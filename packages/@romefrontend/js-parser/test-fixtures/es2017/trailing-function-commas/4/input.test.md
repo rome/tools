@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/trailing-function-commas/4/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/trailing-function-commas/4/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/trailing-function-commas/4/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/trailing-function-commas/4/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/trailing-function-commas/4/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/trailing-function-commas/4/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/4/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 2
@@ -117,7 +117,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/trailing-function-commas/4/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 5

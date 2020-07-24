@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSBinaryExpression {
 					operator: "*"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -78,7 +78,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 10
@@ -95,7 +95,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 14
@@ -117,7 +117,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -133,7 +133,7 @@ JSRoot {
 						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 								end: Object {
 									column: 4
 									index: 4
@@ -148,7 +148,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 2
@@ -166,7 +166,7 @@ JSRoot {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-arrow-function/migrated_0008/input.js"
 									end: Object {
 										column: 4
 										index: 4

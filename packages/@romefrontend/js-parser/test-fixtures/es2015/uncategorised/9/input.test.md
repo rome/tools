@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/9/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/9/input.js"
 		end: Object {
 			column: 37
 			index: 37
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/9/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/9/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/9/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -88,7 +88,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/9/input.js"
 					end: Object {
 						column: 37
 						index: 37
@@ -104,7 +104,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/9/input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -121,7 +121,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/9/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -137,7 +137,7 @@ JSRoot {
 							value: 0
 							format: "octal"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/9/input.js"
 								end: Object {
 									column: 34
 									index: 34

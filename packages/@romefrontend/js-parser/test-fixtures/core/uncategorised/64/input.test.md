@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/64/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/64/input.js"
 		end: Object {
 			column: 11
 			index: 36
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Some comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/64/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -53,7 +53,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/64/input.js"
 				end: Object {
 					column: 11
 					index: 36
@@ -68,7 +68,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/64/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 5
@@ -85,7 +85,7 @@ JSRoot {
 			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/64/input.js"
 					end: Object {
 						column: 11
 						index: 36
@@ -101,7 +101,7 @@ JSRoot {
 					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/64/input.js"
 							end: Object {
 								column: 9
 								index: 34
@@ -117,7 +117,7 @@ JSRoot {
 							arguments: Array []
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/64/input.js"
 								end: Object {
 									column: 8
 									index: 33
@@ -133,7 +133,7 @@ JSRoot {
 								name: "doThat"
 								leadingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/64/input.js"
 									identifierName: "doThat"
 									end: Object {
 										column: 6

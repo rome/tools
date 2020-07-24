@@ -7,12 +7,12 @@
 
 import Server from "../Server";
 import {
+	PROJECT_CONFIG_FILENAMES,
+	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	PROJECT_CONFIG_WARN_FILENAMES,
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectDefinition,
-	ROME_CONFIG_FILENAMES,
-	ROME_CONFIG_PACKAGE_JSON_FIELD,
-	ROME_CONFIG_WARN_FILENAMES,
 	assertHardMeta,
 	createDefaultProjectConfig,
 	createDefaultProjectConfigMeta,
@@ -711,7 +711,9 @@ export default class ProjectManager {
 
 		if (location === undefined) {
 			throw new Error(
-				`Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(" or ")} for ${path.join()}`,
+				`Couldn't find a project. Checked ${PROJECT_CONFIG_FILENAMES.join(
+					" or ",
+				)} for ${path.join()}`,
 			);
 		} else {
 			throw createSingleDiagnosticError({
@@ -801,7 +803,7 @@ export default class ProjectManager {
 		// If not then let's access the file system and try to find one
 		for (const dir of parentDirectories.slice().reverse()) {
 			// Check for dedicated project configs
-			for (const configFilename of ROME_CONFIG_FILENAMES) {
+			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
 				// Check in root
 				const configPath = dir.append(configFilename);
 
@@ -817,7 +819,7 @@ export default class ProjectManager {
 			if (await this.server.memoryFs.existsHard(packagePath)) {
 				const input = await readFileText(packagePath);
 				const json = await consumeJSON({input, path: packagePath});
-				if (json.has(ROME_CONFIG_PACKAGE_JSON_FIELD)) {
+				if (json.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
 					await this.server.memoryFs.watch(dir);
 					return this.assertProjectExisting(cwd);
 				}
@@ -826,7 +828,7 @@ export default class ProjectManager {
 
 		// If we didn't find a project config then check for incorrect config filenames
 		for (const dir of parentDirectories) {
-			for (const basename of ROME_CONFIG_WARN_FILENAMES) {
+			for (const basename of PROJECT_CONFIG_WARN_FILENAMES) {
 				const path = dir.append(basename);
 
 				if (await this.server.memoryFs.existsHard(path)) {
@@ -847,7 +849,7 @@ export default class ProjectManager {
 	}
 
 	checkConfigFile(path: AbsoluteFilePath, diagnostics: DiagnosticsProcessor) {
-		if (ROME_CONFIG_WARN_FILENAMES.includes(path.getBasename())) {
+		if (PROJECT_CONFIG_WARN_FILENAMES.includes(path.getBasename())) {
 			this.warnIncorrectConfigFile(path, diagnostics);
 		}
 	}
@@ -858,7 +860,7 @@ export default class ProjectManager {
 	) {
 		diagnostics.addDiagnostic({
 			description: descriptions.PROJECT_MANAGER.INCORRECT_CONFIG_FILENAME(
-				ROME_CONFIG_FILENAMES,
+				PROJECT_CONFIG_FILENAMES,
 			),
 			location: {
 				filename: path.join(),

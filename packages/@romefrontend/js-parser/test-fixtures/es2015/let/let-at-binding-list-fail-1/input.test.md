@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -84,7 +84,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "let"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 												identifierName: "let"
 												end: Object {
 													column: 9
@@ -99,7 +99,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 											end: Object {
 												column: 9
 												index: 9
@@ -115,7 +115,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "let"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 											identifierName: "let"
 											end: Object {
 												column: 9
@@ -130,7 +130,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 										end: Object {
 											column: 9
 											index: 9
@@ -146,7 +146,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -161,7 +161,7 @@ JSRoot {
 						init: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 								end: Object {
 									column: 16
 									index: 16

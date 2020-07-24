@@ -13,7 +13,7 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSXMemberExpression = NodeBaseWithComments & {
+export interface JSXMemberExpression extends NodeBaseWithComments {
 	type: "JSXMemberExpression";
 	object:
 		| JSXMemberExpression
@@ -21,7 +21,7 @@ export type JSXMemberExpression = NodeBaseWithComments & {
 		| JSXReferenceIdentifier
 		| JSXNamespacedName;
 	property: JSXIdentifier;
-};
+}
 
 export const jsxMemberExpression = createBuilder<JSXMemberExpression>(
 	"JSXMemberExpression",

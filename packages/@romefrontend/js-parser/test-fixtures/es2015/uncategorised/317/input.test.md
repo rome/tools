@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/317/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/317/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/317/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSTemplateLiteral {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/317/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -66,7 +66,7 @@ JSRoot {
 						raw: ""
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/317/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -84,7 +84,7 @@ JSRoot {
 						raw: ""
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/317/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -101,7 +101,7 @@ JSRoot {
 				expressions: Array [
 					JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/317/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -118,7 +118,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/317/input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -132,7 +132,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/317/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -147,7 +147,7 @@ JSRoot {
 						}
 						object: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/317/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -163,7 +163,7 @@ JSRoot {
 								JSStringLiteral {
 									value: "1"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/317/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -179,7 +179,7 @@ JSRoot {
 							]
 							callee: JSMemberExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/317/input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -195,7 +195,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "exec"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/317/input.js"
 											identifierName: "exec"
 											end: Object {
 												column: 12
@@ -210,7 +210,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/317/input.js"
 										identifierName: "exec"
 										end: Object {
 											column: 12
@@ -232,7 +232,7 @@ JSRoot {
 									sticky: false
 									unicode: false
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/317/input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -246,7 +246,7 @@ JSRoot {
 									}
 									expression: JSRegExpSubExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/317/input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -261,7 +261,7 @@ JSRoot {
 										body: Array [
 											JSRegExpDigitCharacter {
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/317/input.js"
 													end: Object {
 														column: 6
 														index: 6

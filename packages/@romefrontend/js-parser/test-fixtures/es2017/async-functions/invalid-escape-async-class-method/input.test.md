@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "async can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 22
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 							end: Object {
 								column: 36
 								index: 36
@@ -163,7 +163,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -189,7 +189,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -205,7 +205,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -220,7 +220,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 										end: Object {
 											column: 34
 											index: 34
@@ -234,7 +234,7 @@ JSRoot {
 									}
 									expression: JSAwaitExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 											end: Object {
 												column: 34
 												index: 34
@@ -249,7 +249,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 34
@@ -279,7 +279,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-async-class-method/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━
 
   ✖ async can't contain a unicode escape
 

@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpNamedBackReference = NodeBaseWithComments & {
+export interface JSRegExpNamedBackReference extends NodeBaseWithComments {
 	type: "JSRegExpNamedBackReference";
 	name: string;
-};
+}
 
 export const jsRegExpNamedBackReference = createBuilder<JSRegExpNamedBackReference>(
 	"JSRegExpNamedBackReference",

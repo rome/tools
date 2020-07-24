@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/fragment-3/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/fragment-3/input.jsx"
 		end: Object {
 			column: 0
 			index: 51
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/fragment-3/input.jsx"
 				end: Object {
 					column: 3
 					index: 50
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/fragment-3/input.jsx"
 					end: Object {
 						column: 3
 						index: 50
@@ -64,7 +64,7 @@ JSRoot {
 					JSXText {
 						value: "\n  "
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/fragment-3/input.jsx"
 							end: Object {
 								column: 2
 								index: 6
@@ -81,7 +81,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "span"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/fragment-3/input.jsx"
 								end: Object {
 									column: 7
 									index: 11
@@ -98,7 +98,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/fragment-3/input.jsx"
 							end: Object {
 								column: 9
 								index: 29
@@ -114,7 +114,7 @@ JSRoot {
 							JSXText {
 								value: "\n    hi\n  "
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/basic/fragment-3/input.jsx"
 									end: Object {
 										column: 2
 										index: 22
@@ -132,7 +132,7 @@ JSRoot {
 					JSXText {
 						value: "\n  "
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/fragment-3/input.jsx"
 							end: Object {
 								column: 2
 								index: 32
@@ -149,7 +149,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "div"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/fragment-3/input.jsx"
 								end: Object {
 									column: 6
 									index: 36
@@ -166,7 +166,7 @@ JSRoot {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/fragment-3/input.jsx"
 							end: Object {
 								column: 16
 								index: 46
@@ -182,7 +182,7 @@ JSRoot {
 							JSXText {
 								value: "bye"
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/basic/fragment-3/input.jsx"
 									end: Object {
 										column: 10
 										index: 40
@@ -200,7 +200,7 @@ JSRoot {
 					JSXText {
 						value: "\n"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/fragment-3/input.jsx"
 							end: Object {
 								column: 0
 								index: 47

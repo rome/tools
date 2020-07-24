@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/interface/method-optional/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/interface/method-optional/input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-optional/input.ts"
 					identifierName: "I"
 					end: Object {
 						column: 11
@@ -53,7 +53,7 @@ JSRoot {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/interface/method-optional/input.ts"
 				end: Object {
 					column: 1
 					index: 31
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/interface/method-optional/input.ts"
 					end: Object {
 						column: 1
 						index: 31
@@ -85,7 +85,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/interface/method-optional/input.ts"
 									identifierName: "m"
 									end: Object {
 										column: 5
@@ -100,7 +100,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-optional/input.ts"
 								end: Object {
 									column: 5
 									index: 19
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/interface/method-optional/input.ts"
 							end: Object {
 								column: 15
 								index: 29
@@ -129,7 +129,7 @@ JSRoot {
 						}
 						returnType: TSVoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-optional/input.ts"
 								end: Object {
 									column: 14
 									index: 28
@@ -147,7 +147,7 @@ JSRoot {
 							rest: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/interface/method-optional/input.ts"
 								end: Object {
 									column: 14
 									index: 28

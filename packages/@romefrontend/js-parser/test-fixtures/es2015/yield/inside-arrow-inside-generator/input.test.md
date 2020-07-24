@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 		end: Object {
 			column: 1
 			index: 52
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 52
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 52
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 							end: Object {
 								column: 14
 								index: 31
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 								end: Object {
 									column: 13
 									index: 30
@@ -133,7 +133,7 @@ JSRoot {
 							body: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 13
@@ -155,7 +155,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 7
 										index: 24
@@ -172,7 +172,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 							end: Object {
 								column: 18
 								index: 50
@@ -186,7 +186,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 								end: Object {
 									column: 17
 									index: 49
@@ -206,7 +206,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 7
 										index: 39
@@ -222,7 +222,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 17
 										index: 49
@@ -237,7 +237,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 											end: Object {
 												column: 15
 												index: 47
@@ -252,7 +252,7 @@ JSRoot {
 										expression: JSReferenceIdentifier {
 											name: "yield"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/inside-arrow-inside-generator/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 15

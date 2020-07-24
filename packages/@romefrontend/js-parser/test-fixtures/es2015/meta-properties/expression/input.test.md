@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/expression/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/expression/input.js"
 				end: Object {
 					column: 2
 					index: 39
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/expression/input.js"
 					end: Object {
 						column: 2
 						index: 39
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/expression/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/expression/input.js"
 							end: Object {
 								column: 1
 								index: 38
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/expression/input.js"
 								end: Object {
 									column: 1
 									index: 38
@@ -118,7 +118,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/expression/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -134,7 +134,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/expression/input.js"
 									end: Object {
 										column: 1
 										index: 38
@@ -149,7 +149,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/meta-properties/expression/input.js"
 											end: Object {
 												column: 13
 												index: 36
@@ -163,7 +163,7 @@ JSRoot {
 										}
 										expression: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/meta-properties/expression/input.js"
 												end: Object {
 													column: 12
 													index: 35
@@ -178,7 +178,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/expression/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 5
@@ -195,7 +195,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/expression/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 12

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/235/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/235/input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/235/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/235/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -73,7 +73,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/235/input.js"
 					identifierName: "list"
 					end: Object {
 						column: 23
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/235/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -103,7 +103,7 @@ JSRoot {
 				}
 				expression: JSCallExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/235/input.js"
 						end: Object {
 							column: 35
 							index: 35
@@ -118,7 +118,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "process"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/235/input.js"
 							identifierName: "process"
 							end: Object {
 								column: 32
@@ -136,7 +136,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/235/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 34
@@ -156,7 +156,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/235/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -173,7 +173,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/235/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 10
@@ -188,7 +188,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/235/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -204,7 +204,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/235/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -229,7 +229,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/235/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

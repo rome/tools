@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/parameter-typecast/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/parameter-typecast/input.ts"
 		end: Object {
 			column: 0
 			index: 12
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/parameter-typecast/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/parameter-typecast/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/parameter-typecast/input.ts"
 					end: Object {
 						column: 10
 						index: 10
@@ -88,7 +88,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/parameter-typecast/input.ts"
 						identifierName: "func"
 						end: Object {
 							column: 4
@@ -112,7 +112,7 @@ JSRoot {
 
 ```
 
- input.ts:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/cast/parameter-typecast/input.ts:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot
     async keyword.

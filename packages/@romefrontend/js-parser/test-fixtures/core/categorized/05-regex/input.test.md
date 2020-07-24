@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/05-regex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/05-regex/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/05-regex/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/05-regex/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -64,7 +64,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "test"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/05-regex/input.js"
 						identifierName: "test"
 						end: Object {
 							column: 4
@@ -84,7 +84,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/05-regex/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 20
@@ -99,7 +99,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/05-regex/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -115,7 +115,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/05-regex/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -138,7 +138,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/05-regex/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -154,7 +154,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/05-regex/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -174,7 +174,7 @@ JSRoot {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/05-regex/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -188,7 +188,7 @@ JSRoot {
 				}
 				expression: JSRegExpSubExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/05-regex/input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -204,7 +204,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "4"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/05-regex/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -220,7 +220,7 @@ JSRoot {
 						JSRegExpCharacter {
 							value: "2"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/05-regex/input.js"
 								end: Object {
 									column: 29
 									index: 29

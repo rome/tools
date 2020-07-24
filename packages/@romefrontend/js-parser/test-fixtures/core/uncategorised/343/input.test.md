@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/343/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/343/input.js"
 		end: Object {
 			column: 12
 			index: 24
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " nothing"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/343/input.js"
 				end: Object {
 					column: 12
 					index: 24
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/343/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -68,7 +68,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/343/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -83,7 +83,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/343/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 1
@@ -100,7 +100,7 @@ JSRoot {
 				right: JSBinaryExpression {
 					operator: ">"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/343/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -116,7 +116,7 @@ JSRoot {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/343/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -133,7 +133,7 @@ JSRoot {
 						operator: "--"
 						prefix: false
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/343/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -148,7 +148,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/343/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 5

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 							end: Object {
 								column: 39
 								index: 39
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -142,7 +142,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -158,7 +158,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 									end: Object {
 										column: 39
 										index: 39
@@ -173,7 +173,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 											end: Object {
 												column: 30
 												index: 30
@@ -188,7 +188,7 @@ JSRoot {
 										expression: JSAssignmentExpression {
 											operator: "="
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 												end: Object {
 													column: 30
 													index: 30
@@ -203,7 +203,7 @@ JSRoot {
 											left: JSAssignmentIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 													identifierName: "y"
 													end: Object {
 														column: 22
@@ -219,7 +219,7 @@ JSRoot {
 											}
 											right: JSMetaProperty {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 													end: Object {
 														column: 30
 														index: 30
@@ -234,7 +234,7 @@ JSRoot {
 												meta: JSIdentifier {
 													name: "new"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 														identifierName: "new"
 														end: Object {
 															column: 28
@@ -251,7 +251,7 @@ JSRoot {
 												property: JSIdentifier {
 													name: ""
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 														identifierName: ""
 														end: Object {
 															column: 30
@@ -270,7 +270,7 @@ JSRoot {
 									}
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -285,7 +285,7 @@ JSRoot {
 										expression: JSReferenceIdentifier {
 											name: "target"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 												identifierName: "target"
 												end: Object {
 													column: 36
@@ -315,7 +315,7 @@ JSRoot {
 
 ```
 
- input.js:1:29 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-meta-property/invalid-dots/input.js:1:29 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

@@ -16,13 +16,13 @@ import {createBuilder} from "../../utils";
 
 export type JSObjectMethodKind = "get" | "set" | "method";
 
-export type JSObjectMethod = NodeBaseWithComments & {
+export interface JSObjectMethod extends NodeBaseWithComments {
 	key: JSComputedPropertyKey | JSStaticPropertyKey;
 	type: "JSObjectMethod";
 	kind: JSObjectMethodKind;
 	head: JSFunctionHead;
 	body: JSBlockStatement;
-};
+}
 
 export const jsObjectMethod = createBuilder<JSObjectMethod>(
 	"JSObjectMethod",

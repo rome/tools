@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSVariableDeclarator = NodeBaseWithComments & {
+export interface JSVariableDeclarator extends NodeBaseWithComments {
 	type: "JSVariableDeclarator";
 	id: AnyJSTargetBindingPattern;
 	init?: AnyJSExpression;
-};
+}
 
 export const jsVariableDeclarator = createBuilder<JSVariableDeclarator>(
 	"JSVariableDeclarator",

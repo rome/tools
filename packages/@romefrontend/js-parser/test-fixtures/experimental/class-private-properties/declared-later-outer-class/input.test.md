@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 		end: Object {
 			column: 1
 			index: 73
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 					identifierName: "B"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 				end: Object {
 					column: 1
 					index: 73
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 					end: Object {
 						column: 1
 						index: 73
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "meth"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 									identifierName: "meth"
 									end: Object {
 										column: 6
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 							end: Object {
 								column: 3
 								index: 64
@@ -139,7 +139,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -165,7 +165,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -181,7 +181,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 3
 									index: 64
@@ -198,7 +198,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "A"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 											identifierName: "A"
 											end: Object {
 												column: 11
@@ -213,7 +213,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 										end: Object {
 											column: 5
 											index: 60
@@ -231,7 +231,7 @@ JSRoot {
 										superTypeParameters: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 											end: Object {
 												column: 5
 												index: 60
@@ -249,7 +249,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "x"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 															identifierName: "x"
 															end: Object {
 																column: 8
@@ -264,7 +264,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 														end: Object {
 															column: 8
 															index: 43
@@ -279,7 +279,7 @@ JSRoot {
 												}
 												value: JSMemberExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 														end: Object {
 															column: 18
 															index: 53
@@ -293,7 +293,7 @@ JSRoot {
 													}
 													object: JSThisExpression {
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 															end: Object {
 																column: 15
 																index: 50
@@ -311,7 +311,7 @@ JSRoot {
 															id: JSIdentifier {
 																name: "y"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 																	identifierName: "y"
 																	end: Object {
 																		column: 18
@@ -326,7 +326,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 																end: Object {
 																	column: 18
 																	index: 53
@@ -340,7 +340,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 															end: Object {
 																column: 18
 																index: 53
@@ -356,7 +356,7 @@ JSRoot {
 												}
 												typeAnnotation: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 													end: Object {
 														column: 19
 														index: 54
@@ -381,7 +381,7 @@ JSRoot {
 														line: 4
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 														end: Object {
 															column: 8
 															index: 43
@@ -406,7 +406,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 4
@@ -421,7 +421,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 4
 									index: 70
@@ -437,7 +437,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 							end: Object {
 								column: 5
 								index: 71
@@ -462,7 +462,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
 								end: Object {
 									column: 4
 									index: 70

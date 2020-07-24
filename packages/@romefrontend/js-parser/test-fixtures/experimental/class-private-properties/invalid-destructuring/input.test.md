@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 				end: Object {
 					column: 1
 					index: 59
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 					end: Object {
 						column: 1
 						index: 59
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -119,7 +119,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 							end: Object {
 								column: 9
 								index: 19
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -179,7 +179,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 									identifierName: "m"
 									end: Object {
 										column: 3
@@ -194,7 +194,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -208,7 +208,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 							end: Object {
 								column: 3
 								index: 57
@@ -230,7 +230,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -256,7 +256,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -272,7 +272,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
 									index: 57
@@ -287,7 +287,7 @@ JSRoot {
 							body: Array [
 								JSVariableDeclarationStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 										end: Object {
 											column: 25
 											index: 53
@@ -302,7 +302,7 @@ JSRoot {
 									declaration: JSVariableDeclaration {
 										kind: "const"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 											end: Object {
 												column: 25
 												index: 53
@@ -319,7 +319,7 @@ JSRoot {
 												id: JSBindingObjectPattern {
 													rest: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 														end: Object {
 															column: 17
 															index: 45
@@ -338,7 +338,7 @@ JSRoot {
 																	id: JSIdentifier {
 																		name: "x"
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																			identifierName: "x"
 																			end: Object {
 																				column: 13
@@ -353,7 +353,7 @@ JSRoot {
 																		}
 																	}
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																		end: Object {
 																			column: 13
 																			index: 41
@@ -367,7 +367,7 @@ JSRoot {
 																	}
 																}
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																	end: Object {
 																		column: 13
 																		index: 41
@@ -383,7 +383,7 @@ JSRoot {
 															value: JSBindingIdentifier {
 																name: "x"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																	identifierName: "x"
 																	end: Object {
 																		column: 16
@@ -398,7 +398,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																end: Object {
 																	column: 16
 																	index: 44
@@ -414,7 +414,7 @@ JSRoot {
 													]
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 													end: Object {
 														column: 24
 														index: 52
@@ -428,7 +428,7 @@ JSRoot {
 												}
 												init: JSThisExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 														end: Object {
 															column: 24
 															index: 52

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/function-generic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/function-generic/input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/function-generic/input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/function-generic/input.ts"
 					end: Object {
 						column: 22
 						index: 22
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/function-generic/input.ts"
 								end: Object {
 									column: 21
 									index: 21
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/function-generic/input.ts"
 									end: Object {
 										column: 21
 										index: 21
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSFunctionType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/function-generic/input.ts"
 										end: Object {
 											column: 21
 											index: 21
@@ -110,7 +110,7 @@ JSRoot {
 									typeAnnotation: TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function-generic/input.ts"
 											end: Object {
 												column: 21
 												index: 21
@@ -125,7 +125,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/function-generic/input.ts"
 												identifierName: "T"
 												end: Object {
 													column: 21
@@ -143,7 +143,7 @@ JSRoot {
 									meta: TSSignatureDeclarationMeta {
 										rest: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function-generic/input.ts"
 											end: Object {
 												column: 21
 												index: 21
@@ -157,7 +157,7 @@ JSRoot {
 										}
 										typeParameters: TSTypeParameterDeclaration {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/function-generic/input.ts"
 												end: Object {
 													column: 10
 													index: 10
@@ -175,7 +175,7 @@ JSRoot {
 													constraint: undefined
 													default: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function-generic/input.ts"
 														end: Object {
 															column: 9
 															index: 9
@@ -194,7 +194,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "a"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/function-generic/input.ts"
 													identifierName: "a"
 													end: Object {
 														column: 12
@@ -210,7 +210,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function-generic/input.ts"
 														end: Object {
 															column: 15
 															index: 15
@@ -225,7 +225,7 @@ JSRoot {
 													typeAnnotation: TSTypeReference {
 														typeParameters: undefined
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/function-generic/input.ts"
 															end: Object {
 																column: 15
 																index: 15
@@ -240,7 +240,7 @@ JSRoot {
 														typeName: JSReferenceIdentifier {
 															name: "T"
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/types/function-generic/input.ts"
 																identifierName: "T"
 																end: Object {
 																	column: 15
@@ -264,7 +264,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/function-generic/input.ts"
 							end: Object {
 								column: 21
 								index: 21

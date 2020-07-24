@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSReturnStatement = NodeBaseWithComments & {
+export interface JSReturnStatement extends NodeBaseWithComments {
 	type: "JSReturnStatement";
 	argument?: AnyJSExpression;
-};
+}
 
 export const jsReturnStatement = createQuickBuilder<
 	JSReturnStatement,

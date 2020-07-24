@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/186/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/186/input.js"
 		end: Object {
 			column: 20
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/186/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/186/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "d"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/186/input.js"
 						identifierName: "d"
 						end: Object {
 							column: 20
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				left: JSAssignmentArrayPattern {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/186/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -95,7 +95,7 @@ JSRoot {
 					rest: JSAssignmentIdentifier {
 						name: "c"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/186/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 15
@@ -113,7 +113,7 @@ JSRoot {
 						JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/186/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -131,7 +131,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/186/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 4
@@ -146,7 +146,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/186/input.js"
 											end: Object {
 												column: 4
 												index: 4
@@ -162,7 +162,7 @@ JSRoot {
 									value: JSAssignmentIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/186/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 4
@@ -177,7 +177,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/186/input.js"
 										end: Object {
 											column: 4
 											index: 4
@@ -195,7 +195,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/186/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 7
@@ -210,7 +210,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/186/input.js"
 											end: Object {
 												column: 7
 												index: 7
@@ -226,7 +226,7 @@ JSRoot {
 									value: JSAssignmentIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/186/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 7
@@ -241,7 +241,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/186/input.js"
 										end: Object {
 											column: 7
 											index: 7

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-as-identifier-5/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-as-identifier-5/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -35,7 +35,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-5/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -51,7 +51,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-5/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-5/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -81,7 +81,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-5/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 10
@@ -101,7 +101,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-5/input.js"
 				end: Object {
 					column: 2
 					index: 13

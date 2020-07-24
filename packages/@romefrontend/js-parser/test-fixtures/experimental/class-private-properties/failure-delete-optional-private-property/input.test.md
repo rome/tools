@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 		end: Object {
 			column: 0
 			index: 63
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 				end: Object {
 					column: 1
 					index: 62
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 					end: Object {
 						column: 1
 						index: 62
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -142,7 +142,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 							end: Object {
 								column: 5
 								index: 17
@@ -167,7 +167,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -187,7 +187,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -202,7 +202,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -216,7 +216,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 							end: Object {
 								column: 3
 								index: 60
@@ -238,7 +238,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 15
 									index: 33
@@ -264,7 +264,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -280,7 +280,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 								end: Object {
 									column: 3
 									index: 60
@@ -295,7 +295,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 										end: Object {
 											column: 18
 											index: 54
@@ -311,7 +311,7 @@ JSRoot {
 										operator: "delete"
 										prefix: true
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 											end: Object {
 												column: 18
 												index: 54
@@ -325,7 +325,7 @@ JSRoot {
 										}
 										argument: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 												end: Object {
 													column: 18
 													index: 54
@@ -339,7 +339,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 													end: Object {
 														column: 15
 														index: 51
@@ -356,7 +356,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: ""
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 														identifierName: ""
 														end: Object {
 															column: 18
@@ -372,7 +372,7 @@ JSRoot {
 												}
 												optional: true
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 													identifierName: ""
 													end: Object {
 														column: 18
@@ -391,7 +391,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 										end: Object {
 											column: 20
 											index: 56
@@ -406,7 +406,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/failure-delete-optional-private-property/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 19
@@ -435,7 +435,8 @@ JSRoot {
 
 ```
 
- input.js:4:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-delete-optional-private-property/input.js:4:17
+parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

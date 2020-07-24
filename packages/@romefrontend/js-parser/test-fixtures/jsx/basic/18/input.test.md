@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/18/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/18/input.jsx"
 		end: Object {
 			column: 35
 			index: 35
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/18/input.jsx"
 				end: Object {
 					column: 35
 					index: 35
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/18/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/18/input.jsx"
 					end: Object {
 						column: 35
 						index: 35
@@ -82,7 +82,7 @@ JSRoot {
 				attributes: Array [
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/18/input.jsx"
 							end: Object {
 								column: 15
 								index: 15
@@ -97,7 +97,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/18/input.jsx"
 								identifierName: "props"
 								end: Object {
 									column: 14
@@ -116,7 +116,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "post"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/18/input.jsx"
 								end: Object {
 									column: 20
 									index: 20
@@ -132,7 +132,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "attribute"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/18/input.jsx"
 								end: Object {
 									column: 32
 									index: 32
@@ -146,7 +146,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/18/input.jsx"
 							end: Object {
 								column: 32
 								index: 32

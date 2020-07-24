@@ -14,10 +14,10 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSStaticPropertyKey = NodeBaseWithComments & {
+export interface JSStaticPropertyKey extends NodeBaseWithComments {
 	type: "JSStaticPropertyKey";
 	value: JSIdentifier | JSPrivateName | JSStringLiteral | JSNumericLiteral;
-};
+}
 
 export const jsStaticPropertyKey = createQuickBuilder<
 	JSStaticPropertyKey,

@@ -30,6 +30,7 @@ import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@romefrontend/path";
 import {Number0} from "@romefrontend/ob1";
 import {FormatterOptions} from "@romefrontend/formatter";
+import {RecoverySaveFile} from "@romefrontend/core/server/fs/RecoveryStore";
 
 export type WorkerProjects = Array<{
 	id: number;
@@ -117,7 +118,7 @@ export type WorkerFormatResult = {
 };
 
 export type WorkerLintResult = {
-	save: undefined | string;
+	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
 };
@@ -133,6 +134,11 @@ export type WorkerBufferPatch = {
 		end: WorkerBufferPosition;
 	};
 	text: string;
+};
+
+export type WorkerUpdateInlineSnapshotResult = {
+	diagnostics: Diagnostics;
+	file: undefined | RecoverySaveFile;
 };
 
 export default class WorkerBridge extends Bridge {
@@ -235,7 +241,7 @@ export default class WorkerBridge extends Bridge {
 			updates: InlineSnapshotUpdates;
 			parseOptions: WorkerParseOptions;
 		},
-		Diagnostics
+		WorkerUpdateInlineSnapshotResult
 	>({name: "updateInlineSnapshots", direction: "server->client"});
 
 	compile = this.createEvent<
@@ -253,6 +259,7 @@ export default class WorkerBridge extends Bridge {
 			ref: JSONFileReference;
 			options: WorkerParseOptions;
 		},
+		// @ts-ignore
 		AnyRoot
 	>({name: "parse", direction: "server->client"});
 

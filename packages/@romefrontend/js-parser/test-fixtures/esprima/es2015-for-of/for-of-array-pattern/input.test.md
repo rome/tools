@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "r"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 					identifierName: "r"
 					end: Object {
 						column: 16
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSAssignmentArrayPattern {
 				rest: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -98,7 +98,7 @@ JSRoot {
 					JSAssignmentIdentifier {
 						name: "p"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 							identifierName: "p"
 							end: Object {
 								column: 7
@@ -115,7 +115,7 @@ JSRoot {
 					JSAssignmentIdentifier {
 						name: "q"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-array-pattern/input.js"
 							identifierName: "q"
 							end: Object {
 								column: 10

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/null-assertion-and-assign/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/null-assertion-and-assign/input.ts"
 		end: Object {
 			column: 0
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion-and-assign/input.ts"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "+="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion-and-assign/input.ts"
 					end: Object {
 						column: 7
 						index: 7
@@ -65,7 +65,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion-and-assign/input.ts"
 						end: Object {
 							column: 7
 							index: 7
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				left: TSAssignmentNonNullExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion-and-assign/input.ts"
 						end: Object {
 							column: 2
 							index: 2
@@ -95,7 +95,7 @@ JSRoot {
 					expression: JSAssignmentIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/null-assertion-and-assign/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 1

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/annotated/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/annotated/input.ts"
 		end: Object {
 			column: 0
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/annotated/input.ts"
 				end: Object {
 					column: 25
 					index: 25
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/annotated/input.ts"
 					end: Object {
 						column: 24
 						index: 24
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/annotated/input.ts"
 						identifierName: "x"
 						end: Object {
 							column: 24
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/annotated/input.ts"
 						end: Object {
 							column: 22
 							index: 22
@@ -97,7 +97,7 @@ JSRoot {
 					}
 					returnType: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/annotated/input.ts"
 							end: Object {
 								column: 19
 								index: 19
@@ -114,7 +114,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/annotated/input.ts"
 								end: Object {
 									column: 22
 									index: 22
@@ -129,7 +129,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/annotated/input.ts"
 									end: Object {
 										column: 22
 										index: 22
@@ -143,7 +143,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/annotated/input.ts"
 										end: Object {
 											column: 10
 											index: 10

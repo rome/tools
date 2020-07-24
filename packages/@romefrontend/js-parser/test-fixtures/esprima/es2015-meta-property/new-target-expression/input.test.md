@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 								identifierName: "f"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 							end: Object {
 								column: 34
 								index: 34
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -118,7 +118,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -134,7 +134,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 									end: Object {
 										column: 34
 										index: 34
@@ -149,7 +149,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 											end: Object {
 												column: 32
 												index: 32
@@ -163,7 +163,7 @@ JSRoot {
 										}
 										expression: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 												end: Object {
 													column: 31
 													index: 31
@@ -178,7 +178,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 24
@@ -195,7 +195,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 31

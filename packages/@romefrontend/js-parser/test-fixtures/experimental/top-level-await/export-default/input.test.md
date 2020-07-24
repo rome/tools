@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/export-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/export-default/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/export-default/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			declaration: JSAwaitExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/export-default/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/export-default/input.js"
 						end: Object {
 							column: 22
 							index: 22

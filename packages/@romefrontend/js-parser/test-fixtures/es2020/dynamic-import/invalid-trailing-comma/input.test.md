@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -110,7 +110,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/invalid-trailing-comma/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/array-rest-spread/invalid-location/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/array-rest-spread/invalid-location/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/array-rest-spread/invalid-location/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/array-rest-spread/invalid-location/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/invalid-location/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/array-rest-spread/invalid-location/input.js"
 						identifierName: "c"
 						end: Object {
 							column: 13
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/array-rest-spread/invalid-location/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -121,7 +121,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/array-rest-spread/invalid-location/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -137,7 +137,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/array-rest-spread/invalid-location/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 8
@@ -163,7 +163,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/array-rest-spread/invalid-location/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

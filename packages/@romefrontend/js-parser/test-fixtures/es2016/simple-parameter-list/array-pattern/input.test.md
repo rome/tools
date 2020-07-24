@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/simple-parameter-list/array-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/simple-parameter-list/array-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 53
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/array-pattern/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/array-pattern/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/array-pattern/input.js"
 				end: Object {
 					column: 1
 					index: 52
@@ -90,7 +90,7 @@ JSRoot {
 			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/array-pattern/input.js"
 					end: Object {
 						column: 1
 						index: 52
@@ -106,7 +106,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/array-pattern/input.js"
 							end: Object {
 								column: 15
 								index: 50
@@ -130,7 +130,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/array-pattern/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -146,7 +146,7 @@ JSRoot {
 					JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/array-pattern/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -162,7 +162,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/array-pattern/input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -179,7 +179,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "option1"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/array-pattern/input.js"
 									identifierName: "option1"
 									end: Object {
 										column: 20
@@ -196,7 +196,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2016/simple-parameter-list/array-pattern/input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -213,7 +213,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "option2"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/array-pattern/input.js"
 									identifierName: "option2"
 									end: Object {
 										column: 29
@@ -230,7 +230,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "es2016/simple-parameter-list/array-pattern/input.js"
 										end: Object {
 											column: 29
 											index: 29
@@ -257,7 +257,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2016/simple-parameter-list/array-pattern/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 

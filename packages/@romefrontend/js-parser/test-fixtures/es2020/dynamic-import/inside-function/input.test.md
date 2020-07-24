@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/inside-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/inside-function/input.js"
 		end: Object {
 			column: 0
 			index: 66
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "loadImport"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/inside-function/input.js"
 					identifierName: "loadImport"
 					end: Object {
 						column: 19
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/inside-function/input.js"
 				end: Object {
 					column: 1
 					index: 65
@@ -72,7 +72,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/inside-function/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -88,7 +88,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "file"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/inside-function/input.js"
 							identifierName: "file"
 							end: Object {
 								column: 24
@@ -105,7 +105,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/inside-function/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -124,7 +124,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/inside-function/input.js"
 					end: Object {
 						column: 1
 						index: 65
@@ -139,7 +139,7 @@ JSRoot {
 				body: Array [
 					JSReturnStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/inside-function/input.js"
 							end: Object {
 								column: 35
 								index: 63
@@ -153,7 +153,7 @@ JSRoot {
 						}
 						argument: JSImportCall {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/inside-function/input.js"
 								end: Object {
 									column: 34
 									index: 62
@@ -167,7 +167,7 @@ JSRoot {
 							}
 							argument: JSTemplateLiteral {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/dynamic-import/inside-function/input.js"
 									end: Object {
 										column: 33
 										index: 61
@@ -183,7 +183,7 @@ JSRoot {
 									JSReferenceIdentifier {
 										name: "file"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/dynamic-import/inside-function/input.js"
 											identifierName: "file"
 											end: Object {
 												column: 28
@@ -204,7 +204,7 @@ JSRoot {
 										raw: "test/"
 										tail: false
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/dynamic-import/inside-function/input.js"
 											end: Object {
 												column: 22
 												index: 50
@@ -222,7 +222,7 @@ JSRoot {
 										raw: ".js"
 										tail: true
 										loc: Object {
-											filename: "input.js"
+											filename: "es2020/dynamic-import/inside-function/input.js"
 											end: Object {
 												column: 32
 												index: 60

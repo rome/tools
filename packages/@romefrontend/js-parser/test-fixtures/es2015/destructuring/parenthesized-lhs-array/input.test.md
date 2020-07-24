@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -89,7 +89,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -105,7 +105,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -121,7 +121,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 3
@@ -147,7 +147,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/destructuring/parenthesized-lhs-array/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
 

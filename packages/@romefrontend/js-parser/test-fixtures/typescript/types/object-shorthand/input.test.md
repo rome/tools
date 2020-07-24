@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/object-shorthand/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/object-shorthand/input.ts"
 		end: Object {
 			column: 0
 			index: 88
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " actually put."
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/object-shorthand/input.ts"
 				end: Object {
 					column: 20
 					index: 80
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/object-shorthand/input.ts"
 				end: Object {
 					column: 2
 					index: 87
@@ -67,7 +67,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/object-shorthand/input.ts"
 					end: Object {
 						column: 2
 						index: 87
@@ -84,7 +84,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "table"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/object-shorthand/input.ts"
 								identifierName: "table"
 								end: Object {
 									column: 11
@@ -99,7 +99,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/object-shorthand/input.ts"
 							end: Object {
 								column: 1
 								index: 86
@@ -113,7 +113,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/object-shorthand/input.ts"
 								end: Object {
 									column: 1
 									index: 86
@@ -132,7 +132,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "put"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/object-shorthand/input.ts"
 												identifierName: "put"
 												end: Object {
 													column: 5
@@ -147,7 +147,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 5
 												index: 21
@@ -161,7 +161,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/object-shorthand/input.ts"
 										end: Object {
 											column: 3
 											index: 84
@@ -179,7 +179,7 @@ JSRoot {
 										trailingComments: Array []
 										innerComments: Array ["0"]
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 3
 												index: 84
@@ -200,7 +200,7 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 41
 												index: 57
@@ -216,7 +216,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "value"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/object-shorthand/input.ts"
 													identifierName: "value"
 													end: Object {
 														column: 37
@@ -232,7 +232,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/object-shorthand/input.ts"
 														end: Object {
 															column: 40
 															index: 56
@@ -247,7 +247,7 @@ JSRoot {
 													typeAnnotation: TSTypeReference {
 														typeParameters: undefined
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/object-shorthand/input.ts"
 															end: Object {
 																column: 40
 																index: 56
@@ -262,7 +262,7 @@ JSRoot {
 														typeName: JSReferenceIdentifier {
 															name: "T"
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/types/object-shorthand/input.ts"
 																identifierName: "T"
 																end: Object {
 																	column: 40
@@ -282,7 +282,7 @@ JSRoot {
 										]
 										typeParameters: TSTypeParameterDeclaration {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/object-shorthand/input.ts"
 												end: Object {
 													column: 31
 													index: 47
@@ -299,7 +299,7 @@ JSRoot {
 													name: "T"
 													default: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/object-shorthand/input.ts"
 														end: Object {
 															column: 30
 															index: 46
@@ -313,7 +313,7 @@ JSRoot {
 													}
 													constraint: TSObjectTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/object-shorthand/input.ts"
 															end: Object {
 																column: 30
 																index: 46
@@ -331,7 +331,7 @@ JSRoot {
 																	value: JSIdentifier {
 																		name: "id"
 																		loc: Object {
-																			filename: "input.ts"
+																			filename: "typescript/types/object-shorthand/input.ts"
 																			identifierName: "id"
 																			end: Object {
 																				column: 20
@@ -346,7 +346,7 @@ JSRoot {
 																		}
 																	}
 																	loc: Object {
-																		filename: "input.ts"
+																		filename: "typescript/types/object-shorthand/input.ts"
 																		end: Object {
 																			column: 20
 																			index: 36
@@ -362,7 +362,7 @@ JSRoot {
 																optional: false
 																readonly: false
 																loc: Object {
-																	filename: "input.ts"
+																	filename: "typescript/types/object-shorthand/input.ts"
 																	end: Object {
 																		column: 28
 																		index: 44
@@ -376,7 +376,7 @@ JSRoot {
 																}
 																typeAnnotation: TSStringKeywordTypeAnnotation {
 																	loc: Object {
-																		filename: "input.ts"
+																		filename: "typescript/types/object-shorthand/input.ts"
 																		end: Object {
 																			column: 28
 																			index: 44

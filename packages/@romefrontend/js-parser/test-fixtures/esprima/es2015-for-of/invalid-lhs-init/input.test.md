@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in for-of statement"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -73,7 +73,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -89,7 +89,7 @@ JSRoot {
 			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -105,7 +105,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "that"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 					identifierName: "that"
 					end: Object {
 						column: 17
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-for-of/invalid-lhs-init/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-of statement
 

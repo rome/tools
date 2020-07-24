@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/214/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/214/input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/214/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/214/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -65,7 +65,7 @@ JSRoot {
 					expression: JSCallExpression {
 						arguments: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/214/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -80,7 +80,7 @@ JSRoot {
 						callee: JSReferenceIdentifier {
 							name: "doThis"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/214/input.js"
 								identifierName: "doThis"
 								end: Object {
 									column: 8
@@ -98,7 +98,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/214/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -113,7 +113,7 @@ JSRoot {
 					expression: JSCallExpression {
 						arguments: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/214/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -128,7 +128,7 @@ JSRoot {
 						callee: JSReferenceIdentifier {
 							name: "doThat"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/214/input.js"
 								identifierName: "doThat"
 								end: Object {
 									column: 18

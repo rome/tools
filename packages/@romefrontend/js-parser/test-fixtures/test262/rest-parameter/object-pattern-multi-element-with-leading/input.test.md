@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 		end: Object {
 			column: 0
 			index: 65
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "multiElementWithLeading"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 					identifierName: "multiElementWithLeading"
 					end: Object {
 						column: 32
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 				end: Object {
 					column: 64
 					index: 64
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 					end: Object {
 						column: 64
 						index: 64
@@ -88,7 +88,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 					end: Object {
 						column: 61
 						index: 61
@@ -104,7 +104,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 34
@@ -121,7 +121,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -138,7 +138,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 37
@@ -155,7 +155,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -173,7 +173,7 @@ JSRoot {
 				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 						end: Object {
 							column: 60
 							index: 60
@@ -189,7 +189,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 							end: Object {
 								column: 60
 								index: 60
@@ -208,7 +208,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 44
@@ -223,7 +223,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 44
 										index: 44
@@ -239,7 +239,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "r"
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									identifierName: "r"
 									end: Object {
 										column: 47
@@ -254,7 +254,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 47
 									index: 47
@@ -272,7 +272,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 50
@@ -287,7 +287,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 50
 										index: 50
@@ -303,7 +303,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 53
@@ -318,7 +318,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 53
 									index: 53
@@ -336,7 +336,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "c"
 									loc: Object {
-										filename: "input.js"
+										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 										identifierName: "c"
 										end: Object {
 											column: 56
@@ -351,7 +351,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 56
 										index: 56
@@ -367,7 +367,7 @@ JSRoot {
 							value: JSBindingIdentifier {
 								name: "t"
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									identifierName: "t"
 									end: Object {
 										column: 59
@@ -382,7 +382,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 59
 									index: 59

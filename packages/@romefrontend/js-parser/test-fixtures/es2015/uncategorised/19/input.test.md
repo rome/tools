@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/19/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/19/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/19/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/19/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 				tag: JSReferenceIdentifier {
 					name: "raw"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/19/input.js"
 						identifierName: "raw"
 						end: Object {
 							column: 3
@@ -81,7 +81,7 @@ JSRoot {
 				quasi: JSTemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/19/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -99,7 +99,7 @@ JSRoot {
 							raw: "42"
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/19/input.js"
 								end: Object {
 									column: 6
 									index: 6

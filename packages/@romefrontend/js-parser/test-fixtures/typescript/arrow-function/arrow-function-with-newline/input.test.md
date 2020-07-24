@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 		end: Object {
 			column: 0
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 				end: Object {
 					column: 10
 					index: 20
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 					end: Object {
 						column: 10
 						index: 20
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 						end: Object {
 							column: 10
 							index: 20
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 						end: Object {
 							column: 6
 							index: 16
@@ -99,7 +99,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 								identifierName: "f"
 								end: Object {
 									column: 8
@@ -117,7 +117,7 @@ JSRoot {
 					returnType: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 							end: Object {
 								column: 3
 								index: 13
@@ -132,7 +132,7 @@ JSRoot {
 						typeName: JSReferenceIdentifier {
 							name: "t"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 								identifierName: "t"
 								end: Object {
 									column: 3

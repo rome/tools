@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/literal-string-2/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/literal-string-2/input.ts"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Template literal types cannot have any substitution"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-string-2/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-string-2/input.ts"
 				end: Object {
 					column: 20
 					index: 20
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/literal-string-2/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/literal-string-2/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/literal-string-2/input.ts"
 									end: Object {
 										column: 19
 										index: 19
@@ -120,7 +120,7 @@ JSRoot {
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
 									value: "foo-"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/literal-string-2/input.ts"
 										end: Object {
 											column: 19
 											index: 19
@@ -137,7 +137,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/literal-string-2/input.ts"
 							end: Object {
 								column: 19
 								index: 19
@@ -161,7 +161,7 @@ JSRoot {
 
 ```
 
- input.ts:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/literal-string-2/input.ts:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literal types cannot have any substitution
 

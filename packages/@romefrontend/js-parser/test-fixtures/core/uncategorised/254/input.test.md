@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/254/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/254/input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/254/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/254/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -65,7 +65,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/254/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -81,7 +81,7 @@ JSRoot {
 					JSBreakStatement {
 						label: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/254/input.js"
 							end: Object {
 								column: 20
 								index: 20

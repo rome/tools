@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/219/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/219/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "\\u{FFZ}"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/219/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/219/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -80,7 +80,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/219/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Bad character escape sequence
 

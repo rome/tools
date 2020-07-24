@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypeReference = NodeBaseWithComments & {
+export interface TSTypeReference extends NodeBaseWithComments {
 	type: "TSTypeReference";
 	typeName: AnyTSEntityName;
 	typeParameters?: TSTypeParameterInstantiation;
-};
+}
 
 export const tsTypeReference = createBuilder<TSTypeReference>(
 	"TSTypeReference",

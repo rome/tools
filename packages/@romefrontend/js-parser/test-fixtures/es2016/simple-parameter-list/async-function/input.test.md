@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2016/simple-parameter-list/async-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2016/simple-parameter-list/async-function/input.js"
 		end: Object {
 			column: 0
 			index: 51
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/async-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/async-function/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 16
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2016/simple-parameter-list/async-function/input.js"
 				end: Object {
 					column: 1
 					index: 50
@@ -90,7 +90,7 @@ JSRoot {
 			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/async-function/input.js"
 					end: Object {
 						column: 1
 						index: 50
@@ -106,7 +106,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/async-function/input.js"
 							end: Object {
 								column: 15
 								index: 48
@@ -130,7 +130,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2016/simple-parameter-list/async-function/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -145,7 +145,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2016/simple-parameter-list/async-function/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -160,7 +160,7 @@ JSRoot {
 						right: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/async-function/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -176,7 +176,7 @@ JSRoot {
 						left: JSBindingIdentifier {
 							name: "options"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2016/simple-parameter-list/async-function/input.js"
 								identifierName: "options"
 								end: Object {
 									column: 24
@@ -193,7 +193,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2016/simple-parameter-list/async-function/input.js"
 									end: Object {
 										column: 24
 										index: 24
@@ -219,7 +219,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2016/simple-parameter-list/async-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 

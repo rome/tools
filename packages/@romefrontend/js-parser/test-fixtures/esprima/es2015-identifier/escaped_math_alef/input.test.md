@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "\u{1ee00}"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 								identifierName: "\u{1ee00}"
 								end: Object {
 									column: 13
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-identifier/escaped_math_alef/input.js"
 							end: Object {
 								column: 13
 								index: 13

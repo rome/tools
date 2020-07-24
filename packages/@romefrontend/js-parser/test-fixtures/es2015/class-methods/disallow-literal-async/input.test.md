@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/disallow-literal-async/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/disallow-literal-async/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/disallow-literal-async/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/disallow-literal-async/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/disallow-literal-async/input.js"
 				end: Object {
 					column: 1
 					index: 28
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/disallow-literal-async/input.js"
 					end: Object {
 						column: 1
 						index: 28
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/disallow-literal-async/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 11
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/disallow-literal-async/input.js"
 								end: Object {
 									column: 11
 									index: 21
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/disallow-literal-async/input.js"
 							end: Object {
 								column: 16
 								index: 26
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/disallow-literal-async/input.js"
 								end: Object {
 									column: 16
 									index: 26
@@ -180,7 +180,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/disallow-literal-async/input.js"
 								end: Object {
 									column: 13
 									index: 23
@@ -206,7 +206,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/disallow-literal-async/input.js"
 								end: Object {
 									column: 11
 									index: 21
@@ -231,7 +231,7 @@ JSRoot {
 
 ```
 
- input.js:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class-methods/disallow-literal-async/input.js:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

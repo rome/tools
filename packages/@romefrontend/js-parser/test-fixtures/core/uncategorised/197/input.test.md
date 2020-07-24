@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/197/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/197/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/197/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/197/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -64,7 +64,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/197/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -81,7 +81,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/197/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -97,7 +97,7 @@ JSRoot {
 				test: JSReferenceIdentifier {
 					name: "y"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/197/input.js"
 						identifierName: "y"
 						end: Object {
 							column: 1

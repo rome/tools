@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/542/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/542/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/542/input.js"
 				end: Object {
 					column: 11
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/542/input.js"
 					end: Object {
 						column: 11
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 					JSStringLiteral {
 						value: " "
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/542/input.js"
 							end: Object {
 								column: 10
 								index: 16
@@ -80,7 +80,7 @@ JSRoot {
 				]
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/542/input.js"
 						end: Object {
 							column: 6
 							index: 12
@@ -95,7 +95,7 @@ JSRoot {
 					object: JSStringLiteral {
 						value: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/542/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -112,7 +112,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "split"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/542/input.js"
 								identifierName: "split"
 								end: Object {
 									column: 6
@@ -127,7 +127,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/542/input.js"
 							identifierName: "split"
 							end: Object {
 								column: 6

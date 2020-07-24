@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/123/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/123/input.js"
 		end: Object {
 			column: 20
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/123/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/123/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -63,7 +63,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/123/input.js"
 						identifierName: "universe"
 						end: Object {
 							column: 8
@@ -81,7 +81,7 @@ JSRoot {
 					value: JSReferenceIdentifier {
 						name: "galaxyName"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/123/input.js"
 							identifierName: "galaxyName"
 							end: Object {
 								column: 19
@@ -96,7 +96,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/123/input.js"
 						end: Object {
 							column: 20
 							index: 20

@@ -13,13 +13,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSModuleDeclaration = NodeBaseWithComments & {
+export interface TSModuleDeclaration extends NodeBaseWithComments {
 	type: "TSModuleDeclaration";
 	id: JSBindingIdentifier | JSStringLiteral;
 	global?: boolean;
 	body?: TSModuleBlock | TSModuleDeclaration;
 	declare?: boolean;
-};
+}
 
 export const tsModuleDeclaration = createBuilder<TSModuleDeclaration>(
 	"TSModuleDeclaration",

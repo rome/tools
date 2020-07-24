@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/computed-properties/call-expression/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/computed-properties/call-expression/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/computed-properties/call-expression/input.js"
 				end: Object {
 					column: 2
 					index: 28
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/computed-properties/call-expression/input.js"
 					end: Object {
 						column: 2
 						index: 28
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/computed-properties/call-expression/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/computed-properties/call-expression/input.js"
 							end: Object {
 								column: 1
 								index: 27
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/computed-properties/call-expression/input.js"
 								end: Object {
 									column: 1
 									index: 27
@@ -113,7 +113,7 @@ JSRoot {
 										value: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/computed-properties/call-expression/input.js"
 												end: Object {
 													column: 8
 													index: 20
@@ -128,7 +128,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "bar"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/computed-properties/call-expression/input.js"
 													identifierName: "bar"
 													end: Object {
 														column: 6
@@ -144,7 +144,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/computed-properties/call-expression/input.js"
 											end: Object {
 												column: 9
 												index: 21
@@ -160,7 +160,7 @@ JSRoot {
 									value: JSStringLiteral {
 										value: ""
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/computed-properties/call-expression/input.js"
 											end: Object {
 												column: 13
 												index: 25
@@ -174,7 +174,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/computed-properties/call-expression/input.js"
 										end: Object {
 											column: 13
 											index: 25

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -99,7 +99,7 @@ JSRoot {
 					params: Array [
 						JSBindingArrayPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -114,7 +114,7 @@ JSRoot {
 							rest: JSBindingIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 8
@@ -132,7 +132,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-03/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 3

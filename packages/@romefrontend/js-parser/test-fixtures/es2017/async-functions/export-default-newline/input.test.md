@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/export-default-newline/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/export-default-newline/input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-default-newline/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-default-newline/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 20
@@ -68,7 +68,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-default-newline/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 12
@@ -83,7 +83,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/export-default-newline/input.js"
 				end: Object {
 					column: 17
 					index: 38
@@ -99,7 +99,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-default-newline/input.js"
 					end: Object {
 						column: 17
 						index: 38
@@ -122,7 +122,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/export-default-newline/input.js"
 					end: Object {
 						column: 14
 						index: 35

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -67,7 +67,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 7
@@ -82,7 +82,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -96,7 +96,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -118,7 +118,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -134,7 +134,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -149,7 +149,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 										end: Object {
 											column: 21
 											index: 21
@@ -164,7 +164,7 @@ JSRoot {
 									expression: JSYieldExpression {
 										delegate: true
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 											end: Object {
 												column: 20
 												index: 20
@@ -180,7 +180,7 @@ JSRoot {
 											value: 3
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-generator/generator-method-with-yield-delegate/input.js"
 												end: Object {
 													column: 20
 													index: 20

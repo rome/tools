@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/top-level-script/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/top-level-script/input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/top-level-script/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/top-level-script/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "await"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/top-level-script/input.js"
 					identifierName: "await"
 					end: Object {
 						column: 5
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/top-level-script/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -106,7 +106,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/top-level-script/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/top-level-script/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

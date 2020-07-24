@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/enabled-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/enabled-call/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-call/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-call/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-call/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-call/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/enabled-call/input.js"
 							end: Object {
 								column: 20
 								index: 38
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/enabled-call/input.js"
 								end: Object {
 									column: 18
 									index: 36
@@ -133,7 +133,7 @@ JSRoot {
 							}
 							callee: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/enabled-call/input.js"
 									end: Object {
 										column: 16
 										index: 34
@@ -148,7 +148,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-call/input.js"
 										identifierName: "function"
 										end: Object {
 											column: 11
@@ -165,7 +165,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "sent"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-call/input.js"
 										identifierName: "sent"
 										end: Object {
 											column: 16

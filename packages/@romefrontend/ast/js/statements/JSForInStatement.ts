@@ -14,12 +14,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForInStatement = NodeBaseWithComments & {
+export interface JSForInStatement extends NodeBaseWithComments {
 	type: "JSForInStatement";
 	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
 	right: AnyJSExpression;
 	body: AnyJSStatement;
-};
+}
 
 export const jsForInStatement = createBuilder<JSForInStatement>(
 	"JSForInStatement",

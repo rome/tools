@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSStaticMemberProperty = NodeBaseWithComments & {
+export interface JSStaticMemberProperty extends NodeBaseWithComments {
 	type: "JSStaticMemberProperty";
 	value: JSIdentifier | JSPrivateName;
 	optional?: boolean;
-};
+}
 
 export const jsStaticMemberProperty = createQuickBuilder<
 	JSStaticMemberProperty,

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/2/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/2/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 18
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/2/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/2/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/2/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/2/input.js"
 							end: Object {
 								column: 15
 								index: 38
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSAwaitExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/2/input.js"
 								end: Object {
 									column: 14
 									index: 37
@@ -157,7 +157,7 @@ JSRoot {
 							argument: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/2/input.js"
 									end: Object {
 										column: 14
 										index: 37
@@ -172,7 +172,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/2/input.js"
 										identifierName: "foo"
 										end: Object {
 											column: 12
@@ -200,7 +200,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/2/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await* has been removed from the async functions proposal. Use Promise.all() instead.
 

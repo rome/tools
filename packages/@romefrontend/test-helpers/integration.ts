@@ -68,6 +68,7 @@ type IntegrationTestHelper = {
 	bridge: ServerBridge;
 	client: Client;
 	server: Server;
+	readFile: (relative: RelativeFilePath | string) => Promise<string>;
 	writeFile: (
 		relative: RelativeFilePath | string,
 		content: string,
@@ -314,8 +315,12 @@ export function createIntegrationTest(
 		const remotePath = temp.append("remote");
 		await createDirectory(remotePath);
 
+		const recoveryPath = temp.append("recovery");
+		await createDirectory(recoveryPath);
+
 		const userConfig: UserConfig = {
 			configPath: undefined,
+			recoveryPath,
 			cachePath,
 			syntaxTheme: undefined,
 		};
@@ -407,33 +412,36 @@ export function createIntegrationTest(
 					userConfig,
 				});
 
-				await callback(
-					t,
-					{
-						cwd: projectPath,
-						bridge,
-						client,
-						server,
-						async writeFile(
-							relative: RelativeFilePath | string,
-							content: string,
-						): Promise<void> {
-							const absolute = projectPath.append(relative);
-							await server.writeFiles(
-								new AbsoluteFilePathMap([[absolute, content]]),
-							);
-						},
-						async createRequest(
-							query: PartialServerQueryRequest = {commandName: "unknown"},
-						) {
-							return new ServerRequest({
-								client: serverClient,
-								query: partialServerQueryRequestToFull(query),
-								server,
-							});
-						},
+				const intTestHelper: IntegrationTestHelper = {
+					cwd: projectPath,
+					bridge,
+					client,
+					server,
+					async readFile(relative: RelativeFilePath | string): Promise<string> {
+						const absolute = projectPath.append(relative);
+						return readFileText(absolute);
 					},
-				);
+					async writeFile(
+						relative: RelativeFilePath | string,
+						content: string,
+					): Promise<void> {
+						const absolute = projectPath.append(relative);
+						await server.recoveryStore.writeFiles(
+							new AbsoluteFilePathMap([[absolute, {content, mtime: undefined}]]),
+						);
+					},
+					async createRequest(
+						query: PartialServerQueryRequest = {commandName: "unknown"},
+					) {
+						return new ServerRequest({
+							client: serverClient,
+							query: partialServerQueryRequestToFull(query),
+							server,
+						});
+					},
+				};
+
+				await callback(t, intTestHelper);
 			} finally {
 				await client.end();
 
@@ -461,7 +469,7 @@ export function createIntegrationTest(
 					}
 
 					filesSnapshot += `# ${basename}\n`;
-					filesSnapshot += (await readFileText(projectPath.append(basename))).trim();
+					filesSnapshot += await readFileText(projectPath.append(basename));
 					filesSnapshot += "\n";
 				}
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/111/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/111/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/111/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/111/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/111/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/111/input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSClassExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/111/input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -114,7 +114,7 @@ JSRoot {
 								superTypeParameters: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/111/input.js"
 									end: Object {
 										column: 26
 										index: 26
@@ -129,7 +129,7 @@ JSRoot {
 								superClass: JSReferenceIdentifier {
 									name: "B"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/111/input.js"
 										identifierName: "B"
 										end: Object {
 											column: 23

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/annotated/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/annotated/input.ts"
 		end: Object {
 			column: 0
 			index: 27
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/annotated/input.ts"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/annotated/input.ts"
 				end: Object {
 					column: 26
 					index: 26
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/annotated/input.ts"
 					end: Object {
 						column: 26
 						index: 26
@@ -87,7 +87,7 @@ JSRoot {
 				rest: undefined
 				thisType: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/annotated/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -102,7 +102,7 @@ JSRoot {
 				returnType: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/annotated/input.ts"
 						end: Object {
 							column: 23
 							index: 23
@@ -117,7 +117,7 @@ JSRoot {
 					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/annotated/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 23
@@ -134,7 +134,7 @@ JSRoot {
 				}
 				typeParameters: TSTypeParameterDeclaration {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/annotated/input.ts"
 						end: Object {
 							column: 13
 							index: 13
@@ -152,7 +152,7 @@ JSRoot {
 							constraint: undefined
 							default: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/annotated/input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -171,7 +171,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/annotated/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 15
@@ -187,7 +187,7 @@ JSRoot {
 						meta: JSPatternMeta {
 							optional: true
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/annotated/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -202,7 +202,7 @@ JSRoot {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/annotated/input.ts"
 									end: Object {
 										column: 19
 										index: 19
@@ -217,7 +217,7 @@ JSRoot {
 								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/annotated/input.ts"
 										identifierName: "T"
 										end: Object {
 											column: 19

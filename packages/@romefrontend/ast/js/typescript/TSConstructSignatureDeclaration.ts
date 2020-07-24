@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSConstructSignatureDeclaration = NodeBaseWithComments & {
+export interface TSConstructSignatureDeclaration extends NodeBaseWithComments {
 	type: "TSConstructSignatureDeclaration";
 	meta: TSSignatureDeclarationMeta;
 	typeAnnotation?: AnyTSPrimary;
-};
+}
 
 export const tsConstructSignatureDeclaration = createBuilder<TSConstructSignatureDeclaration>(
 	"TSConstructSignatureDeclaration",

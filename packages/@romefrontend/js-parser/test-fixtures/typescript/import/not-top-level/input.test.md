@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/not-top-level/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/not-top-level/input.ts"
 		end: Object {
 			column: 0
 			index: 51
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/not-top-level/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -52,7 +52,7 @@ JSRoot {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/not-top-level/input.ts"
 				end: Object {
 					column: 1
 					index: 50
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/not-top-level/input.ts"
 					end: Object {
 						column: 1
 						index: 50
@@ -84,7 +84,7 @@ JSRoot {
 						importKind: undefined
 						namedSpecifiers: Array []
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/import/not-top-level/input.ts"
 							end: Object {
 								column: 27
 								index: 48
@@ -99,7 +99,7 @@ JSRoot {
 						source: JSStringLiteral {
 							value: "a"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/import/not-top-level/input.ts"
 								end: Object {
 									column: 26
 									index: 47
@@ -114,7 +114,7 @@ JSRoot {
 						}
 						namespaceSpecifier: JSImportNamespaceSpecifier {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/import/not-top-level/input.ts"
 								end: Object {
 									column: 17
 									index: 38
@@ -130,7 +130,7 @@ JSRoot {
 								name: JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/import/not-top-level/input.ts"
 										identifierName: "a"
 										end: Object {
 											column: 17
@@ -146,7 +146,7 @@ JSRoot {
 								}
 								importKind: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/import/not-top-level/input.ts"
 									end: Object {
 										column: 17
 										index: 38

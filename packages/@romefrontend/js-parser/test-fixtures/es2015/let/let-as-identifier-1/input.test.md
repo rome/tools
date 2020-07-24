@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-as-identifier-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-as-identifier-1/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-as-identifier-1/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-as-identifier-1/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-1/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 3
@@ -82,7 +82,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/let-as-identifier-1/input.js"
 						end: Object {
 							column: 7
 							index: 7

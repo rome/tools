@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/valid-13/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/valid-13/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/valid-13/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -50,7 +50,7 @@ JSRoot {
 				value: 3
 				format: "binary"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/numeric-separator/valid-13/input.js"
 					end: Object {
 						column: 7
 						index: 7

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/79/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/79/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/79/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -50,7 +50,7 @@ JSRoot {
 				value: 42
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/79/input.js"
 					end: Object {
 						column: 17
 						index: 17

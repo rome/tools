@@ -10,14 +10,14 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/read-only-1/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/read-only-1/input.ts"
 		end: Object {
 			column: 37
 			index: 37
@@ -34,7 +34,7 @@ JSRoot {
 			id: "0"
 			value: " Error"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-1/input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-1/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -78,7 +78,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T30"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/read-only-1/input.ts"
 					identifierName: "T30"
 					end: Object {
 						column: 8
@@ -95,7 +95,7 @@ JSRoot {
 			typeParameters: undefined
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/read-only-1/input.ts"
 				end: Object {
 					column: 27
 					index: 27
@@ -110,7 +110,7 @@ JSRoot {
 			right: TSTypeOperator {
 				operator: "readonly"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/read-only-1/input.ts"
 					end: Object {
 						column: 26
 						index: 26
@@ -124,7 +124,7 @@ JSRoot {
 				}
 				typeAnnotation: TSStringKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/read-only-1/input.ts"
 						end: Object {
 							column: 26
 							index: 26
@@ -147,7 +147,7 @@ JSRoot {
 
 ```
 
- input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/read-only-1/input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/regression/10432/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/regression/10432/input.js"
 		end: Object {
 			column: 0
 			index: 137
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " istanbul ignore next "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10432/input.js"
 				end: Object {
 					column: 26
 					index: 63
@@ -53,7 +53,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10432/input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -69,7 +69,7 @@ JSRoot {
 				kind: "const"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10432/input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -86,7 +86,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "socket"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10432/input.js"
 								identifierName: "socket"
 								end: Object {
 									column: 12
@@ -102,7 +102,7 @@ JSRoot {
 						}
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10432/input.js"
 							end: Object {
 								column: 36
 								index: 36
@@ -117,7 +117,7 @@ JSRoot {
 						init: JSCallExpression {
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10432/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -132,7 +132,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "socketClient"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/10432/input.js"
 									identifierName: "socketClient"
 									end: Object {
 										column: 27
@@ -150,7 +150,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "address"
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/regression/10432/input.js"
 										identifierName: "address"
 										end: Object {
 											column: 35
@@ -173,7 +173,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10432/input.js"
 				end: Object {
 					column: 2
 					index: 136
@@ -188,7 +188,7 @@ JSRoot {
 			expression: JSCallExpression {
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10432/input.js"
 					end: Object {
 						column: 2
 						index: 136
@@ -203,7 +203,7 @@ JSRoot {
 				callee: JSMemberExpression {
 					leadingComments: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/regression/10432/input.js"
 						end: Object {
 							column: 9
 							index: 73
@@ -219,7 +219,7 @@ JSRoot {
 						name: "socket"
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10432/input.js"
 							identifierName: "socket"
 							end: Object {
 								column: 6
@@ -237,7 +237,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "on"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10432/input.js"
 								identifierName: "on"
 								end: Object {
 									column: 9
@@ -252,7 +252,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10432/input.js"
 							identifierName: "on"
 							end: Object {
 								column: 9
@@ -271,7 +271,7 @@ JSRoot {
 					JSStringLiteral {
 						value: "connect"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10432/input.js"
 							end: Object {
 								column: 19
 								index: 83
@@ -287,7 +287,7 @@ JSRoot {
 					JSFunctionExpression {
 						id: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10432/input.js"
 							end: Object {
 								column: 1
 								index: 135
@@ -309,7 +309,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10432/input.js"
 								end: Object {
 									column: 32
 									index: 96
@@ -325,7 +325,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10432/input.js"
 								end: Object {
 									column: 1
 									index: 135
@@ -340,7 +340,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/regression/10432/input.js"
 										end: Object {
 											column: 34
 											index: 133
@@ -354,7 +354,7 @@ JSRoot {
 									}
 									expression: JSCallExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/regression/10432/input.js"
 											end: Object {
 												column: 34
 												index: 133
@@ -369,7 +369,7 @@ JSRoot {
 										callee: JSReferenceIdentifier {
 											name: "debug"
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/regression/10432/input.js"
 												identifierName: "debug"
 												end: Object {
 													column: 7
@@ -387,7 +387,7 @@ JSRoot {
 											JSBinaryExpression {
 												operator: "+"
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/regression/10432/input.js"
 													end: Object {
 														column: 33
 														index: 132
@@ -402,7 +402,7 @@ JSRoot {
 												left: JSStringLiteral {
 													value: "Connected to "
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/regression/10432/input.js"
 														end: Object {
 															column: 23
 															index: 122
@@ -418,7 +418,7 @@ JSRoot {
 												right: JSReferenceIdentifier {
 													name: "address"
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/regression/10432/input.js"
 														identifierName: "address"
 														end: Object {
 															column: 33

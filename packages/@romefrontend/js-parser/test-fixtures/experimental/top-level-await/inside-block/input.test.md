@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/inside-block/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/inside-block/input.js"
 		end: Object {
 			column: 1
 			index: 24
@@ -35,7 +35,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-block/input.js"
 				end: Object {
 					column: 1
 					index: 24
@@ -50,7 +50,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-block/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -66,7 +66,7 @@ JSRoot {
 			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-block/input.js"
 					end: Object {
 						column: 1
 						index: 24
@@ -81,7 +81,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/top-level-await/inside-block/input.js"
 							end: Object {
 								column: 10
 								index: 22
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						expression: JSAwaitExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/top-level-await/inside-block/input.js"
 								end: Object {
 									column: 9
 									index: 21
@@ -111,7 +111,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/top-level-await/inside-block/input.js"
 									end: Object {
 										column: 9
 										index: 21

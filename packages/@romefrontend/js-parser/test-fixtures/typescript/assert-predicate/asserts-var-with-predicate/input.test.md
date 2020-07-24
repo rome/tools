@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 		end: Object {
 			column: 0
 			index: 73
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 				end: Object {
 					column: 1
 					index: 72
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 					end: Object {
 						column: 1
 						index: 72
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "assertIsString"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 									identifierName: "assertIsString"
 									end: Object {
 										column: 16
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 16
 									index: 26
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 							end: Object {
 								column: 60
 								index: 70
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 60
 									index: 70
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 16
 									index: 26
@@ -180,7 +180,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 57
 									index: 67
@@ -195,7 +195,7 @@ JSRoot {
 							returnType: TSTypePredicate {
 								asserts: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 									end: Object {
 										column: 57
 										index: 67
@@ -209,7 +209,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 										end: Object {
 											column: 57
 											index: 67
@@ -225,7 +225,7 @@ JSRoot {
 								parameterName: JSIdentifier {
 									name: "value"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 										identifierName: "value"
 										end: Object {
 											column: 47
@@ -244,7 +244,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 										identifierName: "value"
 										end: Object {
 											column: 22
@@ -260,7 +260,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 											end: Object {
 												column: 31
 												index: 41
@@ -274,7 +274,7 @@ JSRoot {
 										}
 										typeAnnotation: TSUnknownKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 												end: Object {
 													column: 31
 													index: 41

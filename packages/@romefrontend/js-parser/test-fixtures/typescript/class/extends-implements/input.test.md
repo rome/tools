@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/extends-implements/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/extends-implements/input.ts"
 		end: Object {
 			column: 0
 			index: 44
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-implements/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/extends-implements/input.ts"
 				end: Object {
 					column: 43
 					index: 43
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/extends-implements/input.ts"
 					end: Object {
 						column: 43
 						index: 43
@@ -82,7 +82,7 @@ JSRoot {
 				superClass: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/extends-implements/input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -97,7 +97,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "f"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/extends-implements/input.ts"
 							identifierName: "f"
 							end: Object {
 								column: 17
@@ -114,7 +114,7 @@ JSRoot {
 				}
 				superTypeParameters: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/class/extends-implements/input.ts"
 						end: Object {
 							column: 22
 							index: 22
@@ -130,7 +130,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/extends-implements/input.ts"
 								end: Object {
 									column: 21
 									index: 21
@@ -145,7 +145,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/extends-implements/input.ts"
 									identifierName: "T"
 									end: Object {
 										column: 21
@@ -165,7 +165,7 @@ JSRoot {
 				implements: Array [
 					TSExpressionWithTypeArguments {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/extends-implements/input.ts"
 							end: Object {
 								column: 40
 								index: 40
@@ -179,7 +179,7 @@ JSRoot {
 						}
 						expression: TSQualifiedName {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/extends-implements/input.ts"
 								end: Object {
 									column: 37
 									index: 37
@@ -194,7 +194,7 @@ JSRoot {
 							left: JSReferenceIdentifier {
 								name: "X"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/extends-implements/input.ts"
 									identifierName: "X"
 									end: Object {
 										column: 35
@@ -211,7 +211,7 @@ JSRoot {
 							right: JSIdentifier {
 								name: "Y"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/extends-implements/input.ts"
 									identifierName: "Y"
 									end: Object {
 										column: 37
@@ -228,7 +228,7 @@ JSRoot {
 						}
 						typeParameters: TSTypeParameterInstantiation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/extends-implements/input.ts"
 								end: Object {
 									column: 40
 									index: 40
@@ -244,7 +244,7 @@ JSRoot {
 								TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/extends-implements/input.ts"
 										end: Object {
 											column: 39
 											index: 39
@@ -259,7 +259,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/extends-implements/input.ts"
 											identifierName: "T"
 											end: Object {
 												column: 39

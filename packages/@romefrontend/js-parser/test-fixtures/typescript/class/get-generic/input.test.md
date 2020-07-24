@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/get-generic/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/get-generic/input.ts"
 		end: Object {
 			column: 0
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/get-generic/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 15
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/get-generic/input.ts"
 				end: Object {
 					column: 1
 					index: 39
@@ -70,7 +70,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/get-generic/input.ts"
 					end: Object {
 						column: 1
 						index: 39
@@ -89,7 +89,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "get"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/get-generic/input.ts"
 									identifierName: "get"
 									end: Object {
 										column: 7
@@ -104,7 +104,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 7
 									index: 25
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/get-generic/input.ts"
 							end: Object {
 								column: 19
 								index: 37
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 7
 									index: 25
@@ -165,7 +165,7 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 18
 									index: 36
@@ -179,7 +179,7 @@ JSRoot {
 							}
 							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/get-generic/input.ts"
 									end: Object {
 										column: 18
 										index: 36
@@ -194,7 +194,7 @@ JSRoot {
 							}
 							typeParameters: TSTypeParameterDeclaration {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/get-generic/input.ts"
 									end: Object {
 										column: 10
 										index: 28
@@ -212,7 +212,7 @@ JSRoot {
 										constraint: undefined
 										default: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/get-generic/input.ts"
 											end: Object {
 												column: 9
 												index: 27

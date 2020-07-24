@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -87,7 +87,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "async"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 						identifierName: "async"
 						end: Object {
 							column: 5
@@ -105,7 +105,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 8
@@ -124,7 +124,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				end: Object {
 					column: 2
 					index: 12
@@ -139,7 +139,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 					end: Object {
 						column: 2
 						index: 12
@@ -157,7 +157,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				end: Object {
 					column: 5
 					index: 15
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-newline-after-params/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

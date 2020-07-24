@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/export-ns-from/ns/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/export-ns-from/ns/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/export-ns-from/ns/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -51,7 +51,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/export-ns-from/ns/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/export-ns-from/ns/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -81,7 +81,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/export-ns-from/ns/input.js"
 						identifierName: "A"
 						end: Object {
 							column: 13

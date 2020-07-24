@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-postfix/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-postfix/migrated_0003/input.js"
 		end: Object {
 			column: 0
 			index: 7
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-postfix/migrated_0003/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -50,7 +50,7 @@ JSRoot {
 				operator: "--"
 				prefix: false
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-postfix/migrated_0003/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -65,7 +65,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "eval"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-postfix/migrated_0003/input.js"
 						identifierName: "eval"
 						end: Object {
 							column: 4

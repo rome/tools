@@ -8,10 +8,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSBooleanLiteral = NodeBaseWithComments & {
+export interface JSBooleanLiteral extends NodeBaseWithComments {
 	type: "JSBooleanLiteral";
 	value: boolean;
-};
+}
 
 export const jsBooleanLiteral = createQuickBuilder<JSBooleanLiteral, "value">(
 	"JSBooleanLiteral",

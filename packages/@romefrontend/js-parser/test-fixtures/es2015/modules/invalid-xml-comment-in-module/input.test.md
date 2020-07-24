@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -74,7 +74,7 @@ JSRoot {
 				operator: "--"
 				prefix: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 					end: Object {
 						column: 4
 						index: 4
@@ -88,7 +88,7 @@ JSRoot {
 				}
 				argument: TSNonNullExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 						end: Object {
 							column: 2
 							index: 2
@@ -103,7 +103,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -121,7 +121,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 				end: Object {
 					column: 0
 					index: 11
@@ -136,7 +136,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: ">"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 					end: Object {
 						column: 0
 						index: 11
@@ -151,7 +151,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 						end: Object {
 							column: 0
 							index: 11
@@ -168,7 +168,7 @@ JSRoot {
 					operator: "--"
 					prefix: false
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -183,7 +183,7 @@ JSRoot {
 					argument: JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/invalid-xml-comment-in-module/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 7
@@ -208,7 +208,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/invalid-xml-comment-in-module/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

@@ -12,13 +12,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSEnumDeclaration = NodeBaseWithComments & {
+export interface TSEnumDeclaration extends NodeBaseWithComments {
 	type: "TSEnumDeclaration";
 	id: JSBindingIdentifier;
 	const?: boolean;
 	members: Array<TSEnumMember>;
 	declare?: boolean;
-};
+}
 
 export const tsEnumDeclaration = createBuilder<TSEnumDeclaration>(
 	"TSEnumDeclaration",

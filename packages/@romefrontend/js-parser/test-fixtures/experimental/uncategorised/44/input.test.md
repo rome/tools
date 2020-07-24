@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/uncategorised/44/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/uncategorised/44/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/uncategorised/44/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/uncategorised/44/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/uncategorised/44/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/uncategorised/44/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 15
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/uncategorised/44/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -119,7 +119,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/uncategorised/44/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -144,7 +144,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/uncategorised/44/input.js"
 								end: Object {
 									column: 15
 									index: 15

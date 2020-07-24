@@ -28,6 +28,7 @@ import {
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
+	WorkerUpdateInlineSnapshotResult,
 } from "../common/bridges/WorkerBridge";
 import Logger from "../common/utils/Logger";
 import * as jsAnalysis from "@romefrontend/js-analysis";
@@ -44,6 +45,7 @@ import {
 import {FormatterOptions, formatAST} from "@romefrontend/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romefrontend/js-ast-utils";
 import {markup} from "@romefrontend/cli-layout";
+import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
 // This retains the line endings for the formatted code if they were present in the source
@@ -125,8 +127,8 @@ export default class WorkerAPI {
 		ref: FileReference,
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
-	): Promise<Diagnostics> {
-		let {ast} = await this.worker.parse(ref, parseOptions);
+	): Promise<WorkerUpdateInlineSnapshotResult> {
+		let {ast, mtime} = await this.worker.parse(ref, parseOptions);
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -210,12 +212,17 @@ export default class WorkerAPI {
 			);
 		}
 
+		let file: undefined | RecoverySaveFile;
+
 		if (diags.length === 0) {
 			const formatted = formatAST(ast).code;
-			await this.worker.writeFile(ref.real, formatted);
+			file = {
+				content: formatted,
+				mtime,
+			};
 		}
 
-		return diags;
+		return {diagnostics: diags, file};
 	}
 
 	async analyzeDependencies(
@@ -359,6 +366,7 @@ export default class WorkerAPI {
 		const {customFormat} = handler;
 		if (customFormat !== undefined) {
 			return await customFormat({
+				mtime: await this.worker.getMtime(ref.real),
 				file: ref,
 				project,
 				worker: this.worker,
@@ -366,7 +374,7 @@ export default class WorkerAPI {
 			});
 		}
 
-		const {ast, sourceText, astModifiedFromSource} = await this.worker.parse(
+		const {ast, mtime, sourceText, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -375,6 +383,7 @@ export default class WorkerAPI {
 
 		return this.interceptDiagnostics(
 			{
+				mtime,
 				formatted: out.code,
 				sourceText,
 				suppressions: [],
@@ -441,6 +450,7 @@ export default class WorkerAPI {
 			sourceText,
 			diagnostics,
 			suppressions,
+			mtime,
 		}: ExtensionLintResult = res.value;
 
 		const formatted = normalizeFormattedLineEndings(
@@ -454,7 +464,10 @@ export default class WorkerAPI {
 		// Autofix if necessary
 		if (options.save && needsSave) {
 			return {
-				save: formatted,
+				save: {
+					mtime,
+					content: formatted,
+				},
 				diagnostics,
 				suppressions,
 			};
@@ -496,7 +509,7 @@ export default class WorkerAPI {
 		options: WorkerLintOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<ExtensionLintResult> {
-		const {ast, sourceText, project, astModifiedFromSource} = await this.worker.parse(
+		const {ast, mtime, sourceText, project, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -544,6 +557,7 @@ export default class WorkerAPI {
 				diagnostics,
 				sourceText,
 				formatted: res.src,
+				mtime,
 			},
 			{astModifiedFromSource},
 		);

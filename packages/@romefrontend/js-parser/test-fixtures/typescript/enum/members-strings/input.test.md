@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/members-strings/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/members-strings/input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/members-strings/input.ts"
 					identifierName: "E"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			const: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/members-strings/input.ts"
 				end: Object {
 					column: 1
 					index: 35
@@ -69,7 +69,7 @@ JSRoot {
 					id: JSStringLiteral {
 						value: "foo"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-strings/input.ts"
 							end: Object {
 								column: 9
 								index: 18
@@ -84,7 +84,7 @@ JSRoot {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members-strings/input.ts"
 						end: Object {
 							column: 9
 							index: 18
@@ -101,7 +101,7 @@ JSRoot {
 					id: JSStringLiteral {
 						value: "bar"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-strings/input.ts"
 							end: Object {
 								column: 9
 								index: 29
@@ -115,7 +115,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members-strings/input.ts"
 						end: Object {
 							column: 13
 							index: 33
@@ -131,7 +131,7 @@ JSRoot {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-strings/input.ts"
 							end: Object {
 								column: 13
 								index: 33

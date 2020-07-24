@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 15
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 						end: Object {
 							column: 15
 							index: 15

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/390/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/390/input.js"
 		end: Object {
 			column: 20
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an call expression argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/390/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/390/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/390/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "set"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/390/input.js"
 									identifierName: "set"
 									end: Object {
 										column: 6
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/390/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -120,7 +120,7 @@ JSRoot {
 						}
 						value: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/390/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -135,7 +135,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/390/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 9
@@ -153,7 +153,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/390/input.js"
 										end: Object {
 											column: 12
 											index: 12
@@ -169,7 +169,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/390/input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -189,7 +189,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/390/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -204,7 +204,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/390/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -219,7 +219,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/390/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -235,7 +235,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/390/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -250,7 +250,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/390/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -272,7 +272,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/390/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an call expression argument
 

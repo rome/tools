@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/multiple-args/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/multiple-args/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/multiple-args/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/multiple-args/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/multiple-args/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "hello"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/multiple-args/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -104,7 +104,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/multiple-args/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -118,7 +118,7 @@ JSRoot {
 			}
 			expression: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/multiple-args/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -134,7 +134,7 @@ JSRoot {
 					JSStringLiteral {
 						value: "world"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/multiple-args/input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -150,7 +150,7 @@ JSRoot {
 					JSStringLiteral {
 						value: "!"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/multiple-args/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -168,7 +168,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/multiple-args/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -183,7 +183,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/multiple-args/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -205,7 +205,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/multiple-args/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

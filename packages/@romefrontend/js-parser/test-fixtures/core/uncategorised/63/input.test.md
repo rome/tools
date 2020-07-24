@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/63/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/63/input.js"
 		end: Object {
 			column: 2
 			index: 39
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Hello, world!"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/63/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: "   Another hello"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/63/input.js"
 				end: Object {
 					column: 18
 					index: 36
@@ -73,7 +73,7 @@ JSRoot {
 				"1"
 			]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/63/input.js"
 				end: Object {
 					column: 2
 					index: 39
@@ -90,7 +90,7 @@ JSRoot {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/63/input.js"
 					end: Object {
 						column: 2
 						index: 39

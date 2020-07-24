@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/parses-strict/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/parses-strict/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/parses-strict/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -51,7 +51,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/parses-strict/input.js"
 				end: Object {
 					column: 18
 					index: 33
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/parses-strict/input.js"
 					end: Object {
 						column: 17
 						index: 32
@@ -80,7 +80,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "test.js"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/parses-strict/input.js"
 						end: Object {
 							column: 16
 							index: 31

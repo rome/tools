@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/3/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/3/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Function parameters can't be parenthesized"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/3/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/3/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/3/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/3/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/3/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/3/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -135,7 +135,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/3/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -155,7 +155,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/3/input.js"
 									end: Object {
 										column: 26
 										index: 26
@@ -171,7 +171,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "foo"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/3/input.js"
 											identifierName: "foo"
 											end: Object {
 												column: 21
@@ -200,7 +200,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/3/input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
 

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 		end: Object {
 			column: 0
 			index: 142
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " foo"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 				end: Object {
 					column: 14
 					index: 52
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " falls through"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 				end: Object {
 					column: 28
 					index: 97
@@ -71,7 +71,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 12
@@ -86,7 +86,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 				end: Object {
 					column: 1
 					index: 141
@@ -107,7 +107,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -123,7 +123,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 16
@@ -140,7 +140,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -159,7 +159,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 					end: Object {
 						column: 1
 						index: 141
@@ -174,7 +174,7 @@ JSRoot {
 				body: Array [
 					JSSwitchStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 							end: Object {
 								column: 5
 								index: 139
@@ -189,7 +189,7 @@ JSRoot {
 						discriminant: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 14
@@ -209,7 +209,7 @@ JSRoot {
 								leadingComments: Array ["0"]
 								trailingComments: Array ["1"]
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 									end: Object {
 										column: 15
 										index: 68
@@ -226,7 +226,7 @@ JSRoot {
 									format: undefined
 									leadingComments: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 										end: Object {
 											column: 14
 											index: 67
@@ -243,7 +243,7 @@ JSRoot {
 							JSSwitchCase {
 								leadingComments: Array ["1"]
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 									end: Object {
 										column: 19
 										index: 133
@@ -260,7 +260,7 @@ JSRoot {
 									format: undefined
 									leadingComments: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 										end: Object {
 											column: 14
 											index: 112
@@ -276,7 +276,7 @@ JSRoot {
 								consequent: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 											end: Object {
 												column: 19
 												index: 133
@@ -291,7 +291,7 @@ JSRoot {
 										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 												end: Object {
 													column: 18
 													index: 132
@@ -306,7 +306,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "doIt"
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/basic/switch-fallthrough-comment-in-function/input.js"
 													identifierName: "doIt"
 													end: Object {
 														column: 16

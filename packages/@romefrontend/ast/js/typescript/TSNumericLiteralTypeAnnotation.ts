@@ -8,11 +8,11 @@
 import {JSNumericLiteral, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSNumericLiteralTypeAnnotation = NodeBaseWithComments & {
+export interface TSNumericLiteralTypeAnnotation extends NodeBaseWithComments {
 	type: "TSNumericLiteralTypeAnnotation";
 	value: number;
 	format?: JSNumericLiteral["format"];
-};
+}
 
 export const tsNumericLiteralTypeAnnotation = createBuilder<TSNumericLiteralTypeAnnotation>(
 	"TSNumericLiteralTypeAnnotation",

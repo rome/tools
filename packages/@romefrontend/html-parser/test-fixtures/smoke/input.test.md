@@ -10,10 +10,10 @@
 HTMLRoot {
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.html"
+	filename: "smoke/input.html"
 	mtime: undefined
 	loc: Object {
-		filename: "input.html"
+		filename: "smoke/input.html"
 		end: Object {
 			column: 6
 			index: 218
@@ -30,7 +30,7 @@ HTMLRoot {
 			id: "0"
 			value: " I am a comment "
 			loc: Object {
-				filename: "input.html"
+				filename: "smoke/input.html"
 				end: Object {
 					column: 23
 					index: 23
@@ -47,7 +47,7 @@ HTMLRoot {
 			id: "1"
 			value: " I am another comment "
 			loc: Object {
-				filename: "input.html"
+				filename: "smoke/input.html"
 				end: Object {
 					column: 30
 					index: 210
@@ -67,7 +67,7 @@ HTMLRoot {
 				name: "foo"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.html"
+					filename: "smoke/input.html"
 					end: Object {
 						column: 4
 						index: 28
@@ -84,7 +84,7 @@ HTMLRoot {
 			selfClosing: false
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.html"
+				filename: "smoke/input.html"
 				end: Object {
 					column: 6
 					index: 218
@@ -101,7 +101,7 @@ HTMLRoot {
 					name: HTMLIdentifier {
 						name: "input"
 						loc: Object {
-							filename: "input.html"
+							filename: "smoke/input.html"
 							end: Object {
 								column: 7
 								index: 37
@@ -117,7 +117,7 @@ HTMLRoot {
 					children: Array []
 					selfClosing: true
 					loc: Object {
-						filename: "input.html"
+						filename: "smoke/input.html"
 						end: Object {
 							column: 26
 							index: 56
@@ -134,7 +134,7 @@ HTMLRoot {
 							name: HTMLIdentifier {
 								name: "placeholder"
 								loc: Object {
-									filename: "input.html"
+									filename: "smoke/input.html"
 									end: Object {
 										column: 19
 										index: 49
@@ -150,7 +150,7 @@ HTMLRoot {
 							value: HTMLString {
 								value: "ok"
 								loc: Object {
-									filename: "input.html"
+									filename: "smoke/input.html"
 									end: Object {
 										column: 24
 										index: 54
@@ -164,7 +164,7 @@ HTMLRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.html"
+								filename: "smoke/input.html"
 								end: Object {
 									column: 24
 									index: 54
@@ -182,7 +182,7 @@ HTMLRoot {
 				HTMLText {
 					value: "yesiamatextdocumentasdfhahahaok"
 					loc: Object {
-						filename: "input.html"
+						filename: "smoke/input.html"
 						end: Object {
 							column: 6
 							index: 117
@@ -199,7 +199,7 @@ HTMLRoot {
 					name: HTMLIdentifier {
 						name: "span"
 						loc: Object {
-							filename: "input.html"
+							filename: "smoke/input.html"
 							end: Object {
 								column: 11
 								index: 122
@@ -215,7 +215,7 @@ HTMLRoot {
 					attributes: Array []
 					selfClosing: false
 					loc: Object {
-						filename: "input.html"
+						filename: "smoke/input.html"
 						end: Object {
 							column: 48
 							index: 159
@@ -232,7 +232,7 @@ HTMLRoot {
 							name: HTMLIdentifier {
 								name: "span"
 								loc: Object {
-									filename: "input.html"
+									filename: "smoke/input.html"
 									end: Object {
 										column: 17
 										index: 128
@@ -248,7 +248,7 @@ HTMLRoot {
 							attributes: Array []
 							selfClosing: false
 							loc: Object {
-								filename: "input.html"
+								filename: "smoke/input.html"
 								end: Object {
 									column: 41
 									index: 152
@@ -265,7 +265,7 @@ HTMLRoot {
 									name: HTMLIdentifier {
 										name: "span"
 										loc: Object {
-											filename: "input.html"
+											filename: "smoke/input.html"
 											end: Object {
 												column: 23
 												index: 134
@@ -281,7 +281,7 @@ HTMLRoot {
 									attributes: Array []
 									selfClosing: false
 									loc: Object {
-										filename: "input.html"
+										filename: "smoke/input.html"
 										end: Object {
 											column: 34
 											index: 145
@@ -297,7 +297,7 @@ HTMLRoot {
 										HTMLText {
 											value: "lol"
 											loc: Object {
-												filename: "input.html"
+												filename: "smoke/input.html"
 												end: Object {
 													column: 27
 													index: 138
@@ -320,7 +320,7 @@ HTMLRoot {
 					name: HTMLIdentifier {
 						name: "yeah"
 						loc: Object {
-							filename: "input.html"
+							filename: "smoke/input.html"
 							end: Object {
 								column: 6
 								index: 167
@@ -336,7 +336,7 @@ HTMLRoot {
 					attributes: Array []
 					selfClosing: false
 					loc: Object {
-						filename: "input.html"
+						filename: "smoke/input.html"
 						end: Object {
 							column: 18
 							index: 179
@@ -352,7 +352,7 @@ HTMLRoot {
 						HTMLText {
 							value: "mate"
 							loc: Object {
-								filename: "input.html"
+								filename: "smoke/input.html"
 								end: Object {
 									column: 11
 									index: 172

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-inside-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-inside-function/input.js"
 		end: Object {
 			column: 1
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-inside-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-inside-function/input.js"
 				end: Object {
 					column: 1
 					index: 39
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-inside-function/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-inside-function/input.js"
 					end: Object {
 						column: 1
 						index: 39
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-inside-function/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 16
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-inside-function/input.js"
 							end: Object {
 								column: 21
 								index: 37
@@ -137,7 +137,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-inside-function/input.js"
 								end: Object {
 									column: 21
 									index: 37
@@ -160,7 +160,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-inside-function/input.js"
 								end: Object {
 									column: 18
 									index: 34

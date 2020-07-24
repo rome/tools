@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/function-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/function-call/input.js"
 		end: Object {
 			column: 10
 			index: 64
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -64,7 +64,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/function-call/input.js"
 						identifierName: "func"
 						end: Object {
 							column: 4
@@ -82,7 +82,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 12
 					index: 22
@@ -96,7 +96,7 @@ JSRoot {
 			}
 			expression: JSOptionalCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 12
 						index: 22
@@ -111,7 +111,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/function-call/input.js"
 						identifierName: "func"
 						end: Object {
 							column: 4
@@ -129,7 +129,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 8
@@ -146,7 +146,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 11
@@ -165,7 +165,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 11
 					index: 35
@@ -180,7 +180,7 @@ JSRoot {
 			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 11
 						index: 35
@@ -194,7 +194,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 7
 							index: 31
@@ -209,7 +209,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -227,7 +227,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "func"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/function-call/input.js"
 								identifierName: "func"
 								end: Object {
 									column: 7
@@ -243,7 +243,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "func"
 							end: Object {
 								column: 7
@@ -262,7 +262,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 15
 					index: 52
@@ -276,7 +276,7 @@ JSRoot {
 			}
 			expression: JSOptionalCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 15
 						index: 52
@@ -292,7 +292,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 11
@@ -309,7 +309,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 14
@@ -326,7 +326,7 @@ JSRoot {
 				]
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 7
 							index: 44
@@ -341,7 +341,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -359,7 +359,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "func"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/function-call/input.js"
 								identifierName: "func"
 								end: Object {
 									column: 7
@@ -375,7 +375,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "func"
 							end: Object {
 								column: 7
@@ -394,7 +394,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 10
 					index: 64
@@ -409,7 +409,7 @@ JSRoot {
 			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 10
 						index: 64
@@ -423,7 +423,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 6
 							index: 60
@@ -438,7 +438,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 1
@@ -456,7 +456,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "func"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/function-call/input.js"
 								identifierName: "func"
 								end: Object {
 									column: 6
@@ -471,7 +471,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/function-call/input.js"
 							identifierName: "func"
 							end: Object {
 								column: 6

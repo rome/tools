@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/bigint/valid-hex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/bigint/valid-hex/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/valid-hex/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBigIntLiteral {
 				value: "0xFFF123"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/valid-hex/input.js"
 					end: Object {
 						column: 9
 						index: 9

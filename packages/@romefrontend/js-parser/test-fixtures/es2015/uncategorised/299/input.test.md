@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/299/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/299/input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/299/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/299/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "doSmth"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/299/input.js"
 						identifierName: "doSmth"
 						end: Object {
 							column: 6
@@ -80,7 +80,7 @@ JSRoot {
 				arguments: Array [
 					JSTemplateLiteral {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/299/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -98,7 +98,7 @@ JSRoot {
 								raw: ""
 								tail: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									end: Object {
 										column: 8
 										index: 8
@@ -116,7 +116,7 @@ JSRoot {
 								raw: " + "
 								tail: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -134,7 +134,7 @@ JSRoot {
 								raw: " = "
 								tail: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -152,7 +152,7 @@ JSRoot {
 								raw: ""
 								tail: true
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -170,7 +170,7 @@ JSRoot {
 							JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 11
@@ -187,7 +187,7 @@ JSRoot {
 							JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 18
@@ -204,7 +204,7 @@ JSRoot {
 							JSBinaryExpression {
 								operator: "+"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/299/input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -219,7 +219,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/299/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 25
@@ -236,7 +236,7 @@ JSRoot {
 								right: JSReferenceIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/299/input.js"
 										identifierName: "y"
 										end: Object {
 											column: 29

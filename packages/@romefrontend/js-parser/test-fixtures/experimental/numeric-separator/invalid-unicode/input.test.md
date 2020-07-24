@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-unicode/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-unicode/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "\\u{1F_639}"
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-unicode/input.js"
 				end: Object {
 					column: 12
 					index: 12

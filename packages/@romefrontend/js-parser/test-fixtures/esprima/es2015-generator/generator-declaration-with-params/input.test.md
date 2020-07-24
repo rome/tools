@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -105,7 +105,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 15
@@ -122,7 +122,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -139,7 +139,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 							identifierName: "y"
 							end: Object {
 								column: 18
@@ -156,7 +156,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -173,7 +173,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "z"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 							identifierName: "z"
 							end: Object {
 								column: 21
@@ -190,7 +190,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
 								end: Object {
 									column: 21
 									index: 21

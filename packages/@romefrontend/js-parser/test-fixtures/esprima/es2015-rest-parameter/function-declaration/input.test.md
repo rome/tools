@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -88,7 +88,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -103,7 +103,7 @@ JSRoot {
 				rest: JSBindingIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 18
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -138,7 +138,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 12
@@ -155,7 +155,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-rest-parameter/function-declaration/input.js"
 								end: Object {
 									column: 12
 									index: 12

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -62,7 +62,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -77,7 +77,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -93,7 +93,7 @@ JSRoot {
 		}
 		JSWithStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 				end: Object {
 					column: 0
 					index: 17
@@ -108,7 +108,7 @@ JSRoot {
 			object: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -123,7 +123,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 					end: Object {
 						column: 0
 						index: 17
@@ -138,7 +138,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
 						end: Object {
 							column: 0
 							index: 17
@@ -161,7 +161,8 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js:1:11 parse/js
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

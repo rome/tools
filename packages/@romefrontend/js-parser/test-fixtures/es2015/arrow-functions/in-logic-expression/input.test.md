@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/in-logic-expression/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/in-logic-expression/input.js"
 		end: Object {
 			column: 19
 			index: 39
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/in-logic-expression/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/in-logic-expression/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -79,7 +79,7 @@ JSRoot {
 				}
 				left: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -95,7 +95,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -116,7 +116,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -134,7 +134,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/in-logic-expression/input.js"
 				end: Object {
 					column: 19
 					index: 39
@@ -148,7 +148,7 @@ JSRoot {
 			}
 			expression: JSConditionalExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/in-logic-expression/input.js"
 					end: Object {
 						column: 18
 						index: 38
@@ -163,7 +163,7 @@ JSRoot {
 				alternate: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 18
@@ -180,7 +180,7 @@ JSRoot {
 				consequent: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 14
@@ -196,7 +196,7 @@ JSRoot {
 				}
 				test: JSArrowFunctionExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 9
 							index: 29
@@ -212,7 +212,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 9
 								index: 29
@@ -233,7 +233,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 6
 								index: 26

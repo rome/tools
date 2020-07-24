@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/static/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/static/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/static/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/static/input.js"
 				end: Object {
 					column: 1
 					index: 41
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/static/input.js"
 					end: Object {
 						column: 1
 						index: 41
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/static/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 11
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/static/input.js"
 								end: Object {
 									column: 11
 									index: 21
@@ -118,7 +118,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/static/input.js"
 							end: Object {
 								column: 12
 								index: 22
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/static/input.js"
 								end: Object {
 									column: 11
 									index: 21
@@ -162,7 +162,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/static/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 11
@@ -177,7 +177,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/static/input.js"
 								end: Object {
 									column: 11
 									index: 34
@@ -194,7 +194,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/static/input.js"
 								end: Object {
 									column: 15
 									index: 38
@@ -209,7 +209,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/static/input.js"
 							end: Object {
 								column: 16
 								index: 39
@@ -234,7 +234,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/static/input.js"
 								end: Object {
 									column: 11
 									index: 34

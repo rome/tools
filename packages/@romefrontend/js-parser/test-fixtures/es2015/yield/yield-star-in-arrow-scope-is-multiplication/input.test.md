@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -66,7 +66,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -82,7 +82,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "e"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 								identifierName: "e"
 								end: Object {
 									column: 1
@@ -101,7 +101,7 @@ JSRoot {
 				body: JSBinaryExpression {
 					operator: "*"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -116,7 +116,7 @@ JSRoot {
 					left: JSReferenceIdentifier {
 						name: "yield"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 							identifierName: "yield"
 							end: Object {
 								column: 10
@@ -134,7 +134,7 @@ JSRoot {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 							end: Object {
 								column: 14
 								index: 14

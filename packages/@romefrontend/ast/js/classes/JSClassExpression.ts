@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassExpression = NodeBaseWithComments & {
+export interface JSClassExpression extends NodeBaseWithComments {
 	type: "JSClassExpression";
 	id?: JSBindingIdentifier;
 	meta: JSClassHead;
-};
+}
 
 export const jsClassExpression = createBuilder<JSClassExpression>(
 	"JSClassExpression",

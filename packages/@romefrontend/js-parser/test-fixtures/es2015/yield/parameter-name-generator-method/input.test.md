@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-name-generator-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-name-generator-method/input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-generator-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-generator-method/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-generator-method/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -91,7 +91,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "method"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-name-generator-method/input.js"
 									identifierName: "method"
 									end: Object {
 										column: 10
@@ -106,7 +106,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-generator-method/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -120,7 +120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-generator-method/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -136,7 +136,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-generator-method/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -158,7 +158,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-generator-method/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -174,7 +174,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "yield"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/parameter-name-generator-method/input.js"
 										identifierName: "yield"
 										end: Object {
 											column: 16
@@ -191,7 +191,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-name-generator-method/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -219,7 +219,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/parameter-name-generator-method/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
 

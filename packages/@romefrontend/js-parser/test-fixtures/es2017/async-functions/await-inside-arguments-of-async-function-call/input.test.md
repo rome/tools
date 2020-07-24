@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 		end: Object {
 			column: 1
 			index: 45
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 				end: Object {
 					column: 1
 					index: 45
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 					end: Object {
 						column: 1
 						index: 45
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 							end: Object {
 								column: 21
 								index: 43
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 								end: Object {
 									column: 20
 									index: 42
@@ -133,7 +133,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -151,7 +151,7 @@ JSRoot {
 								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 										end: Object {
 											column: 19
 											index: 41
@@ -166,7 +166,7 @@ JSRoot {
 									left: JSAssignmentIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 9
@@ -182,7 +182,7 @@ JSRoot {
 									}
 									right: JSAwaitExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 											end: Object {
 												column: 19
 												index: 41
@@ -198,7 +198,7 @@ JSRoot {
 											value: 2
 											format: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-arguments-of-async-function-call/input.js"
 												end: Object {
 													column: 19
 													index: 41

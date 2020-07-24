@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -64,7 +64,7 @@ JSRoot {
 				tag: JSReferenceIdentifier {
 					name: "sampleTag"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 						identifierName: "sampleTag"
 						end: Object {
 							column: 9
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				quasi: JSTemplateLiteral {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -97,7 +97,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -114,7 +114,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -134,7 +134,7 @@ JSRoot {
 							raw: "left"
 							tail: false
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -152,7 +152,7 @@ JSRoot {
 							raw: "\\u0g"
 							tail: false
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -170,7 +170,7 @@ JSRoot {
 							raw: "right"
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/template-literal-invalid-escapes-tagged/24/input.js"
 								end: Object {
 									column: 31
 									index: 31

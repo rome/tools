@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/body-nested-declare/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/body-nested-declare/input.ts"
 		end: Object {
 			column: 0
 			index: 73
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-nested-declare/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 19
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/body-nested-declare/input.ts"
 				end: Object {
 					column: 1
 					index: 72
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body-nested-declare/input.ts"
 					end: Object {
 						column: 1
 						index: 72
@@ -83,7 +83,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body-nested-declare/input.ts"
 								identifierName: "B"
 								end: Object {
 									column: 15
@@ -98,7 +98,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/body-nested-declare/input.ts"
 							end: Object {
 								column: 5
 								index: 70
@@ -112,7 +112,7 @@ JSRoot {
 						}
 						body: TSModuleBlock {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body-nested-declare/input.ts"
 								end: Object {
 									column: 5
 									index: 70
@@ -127,7 +127,7 @@ JSRoot {
 							body: Array [
 								JSVariableDeclarationStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/module-namespace/body-nested-declare/input.ts"
 										end: Object {
 											column: 24
 											index: 64
@@ -142,7 +142,7 @@ JSRoot {
 									declaration: JSVariableDeclaration {
 										kind: "const"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/module-namespace/body-nested-declare/input.ts"
 											end: Object {
 												column: 24
 												index: 64
@@ -159,7 +159,7 @@ JSRoot {
 												id: JSBindingIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/module-namespace/body-nested-declare/input.ts"
 														end: Object {
 															column: 23
 															index: 63
@@ -174,7 +174,7 @@ JSRoot {
 													meta: JSPatternMeta {
 														definite: undefined
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/module-namespace/body-nested-declare/input.ts"
 															end: Object {
 																column: 23
 																index: 63
@@ -188,7 +188,7 @@ JSRoot {
 														}
 														typeAnnotation: TSNumberKeywordTypeAnnotation {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/module-namespace/body-nested-declare/input.ts"
 																end: Object {
 																	column: 23
 																	index: 63
@@ -205,7 +205,7 @@ JSRoot {
 												}
 												init: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/module-namespace/body-nested-declare/input.ts"
 													end: Object {
 														column: 23
 														index: 63

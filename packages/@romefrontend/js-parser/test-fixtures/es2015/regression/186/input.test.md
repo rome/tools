@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/regression/186/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/regression/186/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/regression/186/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/regression/186/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/regression/186/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/regression/186/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/regression/186/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -113,7 +113,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "async"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/regression/186/input.js"
 												identifierName: "async"
 												end: Object {
 													column: 16
@@ -128,7 +128,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/regression/186/input.js"
 											identifierName: "async"
 											end: Object {
 												column: 16
@@ -145,7 +145,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "async"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/regression/186/input.js"
 											identifierName: "async"
 											end: Object {
 												column: 16
@@ -160,7 +160,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/186/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -178,7 +178,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "bar"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/regression/186/input.js"
 												identifierName: "bar"
 												end: Object {
 													column: 21
@@ -193,7 +193,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/regression/186/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -209,7 +209,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/regression/186/input.js"
 											identifierName: "bar"
 											end: Object {
 												column: 21
@@ -224,7 +224,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/regression/186/input.js"
 										end: Object {
 											column: 21
 											index: 21

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/type-operator/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/type-operator/input.ts"
 		end: Object {
 			column: 0
 			index: 99
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-operator/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/type-operator/input.ts"
 					end: Object {
 						column: 15
 						index: 15
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/type-operator/input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/type-operator/input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -96,7 +96,7 @@ JSRoot {
 								typeAnnotation: TSTypeOperator {
 									operator: "keyof"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/type-operator/input.ts"
 										end: Object {
 											column: 14
 											index: 14
@@ -111,7 +111,7 @@ JSRoot {
 									typeAnnotation: TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/type-operator/input.ts"
 											end: Object {
 												column: 14
 												index: 14
@@ -126,7 +126,7 @@ JSRoot {
 										typeName: JSReferenceIdentifier {
 											name: "T"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/type-operator/input.ts"
 												identifierName: "T"
 												end: Object {
 													column: 14
@@ -146,7 +146,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/type-operator/input.ts"
 							end: Object {
 								column: 14
 								index: 14
@@ -164,7 +164,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-operator/input.ts"
 				end: Object {
 					column: 21
 					index: 37
@@ -179,7 +179,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/type-operator/input.ts"
 					end: Object {
 						column: 21
 						index: 37
@@ -196,7 +196,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/type-operator/input.ts"
 								end: Object {
 									column: 20
 									index: 36
@@ -211,7 +211,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/type-operator/input.ts"
 									end: Object {
 										column: 20
 										index: 36
@@ -226,7 +226,7 @@ JSRoot {
 								typeAnnotation: TSTypeOperator {
 									operator: "unique"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/type-operator/input.ts"
 										end: Object {
 											column: 20
 											index: 36
@@ -240,7 +240,7 @@ JSRoot {
 									}
 									typeAnnotation: TSSymbolKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/type-operator/input.ts"
 											end: Object {
 												column: 20
 												index: 36
@@ -258,7 +258,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/type-operator/input.ts"
 							end: Object {
 								column: 20
 								index: 36
@@ -276,7 +276,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-operator/input.ts"
 				end: Object {
 					column: 25
 					index: 63
@@ -291,7 +291,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/type-operator/input.ts"
 					end: Object {
 						column: 25
 						index: 63
@@ -308,7 +308,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/type-operator/input.ts"
 								end: Object {
 									column: 24
 									index: 62
@@ -323,7 +323,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/type-operator/input.ts"
 									end: Object {
 										column: 24
 										index: 62
@@ -338,7 +338,7 @@ JSRoot {
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/type-operator/input.ts"
 										end: Object {
 											column: 24
 											index: 62
@@ -352,7 +352,7 @@ JSRoot {
 									}
 									typeAnnotation: TSArrayType {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/type-operator/input.ts"
 											end: Object {
 												column: 24
 												index: 62
@@ -366,7 +366,7 @@ JSRoot {
 										}
 										elementType: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/type-operator/input.ts"
 												end: Object {
 													column: 22
 													index: 60
@@ -385,7 +385,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/type-operator/input.ts"
 							end: Object {
 								column: 24
 								index: 62
@@ -403,7 +403,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/type-operator/input.ts"
 				end: Object {
 					column: 34
 					index: 98
@@ -418,7 +418,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/type-operator/input.ts"
 					end: Object {
 						column: 34
 						index: 98
@@ -435,7 +435,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "z1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/type-operator/input.ts"
 								end: Object {
 									column: 33
 									index: 97
@@ -450,7 +450,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/type-operator/input.ts"
 									end: Object {
 										column: 33
 										index: 97
@@ -465,7 +465,7 @@ JSRoot {
 								typeAnnotation: TSTypeOperator {
 									operator: "readonly"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/type-operator/input.ts"
 										end: Object {
 											column: 33
 											index: 97
@@ -480,7 +480,7 @@ JSRoot {
 									typeAnnotation: TSTupleType {
 										rest: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/type-operator/input.ts"
 											end: Object {
 												column: 33
 												index: 97
@@ -497,7 +497,7 @@ JSRoot {
 												name: undefined
 												optional: false
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/type-operator/input.ts"
 													end: Object {
 														column: 24
 														index: 88
@@ -511,7 +511,7 @@ JSRoot {
 												}
 												typeAnnotation: TSNumberKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/type-operator/input.ts"
 														end: Object {
 															column: 24
 															index: 88
@@ -529,7 +529,7 @@ JSRoot {
 												name: undefined
 												optional: false
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/type-operator/input.ts"
 													end: Object {
 														column: 32
 														index: 96
@@ -543,7 +543,7 @@ JSRoot {
 												}
 												typeAnnotation: TSNumberKeywordTypeAnnotation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/type-operator/input.ts"
 														end: Object {
 															column: 32
 															index: 96
@@ -564,7 +564,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/type-operator/input.ts"
 							end: Object {
 								column: 33
 								index: 97

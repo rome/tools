@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-class/migrated_0024/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-class/migrated_0024/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-class/migrated_0024/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0024/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -67,7 +67,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-class/migrated_0024/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -83,7 +83,7 @@ JSRoot {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0024/input.js"
 							end: Object {
 								column: 16
 								index: 16

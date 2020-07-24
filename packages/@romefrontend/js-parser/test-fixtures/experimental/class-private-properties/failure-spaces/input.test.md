@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/failure-spaces/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/failure-spaces/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected space between # and identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-spaces/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Spaces"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-spaces/input.js"
 					identifierName: "Spaces"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/failure-spaces/input.js"
 				end: Object {
 					column: 1
 					index: 34
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/failure-spaces/input.js"
 					end: Object {
 						column: 1
 						index: 34
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "wrongSpaces"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/failure-spaces/input.js"
 									identifierName: "wrongSpaces"
 									end: Object {
 										column: 16
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-spaces/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -142,7 +142,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/failure-spaces/input.js"
 							end: Object {
 								column: 17
 								index: 32
@@ -167,7 +167,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/failure-spaces/input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -192,7 +192,7 @@ JSRoot {
 
 ```
 
- input.js:2:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-spaces/input.js:2:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected space between # and identifier
 

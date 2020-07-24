@@ -260,3 +260,38 @@ export function createDirectory(path: AbsoluteFilePath): Promise<void> {
 export function createDirectorySync(path: AbsoluteFilePath): void {
 	fs.mkdirSync(path.join());
 }
+
+// open
+export function openFile(
+	path: AbsoluteFilePath,
+	flags: fs.OpenMode = "r",
+	mode?: fs.Mode,
+): Promise<fs.promises.FileHandle> {
+	return fs.promises.open(path.join(), flags, mode);
+}
+
+export function openFileSync(
+	path: AbsoluteFilePath,
+	flags: fs.OpenMode = "r",
+	mode?: fs.Mode,
+): number {
+	return fs.openSync(path.join(), flags, mode);
+}
+
+// openDirectory
+export function openDirectory(
+	path: AbsoluteFilePath,
+	opts: fs.OpenDirOptions = {},
+): Promise<fs.Dir> {
+	return promisifyData(
+		path,
+		(filename, callback) => fs.opendir(filename, opts, callback),
+	);
+}
+
+export function openDirectorySync(
+	path: AbsoluteFilePath,
+	opts: fs.OpenDirOptions = {},
+): fs.Dir {
+	return fs.opendirSync(path.join(), opts);
+}

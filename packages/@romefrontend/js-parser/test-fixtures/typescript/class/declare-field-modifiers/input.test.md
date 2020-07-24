@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/declare-field-modifiers/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/declare-field-modifiers/input.ts"
 		end: Object {
 			column: 0
 			index: 203
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/declare-field-modifiers/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare-field-modifiers/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/declare-field-modifiers/input.ts"
 				end: Object {
 					column: 1
 					index: 202
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare-field-modifiers/input.ts"
 					end: Object {
 						column: 1
 						index: 202
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo"
 									end: Object {
 										column: 20
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 20
 									index: 30
@@ -143,7 +143,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 21
 								index: 31
@@ -168,7 +168,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 20
 									index: 30
@@ -187,7 +187,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo0"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo0"
 									end: Object {
 										column: 21
@@ -202,7 +202,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 53
@@ -218,7 +218,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 30
 								index: 62
@@ -232,7 +232,7 @@ JSRoot {
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 29
 									index: 61
@@ -258,7 +258,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 53
@@ -277,7 +277,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo1"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo1"
 									end: Object {
 										column: 21
@@ -292,7 +292,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 85
@@ -309,7 +309,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 22
 								index: 86
@@ -334,7 +334,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 85
@@ -353,7 +353,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo2"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo2"
 									end: Object {
 										column: 21
@@ -368,7 +368,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 108
@@ -385,7 +385,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 22
 								index: 109
@@ -410,7 +410,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
 									index: 108
@@ -429,7 +429,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo4"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo4"
 									end: Object {
 										column: 28
@@ -444,7 +444,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 139
@@ -461,7 +461,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
 								index: 140
@@ -486,7 +486,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 139
@@ -505,7 +505,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo3"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo3"
 									end: Object {
 										column: 28
@@ -520,7 +520,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 169
@@ -537,7 +537,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
 								index: 170
@@ -562,7 +562,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 169
@@ -581,7 +581,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo5"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-modifiers/input.ts"
 									identifierName: "foo5"
 									end: Object {
 										column: 28
@@ -596,7 +596,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 199
@@ -613,7 +613,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
 								index: 200
@@ -638,7 +638,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
 									index: 199
@@ -663,7 +663,7 @@ JSRoot {
 
 ```
 
- input.ts:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/declare-field-modifiers/input.ts:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

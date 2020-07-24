@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 		end: Object {
 			column: 0
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -74,7 +74,7 @@ JSRoot {
 				arguments: Array []
 				optional: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 					end: Object {
 						column: 8
 						index: 8
@@ -89,7 +89,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 						identifierName: "A"
 						end: Object {
 							column: 5
@@ -105,7 +105,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 						end: Object {
 							column: 8
 							index: 8
@@ -121,7 +121,7 @@ JSRoot {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 								end: Object {
 									column: 7
 									index: 7
@@ -136,7 +136,7 @@ JSRoot {
 							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 									identifierName: "T"
 									end: Object {
 										column: 7
@@ -163,7 +163,7 @@ JSRoot {
 
 ```
 
- input.ts:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/type-arguments/new-false-positive-2/input.ts:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In TypeScript, a new expression with type arguments must have parens
 

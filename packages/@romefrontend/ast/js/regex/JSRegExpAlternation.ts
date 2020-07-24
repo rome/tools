@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpAlternation = NodeBaseWithComments & {
+export interface JSRegExpAlternation extends NodeBaseWithComments {
 	type: "JSRegExpAlternation";
 	left: AnyJSRegExpExpression;
 	right: JSRegExpSubExpression;
-};
+}
 
 export const jsRegExpAlternation = createBuilder<JSRegExpAlternation>(
 	"JSRegExpAlternation",

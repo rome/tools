@@ -49,6 +49,7 @@ unknownVariable
 	}
 }
 
+
 ```
 
 ## `smoke save`
@@ -78,6 +79,7 @@ unknownVariable
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✔ 1 file updated
+ℹ You can revert these changes with the rome recover pop command
 ✖ Found 2 problems
 
 ```
@@ -90,11 +92,13 @@ if (unformatted) {
 	swag;
 }
 
+
 # rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
+
 
 ```

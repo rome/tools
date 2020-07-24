@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/unclosed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/unclosed/input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated template"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/unclosed/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/unclosed/input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/unclosed/input.js"
 					end: Object {
 						column: 1
 						index: 1
@@ -91,7 +91,7 @@ JSRoot {
 						raw: ""
 						tail: false
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/unclosed/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -115,7 +115,7 @@ JSRoot {
 
 ```
 
- input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-template-literals/unclosed/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated template
 

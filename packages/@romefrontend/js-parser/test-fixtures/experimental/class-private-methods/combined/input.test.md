@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/combined/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/combined/input.js"
 		end: Object {
 			column: 0
 			index: 160
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/combined/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/combined/input.js"
 				end: Object {
 					column: 1
 					index: 159
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/combined/input.js"
 					end: Object {
 						column: 1
 						index: 159
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -119,7 +119,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
 									index: 19
@@ -135,7 +135,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 8
 								index: 20
@@ -160,7 +160,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -180,7 +180,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 5
@@ -195,7 +195,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 5
 									index: 27
@@ -209,7 +209,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 3
 								index: 52
@@ -231,7 +231,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
 									index: 29
@@ -257,7 +257,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 5
 									index: 27
@@ -273,7 +273,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
 									index: 52
@@ -288,7 +288,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 16
 											index: 48
@@ -303,7 +303,7 @@ JSRoot {
 									expression: JSYieldExpression {
 										delegate: false
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 15
 												index: 47
@@ -318,7 +318,7 @@ JSRoot {
 										argument: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-methods/combined/input.js"
 												end: Object {
 													column: 15
 													index: 47
@@ -333,7 +333,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "bar"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/combined/input.js"
 													identifierName: "bar"
 													end: Object {
 														column: 13
@@ -358,7 +358,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 4
@@ -373,7 +373,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
 									index: 58
@@ -390,7 +390,7 @@ JSRoot {
 							value: 2
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
 									index: 62
@@ -405,7 +405,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 9
 								index: 63
@@ -430,7 +430,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
 									index: 58
@@ -450,7 +450,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 7
@@ -465,7 +465,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
 									index: 72
@@ -479,7 +479,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 26
 								index: 91
@@ -501,7 +501,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 9
 									index: 74
@@ -527,7 +527,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
 									index: 72
@@ -543,7 +543,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 26
 									index: 91
@@ -558,7 +558,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 24
 											index: 89
@@ -574,7 +574,7 @@ JSRoot {
 										value: 9_999
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 23
 												index: 88
@@ -597,7 +597,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 8
@@ -612,7 +612,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
 									index: 100
@@ -626,7 +626,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 25
 								index: 117
@@ -651,7 +651,7 @@ JSRoot {
 								line: 11
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
 									index: 100
@@ -667,7 +667,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 25
 									index: 117
@@ -682,7 +682,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 23
 											index: 115
@@ -697,7 +697,7 @@ JSRoot {
 									argument: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/combined/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 22
@@ -723,7 +723,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 11
 									index: 103
@@ -739,7 +739,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/combined/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 10
@@ -756,7 +756,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 10
 												index: 102
@@ -779,7 +779,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/combined/input.js"
 									identifierName: "d"
 									end: Object {
 										column: 4
@@ -794,7 +794,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
 									index: 123
@@ -808,7 +808,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 3
 								index: 157
@@ -830,7 +830,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 6
 									index: 125
@@ -856,7 +856,7 @@ JSRoot {
 								line: 13
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
 									index: 123
@@ -872,7 +872,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
 									index: 157
@@ -887,7 +887,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 25
 											index: 153
@@ -902,7 +902,7 @@ JSRoot {
 									argument: JSCallExpression {
 										arguments: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 24
 												index: 152
@@ -916,7 +916,7 @@ JSRoot {
 										}
 										callee: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-methods/combined/input.js"
 												end: Object {
 													column: 22
 													index: 150
@@ -931,7 +931,7 @@ JSRoot {
 											object: JSReferenceIdentifier {
 												name: "Math"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/combined/input.js"
 													identifierName: "Math"
 													end: Object {
 														column: 15
@@ -949,7 +949,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "random"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-methods/combined/input.js"
 														identifierName: "random"
 														end: Object {
 															column: 22
@@ -964,7 +964,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/combined/input.js"
 													identifierName: "random"
 													end: Object {
 														column: 22

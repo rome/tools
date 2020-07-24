@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "experimental/numeric-separator/invalid-hex/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/numeric-separator/invalid-hex/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "\\x1_0"
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/numeric-separator/invalid-hex/input.js"
 				end: Object {
 					column: 8
 					index: 8

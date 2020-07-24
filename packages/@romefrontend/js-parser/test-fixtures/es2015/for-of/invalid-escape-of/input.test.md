@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-of/invalid-escape-of/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-of/invalid-escape-of/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ;"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-escape-of/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-escape-of/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -74,7 +74,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-escape-of/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -90,7 +90,7 @@ JSRoot {
 			init: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-escape-of/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 6
@@ -107,7 +107,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "of"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-escape-of/input.js"
 					identifierName: "of"
 					end: Object {
 						column: 14
@@ -124,7 +124,7 @@ JSRoot {
 			update: JSReferenceIdentifier {
 				name: "y"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-escape-of/input.js"
 					identifierName: "y"
 					end: Object {
 						column: 16
@@ -147,7 +147,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/for-of/invalid-escape-of/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ;
 

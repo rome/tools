@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/329/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/329/input.js"
 		end: Object {
 			column: 7
 			index: 7
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/329/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "/"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/329/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -65,7 +65,7 @@ JSRoot {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/329/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -82,7 +82,7 @@ JSRoot {
 					operator: "+"
 					prefix: true
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/329/input.js"
 						end: Object {
 							column: 3
 							index: 3
@@ -97,7 +97,7 @@ JSRoot {
 					argument: JSObjectExpression {
 						properties: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/329/input.js"
 							end: Object {
 								column: 3
 								index: 3

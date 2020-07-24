@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-iteration/migrated_0005/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-iteration/migrated_0005/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSDoWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-iteration/migrated_0005/input.js"
 				end: Object {
 					column: 13
 					index: 23
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0005/input.js"
 					end: Object {
 						column: 12
 						index: 22
@@ -64,7 +64,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0005/input.js"
 					end: Object {
 						column: 1
 						index: 11
@@ -79,7 +79,7 @@ JSRoot {
 				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0005/input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -94,7 +94,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "that"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/migrated_0005/input.js"
 							identifierName: "that"
 							end: Object {
 								column: 7

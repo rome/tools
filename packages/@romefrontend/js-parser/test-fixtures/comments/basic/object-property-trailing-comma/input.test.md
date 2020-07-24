@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/object-property-trailing-comma/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/object-property-trailing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 97
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " comment 1"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-property-trailing-comma/input.js"
 				end: Object {
 					column: 22
 					index: 34
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " comment 2"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-property-trailing-comma/input.js"
 				end: Object {
 					column: 22
 					index: 57
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " comment 3"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-property-trailing-comma/input.js"
 				end: Object {
 					column: 22
 					index: 80
@@ -86,7 +86,7 @@ JSRoot {
 			id: "3"
 			value: " comment 4"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-property-trailing-comma/input.js"
 				end: Object {
 					column: 15
 					index: 96
@@ -104,7 +104,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			trailingComments: Array ["3"]
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/object-property-trailing-comma/input.js"
 				end: Object {
 					column: 2
 					index: 83
@@ -120,7 +120,7 @@ JSRoot {
 				kind: "var"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/object-property-trailing-comma/input.js"
 					end: Object {
 						column: 2
 						index: 83
@@ -137,7 +137,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/object-property-trailing-comma/input.js"
 								identifierName: "obj"
 								end: Object {
 									column: 7
@@ -152,7 +152,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/object-property-trailing-comma/input.js"
 							end: Object {
 								column: 1
 								index: 82
@@ -166,7 +166,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/object-property-trailing-comma/input.js"
 								end: Object {
 									column: 1
 									index: 82
@@ -184,7 +184,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/object-property-trailing-comma/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 3
@@ -199,7 +199,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 3
 												index: 15
@@ -215,7 +215,7 @@ JSRoot {
 									value: JSStringLiteral {
 										value: "1"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 8
 												index: 20
@@ -229,7 +229,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/object-property-trailing-comma/input.js"
 										end: Object {
 											column: 8
 											index: 20
@@ -248,7 +248,7 @@ JSRoot {
 											name: "b"
 											leadingComments: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/object-property-trailing-comma/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 3
@@ -264,7 +264,7 @@ JSRoot {
 										}
 										leadingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 3
 												index: 38
@@ -280,7 +280,7 @@ JSRoot {
 									value: JSStringLiteral {
 										value: "2"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 8
 												index: 43
@@ -295,7 +295,7 @@ JSRoot {
 									}
 									leadingComments: Array ["0"]
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/object-property-trailing-comma/input.js"
 										end: Object {
 											column: 8
 											index: 43
@@ -314,7 +314,7 @@ JSRoot {
 											name: "c"
 											leadingComments: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/object-property-trailing-comma/input.js"
 												identifierName: "c"
 												end: Object {
 													column: 3
@@ -330,7 +330,7 @@ JSRoot {
 										}
 										leadingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 3
 												index: 61
@@ -346,7 +346,7 @@ JSRoot {
 									value: JSStringLiteral {
 										value: "3"
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/object-property-trailing-comma/input.js"
 											end: Object {
 												column: 8
 												index: 66
@@ -362,7 +362,7 @@ JSRoot {
 									leadingComments: Array ["1"]
 									trailingComments: Array ["2"]
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/object-property-trailing-comma/input.js"
 										end: Object {
 											column: 8
 											index: 66

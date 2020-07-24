@@ -11,14 +11,14 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/216/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/216/input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 		JSDirective {
 			value: "\\u{110000}"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/216/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Code point out of bounds"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/216/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -80,7 +80,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/216/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Code point out of bounds
 

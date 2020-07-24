@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/dollar-sign/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/dollar-sign/input.js"
 		end: Object {
 			column: 0
 			index: 4
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/dollar-sign/input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/dollar-sign/input.js"
 					end: Object {
 						column: 3
 						index: 3
@@ -67,7 +67,7 @@ JSRoot {
 						raw: "$"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/dollar-sign/input.js"
 							end: Object {
 								column: 2
 								index: 2

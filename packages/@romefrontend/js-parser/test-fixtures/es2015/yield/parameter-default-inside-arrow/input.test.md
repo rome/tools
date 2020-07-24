@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -115,7 +115,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 2
@@ -132,7 +132,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-default-inside-arrow/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 10

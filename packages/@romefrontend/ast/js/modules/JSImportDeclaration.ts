@@ -20,14 +20,14 @@ export type AnyImportSpecifier =
 	| JSImportNamespaceSpecifier
 	| JSImportSpecifier;
 
-export type JSImportDeclaration = NodeBaseWithComments & {
+export interface JSImportDeclaration extends NodeBaseWithComments {
 	type: "JSImportDeclaration";
 	defaultSpecifier?: JSImportDefaultSpecifier;
 	namespaceSpecifier?: JSImportNamespaceSpecifier;
 	namedSpecifiers: Array<JSImportSpecifier>;
 	source: JSStringLiteral;
 	importKind?: ConstJSImportModuleKind;
-};
+}
 
 export const jsImportDeclaration = createBuilder<JSImportDeclaration>(
 	"JSImportDeclaration",

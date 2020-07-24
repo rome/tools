@@ -13,13 +13,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSFunctionDeclaration = NodeBaseWithComments & {
+export interface JSFunctionDeclaration extends NodeBaseWithComments {
 	type: "JSFunctionDeclaration";
 	id: JSBindingIdentifier;
 	declare?: boolean;
 	head: JSFunctionHead;
 	body: JSBlockStatement;
-};
+}
 
 export const jsFunctionDeclaration = createBuilder<JSFunctionDeclaration>(
 	"JSFunctionDeclaration",

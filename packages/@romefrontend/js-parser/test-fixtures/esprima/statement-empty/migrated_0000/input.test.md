@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-empty/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-empty/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 2
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-empty/migrated_0000/input.js"
 				end: Object {
 					column: 1
 					index: 1

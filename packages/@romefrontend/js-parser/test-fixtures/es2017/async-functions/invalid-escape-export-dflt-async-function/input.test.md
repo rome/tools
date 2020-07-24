@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 		end: Object {
 			column: 0
 			index: 51
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 25
@@ -92,7 +92,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "y"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					identifierName: "y"
 					end: Object {
 						column: 36
@@ -107,7 +107,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -129,7 +129,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -145,7 +145,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -160,7 +160,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -175,7 +175,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 46
@@ -192,7 +192,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 							end: Object {
 								column: 48
 								index: 48
@@ -207,7 +207,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 48
@@ -233,7 +233,7 @@ JSRoot {
 
 ```
 
- input.js:1:26 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-export-dflt-async-function/input.js:1:26 parse/js ━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

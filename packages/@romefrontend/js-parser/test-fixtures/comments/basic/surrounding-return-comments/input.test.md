@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/surrounding-return-comments/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/surrounding-return-comments/input.js"
 		end: Object {
 			column: 0
 			index: 62
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " before "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-return-comments/input.js"
 				end: Object {
 					column: 16
 					index: 31
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " after "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-return-comments/input.js"
 				end: Object {
 					column: 15
 					index: 59
@@ -71,7 +71,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-return-comments/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -86,7 +86,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/surrounding-return-comments/input.js"
 				end: Object {
 					column: 1
 					index: 61
@@ -108,7 +108,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-return-comments/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -124,7 +124,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/surrounding-return-comments/input.js"
 					end: Object {
 						column: 1
 						index: 61
@@ -142,7 +142,7 @@ JSRoot {
 						leadingComments: Array ["0"]
 						trailingComments: Array ["1"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/surrounding-return-comments/input.js"
 							end: Object {
 								column: 11
 								index: 43

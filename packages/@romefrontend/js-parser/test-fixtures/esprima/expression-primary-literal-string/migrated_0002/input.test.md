@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-literal-string/migrated_0002/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-literal-string/migrated_0002/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "\\\\u0061"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-string/migrated_0002/input.js"
 				end: Object {
 					column: 9
 					index: 9

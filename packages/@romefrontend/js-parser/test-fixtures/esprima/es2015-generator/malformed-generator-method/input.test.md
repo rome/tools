@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -91,7 +91,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 									identifierName: ""
 									end: Object {
 										column: 6
@@ -106,7 +106,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -120,7 +120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -136,7 +136,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -159,7 +159,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/malformed-generator-method/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -184,7 +184,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-generator/malformed-generator-method/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -88,7 +88,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 						end: Object {
 							column: 50
 							index: 50
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 						end: Object {
 							column: 49
 							index: 49
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -140,7 +140,7 @@ JSRoot {
 								JSBindingArrayPattern {
 									rest: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 										end: Object {
 											column: 45
 											index: 45
@@ -156,7 +156,7 @@ JSRoot {
 										JSBindingArrayPattern {
 											rest: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 												end: Object {
 													column: 44
 													index: 44
@@ -172,7 +172,7 @@ JSRoot {
 												JSBindingArrayPattern {
 													rest: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 														end: Object {
 															column: 43
 															index: 43
@@ -188,7 +188,7 @@ JSRoot {
 														JSBindingArrayPattern {
 															rest: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																end: Object {
 																	column: 42
 																	index: 42
@@ -204,7 +204,7 @@ JSRoot {
 																JSBindingArrayPattern {
 																	rest: undefined
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																		end: Object {
 																			column: 41
 																			index: 41
@@ -220,7 +220,7 @@ JSRoot {
 																		JSBindingArrayPattern {
 																			rest: undefined
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																				end: Object {
 																					column: 40
 																					index: 40
@@ -236,7 +236,7 @@ JSRoot {
 																				JSBindingArrayPattern {
 																					rest: undefined
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																						end: Object {
 																							column: 39
 																							index: 39
@@ -252,7 +252,7 @@ JSRoot {
 																						JSBindingArrayPattern {
 																							rest: undefined
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																								end: Object {
 																									column: 38
 																									index: 38
@@ -268,7 +268,7 @@ JSRoot {
 																								JSBindingArrayPattern {
 																									rest: undefined
 																									loc: Object {
-																										filename: "input.js"
+																										filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																										end: Object {
 																											column: 37
 																											index: 37
@@ -284,7 +284,7 @@ JSRoot {
 																										JSBindingArrayPattern {
 																											rest: undefined
 																											loc: Object {
-																												filename: "input.js"
+																												filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																												end: Object {
 																													column: 36
 																													index: 36
@@ -300,7 +300,7 @@ JSRoot {
 																												JSBindingArrayPattern {
 																													rest: undefined
 																													loc: Object {
-																														filename: "input.js"
+																														filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																														end: Object {
 																															column: 35
 																															index: 35
@@ -316,7 +316,7 @@ JSRoot {
 																														JSBindingArrayPattern {
 																															rest: undefined
 																															loc: Object {
-																																filename: "input.js"
+																																filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																end: Object {
 																																	column: 34
 																																	index: 34
@@ -332,7 +332,7 @@ JSRoot {
 																																JSBindingArrayPattern {
 																																	rest: undefined
 																																	loc: Object {
-																																		filename: "input.js"
+																																		filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																		end: Object {
 																																			column: 33
 																																			index: 33
@@ -348,7 +348,7 @@ JSRoot {
 																																		JSBindingArrayPattern {
 																																			rest: undefined
 																																			loc: Object {
-																																				filename: "input.js"
+																																				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																				end: Object {
 																																					column: 32
 																																					index: 32
@@ -364,7 +364,7 @@ JSRoot {
 																																				JSBindingArrayPattern {
 																																					rest: undefined
 																																					loc: Object {
-																																						filename: "input.js"
+																																						filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																						end: Object {
 																																							column: 31
 																																							index: 31
@@ -380,7 +380,7 @@ JSRoot {
 																																						JSBindingArrayPattern {
 																																							rest: undefined
 																																							loc: Object {
-																																								filename: "input.js"
+																																								filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																								end: Object {
 																																									column: 30
 																																									index: 30
@@ -396,7 +396,7 @@ JSRoot {
 																																								JSBindingArrayPattern {
 																																									rest: undefined
 																																									loc: Object {
-																																										filename: "input.js"
+																																										filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																										end: Object {
 																																											column: 29
 																																											index: 29
@@ -412,7 +412,7 @@ JSRoot {
 																																										JSBindingArrayPattern {
 																																											rest: undefined
 																																											loc: Object {
-																																												filename: "input.js"
+																																												filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																												end: Object {
 																																													column: 28
 																																													index: 28
@@ -428,7 +428,7 @@ JSRoot {
 																																												JSBindingArrayPattern {
 																																													rest: undefined
 																																													loc: Object {
-																																														filename: "input.js"
+																																														filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																														end: Object {
 																																															column: 27
 																																															index: 27
@@ -444,7 +444,7 @@ JSRoot {
 																																														JSBindingAssignmentPattern {
 																																															operator: "="
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																end: Object {
 																																																	column: 25
 																																																	index: 25
@@ -459,7 +459,7 @@ JSRoot {
 																																															right: JSReferenceIdentifier {
 																																																name: "b"
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																	identifierName: "b"
 																																																	end: Object {
 																																																		column: 25
@@ -476,7 +476,7 @@ JSRoot {
 																																															left: JSBindingObjectPattern {
 																																																rest: undefined
 																																																loc: Object {
-																																																	filename: "input.js"
+																																																	filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																	end: Object {
 																																																		column: 23
 																																																		index: 23
@@ -494,7 +494,7 @@ JSRoot {
 																																																			value: JSIdentifier {
 																																																				name: "a"
 																																																				loc: Object {
-																																																					filename: "input.js"
+																																																					filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																					identifierName: "a"
 																																																					end: Object {
 																																																						column: 23
@@ -509,7 +509,7 @@ JSRoot {
 																																																				}
 																																																			}
 																																																			loc: Object {
-																																																				filename: "input.js"
+																																																				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																				end: Object {
 																																																					column: 23
 																																																					index: 23
@@ -525,7 +525,7 @@ JSRoot {
 																																																		value: JSBindingIdentifier {
 																																																			name: "a"
 																																																			loc: Object {
-																																																				filename: "input.js"
+																																																				filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																				identifierName: "a"
 																																																				end: Object {
 																																																					column: 23
@@ -540,7 +540,7 @@ JSRoot {
 																																																			}
 																																																		}
 																																																		loc: Object {
-																																																			filename: "input.js"
+																																																			filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																			end: Object {
 																																																				column: 23
 																																																				index: 23
@@ -559,7 +559,7 @@ JSRoot {
 																																														JSBindingIdentifier {
 																																															name: "INVALID_PLACEHOLDER"
 																																															loc: Object {
-																																																filename: "input.js"
+																																																filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 																																																end: Object {
 																																																	column: 26
 																																																	index: 26
@@ -624,7 +624,7 @@ JSRoot {
 
 ```
 
- input.js:1:23 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js:1:23 parse/js ━━
 
   ✖ Unexpected token, expected ,
 

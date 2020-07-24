@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/parenthesized/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/parenthesized/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/parenthesized/input.ts"
 					identifierName: "T"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/parenthesized/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			right: TSParenthesizedType {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/parenthesized/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -81,7 +81,7 @@ JSRoot {
 				typeAnnotation: TSObjectTypeAnnotation {
 					members: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/parenthesized/input.ts"
 						end: Object {
 							column: 12
 							index: 12

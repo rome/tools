@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-class/migrated_0011/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-class/migrated_0011/input.js"
 		end: Object {
 			column: 0
 			index: 59
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0011/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-class/migrated_0011/input.js"
 				end: Object {
 					column: 58
 					index: 58
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-class/migrated_0011/input.js"
 					end: Object {
 						column: 58
 						index: 58
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0011/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 17
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -156,7 +156,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -182,7 +182,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -202,7 +202,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0011/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 34
@@ -217,7 +217,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -231,7 +231,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -247,7 +247,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -270,7 +270,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -296,7 +296,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -316,7 +316,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-class/migrated_0011/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 51
@@ -331,7 +331,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 51
 									index: 51
@@ -345,7 +345,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 56
 								index: 56
@@ -361,7 +361,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 56
 									index: 56
@@ -387,7 +387,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 51
 									index: 51
@@ -409,7 +409,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 54
 									index: 54
@@ -425,7 +425,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-class/migrated_0011/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 53
@@ -442,7 +442,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-class/migrated_0011/input.js"
 											end: Object {
 												column: 53
 												index: 53

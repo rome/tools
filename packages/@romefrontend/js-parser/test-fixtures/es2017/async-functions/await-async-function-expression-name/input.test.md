@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 		end: Object {
 			column: 28
 			index: 28
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -74,7 +74,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "await"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 						identifierName: "await"
 						end: Object {
 							column: 21
@@ -89,7 +89,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -105,7 +105,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -128,7 +128,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -151,7 +151,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-async-function-expression-name/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
 

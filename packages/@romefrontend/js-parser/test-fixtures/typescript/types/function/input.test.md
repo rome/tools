@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/function/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/function/input.ts"
 		end: Object {
 			column: 0
 			index: 56
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/function/input.ts"
 				end: Object {
 					column: 55
 					index: 55
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/function/input.ts"
 					end: Object {
 						column: 55
 						index: 55
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/function/input.ts"
 								end: Object {
 									column: 54
 									index: 54
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/function/input.ts"
 									end: Object {
 										column: 54
 										index: 54
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSFunctionType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/function/input.ts"
 										end: Object {
 											column: 54
 											index: 54
@@ -109,7 +109,7 @@ JSRoot {
 									}
 									typeAnnotation: TSVoidKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function/input.ts"
 											end: Object {
 												column: 54
 												index: 54
@@ -125,7 +125,7 @@ JSRoot {
 									meta: TSSignatureDeclarationMeta {
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/function/input.ts"
 											end: Object {
 												column: 54
 												index: 54
@@ -140,7 +140,7 @@ JSRoot {
 										rest: JSBindingIdentifier {
 											name: "c"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/function/input.ts"
 												identifierName: "c"
 												end: Object {
 													column: 35
@@ -156,7 +156,7 @@ JSRoot {
 											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/function/input.ts"
 													end: Object {
 														column: 45
 														index: 45
@@ -170,7 +170,7 @@ JSRoot {
 												}
 												typeAnnotation: TSArrayType {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function/input.ts"
 														end: Object {
 															column: 45
 															index: 45
@@ -184,7 +184,7 @@ JSRoot {
 													}
 													elementType: TSNumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/function/input.ts"
 															end: Object {
 																column: 43
 																index: 43
@@ -204,7 +204,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "a"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/function/input.ts"
 													identifierName: "a"
 													end: Object {
 														column: 9
@@ -220,7 +220,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function/input.ts"
 														end: Object {
 															column: 17
 															index: 17
@@ -234,7 +234,7 @@ JSRoot {
 													}
 													typeAnnotation: TSNumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/function/input.ts"
 															end: Object {
 																column: 17
 																index: 17
@@ -252,7 +252,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "b"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/function/input.ts"
 													identifierName: "b"
 													end: Object {
 														column: 20
@@ -268,7 +268,7 @@ JSRoot {
 												meta: JSPatternMeta {
 													optional: true
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/function/input.ts"
 														end: Object {
 															column: 29
 															index: 29
@@ -282,7 +282,7 @@ JSRoot {
 													}
 													typeAnnotation: TSNumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/types/function/input.ts"
 															end: Object {
 																column: 29
 																index: 29
@@ -304,7 +304,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/function/input.ts"
 							end: Object {
 								column: 54
 								index: 54

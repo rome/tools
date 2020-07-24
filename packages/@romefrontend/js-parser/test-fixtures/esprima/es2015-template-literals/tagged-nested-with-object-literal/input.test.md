@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -64,7 +64,7 @@ JSRoot {
 				tag: JSReferenceIdentifier {
 					name: "raw"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 						identifierName: "raw"
 						end: Object {
 							column: 3
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				quasi: JSTemplateLiteral {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 						end: Object {
 							column: 44
 							index: 44
@@ -98,7 +98,7 @@ JSRoot {
 							raw: "token "
 							tail: false
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -116,7 +116,7 @@ JSRoot {
 							raw: ""
 							tail: true
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 43
 									index: 43
@@ -133,7 +133,7 @@ JSRoot {
 					expressions: Array [
 						JSTemplateLiteral {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -151,7 +151,7 @@ JSRoot {
 									raw: "nested "
 									tail: false
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -169,7 +169,7 @@ JSRoot {
 									raw: " blah"
 									tail: true
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 41
 											index: 41
@@ -187,7 +187,7 @@ JSRoot {
 								JSBinaryExpression {
 									operator: "+"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 35
 											index: 35
@@ -202,7 +202,7 @@ JSRoot {
 									right: JSObjectExpression {
 										properties: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 											end: Object {
 												column: 35
 												index: 35
@@ -218,7 +218,7 @@ JSRoot {
 									left: JSTemplateLiteral {
 										expressions: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 											end: Object {
 												column: 30
 												index: 30
@@ -236,7 +236,7 @@ JSRoot {
 												raw: "deeply"
 												tail: true
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 													end: Object {
 														column: 29
 														index: 29

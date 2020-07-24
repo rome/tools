@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "emptyWithArray"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 					identifierName: "emptyWithArray"
 					end: Object {
 						column: 23
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 						end: Object {
 							column: 31
 							index: 31
@@ -120,7 +120,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -138,7 +138,7 @@ JSRoot {
 							elements: Array []
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -154,7 +154,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 									end: Object {
 										column: 30
 										index: 30

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/import-type-escaped-error/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/import-type-escaped-error/input.ts"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-escaped-error/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-escaped-error/input.ts"
 				end: Object {
 					column: 16
 					index: 16
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-escaped-error/input.ts"
 					end: Object {
 						column: 16
 						index: 16
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-escaped-error/input.ts"
 					end: Object {
 						column: 16
 						index: 16
@@ -107,7 +107,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "type"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-escaped-error/input.ts"
 							identifierName: "type"
 							end: Object {
 								column: 16
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/import-type-escaped-error/input.ts"
 						end: Object {
 							column: 16
 							index: 16
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-escaped-error/input.ts"
 				end: Object {
 					column: 27
 					index: 27
@@ -155,7 +155,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "typescript"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-escaped-error/input.ts"
 					identifierName: "typescript"
 					end: Object {
 						column: 27
@@ -172,7 +172,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-escaped-error/input.ts"
 				end: Object {
 					column: 32
 					index: 32
@@ -187,7 +187,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-escaped-error/input.ts"
 					identifierName: "from"
 					end: Object {
 						column: 32
@@ -204,7 +204,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-escaped-error/input.ts"
 				end: Object {
 					column: 46
 					index: 46
@@ -219,7 +219,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "typescript"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-escaped-error/input.ts"
 					end: Object {
 						column: 45
 						index: 45
@@ -241,7 +241,7 @@ JSRoot {
 
 ```
 
- input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/import-type-escaped-error/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected keyword from
 

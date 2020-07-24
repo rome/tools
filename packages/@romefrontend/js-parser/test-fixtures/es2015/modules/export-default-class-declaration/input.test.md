@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/export-default-class-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/export-default-class-declaration/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/export-default-class-declaration/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -50,7 +50,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-class-declaration/input.js"
 						identifierName: "Foo"
 						end: Object {
 							column: 24
@@ -65,7 +65,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/export-default-class-declaration/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -84,7 +84,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/export-default-class-declaration/input.js"
 						end: Object {
 							column: 27
 							index: 27

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 				end: Object {
 					column: 1
 					index: 41
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 					end: Object {
 						column: 1
 						index: 41
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 3
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 3
 									index: 13
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 28
 									index: 38
@@ -137,7 +137,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 									end: Object {
 										column: 17
 										index: 27
@@ -152,7 +152,7 @@ JSRoot {
 							}
 							body: JSAwaitExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 									end: Object {
 										column: 28
 										index: 38
@@ -168,7 +168,7 @@ JSRoot {
 									operator: "+"
 									prefix: true
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 										end: Object {
 											column: 28
 											index: 38
@@ -184,7 +184,7 @@ JSRoot {
 										value: 42
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 											end: Object {
 												column: 28
 												index: 38
@@ -203,7 +203,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 							end: Object {
 								column: 29
 								index: 39
@@ -228,7 +228,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 3
 									index: 13

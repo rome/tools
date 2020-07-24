@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default-and-named/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default-and-named/input.js"
 		end: Object {
 			column: 31
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-and-named/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -51,7 +51,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-and-named/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-and-named/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -81,7 +81,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default-and-named/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 10
@@ -99,7 +99,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default-and-named/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -114,7 +114,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/export-extensions/default-and-named/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 17
@@ -131,7 +131,7 @@ JSRoot {
 					local: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/export-extensions/default-and-named/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 17

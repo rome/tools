@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 						end: Object {
 							column: 23
 							index: 23
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-catch-parameter/input.js"
 						identifierName: "yield"
 						end: Object {
 							column: 19

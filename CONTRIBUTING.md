@@ -14,6 +14,21 @@ cd rome
 ./rome --help
 ```
 
+## Developing on Windows
+
+You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
+
+For example, to run help:
+
+```bash
+.\rome --help
+```
+or you can directly use `rome` without any path referencing like below:
+
+```bash
+rome --help
+```
+
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
 ### User files

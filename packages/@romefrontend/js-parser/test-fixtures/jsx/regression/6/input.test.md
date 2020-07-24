@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/6/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/6/input.jsx"
 		end: Object {
 			column: 32
 			index: 32
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/6/input.jsx"
 				end: Object {
 					column: 32
 					index: 32
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/6/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/6/input.jsx"
 					end: Object {
 						column: 32
 						index: 32
@@ -84,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "pre"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/6/input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -100,7 +100,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "leading"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/6/input.jsx"
 								end: Object {
 									column: 18
 									index: 18
@@ -114,7 +114,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/6/input.jsx"
 							end: Object {
 								column: 18
 								index: 18
@@ -129,7 +129,7 @@ JSRoot {
 					}
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/6/input.jsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -144,7 +144,7 @@ JSRoot {
 						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/6/input.jsx"
 								identifierName: "props"
 								end: Object {
 									column: 28

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/389/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/389/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/389/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/389/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -74,7 +74,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/389/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -89,7 +89,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "get"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/389/input.js"
 							identifierName: "get"
 							end: Object {
 								column: 5
@@ -106,7 +106,7 @@ JSRoot {
 				}
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/389/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -122,7 +122,7 @@ JSRoot {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/389/input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/389/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

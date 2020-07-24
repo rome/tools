@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an yield argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -95,7 +95,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -111,7 +111,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -126,7 +126,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -141,7 +141,7 @@ JSRoot {
 							expression: JSYieldExpression {
 								delegate: true
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 									end: Object {
 										column: 23
 										index: 23
@@ -156,7 +156,7 @@ JSRoot {
 								argument: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 										end: Object {
 											column: 23
 											index: 23
@@ -173,7 +173,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -188,7 +188,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 									end: Object {
 										column: 24
 										index: 24
@@ -214,7 +214,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-generator/incomplete-yield-delegate/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an yield argument
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/destructuring/binding-this/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/destructuring/binding-this/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected keyword this"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/binding-this/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/destructuring/binding-this/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/destructuring/binding-this/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/destructuring/binding-this/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "this"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/destructuring/binding-this/input.js"
 												identifierName: "this"
 												end: Object {
 													column: 10
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/binding-this/input.js"
 											end: Object {
 												column: 10
 												index: 10
@@ -139,7 +139,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "this"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/destructuring/binding-this/input.js"
 											identifierName: "this"
 											end: Object {
 												column: 10
@@ -154,7 +154,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/destructuring/binding-this/input.js"
 										end: Object {
 											column: 10
 											index: 10
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/destructuring/binding-this/input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -185,7 +185,7 @@ JSRoot {
 						init: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/destructuring/binding-this/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -210,7 +210,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/destructuring/binding-this/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword this
 

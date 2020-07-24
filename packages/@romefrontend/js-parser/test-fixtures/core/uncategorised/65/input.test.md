@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/65/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/65/input.js"
 		end: Object {
 			column: 50
 			index: 50
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " perfect "
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/65/input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/65/input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -67,7 +67,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "answer"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/65/input.js"
 					identifierName: "answer"
 					end: Object {
 						column: 14
@@ -84,7 +84,7 @@ JSRoot {
 			cases: Array [
 				JSSwitchCase {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/65/input.js"
 						end: Object {
 							column: 48
 							index: 48
@@ -100,7 +100,7 @@ JSRoot {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/65/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -117,7 +117,7 @@ JSRoot {
 						JSExpressionStatement {
 							leadingComments: Array ["0"]
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/65/input.js"
 								end: Object {
 									column: 48
 									index: 48
@@ -133,7 +133,7 @@ JSRoot {
 								arguments: Array []
 								leadingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/65/input.js"
 									end: Object {
 										column: 48
 										index: 48
@@ -149,7 +149,7 @@ JSRoot {
 									name: "bingo"
 									leadingComments: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/65/input.js"
 										identifierName: "bingo"
 										end: Object {
 											column: 46

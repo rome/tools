@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 		end: Object {
 			column: 1
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 47
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 47
@@ -106,7 +106,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "fn2"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 								identifierName: "fn2"
 								end: Object {
 									column: 14
@@ -121,7 +121,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 							end: Object {
 								column: 28
 								index: 45
@@ -137,7 +137,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 								end: Object {
 									column: 28
 									index: 45
@@ -159,7 +159,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 								end: Object {
 									column: 25
 									index: 42
@@ -174,7 +174,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 										end: Object {
 											column: 24
 											index: 41
@@ -189,7 +189,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "yield"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 											identifierName: "yield"
 											end: Object {
 												column: 24
@@ -206,7 +206,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 16
@@ -223,7 +223,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/parameter-default-inside-function-inside-generator/input.js"
 												end: Object {
 													column: 16
 													index: 33

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 		end: Object {
 			column: 0
 			index: 297
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " no default"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 				end: Object {
 					column: 25
 					index: 245
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 				end: Object {
 					column: 2
 					index: 296
@@ -67,7 +67,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 					end: Object {
 						column: 1
 						index: 295
@@ -81,7 +81,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -96,7 +96,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "module"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							identifierName: "module"
 							end: Object {
 								column: 6
@@ -114,7 +114,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "exports"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 								identifierName: "exports"
 								end: Object {
 									column: 14
@@ -129,7 +129,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							identifierName: "exports"
 							end: Object {
 								column: 14
@@ -147,7 +147,7 @@ JSRoot {
 				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 						end: Object {
 							column: 1
 							index: 295
@@ -168,7 +168,7 @@ JSRoot {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							end: Object {
 								column: 34
 								index: 34
@@ -184,7 +184,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "context"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 									identifierName: "context"
 									end: Object {
 										column: 33
@@ -201,7 +201,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 33
 											index: 33
@@ -220,7 +220,7 @@ JSRoot {
 					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							end: Object {
 								column: 1
 								index: 295
@@ -237,7 +237,7 @@ JSRoot {
 								id: JSBindingIdentifier {
 									name: "isConstant"
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										identifierName: "isConstant"
 										end: Object {
 											column: 23
@@ -252,7 +252,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 									end: Object {
 										column: 5
 										index: 292
@@ -273,7 +273,7 @@ JSRoot {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 29
 											index: 67
@@ -289,7 +289,7 @@ JSRoot {
 										JSBindingIdentifier {
 											name: "node"
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 												identifierName: "node"
 												end: Object {
 													column: 28
@@ -306,7 +306,7 @@ JSRoot {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 28
 														index: 66
@@ -325,7 +325,7 @@ JSRoot {
 								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 5
 											index: 292
@@ -340,7 +340,7 @@ JSRoot {
 									body: Array [
 										JSSwitchStatement {
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 												end: Object {
 													column: 9
 													index: 255
@@ -354,7 +354,7 @@ JSRoot {
 											}
 											discriminant: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 25
 														index: 95
@@ -369,7 +369,7 @@ JSRoot {
 												object: JSReferenceIdentifier {
 													name: "node"
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 														identifierName: "node"
 														end: Object {
 															column: 20
@@ -387,7 +387,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: "type"
 														loc: Object {
-															filename: "input.js"
+															filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 															identifierName: "type"
 															end: Object {
 																column: 25
@@ -402,7 +402,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 														identifierName: "type"
 														end: Object {
 															column: 25
@@ -421,7 +421,7 @@ JSRoot {
 												JSSwitchCase {
 													trailingComments: Array ["0"]
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 														end: Object {
 															column: 81
 															index: 219
@@ -436,7 +436,7 @@ JSRoot {
 													test: JSStringLiteral {
 														value: "SequenceExpression"
 														loc: Object {
-															filename: "input.js"
+															filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 															end: Object {
 																column: 37
 																index: 136
@@ -453,7 +453,7 @@ JSRoot {
 														JSReturnStatement {
 															trailingComments: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																end: Object {
 																	column: 81
 																	index: 219
@@ -467,7 +467,7 @@ JSRoot {
 															}
 															argument: JSCallExpression {
 																loc: Object {
-																	filename: "input.js"
+																	filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																	end: Object {
 																		column: 80
 																		index: 218
@@ -482,7 +482,7 @@ JSRoot {
 																callee: JSReferenceIdentifier {
 																	name: "isConstant"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																		identifierName: "isConstant"
 																		end: Object {
 																			column: 33
@@ -499,7 +499,7 @@ JSRoot {
 																arguments: Array [
 																	JSMemberExpression {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																			end: Object {
 																				column: 79
 																				index: 217
@@ -513,7 +513,7 @@ JSRoot {
 																		}
 																		object: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																				end: Object {
 																					column: 50
 																					index: 188
@@ -528,7 +528,7 @@ JSRoot {
 																			object: JSReferenceIdentifier {
 																				name: "node"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																					identifierName: "node"
 																					end: Object {
 																						column: 38
@@ -546,7 +546,7 @@ JSRoot {
 																				value: JSIdentifier {
 																					name: "expressions"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																						identifierName: "expressions"
 																						end: Object {
 																							column: 50
@@ -561,7 +561,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																					identifierName: "expressions"
 																					end: Object {
 																						column: 50
@@ -580,7 +580,7 @@ JSRoot {
 																			value: JSBinaryExpression {
 																				operator: "-"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																					end: Object {
 																						column: 78
 																						index: 216
@@ -596,7 +596,7 @@ JSRoot {
 																					value: 1
 																					format: undefined
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																						end: Object {
 																							column: 78
 																							index: 216
@@ -611,7 +611,7 @@ JSRoot {
 																				}
 																				left: JSMemberExpression {
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																						end: Object {
 																							column: 74
 																							index: 212
@@ -627,7 +627,7 @@ JSRoot {
 																						value: JSIdentifier {
 																							name: "length"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																								identifierName: "length"
 																								end: Object {
 																									column: 74
@@ -642,7 +642,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																							identifierName: "length"
 																							end: Object {
 																								column: 74
@@ -658,7 +658,7 @@ JSRoot {
 																					}
 																					object: JSMemberExpression {
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																							end: Object {
 																								column: 67
 																								index: 205
@@ -673,7 +673,7 @@ JSRoot {
 																						object: JSReferenceIdentifier {
 																							name: "node"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																								identifierName: "node"
 																								end: Object {
 																									column: 55
@@ -691,7 +691,7 @@ JSRoot {
 																							value: JSIdentifier {
 																								name: "expressions"
 																								loc: Object {
-																									filename: "input.js"
+																									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																									identifierName: "expressions"
 																									end: Object {
 																										column: 67
@@ -706,7 +706,7 @@ JSRoot {
 																								}
 																							}
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																								identifierName: "expressions"
 																								end: Object {
 																									column: 67
@@ -724,7 +724,7 @@ JSRoot {
 																				}
 																			}
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																				end: Object {
 																					column: 79
 																					index: 217
@@ -747,7 +747,7 @@ JSRoot {
 										}
 										JSReturnStatement {
 											loc: Object {
-												filename: "input.js"
+												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 												end: Object {
 													column: 21
 													index: 286
@@ -762,7 +762,7 @@ JSRoot {
 											argument: JSBooleanLiteral {
 												value: false
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 20
 														index: 285

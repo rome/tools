@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/new-target-invalid/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/new-target-invalid/input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-invalid/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-invalid/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSMetaProperty {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-invalid/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -87,7 +87,7 @@ JSRoot {
 				meta: JSIdentifier {
 					name: "new"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/meta-properties/new-target-invalid/input.js"
 						identifierName: "new"
 						end: Object {
 							column: 3
@@ -104,7 +104,7 @@ JSRoot {
 				property: JSIdentifier {
 					name: "target"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/meta-properties/new-target-invalid/input.js"
 						identifierName: "target"
 						end: Object {
 							column: 10
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/new-target-invalid/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
 

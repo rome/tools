@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -88,7 +88,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -105,7 +105,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/rest-without-arrow/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/246/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/246/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/246/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -49,7 +49,7 @@ JSRoot {
 			left: JSAssignmentIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/246/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 5
@@ -66,7 +66,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/246/input.js"
 					identifierName: "list"
 					end: Object {
 						column: 13
@@ -82,7 +82,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/246/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -96,7 +96,7 @@ JSRoot {
 				}
 				expression: JSCallExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/246/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -111,7 +111,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "process"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/246/input.js"
 							identifierName: "process"
 							end: Object {
 								column: 22
@@ -129,7 +129,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/246/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 24

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/315/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/315/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/315/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -50,7 +50,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/315/input.js"
 					identifierName: "list"
 					end: Object {
 						column: 20
@@ -67,7 +67,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/315/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -84,7 +84,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/315/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 12
@@ -100,7 +100,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/315/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -117,7 +117,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/315/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -131,7 +131,7 @@ JSRoot {
 				}
 				expression: JSCallExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/315/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -146,7 +146,7 @@ JSRoot {
 					callee: JSReferenceIdentifier {
 						name: "process"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/315/input.js"
 							identifierName: "process"
 							end: Object {
 								column: 29
@@ -164,7 +164,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/315/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 31

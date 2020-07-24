@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/516/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/516/input.js"
 		end: Object {
 			column: 37
 			index: 37
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "package is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/516/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/516/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/516/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -90,7 +90,7 @@ JSRoot {
 			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/516/input.js"
 					end: Object {
 						column: 37
 						index: 37
@@ -106,7 +106,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/516/input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -130,7 +130,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/516/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -146,7 +146,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "package"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/516/input.js"
 							identifierName: "package"
 							end: Object {
 								column: 18
@@ -163,7 +163,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/516/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -188,7 +188,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/516/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ package is a reserved word
 

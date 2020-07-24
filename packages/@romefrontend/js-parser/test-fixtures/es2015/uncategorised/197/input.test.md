@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/197/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/197/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSDoWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/197/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/197/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -66,7 +66,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/197/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -82,7 +82,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/197/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -97,7 +97,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/197/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -112,7 +112,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/197/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 23

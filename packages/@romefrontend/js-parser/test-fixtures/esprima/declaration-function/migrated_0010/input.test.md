@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/declaration-function/migrated_0010/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/declaration-function/migrated_0010/input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/declaration-function/migrated_0010/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/declaration-function/migrated_0010/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "hi"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/declaration-function/migrated_0010/input.js"
 								identifierName: "hi"
 								end: Object {
 									column: 6
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/declaration-function/migrated_0010/input.js"
 							end: Object {
 								column: 33
 								index: 33
@@ -97,7 +97,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "arguments"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-function/migrated_0010/input.js"
 									identifierName: "arguments"
 									end: Object {
 										column: 27
@@ -112,7 +112,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/declaration-function/migrated_0010/input.js"
 								end: Object {
 									column: 33
 									index: 33
@@ -128,7 +128,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-function/migrated_0010/input.js"
 									end: Object {
 										column: 33
 										index: 33
@@ -151,7 +151,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/declaration-function/migrated_0010/input.js"
 									end: Object {
 										column: 29
 										index: 29

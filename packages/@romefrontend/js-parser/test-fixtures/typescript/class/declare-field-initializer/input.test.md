@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/declare-field-initializer/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/declare-field-initializer/input.ts"
 		end: Object {
 			column: 0
 			index: 44
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/declare-field-initializer/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare-field-initializer/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/declare-field-initializer/input.ts"
 				end: Object {
 					column: 1
 					index: 43
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/declare-field-initializer/input.ts"
 					end: Object {
 						column: 1
 						index: 43
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/declare-field-initializer/input.ts"
 									identifierName: "bar"
 									end: Object {
 										column: 13
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-initializer/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "test"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-initializer/input.ts"
 								end: Object {
 									column: 30
 									index: 40
@@ -157,7 +157,7 @@ JSRoot {
 						}
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/declare-field-initializer/input.ts"
 							end: Object {
 								column: 31
 								index: 41
@@ -171,7 +171,7 @@ JSRoot {
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-initializer/input.ts"
 								end: Object {
 									column: 21
 									index: 31
@@ -197,7 +197,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/declare-field-initializer/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -222,7 +222,7 @@ JSRoot {
 
 ```
 
- input.ts:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/declare-field-initializer/input.ts:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

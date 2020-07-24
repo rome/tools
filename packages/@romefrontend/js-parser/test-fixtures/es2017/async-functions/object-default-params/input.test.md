@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/object-default-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/object-default-params/input.js"
 		end: Object {
 			column: 0
 			index: 38
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/object-default-params/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/object-default-params/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/object-default-params/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSCallExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/object-default-params/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -134,7 +134,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/object-default-params/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 15
@@ -152,7 +152,7 @@ JSRoot {
 								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/object-default-params/input.js"
 										end: Object {
 											column: 29
 											index: 29
@@ -167,7 +167,7 @@ JSRoot {
 									right: JSStringLiteral {
 										value: "bar"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/object-default-params/input.js"
 											end: Object {
 												column: 29
 												index: 29
@@ -183,7 +183,7 @@ JSRoot {
 									left: JSAssignmentObjectPattern {
 										rest: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/object-default-params/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -201,7 +201,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: "bar"
 														loc: Object {
-															filename: "input.js"
+															filename: "es2017/async-functions/object-default-params/input.js"
 															identifierName: "bar"
 															end: Object {
 																column: 21
@@ -216,7 +216,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "es2017/async-functions/object-default-params/input.js"
 														end: Object {
 															column: 21
 															index: 21
@@ -232,7 +232,7 @@ JSRoot {
 												value: JSAssignmentIdentifier {
 													name: "bar"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2017/async-functions/object-default-params/input.js"
 														identifierName: "bar"
 														end: Object {
 															column: 21
@@ -247,7 +247,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/object-default-params/input.js"
 													end: Object {
 														column: 21
 														index: 21
@@ -271,7 +271,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -286,7 +286,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/object-default-params/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -302,7 +302,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -317,7 +317,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/object-default-params/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -333,7 +333,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -348,7 +348,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/object-default-params/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -366,7 +366,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/object-default-params/input.js"
 				end: Object {
 					column: 37
 					index: 37
@@ -387,7 +387,7 @@ JSRoot {
 
 ```
 
- input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/object-default-params/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

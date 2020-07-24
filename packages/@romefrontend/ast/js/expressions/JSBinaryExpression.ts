@@ -8,12 +8,12 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSBinaryExpression = NodeBaseWithComments & {
+export interface JSBinaryExpression extends NodeBaseWithComments {
 	type: "JSBinaryExpression";
 	operator: BinaryOperator;
 	left: AnyJSExpression;
 	right: AnyJSExpression;
-};
+}
 
 export type BinaryOperator =
 	| "=="

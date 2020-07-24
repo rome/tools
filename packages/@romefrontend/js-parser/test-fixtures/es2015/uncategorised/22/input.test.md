@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/22/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/22/input.js"
 		end: Object {
 			column: 5
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/22/input.js"
 				end: Object {
 					column: 5
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/22/input.js"
 					end: Object {
 						column: 5
 						index: 22
@@ -67,7 +67,7 @@ JSRoot {
 						raw: "\\n\\r\\b\\v\\t\\f\\\n\\\n\\\u2028\\\u2029"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/22/input.js"
 							end: Object {
 								column: 4
 								index: 21

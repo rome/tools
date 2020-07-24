@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/537/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/537/input.js"
 		end: Object {
 			column: 19
 			index: 19
@@ -36,7 +36,7 @@ JSRoot {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/537/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/537/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -66,7 +66,7 @@ JSRoot {
 			init: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/537/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -83,7 +83,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/537/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 11
@@ -98,7 +98,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/537/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -114,7 +114,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/537/input.js"
 								end: Object {
 									column: 15
 									index: 15

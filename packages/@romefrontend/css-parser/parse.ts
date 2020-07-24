@@ -1,6 +1,7 @@
-import {CSSParserOptions, Tokens} from "./types";
+import {AnyCSSToken, AnyCSSValue, CSSParserOptions, Tokens} from "./types";
 import {
 	ParserOptions,
+	ValueToken,
 	createParser,
 	isDigit,
 	isHexDigit,
@@ -18,9 +19,17 @@ import {
 	isValidEscape,
 	isWhitespace,
 } from "./utils";
+import {
+	CSSAtRule,
+	CSSBlock,
+	CSSDeclaration,
+	CSSFunction,
+	CSSRoot,
+	CSSRule,
+} from "@romefrontend/ast";
 
-export const createCSSParser = createParser((ParserCore) =>
-	class CSSParser extends ParserCore<Tokens> {
+export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
+	class CSSParser extends ParserWithRequiredPath<Tokens> {
 		consumeDiagnosticCategory: DiagnosticCategory;
 		options: ParserOptions;
 
@@ -28,7 +37,7 @@ export const createCSSParser = createParser((ParserCore) =>
 			super(opts, "parse/css", {});
 
 			this.consumeDiagnosticCategory =
-				opts.consumeDiagnosticCategory || "parse/json";
+				opts.consumeDiagnosticCategory || "parse/css";
 			this.ignoreWhitespaceTokens = false;
 			this.options = opts;
 		}
@@ -308,7 +317,11 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			if (this.getInputCharOnly(index) === "%") {
-				return this.finishValueToken("Percentage", numberValue, index);
+				return this.finishValueToken(
+					"Percentage",
+					numberValue,
+					ob1Add(index, 1),
+				);
 			}
 
 			return this.finishComplexToken(
@@ -399,10 +412,9 @@ export const createCSSParser = createParser((ParserCore) =>
 			throw new Error("Unrecoverable state due to bad URL");
 		}
 
-		tokenize(index: Number0) {
+		tokenize(index: Number0): AnyCSSToken {
 			const char = this.getInputCharOnly(index);
 
-			// Skip over comments
 			if (char === "/" && this.getInputCharOnly(index, 1) === "*") {
 				index = ob1Add(index, 2);
 				let value = "";
@@ -414,12 +426,7 @@ export const createCSSParser = createParser((ParserCore) =>
 					value += this.getInputCharOnly(index);
 					index = ob1Add(index, 1);
 				}
-				this.registerComment(
-					this.comments.createComment({
-						type: "CommentBlock",
-						value,
-					}),
-				);
+				return this.finishValueToken("Comment", value, ob1Add(index, 2));
 			}
 
 			if (isWhitespace(char)) {
@@ -538,6 +545,17 @@ export const createCSSParser = createParser((ParserCore) =>
 				return this.finishToken("Semi");
 			}
 
+			if (char === "<") {
+				if (
+					this.getInputCharOnly(index, 1) === "!" &&
+					this.getInputCharOnly(index, 2) === "-" &&
+					this.getInputCharOnly(index, 3) === "-"
+				) {
+					return this.finishToken("CDO", ob1Add(index, 4));
+				}
+				return this.finishValueToken("Delim", char);
+			}
+
 			if (char === "@") {
 				if (
 					isIdentifierStart(
@@ -588,6 +606,458 @@ export const createCSSParser = createParser((ParserCore) =>
 			}
 
 			return this.finishValueToken("Delim", char);
+		}
+
+		parse(): CSSRoot {
+			const start = this.getPosition();
+			const rules = this.parseRules(true);
+
+			this.finalize();
+
+			return this.finishNode(
+				start,
+				this.finishRoot({
+					type: "CSSRoot",
+					body: rules,
+				}),
+			);
+		}
+
+		parseRules(
+			topLevel = false,
+			endingTokenType?: keyof Tokens,
+		): Array<CSSAtRule | CSSRule> {
+			const rules: Array<CSSAtRule | CSSRule> = [];
+			while (!this.matchToken("EOF")) {
+				if (endingTokenType && this.matchToken(endingTokenType)) {
+					this.nextToken();
+					break;
+				}
+				if (this.matchToken("Comment")) {
+					this.registerComment(
+						this.comments.createComment({
+							type: "CommentBlock",
+							loc: this.finishLoc(this.getPosition()),
+							value: (this.getToken() as Tokens["Comment"]).value,
+						}),
+					);
+					this.eatToken("Comment");
+					continue;
+				}
+				if (this.matchToken("Whitespace")) {
+					this.eatToken("Whitespace");
+					continue;
+				}
+				if (this.matchToken("CDO") || this.matchToken("CDC")) {
+					if (topLevel) {
+						this.nextToken();
+						continue;
+					}
+					const rule = this.parseRule();
+					rule && rules.push(rule);
+					continue;
+				}
+				if (this.matchToken("AtKeyword")) {
+					rules.push(this.parseAtRule());
+					continue;
+				}
+				const rule = this.parseRule();
+				rule && rules.push(rule);
+			}
+
+			return rules;
+		}
+
+		parseRule(): CSSRule | undefined {
+			const start = this.getPosition();
+			const prelude: Array<AnyCSSValue> = [];
+			while (!this.matchToken("EOF")) {
+				if (this.matchToken("LeftCurlyBracket")) {
+					return this.finishNode(
+						start,
+						{
+							type: "CSSRule",
+							// TODO: Parse prelude according to selector grammar
+							// https://www.w3.org/TR/css-syntax-3/#style-rules
+							prelude,
+							block: this.parseDeclartionBlock(),
+						},
+					);
+				}
+				const parsedValue = this.parseComponentValue();
+				parsedValue && prelude.push(parsedValue);
+			}
+			this.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.UNEXPECTED_TOKEN,
+			});
+			return undefined;
+		}
+
+		parseAtRule(): CSSAtRule {
+			const start = this.getPosition();
+			const token = this.expectToken("AtKeyword");
+			const prelude: Array<AnyCSSValue> = [];
+			const name = token.value;
+			let block = undefined;
+			while (true) {
+				if (this.matchToken("Semi")) {
+					break;
+				}
+				if (this.matchToken("EOF")) {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.UNTERMINATED_AT_RULE,
+					});
+					break;
+				}
+				if (this.matchToken("LeftCurlyBracket")) {
+					block = this.parseComplexBlock();
+					break;
+				}
+				const parsedValue = this.parseComponentValue();
+				parsedValue && prelude.push(parsedValue);
+			}
+			return this.finishNode(
+				start,
+				{
+					type: "CSSAtRule",
+					name,
+					prelude,
+					block,
+				},
+			);
+		}
+
+		parseSimpleBlock(): CSSBlock | undefined {
+			const start = this.getPosition();
+			const startingToken = this.getToken();
+			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
+			const endingTokenType = this.getBlockEndTokenType(startingToken);
+			let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration | undefined> = [];
+
+			if (!endingTokenType) {
+				return undefined;
+			}
+
+			this.nextToken();
+
+			while (true) {
+				if (this.matchToken(endingTokenType)) {
+					this.nextToken();
+					break;
+				}
+				if (this.matchToken("EOF")) {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.UNTERMINATED_BLOCK,
+					});
+					break;
+				}
+				const parsedValue = this.parseComponentValue();
+				parsedValue && value.push(parsedValue);
+			}
+
+			return this.finishNode(
+				start,
+				{
+					type: "CSSBlock",
+					startingTokenValue,
+					value,
+				},
+			);
+		}
+
+		parseDeclartionBlock(): CSSBlock | undefined {
+			const start = this.getPosition();
+			const startingToken = this.getToken();
+			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
+			const endingTokenType = this.getBlockEndTokenType(startingToken);
+			let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration | undefined> = [];
+
+			if (!endingTokenType) {
+				return undefined;
+			}
+
+			this.nextToken();
+
+			value = this.parseDeclarations(endingTokenType);
+
+			return this.finishNode(
+				start,
+				{
+					type: "CSSBlock",
+					startingTokenValue,
+					value,
+				},
+			);
+		}
+
+		parseComplexBlock(): CSSBlock | undefined {
+			const start = this.getPosition();
+			const startingToken = this.getToken();
+			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
+			const endingTokenType = this.getBlockEndTokenType(startingToken);
+			let value: Array<CSSAtRule | CSSRule> = [];
+
+			if (!endingTokenType) {
+				return undefined;
+			}
+
+			this.nextToken();
+
+			value = this.parseRules(false, endingTokenType);
+
+			return this.finishNode(
+				start,
+				{
+					type: "CSSBlock",
+					startingTokenValue,
+					value,
+				},
+			);
+		}
+
+		parseComponentValue(): AnyCSSValue | undefined {
+			if (this.matchToken("Whitespace")) {
+				this.nextToken();
+				return undefined;
+			}
+			if (
+				this.matchToken("LeftCurlyBracket") ||
+				this.matchToken("LeftParen") ||
+				this.matchToken("LeftSquareBracket")
+			) {
+				return this.parseSimpleBlock();
+			}
+			if (this.matchToken("Function")) {
+				return this.parseFunction();
+			}
+
+			const start = this.getPosition();
+
+			if (this.matchToken("Dimension")) {
+				const unit = (this.getToken() as Tokens["Dimension"]).unit;
+				const value = (this.getToken() as Tokens["Dimension"]).value;
+				this.nextToken();
+				return this.finishNode(
+					start,
+					{
+						type: "CSSDimension",
+						unit,
+						value,
+					},
+				);
+			}
+			if (this.matchToken("Percentage")) {
+				const value = (this.getToken() as Tokens["Percentage"]).value;
+				this.nextToken();
+				return this.finishNode(
+					start,
+					{
+						type: "CSSPercentage",
+						value,
+					},
+				);
+			}
+			if (this.matchToken("Ident")) {
+				const value = (this.getToken() as Tokens["Ident"]).value;
+				this.nextToken();
+				return this.finishNode(
+					start,
+					{
+						type: "CSSIdentifier",
+						value,
+					},
+				);
+			}
+			if (this.matchToken("Number")) {
+				const value = (this.getToken() as Tokens["Number"]).value;
+				this.nextToken();
+				return this.finishNode(
+					start,
+					{
+						type: "CSSNumber",
+						value,
+					},
+				);
+			}
+			if (this.matchToken("Colon")) {
+				this.nextToken();
+				return this.finishNode(
+					start,
+					{
+						type: "CSSRaw",
+						value: ":",
+					},
+				);
+			}
+			const value = (this.getToken() as ValueToken<string, string>).value;
+			this.nextToken();
+			return this.finishNode(
+				start,
+				{
+					type: "CSSRaw",
+					value,
+				},
+			);
+		}
+
+		parseFunction(): CSSFunction {
+			const start = this.getPosition();
+			const token = this.expectToken("Function");
+			const name = token.value;
+			const value = [];
+
+			while (true) {
+				if (this.matchToken("RightParen")) {
+					this.nextToken();
+					break;
+				}
+				if (this.matchToken("EOF")) {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+					});
+					break;
+				}
+				const parsedValue = this.parseComponentValue();
+				parsedValue && value.push(parsedValue);
+			}
+
+			return this.finishNode(
+				start,
+				{
+					type: "CSSFunction",
+					name,
+					value,
+				},
+			);
+		}
+
+		parseDeclarations(
+			endingTokenType?: keyof Tokens,
+		): Array<CSSAtRule | CSSDeclaration> {
+			const declarations: Array<CSSAtRule | CSSDeclaration> = [];
+
+			while (!this.matchToken("EOF")) {
+				if (this.eatToken("Whitespace") || this.eatToken("Semi")) {
+					continue;
+				}
+				if (endingTokenType && this.matchToken(endingTokenType)) {
+					this.nextToken();
+					break;
+				}
+				if (this.matchToken("AtKeyword")) {
+					declarations.push(this.parseAtRule());
+					continue;
+				}
+				if (this.matchToken("Ident")) {
+					const declaration = this.parseDeclaration();
+					declaration && declarations.push(declaration);
+					while (!this.matchToken("Semi") && !this.matchToken("EOF")) {
+						const declaration = this.parseDeclaration();
+						declaration && declarations.push(declaration);
+					}
+					continue;
+				}
+				this.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+				});
+				while (!this.matchToken("Semi") && !this.matchToken("EOF")) {
+					this.parseComponentValue();
+				}
+			}
+
+			return declarations;
+		}
+
+		parseDeclaration(): CSSDeclaration | undefined {
+			while (!this.matchToken("Semi")) {
+				const currentToken = this.getToken();
+				if (currentToken.type !== "Ident") {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+					});
+					return undefined;
+				}
+
+				const name = currentToken.value;
+				const start = this.getPosition();
+				let important = false;
+				let value: Array<AnyCSSValue | undefined> = [];
+				this.nextToken();
+
+				while (this.matchToken("Whitespace")) {
+					this.eatToken("Whitespace");
+				}
+				if (!this.matchToken("Colon")) {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+					});
+					return undefined;
+				}
+				this.nextToken();
+				while (this.matchToken("Whitespace")) {
+					this.eatToken("Whitespace");
+				}
+				while (!this.matchToken("EOF")) {
+					if (this.matchToken("Semi")) {
+						const lastTwoTokens = [...value].slice(-2);
+						if (
+							lastTwoTokens[0]?.type === "CSSRaw" &&
+							lastTwoTokens[0].value === "!" &&
+							lastTwoTokens[1]?.type === "CSSIdentifier" &&
+							/^important$/i.test(lastTwoTokens[1].value)
+						) {
+							value = value.slice(0, -2);
+							important = true;
+						}
+						return this.finishNode(
+							start,
+							{
+								type: "CSSDeclaration",
+								important,
+								name,
+								value,
+							},
+						);
+					}
+					const parsedValue = this.parseComponentValue();
+					parsedValue && value.push(parsedValue);
+				}
+			}
+			return undefined;
+		}
+
+		getBlockStartTokenValue(token: AnyCSSToken): string | undefined {
+			switch (token.type) {
+				case "LeftCurlyBracket":
+					return "{";
+				case "LeftParen":
+					return "(";
+				case "LeftSquareBracket":
+					return "[";
+				default: {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.INVALID_BLOCK_START,
+					});
+					return undefined;
+				}
+			}
+		}
+
+		getBlockEndTokenType(token: AnyCSSToken): keyof Tokens | undefined {
+			switch (token.type) {
+				case "LeftCurlyBracket":
+					return "RightCurlyBracket";
+				case "LeftParen":
+					return "RightParen";
+				case "LeftSquareBracket":
+					return "RightSquareBracket";
+				default: {
+					this.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.INVALID_BLOCK_START,
+					});
+					return undefined;
+				}
+			}
 		}
 	}
 );

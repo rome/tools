@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 		end: Object {
 			column: 0
 			index: 25
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -63,7 +63,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 						identifierName: "a"
 						end: Object {
 							column: 23
@@ -83,7 +83,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 						end: Object {
 							column: 21
 							index: 21
@@ -98,7 +98,7 @@ JSRoot {
 					returnType: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 							end: Object {
 								column: 18
 								index: 18
@@ -113,7 +113,7 @@ JSRoot {
 						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 								identifierName: "T"
 								end: Object {
 									column: 18
@@ -130,7 +130,7 @@ JSRoot {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 							end: Object {
 								column: 9
 								index: 9
@@ -148,7 +148,7 @@ JSRoot {
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 									end: Object {
 										column: 8
 										index: 8
@@ -167,7 +167,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 								identifierName: "a"
 								end: Object {
 									column: 11
@@ -183,7 +183,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -198,7 +198,7 @@ JSRoot {
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 										end: Object {
 											column: 14
 											index: 14
@@ -213,7 +213,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/arrow-function/async-generic-tokens-true/input.ts"
 											identifierName: "T"
 											end: Object {
 												column: 14

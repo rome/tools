@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/export/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/export/input.ts"
 		end: Object {
 			column: 0
 			index: 17
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/export/input.ts"
 				end: Object {
 					column: 16
 					index: 16
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/export/input.ts"
 						identifierName: "E"
 						end: Object {
 							column: 13
@@ -69,7 +69,7 @@ JSRoot {
 				const: false
 				members: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/export/input.ts"
 					end: Object {
 						column: 16
 						index: 16

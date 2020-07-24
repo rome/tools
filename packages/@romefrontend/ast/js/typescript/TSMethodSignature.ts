@@ -13,13 +13,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSMethodSignature = NodeBaseWithComments & {
+export interface TSMethodSignature extends NodeBaseWithComments {
 	key: AnyJSObjectPropertyKey;
 	type: "TSMethodSignature";
 	optional?: boolean;
 	meta: TSSignatureDeclarationMeta;
 	returnType?: AnyTSPrimary;
-};
+}
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(
 	"TSMethodSignature",

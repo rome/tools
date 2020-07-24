@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/reference-generic-nested/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/reference-generic-nested/input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/reference-generic-nested/input.ts"
 				end: Object {
 					column: 28
 					index: 28
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/reference-generic-nested/input.ts"
 					end: Object {
 						column: 28
 						index: 28
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/reference-generic-nested/input.ts"
 								end: Object {
 									column: 27
 									index: 27
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/reference-generic-nested/input.ts"
 									end: Object {
 										column: 27
 										index: 27
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSTypeReference {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/reference-generic-nested/input.ts"
 										end: Object {
 											column: 27
 											index: 27
@@ -110,7 +110,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "Array"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/reference-generic-nested/input.ts"
 											identifierName: "Array"
 											end: Object {
 												column: 12
@@ -126,7 +126,7 @@ JSRoot {
 									}
 									typeParameters: TSTypeParameterInstantiation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/reference-generic-nested/input.ts"
 											end: Object {
 												column: 27
 												index: 27
@@ -141,7 +141,7 @@ JSRoot {
 										params: Array [
 											TSTypeReference {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/reference-generic-nested/input.ts"
 													end: Object {
 														column: 26
 														index: 26
@@ -156,7 +156,7 @@ JSRoot {
 												typeName: JSReferenceIdentifier {
 													name: "Array"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/reference-generic-nested/input.ts"
 														identifierName: "Array"
 														end: Object {
 															column: 18
@@ -172,7 +172,7 @@ JSRoot {
 												}
 												typeParameters: TSTypeParameterInstantiation {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/types/reference-generic-nested/input.ts"
 														end: Object {
 															column: 26
 															index: 26
@@ -187,7 +187,7 @@ JSRoot {
 													params: Array [
 														TSNumberKeywordTypeAnnotation {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/types/reference-generic-nested/input.ts"
 																end: Object {
 																	column: 25
 																	index: 25
@@ -210,7 +210,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/reference-generic-nested/input.ts"
 							end: Object {
 								column: 27
 								index: 27

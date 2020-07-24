@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-template-literals/after-switch/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-template-literals/after-switch/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/after-switch/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSSwitchStatement {
 			cases: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-template-literals/after-switch/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -74,7 +74,7 @@ JSRoot {
 			discriminant: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-template-literals/after-switch/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -92,7 +92,7 @@ JSRoot {
 						raw: "test"
 						tail: true
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-template-literals/after-switch/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -116,7 +116,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-template-literals/after-switch/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

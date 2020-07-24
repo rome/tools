@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0219/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0219/input.js"
 		end: Object {
 			column: 0
 			index: 51
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0219/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0219/input.js"
 					identifierName: "hello"
 					end: Object {
 						column: 14
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0219/input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0219/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -112,7 +112,7 @@ JSRoot {
 			}
 			body: JSBlockStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0219/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -128,7 +128,7 @@ JSRoot {
 					JSDirective {
 						value: "use strict"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0219/input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -145,7 +145,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0219/input.js"
 							end: Object {
 								column: 48
 								index: 48
@@ -159,7 +159,7 @@ JSRoot {
 						}
 						expression: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0219/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -177,7 +177,7 @@ JSRoot {
 										value: JSStringLiteral {
 											value: "\x01"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/invalid-syntax/migrated_0219/input.js"
 												end: Object {
 													column: 40
 													index: 40
@@ -191,7 +191,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0219/input.js"
 											end: Object {
 												column: 40
 												index: 40
@@ -208,7 +208,7 @@ JSRoot {
 										value: 42
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0219/input.js"
 											end: Object {
 												column: 44
 												index: 44
@@ -222,7 +222,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0219/input.js"
 										end: Object {
 											column: 44
 											index: 44
@@ -249,7 +249,7 @@ JSRoot {
 
 ```
 
- input.js:1:38 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0219/input.js:1:38 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
 

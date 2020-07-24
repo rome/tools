@@ -8,10 +8,10 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSSpreadElement = NodeBaseWithComments & {
+export interface JSSpreadElement extends NodeBaseWithComments {
 	type: "JSSpreadElement";
 	argument: AnyJSExpression;
-};
+}
 
 export const jsSpreadElement = createQuickBuilder<JSSpreadElement, "argument">(
 	"JSSpreadElement",

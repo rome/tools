@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/import-meta/error-in-script/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/import-meta/error-in-script/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "import.meta may only appear in a module"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/error-in-script/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/error-in-script/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/error-in-script/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/error-in-script/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/error-in-script/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/error-in-script/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -134,7 +134,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "import"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/error-in-script/input.js"
 									identifierName: "import"
 									end: Object {
 										column: 16
@@ -151,7 +151,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "meta"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/error-in-script/input.js"
 									identifierName: "meta"
 									end: Object {
 										column: 21
@@ -178,7 +178,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/import-meta/error-in-script/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import.meta may only appear in a module
 

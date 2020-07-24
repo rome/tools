@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/380/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/380/input.js"
 		end: Object {
 			column: 11
 			index: 11
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/380/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/380/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/380/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/380/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/380/input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "/"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/380/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -135,7 +135,7 @@ JSRoot {
 							right: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/380/input.js"
 									end: Object {
 										column: 11
 										index: 11
@@ -156,7 +156,7 @@ JSRoot {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/380/input.js"
 									end: Object {
 										column: 10
 										index: 10
@@ -171,7 +171,7 @@ JSRoot {
 								expression: JSRegExpSubExpression {
 									body: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/380/input.js"
 										end: Object {
 											column: 9
 											index: 9
@@ -198,7 +198,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/380/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated regular expression
 

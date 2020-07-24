@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 		end: Object {
 			column: 0
 			index: 44
@@ -36,7 +36,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -51,7 +51,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -66,7 +66,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 22
@@ -83,7 +83,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 11
@@ -100,7 +100,7 @@ JSRoot {
 				}
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -115,7 +115,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 27
@@ -132,7 +132,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 27
@@ -151,7 +151,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 				end: Object {
 					column: 13
 					index: 43
@@ -166,7 +166,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 					end: Object {
 						column: 13
 						index: 43
@@ -183,7 +183,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 7
@@ -199,7 +199,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							end: Object {
 								column: 7
 								index: 37
@@ -216,7 +216,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 								identifierName: "bar"
 								end: Object {
 									column: 12
@@ -232,7 +232,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							end: Object {
 								column: 12
 								index: 42

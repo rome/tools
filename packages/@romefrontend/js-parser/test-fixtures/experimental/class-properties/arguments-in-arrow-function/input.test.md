@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 		end: Object {
 			column: 1
 			index: 60
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 11
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 					end: Object {
 						column: 1
 						index: 60
@@ -130,7 +130,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 								identifierName: "A"
 								end: Object {
 									column: 9
@@ -145,7 +145,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 							end: Object {
 								column: 3
 								index: 58
@@ -163,7 +163,7 @@ JSRoot {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 								end: Object {
 									column: 3
 									index: 58
@@ -181,7 +181,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 7
@@ -196,7 +196,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -211,7 +211,7 @@ JSRoot {
 									}
 									value: JSArrowFunctionExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 											end: Object {
 												column: 25
 												index: 53
@@ -226,7 +226,7 @@ JSRoot {
 										body: JSReferenceIdentifier {
 											name: "arguments"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 												identifierName: "arguments"
 												end: Object {
 													column: 25
@@ -248,7 +248,7 @@ JSRoot {
 											returnType: undefined
 											thisType: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 												end: Object {
 													column: 15
 													index: 43
@@ -265,7 +265,7 @@ JSRoot {
 									definite: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 										end: Object {
 											column: 26
 											index: 54
@@ -290,7 +290,7 @@ JSRoot {
 											line: 3
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -318,7 +318,7 @@ JSRoot {
 
 ```
 
- input.js:3:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/arguments-in-arrow-function/input.js:3:16 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/526/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/526/input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/526/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/526/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/526/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/526/input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/526/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 8
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/526/input.js"
 							end: Object {
 								column: 8
 								index: 8

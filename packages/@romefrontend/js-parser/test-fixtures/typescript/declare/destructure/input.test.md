@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/destructure/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/destructure/input.ts"
 		end: Object {
 			column: 0
 			index: 50
@@ -35,7 +35,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/destructure/input.ts"
 				end: Object {
 					column: 49
 					index: 49
@@ -50,7 +50,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/destructure/input.ts"
 					end: Object {
 						column: 49
 						index: 49
@@ -67,7 +67,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/destructure/input.ts"
 								end: Object {
 									column: 48
 									index: 48
@@ -85,7 +85,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/declare/destructure/input.ts"
 												identifierName: "x"
 												end: Object {
 													column: 17
@@ -100,7 +100,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/declare/destructure/input.ts"
 											end: Object {
 												column: 17
 												index: 17
@@ -116,7 +116,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/declare/destructure/input.ts"
 											identifierName: "x"
 											end: Object {
 												column: 17
@@ -131,7 +131,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/destructure/input.ts"
 										end: Object {
 											column: 17
 											index: 17
@@ -149,7 +149,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "y"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/declare/destructure/input.ts"
 												identifierName: "y"
 												end: Object {
 													column: 20
@@ -164,7 +164,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/declare/destructure/input.ts"
 											end: Object {
 												column: 20
 												index: 20
@@ -180,7 +180,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/declare/destructure/input.ts"
 											identifierName: "y"
 											end: Object {
 												column: 20
@@ -195,7 +195,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/destructure/input.ts"
 										end: Object {
 											column: 20
 											index: 20
@@ -212,7 +212,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/declare/destructure/input.ts"
 									end: Object {
 										column: 48
 										index: 48
@@ -226,7 +226,7 @@ JSRoot {
 								}
 								typeAnnotation: TSObjectTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/destructure/input.ts"
 										end: Object {
 											column: 48
 											index: 48
@@ -244,7 +244,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/declare/destructure/input.ts"
 														identifierName: "x"
 														end: Object {
 															column: 27
@@ -259,7 +259,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/declare/destructure/input.ts"
 													end: Object {
 														column: 27
 														index: 27
@@ -275,7 +275,7 @@ JSRoot {
 											optional: false
 											readonly: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/declare/destructure/input.ts"
 												end: Object {
 													column: 36
 													index: 36
@@ -289,7 +289,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/declare/destructure/input.ts"
 													end: Object {
 														column: 35
 														index: 35
@@ -308,7 +308,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "y"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/declare/destructure/input.ts"
 														identifierName: "y"
 														end: Object {
 															column: 38
@@ -323,7 +323,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/declare/destructure/input.ts"
 													end: Object {
 														column: 38
 														index: 38
@@ -339,7 +339,7 @@ JSRoot {
 											optional: false
 											readonly: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/declare/destructure/input.ts"
 												end: Object {
 													column: 46
 													index: 46
@@ -353,7 +353,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/declare/destructure/input.ts"
 													end: Object {
 														column: 46
 														index: 46
@@ -373,7 +373,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/destructure/input.ts"
 							end: Object {
 								column: 48
 								index: 48

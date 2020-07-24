@@ -8,12 +8,12 @@
 import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSConditionalExpression = NodeBaseWithComments & {
+export interface JSConditionalExpression extends NodeBaseWithComments {
 	type: "JSConditionalExpression";
 	test: AnyJSExpression;
 	alternate: AnyJSExpression;
 	consequent: AnyJSExpression;
-};
+}
 
 export const jsConditionalExpression = createBuilder<JSConditionalExpression>(
 	"JSConditionalExpression",

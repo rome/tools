@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-meta-property/new-new-target/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-meta-property/new-new-target/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/new-new-target/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-meta-property/new-new-target/input.js"
 				end: Object {
 					column: 1
 					index: 36
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/new-new-target/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-meta-property/new-new-target/input.js"
 					end: Object {
 						column: 1
 						index: 36
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-meta-property/new-new-target/input.js"
 							end: Object {
 								column: 19
 								index: 34
@@ -121,7 +121,7 @@ JSRoot {
 							optional: undefined
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-meta-property/new-new-target/input.js"
 								end: Object {
 									column: 18
 									index: 33
@@ -135,7 +135,7 @@ JSRoot {
 							}
 							callee: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-meta-property/new-new-target/input.js"
 									end: Object {
 										column: 18
 										index: 33
@@ -150,7 +150,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-meta-property/new-new-target/input.js"
 										identifierName: "new"
 										end: Object {
 											column: 11
@@ -167,7 +167,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "target"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-meta-property/new-new-target/input.js"
 										identifierName: "target"
 										end: Object {
 											column: 18

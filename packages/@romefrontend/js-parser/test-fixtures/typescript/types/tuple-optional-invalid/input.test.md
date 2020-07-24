@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/tuple-optional-invalid/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/tuple-optional-invalid/input.ts"
 		end: Object {
 			column: 0
 			index: 25
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "A required element cannot follow an optional element."}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-optional-invalid/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-optional-invalid/input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-optional-invalid/input.ts"
 					end: Object {
 						column: 24
 						index: 24
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/tuple-optional-invalid/input.ts"
 								end: Object {
 									column: 24
 									index: 24
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/tuple-optional-invalid/input.ts"
 									end: Object {
 										column: 24
 										index: 24
@@ -120,7 +120,7 @@ JSRoot {
 								typeAnnotation: TSTupleType {
 									rest: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-optional-invalid/input.ts"
 										end: Object {
 											column: 24
 											index: 24
@@ -137,7 +137,7 @@ JSRoot {
 											name: undefined
 											optional: true
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-optional-invalid/input.ts"
 												end: Object {
 													column: 15
 													index: 15
@@ -151,7 +151,7 @@ JSRoot {
 											}
 											typeAnnotation: TSStringKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-optional-invalid/input.ts"
 													end: Object {
 														column: 14
 														index: 14
@@ -169,7 +169,7 @@ JSRoot {
 											name: undefined
 											optional: false
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-optional-invalid/input.ts"
 												end: Object {
 													column: 23
 													index: 23
@@ -183,7 +183,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-optional-invalid/input.ts"
 													end: Object {
 														column: 23
 														index: 23
@@ -203,7 +203,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/tuple-optional-invalid/input.ts"
 							end: Object {
 								column: 24
 								index: 24
@@ -227,7 +227,7 @@ JSRoot {
 
 ```
 
- input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/tuple-optional-invalid/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A required element cannot follow an optional element.
 

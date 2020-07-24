@@ -12,14 +12,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/1/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -35,7 +35,7 @@ JSRoot {
 		JSDirective {
 			value: "\\u{714E}\\u{8336}"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/1/input.js"
 				end: Object {
 					column: 18
 					index: 18

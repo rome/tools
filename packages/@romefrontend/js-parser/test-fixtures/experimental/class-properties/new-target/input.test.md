@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/new-target/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/new-target/input.js"
 		end: Object {
 			column: 0
 			index: 258
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/new-target/input.js"
 					identifierName: "X"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/new-target/input.js"
 				end: Object {
 					column: 1
 					index: 257
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/new-target/input.js"
 					end: Object {
 						column: 1
 						index: 257
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 10
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						value: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 23
 									index: 33
@@ -132,7 +132,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 16
@@ -149,7 +149,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 23
@@ -167,7 +167,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 24
 								index: 34
@@ -192,7 +192,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -211,7 +211,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 10
@@ -226,7 +226,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 45
@@ -242,7 +242,7 @@ JSRoot {
 						value: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 39
 									index: 74
@@ -257,7 +257,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 17
@@ -274,7 +274,7 @@ JSRoot {
 							right: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 39
 										index: 74
@@ -290,7 +290,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 21
 											index: 56
@@ -305,7 +305,7 @@ JSRoot {
 								}
 								right: JSCallExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 39
 											index: 74
@@ -320,7 +320,7 @@ JSRoot {
 									callee: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/new-target/input.js"
 											identifierName: "bar"
 											end: Object {
 												column: 27
@@ -337,7 +337,7 @@ JSRoot {
 									arguments: Array [
 										JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 38
 													index: 73
@@ -352,7 +352,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 31
@@ -369,7 +369,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 38
@@ -391,7 +391,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 41
 								index: 76
@@ -416,7 +416,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 45
@@ -435,7 +435,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 10
@@ -450,7 +450,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 87
@@ -465,7 +465,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 29
 									index: 106
@@ -485,7 +485,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 18
 										index: 95
@@ -500,7 +500,7 @@ JSRoot {
 							}
 							body: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 29
 										index: 106
@@ -515,7 +515,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										identifierName: "new"
 										end: Object {
 											column: 22
@@ -532,7 +532,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "target"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										identifierName: "target"
 										end: Object {
 											column: 29
@@ -551,7 +551,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 30
 								index: 107
@@ -576,7 +576,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 87
@@ -595,7 +595,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "d"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "d"
 									end: Object {
 										column: 10
@@ -610,7 +610,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 118
@@ -625,7 +625,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 37
 									index: 145
@@ -641,7 +641,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 37
 										index: 145
@@ -661,7 +661,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 34
 										index: 142
@@ -677,7 +677,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/new-target/input.js"
 											end: Object {
 												column: 30
 												index: 138
@@ -692,7 +692,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 17
@@ -708,7 +708,7 @@ JSRoot {
 										}
 										right: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 30
 													index: 138
@@ -723,7 +723,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 23
@@ -740,7 +740,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 30
@@ -762,7 +762,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 38
 								index: 146
@@ -787,7 +787,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
 									index: 118
@@ -806,7 +806,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "e"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "e"
 									end: Object {
 										column: 3
@@ -821,7 +821,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 150
@@ -836,7 +836,7 @@ JSRoot {
 						}
 						value: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 16
 									index: 163
@@ -851,7 +851,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 9
@@ -868,7 +868,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 16
@@ -886,7 +886,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 17
 								index: 164
@@ -911,7 +911,7 @@ JSRoot {
 								line: 6
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 150
@@ -930,7 +930,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "f"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "f"
 									end: Object {
 										column: 3
@@ -945,7 +945,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 168
@@ -961,7 +961,7 @@ JSRoot {
 						value: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 32
 									index: 197
@@ -976,7 +976,7 @@ JSRoot {
 							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 10
@@ -993,7 +993,7 @@ JSRoot {
 							right: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 32
 										index: 197
@@ -1009,7 +1009,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 14
 											index: 179
@@ -1024,7 +1024,7 @@ JSRoot {
 								}
 								right: JSCallExpression {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 32
 											index: 197
@@ -1039,7 +1039,7 @@ JSRoot {
 									callee: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/new-target/input.js"
 											identifierName: "bar"
 											end: Object {
 												column: 20
@@ -1056,7 +1056,7 @@ JSRoot {
 									arguments: Array [
 										JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 31
 													index: 196
@@ -1071,7 +1071,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 24
@@ -1088,7 +1088,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 31
@@ -1110,7 +1110,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 34
 								index: 199
@@ -1135,7 +1135,7 @@ JSRoot {
 								line: 7
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 168
@@ -1154,7 +1154,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "g"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "g"
 									end: Object {
 										column: 3
@@ -1169,7 +1169,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1184,7 +1184,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 22
 									index: 222
@@ -1204,7 +1204,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 11
 										index: 211
@@ -1219,7 +1219,7 @@ JSRoot {
 							}
 							body: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 22
 										index: 222
@@ -1234,7 +1234,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										identifierName: "new"
 										end: Object {
 											column: 15
@@ -1251,7 +1251,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "target"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/new-target/input.js"
 										identifierName: "target"
 										end: Object {
 											column: 22
@@ -1270,7 +1270,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 23
 								index: 223
@@ -1295,7 +1295,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1314,7 +1314,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "h"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									identifierName: "h"
 									end: Object {
 										column: 3
@@ -1329,7 +1329,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 227
@@ -1344,7 +1344,7 @@ JSRoot {
 						}
 						value: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 30
 									index: 254
@@ -1360,7 +1360,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 30
 										index: 254
@@ -1380,7 +1380,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 27
 										index: 251
@@ -1396,7 +1396,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/new-target/input.js"
 											end: Object {
 												column: 23
 												index: 247
@@ -1411,7 +1411,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												identifierName: "foo"
 												end: Object {
 													column: 10
@@ -1427,7 +1427,7 @@ JSRoot {
 										}
 										right: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 23
 													index: 247
@@ -1442,7 +1442,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 16
@@ -1459,7 +1459,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/new-target/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 23
@@ -1481,7 +1481,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 31
 								index: 255
@@ -1506,7 +1506,7 @@ JSRoot {
 								line: 9
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
 									index: 227

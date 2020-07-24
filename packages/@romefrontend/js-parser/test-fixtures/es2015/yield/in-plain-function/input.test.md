@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/in-plain-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/in-plain-function/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-plain-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/in-plain-function/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/in-plain-function/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -95,7 +95,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/in-plain-function/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -111,7 +111,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/in-plain-function/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -126,7 +126,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-plain-function/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -141,7 +141,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/in-plain-function/input.js"
 									identifierName: "yield"
 									end: Object {
 										column: 20
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/in-plain-function/input.js"
 								end: Object {
 									column: 23
 									index: 23
@@ -174,7 +174,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/in-plain-function/input.js"
 									end: Object {
 										column: 23
 										index: 23
@@ -200,7 +200,7 @@ JSRoot {
 
 ```
 
- input.js:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/in-plain-function/input.js:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

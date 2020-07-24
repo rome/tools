@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSTaggedTemplateExpression = NodeBaseWithComments & {
+export interface JSTaggedTemplateExpression extends NodeBaseWithComments {
 	type: "JSTaggedTemplateExpression";
 	tag: AnyJSExpression;
 	quasi: JSTemplateLiteral;
 	typeArguments?: TSTypeParameterInstantiation;
-};
+}
 
 export const jsTaggedTemplateExpression = createBuilder<JSTaggedTemplateExpression>(
 	"JSTaggedTemplateExpression",

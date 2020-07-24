@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/3/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/3/input.jsx"
 		end: Object {
 			column: 18
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/3/input.jsx"
 				end: Object {
 					column: 18
 					index: 18
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/3/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/3/input.jsx"
 					end: Object {
 						column: 18
 						index: 18
@@ -82,7 +82,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/3/input.jsx"
 							end: Object {
 								column: 12
 								index: 12
@@ -96,7 +96,7 @@ JSRoot {
 						}
 						expression: JSObjectExpression {
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/3/input.jsx"
 								end: Object {
 									column: 10
 									index: 10
@@ -114,7 +114,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/regression/3/input.jsx"
 												identifierName: "a"
 												end: Object {
 													column: 9
@@ -129,7 +129,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/3/input.jsx"
 											end: Object {
 												column: 9
 												index: 9
@@ -145,7 +145,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/regression/3/input.jsx"
 											identifierName: "a"
 											end: Object {
 												column: 9
@@ -160,7 +160,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/regression/3/input.jsx"
 										end: Object {
 											column: 9
 											index: 9

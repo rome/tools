@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/327/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/327/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected character <emphasis>\u{2b81e}</emphasis>"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/327/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/327/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/327/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "_"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/327/input.js"
 								identifierName: "_"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/327/input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -121,7 +121,7 @@ JSRoot {
 							value: 12
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/327/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -146,7 +146,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/327/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character 𫠞
 

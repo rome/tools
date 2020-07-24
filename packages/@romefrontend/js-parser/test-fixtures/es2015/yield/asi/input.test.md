@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/asi/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/asi/input.js"
 		end: Object {
 			column: 4
 			index: 26
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/asi/input.js"
 				end: Object {
 					column: 4
 					index: 26
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/asi/input.js"
 					end: Object {
 						column: 3
 						index: 25
@@ -71,7 +71,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/asi/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/yield/asi/input.js"
 						end: Object {
 							column: 3
 							index: 25
@@ -102,7 +102,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/asi/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -118,7 +118,7 @@ JSRoot {
 								argument: undefined
 								delegate: false
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/asi/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/asi/input.js"
 								end: Object {
 									column: 1
 									index: 23
@@ -149,7 +149,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "v"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/asi/input.js"
 									identifierName: "v"
 									end: Object {
 										column: 1

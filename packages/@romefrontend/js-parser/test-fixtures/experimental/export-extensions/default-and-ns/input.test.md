@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/export-extensions/default-and-ns/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/export-extensions/default-and-ns/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/export-extensions/default-and-ns/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -51,7 +51,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-and-ns/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-and-ns/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -81,7 +81,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default-and-ns/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 8
@@ -98,7 +98,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/export-extensions/default-and-ns/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -113,7 +113,7 @@ JSRoot {
 				exported: JSIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/export-extensions/default-and-ns/input.js"
 						identifierName: "A"
 						end: Object {
 							column: 16

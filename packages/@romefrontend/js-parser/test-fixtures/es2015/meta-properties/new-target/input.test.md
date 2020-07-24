@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/new-target/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/new-target/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/new-target/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-target/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -133,7 +133,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 20
@@ -150,7 +150,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 27

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/284/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/284/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid left-hand side in arrow function parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/284/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/284/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/284/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/284/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/284/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/284/input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -140,7 +140,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/284/input.js"
 										end: Object {
 											column: 10
 											index: 10
@@ -167,7 +167,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/284/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in arrow function parameters
 

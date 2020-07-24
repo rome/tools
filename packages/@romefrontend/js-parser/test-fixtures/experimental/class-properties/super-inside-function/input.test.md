@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/super-inside-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/super-inside-function/input.js"
 		end: Object {
 			column: 0
 			index: 55
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/super-inside-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/super-inside-function/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/super-inside-function/input.js"
 				end: Object {
 					column: 1
 					index: 54
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/super-inside-function/input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-function/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 5
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 5
 									index: 15
@@ -143,7 +143,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "fn"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-function/input.js"
 									identifierName: "fn"
 									end: Object {
 										column: 19
@@ -158,7 +158,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 3
 									index: 52
@@ -180,7 +180,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-function/input.js"
 									end: Object {
 										column: 21
 										index: 31
@@ -196,7 +196,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/super-inside-function/input.js"
 									end: Object {
 										column: 3
 										index: 52
@@ -211,7 +211,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/super-inside-function/input.js"
 											end: Object {
 												column: 14
 												index: 48
@@ -226,7 +226,7 @@ JSRoot {
 										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-properties/super-inside-function/input.js"
 												end: Object {
 													column: 13
 													index: 47
@@ -240,7 +240,7 @@ JSRoot {
 											}
 											callee: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-properties/super-inside-function/input.js"
 													end: Object {
 														column: 11
 														index: 45
@@ -254,7 +254,7 @@ JSRoot {
 												}
 												object: JSSuper {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-properties/super-inside-function/input.js"
 														end: Object {
 															column: 9
 															index: 43
@@ -271,7 +271,7 @@ JSRoot {
 													value: JSIdentifier {
 														name: "x"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-properties/super-inside-function/input.js"
 															identifierName: "x"
 															end: Object {
 																column: 11
@@ -286,7 +286,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-properties/super-inside-function/input.js"
 														identifierName: "x"
 														end: Object {
 															column: 11
@@ -309,7 +309,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/super-inside-function/input.js"
 							end: Object {
 								column: 3
 								index: 52
@@ -334,7 +334,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 5
 									index: 15
@@ -359,7 +359,7 @@ JSRoot {
 
 ```
 
- input.js:3:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/super-inside-function/input.js:3:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

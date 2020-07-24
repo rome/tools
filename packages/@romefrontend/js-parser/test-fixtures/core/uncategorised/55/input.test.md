@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/55/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/55/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " line comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/55/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/55/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -70,7 +70,7 @@ JSRoot {
 				format: undefined
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/55/input.js"
 					end: Object {
 						column: 2
 						index: 2

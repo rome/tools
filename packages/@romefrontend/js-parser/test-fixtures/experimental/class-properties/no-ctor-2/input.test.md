@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/no-ctor-2/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/no-ctor-2/input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/no-ctor-2/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/no-ctor-2/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/no-ctor-2/input.js"
 				end: Object {
 					column: 1
 					index: 36
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/no-ctor-2/input.js"
 					end: Object {
 						column: 1
 						index: 36
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/no-ctor-2/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 13
 									index: 25
@@ -143,7 +143,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/no-ctor-2/input.js"
 							end: Object {
 								column: 13
 								index: 25
@@ -168,7 +168,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 13
 									index: 25
@@ -188,7 +188,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/no-ctor-2/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -203,7 +203,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 4
 									index: 30
@@ -217,7 +217,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/no-ctor-2/input.js"
 							end: Object {
 								column: 8
 								index: 34
@@ -233,7 +233,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 8
 									index: 34
@@ -256,7 +256,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 6
 									index: 32
@@ -282,7 +282,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/no-ctor-2/input.js"
 								end: Object {
 									column: 4
 									index: 30
@@ -307,7 +307,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/no-ctor-2/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have a non-static field named 'constructor'
 

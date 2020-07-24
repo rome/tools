@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/namespace-tag/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/namespace-tag/input.jsx"
 		end: Object {
 			column: 0
 			index: 33
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/namespace-tag/input.jsx"
 				end: Object {
 					column: 12
 					index: 12
@@ -51,7 +51,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "Bar"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/namespace-tag/input.jsx"
 							end: Object {
 								column: 8
 								index: 8
@@ -65,7 +65,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/namespace-tag/input.jsx"
 						end: Object {
 							column: 8
 							index: 8
@@ -80,7 +80,7 @@ JSRoot {
 					namespace: JSXIdentifier {
 						name: "Foo"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/namespace-tag/input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -99,7 +99,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/namespace-tag/input.jsx"
 					end: Object {
 						column: 11
 						index: 11
@@ -115,7 +115,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/namespace-tag/input.jsx"
 				end: Object {
 					column: 19
 					index: 32
@@ -132,7 +132,7 @@ JSRoot {
 					name: JSXIdentifier {
 						name: "Bar"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/namespace-tag/input.jsx"
 							end: Object {
 								column: 8
 								index: 21
@@ -146,7 +146,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/namespace-tag/input.jsx"
 						end: Object {
 							column: 8
 							index: 21
@@ -161,7 +161,7 @@ JSRoot {
 					namespace: JSXIdentifier {
 						name: "Foo"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/namespace-tag/input.jsx"
 							end: Object {
 								column: 4
 								index: 17
@@ -180,7 +180,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/namespace-tag/input.jsx"
 					end: Object {
 						column: 19
 						index: 32

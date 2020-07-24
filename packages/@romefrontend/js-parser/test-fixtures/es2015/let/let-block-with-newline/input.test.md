@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-block-with-newline/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-block-with-newline/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " ASI"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-block-with-newline/input.js"
 				end: Object {
 					column: 17
 					index: 30
@@ -53,7 +53,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-block-with-newline/input.js"
 				end: Object {
 					column: 1
 					index: 39
@@ -68,7 +68,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: false
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-block-with-newline/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -84,7 +84,7 @@ JSRoot {
 			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-block-with-newline/input.js"
 					end: Object {
 						column: 1
 						index: 39
@@ -100,7 +100,7 @@ JSRoot {
 					JSLabeledStatement {
 						trailingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-block-with-newline/input.js"
 							end: Object {
 								column: 10
 								index: 23
@@ -115,7 +115,7 @@ JSRoot {
 						label: JSIdentifier {
 							name: "L"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-block-with-newline/input.js"
 								identifierName: "L"
 								end: Object {
 									column: 5
@@ -132,7 +132,7 @@ JSRoot {
 						body: JSExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-block-with-newline/input.js"
 								end: Object {
 									column: 10
 									index: 23
@@ -148,7 +148,7 @@ JSRoot {
 								name: "let"
 								trailingComments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/let/let-block-with-newline/input.js"
 									identifierName: "let"
 									end: Object {
 										column: 10
@@ -169,7 +169,7 @@ JSRoot {
 						directives: Array []
 						leadingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-block-with-newline/input.js"
 							end: Object {
 								column: 6
 								index: 37

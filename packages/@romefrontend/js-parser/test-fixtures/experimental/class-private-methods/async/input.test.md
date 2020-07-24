@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/async/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/async/input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/async/input.js"
 					identifierName: "Hotel"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/async/input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/async/input.js"
 					end: Object {
 						column: 1
 						index: 60
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "evil"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/async/input.js"
 									identifierName: "evil"
 									end: Object {
 										column: 13
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async/input.js"
 								end: Object {
 									column: 13
 									index: 27
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/async/input.js"
 							end: Object {
 								column: 3
 								index: 58
@@ -139,7 +139,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async/input.js"
 								end: Object {
 									column: 15
 									index: 29
@@ -165,7 +165,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async/input.js"
 								end: Object {
 									column: 13
 									index: 27
@@ -181,7 +181,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/async/input.js"
 								end: Object {
 									column: 3
 									index: 58
@@ -196,7 +196,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/async/input.js"
 										end: Object {
 											column: 22
 											index: 54
@@ -210,7 +210,7 @@ JSRoot {
 									}
 									expression: JSAwaitExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/async/input.js"
 											end: Object {
 												column: 21
 												index: 53
@@ -225,7 +225,7 @@ JSRoot {
 										argument: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-methods/async/input.js"
 												end: Object {
 													column: 21
 													index: 53
@@ -240,7 +240,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "notReally"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/async/input.js"
 													identifierName: "notReally"
 													end: Object {
 														column: 19

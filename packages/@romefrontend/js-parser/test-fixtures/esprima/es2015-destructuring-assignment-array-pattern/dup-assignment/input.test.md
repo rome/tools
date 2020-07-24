@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -65,7 +65,7 @@ JSRoot {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -80,7 +80,7 @@ JSRoot {
 				}
 				left: JSAssignmentArrayPattern {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -95,7 +95,7 @@ JSRoot {
 					rest: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 10
@@ -113,7 +113,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 2
@@ -130,7 +130,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 4
@@ -146,7 +146,7 @@ JSRoot {
 						}
 						JSArrayHole {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-destructuring-assignment-array-pattern/dup-assignment/input.js"
 								end: Object {
 									column: 5
 									index: 5

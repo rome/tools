@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/tuple-rest-after-optional/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/tuple-rest-after-optional/input.ts"
 		end: Object {
 			column: 0
 			index: 57
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-rest-after-optional/input.ts"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-rest-after-optional/input.ts"
 				end: Object {
 					column: 56
 					index: 56
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-rest-after-optional/input.ts"
 					end: Object {
 						column: 56
 						index: 56
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-rest-after-optional/input.ts"
 					end: Object {
 						column: 53
 						index: 53
@@ -104,7 +104,7 @@ JSRoot {
 				rest: JSBindingIdentifier {
 					name: "args"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/tuple-rest-after-optional/input.ts"
 						identifierName: "args"
 						end: Object {
 							column: 20
@@ -120,7 +120,7 @@ JSRoot {
 					meta: JSPatternMeta {
 						optional: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/tuple-rest-after-optional/input.ts"
 							end: Object {
 								column: 52
 								index: 52
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						typeAnnotation: TSTupleType {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/tuple-rest-after-optional/input.ts"
 								end: Object {
 									column: 52
 									index: 52
@@ -150,7 +150,7 @@ JSRoot {
 								name: undefined
 								optional: false
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/tuple-rest-after-optional/input.ts"
 									end: Object {
 										column: 51
 										index: 51
@@ -164,7 +164,7 @@ JSRoot {
 								}
 								typeAnnotation: TSArrayType {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 51
 											index: 51
@@ -178,7 +178,7 @@ JSRoot {
 									}
 									elementType: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 49
 												index: 49
@@ -198,7 +198,7 @@ JSRoot {
 									name: undefined
 									optional: false
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 29
 											index: 29
@@ -212,7 +212,7 @@ JSRoot {
 									}
 									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 29
 												index: 29
@@ -230,7 +230,7 @@ JSRoot {
 									name: undefined
 									optional: true
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 38
 											index: 38
@@ -244,7 +244,7 @@ JSRoot {
 									}
 									typeAnnotation: TSStringKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 37
 												index: 37

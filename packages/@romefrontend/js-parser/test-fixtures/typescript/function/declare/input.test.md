@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/declare/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/declare/input.ts"
 		end: Object {
 			column: 0
 			index: 56
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/function/declare/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "function"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/declare/input.ts"
 					identifierName: "function"
 					end: Object {
 						column: 16
@@ -76,7 +76,7 @@ JSRoot {
 			}
 			declare: true
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/declare/input.ts"
 				end: Object {
 					column: 27
 					index: 55
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/declare/input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -113,7 +113,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "f"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/declare/input.ts"
 							identifierName: "f"
 							end: Object {
 								column: 18
@@ -130,7 +130,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 18
 									index: 18
@@ -149,7 +149,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/declare/input.ts"
 					end: Object {
 						column: 27
 						index: 55
@@ -164,7 +164,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/declare/input.ts"
 							end: Object {
 								column: 20
 								index: 20
@@ -179,7 +179,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -195,7 +195,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/declare/input.ts"
 							end: Object {
 								column: 21
 								index: 21
@@ -210,7 +210,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 21
 									index: 21
@@ -226,7 +226,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/declare/input.ts"
 							end: Object {
 								column: 27
 								index: 27
@@ -242,7 +242,7 @@ JSRoot {
 							operator: "void"
 							prefix: true
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 27
 									index: 27
@@ -257,7 +257,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/declare/input.ts"
 									end: Object {
 										column: 27
 										index: 27
@@ -276,7 +276,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "function"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								identifierName: "function"
 								end: Object {
 									column: 16
@@ -292,7 +292,7 @@ JSRoot {
 						}
 						declare: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/declare/input.ts"
 							end: Object {
 								column: 27
 								index: 55
@@ -313,7 +313,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 18
 									index: 46
@@ -329,7 +329,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "f"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/declare/input.ts"
 										identifierName: "f"
 										end: Object {
 											column: 18
@@ -346,7 +346,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/declare/input.ts"
 											end: Object {
 												column: 18
 												index: 46
@@ -365,7 +365,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/declare/input.ts"
 								end: Object {
 									column: 27
 									index: 55
@@ -380,7 +380,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/declare/input.ts"
 										end: Object {
 											column: 23
 											index: 51
@@ -394,7 +394,7 @@ JSRoot {
 									}
 									expression: TSTypeAssertion {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/declare/input.ts"
 											end: Object {
 												column: 23
 												index: 51
@@ -409,7 +409,7 @@ JSRoot {
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/declare/input.ts"
 												end: Object {
 													column: 22
 													index: 50
@@ -425,7 +425,7 @@ JSRoot {
 										typeAnnotation: TSTypeReference {
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/declare/input.ts"
 												end: Object {
 													column: 20
 													index: 48
@@ -440,7 +440,7 @@ JSRoot {
 											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/declare/input.ts"
 													identifierName: "T"
 													end: Object {
 														column: 20
@@ -459,7 +459,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/declare/input.ts"
 										end: Object {
 											column: 24
 											index: 52
@@ -474,7 +474,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/declare/input.ts"
 											end: Object {
 												column: 24
 												index: 52
@@ -490,7 +490,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/declare/input.ts"
 										end: Object {
 											column: 27
 											index: 55
@@ -505,7 +505,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/declare/input.ts"
 											identifierName: "T"
 											end: Object {
 												column: 26
@@ -534,7 +534,7 @@ JSRoot {
 
 ```
 
- input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/function/declare/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

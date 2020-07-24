@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/107/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/107/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/107/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/107/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/107/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/107/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -101,7 +101,7 @@ JSRoot {
 							sticky: false
 							unicode: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/107/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -115,7 +115,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/107/input.js"
 									end: Object {
 										column: 18
 										index: 19
@@ -131,7 +131,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/107/input.js"
 											end: Object {
 												column: 10
 												index: 10
@@ -149,7 +149,7 @@ JSRoot {
 										max: undefined
 										min: 1
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/107/input.js"
 											end: Object {
 												column: 18
 												index: 18
@@ -164,7 +164,7 @@ JSRoot {
 										target: JSRegExpGroupCapture {
 											name: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/107/input.js"
 												end: Object {
 													column: 18
 													index: 18
@@ -178,7 +178,7 @@ JSRoot {
 											}
 											expression: JSRegExpSubExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/107/input.js"
 													end: Object {
 														column: 17
 														index: 17
@@ -194,7 +194,7 @@ JSRoot {
 													JSRegExpCharSet {
 														invert: true
 														loc: Object {
-															filename: "input.js"
+															filename: "core/uncategorised/107/input.js"
 															end: Object {
 																column: 17
 																index: 17
@@ -210,7 +210,7 @@ JSRoot {
 															JSRegExpCharacter {
 																value: "="
 																loc: Object {
-																	filename: "input.js"
+																	filename: "core/uncategorised/107/input.js"
 																	end: Object {
 																		column: 14
 																		index: 14
@@ -225,7 +225,7 @@ JSRoot {
 															}
 															JSRegExpWhiteSpaceCharacter {
 																loc: Object {
-																	filename: "input.js"
+																	filename: "core/uncategorised/107/input.js"
 																	end: Object {
 																		column: 16
 																		index: 16

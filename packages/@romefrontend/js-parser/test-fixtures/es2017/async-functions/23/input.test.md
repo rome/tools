@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/23/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/23/input.js"
 		end: Object {
 			column: 28
 			index: 28
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/23/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/23/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/23/input.js"
 								identifierName: "obj"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/23/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/23/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -113,7 +113,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "async"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/23/input.js"
 												identifierName: "async"
 												end: Object {
 													column: 17
@@ -128,7 +128,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/23/input.js"
 											identifierName: "async"
 											end: Object {
 												column: 17
@@ -145,7 +145,7 @@ JSRoot {
 									value: JSStringLiteral {
 										value: "test"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/23/input.js"
 											end: Object {
 												column: 25
 												index: 25
@@ -159,7 +159,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2017/async-functions/23/input.js"
 										end: Object {
 											column: 25
 											index: 25

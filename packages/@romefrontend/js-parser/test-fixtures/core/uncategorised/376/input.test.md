@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/376/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/376/input.js"
 		end: Object {
 			column: 2
 			index: 2
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an array element"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/376/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/376/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrayExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/376/input.js"
 					end: Object {
 						column: 2
 						index: 2
@@ -87,7 +87,7 @@ JSRoot {
 				elements: Array [
 					JSArrayHole {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/376/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -103,7 +103,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/376/input.js"
 							end: Object {
 								column: 2
 								index: 2
@@ -127,7 +127,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/376/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an array element
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/23/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/23/input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/23/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/23/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 13
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/23/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -91,7 +91,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/23/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -113,7 +113,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/23/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -128,7 +128,7 @@ JSRoot {
 				params: Array [
 					JSBindingObjectPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/object-rest-spread/23/input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -144,7 +144,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/23/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -160,7 +160,7 @@ JSRoot {
 						rest: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/object-rest-spread/23/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 19
@@ -180,7 +180,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: ""
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/object-rest-spread/23/input.js"
 											identifierName: ""
 											end: Object {
 												column: 21
@@ -195,7 +195,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/23/input.js"
 										end: Object {
 											column: 21
 											index: 21
@@ -211,7 +211,7 @@ JSRoot {
 								value: JSBindingIdentifier {
 									name: ""
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/object-rest-spread/23/input.js"
 										identifierName: ""
 										end: Object {
 											column: 21
@@ -226,7 +226,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/object-rest-spread/23/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -252,7 +252,7 @@ JSRoot {
 
 ```
 
- input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/object-rest-spread/23/input.js:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

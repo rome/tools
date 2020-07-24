@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/adjacent-tags/input.jsx"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/adjacent-tags/input.jsx"
 		end: Object {
 			column: 38
 			index: 38
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/adjacent-tags/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/adjacent-tags/input.jsx"
 				end: Object {
 					column: 38
 					index: 38
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/adjacent-tags/input.jsx"
 					end: Object {
 						column: 38
 						index: 38
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/adjacent-tags/input.jsx"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/adjacent-tags/input.jsx"
 							end: Object {
 								column: 38
 								index: 38
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSBinaryExpression {
 							operator: "<"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/adjacent-tags/input.jsx"
 								end: Object {
 									column: 38
 									index: 38
@@ -135,7 +135,7 @@ JSRoot {
 							left: JSBinaryExpression {
 								operator: ">"
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/errors/adjacent-tags/input.jsx"
 									end: Object {
 										column: 30
 										index: 30
@@ -150,7 +150,7 @@ JSRoot {
 								right: JSReferenceIdentifier {
 									name: "two"
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/errors/adjacent-tags/input.jsx"
 										identifierName: "two"
 										end: Object {
 											column: 30
@@ -167,7 +167,7 @@ JSRoot {
 								left: JSBinaryExpression {
 									operator: "<"
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/errors/adjacent-tags/input.jsx"
 										end: Object {
 											column: 26
 											index: 26
@@ -182,7 +182,7 @@ JSRoot {
 									right: JSReferenceIdentifier {
 										name: "div"
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/errors/adjacent-tags/input.jsx"
 											identifierName: "div"
 											end: Object {
 												column: 26
@@ -200,7 +200,7 @@ JSRoot {
 										name: JSXIdentifier {
 											name: "div"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 12
 													index: 12
@@ -217,7 +217,7 @@ JSRoot {
 										selfClosing: false
 										typeArguments: undefined
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/errors/adjacent-tags/input.jsx"
 											end: Object {
 												column: 22
 												index: 22
@@ -233,7 +233,7 @@ JSRoot {
 											JSXText {
 												value: "one"
 												loc: Object {
-													filename: "input.jsx"
+													filename: "jsx/errors/adjacent-tags/input.jsx"
 													end: Object {
 														column: 16
 														index: 16
@@ -258,7 +258,7 @@ JSRoot {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/errors/adjacent-tags/input.jsx"
 									end: Object {
 										column: 38
 										index: 38
@@ -272,7 +272,7 @@ JSRoot {
 								}
 								expression: JSRegExpSubExpression {
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/errors/adjacent-tags/input.jsx"
 										end: Object {
 											column: 37
 											index: 37
@@ -288,7 +288,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "d"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 33
 													index: 33
@@ -304,7 +304,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "i"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 34
 													index: 34
@@ -320,7 +320,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: "v"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 35
 													index: 35
@@ -336,7 +336,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: ">"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 36
 													index: 36
@@ -352,7 +352,7 @@ JSRoot {
 										JSRegExpCharacter {
 											value: ";"
 											loc: Object {
-												filename: "input.jsx"
+												filename: "jsx/errors/adjacent-tags/input.jsx"
 												end: Object {
 													column: 37
 													index: 37
@@ -381,7 +381,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/adjacent-tags/input.jsx:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment
     <>...</>?

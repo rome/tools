@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/valid-assignment-pattern-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/valid-assignment-pattern-1/input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/valid-assignment-pattern-1/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/valid-assignment-pattern-1/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "t"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/valid-assignment-pattern-1/input.js"
 						identifierName: "t"
 						end: Object {
 							column: 11
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/valid-assignment-pattern-1/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -96,7 +96,7 @@ JSRoot {
 					elements: Array [
 						JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/categorized/valid-assignment-pattern-1/input.js"
 								end: Object {
 									column: 5
 									index: 5
@@ -111,7 +111,7 @@ JSRoot {
 							object: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/valid-assignment-pattern-1/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 3
@@ -129,7 +129,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/categorized/valid-assignment-pattern-1/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 5
@@ -144,7 +144,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/valid-assignment-pattern-1/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 5

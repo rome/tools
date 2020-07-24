@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/177/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/177/input.js"
 		end: Object {
 			column: 15
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/177/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/177/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/177/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -83,7 +83,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/177/input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -98,7 +98,7 @@ JSRoot {
 					rest: JSBindingIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/177/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 8
@@ -116,7 +116,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/177/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 2

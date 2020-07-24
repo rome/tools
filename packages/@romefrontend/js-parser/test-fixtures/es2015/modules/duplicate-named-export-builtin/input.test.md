@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "toString"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 								identifierName: "toString"
 								end: Object {
 									column: 14
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -97,7 +97,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -118,7 +118,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 				end: Object {
 					column: 20
 					index: 41
@@ -133,7 +133,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 						end: Object {
 							column: 17
 							index: 38
@@ -148,7 +148,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "toString"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 							identifierName: "toString"
 							end: Object {
 								column: 17
@@ -165,7 +165,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "toString"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 							identifierName: "toString"
 							end: Object {
 								column: 17

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/for-await-script/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/for-await-script/input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/for-await-script/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSForStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/for-await-script/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -73,7 +73,7 @@ JSRoot {
 			test: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-script/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 18
@@ -90,7 +90,7 @@ JSRoot {
 			update: JSReferenceIdentifier {
 				name: "of"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-script/input.js"
 					identifierName: "of"
 					end: Object {
 						column: 21
@@ -106,7 +106,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -121,7 +121,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/for-await-script/input.js"
 						identifierName: "b"
 						end: Object {
 							column: 23
@@ -138,7 +138,7 @@ JSRoot {
 			}
 			init: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -153,7 +153,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "await"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/for-await-script/input.js"
 						identifierName: "await"
 						end: Object {
 							column: 9
@@ -171,7 +171,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/top-level-await/for-await-script/input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -189,7 +189,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/for-await-script/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -204,7 +204,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -226,7 +226,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/for-await-script/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

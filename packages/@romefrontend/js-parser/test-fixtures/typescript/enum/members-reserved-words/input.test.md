@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/enum/members-reserved-words/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/enum/members-reserved-words/input.ts"
 		end: Object {
 			column: 0
 			index: 34
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/enum/members-reserved-words/input.ts"
 					identifierName: "E"
 					end: Object {
 						column: 6
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			const: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/enum/members-reserved-words/input.ts"
 				end: Object {
 					column: 1
 					index: 33
@@ -69,7 +69,7 @@ JSRoot {
 					id: JSIdentifier {
 						name: "const"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-reserved-words/input.ts"
 							identifierName: "const"
 							end: Object {
 								column: 9
@@ -85,7 +85,7 @@ JSRoot {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members-reserved-words/input.ts"
 						end: Object {
 							column: 9
 							index: 18
@@ -102,7 +102,7 @@ JSRoot {
 					id: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/enum/members-reserved-words/input.ts"
 							identifierName: "default"
 							end: Object {
 								column: 11
@@ -118,7 +118,7 @@ JSRoot {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/enum/members-reserved-words/input.ts"
 						end: Object {
 							column: 11
 							index: 31

@@ -15,7 +15,7 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSFunctionHead = NodeBaseWithComments & {
+export interface JSFunctionHead extends NodeBaseWithComments {
 	type: "JSFunctionHead";
 	params: Array<AnyJSParamBindingPattern>;
 	rest?: AnyJSTargetBindingPattern;
@@ -25,7 +25,7 @@ export type JSFunctionHead = NodeBaseWithComments & {
 	async?: boolean;
 	typeParameters?: TSTypeParameterDeclaration;
 	returnType?: AnyTSPrimary;
-};
+}
 
 export const jsFunctionHead = createQuickBuilder<JSFunctionHead, "params">(
 	"JSFunctionHead",

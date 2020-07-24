@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -134,7 +134,7 @@ JSRoot {
 							argument: JSReferenceIdentifier {
 								name: "v"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/yield-star-inside-generator-function-declaration/input.js"
 									identifierName: "v"
 									end: Object {
 										column: 28

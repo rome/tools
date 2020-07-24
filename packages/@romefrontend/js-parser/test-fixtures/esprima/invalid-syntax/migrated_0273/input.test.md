@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0273/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0273/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0273/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0273/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0273/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0273/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 24
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0273/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0273/input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0273/input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -159,7 +159,7 @@ JSRoot {
 								line: 1
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0273/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0273/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -197,7 +197,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "m"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0273/input.js"
 										identifierName: "m"
 										end: Object {
 											column: 26
@@ -214,7 +214,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/invalid-syntax/migrated_0273/input.js"
 											end: Object {
 												column: 26
 												index: 26

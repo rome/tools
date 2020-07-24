@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -98,7 +98,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "foo"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 											identifierName: "foo"
 											end: Object {
 												column: 17
@@ -115,7 +115,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 												end: Object {
 													column: 17
 													index: 17
@@ -132,7 +132,7 @@ JSRoot {
 								]
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -147,7 +147,7 @@ JSRoot {
 							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 24
@@ -170,7 +170,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 24
 					index: 50
@@ -186,7 +186,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 19
@@ -201,7 +201,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 					end: Object {
 						column: 24
 						index: 50
@@ -217,7 +217,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 24
 							index: 50
@@ -240,7 +240,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 21
 							index: 47
@@ -257,7 +257,7 @@ JSRoot {
 		}
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 25
 					index: 51

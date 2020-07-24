@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/regression/10448/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/regression/10448/input.js"
 		end: Object {
 			column: 1
 			index: 55
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " not used "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10448/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " not used "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10448/input.js"
 				end: Object {
 					column: 49
 					index: 49
@@ -71,7 +71,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10448/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 12
@@ -86,7 +86,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/10448/input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -102,7 +102,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10448/input.js"
 					end: Object {
 						column: 1
 						index: 55
@@ -124,7 +124,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/10448/input.js"
 					end: Object {
 						column: 51
 						index: 51
@@ -140,7 +140,7 @@ JSRoot {
 					JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/10448/input.js"
 							end: Object {
 								column: 50
 								index: 50
@@ -156,7 +156,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/10448/input.js"
 								end: Object {
 									column: 50
 									index: 50
@@ -173,7 +173,7 @@ JSRoot {
 							JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/10448/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 17
@@ -190,7 +190,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/regression/10448/input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -208,7 +208,7 @@ JSRoot {
 								leadingComments: Array ["0"]
 								trailingComments: Array ["1"]
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/10448/input.js"
 									end: Object {
 										column: 18
 										index: 18

@@ -14,14 +14,14 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSClassProperty = NodeBaseWithComments & {
+export interface JSClassProperty extends NodeBaseWithComments {
 	type: "JSClassProperty";
 	key: AnyJSObjectPropertyKey;
 	meta: JSClassPropertyMeta;
 	value?: AnyJSExpression;
 	typeAnnotation?: AnyTSPrimary;
 	definite?: boolean;
-};
+}
 
 export const jsClassProperty = createBuilder<JSClassProperty>(
 	"JSClassProperty",

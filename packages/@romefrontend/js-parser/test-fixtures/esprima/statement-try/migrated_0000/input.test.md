@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-try/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-try/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-try/migrated_0000/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-try/migrated_0000/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-try/migrated_0000/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-try/migrated_0000/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: "e"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-try/migrated_0000/input.js"
 						identifierName: "e"
 						end: Object {
 							column: 16

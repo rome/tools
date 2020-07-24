@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/body/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/body/input.ts"
 		end: Object {
 			column: 0
 			index: 33
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "N"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body/input.ts"
 					identifierName: "N"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/body/input.ts"
 				end: Object {
 					column: 1
 					index: 32
@@ -65,7 +65,7 @@ JSRoot {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/body/input.ts"
 					end: Object {
 						column: 1
 						index: 32
@@ -80,7 +80,7 @@ JSRoot {
 				body: Array [
 					JSVariableDeclarationStatement {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/body/input.ts"
 							end: Object {
 								column: 16
 								index: 30
@@ -95,7 +95,7 @@ JSRoot {
 						declaration: JSVariableDeclaration {
 							kind: "const"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/module-namespace/body/input.ts"
 								end: Object {
 									column: 16
 									index: 30
@@ -112,7 +112,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/module-namespace/body/input.ts"
 											identifierName: "x"
 											end: Object {
 												column: 11
@@ -127,7 +127,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/module-namespace/body/input.ts"
 										end: Object {
 											column: 15
 											index: 29
@@ -143,7 +143,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/module-namespace/body/input.ts"
 											end: Object {
 												column: 15
 												index: 29

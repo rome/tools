@@ -23,6 +23,7 @@ import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
 import json from "./commands/json";
+import recover from "./commands/recover";
 
 // Hidden commands, useful for internal debugging but not much else
 import _evict from "./commands/_evict";
@@ -113,3 +114,4 @@ serverCommands.set("noop", noop);
 serverCommands.set("_projectDump", _projectDump);
 serverCommands.set("json", json);
 serverCommands.set("init", init);
+serverCommands.set("recover", recover);

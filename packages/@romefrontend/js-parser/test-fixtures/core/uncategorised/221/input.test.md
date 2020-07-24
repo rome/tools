@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/221/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/221/input.js"
 		end: Object {
 			column: 34
 			index: 34
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/221/input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/221/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "implements"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/221/input.js"
 								identifierName: "implements"
 								end: Object {
 									column: 14
@@ -82,7 +82,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/221/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "interface"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/221/input.js"
 								identifierName: "interface"
 								end: Object {
 									column: 25
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/221/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -132,7 +132,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "package"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/221/input.js"
 								identifierName: "package"
 								end: Object {
 									column: 34
@@ -148,7 +148,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/221/input.js"
 							end: Object {
 								column: 34
 								index: 34

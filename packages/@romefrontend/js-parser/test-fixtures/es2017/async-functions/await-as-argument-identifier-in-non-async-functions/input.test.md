@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -64,7 +64,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -84,7 +84,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -100,7 +100,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "await"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-as-argument-identifier-in-non-async-functions/input.js"
 								identifierName: "await"
 								end: Object {
 									column: 6

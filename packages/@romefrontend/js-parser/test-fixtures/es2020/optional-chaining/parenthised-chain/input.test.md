@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/parenthised-chain/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/parenthised-chain/input.js"
 		end: Object {
 			column: 15
 			index: 39
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -64,7 +64,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "c"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 8
@@ -79,7 +79,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						identifierName: "c"
 						end: Object {
 							column: 8
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -110,7 +110,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 2
@@ -128,7 +128,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 5
@@ -144,7 +144,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 5
@@ -163,7 +163,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 11
 					index: 22
@@ -178,7 +178,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 10
 						index: 21
@@ -192,7 +192,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 8
 							index: 19
@@ -208,7 +208,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "c"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "c"
 								end: Object {
 									column: 8
@@ -223,7 +223,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "c"
 							end: Object {
 								column: 8
@@ -239,7 +239,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							end: Object {
 								column: 5
 								index: 16
@@ -254,7 +254,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 2
@@ -272,7 +272,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/parenthised-chain/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 5
@@ -288,7 +288,7 @@ JSRoot {
 							}
 							optional: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 5
@@ -308,7 +308,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 15
 					index: 39
@@ -322,7 +322,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 14
 						index: 38
@@ -338,7 +338,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "e"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "e"
 							end: Object {
 								column: 14
@@ -354,7 +354,7 @@ JSRoot {
 					}
 					optional: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						identifierName: "e"
 						end: Object {
 							column: 14
@@ -370,7 +370,7 @@ JSRoot {
 				}
 				object: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 11
 							index: 35
@@ -386,7 +386,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "d"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "d"
 								end: Object {
 									column: 11
@@ -401,7 +401,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							identifierName: "d"
 							end: Object {
 								column: 11
@@ -417,7 +417,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							end: Object {
 								column: 9
 								index: 33
@@ -433,7 +433,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "c"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/parenthised-chain/input.js"
 									identifierName: "c"
 									end: Object {
 										column: 9
@@ -449,7 +449,7 @@ JSRoot {
 							}
 							optional: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								identifierName: "c"
 								end: Object {
 									column: 9
@@ -465,7 +465,7 @@ JSRoot {
 						}
 						object: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								end: Object {
 									column: 5
 									index: 29
@@ -480,7 +480,7 @@ JSRoot {
 							object: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/parenthised-chain/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 2
@@ -498,7 +498,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "b"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/optional-chaining/parenthised-chain/input.js"
 										identifierName: "b"
 										end: Object {
 											column: 5
@@ -514,7 +514,7 @@ JSRoot {
 								}
 								optional: true
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/parenthised-chain/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 5

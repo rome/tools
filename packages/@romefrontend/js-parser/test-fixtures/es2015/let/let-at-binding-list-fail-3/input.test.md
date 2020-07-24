@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -82,7 +82,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "let"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 										identifierName: "let"
 										end: Object {
 											column: 8
@@ -99,7 +99,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 											end: Object {
 												column: 8
 												index: 8
@@ -116,7 +116,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -131,7 +131,7 @@ JSRoot {
 						init: JSArrayExpression {
 							elements: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 								end: Object {
 									column: 14
 									index: 14

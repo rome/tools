@@ -22,6 +22,7 @@ export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 
 export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 	...DEFAULT_PRINTER_FLAGS,
+	unsafeWrites: false,
 	showAllDiagnostics: false,
 	collectMarkers: false,
 	timing: false,
@@ -37,6 +38,7 @@ export const DEFAULT_CLIENT_REQUEST_FLAGS: ClientRequestFlags = {
 export type ClientRequestFlags = DiagnosticsPrinterFlags & {
 	watch: boolean;
 	review: boolean;
+	unsafeWrites: boolean;
 
 	// Debugging
 	timing: boolean;

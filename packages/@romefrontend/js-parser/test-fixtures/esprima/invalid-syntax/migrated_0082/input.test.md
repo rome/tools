@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0082/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0082/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 3
 						index: 3
@@ -90,7 +90,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0082/input.js"
 									identifierName: ""
 									end: Object {
 										column: 3
@@ -105,7 +105,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0082/input.js"
 								end: Object {
 									column: 3
 									index: 3
@@ -121,7 +121,7 @@ JSRoot {
 						value: JSReferenceIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0082/input.js"
 								identifierName: ""
 								end: Object {
 									column: 3
@@ -136,7 +136,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0082/input.js"
 							end: Object {
 								column: 3
 								index: 3
@@ -154,7 +154,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -169,7 +169,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 4
@@ -186,7 +186,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -201,7 +201,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -217,7 +217,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -232,7 +232,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -248,7 +248,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -264,7 +264,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -280,7 +280,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -295,7 +295,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -311,7 +311,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0082/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -326,7 +326,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0082/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -348,7 +348,7 @@ JSRoot {
 
 ```
 
- input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0082/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 					identifierName: "list"
 					end: Object {
 						column: 20
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "y"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 								identifierName: "y"
 								end: Object {
 									column: 12
@@ -115,7 +115,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-with-const/input.js"
 							end: Object {
 								column: 12
 								index: 12

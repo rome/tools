@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 		end: Object {
 			column: 0
 			index: 91
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword import"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "import"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 								identifierName: "import"
 								end: Object {
 									column: 40
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -121,7 +121,7 @@ JSRoot {
 							value: 123
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -144,7 +144,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 				end: Object {
 					column: 41
 					index: 90
@@ -159,7 +159,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 					end: Object {
 						column: 40
 						index: 89
@@ -181,7 +181,7 @@ JSRoot {
 
 ```
 
- input.js:1:34 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-import/input.js:1:34 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword import
 

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/throw-expression/logical/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/throw-expression/logical/input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/logical/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/throw-expression/logical/input.js"
 				end: Object {
 					column: 1
 					index: 38
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/logical/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/throw-expression/logical/input.js"
 					end: Object {
 						column: 1
 						index: 38
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/throw-expression/logical/input.js"
 							end: Object {
 								column: 18
 								index: 36
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSLogicalExpression {
 							operator: "&&"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/throw-expression/logical/input.js"
 								end: Object {
 									column: 17
 									index: 35
@@ -134,7 +134,7 @@ JSRoot {
 							left: JSBooleanLiteral {
 								value: true
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/throw-expression/logical/input.js"
 									end: Object {
 										column: 6
 										index: 24
@@ -151,7 +151,7 @@ JSRoot {
 								operator: "throw"
 								prefix: true
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/throw-expression/logical/input.js"
 									end: Object {
 										column: 17
 										index: 35
@@ -167,7 +167,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/throw-expression/logical/input.js"
 										end: Object {
 											column: 17
 											index: 35

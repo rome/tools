@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/meta-properties/new-target-inside-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/meta-properties/new-target-inside-params/input.js"
 		end: Object {
 			column: 0
 			index: 74
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 12
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-inside-params/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -89,7 +89,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -104,7 +104,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/new-target-inside-params/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -119,7 +119,7 @@ JSRoot {
 						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-target-inside-params/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 14
@@ -136,7 +136,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -152,7 +152,7 @@ JSRoot {
 						}
 						right: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-target-inside-params/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -167,7 +167,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									identifierName: "new"
 									end: Object {
 										column: 20
@@ -184,7 +184,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "target"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									identifierName: "target"
 									end: Object {
 										column: 27
@@ -207,7 +207,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					identifierName: "Bar"
 					end: Object {
 						column: 12
@@ -222,7 +222,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/meta-properties/new-target-inside-params/input.js"
 				end: Object {
 					column: 41
 					index: 73
@@ -244,7 +244,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 14
 						index: 46
@@ -260,7 +260,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 41
 						index: 73
@@ -275,7 +275,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/meta-properties/new-target-inside-params/input.js"
 							end: Object {
 								column: 39
 								index: 71
@@ -289,7 +289,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/meta-properties/new-target-inside-params/input.js"
 								end: Object {
 									column: 39
 									index: 71
@@ -305,7 +305,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 39
 										index: 71
@@ -325,7 +325,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 36
 										index: 68
@@ -341,7 +341,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/meta-properties/new-target-inside-params/input.js"
 											end: Object {
 												column: 32
 												index: 64
@@ -356,7 +356,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/meta-properties/new-target-inside-params/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 19
@@ -372,7 +372,7 @@ JSRoot {
 										}
 										right: JSMetaProperty {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/meta-properties/new-target-inside-params/input.js"
 												end: Object {
 													column: 32
 													index: 64
@@ -387,7 +387,7 @@ JSRoot {
 											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/new-target-inside-params/input.js"
 													identifierName: "new"
 													end: Object {
 														column: 25
@@ -404,7 +404,7 @@ JSRoot {
 											property: JSIdentifier {
 												name: "target"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/meta-properties/new-target-inside-params/input.js"
 													identifierName: "target"
 													end: Object {
 														column: 32

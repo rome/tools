@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 		end: Object {
 			column: 0
 			index: 46
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 					identifierName: "f"
 					end: Object {
 						column: 16
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 				end: Object {
 					column: 1
 					index: 45
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 					end: Object {
 						column: 1
 						index: 45
@@ -130,7 +130,7 @@ JSRoot {
 						init: undefined
 						update: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 							end: Object {
 								column: 22
 								index: 43
@@ -144,7 +144,7 @@ JSRoot {
 						}
 						body: JSEmptyStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 								end: Object {
 									column: 22
 									index: 43
@@ -160,7 +160,7 @@ JSRoot {
 						test: JSBooleanLiteral {
 							value: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 								end: Object {
 									column: 19
 									index: 40
@@ -185,7 +185,7 @@ JSRoot {
 
 ```
 
- input.js:2:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/async-generators/for-await-no-semi-1/input.js:2:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

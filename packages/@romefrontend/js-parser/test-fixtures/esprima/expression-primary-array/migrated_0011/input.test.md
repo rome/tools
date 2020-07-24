@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-array/migrated_0011/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-array/migrated_0011/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-array/migrated_0011/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-array/migrated_0011/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSArrayExpression {
 					elements: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-primary-array/migrated_0011/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -80,7 +80,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "\u2163\u2161"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-primary-array/migrated_0011/input.js"
 						identifierName: "\u2163\u2161"
 						end: Object {
 							column: 12

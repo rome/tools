@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/97/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/97/input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/97/input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/97/input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/97/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -83,7 +83,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "null"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/97/input.js"
 							identifierName: "null"
 							end: Object {
 								column: 13
@@ -101,7 +101,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "nil"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/97/input.js"
 								identifierName: "nil"
 								end: Object {
 									column: 20
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/97/input.js"
 							end: Object {
 								column: 20
 								index: 20

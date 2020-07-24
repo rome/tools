@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 		end: Object {
 			column: 0
 			index: 28
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -113,7 +113,7 @@ JSRoot {
 					elements: Array [
 						JSBindingAssignmentPattern {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -129,7 +129,7 @@ JSRoot {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -145,7 +145,7 @@ JSRoot {
 							left: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 17
@@ -162,7 +162,7 @@ JSRoot {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 										end: Object {
 											column: 17
 											index: 17

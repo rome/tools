@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -75,7 +75,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -90,7 +90,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -107,7 +107,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -126,7 +126,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 				end: Object {
 					column: 0
 					index: 19
@@ -142,7 +142,7 @@ JSRoot {
 				operator: "+"
 				prefix: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 					end: Object {
 						column: 0
 						index: 19
@@ -157,7 +157,7 @@ JSRoot {
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/invalid-export-default-token/input.js"
 						end: Object {
 							column: 0
 							index: 19
@@ -180,7 +180,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-default-token/input.js:1:17 parse/js ━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

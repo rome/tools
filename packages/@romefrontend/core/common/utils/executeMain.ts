@@ -34,6 +34,7 @@ export default async function executeMain(
 	opts: ExecuteMainOptions,
 ): Promise<{
 	syntaxError: undefined | Diagnostic;
+	exitCode: undefined | number;
 }> {
 	const {path, code, sourceMap, globals, args = []} = opts;
 
@@ -100,7 +101,7 @@ export default async function executeMain(
 					sourceText: truncateSourceText(code, pos, pos),
 				},
 			};
-			return {syntaxError};
+			return {syntaxError, exitCode: undefined};
 		}
 
 		throw err;
@@ -112,12 +113,14 @@ export default async function executeMain(
 	}
 	const res = await script.runInContext(context);
 
+	let exitCode: undefined | number;
+
 	if (typeof res === "object" && res != null && typeof res.main === "function") {
 		const code = await Promise.resolve(res.main(args));
 		if (typeof code === "number") {
-			process.exit(code);
+			exitCode = code;
 		}
 	}
 
-	return {syntaxError: undefined};
+	return {syntaxError: undefined, exitCode};
 }

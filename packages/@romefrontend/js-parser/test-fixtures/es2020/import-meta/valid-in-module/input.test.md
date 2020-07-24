@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/import-meta/valid-in-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/import-meta/valid-in-module/input.js"
 		end: Object {
 			column: 0
 			index: 117
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSMetaProperty {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -110,7 +110,7 @@ JSRoot {
 							meta: JSIdentifier {
 								name: "import"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/valid-in-module/input.js"
 									identifierName: "import"
 									end: Object {
 										column: 16
@@ -127,7 +127,7 @@ JSRoot {
 							property: JSIdentifier {
 								name: "meta"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/valid-in-module/input.js"
 									identifierName: "meta"
 									end: Object {
 										column: 21
@@ -148,7 +148,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 28
 					index: 51
@@ -163,7 +163,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 28
 						index: 51
@@ -180,7 +180,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "url"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								identifierName: "url"
 								end: Object {
 									column: 9
@@ -195,7 +195,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 27
 								index: 50
@@ -209,7 +209,7 @@ JSRoot {
 						}
 						init: JSMemberExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								end: Object {
 									column: 27
 									index: 50
@@ -225,7 +225,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "url"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/import-meta/valid-in-module/input.js"
 										identifierName: "url"
 										end: Object {
 											column: 27
@@ -240,7 +240,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/valid-in-module/input.js"
 									identifierName: "url"
 									end: Object {
 										column: 27
@@ -256,7 +256,7 @@ JSRoot {
 							}
 							object: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/import-meta/valid-in-module/input.js"
 									end: Object {
 										column: 23
 										index: 46
@@ -271,7 +271,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "import"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/import-meta/valid-in-module/input.js"
 										identifierName: "import"
 										end: Object {
 											column: 18
@@ -288,7 +288,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "meta"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2020/import-meta/valid-in-module/input.js"
 										identifierName: "meta"
 										end: Object {
 											column: 23
@@ -310,7 +310,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 12
 					index: 64
@@ -324,7 +324,7 @@ JSRoot {
 			}
 			expression: JSMetaProperty {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 11
 						index: 63
@@ -339,7 +339,7 @@ JSRoot {
 				meta: JSIdentifier {
 					name: "import"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						identifierName: "import"
 						end: Object {
 							column: 6
@@ -356,7 +356,7 @@ JSRoot {
 				property: JSIdentifier {
 					name: "meta"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						identifierName: "meta"
 						end: Object {
 							column: 11
@@ -374,7 +374,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 16
 					index: 81
@@ -388,7 +388,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 15
 						index: 80
@@ -404,7 +404,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "url"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							identifierName: "url"
 							end: Object {
 								column: 15
@@ -419,7 +419,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						identifierName: "url"
 						end: Object {
 							column: 15
@@ -435,7 +435,7 @@ JSRoot {
 				}
 				object: JSMetaProperty {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 11
 							index: 76
@@ -450,7 +450,7 @@ JSRoot {
 					meta: JSIdentifier {
 						name: "import"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							identifierName: "import"
 							end: Object {
 								column: 6
@@ -467,7 +467,7 @@ JSRoot {
 					property: JSIdentifier {
 						name: "meta"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							identifierName: "meta"
 							end: Object {
 								column: 11
@@ -486,7 +486,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 34
 					index: 116
@@ -501,7 +501,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 33
 						index: 115
@@ -516,7 +516,7 @@ JSRoot {
 				right: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 33
 							index: 115
@@ -531,7 +531,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 26
 							index: 108
@@ -547,7 +547,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "couldBeMutable"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								identifierName: "couldBeMutable"
 								end: Object {
 									column: 26
@@ -562,7 +562,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							identifierName: "couldBeMutable"
 							end: Object {
 								column: 26
@@ -578,7 +578,7 @@ JSRoot {
 					}
 					object: JSMetaProperty {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 11
 								index: 93
@@ -593,7 +593,7 @@ JSRoot {
 						meta: JSIdentifier {
 							name: "import"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								identifierName: "import"
 								end: Object {
 									column: 6
@@ -610,7 +610,7 @@ JSRoot {
 						property: JSIdentifier {
 							name: "meta"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/import-meta/valid-in-module/input.js"
 								identifierName: "meta"
 								end: Object {
 									column: 11

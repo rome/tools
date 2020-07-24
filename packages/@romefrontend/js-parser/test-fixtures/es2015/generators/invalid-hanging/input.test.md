@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/generators/invalid-hanging/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/generators/invalid-hanging/input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Generators can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/generators/invalid-hanging/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/generators/invalid-hanging/input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -75,7 +75,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/generators/invalid-hanging/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -92,7 +92,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/generators/invalid-hanging/input.js"
 						identifierName: "foo"
 						end: Object {
 							column: 20
@@ -107,7 +107,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/generators/invalid-hanging/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -123,7 +123,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/generators/invalid-hanging/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -146,7 +146,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/generators/invalid-hanging/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -169,7 +169,7 @@ JSRoot {
 
 ```
 
- input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/generators/invalid-hanging/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Generators can only be declared at the top level or inside a block
 

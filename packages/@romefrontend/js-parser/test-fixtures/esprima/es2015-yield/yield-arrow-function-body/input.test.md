@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -67,7 +67,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -83,7 +83,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "z"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 								identifierName: "z"
 								end: Object {
 									column: 2
@@ -102,7 +102,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -117,7 +117,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -132,7 +132,7 @@ JSRoot {
 							expression: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -147,7 +147,7 @@ JSRoot {
 								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 										identifierName: "yield"
 										end: Object {
 											column: 14
@@ -164,7 +164,7 @@ JSRoot {
 								right: JSReferenceIdentifier {
 									name: "z"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-arrow-function-body/input.js"
 										identifierName: "z"
 										end: Object {
 											column: 18

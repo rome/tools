@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -133,7 +133,7 @@ JSRoot {
 							}
 							callee: JSMemberExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 									end: Object {
 										column: 25
 										index: 25
@@ -148,7 +148,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "obj"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 										identifierName: "obj"
 										end: Object {
 											column: 19
@@ -166,7 +166,7 @@ JSRoot {
 									value: JSIdentifier {
 										name: "yield"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 											identifierName: "yield"
 											end: Object {
 												column: 25
@@ -181,7 +181,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-call-expression-property/input.js"
 										identifierName: "yield"
 										end: Object {
 											column: 25

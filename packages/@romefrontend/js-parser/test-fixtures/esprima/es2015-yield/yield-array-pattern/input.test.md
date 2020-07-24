@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 12
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -97,7 +97,7 @@ JSRoot {
 						JSAssignmentIdentifier {
 							name: "yield"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-array-pattern/input.js"
 								identifierName: "yield"
 								end: Object {
 									column: 7

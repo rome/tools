@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/parses-module/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/parses-module/input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/parses-module/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/parses-module/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -63,7 +63,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "test.js"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/dynamic-import/parses-module/input.js"
 						end: Object {
 							column: 16
 							index: 16

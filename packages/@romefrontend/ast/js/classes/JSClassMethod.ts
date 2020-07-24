@@ -14,14 +14,14 @@ import {
 import {createBuilder} from "../../utils";
 import {AnyJSObjectPropertyKey} from "../unions";
 
-export type JSClassMethod = NodeBaseWithComments & {
+export interface JSClassMethod extends NodeBaseWithComments {
 	type: "JSClassMethod";
 	meta: JSClassPropertyMeta;
 	key: AnyJSObjectPropertyKey;
 	kind: JSClassMethodKind;
 	head: JSFunctionHead;
 	body: JSBlockStatement;
-};
+}
 
 export type JSClassMethodKind = "constructor" | "method" | "get" | "set";
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/class-methods/getter-signature/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/class-methods/getter-signature/input.js"
 		end: Object {
 			column: 1
 			index: 31
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "getter should have no parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/getter-signature/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/getter-signature/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/class-methods/getter-signature/input.js"
 				end: Object {
 					column: 1
 					index: 31
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/class-methods/getter-signature/input.js"
 					end: Object {
 						column: 1
 						index: 31
@@ -112,7 +112,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "prop"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/class-methods/getter-signature/input.js"
 									identifierName: "prop"
 									end: Object {
 										column: 10
@@ -127,7 +127,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/getter-signature/input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -141,7 +141,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/class-methods/getter-signature/input.js"
 							end: Object {
 								column: 19
 								index: 29
@@ -157,7 +157,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/getter-signature/input.js"
 								end: Object {
 									column: 19
 									index: 29
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/getter-signature/input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -205,7 +205,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/class-methods/getter-signature/input.js"
 								end: Object {
 									column: 16
 									index: 26
@@ -221,7 +221,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "arg"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/class-methods/getter-signature/input.js"
 										identifierName: "arg"
 										end: Object {
 											column: 15
@@ -238,7 +238,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/class-methods/getter-signature/input.js"
 											end: Object {
 												column: 15
 												index: 25
@@ -266,7 +266,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class-methods/getter-signature/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ getter should have no parameters
 

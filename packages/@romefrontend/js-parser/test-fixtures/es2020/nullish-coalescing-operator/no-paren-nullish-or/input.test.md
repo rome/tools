@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -64,7 +64,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "h"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 						identifierName: "h"
 						end: Object {
 							column: 16
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSLogicalExpression {
 					operator: "??"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -96,7 +96,7 @@ JSRoot {
 					right: JSReferenceIdentifier {
 						name: "g"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 							identifierName: "g"
 							end: Object {
 								column: 11
@@ -113,7 +113,7 @@ JSRoot {
 					left: JSLogicalExpression {
 						operator: "??"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -128,7 +128,7 @@ JSRoot {
 						left: JSReferenceIdentifier {
 							name: "e"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 								identifierName: "e"
 								end: Object {
 									column: 1
@@ -145,7 +145,7 @@ JSRoot {
 						right: JSReferenceIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/nullish-coalescing-operator/no-paren-nullish-or/input.js"
 								identifierName: "f"
 								end: Object {
 									column: 6

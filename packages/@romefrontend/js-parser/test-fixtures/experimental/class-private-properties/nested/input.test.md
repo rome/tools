@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/nested/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/nested/input.js"
 		end: Object {
 			column: 0
 			index: 783
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Point"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/nested/input.js"
 					identifierName: "Point"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/nested/input.js"
 				end: Object {
 					column: 1
 					index: 782
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/nested/input.js"
 					end: Object {
 						column: 1
 						index: 782
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
 									index: 18
@@ -119,7 +119,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
 									index: 22
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 9
 								index: 23
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
 									index: 18
@@ -178,7 +178,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 4
@@ -193,7 +193,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
 									index: 28
@@ -210,7 +210,7 @@ JSRoot {
 							value: 2
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
 									index: 32
@@ -225,7 +225,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 9
 								index: 33
@@ -250,7 +250,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
 									index: 28
@@ -270,7 +270,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -285,7 +285,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 13
 									index: 48
@@ -299,7 +299,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 3
 								index: 527
@@ -324,7 +324,7 @@ JSRoot {
 								line: 5
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 13
 									index: 48
@@ -346,7 +346,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 27
 									index: 62
@@ -361,7 +361,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 19
 											index: 54
@@ -377,7 +377,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 19
 												index: 54
@@ -393,7 +393,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 15
@@ -410,7 +410,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 15
 													index: 50
@@ -427,7 +427,7 @@ JSRoot {
 								}
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
 											index: 61
@@ -443,7 +443,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
 												index: 61
@@ -459,7 +459,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											identifierName: "y"
 											end: Object {
 												column: 22
@@ -476,7 +476,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 22
 													index: 57
@@ -496,7 +496,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 3
 									index: 527
@@ -511,7 +511,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 17
 											index: 82
@@ -526,7 +526,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 16
 												index: 81
@@ -542,7 +542,7 @@ JSRoot {
 											operator: "+"
 											prefix: true
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 16
 													index: 81
@@ -557,7 +557,7 @@ JSRoot {
 											argument: JSReferenceIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 16
@@ -574,7 +574,7 @@ JSRoot {
 										}
 										left: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 11
 													index: 76
@@ -588,7 +588,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
 														index: 73
@@ -606,7 +606,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "x"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															identifierName: "x"
 															end: Object {
 																column: 11
@@ -621,7 +621,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 11
 															index: 76
@@ -635,7 +635,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 11
 														index: 76
@@ -653,7 +653,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 17
 											index: 100
@@ -668,7 +668,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 16
 												index: 99
@@ -684,7 +684,7 @@ JSRoot {
 											operator: "+"
 											prefix: true
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 16
 													index: 99
@@ -699,7 +699,7 @@ JSRoot {
 											argument: JSReferenceIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													identifierName: "y"
 													end: Object {
 														column: 16
@@ -716,7 +716,7 @@ JSRoot {
 										}
 										left: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 11
 													index: 94
@@ -730,7 +730,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
 														index: 91
@@ -748,7 +748,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "y"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															identifierName: "y"
 															end: Object {
 																column: 11
@@ -763,7 +763,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 11
 															index: 94
@@ -777,7 +777,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 11
 														index: 94
@@ -795,7 +795,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 6
 											index: 523
@@ -810,7 +810,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 5
 												index: 522
@@ -824,7 +824,7 @@ JSRoot {
 										}
 										left: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 12
 													index: 114
@@ -838,7 +838,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
 														index: 110
@@ -855,7 +855,7 @@ JSRoot {
 												value: JSIdentifier {
 													name: "foo"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														identifierName: "foo"
 														end: Object {
 															column: 12
@@ -870,7 +870,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													identifierName: "foo"
 													end: Object {
 														column: 12
@@ -888,7 +888,7 @@ JSRoot {
 										right: JSClassExpression {
 											id: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 5
 													index: 522
@@ -906,7 +906,7 @@ JSRoot {
 												superTypeParameters: undefined
 												typeParameters: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 5
 														index: 522
@@ -924,7 +924,7 @@ JSRoot {
 															id: JSIdentifier {
 																name: "x"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "x"
 																	end: Object {
 																		column: 8
@@ -939,7 +939,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
 																	index: 133
@@ -956,7 +956,7 @@ JSRoot {
 															value: 1
 															format: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
 																	index: 137
@@ -971,7 +971,7 @@ JSRoot {
 														}
 														typeAnnotation: undefined
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 13
 																index: 138
@@ -996,7 +996,7 @@ JSRoot {
 																line: 10
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
 																	index: 133
@@ -1015,7 +1015,7 @@ JSRoot {
 															id: JSIdentifier {
 																name: "y"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "y"
 																	end: Object {
 																		column: 8
@@ -1030,7 +1030,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
 																	index: 147
@@ -1047,7 +1047,7 @@ JSRoot {
 															value: 2
 															format: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
 																	index: 151
@@ -1062,7 +1062,7 @@ JSRoot {
 														}
 														typeAnnotation: undefined
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 13
 																index: 152
@@ -1087,7 +1087,7 @@ JSRoot {
 																line: 11
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
 																	index: 147
@@ -1107,7 +1107,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "constructor"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "constructor"
 																	end: Object {
 																		column: 17
@@ -1122,7 +1122,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 17
 																	index: 171
@@ -1136,7 +1136,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 7
 																index: 239
@@ -1161,7 +1161,7 @@ JSRoot {
 																line: 13
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 17
 																	index: 171
@@ -1183,7 +1183,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 31
 																	index: 185
@@ -1198,7 +1198,7 @@ JSRoot {
 															params: Array [
 																JSBindingAssignmentPattern {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 23
 																			index: 177
@@ -1214,7 +1214,7 @@ JSRoot {
 																		value: 0
 																		format: undefined
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 23
 																				index: 177
@@ -1230,7 +1230,7 @@ JSRoot {
 																	left: JSBindingIdentifier {
 																		name: "x"
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			identifierName: "x"
 																			end: Object {
 																				column: 19
@@ -1247,7 +1247,7 @@ JSRoot {
 																			optional: undefined
 																			typeAnnotation: undefined
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 19
 																					index: 173
@@ -1264,7 +1264,7 @@ JSRoot {
 																}
 																JSBindingAssignmentPattern {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
 																			index: 184
@@ -1280,7 +1280,7 @@ JSRoot {
 																		value: 0
 																		format: undefined
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
 																				index: 184
@@ -1296,7 +1296,7 @@ JSRoot {
 																	left: JSBindingIdentifier {
 																		name: "y"
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			identifierName: "y"
 																			end: Object {
 																				column: 26
@@ -1313,7 +1313,7 @@ JSRoot {
 																			optional: undefined
 																			typeAnnotation: undefined
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 26
 																					index: 180
@@ -1333,7 +1333,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 7
 																	index: 239
@@ -1348,7 +1348,7 @@ JSRoot {
 															body: Array [
 																JSExpressionStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 21
 																			index: 209
@@ -1363,7 +1363,7 @@ JSRoot {
 																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 20
 																				index: 208
@@ -1379,7 +1379,7 @@ JSRoot {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 20
 																					index: 208
@@ -1394,7 +1394,7 @@ JSRoot {
 																			argument: JSReferenceIdentifier {
 																				name: "x"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					identifierName: "x"
 																					end: Object {
 																						column: 20
@@ -1411,7 +1411,7 @@ JSRoot {
 																		}
 																		left: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 15
 																					index: 203
@@ -1425,7 +1425,7 @@ JSRoot {
 																			}
 																			object: JSThisExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 12
 																						index: 200
@@ -1443,7 +1443,7 @@ JSRoot {
 																					id: JSIdentifier {
 																						name: "x"
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							identifierName: "x"
 																							end: Object {
 																								column: 15
@@ -1458,7 +1458,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 15
 																							index: 203
@@ -1472,7 +1472,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 15
 																						index: 203
@@ -1490,7 +1490,7 @@ JSRoot {
 																}
 																JSExpressionStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 21
 																			index: 231
@@ -1505,7 +1505,7 @@ JSRoot {
 																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 20
 																				index: 230
@@ -1521,7 +1521,7 @@ JSRoot {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 20
 																					index: 230
@@ -1536,7 +1536,7 @@ JSRoot {
 																			argument: JSReferenceIdentifier {
 																				name: "y"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					identifierName: "y"
 																					end: Object {
 																						column: 20
@@ -1553,7 +1553,7 @@ JSRoot {
 																		}
 																		left: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 15
 																					index: 225
@@ -1567,7 +1567,7 @@ JSRoot {
 																			}
 																			object: JSThisExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 12
 																						index: 222
@@ -1585,7 +1585,7 @@ JSRoot {
 																					id: JSIdentifier {
 																						name: "y"
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							identifierName: "y"
 																							end: Object {
 																								column: 15
@@ -1600,7 +1600,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 15
 																							index: 225
@@ -1614,7 +1614,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 15
 																						index: 225
@@ -1639,7 +1639,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "x"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "x"
 																	end: Object {
 																		column: 11
@@ -1654,7 +1654,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 252
@@ -1668,7 +1668,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 32
 																index: 273
@@ -1690,7 +1690,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 13
 																	index: 254
@@ -1716,7 +1716,7 @@ JSRoot {
 																line: 18
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 252
@@ -1732,7 +1732,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 32
 																	index: 273
@@ -1747,7 +1747,7 @@ JSRoot {
 															body: Array [
 																JSReturnStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
 																			index: 271
@@ -1761,7 +1761,7 @@ JSRoot {
 																	}
 																	argument: JSMemberExpression {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
 																				index: 271
@@ -1775,7 +1775,7 @@ JSRoot {
 																		}
 																		object: JSThisExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 27
 																					index: 268
@@ -1793,7 +1793,7 @@ JSRoot {
 																				id: JSIdentifier {
 																					name: "x"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						identifierName: "x"
 																						end: Object {
 																							column: 30
@@ -1808,7 +1808,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 30
 																						index: 271
@@ -1822,7 +1822,7 @@ JSRoot {
 																				}
 																			}
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 30
 																					index: 271
@@ -1846,7 +1846,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "x"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "x"
 																	end: Object {
 																		column: 11
@@ -1861,7 +1861,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 285
@@ -1875,7 +1875,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
 																index: 313
@@ -1900,7 +1900,7 @@ JSRoot {
 																line: 19
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 285
@@ -1922,7 +1922,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 18
 																	index: 292
@@ -1938,7 +1938,7 @@ JSRoot {
 																JSBindingIdentifier {
 																	name: "value"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		identifierName: "value"
 																		end: Object {
 																			column: 17
@@ -1955,7 +1955,7 @@ JSRoot {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 17
 																				index: 291
@@ -1974,7 +1974,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 39
 																	index: 313
@@ -1989,7 +1989,7 @@ JSRoot {
 															body: Array [
 																JSExpressionStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 37
 																			index: 311
@@ -2004,7 +2004,7 @@ JSRoot {
 																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 37
 																				index: 311
@@ -2020,7 +2020,7 @@ JSRoot {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 37
 																					index: 311
@@ -2035,7 +2035,7 @@ JSRoot {
 																			argument: JSReferenceIdentifier {
 																				name: "value"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					identifierName: "value"
 																					end: Object {
 																						column: 37
@@ -2052,7 +2052,7 @@ JSRoot {
 																		}
 																		left: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 28
 																					index: 302
@@ -2066,7 +2066,7 @@ JSRoot {
 																			}
 																			object: JSThisExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 25
 																						index: 299
@@ -2084,7 +2084,7 @@ JSRoot {
 																					id: JSIdentifier {
 																						name: "x"
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							identifierName: "x"
 																							end: Object {
 																								column: 28
@@ -2099,7 +2099,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 28
 																							index: 302
@@ -2113,7 +2113,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 28
 																						index: 302
@@ -2138,7 +2138,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "y"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "y"
 																	end: Object {
 																		column: 11
@@ -2153,7 +2153,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 326
@@ -2167,7 +2167,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 32
 																index: 347
@@ -2189,7 +2189,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 13
 																	index: 328
@@ -2215,7 +2215,7 @@ JSRoot {
 																line: 21
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 326
@@ -2231,7 +2231,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 32
 																	index: 347
@@ -2246,7 +2246,7 @@ JSRoot {
 															body: Array [
 																JSReturnStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
 																			index: 345
@@ -2260,7 +2260,7 @@ JSRoot {
 																	}
 																	argument: JSMemberExpression {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
 																				index: 345
@@ -2274,7 +2274,7 @@ JSRoot {
 																		}
 																		object: JSThisExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 27
 																					index: 342
@@ -2292,7 +2292,7 @@ JSRoot {
 																				id: JSIdentifier {
 																					name: "y"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						identifierName: "y"
 																						end: Object {
 																							column: 30
@@ -2307,7 +2307,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 30
 																						index: 345
@@ -2321,7 +2321,7 @@ JSRoot {
 																				}
 																			}
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 30
 																					index: 345
@@ -2345,7 +2345,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "y"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "y"
 																	end: Object {
 																		column: 11
@@ -2360,7 +2360,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 359
@@ -2374,7 +2374,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
 																index: 387
@@ -2399,7 +2399,7 @@ JSRoot {
 																line: 22
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
 																	index: 359
@@ -2421,7 +2421,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 18
 																	index: 366
@@ -2437,7 +2437,7 @@ JSRoot {
 																JSBindingIdentifier {
 																	name: "value"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		identifierName: "value"
 																		end: Object {
 																			column: 17
@@ -2454,7 +2454,7 @@ JSRoot {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 17
 																				index: 365
@@ -2473,7 +2473,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 39
 																	index: 387
@@ -2488,7 +2488,7 @@ JSRoot {
 															body: Array [
 																JSExpressionStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 37
 																			index: 385
@@ -2503,7 +2503,7 @@ JSRoot {
 																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 37
 																				index: 385
@@ -2519,7 +2519,7 @@ JSRoot {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 37
 																					index: 385
@@ -2534,7 +2534,7 @@ JSRoot {
 																			argument: JSReferenceIdentifier {
 																				name: "value"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					identifierName: "value"
 																					end: Object {
 																						column: 37
@@ -2551,7 +2551,7 @@ JSRoot {
 																		}
 																		left: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 28
 																					index: 376
@@ -2565,7 +2565,7 @@ JSRoot {
 																			}
 																			object: JSThisExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 25
 																						index: 373
@@ -2583,7 +2583,7 @@ JSRoot {
 																					id: JSIdentifier {
 																						name: "y"
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							identifierName: "y"
 																							end: Object {
 																								column: 28
@@ -2598,7 +2598,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 28
 																							index: 376
@@ -2612,7 +2612,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 28
 																						index: 376
@@ -2637,7 +2637,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "equals"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "equals"
 																	end: Object {
 																		column: 12
@@ -2652,7 +2652,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
 																	index: 401
@@ -2666,7 +2666,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 63
 																index: 452
@@ -2691,7 +2691,7 @@ JSRoot {
 																line: 24
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
 																	index: 401
@@ -2713,7 +2713,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 15
 																	index: 404
@@ -2729,7 +2729,7 @@ JSRoot {
 																JSBindingIdentifier {
 																	name: "p"
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		identifierName: "p"
 																		end: Object {
 																			column: 14
@@ -2746,7 +2746,7 @@ JSRoot {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 14
 																				index: 403
@@ -2765,7 +2765,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 63
 																	index: 452
@@ -2780,7 +2780,7 @@ JSRoot {
 															body: Array [
 																JSReturnStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 61
 																			index: 450
@@ -2795,7 +2795,7 @@ JSRoot {
 																	argument: JSLogicalExpression {
 																		operator: "&&"
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 61
 																				index: 450
@@ -2810,7 +2810,7 @@ JSRoot {
 																		left: JSBinaryExpression {
 																			operator: "==="
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 41
 																					index: 430
@@ -2824,7 +2824,7 @@ JSRoot {
 																			}
 																			left: JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 32
 																						index: 421
@@ -2838,7 +2838,7 @@ JSRoot {
 																				}
 																				object: JSThisExpression {
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 29
 																							index: 418
@@ -2856,7 +2856,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "x"
 																								end: Object {
 																									column: 32
@@ -2871,7 +2871,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 32
 																								index: 421
@@ -2885,7 +2885,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 32
 																							index: 421
@@ -2901,7 +2901,7 @@ JSRoot {
 																			}
 																			right: JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 41
 																						index: 430
@@ -2916,7 +2916,7 @@ JSRoot {
 																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						identifierName: "p"
 																						end: Object {
 																							column: 38
@@ -2935,7 +2935,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "x"
 																								end: Object {
 																									column: 41
@@ -2950,7 +2950,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 41
 																								index: 430
@@ -2964,7 +2964,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 41
 																							index: 430
@@ -2982,7 +2982,7 @@ JSRoot {
 																		right: JSBinaryExpression {
 																			operator: "==="
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 61
 																					index: 450
@@ -2996,7 +2996,7 @@ JSRoot {
 																			}
 																			left: JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 52
 																						index: 441
@@ -3010,7 +3010,7 @@ JSRoot {
 																				}
 																				object: JSThisExpression {
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 49
 																							index: 438
@@ -3028,7 +3028,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "y"
 																								end: Object {
 																									column: 52
@@ -3043,7 +3043,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 52
 																								index: 441
@@ -3057,7 +3057,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 52
 																							index: 441
@@ -3073,7 +3073,7 @@ JSRoot {
 																			}
 																			right: JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 61
 																						index: 450
@@ -3088,7 +3088,7 @@ JSRoot {
 																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						identifierName: "p"
 																						end: Object {
 																							column: 58
@@ -3107,7 +3107,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "y"
 																								end: Object {
 																									column: 61
@@ -3122,7 +3122,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 61
 																								index: 450
@@ -3136,7 +3136,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 61
 																							index: 450
@@ -3162,7 +3162,7 @@ JSRoot {
 															value: JSIdentifier {
 																name: "toString"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "experimental/class-private-properties/nested/input.js"
 																	identifierName: "toString"
 																	end: Object {
 																		column: 14
@@ -3177,7 +3177,7 @@ JSRoot {
 																}
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 14
 																	index: 468
@@ -3191,7 +3191,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 62
 																index: 516
@@ -3213,7 +3213,7 @@ JSRoot {
 															thisType: undefined
 															typeParameters: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 16
 																	index: 470
@@ -3239,7 +3239,7 @@ JSRoot {
 																line: 26
 															}
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 14
 																	index: 468
@@ -3255,7 +3255,7 @@ JSRoot {
 														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 62
 																	index: 516
@@ -3270,7 +3270,7 @@ JSRoot {
 															body: Array [
 																JSReturnStatement {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 60
 																			index: 514
@@ -3284,7 +3284,7 @@ JSRoot {
 																	}
 																	argument: JSTemplateLiteral {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 60
 																				index: 514
@@ -3302,7 +3302,7 @@ JSRoot {
 																				raw: "Point<"
 																				tail: false
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 33
 																						index: 487
@@ -3320,7 +3320,7 @@ JSRoot {
 																				raw: ","
 																				tail: false
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 46
 																						index: 500
@@ -3338,7 +3338,7 @@ JSRoot {
 																				raw: ">"
 																				tail: true
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 59
 																						index: 513
@@ -3355,7 +3355,7 @@ JSRoot {
 																		expressions: Array [
 																			JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 43
 																						index: 497
@@ -3369,7 +3369,7 @@ JSRoot {
 																				}
 																				object: JSThisExpression {
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 40
 																							index: 494
@@ -3387,7 +3387,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "x"
 																								end: Object {
 																									column: 43
@@ -3402,7 +3402,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 43
 																								index: 497
@@ -3416,7 +3416,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 43
 																							index: 497
@@ -3432,7 +3432,7 @@ JSRoot {
 																			}
 																			JSMemberExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 56
 																						index: 510
@@ -3446,7 +3446,7 @@ JSRoot {
 																				}
 																				object: JSThisExpression {
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 53
 																							index: 507
@@ -3464,7 +3464,7 @@ JSRoot {
 																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
-																								filename: "input.js"
+																								filename: "experimental/class-private-properties/nested/input.js"
 																								identifierName: "y"
 																								end: Object {
 																									column: 56
@@ -3479,7 +3479,7 @@ JSRoot {
 																							}
 																						}
 																						loc: Object {
-																							filename: "input.js"
+																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 56
 																								index: 510
@@ -3493,7 +3493,7 @@ JSRoot {
 																						}
 																					}
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 56
 																							index: 510
@@ -3527,7 +3527,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 7
@@ -3542,7 +3542,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 536
@@ -3556,7 +3556,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 28
 								index: 557
@@ -3578,7 +3578,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 9
 									index: 538
@@ -3604,7 +3604,7 @@ JSRoot {
 								line: 30
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 536
@@ -3620,7 +3620,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 28
 									index: 557
@@ -3635,7 +3635,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
 											index: 555
@@ -3649,7 +3649,7 @@ JSRoot {
 									}
 									argument: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
 												index: 555
@@ -3663,7 +3663,7 @@ JSRoot {
 										}
 										object: JSThisExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 23
 													index: 552
@@ -3681,7 +3681,7 @@ JSRoot {
 												id: JSIdentifier {
 													name: "x"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														identifierName: "x"
 														end: Object {
 															column: 26
@@ -3696,7 +3696,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 26
 														index: 555
@@ -3710,7 +3710,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 26
 													index: 555
@@ -3734,7 +3734,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 7
@@ -3749,7 +3749,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 565
@@ -3763,7 +3763,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 35
 								index: 593
@@ -3788,7 +3788,7 @@ JSRoot {
 								line: 31
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 565
@@ -3810,7 +3810,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 14
 									index: 572
@@ -3826,7 +3826,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										identifierName: "value"
 										end: Object {
 											column: 13
@@ -3843,7 +3843,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 13
 												index: 571
@@ -3862,7 +3862,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 35
 									index: 593
@@ -3877,7 +3877,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 33
 											index: 591
@@ -3892,7 +3892,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 33
 												index: 591
@@ -3908,7 +3908,7 @@ JSRoot {
 											operator: "+"
 											prefix: true
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 33
 													index: 591
@@ -3923,7 +3923,7 @@ JSRoot {
 											argument: JSReferenceIdentifier {
 												name: "value"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													identifierName: "value"
 													end: Object {
 														column: 33
@@ -3940,7 +3940,7 @@ JSRoot {
 										}
 										left: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 24
 													index: 582
@@ -3954,7 +3954,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 21
 														index: 579
@@ -3972,7 +3972,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "x"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															identifierName: "x"
 															end: Object {
 																column: 24
@@ -3987,7 +3987,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 24
 															index: 582
@@ -4001,7 +4001,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 24
 														index: 582
@@ -4026,7 +4026,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 7
@@ -4041,7 +4041,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 602
@@ -4055,7 +4055,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 28
 								index: 623
@@ -4077,7 +4077,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 9
 									index: 604
@@ -4103,7 +4103,7 @@ JSRoot {
 								line: 33
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 602
@@ -4119,7 +4119,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 28
 									index: 623
@@ -4134,7 +4134,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
 											index: 621
@@ -4148,7 +4148,7 @@ JSRoot {
 									}
 									argument: JSMemberExpression {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
 												index: 621
@@ -4162,7 +4162,7 @@ JSRoot {
 										}
 										object: JSThisExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 23
 													index: 618
@@ -4180,7 +4180,7 @@ JSRoot {
 												id: JSIdentifier {
 													name: "y"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														identifierName: "y"
 														end: Object {
 															column: 26
@@ -4195,7 +4195,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 26
 														index: 621
@@ -4209,7 +4209,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 26
 													index: 621
@@ -4233,7 +4233,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "y"
 									end: Object {
 										column: 7
@@ -4248,7 +4248,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 631
@@ -4262,7 +4262,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 35
 								index: 659
@@ -4287,7 +4287,7 @@ JSRoot {
 								line: 34
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
 									index: 631
@@ -4309,7 +4309,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 14
 									index: 638
@@ -4325,7 +4325,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										identifierName: "value"
 										end: Object {
 											column: 13
@@ -4342,7 +4342,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 13
 												index: 637
@@ -4361,7 +4361,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 35
 									index: 659
@@ -4376,7 +4376,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 33
 											index: 657
@@ -4391,7 +4391,7 @@ JSRoot {
 									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 33
 												index: 657
@@ -4407,7 +4407,7 @@ JSRoot {
 											operator: "+"
 											prefix: true
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 33
 													index: 657
@@ -4422,7 +4422,7 @@ JSRoot {
 											argument: JSReferenceIdentifier {
 												name: "value"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													identifierName: "value"
 													end: Object {
 														column: 33
@@ -4439,7 +4439,7 @@ JSRoot {
 										}
 										left: JSMemberExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 24
 													index: 648
@@ -4453,7 +4453,7 @@ JSRoot {
 											}
 											object: JSThisExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 21
 														index: 645
@@ -4471,7 +4471,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "y"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															identifierName: "y"
 															end: Object {
 																column: 24
@@ -4486,7 +4486,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 24
 															index: 648
@@ -4500,7 +4500,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 24
 														index: 648
@@ -4525,7 +4525,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "equals"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "equals"
 									end: Object {
 										column: 8
@@ -4540,7 +4540,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
 									index: 669
@@ -4554,7 +4554,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 59
 								index: 720
@@ -4579,7 +4579,7 @@ JSRoot {
 								line: 36
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
 									index: 669
@@ -4601,7 +4601,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 11
 									index: 672
@@ -4617,7 +4617,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "p"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										identifierName: "p"
 										end: Object {
 											column: 10
@@ -4634,7 +4634,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 10
 												index: 671
@@ -4653,7 +4653,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 59
 									index: 720
@@ -4668,7 +4668,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 57
 											index: 718
@@ -4683,7 +4683,7 @@ JSRoot {
 									argument: JSLogicalExpression {
 										operator: "&&"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 57
 												index: 718
@@ -4698,7 +4698,7 @@ JSRoot {
 										left: JSBinaryExpression {
 											operator: "==="
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 37
 													index: 698
@@ -4712,7 +4712,7 @@ JSRoot {
 											}
 											left: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 28
 														index: 689
@@ -4726,7 +4726,7 @@ JSRoot {
 												}
 												object: JSThisExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 25
 															index: 686
@@ -4744,7 +4744,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "x"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "x"
 																end: Object {
 																	column: 28
@@ -4759,7 +4759,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 28
 																index: 689
@@ -4773,7 +4773,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 28
 															index: 689
@@ -4789,7 +4789,7 @@ JSRoot {
 											}
 											right: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 37
 														index: 698
@@ -4804,7 +4804,7 @@ JSRoot {
 												object: JSReferenceIdentifier {
 													name: "p"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														identifierName: "p"
 														end: Object {
 															column: 34
@@ -4823,7 +4823,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "x"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "x"
 																end: Object {
 																	column: 37
@@ -4838,7 +4838,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 37
 																index: 698
@@ -4852,7 +4852,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 37
 															index: 698
@@ -4870,7 +4870,7 @@ JSRoot {
 										right: JSBinaryExpression {
 											operator: "==="
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 57
 													index: 718
@@ -4884,7 +4884,7 @@ JSRoot {
 											}
 											left: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 48
 														index: 709
@@ -4898,7 +4898,7 @@ JSRoot {
 												}
 												object: JSThisExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 45
 															index: 706
@@ -4916,7 +4916,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "y"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "y"
 																end: Object {
 																	column: 48
@@ -4931,7 +4931,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 48
 																index: 709
@@ -4945,7 +4945,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 48
 															index: 709
@@ -4961,7 +4961,7 @@ JSRoot {
 											}
 											right: JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 57
 														index: 718
@@ -4976,7 +4976,7 @@ JSRoot {
 												object: JSReferenceIdentifier {
 													name: "p"
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														identifierName: "p"
 														end: Object {
 															column: 54
@@ -4995,7 +4995,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "y"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "y"
 																end: Object {
 																	column: 57
@@ -5010,7 +5010,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 57
 																index: 718
@@ -5024,7 +5024,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 57
 															index: 718
@@ -5050,7 +5050,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "toString"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/nested/input.js"
 									identifierName: "toString"
 									end: Object {
 										column: 10
@@ -5065,7 +5065,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 10
 									index: 732
@@ -5079,7 +5079,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 58
 								index: 780
@@ -5101,7 +5101,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 12
 									index: 734
@@ -5127,7 +5127,7 @@ JSRoot {
 								line: 38
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 10
 									index: 732
@@ -5143,7 +5143,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 58
 									index: 780
@@ -5158,7 +5158,7 @@ JSRoot {
 							body: Array [
 								JSReturnStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 56
 											index: 778
@@ -5172,7 +5172,7 @@ JSRoot {
 									}
 									argument: JSTemplateLiteral {
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 56
 												index: 778
@@ -5190,7 +5190,7 @@ JSRoot {
 												raw: "Point<"
 												tail: false
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 29
 														index: 751
@@ -5208,7 +5208,7 @@ JSRoot {
 												raw: ","
 												tail: false
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 42
 														index: 764
@@ -5226,7 +5226,7 @@ JSRoot {
 												raw: ">"
 												tail: true
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 55
 														index: 777
@@ -5243,7 +5243,7 @@ JSRoot {
 										expressions: Array [
 											JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 39
 														index: 761
@@ -5257,7 +5257,7 @@ JSRoot {
 												}
 												object: JSThisExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 36
 															index: 758
@@ -5275,7 +5275,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "x"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "x"
 																end: Object {
 																	column: 39
@@ -5290,7 +5290,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
 																index: 761
@@ -5304,7 +5304,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 39
 															index: 761
@@ -5320,7 +5320,7 @@ JSRoot {
 											}
 											JSMemberExpression {
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 52
 														index: 774
@@ -5334,7 +5334,7 @@ JSRoot {
 												}
 												object: JSThisExpression {
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 49
 															index: 771
@@ -5352,7 +5352,7 @@ JSRoot {
 														id: JSIdentifier {
 															name: "y"
 															loc: Object {
-																filename: "input.js"
+																filename: "experimental/class-private-properties/nested/input.js"
 																identifierName: "y"
 																end: Object {
 																	column: 52
@@ -5367,7 +5367,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 52
 																index: 774
@@ -5381,7 +5381,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 52
 															index: 774

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 		end: Object {
 			column: 1
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 				end: Object {
 					column: 1
 					index: 41
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 					end: Object {
 						column: 1
 						index: 41
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 							end: Object {
 								column: 22
 								index: 39
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 								end: Object {
 									column: 21
 									index: 38
@@ -158,7 +158,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 									end: Object {
 										column: 21
 										index: 38
@@ -178,7 +178,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 									end: Object {
 										column: 18
 										index: 35
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 4
@@ -211,7 +211,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "b"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 											identifierName: "b"
 											end: Object {
 												column: 7
@@ -228,7 +228,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/parameter-name-arrow-inside-generator-3/input.js"
 											end: Object {
 												column: 18
 												index: 35
@@ -256,7 +256,7 @@ JSRoot {
 
 ```
 
- input.js:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/parameter-name-arrow-inside-generator-3/input.js:2:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
 

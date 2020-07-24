@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/553/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/553/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/553/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -50,7 +50,7 @@ JSRoot {
 				value: 25_257_156_155
 				format: "octal"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/553/input.js"
 					end: Object {
 						column: 13
 						index: 13

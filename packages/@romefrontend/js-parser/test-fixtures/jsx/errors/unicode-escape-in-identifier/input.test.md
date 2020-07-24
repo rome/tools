@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 		end: Object {
 			column: 23
 			index: 23
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 				end: Object {
 					column: 23
 					index: 23
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: ""
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 						end: Object {
 							column: 10
 							index: 10
@@ -92,7 +92,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 					end: Object {
 						column: 23
 						index: 23
@@ -114,7 +114,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/unicode-escape-in-identifier/input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
 

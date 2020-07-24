@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 		end: Object {
 			column: 1
 			index: 36
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 				end: Object {
 					column: 1
 					index: 36
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 					end: Object {
 						column: 1
 						index: 36
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 8
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 							end: Object {
 								column: 14
 								index: 24
@@ -133,7 +133,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 14
 									index: 24
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -181,7 +181,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 11
 									index: 21
@@ -197,7 +197,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "_"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 										identifierName: "_"
 										end: Object {
 											column: 10
@@ -214,7 +214,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 											end: Object {
 												column: 10
 												index: 20
@@ -237,7 +237,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -252,7 +252,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 4
 									index: 29
@@ -266,7 +266,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 							end: Object {
 								column: 9
 								index: 34
@@ -282,7 +282,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 9
 									index: 34
@@ -305,7 +305,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 6
 									index: 31
@@ -331,7 +331,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-set-instance-method/input.js"
 								end: Object {
 									column: 4
 									index: 29

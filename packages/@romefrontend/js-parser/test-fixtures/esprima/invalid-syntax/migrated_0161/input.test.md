@@ -10,14 +10,14 @@
 JSRoot {
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0161/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0161/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 			id: "0"
 			value: " \n"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0161/input.js"
 				end: Object {
 					column: 2
 					index: 6
@@ -57,7 +57,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0161/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -77,7 +77,7 @@ JSRoot {
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0161/input.js"
 				end: Object {
 					column: 3
 					index: 7
@@ -93,7 +93,7 @@ JSRoot {
 				name: "INVALID_PLACEHOLDER"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0161/input.js"
 					end: Object {
 						column: 3
 						index: 7
@@ -115,7 +115,7 @@ JSRoot {
 
 ```
 
- input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0161/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

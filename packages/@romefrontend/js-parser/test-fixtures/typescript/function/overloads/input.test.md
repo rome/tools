@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/overloads/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/overloads/input.ts"
 		end: Object {
 			column: 0
 			index: 76
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/overloads/input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/overloads/input.ts"
 						identifierName: "f"
 						end: Object {
 							column: 17
@@ -67,7 +67,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/overloads/input.ts"
 					end: Object {
 						column: 37
 						index: 37
@@ -87,7 +87,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/overloads/input.ts"
 						end: Object {
 							column: 36
 							index: 36
@@ -101,7 +101,7 @@ JSRoot {
 					}
 					returnType: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/overloads/input.ts"
 							end: Object {
 								column: 36
 								index: 36
@@ -118,7 +118,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/overloads/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 19
@@ -134,7 +134,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/overloads/input.ts"
 									end: Object {
 										column: 27
 										index: 27
@@ -148,7 +148,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/overloads/input.ts"
 										end: Object {
 											column: 27
 											index: 27
@@ -171,7 +171,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/overloads/input.ts"
 				end: Object {
 					column: 37
 					index: 75
@@ -187,7 +187,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/overloads/input.ts"
 						identifierName: "f"
 						end: Object {
 							column: 17
@@ -202,7 +202,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/overloads/input.ts"
 					end: Object {
 						column: 37
 						index: 75
@@ -222,7 +222,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/function/overloads/input.ts"
 						end: Object {
 							column: 36
 							index: 74
@@ -236,7 +236,7 @@ JSRoot {
 					}
 					returnType: TSStringKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/overloads/input.ts"
 							end: Object {
 								column: 36
 								index: 74
@@ -253,7 +253,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/overloads/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 19
@@ -269,7 +269,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/overloads/input.ts"
 									end: Object {
 										column: 27
 										index: 65
@@ -283,7 +283,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/overloads/input.ts"
 										end: Object {
 											column: 27
 											index: 65

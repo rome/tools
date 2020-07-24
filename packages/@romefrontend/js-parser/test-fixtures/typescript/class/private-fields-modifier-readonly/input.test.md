@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 		end: Object {
 			column: 0
 			index: 50
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 				end: Object {
 					column: 1
 					index: 49
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 					end: Object {
 						column: 1
 						index: 49
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 13
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -118,7 +118,7 @@ JSRoot {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 							end: Object {
 								column: 14
 								index: 24
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -162,7 +162,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 									identifierName: "b"
 									end: Object {
 										column: 13
@@ -177,7 +177,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
 									index: 38
@@ -192,7 +192,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 							end: Object {
 								column: 22
 								index: 47
@@ -206,7 +206,7 @@ JSRoot {
 						}
 						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 21
 									index: 46
@@ -232,7 +232,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
 									index: 38

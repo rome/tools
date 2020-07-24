@@ -14,11 +14,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSMemberExpression = NodeBaseWithComments & {
+export interface JSMemberExpression extends NodeBaseWithComments {
 	type: "JSMemberExpression";
 	object: AnyJSExpression | JSSuper;
 	property: JSStaticMemberProperty | JSComputedMemberProperty;
-};
+}
 
 export const jsMemberExpression = createBuilder<JSMemberExpression>(
 	"JSMemberExpression",

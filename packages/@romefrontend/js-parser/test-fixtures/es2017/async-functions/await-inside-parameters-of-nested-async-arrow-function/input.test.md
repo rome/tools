@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 		end: Object {
 			column: 1
 			index: 52
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 17
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 				end: Object {
 					column: 1
 					index: 52
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 					end: Object {
 						column: 1
 						index: 52
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 							end: Object {
 								column: 28
 								index: 50
@@ -142,7 +142,7 @@ JSRoot {
 						}
 						expression: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 								end: Object {
 									column: 27
 									index: 49
@@ -158,7 +158,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 									end: Object {
 										column: 27
 										index: 49
@@ -178,7 +178,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 									end: Object {
 										column: 24
 										index: 46
@@ -194,7 +194,7 @@ JSRoot {
 									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 											end: Object {
 												column: 20
 												index: 42
@@ -209,7 +209,7 @@ JSRoot {
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 10
@@ -225,7 +225,7 @@ JSRoot {
 										}
 										right: JSAwaitExpression {
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 												end: Object {
 													column: 20
 													index: 42
@@ -241,7 +241,7 @@ JSRoot {
 												value: 2
 												format: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 													end: Object {
 														column: 20
 														index: 42
@@ -271,7 +271,8 @@ JSRoot {
 
 ```
 
- input.js:2:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js:2:18
+parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
 

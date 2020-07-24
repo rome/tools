@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/dynamic-import/return-value/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/dynamic-import/return-value/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/dynamic-import/return-value/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/dynamic-import/return-value/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "importResult"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/return-value/input.js"
 								identifierName: "importResult"
 								end: Object {
 									column: 18
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/dynamic-import/return-value/input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSImportCall {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/dynamic-import/return-value/input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -110,7 +110,7 @@ JSRoot {
 							argument: JSStringLiteral {
 								value: "test.js"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/dynamic-import/return-value/input.js"
 									end: Object {
 										column: 37
 										index: 37

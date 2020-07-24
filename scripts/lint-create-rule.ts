@@ -15,7 +15,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	}
 
 	const descriptionKey = toCamelCase(ruleName).replace(/([A-Z+])/g, " $1").trim().toUpperCase().replace(
-		/[\s\-]/g,
+		/[\s\-\/]/g,
 		"_",
 	);
 	const categoryName = `lint/${ruleName}`;

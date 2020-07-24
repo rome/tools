@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 				end: Object {
 					column: 8
 					index: 46
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 					end: Object {
 						column: 7
 						index: 45
@@ -88,7 +88,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 						end: Object {
 							column: 7
 							index: 45
@@ -108,7 +108,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 						end: Object {
 							column: 4
 							index: 42
@@ -124,7 +124,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "first"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 								identifierName: "first"
 								end: Object {
 									column: 9
@@ -141,7 +141,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 								end: Object {
 									column: 4
 									index: 42
@@ -157,7 +157,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "third"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 								identifierName: "third"
 								end: Object {
 									column: 9
@@ -183,7 +183,7 @@ JSRoot {
 
 ```
 
- input.js:3:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/arrow-functions/invalid-rest-in-params/input.js:3:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

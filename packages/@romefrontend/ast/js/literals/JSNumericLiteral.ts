@@ -8,11 +8,11 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSNumericLiteral = NodeBaseWithComments & {
+export interface JSNumericLiteral extends NodeBaseWithComments {
 	type: "JSNumericLiteral";
 	value: number;
 	format?: "octal" | "binary" | "hex";
-};
+}
 
 export const jsNumericLiteral = createQuickBuilder<JSNumericLiteral, "value">(
 	"JSNumericLiteral",

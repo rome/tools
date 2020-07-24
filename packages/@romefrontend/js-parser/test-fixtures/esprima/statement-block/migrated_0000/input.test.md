@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-block/migrated_0000/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-block/migrated_0000/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -35,7 +35,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-block/migrated_0000/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -50,7 +50,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-block/migrated_0000/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -65,7 +65,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-block/migrated_0000/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 5

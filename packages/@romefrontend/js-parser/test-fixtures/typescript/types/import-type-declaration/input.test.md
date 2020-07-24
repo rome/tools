@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/import-type-declaration/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/import-type-declaration/input.ts"
 		end: Object {
 			column: 0
 			index: 100
@@ -37,7 +37,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 27
 					index: 27
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "./mod"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 26
 						index: 26
@@ -67,7 +67,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -83,7 +83,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "T"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							identifierName: "T"
 							end: Object {
 								column: 13
@@ -99,7 +99,7 @@ JSRoot {
 					}
 					importKind: "type"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 13
 							index: 13
@@ -119,7 +119,7 @@ JSRoot {
 			importKind: "type"
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 34
 					index: 62
@@ -134,7 +134,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "./mod"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 33
 						index: 61
@@ -150,7 +150,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 15
 							index: 43
@@ -165,7 +165,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "A"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							identifierName: "A"
 							end: Object {
 								column: 15
@@ -183,7 +183,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/import-type-declaration/input.ts"
 								identifierName: "A"
 								end: Object {
 									column: 15
@@ -199,7 +199,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							end: Object {
 								column: 15
 								index: 43
@@ -215,7 +215,7 @@ JSRoot {
 				}
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 18
 							index: 46
@@ -230,7 +230,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "B"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							identifierName: "B"
 							end: Object {
 								column: 18
@@ -248,7 +248,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/import-type-declaration/input.ts"
 								identifierName: "B"
 								end: Object {
 									column: 18
@@ -264,7 +264,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							end: Object {
 								column: 18
 								index: 46
@@ -285,7 +285,7 @@ JSRoot {
 			importKind: "type"
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 36
 					index: 99
@@ -300,7 +300,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "./mod"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 35
 						index: 98
@@ -315,7 +315,7 @@ JSRoot {
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 22
 						index: 85
@@ -331,7 +331,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "Types"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/import-type-declaration/input.ts"
 							identifierName: "Types"
 							end: Object {
 								column: 22
@@ -347,7 +347,7 @@ JSRoot {
 					}
 					importKind: "type"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 22
 							index: 85

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0003/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0003/input.js"
 		end: Object {
 			column: 0
 			index: 7
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0003/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0003/input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "in"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0003/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSArrayExpression {
 					elements: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0003/input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -105,7 +105,7 @@ JSRoot {
 					value: 3
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0003/input.js"
 						end: Object {
 							column: 1
 							index: 1
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0003/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Identifier directly after number
 

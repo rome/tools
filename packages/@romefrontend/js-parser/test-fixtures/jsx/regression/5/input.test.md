@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/5/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/5/input.jsx"
 		end: Object {
 			column: 17
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/5/input.jsx"
 				end: Object {
 					column: 17
 					index: 17
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/5/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/5/input.jsx"
 					end: Object {
 						column: 17
 						index: 17
@@ -82,7 +82,7 @@ JSRoot {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/5/input.jsx"
 							end: Object {
 								column: 8
 								index: 8
@@ -97,7 +97,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/5/input.jsx"
 								identifierName: "a"
 								end: Object {
 									column: 7
@@ -114,7 +114,7 @@ JSRoot {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/5/input.jsx"
 							end: Object {
 								column: 11
 								index: 11
@@ -129,7 +129,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/regression/5/input.jsx"
 								identifierName: "b"
 								end: Object {
 									column: 10

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/parameter-properties/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/parameter-properties/input.ts"
 		end: Object {
 			column: 0
 			index: 258
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Also works on AssignmentPattern"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/parameter-properties/input.ts"
 				end: Object {
 					column: 42
 					index: 197
@@ -54,7 +54,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/parameter-properties/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -69,7 +69,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/parameter-properties/input.ts"
 				end: Object {
 					column: 1
 					index: 257
@@ -87,7 +87,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/parameter-properties/input.ts"
 					end: Object {
 						column: 1
 						index: 257
@@ -106,7 +106,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/parameter-properties/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -121,7 +121,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -135,7 +135,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/parameter-properties/input.ts"
 							end: Object {
 								column: 33
 								index: 255
@@ -151,7 +151,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 33
 									index: 255
@@ -177,7 +177,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -199,7 +199,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 30
 									index: 252
@@ -215,7 +215,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "r"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 18
 											index: 45
@@ -231,7 +231,7 @@ JSRoot {
 										accessibility: undefined
 										readonly: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 18
 												index: 45
@@ -248,7 +248,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "pu"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 25
 											index: 72
@@ -264,7 +264,7 @@ JSRoot {
 										accessibility: "public"
 										readonly: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 25
 												index: 72
@@ -281,7 +281,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "po"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 21
 											index: 95
@@ -297,7 +297,7 @@ JSRoot {
 										accessibility: "protected"
 										readonly: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 21
 												index: 95
@@ -314,7 +314,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "pi"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 27
 											index: 124
@@ -330,7 +330,7 @@ JSRoot {
 										accessibility: "private"
 										readonly: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 27
 												index: 124
@@ -347,7 +347,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "pur"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 27
 											index: 153
@@ -363,7 +363,7 @@ JSRoot {
 										accessibility: "public"
 										readonly: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 27
 												index: 153
@@ -380,7 +380,7 @@ JSRoot {
 								JSBindingAssignmentPattern {
 									leadingComments: Array ["0"]
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 22
 											index: 220
@@ -396,7 +396,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 22
 												index: 220
@@ -414,7 +414,7 @@ JSRoot {
 										leadingComments: undefined
 										readonly: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 22
 												index: 220
@@ -431,7 +431,7 @@ JSRoot {
 										name: "x"
 										leadingComments: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											identifierName: "x"
 											end: Object {
 												column: 18
@@ -449,7 +449,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/parameter-properties/input.ts"
 												end: Object {
 													column: 18
 													index: 216
@@ -466,7 +466,7 @@ JSRoot {
 								}
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 29
 											index: 251
@@ -482,7 +482,7 @@ JSRoot {
 										accessibility: "public"
 										readonly: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 29
 												index: 251
@@ -499,7 +499,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 29
 												index: 251
@@ -515,7 +515,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/parameter-properties/input.ts"
 											identifierName: "y"
 											end: Object {
 												column: 16
@@ -531,7 +531,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											optional: true
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/parameter-properties/input.ts"
 												end: Object {
 													column: 25
 													index: 247
@@ -545,7 +545,7 @@ JSRoot {
 											}
 											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/class/parameter-properties/input.ts"
 													end: Object {
 														column: 25
 														index: 247

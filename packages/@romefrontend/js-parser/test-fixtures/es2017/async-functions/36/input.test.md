@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/36/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/36/input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/36/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/36/input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/36/input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/36/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 9
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2017/async-functions/36/input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/36/input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -135,7 +135,7 @@ JSRoot {
 							right: JSBooleanLiteral {
 								value: true
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/36/input.js"
 									end: Object {
 										column: 27
 										index: 27
@@ -151,7 +151,7 @@ JSRoot {
 							left: JSAssignmentObjectPattern {
 								rest: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/36/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -169,7 +169,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "async"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2017/async-functions/36/input.js"
 													identifierName: "async"
 													end: Object {
 														column: 20
@@ -184,7 +184,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/36/input.js"
 												identifierName: "async"
 												end: Object {
 													column: 20
@@ -201,7 +201,7 @@ JSRoot {
 										value: JSAssignmentIdentifier {
 											name: "async"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2017/async-functions/36/input.js"
 												identifierName: "async"
 												end: Object {
 													column: 20
@@ -216,7 +216,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2017/async-functions/36/input.js"
 											end: Object {
 												column: 20
 												index: 20
@@ -238,7 +238,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/36/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -253,7 +253,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/36/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -269,7 +269,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/36/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -284,7 +284,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/36/input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -306,7 +306,7 @@ JSRoot {
 
 ```
 
- input.js:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/36/input.js:1:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

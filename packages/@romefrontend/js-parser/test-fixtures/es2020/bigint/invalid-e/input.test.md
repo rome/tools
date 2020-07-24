@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/bigint/invalid-e/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/bigint/invalid-e/input.js"
 		end: Object {
 			column: 0
 			index: 5
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "A bigint can't have a decimal"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/invalid-e/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/bigint/invalid-e/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBigIntLiteral {
 				value: "2e9"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/bigint/invalid-e/input.js"
 					end: Object {
 						column: 4
 						index: 4
@@ -95,7 +95,7 @@ JSRoot {
 
 ```
 
- input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/bigint/invalid-e/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A bigint can't have a decimal
 

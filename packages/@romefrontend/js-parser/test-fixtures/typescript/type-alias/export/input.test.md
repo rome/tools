@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/type-alias/export/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/type-alias/export/input.ts"
 		end: Object {
 			column: 0
 			index: 63
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " `export default type` is not valid."
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-alias/export/input.ts"
 				end: Object {
 					column: 38
 					index: 62
@@ -55,7 +55,7 @@ JSRoot {
 			specifiers: undefined
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/type-alias/export/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -71,7 +71,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "T"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-alias/export/input.ts"
 						identifierName: "T"
 						end: Object {
 							column: 13
@@ -88,7 +88,7 @@ JSRoot {
 				trailingComments: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/type-alias/export/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -102,7 +102,7 @@ JSRoot {
 				}
 				right: TSNumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/type-alias/export/input.ts"
 						end: Object {
 							column: 22
 							index: 22

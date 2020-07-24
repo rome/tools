@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 		end: Object {
 			column: 0
 			index: 22
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 				end: Object {
 					column: 5
 					index: 5
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "&&"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -104,7 +104,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -122,7 +122,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -137,7 +137,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 					identifierName: "b"
 					end: Object {
 						column: 7
@@ -154,7 +154,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 				end: Object {
 					column: 9
 					index: 18
@@ -169,7 +169,7 @@ JSRoot {
 			expression: JSLogicalExpression {
 				operator: "&&"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 					end: Object {
 						column: 9
 						index: 18
@@ -184,7 +184,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 						end: Object {
 							column: 9
 							index: 18
@@ -199,7 +199,7 @@ JSRoot {
 				}
 				left: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 						end: Object {
 							column: 5
 							index: 14
@@ -214,7 +214,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 							identifierName: "obj"
 							end: Object {
 								column: 3
@@ -232,7 +232,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 5
@@ -247,7 +247,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 5
@@ -266,7 +266,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 				end: Object {
 					column: 12
 					index: 21
@@ -281,7 +281,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "b"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js"
 					identifierName: "b"
 					end: Object {
 						column: 11
@@ -304,7 +304,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/logical-assignment-operator/and-and-equals-no-plugin/input.js:1:4 parse/js ━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

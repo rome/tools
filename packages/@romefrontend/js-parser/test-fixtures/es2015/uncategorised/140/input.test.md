@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/140/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/140/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Semicolon"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/140/input.js"
 					identifierName: "Semicolon"
 					end: Object {
 						column: 15
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/140/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -70,7 +70,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/140/input.js"
 					end: Object {
 						column: 21
 						index: 21

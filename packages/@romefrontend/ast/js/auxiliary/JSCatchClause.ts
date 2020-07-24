@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSCatchClause = NodeBaseWithComments & {
+export interface JSCatchClause extends NodeBaseWithComments {
 	type: "JSCatchClause";
 	param?: AnyJSBindingPattern;
 	body: JSBlockStatement;
-};
+}
 
 export const jsCatchClause = createBuilder<JSCatchClause>(
 	"JSCatchClause",

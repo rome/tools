@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 		end: Object {
 			column: 0
 			index: 62
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 				end: Object {
 					column: 61
 					index: 61
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 					end: Object {
 						column: 61
 						index: 61
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 							end: Object {
 								column: 60
 								index: 60
@@ -125,7 +125,7 @@ JSRoot {
 							sticky: false
 							unicode: true
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 								end: Object {
 									column: 60
 									index: 60
@@ -139,7 +139,7 @@ JSRoot {
 							}
 							expression: JSRegExpSubExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 									end: Object {
 										column: 58
 										index: 58
@@ -155,7 +155,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 19
 												index: 19
@@ -171,7 +171,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "u"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 12
 														index: 12
@@ -187,7 +187,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "{"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 13
 														index: 13
@@ -203,7 +203,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "6"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 14
 														index: 14
@@ -219,7 +219,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "1"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 15
 														index: 15
@@ -234,7 +234,7 @@ JSRoot {
 											}
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 18
 														index: 18
@@ -249,7 +249,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "}"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 16
 															index: 16
@@ -265,7 +265,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "b"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 18
 															index: 18
@@ -284,7 +284,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 29
 												index: 29
@@ -299,7 +299,7 @@ JSRoot {
 										body: Array [
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 28
 														index: 28
@@ -314,7 +314,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "b"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 28
 															index: 28
@@ -330,7 +330,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 26
 															index: 26
@@ -349,7 +349,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 39
 												index: 39
@@ -364,7 +364,7 @@ JSRoot {
 										body: Array [
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 34
 														index: 34
@@ -379,7 +379,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "u"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 34
 															index: 34
@@ -395,7 +395,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 31
 															index: 31
@@ -412,7 +412,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "{"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 35
 														index: 35
@@ -428,7 +428,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "6"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 36
 														index: 36
@@ -444,7 +444,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "2"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 37
 														index: 37
@@ -460,7 +460,7 @@ JSRoot {
 											JSRegExpCharacter {
 												value: "}"
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 38
 														index: 38
@@ -478,7 +478,7 @@ JSRoot {
 									JSRegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 49
 												index: 49
@@ -493,7 +493,7 @@ JSRoot {
 										body: Array [
 											JSRegExpCharSetRange {
 												loc: Object {
-													filename: "input.js"
+													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 48
 														index: 48
@@ -508,7 +508,7 @@ JSRoot {
 												end: JSRegExpCharacter {
 													value: "b"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 48
 															index: 48
@@ -524,7 +524,7 @@ JSRoot {
 												start: JSRegExpCharacter {
 													value: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 41
 															index: 41
@@ -543,7 +543,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "u"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 51
 												index: 51
@@ -559,7 +559,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "{"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 52
 												index: 52
@@ -575,7 +575,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "1"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 53
 												index: 53
@@ -591,7 +591,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "f"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 54
 												index: 54
@@ -607,7 +607,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "f"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 55
 												index: 55
@@ -623,7 +623,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "f"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 56
 												index: 56
@@ -639,7 +639,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "f"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 57
 												index: 57
@@ -655,7 +655,7 @@ JSRoot {
 									JSRegExpCharacter {
 										value: "}"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 58
 												index: 58
@@ -683,7 +683,8 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js:1:15 parse/regex
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 

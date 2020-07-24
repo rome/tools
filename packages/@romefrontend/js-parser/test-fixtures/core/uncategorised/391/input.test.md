@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/391/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/391/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/391/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/391/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/391/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -91,7 +91,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "s"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/391/input.js"
 									identifierName: "s"
 									end: Object {
 										column: 8
@@ -106,7 +106,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/391/input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -120,7 +120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/391/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -136,7 +136,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/391/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -158,7 +158,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/391/input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -174,7 +174,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: ""
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/391/input.js"
 										identifierName: ""
 										end: Object {
 											column: 10
@@ -191,7 +191,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "core/uncategorised/391/input.js"
 											end: Object {
 												column: 10
 												index: 10
@@ -219,7 +219,7 @@ JSRoot {
 
 ```
 
- input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/391/input.js:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

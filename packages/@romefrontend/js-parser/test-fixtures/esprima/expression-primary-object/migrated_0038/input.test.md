@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-primary-object/migrated_0038/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-primary-object/migrated_0038/input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-primary-object/migrated_0038/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSObjectExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-primary-object/migrated_0038/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -67,7 +67,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/expression-primary-object/migrated_0038/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 7
@@ -82,7 +82,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0038/input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -96,7 +96,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-primary-object/migrated_0038/input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -112,7 +112,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0038/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -134,7 +134,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/expression-primary-object/migrated_0038/input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -149,7 +149,7 @@ JSRoot {
 							params: Array [
 								JSBindingAssignmentPattern {
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/expression-primary-object/migrated_0038/input.js"
 										end: Object {
 											column: 11
 											index: 11
@@ -165,7 +165,7 @@ JSRoot {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-object/migrated_0038/input.js"
 											end: Object {
 												column: 11
 												index: 11
@@ -181,7 +181,7 @@ JSRoot {
 									left: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/expression-primary-object/migrated_0038/input.js"
 											identifierName: "a"
 											end: Object {
 												column: 9
@@ -198,7 +198,7 @@ JSRoot {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/expression-primary-object/migrated_0038/input.js"
 												end: Object {
 													column: 9
 													index: 9

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0182/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0182/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0182/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "esprima/invalid-syntax/migrated_0182/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -79,7 +79,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0182/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -94,7 +94,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0182/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 1
@@ -110,7 +110,7 @@ JSRoot {
 			}
 			body: JSWhileStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0182/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -125,7 +125,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0182/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -141,7 +141,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0182/input.js"
 						end: Object {
 							column: 39
 							index: 39
@@ -156,7 +156,7 @@ JSRoot {
 					body: Array [
 						JSLabeledStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/invalid-syntax/migrated_0182/input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -171,7 +171,7 @@ JSRoot {
 							label: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0182/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 19
@@ -187,7 +187,7 @@ JSRoot {
 							}
 							body: JSWhileStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/invalid-syntax/migrated_0182/input.js"
 									end: Object {
 										column: 37
 										index: 37
@@ -202,7 +202,7 @@ JSRoot {
 								test: JSBooleanLiteral {
 									value: true
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0182/input.js"
 										end: Object {
 											column: 32
 											index: 32
@@ -219,7 +219,7 @@ JSRoot {
 									body: Array []
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/invalid-syntax/migrated_0182/input.js"
 										end: Object {
 											column: 37
 											index: 37
@@ -246,7 +246,7 @@ JSRoot {
 
 ```
 
- input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0182/input.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Label x is already declared
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 		end: Object {
 			column: 0
 			index: 27
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 				end: Object {
 					column: 1
 					index: 26
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 					end: Object {
 						column: 1
 						index: 26
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 									identifierName: "x"
 									end: Object {
 										column: 3
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 3
 									index: 13
@@ -143,7 +143,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 							end: Object {
 								column: 4
 								index: 14
@@ -168,7 +168,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 4
 									index: 14
@@ -187,7 +187,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 									identifierName: ""
 									end: Object {
 										column: 5
@@ -202,7 +202,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -218,7 +218,7 @@ JSRoot {
 						value: undefined
 						definite: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 							end: Object {
 								column: 14
 								index: 24
@@ -232,7 +232,7 @@ JSRoot {
 						}
 						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 13
 									index: 23
@@ -258,7 +258,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/property-optional-definite-assignment-not-allowed/input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -283,7 +283,7 @@ JSRoot {
 
 ```
 
- input.ts:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/property-optional-definite-assignment-not-allowed/input.ts:2:4 parse/js ━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

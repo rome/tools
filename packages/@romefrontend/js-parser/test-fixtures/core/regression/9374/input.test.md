@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/regression/9374/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/9374/input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/9374/input.js"
 					identifierName: "test"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/9374/input.js"
 				end: Object {
 					column: 1
 					index: 39
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/9374/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/9374/input.js"
 					end: Object {
 						column: 1
 						index: 39
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/9374/input.js"
 							end: Object {
 								column: 18
 								index: 37
@@ -119,7 +119,7 @@ JSRoot {
 						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/9374/input.js"
 								end: Object {
 									column: 17
 									index: 36
@@ -136,7 +136,7 @@ JSRoot {
 								optional: undefined
 								typeArguments: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/regression/9374/input.js"
 									end: Object {
 										column: 17
 										index: 36
@@ -151,7 +151,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "Foo"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/regression/9374/input.js"
 										identifierName: "Foo"
 										end: Object {
 											column: 15

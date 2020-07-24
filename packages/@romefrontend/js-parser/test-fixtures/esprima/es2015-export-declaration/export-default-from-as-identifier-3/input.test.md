@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSLogicalExpression {
 				operator: "??"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "from"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 						identifierName: "from"
 						end: Object {
 							column: 19
@@ -82,7 +82,7 @@ JSRoot {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 						end: Object {
 							column: 25
 							index: 25

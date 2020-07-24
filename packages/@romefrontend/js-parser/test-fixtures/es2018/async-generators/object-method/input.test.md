@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/async-generators/object-method/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/async-generators/object-method/input.js"
 		end: Object {
 			column: 0
 			index: 134
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/object-method/input.js"
 				end: Object {
 					column: 2
 					index: 133
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/object-method/input.js"
 					end: Object {
 						column: 2
 						index: 133
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "query"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/object-method/input.js"
 								identifierName: "query"
 								end: Object {
 									column: 11
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/object-method/input.js"
 							end: Object {
 								column: 1
 								index: 132
@@ -95,7 +95,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/object-method/input.js"
 								end: Object {
 									column: 1
 									index: 132
@@ -114,7 +114,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "queryAll"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2018/async-generators/object-method/input.js"
 												identifierName: "queryAll"
 												end: Object {
 													column: 19
@@ -129,7 +129,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/async-generators/object-method/input.js"
 											end: Object {
 												column: 19
 												index: 35
@@ -143,7 +143,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2018/async-generators/object-method/input.js"
 										end: Object {
 											column: 5
 											index: 130
@@ -164,7 +164,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/async-generators/object-method/input.js"
 											end: Object {
 												column: 24
 												index: 40
@@ -180,7 +180,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: "ids"
 												loc: Object {
-													filename: "input.js"
+													filename: "es2018/async-generators/object-method/input.js"
 													identifierName: "ids"
 													end: Object {
 														column: 23
@@ -197,7 +197,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/async-generators/object-method/input.js"
 														end: Object {
 															column: 23
 															index: 39
@@ -216,7 +216,7 @@ JSRoot {
 									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2018/async-generators/object-method/input.js"
 											end: Object {
 												column: 5
 												index: 130
@@ -232,7 +232,7 @@ JSRoot {
 											JSForOfStatement {
 												await: false
 												loc: Object {
-													filename: "input.js"
+													filename: "es2018/async-generators/object-method/input.js"
 													end: Object {
 														column: 9
 														index: 124
@@ -247,7 +247,7 @@ JSRoot {
 												right: JSReferenceIdentifier {
 													name: "ids"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/async-generators/object-method/input.js"
 														identifierName: "ids"
 														end: Object {
 															column: 28
@@ -264,7 +264,7 @@ JSRoot {
 												left: JSVariableDeclaration {
 													kind: "const"
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/async-generators/object-method/input.js"
 														end: Object {
 															column: 21
 															index: 64
@@ -281,7 +281,7 @@ JSRoot {
 															id: JSBindingIdentifier {
 																name: "id"
 																loc: Object {
-																	filename: "input.js"
+																	filename: "es2018/async-generators/object-method/input.js"
 																	identifierName: "id"
 																	end: Object {
 																		column: 21
@@ -297,7 +297,7 @@ JSRoot {
 															}
 															init: undefined
 															loc: Object {
-																filename: "input.js"
+																filename: "es2018/async-generators/object-method/input.js"
 																end: Object {
 																	column: 21
 																	index: 64
@@ -315,7 +315,7 @@ JSRoot {
 												body: JSBlockStatement {
 													directives: Array []
 													loc: Object {
-														filename: "input.js"
+														filename: "es2018/async-generators/object-method/input.js"
 														end: Object {
 															column: 9
 															index: 124
@@ -330,7 +330,7 @@ JSRoot {
 													body: Array [
 														JSExpressionStatement {
 															loc: Object {
-																filename: "input.js"
+																filename: "es2018/async-generators/object-method/input.js"
 																end: Object {
 																	column: 39
 																	index: 114
@@ -345,7 +345,7 @@ JSRoot {
 															expression: JSYieldExpression {
 																delegate: false
 																loc: Object {
-																	filename: "input.js"
+																	filename: "es2018/async-generators/object-method/input.js"
 																	end: Object {
 																		column: 38
 																		index: 113
@@ -359,7 +359,7 @@ JSRoot {
 																}
 																argument: JSAwaitExpression {
 																	loc: Object {
-																		filename: "input.js"
+																		filename: "es2018/async-generators/object-method/input.js"
 																		end: Object {
 																			column: 38
 																			index: 113
@@ -373,7 +373,7 @@ JSRoot {
 																	}
 																	argument: JSCallExpression {
 																		loc: Object {
-																			filename: "input.js"
+																			filename: "es2018/async-generators/object-method/input.js"
 																			end: Object {
 																				column: 38
 																				index: 113
@@ -389,7 +389,7 @@ JSRoot {
 																			JSReferenceIdentifier {
 																				name: "id"
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "es2018/async-generators/object-method/input.js"
 																					identifierName: "id"
 																					end: Object {
 																						column: 37
@@ -406,7 +406,7 @@ JSRoot {
 																		]
 																		callee: JSMemberExpression {
 																			loc: Object {
-																				filename: "input.js"
+																				filename: "es2018/async-generators/object-method/input.js"
 																				end: Object {
 																					column: 34
 																					index: 109
@@ -420,7 +420,7 @@ JSRoot {
 																			}
 																			object: JSThisExpression {
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "es2018/async-generators/object-method/input.js"
 																					end: Object {
 																						column: 28
 																						index: 103
@@ -437,7 +437,7 @@ JSRoot {
 																				value: JSIdentifier {
 																					name: "query"
 																					loc: Object {
-																						filename: "input.js"
+																						filename: "es2018/async-generators/object-method/input.js"
 																						identifierName: "query"
 																						end: Object {
 																							column: 34
@@ -452,7 +452,7 @@ JSRoot {
 																					}
 																				}
 																				loc: Object {
-																					filename: "input.js"
+																					filename: "es2018/async-generators/object-method/input.js"
 																					identifierName: "query"
 																					end: Object {
 																						column: 34

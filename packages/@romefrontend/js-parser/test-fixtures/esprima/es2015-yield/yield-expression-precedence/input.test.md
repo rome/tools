@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 					identifierName: "g"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 							end: Object {
 								column: 40
 								index: 40
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSSequenceExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 								end: Object {
 									column: 40
 									index: 40
@@ -134,7 +134,7 @@ JSRoot {
 								JSYieldExpression {
 									delegate: false
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 										end: Object {
 											column: 25
 											index: 25
@@ -149,7 +149,7 @@ JSRoot {
 									argument: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 											end: Object {
 												column: 25
 												index: 25
@@ -164,7 +164,7 @@ JSRoot {
 										left: JSAssignmentIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 23
@@ -181,7 +181,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "b"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 												identifierName: "b"
 												end: Object {
 													column: 25
@@ -200,7 +200,7 @@ JSRoot {
 								JSYieldExpression {
 									delegate: true
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 										end: Object {
 											column: 37
 											index: 37
@@ -215,7 +215,7 @@ JSRoot {
 									argument: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -230,7 +230,7 @@ JSRoot {
 										left: JSAssignmentIdentifier {
 											name: "c"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 												identifierName: "c"
 												end: Object {
 													column: 35
@@ -247,7 +247,7 @@ JSRoot {
 										right: JSReferenceIdentifier {
 											name: "d"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 												identifierName: "d"
 												end: Object {
 													column: 37
@@ -266,7 +266,7 @@ JSRoot {
 								JSReferenceIdentifier {
 									name: "e"
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 										identifierName: "e"
 										end: Object {
 											column: 40

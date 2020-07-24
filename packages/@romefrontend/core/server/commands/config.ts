@@ -27,6 +27,7 @@ import {
 	loadUserConfig,
 	normalizeUserConfig,
 } from "@romefrontend/core/common/userConfig";
+import {USER_CONFIG_DIRECTORY} from "@romefrontend/core/common/constants";
 
 type Flags = {
 	user: boolean;
@@ -206,7 +207,7 @@ export default createServerCommand<Flags>({
 
 				let configPath: AbsoluteFilePath;
 				if (existingConfigPath === undefined) {
-					configPath = HOME_PATH.appendList(".config", "rome.rjson");
+					configPath = USER_CONFIG_DIRECTORY.append("rome.rjson");
 					await writeFile(configPath, "");
 					reporter.info(
 						markup`Created user config at <emphasis>${configPath}</emphasis> as it did not exist`,

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/13/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/13/input.jsx"
 		end: Object {
 			column: 57
 			index: 57
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/13/input.jsx"
 				end: Object {
 					column: 57
 					index: 57
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "LeftRight"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/13/input.jsx"
 						end: Object {
 							column: 10
 							index: 10
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/13/input.jsx"
 					end: Object {
 						column: 57
 						index: 57
@@ -84,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "left"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/13/input.jsx"
 								end: Object {
 									column: 15
 									index: 15
@@ -101,7 +101,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/basic/13/input.jsx"
 									end: Object {
 										column: 18
 										index: 18
@@ -119,7 +119,7 @@ JSRoot {
 							selfClosing: true
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/13/input.jsx"
 								end: Object {
 									column: 21
 									index: 21
@@ -133,7 +133,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/13/input.jsx"
 							end: Object {
 								column: 21
 								index: 21
@@ -150,7 +150,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "right"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/13/input.jsx"
 								end: Object {
 									column: 27
 									index: 27
@@ -167,7 +167,7 @@ JSRoot {
 							name: JSXIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/basic/13/input.jsx"
 									end: Object {
 										column: 30
 										index: 30
@@ -184,7 +184,7 @@ JSRoot {
 							selfClosing: false
 							typeArguments: undefined
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/13/input.jsx"
 								end: Object {
 									column: 54
 									index: 54
@@ -200,7 +200,7 @@ JSRoot {
 								JSXText {
 									value: "monkeys /> gorillas"
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/basic/13/input.jsx"
 										end: Object {
 											column: 50
 											index: 50
@@ -216,7 +216,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/13/input.jsx"
 							end: Object {
 								column: 54
 								index: 54

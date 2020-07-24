@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/html/first-line/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -24,7 +24,7 @@ JSRoot {
 		"1"
 	]
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/html/first-line/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -41,7 +41,7 @@ JSRoot {
 			id: "0"
 			value: ""
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/html/first-line/input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -58,7 +58,7 @@ JSRoot {
 			id: "1"
 			value: " comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/html/first-line/input.js"
 				end: Object {
 					column: 16
 					index: 16

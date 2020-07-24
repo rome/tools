@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 		end: Object {
 			column: 0
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 				end: Object {
 					column: 17
 					index: 17
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -91,7 +91,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 					end: Object {
 						column: 17
 						index: 17
@@ -108,7 +108,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -124,7 +124,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "?"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 9
 									index: 9
@@ -138,7 +138,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 9
 								index: 9
@@ -155,7 +155,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 12
 									index: 12
@@ -170,7 +170,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 12
 								index: 12
@@ -187,7 +187,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 13
 									index: 13
@@ -202,7 +202,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 13
 								index: 13
@@ -219,7 +219,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: ""
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 14
 									index: 14
@@ -234,7 +234,7 @@ JSRoot {
 						}
 						value: undefined
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 14
 								index: 14
@@ -258,7 +258,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/attribute-arbitrary-expression/input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
 

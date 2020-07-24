@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword const"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "const"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								identifierName: "const"
 								end: Object {
 									column: 14
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -121,7 +121,7 @@ JSRoot {
 							value: 123
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -140,7 +140,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				end: Object {
 					column: 17
 					index: 40
@@ -155,7 +155,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 					end: Object {
 						column: 17
 						index: 40
@@ -172,7 +172,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 12
@@ -187,7 +187,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 							end: Object {
 								column: 16
 								index: 39
@@ -203,7 +203,7 @@ JSRoot {
 							value: 2
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								end: Object {
 									column: 16
 									index: 39
@@ -228,7 +228,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-const/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword const
 

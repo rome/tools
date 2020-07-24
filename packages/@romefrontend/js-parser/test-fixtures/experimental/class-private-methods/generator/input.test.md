@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-methods/generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-methods/generator/input.js"
 		end: Object {
 			column: 0
 			index: 56
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/generator/input.js"
 					identifierName: "Hotel"
 					end: Object {
 						column: 11
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-methods/generator/input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-methods/generator/input.js"
 					end: Object {
 						column: 1
 						index: 55
@@ -88,7 +88,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "evil"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-methods/generator/input.js"
 									identifierName: "evil"
 									end: Object {
 										column: 8
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 8
 									index: 22
@@ -117,7 +117,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-methods/generator/input.js"
 							end: Object {
 								column: 3
 								index: 53
@@ -139,7 +139,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 10
 									index: 24
@@ -165,7 +165,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 8
 									index: 22
@@ -181,7 +181,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 3
 									index: 53
@@ -196,7 +196,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-methods/generator/input.js"
 										end: Object {
 											column: 22
 											index: 49
@@ -211,7 +211,7 @@ JSRoot {
 									expression: JSYieldExpression {
 										delegate: false
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-methods/generator/input.js"
 											end: Object {
 												column: 21
 												index: 48
@@ -226,7 +226,7 @@ JSRoot {
 										argument: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-methods/generator/input.js"
 												end: Object {
 													column: 21
 													index: 48
@@ -241,7 +241,7 @@ JSRoot {
 											callee: JSReferenceIdentifier {
 												name: "notReally"
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-methods/generator/input.js"
 													identifierName: "notReally"
 													end: Object {
 														column: 19

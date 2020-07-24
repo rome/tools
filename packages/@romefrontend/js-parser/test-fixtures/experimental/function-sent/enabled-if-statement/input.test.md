@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/function-sent/enabled-if-statement/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/function-sent/enabled-if-statement/input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-if-statement/input.js"
 					identifierName: "foo"
 					end: Object {
 						column: 13
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/function-sent/enabled-if-statement/input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-if-statement/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/function-sent/enabled-if-statement/input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -105,7 +105,7 @@ JSRoot {
 					JSIfStatement {
 						alternate: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/function-sent/enabled-if-statement/input.js"
 							end: Object {
 								column: 26
 								index: 44
@@ -120,7 +120,7 @@ JSRoot {
 						test: JSBooleanLiteral {
 							value: true
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/enabled-if-statement/input.js"
 								end: Object {
 									column: 10
 									index: 28
@@ -135,7 +135,7 @@ JSRoot {
 						}
 						consequent: JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/function-sent/enabled-if-statement/input.js"
 								end: Object {
 									column: 26
 									index: 44
@@ -149,7 +149,7 @@ JSRoot {
 							}
 							expression: JSMetaProperty {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/function-sent/enabled-if-statement/input.js"
 									end: Object {
 										column: 25
 										index: 43
@@ -164,7 +164,7 @@ JSRoot {
 								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-if-statement/input.js"
 										identifierName: "function"
 										end: Object {
 											column: 20
@@ -181,7 +181,7 @@ JSRoot {
 								property: JSIdentifier {
 									name: "sent"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/function-sent/enabled-if-statement/input.js"
 										identifierName: "sent"
 										end: Object {
 											column: 25

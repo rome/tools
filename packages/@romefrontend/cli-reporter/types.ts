@@ -14,13 +14,18 @@ export type SelectOption = {
 	shortcut?: string;
 };
 
+export type SelectOptionsKeys<Options extends SelectOptions> = Extract<
+	keyof Options,
+	string
+>;
+
 export type SelectOptions = {
 	[key: string]: undefined | SelectOption;
 };
 
 export type SelectArguments<Options extends SelectOptions> = {
 	options: Options;
-	defaults?: Array<keyof Options>;
+	defaults?: Array<SelectOptionsKeys<Options>>;
 	radio?: boolean;
 	yes?: boolean;
 };

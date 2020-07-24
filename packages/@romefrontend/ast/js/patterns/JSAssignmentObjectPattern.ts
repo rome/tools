@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSAssignmentObjectPattern = NodeBaseWithComments & {
+export interface JSAssignmentObjectPattern extends NodeBaseWithComments {
 	type: "JSAssignmentObjectPattern";
 	meta?: JSPatternMeta;
 	properties: Array<JSAssignmentObjectPatternProperty>;
 	rest: undefined | JSAssignmentIdentifier;
-};
+}
 
 export const jsAssignmentObjectPattern = createBuilder<JSAssignmentObjectPattern>(
 	"JSAssignmentObjectPattern",

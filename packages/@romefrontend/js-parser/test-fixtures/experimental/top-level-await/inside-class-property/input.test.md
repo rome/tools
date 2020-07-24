@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/inside-class-property/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/inside-class-property/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-class-property/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/inside-class-property/input.js"
 						identifierName: "C"
 						end: Object {
 							column: 14
@@ -67,7 +67,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-class-property/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -85,7 +85,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/inside-class-property/input.js"
 						end: Object {
 							column: 1
 							index: 33
@@ -103,7 +103,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "p"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/top-level-await/inside-class-property/input.js"
 										identifierName: "p"
 										end: Object {
 											column: 3
@@ -118,7 +118,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 3
 										index: 20
@@ -133,7 +133,7 @@ JSRoot {
 							}
 							value: JSAwaitExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 13
 										index: 30
@@ -149,7 +149,7 @@ JSRoot {
 									value: 0
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/top-level-await/inside-class-property/input.js"
 										end: Object {
 											column: 13
 											index: 30
@@ -166,7 +166,7 @@ JSRoot {
 							definite: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/top-level-await/inside-class-property/input.js"
 								end: Object {
 									column: 14
 									index: 31
@@ -191,7 +191,7 @@ JSRoot {
 									line: 2
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 3
 										index: 20

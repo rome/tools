@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/keywords/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/keywords/input.ts"
 		end: Object {
 			column: 0
 			index: 185
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 11
 						index: 11
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 10
 									index: 10
@@ -81,7 +81,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 10
 										index: 10
@@ -95,7 +95,7 @@ JSRoot {
 								}
 								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 10
 											index: 10
@@ -112,7 +112,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 10
 								index: 10
@@ -130,7 +130,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 16
 					index: 28
@@ -145,7 +145,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 16
 						index: 28
@@ -162,7 +162,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "un"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 15
 									index: 27
@@ -177,7 +177,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 15
 										index: 27
@@ -191,7 +191,7 @@ JSRoot {
 								}
 								typeAnnotation: TSUnknownKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 15
 											index: 27
@@ -208,7 +208,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 15
 								index: 27
@@ -226,7 +226,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
 					index: 44
@@ -241,7 +241,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
 						index: 44
@@ -258,7 +258,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
 									index: 43
@@ -273,7 +273,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
 										index: 43
@@ -287,7 +287,7 @@ JSRoot {
 								}
 								typeAnnotation: TSBooleanKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
 											index: 43
@@ -304,7 +304,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
 								index: 43
@@ -322,7 +322,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
 					index: 59
@@ -337,7 +337,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
 						index: 59
@@ -354,7 +354,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "ne"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
 									index: 58
@@ -369,7 +369,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
 										index: 58
@@ -383,7 +383,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNeverKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
 											index: 58
@@ -400,7 +400,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
 								index: 58
@@ -418,7 +418,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
 					index: 74
@@ -433,7 +433,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
 						index: 74
@@ -450,7 +450,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "nul"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
 									index: 73
@@ -465,7 +465,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
 										index: 73
@@ -479,7 +479,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNullKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
 											index: 73
@@ -496,7 +496,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
 								index: 73
@@ -514,7 +514,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 16
 					index: 91
@@ -529,7 +529,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 16
 						index: 91
@@ -546,7 +546,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "num"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 15
 									index: 90
@@ -561,7 +561,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 15
 										index: 90
@@ -575,7 +575,7 @@ JSRoot {
 								}
 								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 15
 											index: 90
@@ -592,7 +592,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 15
 								index: 90
@@ -610,7 +610,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
 					index: 106
@@ -625,7 +625,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
 						index: 106
@@ -642,7 +642,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
 									index: 105
@@ -657,7 +657,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
 										index: 105
@@ -671,7 +671,7 @@ JSRoot {
 								}
 								typeAnnotation: TSObjectKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
 											index: 105
@@ -688,7 +688,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
 								index: 105
@@ -706,7 +706,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
 					index: 122
@@ -721,7 +721,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
 						index: 122
@@ -738,7 +738,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "st"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
 									index: 121
@@ -753,7 +753,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
 										index: 121
@@ -767,7 +767,7 @@ JSRoot {
 								}
 								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
 											index: 121
@@ -784,7 +784,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
 								index: 121
@@ -802,7 +802,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
 					index: 138
@@ -817,7 +817,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
 						index: 138
@@ -834,7 +834,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "sy"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
 									index: 137
@@ -849,7 +849,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
 										index: 137
@@ -863,7 +863,7 @@ JSRoot {
 								}
 								typeAnnotation: TSSymbolKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
 											index: 137
@@ -880,7 +880,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
 								index: 137
@@ -898,7 +898,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 17
 					index: 156
@@ -913,7 +913,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 17
 						index: 156
@@ -930,7 +930,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "u"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 16
 									index: 155
@@ -945,7 +945,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 16
 										index: 155
@@ -959,7 +959,7 @@ JSRoot {
 								}
 								typeAnnotation: TSUndefinedKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 16
 											index: 155
@@ -976,7 +976,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 16
 								index: 155
@@ -994,7 +994,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 12
 					index: 169
@@ -1009,7 +1009,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 12
 						index: 169
@@ -1026,7 +1026,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 11
 									index: 168
@@ -1041,7 +1041,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 11
 										index: 168
@@ -1055,7 +1055,7 @@ JSRoot {
 								}
 								typeAnnotation: TSVoidKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 11
 											index: 168
@@ -1072,7 +1072,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 11
 								index: 168
@@ -1090,7 +1090,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
 					index: 184
@@ -1105,7 +1105,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
 						index: 184
@@ -1122,7 +1122,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "n"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
 									index: 183
@@ -1137,7 +1137,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
 										index: 183
@@ -1151,7 +1151,7 @@ JSRoot {
 								}
 								typeAnnotation: TSBigIntKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
 											index: 183
@@ -1168,7 +1168,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
 								index: 183

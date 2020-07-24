@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 		end: Object {
 			column: 0
 			index: 63
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 				end: Object {
 					column: 1
 					index: 62
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 					end: Object {
 						column: 1
 						index: 62
@@ -111,7 +111,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 9
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 9
 									index: 21
@@ -143,7 +143,7 @@ JSRoot {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 13
 									index: 25
@@ -158,7 +158,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 							end: Object {
 								column: 14
 								index: 26
@@ -183,7 +183,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 9
 									index: 21
@@ -203,7 +203,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 6
@@ -218,7 +218,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 6
 									index: 33
@@ -232,7 +232,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 							end: Object {
 								column: 3
 								index: 60
@@ -254,7 +254,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 8
 									index: 35
@@ -280,7 +280,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 6
 									index: 33
@@ -296,7 +296,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {
 									column: 3
 									index: 60
@@ -311,7 +311,7 @@ JSRoot {
 							body: Array [
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 										end: Object {
 											column: 5
 											index: 43
@@ -326,7 +326,7 @@ JSRoot {
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 											end: Object {
 												column: 5
 												index: 43
@@ -342,7 +342,7 @@ JSRoot {
 								}
 								JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 										end: Object {
 											column: 18
 											index: 56
@@ -357,7 +357,7 @@ JSRoot {
 									expression: JSBinaryExpression {
 										operator: "in"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 											end: Object {
 												column: 17
 												index: 55
@@ -372,7 +372,7 @@ JSRoot {
 										right: JSObjectExpression {
 											properties: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 												end: Object {
 													column: 17
 													index: 55
@@ -388,7 +388,7 @@ JSRoot {
 										left: JSReferenceIdentifier {
 											name: "a"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 												identifierName: "a"
 												end: Object {
 													column: 11
@@ -418,7 +418,7 @@ JSRoot {
 
 ```
 
- input.js:4:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/private-in/private-in-escaped-sequence/input.js:4:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

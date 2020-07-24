@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-export-declaration/export-var/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-export-declaration/export-var/input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-export-declaration/export-var/input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -50,7 +50,7 @@ JSRoot {
 			}
 			declaration: JSVariableDeclarationStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-export-declaration/export-var/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -65,7 +65,7 @@ JSRoot {
 				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-export-declaration/export-var/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -82,7 +82,7 @@ JSRoot {
 							id: JSBindingIdentifier {
 								name: "bar"
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-export-declaration/export-var/input.js"
 									identifierName: "bar"
 									end: Object {
 										column: 14
@@ -98,7 +98,7 @@ JSRoot {
 							}
 							init: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-export-declaration/export-var/input.js"
 								end: Object {
 									column: 14
 									index: 14

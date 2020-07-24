@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2019/json-strings/string-paragraph-separator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2019/json-strings/string-paragraph-separator/input.js"
 		end: Object {
 			column: 0
 			index: 107
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "      ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/string-paragraph-separator/input.js"
 				end: Object {
 					column: 88
 					index: 106
@@ -53,7 +53,7 @@ JSRoot {
 		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
-				filename: "input.js"
+				filename: "es2019/json-strings/string-paragraph-separator/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -68,7 +68,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "before\u2029after"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2019/json-strings/string-paragraph-separator/input.js"
 					end: Object {
 						column: 15
 						index: 15

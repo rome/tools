@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-properties/super-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-properties/super-call/input.js"
 		end: Object {
 			column: 1
 			index: 95
@@ -44,7 +44,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/super-call/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -65,7 +65,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/super-call/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -80,7 +80,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-properties/super-call/input.js"
 				end: Object {
 					column: 1
 					index: 95
@@ -97,7 +97,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-properties/super-call/input.js"
 					end: Object {
 						column: 1
 						index: 95
@@ -112,7 +112,7 @@ JSRoot {
 				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/class-private-properties/super-call/input.js"
 						identifierName: "B"
 						end: Object {
 							column: 17
@@ -133,7 +133,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-properties/super-call/input.js"
 									identifierName: "constructor"
 									end: Object {
 										column: 13
@@ -148,7 +148,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-call/input.js"
 								end: Object {
 									column: 13
 									index: 33
@@ -162,7 +162,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-properties/super-call/input.js"
 							end: Object {
 								column: 3
 								index: 93
@@ -184,7 +184,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-call/input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -210,7 +210,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-call/input.js"
 								end: Object {
 									column: 13
 									index: 33
@@ -226,7 +226,7 @@ JSRoot {
 						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-properties/super-call/input.js"
 								end: Object {
 									column: 3
 									index: 93
@@ -243,7 +243,7 @@ JSRoot {
 									id: JSBindingIdentifier {
 										name: "C"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/super-call/input.js"
 											identifierName: "C"
 											end: Object {
 												column: 11
@@ -258,7 +258,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-private-properties/super-call/input.js"
 										end: Object {
 											column: 5
 											index: 89
@@ -275,7 +275,7 @@ JSRoot {
 										superTypeParameters: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-private-properties/super-call/input.js"
 											end: Object {
 												column: 5
 												index: 89
@@ -290,7 +290,7 @@ JSRoot {
 										superClass: JSReferenceIdentifier {
 											name: "D"
 											loc: Object {
-												filename: "input.js"
+												filename: "experimental/class-private-properties/super-call/input.js"
 												identifierName: "D"
 												end: Object {
 													column: 21
@@ -310,7 +310,7 @@ JSRoot {
 													id: JSIdentifier {
 														name: "foo"
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/super-call/input.js"
 															identifierName: "foo"
 															end: Object {
 																column: 10
@@ -325,7 +325,7 @@ JSRoot {
 														}
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/super-call/input.js"
 														end: Object {
 															column: 10
 															index: 72
@@ -341,7 +341,7 @@ JSRoot {
 												value: JSCallExpression {
 													arguments: Array []
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/super-call/input.js"
 														end: Object {
 															column: 20
 															index: 82
@@ -355,7 +355,7 @@ JSRoot {
 													}
 													callee: JSSuper {
 														loc: Object {
-															filename: "input.js"
+															filename: "experimental/class-private-properties/super-call/input.js"
 															end: Object {
 																column: 18
 																index: 80
@@ -371,7 +371,7 @@ JSRoot {
 												}
 												typeAnnotation: undefined
 												loc: Object {
-													filename: "input.js"
+													filename: "experimental/class-private-properties/super-call/input.js"
 													end: Object {
 														column: 21
 														index: 83
@@ -396,7 +396,7 @@ JSRoot {
 														line: 4
 													}
 													loc: Object {
-														filename: "input.js"
+														filename: "experimental/class-private-properties/super-call/input.js"
 														end: Object {
 															column: 10
 															index: 72
@@ -427,7 +427,7 @@ JSRoot {
 
 ```
 
- input.js:4:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/super-call/input.js:4:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super() is only valid inside a class constructor of a subclass
 

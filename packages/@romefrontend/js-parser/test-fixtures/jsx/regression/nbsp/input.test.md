@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/regression/nbsp/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/regression/nbsp/input.jsx"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/regression/nbsp/input.jsx"
 				end: Object {
 					column: 17
 					index: 17
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "div"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/regression/nbsp/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/regression/nbsp/input.jsx"
 					end: Object {
 						column: 17
 						index: 17
@@ -83,7 +83,7 @@ JSRoot {
 					JSXText {
 						value: "\xa0"
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/regression/nbsp/input.jsx"
 							end: Object {
 								column: 11
 								index: 11

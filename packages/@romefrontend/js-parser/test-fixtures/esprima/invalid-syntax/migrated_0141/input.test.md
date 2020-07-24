@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/invalid-syntax/migrated_0141/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/invalid-syntax/migrated_0141/input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0141/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0141/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -74,7 +74,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0141/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0141/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -104,7 +104,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0141/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 12
@@ -122,7 +122,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/invalid-syntax/migrated_0141/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -137,7 +137,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/invalid-syntax/migrated_0141/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -152,7 +152,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0141/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 14
@@ -170,7 +170,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/invalid-syntax/migrated_0141/input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -193,7 +193,7 @@ JSRoot {
 
 ```
 
- input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0141/input.js:1:13 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

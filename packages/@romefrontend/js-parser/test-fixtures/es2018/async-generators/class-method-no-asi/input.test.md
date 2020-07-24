@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/async-generators/class-method-no-asi/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/async-generators/class-method-no-asi/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/class-method-no-asi/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/async-generators/class-method-no-asi/input.js"
 				end: Object {
 					column: 1
 					index: 29
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/async-generators/class-method-no-asi/input.js"
 					end: Object {
 						column: 1
 						index: 29
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "async"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/async-generators/class-method-no-asi/input.js"
 									identifierName: "async"
 									end: Object {
 										column: 7
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 7
 									index: 17
@@ -119,7 +119,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/class-method-no-asi/input.js"
 							end: Object {
 								column: 7
 								index: 17
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 7
 									index: 17
@@ -164,7 +164,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2018/async-generators/class-method-no-asi/input.js"
 									identifierName: "a"
 									end: Object {
 										column: 5
@@ -179,7 +179,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 5
 									index: 23
@@ -193,7 +193,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2018/async-generators/class-method-no-asi/input.js"
 							end: Object {
 								column: 9
 								index: 27
@@ -209,7 +209,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 9
 									index: 27
@@ -232,7 +232,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 7
 									index: 25
@@ -258,7 +258,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2018/async-generators/class-method-no-asi/input.js"
 								end: Object {
 									column: 5
 									index: 23

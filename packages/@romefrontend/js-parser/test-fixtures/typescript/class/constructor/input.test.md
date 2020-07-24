@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/class/constructor/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/class/constructor/input.ts"
 		end: Object {
 			column: 0
 			index: 125
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/constructor/input.ts"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/class/constructor/input.ts"
 				end: Object {
 					column: 1
 					index: 124
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/class/constructor/input.ts"
 					end: Object {
 						column: 1
 						index: 124
@@ -88,7 +88,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/constructor/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -103,7 +103,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 38
 								index: 48
@@ -143,7 +143,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -165,7 +165,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 37
 									index: 47
@@ -181,7 +181,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "x"
 										end: Object {
 											column: 17
@@ -197,7 +197,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 25
 												index: 35
@@ -211,7 +211,7 @@ JSRoot {
 										}
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 25
 													index: 35
@@ -229,7 +229,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "y"
 										end: Object {
 											column: 28
@@ -245,7 +245,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 36
 												index: 46
@@ -259,7 +259,7 @@ JSRoot {
 										}
 										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 36
 													index: 46
@@ -283,7 +283,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/constructor/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -298,7 +298,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 64
@@ -313,7 +313,7 @@ JSRoot {
 						}
 						body: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 38
 								index: 87
@@ -338,7 +338,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 64
@@ -360,7 +360,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 37
 									index: 86
@@ -376,7 +376,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "x"
 										end: Object {
 											column: 17
@@ -392,7 +392,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 25
 												index: 74
@@ -406,7 +406,7 @@ JSRoot {
 										}
 										typeAnnotation: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 25
 													index: 74
@@ -424,7 +424,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "y"
 										end: Object {
 											column: 28
@@ -440,7 +440,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 36
 												index: 85
@@ -454,7 +454,7 @@ JSRoot {
 										}
 										typeAnnotation: TSStringKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 36
 													index: 85
@@ -478,7 +478,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/class/constructor/input.ts"
 									identifierName: "constructor"
 									end: Object {
 										column: 15
@@ -493,7 +493,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 103
@@ -507,7 +507,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 34
 								index: 122
@@ -523,7 +523,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 34
 									index: 122
@@ -549,7 +549,7 @@ JSRoot {
 								line: 4
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
 									index: 103
@@ -571,7 +571,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 31
 									index: 119
@@ -587,7 +587,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "x"
 										end: Object {
 											column: 17
@@ -603,7 +603,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 22
 												index: 110
@@ -617,7 +617,7 @@ JSRoot {
 										}
 										typeAnnotation: TSAnyKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 22
 													index: 110
@@ -635,7 +635,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "y"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/class/constructor/input.ts"
 										identifierName: "y"
 										end: Object {
 											column: 25
@@ -651,7 +651,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 30
 												index: 118
@@ -665,7 +665,7 @@ JSRoot {
 										}
 										typeAnnotation: TSAnyKeywordTypeAnnotation {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 30
 													index: 118

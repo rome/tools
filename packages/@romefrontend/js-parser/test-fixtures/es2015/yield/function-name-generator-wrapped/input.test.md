@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/function-name-generator-wrapped/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/function-name-generator-wrapped/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "wrap"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-wrapped/input.js"
 					identifierName: "wrap"
 					end: Object {
 						column: 14
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/function-name-generator-wrapped/input.js"
 				end: Object {
 					column: 1
 					index: 40
@@ -73,7 +73,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-wrapped/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -89,7 +89,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/function-name-generator-wrapped/input.js"
 					end: Object {
 						column: 1
 						index: 40
@@ -104,7 +104,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/function-name-generator-wrapped/input.js"
 							end: Object {
 								column: 19
 								index: 38
@@ -118,7 +118,7 @@ JSRoot {
 						}
 						expression: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/function-name-generator-wrapped/input.js"
 								end: Object {
 									column: 18
 									index: 37
@@ -137,7 +137,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "yield"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/yield/function-name-generator-wrapped/input.js"
 												identifierName: "yield"
 												end: Object {
 													column: 12
@@ -152,7 +152,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 12
 												index: 31
@@ -166,7 +166,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/yield/function-name-generator-wrapped/input.js"
 										end: Object {
 											column: 17
 											index: 36
@@ -182,7 +182,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 17
 												index: 36
@@ -205,7 +205,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 14
 												index: 33

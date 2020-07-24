@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 		end: Object {
 			column: 1
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 					identifierName: "fn"
 					end: Object {
 						column: 12
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -97,7 +97,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -113,7 +113,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -128,7 +128,7 @@ JSRoot {
 				body: Array [
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 							end: Object {
 								column: 7
 								index: 24
@@ -144,7 +144,7 @@ JSRoot {
 							argument: undefined
 							delegate: false
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 								end: Object {
 									column: 7
 									index: 24
@@ -160,7 +160,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 							end: Object {
 								column: 10
 								index: 27
@@ -175,7 +175,7 @@ JSRoot {
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 								end: Object {
 									column: 10
 									index: 27
@@ -193,7 +193,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 							end: Object {
 								column: 13
 								index: 30
@@ -208,7 +208,7 @@ JSRoot {
 					}
 					JSEmptyStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 							end: Object {
 								column: 14
 								index: 31
@@ -232,7 +232,7 @@ JSRoot {
 
 ```
 
- input.js:2:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js:2:8 parse/js ━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

@@ -12,7 +12,12 @@ import {
 	markup,
 } from "@romefrontend/cli-layout";
 import Reporter from "./Reporter";
-import {SelectArguments, SelectOption, SelectOptions} from "./types";
+import {
+	SelectArguments,
+	SelectOption,
+	SelectOptions,
+	SelectOptionsKeys,
+} from "./types";
 import {onKeypress, setRawMode} from "./util";
 
 function formatShortcut({shortcut}: SelectOption): string {
@@ -32,8 +37,8 @@ export default async function select<Options extends SelectOptions>(
 		radio = false,
 		yes = false,
 	}: SelectArguments<Options>,
-): Promise<Set<keyof Options>> {
-	const optionNames: Array<keyof Options> = [];
+): Promise<Set<SelectOptionsKeys<Options>>> {
+	const optionNames: Array<SelectOptionsKeys<Options>> = [];
 	const seenShortcuts: Set<string> = new Set();
 
 	// Verify there's no shortcut collisions and remove empty options
@@ -76,7 +81,7 @@ export default async function select<Options extends SelectOptions>(
 		);
 	}
 
-	const selectedOptions: Set<keyof Options> = new Set(defaults);
+	const selectedOptions: Set<SelectOptionsKeys<Options>> = new Set(defaults);
 	let activeOption = 0;
 
 	// Set first option if this is a radio
@@ -102,7 +107,7 @@ export default async function select<Options extends SelectOptions>(
 	}
 
 	function render() {
-		const optionNames = Object.keys(options);
+		const optionNames = (Object.keys(options) as Array<SelectOptionsKeys<Options>>);
 		for (let i = 0; i < optionNames.length; i++) {
 			const key = optionNames[i];
 			const option = options[key]!;
@@ -141,7 +146,7 @@ export default async function select<Options extends SelectOptions>(
 		}
 		reporter.writeAll(ansiEscapes.cursorTo(0));
 	}
-	function toggleOption(optionName: string) {
+	function toggleOption(optionName: SelectOptionsKeys<Options>) {
 		if (selectedOptions.has(optionName)) {
 			selectedOptions.delete(optionName);
 		} else {
@@ -194,7 +199,7 @@ export default async function select<Options extends SelectOptions>(
 
 					case "space": {
 						if (!radio) {
-							toggleOption((optionNames[activeOption] as string));
+							toggleOption(optionNames[activeOption]);
 						}
 						break;
 					}

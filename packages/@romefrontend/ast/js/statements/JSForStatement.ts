@@ -13,13 +13,13 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSForStatement = NodeBaseWithComments & {
+export interface JSForStatement extends NodeBaseWithComments {
 	type: "JSForStatement";
 	init?: JSVariableDeclaration | AnyJSExpression;
 	test?: AnyJSExpression;
 	update?: AnyJSExpression;
 	body: AnyJSStatement;
-};
+}
 
 export const jsForStatement = createBuilder<JSForStatement>(
 	"JSForStatement",

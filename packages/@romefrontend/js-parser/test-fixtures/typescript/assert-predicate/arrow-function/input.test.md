@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/assert-predicate/arrow-function/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/assert-predicate/arrow-function/input.ts"
 		end: Object {
 			column: 0
 			index: 166
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 63
 					index: 63
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 63
 						index: 63
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "assert1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								identifierName: "assert1"
 								end: Object {
 									column: 13
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 63
 								index: 63
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								end: Object {
 									column: 63
 									index: 63
@@ -135,7 +135,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 63
 										index: 63
@@ -154,7 +154,7 @@ JSRoot {
 								rest: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 60
 										index: 60
@@ -169,7 +169,7 @@ JSRoot {
 								returnType: TSTypePredicate {
 									asserts: true
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/arrow-function/input.ts"
 										end: Object {
 											column: 57
 											index: 57
@@ -183,7 +183,7 @@ JSRoot {
 									}
 									typeAnnotation: TSStringKeywordTypeAnnotation {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 57
 												index: 57
@@ -199,7 +199,7 @@ JSRoot {
 									parameterName: JSIdentifier {
 										name: "value"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											identifierName: "value"
 											end: Object {
 												column: 47
@@ -218,7 +218,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "value"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 60
 												index: 60
@@ -233,7 +233,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											optional: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/arrow-function/input.ts"
 												end: Object {
 													column: 60
 													index: 60
@@ -247,7 +247,7 @@ JSRoot {
 											}
 											typeAnnotation: TSUnknownKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/assert-predicate/arrow-function/input.ts"
 													end: Object {
 														column: 31
 														index: 31
@@ -271,7 +271,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 53
 					index: 117
@@ -286,7 +286,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 53
 						index: 117
@@ -303,7 +303,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "assert2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								identifierName: "assert2"
 								end: Object {
 									column: 13
@@ -318,7 +318,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 53
 								index: 117
@@ -332,7 +332,7 @@ JSRoot {
 						}
 						init: JSArrowFunctionExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								end: Object {
 									column: 53
 									index: 117
@@ -348,7 +348,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 53
 										index: 117
@@ -367,7 +367,7 @@ JSRoot {
 								rest: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 50
 										index: 114
@@ -383,7 +383,7 @@ JSRoot {
 									asserts: true
 									typeAnnotation: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/assert-predicate/arrow-function/input.ts"
 										end: Object {
 											column: 47
 											index: 111
@@ -398,7 +398,7 @@ JSRoot {
 									parameterName: JSIdentifier {
 										name: "value"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											identifierName: "value"
 											end: Object {
 												column: 47
@@ -417,7 +417,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "value"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 50
 												index: 114
@@ -432,7 +432,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											optional: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/assert-predicate/arrow-function/input.ts"
 												end: Object {
 													column: 50
 													index: 114
@@ -446,7 +446,7 @@ JSRoot {
 											}
 											typeAnnotation: TSUnknownKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/assert-predicate/arrow-function/input.ts"
 													end: Object {
 														column: 31
 														index: 95
@@ -470,7 +470,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 32
 					index: 150
@@ -485,7 +485,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 32
 						index: 150
@@ -502,7 +502,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "assert3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								identifierName: "assert3"
 								end: Object {
 									column: 13
@@ -517,7 +517,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 32
 								index: 150
@@ -532,7 +532,7 @@ JSRoot {
 						init: JSReferenceIdentifier {
 							name: "value"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								identifierName: "value"
 								end: Object {
 									column: 22
@@ -552,7 +552,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 33
 					index: 151
@@ -567,7 +567,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 33
 						index: 151
@@ -583,7 +583,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 47
 					index: 165
@@ -597,7 +597,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 47
 						index: 165
@@ -613,7 +613,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/assert-predicate/arrow-function/input.ts"
 						end: Object {
 							column: 47
 							index: 165
@@ -632,7 +632,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/assert-predicate/arrow-function/input.ts"
 						end: Object {
 							column: 44
 							index: 162
@@ -648,7 +648,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "asserts"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								identifierName: "asserts"
 								end: Object {
 									column: 41
@@ -674,7 +674,7 @@ JSRoot {
 
 ```
 
- input.ts:3:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/assert-predicate/arrow-function/input.ts:3:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Flow type cast expressions aren't allowed in TypeScript
 

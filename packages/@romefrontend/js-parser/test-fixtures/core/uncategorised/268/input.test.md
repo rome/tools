@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/268/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/268/input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -35,7 +35,7 @@ JSRoot {
 		JSSwitchStatement {
 			cases: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/268/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -50,7 +50,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/268/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 9

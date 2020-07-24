@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/declare/var-new-line/input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/declare/var-new-line/input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var-new-line/input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var-new-line/input.ts"
 					identifierName: "declare"
 					end: Object {
 						column: 7
@@ -66,7 +66,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var-new-line/input.ts"
 				end: Object {
 					column: 6
 					index: 14
@@ -81,7 +81,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var-new-line/input.ts"
 					end: Object {
 						column: 6
 						index: 14
@@ -98,7 +98,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/var-new-line/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -114,7 +114,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/var-new-line/input.ts"
 							end: Object {
 								column: 5
 								index: 13
@@ -132,7 +132,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var-new-line/input.ts"
 				end: Object {
 					column: 7
 					index: 23
@@ -147,7 +147,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var-new-line/input.ts"
 					identifierName: "declare"
 					end: Object {
 						column: 7
@@ -164,7 +164,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/declare/var-new-line/input.ts"
 				end: Object {
 					column: 11
 					index: 35
@@ -179,7 +179,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/declare/var-new-line/input.ts"
 					end: Object {
 						column: 11
 						index: 35
@@ -196,7 +196,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/declare/var-new-line/input.ts"
 								end: Object {
 									column: 10
 									index: 34
@@ -211,7 +211,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/declare/var-new-line/input.ts"
 									end: Object {
 										column: 10
 										index: 34
@@ -225,7 +225,7 @@ JSRoot {
 								}
 								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/declare/var-new-line/input.ts"
 										end: Object {
 											column: 10
 											index: 34
@@ -242,7 +242,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/declare/var-new-line/input.ts"
 							end: Object {
 								column: 10
 								index: 34

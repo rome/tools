@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Comment"
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -52,7 +52,7 @@ JSRoot {
 	body: Array [
 		JSWhileStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 				end: Object {
 					column: 8
 					index: 40
@@ -67,7 +67,7 @@ JSRoot {
 			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -83,7 +83,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 					end: Object {
 						column: 8
 						index: 40
@@ -100,7 +100,7 @@ JSRoot {
 						label: undefined
 						trailingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -116,7 +116,7 @@ JSRoot {
 					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 							end: Object {
 								column: 6
 								index: 38
@@ -132,7 +132,7 @@ JSRoot {
 							name: "there"
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/automatic-semicolon-insertion/migrated_0008/input.js"
 								identifierName: "there"
 								end: Object {
 									column: 5

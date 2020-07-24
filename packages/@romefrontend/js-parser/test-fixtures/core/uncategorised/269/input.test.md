@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/269/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/269/input.js"
 		end: Object {
 			column: 41
 			index: 41
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSSwitchStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/269/input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -49,7 +49,7 @@ JSRoot {
 			discriminant: JSReferenceIdentifier {
 				name: "answer"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/269/input.js"
 					identifierName: "answer"
 					end: Object {
 						column: 14
@@ -66,7 +66,7 @@ JSRoot {
 			cases: Array [
 				JSSwitchCase {
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/269/input.js"
 						end: Object {
 							column: 39
 							index: 39
@@ -82,7 +82,7 @@ JSRoot {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "core/uncategorised/269/input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -98,7 +98,7 @@ JSRoot {
 					consequent: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/269/input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -113,7 +113,7 @@ JSRoot {
 							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/269/input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -128,7 +128,7 @@ JSRoot {
 								callee: JSReferenceIdentifier {
 									name: "hi"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/269/input.js"
 										identifierName: "hi"
 										end: Object {
 											column: 29
@@ -147,7 +147,7 @@ JSRoot {
 						JSBreakStatement {
 							label: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/269/input.js"
 								end: Object {
 									column: 39
 									index: 39

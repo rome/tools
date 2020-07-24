@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 9
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 					end: Object {
 						column: 1
 						index: 1
@@ -89,7 +89,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 				end: Object {
 					column: 2
 					index: 5
@@ -104,7 +104,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 					end: Object {
 						column: 2
 						index: 5
@@ -120,7 +120,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 				end: Object {
 					column: 5
 					index: 8
@@ -136,7 +136,7 @@ JSRoot {
 				value: 42
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js"
 					end: Object {
 						column: 5
 						index: 8
@@ -158,7 +158,7 @@ JSRoot {
 
 ```
 
- input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
 

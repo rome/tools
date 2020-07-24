@@ -15,14 +15,14 @@ import {
 } from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
-export type JSClassHead = NodeBaseWithComments & {
+export interface JSClassHead extends NodeBaseWithComments {
 	type: "JSClassHead";
 	superClass?: AnyJSExpression;
 	body: Array<AnyJSClassMember>;
 	typeParameters?: TSTypeParameterDeclaration;
 	superTypeParameters?: TSTypeParameterInstantiation;
 	implements?: undefined | Array<TSExpressionWithTypeArguments>;
-};
+}
 
 export const jsClassHead = createQuickBuilder<JSClassHead, "body">(
 	"JSClassHead",

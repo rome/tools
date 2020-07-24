@@ -38,9 +38,9 @@ export async function main(
 			import {NodeBaseWithComments} from "@romefrontend/ast";
 			import {createBuilder} from "../../utils";
 
-			export type ${nodeType} = NodeBaseWithComments & {
+			interface ${nodeType} extends NodeBaseWithComments {
 				type: "${nodeType}";
-			};
+			}
 
 			export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {
 				bindingKeys: {},

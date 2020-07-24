@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/import/equals/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/import/equals/input.ts"
 		end: Object {
 			column: 0
 			index: 16
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/equals/input.ts"
 					identifierName: "A"
 					end: Object {
 						column: 8
@@ -52,7 +52,7 @@ JSRoot {
 			}
 			isExport: false
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/import/equals/input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			moduleReference: TSQualifiedName {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/import/equals/input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/equals/input.ts"
 						identifierName: "B"
 						end: Object {
 							column: 12
@@ -98,7 +98,7 @@ JSRoot {
 				right: JSIdentifier {
 					name: "C"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/import/equals/input.ts"
 						identifierName: "C"
 						end: Object {
 							column: 14

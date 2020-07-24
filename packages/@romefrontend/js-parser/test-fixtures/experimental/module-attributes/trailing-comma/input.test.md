@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/module-attributes/trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/module-attributes/trailing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 68
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -87,7 +87,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "foo.js"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -104,7 +104,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 18
 					index: 37
@@ -118,7 +118,7 @@ JSRoot {
 			}
 			expression: JSImportCall {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 18
 						index: 37
@@ -133,7 +133,7 @@ JSRoot {
 				argument: JSStringLiteral {
 					value: "foo.json"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 17
 							index: 36
@@ -151,7 +151,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 45
 					index: 64
@@ -166,7 +166,7 @@ JSRoot {
 			body: Array [
 				JSWithStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 43
 							index: 62
@@ -181,7 +181,7 @@ JSRoot {
 					object: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/trailing-comma/input.js"
 							end: Object {
 								column: 26
 								index: 45
@@ -197,7 +197,7 @@ JSRoot {
 					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/module-attributes/trailing-comma/input.js"
 							end: Object {
 								column: 43
 								index: 62
@@ -212,7 +212,7 @@ JSRoot {
 						body: Array [
 							JSLabeledStatement {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/module-attributes/trailing-comma/input.js"
 									end: Object {
 										column: 41
 										index: 60
@@ -227,7 +227,7 @@ JSRoot {
 								label: JSIdentifier {
 									name: "type"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/trailing-comma/input.js"
 										identifierName: "type"
 										end: Object {
 											column: 33
@@ -243,7 +243,7 @@ JSRoot {
 								}
 								body: JSExpressionStatement {
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/module-attributes/trailing-comma/input.js"
 										end: Object {
 											column: 41
 											index: 60
@@ -258,7 +258,7 @@ JSRoot {
 									expression: JSStringLiteral {
 										value: "json"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/module-attributes/trailing-comma/input.js"
 											end: Object {
 												column: 41
 												index: 60
@@ -280,7 +280,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 46
 					index: 65
@@ -295,7 +295,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 46
 						index: 65
@@ -311,7 +311,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 48
 					index: 67
@@ -326,7 +326,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 47
 						index: 66
@@ -348,7 +348,7 @@ JSRoot {
 
 ```
 
- input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/trailing-comma/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

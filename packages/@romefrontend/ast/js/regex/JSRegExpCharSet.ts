@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpCharSet = NodeBaseWithComments & {
+export interface JSRegExpCharSet extends NodeBaseWithComments {
 	type: "JSRegExpCharSet";
 	invert?: boolean;
 	body: Array<JSRegExpCharSetRange | AnyJSRegExpEscapedCharacter>;
-};
+}
 
 export const jsRegExpCharSet = createBuilder<JSRegExpCharSet>(
 	"JSRegExpCharSet",

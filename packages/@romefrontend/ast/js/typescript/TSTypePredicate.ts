@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSTypePredicate = NodeBaseWithComments & {
+export interface TSTypePredicate extends NodeBaseWithComments {
 	type: "TSTypePredicate";
 	asserts: boolean;
 	parameterName: JSIdentifier | TSThisType;
 	typeAnnotation?: AnyTSPrimary;
-};
+}
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(
 	"TSTypePredicate",

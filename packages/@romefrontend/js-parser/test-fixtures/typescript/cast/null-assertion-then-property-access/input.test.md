@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 		end: Object {
 			column: 0
 			index: 6
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 				end: Object {
 					column: 5
 					index: 5
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 					end: Object {
 						column: 4
 						index: 4
@@ -62,7 +62,7 @@ JSRoot {
 				}
 				object: TSNonNullExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 						end: Object {
 							column: 2
 							index: 2
@@ -77,7 +77,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 							identifierName: "x"
 							end: Object {
 								column: 1
@@ -96,7 +96,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 							identifierName: "y"
 							end: Object {
 								column: 4
@@ -111,7 +111,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 						identifierName: "y"
 						end: Object {
 							column: 4

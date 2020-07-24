@@ -13,12 +13,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSImportType = NodeBaseWithComments & {
+export interface TSImportType extends NodeBaseWithComments {
 	type: "TSImportType";
 	argument: AnyJSExpression;
 	typeParameters?: TSTypeParameterInstantiation;
 	qualifier?: AnyTSEntityName;
-};
+}
 
 export const tsImportType = createBuilder<TSImportType>(
 	"TSImportType",

@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 		end: Object {
 			column: 0
 			index: 134
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: "no default"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 				end: Object {
 					column: 20
 					index: 125
@@ -54,7 +54,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 					identifierName: "bar"
 					end: Object {
 						column: 12
@@ -69,7 +69,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 				end: Object {
 					column: 1
 					index: 133
@@ -90,7 +90,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -106,7 +106,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 							identifierName: "a"
 							end: Object {
 								column: 14
@@ -123,7 +123,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -142,7 +142,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 					end: Object {
 						column: 1
 						index: 133
@@ -157,7 +157,7 @@ JSRoot {
 				body: Array [
 					JSSwitchStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 							end: Object {
 								column: 5
 								index: 131
@@ -172,7 +172,7 @@ JSRoot {
 						discriminant: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 13
@@ -189,7 +189,7 @@ JSRoot {
 						cases: Array [
 							JSSwitchCase {
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 									end: Object {
 										column: 18
 										index: 69
@@ -205,7 +205,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 										end: Object {
 											column: 14
 											index: 49
@@ -222,7 +222,7 @@ JSRoot {
 									JSBreakStatement {
 										label: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 											end: Object {
 												column: 18
 												index: 69
@@ -240,7 +240,7 @@ JSRoot {
 							JSSwitchCase {
 								trailingComments: Array ["0"]
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 									end: Object {
 										column: 18
 										index: 104
@@ -256,7 +256,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 										end: Object {
 											column: 14
 											index: 84
@@ -274,7 +274,7 @@ JSRoot {
 										label: undefined
 										trailingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 											end: Object {
 												column: 18
 												index: 104

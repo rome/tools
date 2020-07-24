@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -63,7 +63,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 						identifierName: "universe"
 						end: Object {
 							column: 8
@@ -81,7 +81,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "milkyway"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 							identifierName: "milkyway"
 							end: Object {
 								column: 17
@@ -96,7 +96,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-left-hand-side/migrated_0010/input.js"
 						identifierName: "milkyway"
 						end: Object {
 							column: 17

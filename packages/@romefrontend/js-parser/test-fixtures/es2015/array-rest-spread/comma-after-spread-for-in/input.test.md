@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -64,7 +64,7 @@ JSRoot {
 			right: JSArrayExpression {
 				elements: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -80,7 +80,7 @@ JSRoot {
 			left: JSAssignmentArrayPattern {
 				elements: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -95,7 +95,7 @@ JSRoot {
 				rest: JSAssignmentIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 10

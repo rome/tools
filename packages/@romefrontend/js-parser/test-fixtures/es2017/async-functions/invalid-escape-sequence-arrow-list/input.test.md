@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 					identifierName: "async"
 					end: Object {
 						column: 11
@@ -90,7 +90,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -104,7 +104,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -122,7 +122,7 @@ JSRoot {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -138,7 +138,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 13
@@ -157,7 +157,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -172,7 +172,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -187,7 +187,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 									identifierName: "await"
 									end: Object {
 										column: 24
@@ -204,7 +204,7 @@ JSRoot {
 						}
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -219,7 +219,7 @@ JSRoot {
 							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 26
@@ -240,7 +240,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -255,7 +255,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2017/async-functions/invalid-escape-sequence-arrow-list/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -277,7 +277,7 @@ JSRoot {
 
 ```
 
- input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-sequence-arrow-list/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

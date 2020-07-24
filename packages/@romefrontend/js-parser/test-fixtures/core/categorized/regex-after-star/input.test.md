@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/categorized/regex-after-star/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/categorized/regex-after-star/input.js"
 		end: Object {
 			column: 0
 			index: 8
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/categorized/regex-after-star/input.js"
 				end: Object {
 					column: 7
 					index: 7
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/categorized/regex-after-star/input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ JSRoot {
 				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/regex-after-star/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 1
@@ -86,7 +86,7 @@ JSRoot {
 					sticky: false
 					unicode: false
 					loc: Object {
-						filename: "input.js"
+						filename: "core/categorized/regex-after-star/input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -100,7 +100,7 @@ JSRoot {
 					}
 					expression: JSRegExpSubExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/categorized/regex-after-star/input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -116,7 +116,7 @@ JSRoot {
 							JSRegExpCharacter {
 								value: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "core/categorized/regex-after-star/input.js"
 									end: Object {
 										column: 6
 										index: 6

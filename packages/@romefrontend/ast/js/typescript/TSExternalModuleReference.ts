@@ -8,10 +8,10 @@
 import {JSStringLiteral, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSExternalModuleReference = NodeBaseWithComments & {
+export interface TSExternalModuleReference extends NodeBaseWithComments {
 	type: "TSExternalModuleReference";
 	expression: JSStringLiteral;
-};
+}
 
 export const tsExternalModuleReference = createBuilder<TSExternalModuleReference>(
 	"TSExternalModuleReference",

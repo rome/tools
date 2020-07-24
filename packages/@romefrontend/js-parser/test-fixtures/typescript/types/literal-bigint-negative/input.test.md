@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/literal-bigint-negative/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/literal-bigint-negative/input.ts"
 		end: Object {
 			column: 0
 			index: 12
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected \"number\""}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-bigint-negative/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/literal-bigint-negative/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/literal-bigint-negative/input.ts"
 					end: Object {
 						column: 11
 						index: 11
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/literal-bigint-negative/input.ts"
 								end: Object {
 									column: 10
 									index: 10
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/literal-bigint-negative/input.ts"
 									end: Object {
 										column: 10
 										index: 10
@@ -120,7 +120,7 @@ JSRoot {
 								typeAnnotation: TSNumericLiteralTypeAnnotation {
 									value: 0
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/literal-bigint-negative/input.ts"
 										end: Object {
 											column: 10
 											index: 10
@@ -137,7 +137,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/literal-bigint-negative/input.ts"
 							end: Object {
 								column: 10
 								index: 10
@@ -161,7 +161,7 @@ JSRoot {
 
 ```
 
- input.ts:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/literal-bigint-negative/input.ts:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected "number"
 

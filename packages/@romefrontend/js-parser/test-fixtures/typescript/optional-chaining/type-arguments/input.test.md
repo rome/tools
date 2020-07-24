@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/optional-chaining/type-arguments/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/optional-chaining/type-arguments/input.ts"
 		end: Object {
 			column: 0
 			index: 31
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/optional-chaining/type-arguments/input.ts"
 				end: Object {
 					column: 30
 					index: 30
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/optional-chaining/type-arguments/input.ts"
 					end: Object {
 						column: 30
 						index: 30
@@ -63,7 +63,7 @@ JSRoot {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/optional-chaining/type-arguments/input.ts"
 						end: Object {
 							column: 28
 							index: 28
@@ -78,7 +78,7 @@ JSRoot {
 					params: Array [
 						TSStringKeywordTypeAnnotation {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/optional-chaining/type-arguments/input.ts"
 								end: Object {
 									column: 27
 									index: 27
@@ -95,7 +95,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/optional-chaining/type-arguments/input.ts"
 						end: Object {
 							column: 20
 							index: 20
@@ -111,7 +111,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "greet"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/optional-chaining/type-arguments/input.ts"
 								identifierName: "greet"
 								end: Object {
 									column: 20
@@ -127,7 +127,7 @@ JSRoot {
 						}
 						optional: true
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/optional-chaining/type-arguments/input.ts"
 							identifierName: "greet"
 							end: Object {
 								column: 20
@@ -143,7 +143,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/optional-chaining/type-arguments/input.ts"
 							end: Object {
 								column: 13
 								index: 13
@@ -158,7 +158,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "example"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/optional-chaining/type-arguments/input.ts"
 								identifierName: "example"
 								end: Object {
 									column: 7
@@ -176,7 +176,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "inner"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/optional-chaining/type-arguments/input.ts"
 									identifierName: "inner"
 									end: Object {
 										column: 13
@@ -191,7 +191,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/optional-chaining/type-arguments/input.ts"
 								identifierName: "inner"
 								end: Object {
 									column: 13

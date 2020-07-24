@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "core/uncategorised/461/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/uncategorised/461/input.js"
 		end: Object {
 			column: 47
 			index: 47
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/461/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSLabeledStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "core/uncategorised/461/input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -73,7 +73,7 @@ JSRoot {
 			label: JSIdentifier {
 				name: "x"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/461/input.js"
 					identifierName: "x"
 					end: Object {
 						column: 1
@@ -89,7 +89,7 @@ JSRoot {
 			}
 			body: JSWhileStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "core/uncategorised/461/input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -104,7 +104,7 @@ JSRoot {
 				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/461/input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -120,7 +120,7 @@ JSRoot {
 				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "core/uncategorised/461/input.js"
 						end: Object {
 							column: 47
 							index: 47
@@ -135,7 +135,7 @@ JSRoot {
 					body: Array [
 						JSExpressionStatement {
 							loc: Object {
-								filename: "input.js"
+								filename: "core/uncategorised/461/input.js"
 								end: Object {
 									column: 45
 									index: 45
@@ -150,7 +150,7 @@ JSRoot {
 							expression: JSFunctionExpression {
 								id: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/uncategorised/461/input.js"
 									end: Object {
 										column: 43
 										index: 43
@@ -172,7 +172,7 @@ JSRoot {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/461/input.js"
 										end: Object {
 											column: 30
 											index: 30
@@ -188,7 +188,7 @@ JSRoot {
 								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
-										filename: "input.js"
+										filename: "core/uncategorised/461/input.js"
 										end: Object {
 											column: 43
 											index: 43
@@ -203,7 +203,7 @@ JSRoot {
 									body: Array [
 										JSBreakStatement {
 											loc: Object {
-												filename: "input.js"
+												filename: "core/uncategorised/461/input.js"
 												end: Object {
 													column: 41
 													index: 41
@@ -218,7 +218,7 @@ JSRoot {
 											label: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.js"
+													filename: "core/uncategorised/461/input.js"
 													identifierName: "x"
 													end: Object {
 														column: 40
@@ -249,7 +249,7 @@ JSRoot {
 
 ```
 
- input.js:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/461/input.js:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown label x
 

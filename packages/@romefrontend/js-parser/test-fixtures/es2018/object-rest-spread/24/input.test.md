@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2018/object-rest-spread/24/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2018/object-rest-spread/24/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Invalid rest operator's argument"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/24/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2018/object-rest-spread/24/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2018/object-rest-spread/24/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -88,7 +88,7 @@ JSRoot {
 				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/24/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -105,7 +105,7 @@ JSRoot {
 					properties: Array []
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2018/object-rest-spread/24/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -128,7 +128,7 @@ JSRoot {
 
 ```
 
- input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/object-rest-spread/24/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid rest operator's argument
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/261/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/261/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/261/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/261/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/261/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/261/input.js"
 								identifierName: "obj"
 								end: Object {
 									column: 7
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/261/input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -119,7 +119,7 @@ JSRoot {
 						}
 						init: JSObjectExpression {
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/261/input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -138,7 +138,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "test"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/261/input.js"
 												identifierName: "test"
 												end: Object {
 													column: 17
@@ -153,7 +153,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/261/input.js"
 											end: Object {
 												column: 17
 												index: 17
@@ -167,7 +167,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/261/input.js"
 										end: Object {
 											column: 21
 											index: 21
@@ -183,7 +183,7 @@ JSRoot {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/261/input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -205,7 +205,7 @@ JSRoot {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/261/input.js"
 											end: Object {
 												column: 19
 												index: 19
@@ -221,7 +221,7 @@ JSRoot {
 											JSBindingIdentifier {
 												name: ""
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/261/input.js"
 													identifierName: ""
 													end: Object {
 														column: 19
@@ -238,7 +238,7 @@ JSRoot {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "es2015/uncategorised/261/input.js"
 														end: Object {
 															column: 19
 															index: 19
@@ -269,7 +269,7 @@ JSRoot {
 
 ```
 
- input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/261/input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

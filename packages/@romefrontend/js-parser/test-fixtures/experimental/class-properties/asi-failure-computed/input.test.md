@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/asi-failure-computed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/asi-failure-computed/input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/asi-failure-computed/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -60,7 +60,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-failure-computed/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -75,7 +75,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/asi-failure-computed/input.js"
 				end: Object {
 					column: 11
 					index: 31
@@ -93,7 +93,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-failure-computed/input.js"
 					end: Object {
 						column: 11
 						index: 31
@@ -111,7 +111,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-failure-computed/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 3
@@ -126,7 +126,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-failure-computed/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -142,7 +142,7 @@ JSRoot {
 						value: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-failure-computed/input.js"
 								end: Object {
 									column: 8
 									index: 28
@@ -156,7 +156,7 @@ JSRoot {
 							}
 							callee: JSMemberExpression {
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-failure-computed/input.js"
 									end: Object {
 										column: 5
 										index: 25
@@ -171,7 +171,7 @@ JSRoot {
 								object: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/asi-failure-computed/input.js"
 										identifierName: "x"
 										end: Object {
 											column: 7
@@ -189,7 +189,7 @@ JSRoot {
 									value: JSReferenceIdentifier {
 										name: "m"
 										loc: Object {
-											filename: "input.js"
+											filename: "experimental/class-properties/asi-failure-computed/input.js"
 											identifierName: "m"
 											end: Object {
 												column: 4
@@ -204,7 +204,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "experimental/class-properties/asi-failure-computed/input.js"
 										end: Object {
 											column: 5
 											index: 25
@@ -222,7 +222,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-failure-computed/input.js"
 							end: Object {
 								column: 8
 								index: 28
@@ -247,7 +247,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-failure-computed/input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -266,7 +266,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: ""
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/asi-failure-computed/input.js"
 									identifierName: ""
 									end: Object {
 										column: 10
@@ -281,7 +281,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-failure-computed/input.js"
 								end: Object {
 									column: 10
 									index: 30
@@ -298,7 +298,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/asi-failure-computed/input.js"
 							end: Object {
 								column: 10
 								index: 30
@@ -323,7 +323,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/asi-failure-computed/input.js"
 								end: Object {
 									column: 10
 									index: 30
@@ -342,7 +342,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/asi-failure-computed/input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -357,7 +357,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/asi-failure-computed/input.js"
 					end: Object {
 						column: 1
 						index: 33
@@ -379,7 +379,7 @@ JSRoot {
 
 ```
 
- input.js:3:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/asi-failure-computed/input.js:3:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

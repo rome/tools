@@ -12,11 +12,11 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSDoWhileStatement = NodeBaseWithComments & {
+export interface JSDoWhileStatement extends NodeBaseWithComments {
 	type: "JSDoWhileStatement";
 	body: AnyJSStatement;
 	test: AnyJSExpression;
-};
+}
 
 export const jsDoWhileStatement = createBuilder<JSDoWhileStatement>(
 	"JSDoWhileStatement",

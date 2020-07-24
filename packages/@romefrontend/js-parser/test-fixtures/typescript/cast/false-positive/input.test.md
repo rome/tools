@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/false-positive/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/false-positive/input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/false-positive/input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/false-positive/input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -63,7 +63,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/false-positive/input.ts"
 						identifierName: "f"
 						end: Object {
 							column: 1
@@ -81,7 +81,7 @@ JSRoot {
 					JSBinaryExpression {
 						operator: "<"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/false-positive/input.ts"
 							end: Object {
 								column: 7
 								index: 7
@@ -96,7 +96,7 @@ JSRoot {
 						left: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/false-positive/input.ts"
 								identifierName: "x"
 								end: Object {
 									column: 3
@@ -114,7 +114,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/false-positive/input.ts"
 								end: Object {
 									column: 7
 									index: 7
@@ -136,7 +136,7 @@ JSRoot {
 						sticky: false
 						unicode: false
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/false-positive/input.ts"
 							end: Object {
 								column: 12
 								index: 12
@@ -150,7 +150,7 @@ JSRoot {
 						}
 						expression: JSRegExpSubExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/false-positive/input.ts"
 								end: Object {
 									column: 11
 									index: 11
@@ -166,7 +166,7 @@ JSRoot {
 								JSRegExpCharacter {
 									value: "a"
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/false-positive/input.ts"
 										end: Object {
 											column: 11
 											index: 11

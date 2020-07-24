@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/module-namespace/head-export/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/module-namespace/head-export/input.ts"
 		end: Object {
 			column: 0
 			index: 43
@@ -36,7 +36,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head-export/input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -52,7 +52,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head-export/input.ts"
 						identifierName: "X"
 						end: Object {
 							column: 18
@@ -67,7 +67,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head-export/input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -83,7 +83,7 @@ JSRoot {
 					id: JSBindingIdentifier {
 						name: "Y"
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/head-export/input.ts"
 							identifierName: "Y"
 							end: Object {
 								column: 20
@@ -98,7 +98,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head-export/input.ts"
 						end: Object {
 							column: 23
 							index: 23
@@ -113,7 +113,7 @@ JSRoot {
 					body: TSModuleBlock {
 						body: Array []
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/module-namespace/head-export/input.ts"
 							end: Object {
 								column: 23
 								index: 23
@@ -133,7 +133,7 @@ JSRoot {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/module-namespace/head-export/input.ts"
 				end: Object {
 					column: 18
 					index: 42
@@ -149,7 +149,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head-export/input.ts"
 						identifierName: "X"
 						end: Object {
 							column: 15
@@ -164,7 +164,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/module-namespace/head-export/input.ts"
 					end: Object {
 						column: 18
 						index: 42
@@ -179,7 +179,7 @@ JSRoot {
 				body: TSModuleBlock {
 					body: Array []
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/module-namespace/head-export/input.ts"
 						end: Object {
 							column: 18
 							index: 42

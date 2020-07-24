@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/as-const/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/as-const/input.ts"
 		end: Object {
 			column: 0
 			index: 1_128
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " Copied over from TypeScript's test case"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 42
 					index: 42
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 99
 					index: 142
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " Error"
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 61
 					index: 821
@@ -90,7 +90,7 @@ JSRoot {
 				"1"
 			]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
 					index: 167
@@ -106,7 +106,7 @@ JSRoot {
 				kind: "let"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
 						index: 167
@@ -124,7 +124,7 @@ JSRoot {
 							name: "v1"
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v1"
 								end: Object {
 									column: 6
@@ -140,7 +140,7 @@ JSRoot {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
 								index: 166
@@ -154,7 +154,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
 									index: 166
@@ -169,7 +169,7 @@ JSRoot {
 							expression: JSStringLiteral {
 								value: "abc"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
 										index: 157
@@ -182,10 +182,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 166
@@ -197,23 +198,6 @@ JSRoot {
 										line: 3
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 166
-											line: 3
-										}
-										start: Object {
-											column: 18
-											index: 161
-											line: 3
-										}
-									}
-								}
 							}
 						}
 					}
@@ -222,7 +206,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
 					index: 192
@@ -237,7 +221,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
 						index: 192
@@ -254,7 +238,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v2"
 								end: Object {
 									column: 6
@@ -269,7 +253,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
 								index: 191
@@ -283,7 +267,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
 									index: 191
@@ -295,10 +279,11 @@ JSRoot {
 									line: 4
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 191
@@ -310,28 +295,11 @@ JSRoot {
 										line: 4
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 191
-											line: 4
-										}
-										start: Object {
-											column: 18
-											index: 186
-											line: 4
-										}
-									}
-								}
 							}
 							expression: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
 										index: 182
@@ -349,7 +317,7 @@ JSRoot {
 										raw: "abc"
 										tail: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 13
 												index: 181
@@ -371,7 +339,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
 					index: 214
@@ -386,7 +354,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
 						index: 214
@@ -403,7 +371,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v3"
 								end: Object {
 									column: 6
@@ -418,7 +386,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
 								index: 213
@@ -432,7 +400,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
 									index: 213
@@ -448,7 +416,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
 										index: 204
@@ -461,10 +429,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 213
@@ -476,23 +445,6 @@ JSRoot {
 										line: 5
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 213
-											line: 5
-										}
-										start: Object {
-											column: 15
-											index: 208
-											line: 5
-										}
-									}
-								}
 							}
 						}
 					}
@@ -501,7 +453,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
 					index: 237
@@ -516,7 +468,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
 						index: 237
@@ -533,7 +485,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v4"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v4"
 								end: Object {
 									column: 6
@@ -548,7 +500,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
 								index: 236
@@ -562,7 +514,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
 									index: 236
@@ -574,10 +526,11 @@ JSRoot {
 									line: 6
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 236
@@ -589,29 +542,12 @@ JSRoot {
 										line: 6
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 236
-											line: 6
-										}
-										start: Object {
-											column: 16
-											index: 231
-											line: 6
-										}
-									}
-								}
 							}
 							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
 										index: 227
@@ -627,7 +563,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
 											index: 227
@@ -648,7 +584,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
 					index: 260
@@ -663,7 +599,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
 						index: 260
@@ -680,7 +616,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v5"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v5"
 								end: Object {
 									column: 6
@@ -695,7 +631,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
 								index: 259
@@ -709,7 +645,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
 									index: 259
@@ -721,10 +657,11 @@ JSRoot {
 									line: 7
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 259
@@ -736,29 +673,12 @@ JSRoot {
 										line: 7
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 259
-											line: 7
-										}
-										start: Object {
-											column: 16
-											index: 254
-											line: 7
-										}
-									}
-								}
 							}
 							expression: JSUnaryExpression {
 								operator: "+"
 								prefix: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
 										index: 250
@@ -774,7 +694,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
 											index: 250
@@ -795,7 +715,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
 					index: 282
@@ -810,7 +730,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
 						index: 282
@@ -827,7 +747,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v6"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v6"
 								end: Object {
 									column: 6
@@ -842,7 +762,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
 								index: 281
@@ -856,7 +776,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
 									index: 281
@@ -872,7 +792,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
 										index: 272
@@ -885,10 +805,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 281
@@ -900,23 +821,6 @@ JSRoot {
 										line: 8
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 281
-											line: 8
-										}
-										start: Object {
-											column: 15
-											index: 276
-											line: 8
-										}
-									}
-								}
 							}
 						}
 					}
@@ -925,7 +829,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
 					index: 305
@@ -940,7 +844,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
 						index: 305
@@ -957,7 +861,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v7"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v7"
 								end: Object {
 									column: 6
@@ -972,7 +876,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
 								index: 304
@@ -986,7 +890,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
 									index: 304
@@ -998,10 +902,11 @@ JSRoot {
 									line: 9
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 21
 										index: 304
@@ -1013,29 +918,12 @@ JSRoot {
 										line: 9
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 21
-											index: 304
-											line: 9
-										}
-										start: Object {
-											column: 16
-											index: 299
-											line: 9
-										}
-									}
-								}
 							}
 							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
 										index: 295
@@ -1051,7 +939,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
 											index: 295
@@ -1072,7 +960,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
 					index: 329
@@ -1087,7 +975,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
 						index: 329
@@ -1104,7 +992,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v8"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v8"
 								end: Object {
 									column: 6
@@ -1119,7 +1007,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
 								index: 328
@@ -1133,7 +1021,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
 									index: 328
@@ -1148,7 +1036,7 @@ JSRoot {
 							expression: JSBooleanLiteral {
 								value: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 13
 										index: 319
@@ -1161,10 +1049,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 22
 										index: 328
@@ -1176,23 +1065,6 @@ JSRoot {
 										line: 10
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 22
-											index: 328
-											line: 10
-										}
-										start: Object {
-											column: 17
-											index: 323
-											line: 10
-										}
-									}
-								}
 							}
 						}
 					}
@@ -1201,7 +1073,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
 					index: 354
@@ -1216,7 +1088,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
 						index: 354
@@ -1233,7 +1105,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "v9"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "v9"
 								end: Object {
 									column: 6
@@ -1248,7 +1120,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
 								index: 353
@@ -1262,7 +1134,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
 									index: 353
@@ -1277,7 +1149,7 @@ JSRoot {
 							expression: JSBooleanLiteral {
 								value: false
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
 										index: 344
@@ -1290,10 +1162,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 23
 										index: 353
@@ -1305,23 +1178,6 @@ JSRoot {
 										line: 11
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 23
-											index: 353
-											line: 11
-										}
-										start: Object {
-											column: 18
-											index: 348
-											line: 11
-										}
-									}
-								}
 							}
 						}
 					}
@@ -1330,7 +1186,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
 					index: 377
@@ -1345,7 +1201,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
 						index: 377
@@ -1362,7 +1218,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a1"
 								end: Object {
 									column: 6
@@ -1377,7 +1233,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
 								index: 376
@@ -1391,7 +1247,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
 									index: 376
@@ -1406,7 +1262,7 @@ JSRoot {
 							expression: JSArrayExpression {
 								elements: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
 										index: 367
@@ -1419,10 +1275,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 20
 										index: 376
@@ -1434,23 +1291,6 @@ JSRoot {
 										line: 13
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 20
-											index: 376
-											line: 13
-										}
-										start: Object {
-											column: 15
-											index: 371
-											line: 13
-										}
-									}
-								}
 							}
 						}
 					}
@@ -1459,7 +1299,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 28
 					index: 406
@@ -1474,7 +1314,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 28
 						index: 406
@@ -1491,7 +1331,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a2"
 								end: Object {
 									column: 6
@@ -1506,7 +1346,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 27
 								index: 405
@@ -1520,7 +1360,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 27
 									index: 405
@@ -1532,10 +1372,11 @@ JSRoot {
 									line: 14
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 27
 										index: 405
@@ -1547,27 +1388,10 @@ JSRoot {
 										line: 14
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 27
-											index: 405
-											line: 14
-										}
-										start: Object {
-											column: 22
-											index: 400
-											line: 14
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 18
 										index: 396
@@ -1584,7 +1408,7 @@ JSRoot {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 11
 												index: 389
@@ -1601,7 +1425,7 @@ JSRoot {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 14
 												index: 392
@@ -1618,7 +1442,7 @@ JSRoot {
 										value: 3
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 17
 												index: 395
@@ -1640,7 +1464,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 38
 					index: 445
@@ -1655,7 +1479,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 38
 						index: 445
@@ -1672,7 +1496,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a3"
 								end: Object {
 									column: 6
@@ -1687,7 +1511,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 37
 								index: 444
@@ -1701,7 +1525,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 37
 									index: 444
@@ -1713,10 +1537,11 @@ JSRoot {
 									line: 15
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 37
 										index: 444
@@ -1728,27 +1553,10 @@ JSRoot {
 										line: 15
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 37
-											index: 444
-											line: 15
-										}
-										start: Object {
-											column: 32
-											index: 439
-											line: 15
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 28
 										index: 435
@@ -1765,7 +1573,7 @@ JSRoot {
 										value: 10
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 12
 												index: 419
@@ -1781,7 +1589,7 @@ JSRoot {
 									JSStringLiteral {
 										value: "hello"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 21
 												index: 428
@@ -1797,7 +1605,7 @@ JSRoot {
 									JSBooleanLiteral {
 										value: true
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 27
 												index: 434
@@ -1819,7 +1627,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 33
 					index: 479
@@ -1834,7 +1642,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 33
 						index: 479
@@ -1851,7 +1659,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a4"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a4"
 								end: Object {
 									column: 6
@@ -1866,7 +1674,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 32
 								index: 478
@@ -1880,7 +1688,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 32
 									index: 478
@@ -1892,10 +1700,11 @@ JSRoot {
 									line: 16
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 32
 										index: 478
@@ -1907,27 +1716,10 @@ JSRoot {
 										line: 16
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 32
-											index: 478
-											line: 16
-										}
-										start: Object {
-											column: 27
-											index: 473
-											line: 16
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 23
 										index: 469
@@ -1942,7 +1734,7 @@ JSRoot {
 								elements: Array [
 									JSSpreadElement {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
 												index: 468
@@ -1956,7 +1748,7 @@ JSRoot {
 										}
 										argument: JSArrayExpression {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 22
 													index: 468
@@ -1973,7 +1765,7 @@ JSRoot {
 													value: 1
 													format: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 15
 															index: 461
@@ -1990,7 +1782,7 @@ JSRoot {
 													value: 2
 													format: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 18
 															index: 464
@@ -2007,7 +1799,7 @@ JSRoot {
 													value: 3
 													format: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 21
 															index: 467
@@ -2032,7 +1824,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 19
 					index: 499
@@ -2047,7 +1839,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 19
 						index: 499
@@ -2064,7 +1856,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a5"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a5"
 								end: Object {
 									column: 6
@@ -2079,7 +1871,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 18
 								index: 498
@@ -2093,7 +1885,7 @@ JSRoot {
 						}
 						init: JSArrayExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 18
 									index: 498
@@ -2110,7 +1902,7 @@ JSRoot {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 11
 											index: 491
@@ -2127,7 +1919,7 @@ JSRoot {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 14
 											index: 494
@@ -2144,7 +1936,7 @@ JSRoot {
 									value: 3
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 17
 											index: 497
@@ -2165,7 +1957,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 26
 					index: 526
@@ -2180,7 +1972,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 26
 						index: 526
@@ -2197,7 +1989,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a6"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a6"
 								end: Object {
 									column: 6
@@ -2212,7 +2004,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 25
 								index: 525
@@ -2226,7 +2018,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 25
 									index: 525
@@ -2238,10 +2030,11 @@ JSRoot {
 									line: 18
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 25
 										index: 525
@@ -2253,27 +2046,10 @@ JSRoot {
 										line: 18
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 25
-											index: 525
-											line: 18
-										}
-										start: Object {
-											column: 20
-											index: 520
-											line: 18
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 16
 										index: 516
@@ -2288,7 +2064,7 @@ JSRoot {
 								elements: Array [
 									JSSpreadElement {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
 												index: 515
@@ -2303,7 +2079,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "a5"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "a5"
 												end: Object {
 													column: 15
@@ -2327,7 +2103,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 33
 					index: 560
@@ -2342,7 +2118,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 33
 						index: 560
@@ -2359,7 +2135,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "a8"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "a8"
 								end: Object {
 									column: 6
@@ -2374,7 +2150,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 32
 								index: 559
@@ -2388,7 +2164,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 32
 									index: 559
@@ -2400,10 +2176,11 @@ JSRoot {
 									line: 19
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 32
 										index: 559
@@ -2415,27 +2192,10 @@ JSRoot {
 										line: 19
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 32
-											index: 559
-											line: 19
-										}
-										start: Object {
-											column: 27
-											index: 554
-											line: 19
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 23
 										index: 550
@@ -2451,7 +2211,7 @@ JSRoot {
 									JSStringLiteral {
 										value: "abc"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
 												index: 542
@@ -2466,7 +2226,7 @@ JSRoot {
 									}
 									JSSpreadElement {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
 												index: 549
@@ -2481,7 +2241,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "a7"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "a7"
 												end: Object {
 													column: 22
@@ -2505,7 +2265,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 35
 					index: 597
@@ -2520,7 +2280,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 35
 						index: 597
@@ -2537,7 +2297,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o1"
 								end: Object {
 									column: 6
@@ -2552,7 +2312,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 34
 								index: 596
@@ -2566,7 +2326,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 34
 									index: 596
@@ -2578,10 +2338,11 @@ JSRoot {
 									line: 21
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 34
 										index: 596
@@ -2593,27 +2354,10 @@ JSRoot {
 										line: 21
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 34
-											index: 596
-											line: 21
-										}
-										start: Object {
-											column: 29
-											index: 591
-											line: 21
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 25
 										index: 587
@@ -2631,7 +2375,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "x"
 													end: Object {
 														column: 12
@@ -2646,7 +2390,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
 													index: 574
@@ -2663,7 +2407,7 @@ JSRoot {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
 													index: 578
@@ -2677,7 +2421,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
 												index: 578
@@ -2695,7 +2439,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "y"
 													end: Object {
 														column: 19
@@ -2710,7 +2454,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 19
 													index: 581
@@ -2727,7 +2471,7 @@ JSRoot {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
 													index: 585
@@ -2741,7 +2485,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
 												index: 585
@@ -2763,7 +2507,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 68
 					index: 666
@@ -2778,7 +2522,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 68
 						index: 666
@@ -2795,7 +2539,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o2"
 								end: Object {
 									column: 6
@@ -2810,7 +2554,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 67
 								index: 665
@@ -2824,7 +2568,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 67
 									index: 665
@@ -2836,10 +2580,11 @@ JSRoot {
 									line: 22
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 67
 										index: 665
@@ -2851,27 +2596,10 @@ JSRoot {
 										line: 22
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 67
-											index: 665
-											line: 22
-										}
-										start: Object {
-											column: 62
-											index: 660
-											line: 22
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 58
 										index: 656
@@ -2889,7 +2617,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "a"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "a"
 													end: Object {
 														column: 12
@@ -2904,7 +2632,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
 													index: 610
@@ -2921,7 +2649,7 @@ JSRoot {
 											value: 1
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 15
 													index: 613
@@ -2935,7 +2663,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
 												index: 613
@@ -2953,7 +2681,7 @@ JSRoot {
 											value: JSStringLiteral {
 												value: "b"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 20
 														index: 618
@@ -2967,7 +2695,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 20
 													index: 618
@@ -2984,7 +2712,7 @@ JSRoot {
 											value: 2
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
 													index: 621
@@ -2998,7 +2726,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
 												index: 621
@@ -3016,7 +2744,7 @@ JSRoot {
 											value: JSStringLiteral {
 												value: "c"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 29
 														index: 627
@@ -3030,7 +2758,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 30
 													index: 628
@@ -3047,7 +2775,7 @@ JSRoot {
 											value: 3
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 33
 													index: 631
@@ -3061,7 +2789,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 33
 												index: 631
@@ -3080,7 +2808,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "d"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "d"
 													end: Object {
 														column: 36
@@ -3095,7 +2823,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 36
 													index: 634
@@ -3109,7 +2837,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 41
 												index: 639
@@ -3125,7 +2853,7 @@ JSRoot {
 											body: Array []
 											directives: Array []
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 41
 													index: 639
@@ -3148,7 +2876,7 @@ JSRoot {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 38
 													index: 636
@@ -3167,7 +2895,7 @@ JSRoot {
 											value: JSBinaryExpression {
 												operator: "+"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 52
 														index: 650
@@ -3182,7 +2910,7 @@ JSRoot {
 												left: JSStringLiteral {
 													value: "e"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 47
 															index: 645
@@ -3198,7 +2926,7 @@ JSRoot {
 												right: JSStringLiteral {
 													value: ""
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 52
 															index: 650
@@ -3213,7 +2941,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 53
 													index: 651
@@ -3230,7 +2958,7 @@ JSRoot {
 											value: 4
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 56
 													index: 654
@@ -3244,7 +2972,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 56
 												index: 654
@@ -3266,7 +2994,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 35
 					index: 702
@@ -3281,7 +3009,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 35
 						index: 702
@@ -3298,7 +3026,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o3"
 								end: Object {
 									column: 6
@@ -3313,7 +3041,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 34
 								index: 701
@@ -3327,7 +3055,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 34
 									index: 701
@@ -3339,10 +3067,11 @@ JSRoot {
 									line: 23
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 34
 										index: 701
@@ -3354,27 +3083,10 @@ JSRoot {
 										line: 23
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 34
-											index: 701
-											line: 23
-										}
-										start: Object {
-											column: 29
-											index: 696
-											line: 23
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 25
 										index: 692
@@ -3389,7 +3101,7 @@ JSRoot {
 								properties: Array [
 									JSSpreadProperty {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
 												index: 683
@@ -3404,7 +3116,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "o1"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "o1"
 												end: Object {
 													column: 16
@@ -3421,7 +3133,7 @@ JSRoot {
 									}
 									JSSpreadProperty {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
 												index: 690
@@ -3436,7 +3148,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "o2"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "o2"
 												end: Object {
 													column: 23
@@ -3460,7 +3172,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 28
 					index: 731
@@ -3475,7 +3187,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 28
 						index: 731
@@ -3492,7 +3204,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o5"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o5"
 								end: Object {
 									column: 6
@@ -3507,7 +3219,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 27
 								index: 730
@@ -3521,7 +3233,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 27
 									index: 730
@@ -3533,10 +3245,11 @@ JSRoot {
 									line: 24
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 27
 										index: 730
@@ -3548,27 +3261,10 @@ JSRoot {
 										line: 24
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 27
-											index: 730
-											line: 24
-										}
-										start: Object {
-											column: 22
-											index: 725
-											line: 24
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 18
 										index: 721
@@ -3583,7 +3279,7 @@ JSRoot {
 								properties: Array [
 									JSSpreadProperty {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
 												index: 719
@@ -3598,7 +3294,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "o4"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "o4"
 												end: Object {
 													column: 16
@@ -3622,7 +3318,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
 					index: 759
@@ -3637,7 +3333,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
 						index: 759
@@ -3654,7 +3350,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o7"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o7"
 								end: Object {
 									column: 6
@@ -3669,7 +3365,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
 								index: 758
@@ -3683,7 +3379,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
 									index: 758
@@ -3695,10 +3391,11 @@ JSRoot {
 									line: 25
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 26
 										index: 758
@@ -3710,27 +3407,10 @@ JSRoot {
 										line: 25
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 26
-											index: 758
-											line: 25
-										}
-										start: Object {
-											column: 21
-											index: 753
-											line: 25
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 17
 										index: 749
@@ -3745,7 +3425,7 @@ JSRoot {
 								properties: Array [
 									JSSpreadProperty {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
 												index: 747
@@ -3760,7 +3440,7 @@ JSRoot {
 										argument: JSReferenceIdentifier {
 											name: "d"
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												identifierName: "d"
 												end: Object {
 													column: 15
@@ -3785,7 +3465,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			trailingComments: Array ["2"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 51
 					index: 811
@@ -3801,7 +3481,7 @@ JSRoot {
 				kind: "let"
 				trailingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 51
 						index: 811
@@ -3818,7 +3498,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "o9"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "o9"
 								end: Object {
 									column: 6
@@ -3833,7 +3513,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 50
 								index: 810
@@ -3847,7 +3527,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 50
 									index: 810
@@ -3859,10 +3539,11 @@ JSRoot {
 									line: 26
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 50
 										index: 810
@@ -3874,27 +3555,10 @@ JSRoot {
 										line: 26
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 50
-											index: 810
-											line: 26
-										}
-										start: Object {
-											column: 45
-											index: 805
-											line: 26
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 41
 										index: 801
@@ -3912,7 +3576,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "x"
 													end: Object {
 														column: 12
@@ -3927,7 +3591,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
 													index: 772
@@ -3944,7 +3608,7 @@ JSRoot {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
 													index: 776
@@ -3958,7 +3622,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
 												index: 776
@@ -3977,7 +3641,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "foo"
 													end: Object {
 														column: 21
@@ -3992,7 +3656,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 21
 													index: 781
@@ -4006,7 +3670,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 39
 												index: 799
@@ -4028,7 +3692,7 @@ JSRoot {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
 													index: 783
@@ -4044,7 +3708,7 @@ JSRoot {
 										body: JSBlockStatement {
 											directives: Array []
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 39
 													index: 799
@@ -4059,7 +3723,7 @@ JSRoot {
 											body: Array [
 												JSExpressionStatement {
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 37
 															index: 797
@@ -4074,7 +3738,7 @@ JSRoot {
 													expression: JSAssignmentExpression {
 														operator: "="
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 37
 																index: 797
@@ -4090,7 +3754,7 @@ JSRoot {
 															value: 20
 															format: undefined
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/cast/as-const/input.ts"
 																end: Object {
 																	column: 37
 																	index: 797
@@ -4105,7 +3769,7 @@ JSRoot {
 														}
 														left: JSMemberExpression {
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/cast/as-const/input.ts"
 																end: Object {
 																	column: 32
 																	index: 792
@@ -4119,7 +3783,7 @@ JSRoot {
 															}
 															object: JSThisExpression {
 																loc: Object {
-																	filename: "input.ts"
+																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 30
 																		index: 790
@@ -4136,7 +3800,7 @@ JSRoot {
 																value: JSIdentifier {
 																	name: "x"
 																	loc: Object {
-																		filename: "input.ts"
+																		filename: "typescript/cast/as-const/input.ts"
 																		identifierName: "x"
 																		end: Object {
 																			column: 32
@@ -4151,7 +3815,7 @@ JSRoot {
 																	}
 																}
 																loc: Object {
-																	filename: "input.ts"
+																	filename: "typescript/cast/as-const/input.ts"
 																	identifierName: "x"
 																	end: Object {
 																		column: 32
@@ -4181,7 +3845,7 @@ JSRoot {
 		JSVariableDeclarationStatement {
 			leadingComments: Array ["2"]
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
 					index: 846
@@ -4197,7 +3861,7 @@ JSRoot {
 				kind: "let"
 				leadingComments: undefined
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
 						index: 846
@@ -4215,7 +3879,7 @@ JSRoot {
 							name: "p1"
 							leadingComments: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "p1"
 								end: Object {
 									column: 6
@@ -4231,7 +3895,7 @@ JSRoot {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
 								index: 845
@@ -4245,7 +3909,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
 									index: 845
@@ -4261,7 +3925,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
 										index: 835
@@ -4274,10 +3938,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 22
 										index: 845
@@ -4289,23 +3954,6 @@ JSRoot {
 										line: 28
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 22
-											index: 845
-											line: 28
-										}
-										start: Object {
-											column: 17
-											index: 840
-											line: 28
-										}
-									}
-								}
 							}
 						}
 					}
@@ -4314,7 +3962,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 26
 					index: 873
@@ -4329,7 +3977,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 26
 						index: 873
@@ -4346,7 +3994,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "p2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "p2"
 								end: Object {
 									column: 6
@@ -4361,7 +4009,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 25
 								index: 872
@@ -4375,7 +4023,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 25
 									index: 872
@@ -4387,10 +4035,11 @@ JSRoot {
 									line: 29
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 25
 										index: 872
@@ -4402,29 +4051,12 @@ JSRoot {
 										line: 29
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 25
-											index: 872
-											line: 29
-										}
-										start: Object {
-											column: 20
-											index: 867
-											line: 29
-										}
-									}
-								}
 							}
 							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
 										index: 861
@@ -4440,7 +4072,7 @@ JSRoot {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 14
 											index: 861
@@ -4461,7 +4093,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
 					index: 901
@@ -4476,7 +4108,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
 						index: 901
@@ -4493,7 +4125,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "p3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "p3"
 								end: Object {
 									column: 6
@@ -4508,7 +4140,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
 								index: 900
@@ -4522,7 +4154,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
 									index: 900
@@ -4534,10 +4166,11 @@ JSRoot {
 									line: 30
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 26
 										index: 900
@@ -4549,27 +4182,10 @@ JSRoot {
 										line: 30
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 26
-											index: 900
-											line: 30
-										}
-										start: Object {
-											column: 21
-											index: 895
-											line: 30
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 16
 										index: 890
@@ -4586,7 +4202,7 @@ JSRoot {
 										value: 10
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 14
 												index: 888
@@ -4608,7 +4224,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 29
 					index: 931
@@ -4623,7 +4239,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 29
 						index: 931
@@ -4640,7 +4256,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "p4"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "p4"
 								end: Object {
 									column: 6
@@ -4655,7 +4271,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 28
 								index: 930
@@ -4669,7 +4285,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 28
 									index: 930
@@ -4681,10 +4297,11 @@ JSRoot {
 									line: 31
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 28
 										index: 930
@@ -4696,27 +4313,10 @@ JSRoot {
 										line: 31
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 28
-											index: 930
-											line: 31
-										}
-										start: Object {
-											column: 23
-											index: 925
-											line: 31
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 19
 										index: 921
@@ -4731,7 +4331,7 @@ JSRoot {
 								elements: Array [
 									JSArrayExpression {
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 18
 												index: 920
@@ -4746,7 +4346,7 @@ JSRoot {
 										elements: Array [
 											JSArrayExpression {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 17
 														index: 919
@@ -4761,7 +4361,7 @@ JSRoot {
 												elements: Array [
 													JSArrayExpression {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 16
 																index: 918
@@ -4778,7 +4378,7 @@ JSRoot {
 																value: 10
 																format: undefined
 																loc: Object {
-																	filename: "input.ts"
+																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 15
 																		index: 917
@@ -4806,7 +4406,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 62
 					index: 995
@@ -4821,7 +4421,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 62
 						index: 995
@@ -4838,7 +4438,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "x1"
 								end: Object {
 									column: 6
@@ -4853,7 +4453,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 61
 								index: 994
@@ -4867,7 +4467,7 @@ JSRoot {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 61
 									index: 994
@@ -4879,10 +4479,11 @@ JSRoot {
 									line: 33
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 61
 										index: 994
@@ -4894,27 +4495,10 @@ JSRoot {
 										line: 33
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 61
-											index: 994
-											line: 33
-										}
-										start: Object {
-											column: 56
-											index: 989
-											line: 33
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 52
 										index: 985
@@ -4932,7 +4516,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "x"
 													end: Object {
 														column: 12
@@ -4947,7 +4531,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
 													index: 945
@@ -4964,7 +4548,7 @@ JSRoot {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
 													index: 949
@@ -4978,7 +4562,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
 												index: 949
@@ -4996,7 +4580,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "y"
 													end: Object {
 														column: 19
@@ -5011,7 +4595,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 19
 													index: 952
@@ -5026,7 +4610,7 @@ JSRoot {
 										}
 										value: JSArrayExpression {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 29
 													index: 962
@@ -5043,7 +4627,7 @@ JSRoot {
 													value: 20
 													format: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 24
 															index: 957
@@ -5060,7 +4644,7 @@ JSRoot {
 													value: 30
 													format: undefined
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 28
 															index: 961
@@ -5076,7 +4660,7 @@ JSRoot {
 											]
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 29
 												index: 962
@@ -5094,7 +4678,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "z"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "z"
 													end: Object {
 														column: 32
@@ -5109,7 +4693,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 32
 													index: 965
@@ -5124,7 +4708,7 @@ JSRoot {
 										}
 										value: JSObjectExpression {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 50
 													index: 983
@@ -5142,7 +4726,7 @@ JSRoot {
 														value: JSIdentifier {
 															name: "a"
 															loc: Object {
-																filename: "input.ts"
+																filename: "typescript/cast/as-const/input.ts"
 																identifierName: "a"
 																end: Object {
 																	column: 37
@@ -5157,7 +4741,7 @@ JSRoot {
 															}
 														}
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 37
 																index: 970
@@ -5172,7 +4756,7 @@ JSRoot {
 													}
 													value: JSObjectExpression {
 														loc: Object {
-															filename: "input.ts"
+															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 48
 																index: 981
@@ -5190,7 +4774,7 @@ JSRoot {
 																	value: JSIdentifier {
 																		name: "b"
 																		loc: Object {
-																			filename: "input.ts"
+																			filename: "typescript/cast/as-const/input.ts"
 																			identifierName: "b"
 																			end: Object {
 																				column: 42
@@ -5205,7 +4789,7 @@ JSRoot {
 																		}
 																	}
 																	loc: Object {
-																		filename: "input.ts"
+																		filename: "typescript/cast/as-const/input.ts"
 																		end: Object {
 																			column: 42
 																			index: 975
@@ -5222,7 +4806,7 @@ JSRoot {
 																	value: 42
 																	format: undefined
 																	loc: Object {
-																		filename: "input.ts"
+																		filename: "typescript/cast/as-const/input.ts"
 																		end: Object {
 																			column: 46
 																			index: 979
@@ -5236,7 +4820,7 @@ JSRoot {
 																	}
 																}
 																loc: Object {
-																	filename: "input.ts"
+																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 46
 																		index: 979
@@ -5252,7 +4836,7 @@ JSRoot {
 														]
 													}
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 48
 															index: 981
@@ -5268,7 +4852,7 @@ JSRoot {
 											]
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 50
 												index: 983
@@ -5290,7 +4874,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 20
 					index: 1_017
@@ -5305,7 +4889,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 20
 						index: 1_017
@@ -5322,7 +4906,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "q1"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "q1"
 								end: Object {
 									column: 6
@@ -5337,7 +4921,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 19
 								index: 1_016
@@ -5351,7 +4935,7 @@ JSRoot {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 19
 									index: 1_016
@@ -5367,7 +4951,7 @@ JSRoot {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 19
 										index: 1_016
@@ -5380,10 +4964,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_012
@@ -5395,23 +4980,6 @@ JSRoot {
 										line: 35
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_012
-											line: 35
-										}
-										start: Object {
-											column: 10
-											index: 1_007
-											line: 35
-										}
-									}
-								}
 							}
 						}
 					}
@@ -5420,7 +4988,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
 					index: 1_041
@@ -5435,7 +5003,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
 						index: 1_041
@@ -5452,7 +5020,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "q2"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "q2"
 								end: Object {
 									column: 6
@@ -5467,7 +5035,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
 								index: 1_040
@@ -5481,7 +5049,7 @@ JSRoot {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
 									index: 1_040
@@ -5496,7 +5064,7 @@ JSRoot {
 							expression: JSStringLiteral {
 								value: "abc"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 22
 										index: 1_040
@@ -5509,10 +5077,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_033
@@ -5524,23 +5093,6 @@ JSRoot {
 										line: 36
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_033
-											line: 36
-										}
-										start: Object {
-											column: 10
-											index: 1_028
-											line: 36
-										}
-									}
-								}
 							}
 						}
 					}
@@ -5549,7 +5101,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
 					index: 1_064
@@ -5564,7 +5116,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
 						index: 1_064
@@ -5581,7 +5133,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "q3"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "q3"
 								end: Object {
 									column: 6
@@ -5596,7 +5148,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
 								index: 1_063
@@ -5610,7 +5162,7 @@ JSRoot {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
 									index: 1_063
@@ -5625,7 +5177,7 @@ JSRoot {
 							expression: JSBooleanLiteral {
 								value: true
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 21
 										index: 1_063
@@ -5638,10 +5190,11 @@ JSRoot {
 									}
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_057
@@ -5653,23 +5206,6 @@ JSRoot {
 										line: 37
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_057
-											line: 37
-										}
-										start: Object {
-											column: 10
-											index: 1_052
-											line: 37
-										}
-									}
-								}
 							}
 						}
 					}
@@ -5678,7 +5214,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
 					index: 1_092
@@ -5693,7 +5229,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
 						index: 1_092
@@ -5710,7 +5246,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "q4"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "q4"
 								end: Object {
 									column: 6
@@ -5725,7 +5261,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
 								index: 1_091
@@ -5739,7 +5275,7 @@ JSRoot {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
 									index: 1_091
@@ -5751,10 +5287,11 @@ JSRoot {
 									line: 38
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_080
@@ -5766,27 +5303,10 @@ JSRoot {
 										line: 38
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_080
-											line: 38
-										}
-										start: Object {
-											column: 10
-											index: 1_075
-											line: 38
-										}
-									}
-								}
 							}
 							expression: JSArrayExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 26
 										index: 1_091
@@ -5803,7 +5323,7 @@ JSRoot {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 19
 												index: 1_084
@@ -5820,7 +5340,7 @@ JSRoot {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
 												index: 1_087
@@ -5837,7 +5357,7 @@ JSRoot {
 										value: 3
 										format: undefined
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 25
 												index: 1_090
@@ -5859,7 +5379,7 @@ JSRoot {
 		}
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 34
 					index: 1_127
@@ -5874,7 +5394,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 34
 						index: 1_127
@@ -5891,7 +5411,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "q5"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								identifierName: "q5"
 								end: Object {
 									column: 6
@@ -5906,7 +5426,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 33
 								index: 1_126
@@ -5920,7 +5440,7 @@ JSRoot {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 33
 									index: 1_126
@@ -5932,10 +5452,11 @@ JSRoot {
 									line: 39
 								}
 							}
-							typeAnnotation: TSTypeReference {
-								typeParameters: undefined
+							typeAnnotation: TSConstKeyword {
+								name: "const"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
+									identifierName: "const"
 									end: Object {
 										column: 15
 										index: 1_108
@@ -5947,27 +5468,10 @@ JSRoot {
 										line: 39
 									}
 								}
-								typeName: JSReferenceIdentifier {
-									name: "const"
-									loc: Object {
-										filename: "input.ts"
-										identifierName: "const"
-										end: Object {
-											column: 15
-											index: 1_108
-											line: 39
-										}
-										start: Object {
-											column: 10
-											index: 1_103
-											line: 39
-										}
-									}
-								}
 							}
 							expression: JSObjectExpression {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 33
 										index: 1_126
@@ -5985,7 +5489,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "x"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "x"
 													end: Object {
 														column: 20
@@ -6000,7 +5504,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 20
 													index: 1_113
@@ -6017,7 +5521,7 @@ JSRoot {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 24
 													index: 1_117
@@ -6031,7 +5535,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 24
 												index: 1_117
@@ -6049,7 +5553,7 @@ JSRoot {
 											value: JSIdentifier {
 												name: "y"
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/cast/as-const/input.ts"
 													identifierName: "y"
 													end: Object {
 														column: 27
@@ -6064,7 +5568,7 @@ JSRoot {
 												}
 											}
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 27
 													index: 1_120
@@ -6081,7 +5585,7 @@ JSRoot {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 31
 													index: 1_124
@@ -6095,7 +5599,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 31
 												index: 1_124

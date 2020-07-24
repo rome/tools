@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected keyword from"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -61,7 +61,7 @@ JSRoot {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -76,7 +76,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: ""
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -91,7 +91,7 @@ JSRoot {
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -107,7 +107,7 @@ JSRoot {
 					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 10
@@ -123,7 +123,7 @@ JSRoot {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -141,7 +141,7 @@ JSRoot {
 		JSBlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -156,7 +156,7 @@ JSRoot {
 			body: Array [
 				JSExpressionStatement {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -171,7 +171,7 @@ JSRoot {
 					expression: JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 							identifierName: "bar"
 							end: Object {
 								column: 16
@@ -190,7 +190,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -205,7 +205,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 					identifierName: "from"
 					end: Object {
 						column: 23
@@ -222,7 +222,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -237,7 +237,7 @@ JSRoot {
 			expression: JSStringLiteral {
 				value: "bar"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/invalid-import-missing-comma/input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -259,7 +259,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-missing-comma/input.js:1:11 parse/js ━━━━━━━━━━━━━
 
   ✖ Expected keyword from
 

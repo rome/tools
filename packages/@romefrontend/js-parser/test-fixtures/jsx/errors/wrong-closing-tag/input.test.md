@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/wrong-closing-tag/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/wrong-closing-tag/input.jsx"
 		end: Object {
 			column: 0
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/wrong-closing-tag/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/wrong-closing-tag/input.jsx"
 							end: Object {
 								column: 4
 								index: 4
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/wrong-closing-tag/input.jsx"
 				end: Object {
 					column: 11
 					index: 11
@@ -94,7 +94,7 @@ JSRoot {
 				name: JSXReferenceIdentifier {
 					name: "Foo"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/wrong-closing-tag/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -112,7 +112,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/wrong-closing-tag/input.jsx"
 					end: Object {
 						column: 11
 						index: 11
@@ -134,7 +134,7 @@ JSRoot {
 
 ```
 
- input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/wrong-closing-tag/input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a corresponding JSX closing tag for Foo
 

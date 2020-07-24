@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "core/regression/use-strict-with-pre-semi/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "core/regression/use-strict-with-pre-semi/input.js"
 		end: Object {
 			column: 0
 			index: 56
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/use-strict-with-pre-semi/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 10
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "core/regression/use-strict-with-pre-semi/input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -66,7 +66,7 @@ JSRoot {
 			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/use-strict-with-pre-semi/input.js"
 					end: Object {
 						column: 1
 						index: 55
@@ -81,7 +81,7 @@ JSRoot {
 				body: Array [
 					JSEmptyStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 2
 								index: 26
@@ -96,7 +96,7 @@ JSRoot {
 					}
 					JSExpressionStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 16
 								index: 40
@@ -111,7 +111,7 @@ JSRoot {
 						expression: JSStringLiteral {
 							value: "use strict"
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 15
 									index: 39
@@ -127,7 +127,7 @@ JSRoot {
 					}
 					JSWithStatement {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 29
 								index: 53
@@ -142,7 +142,7 @@ JSRoot {
 						object: JSObjectExpression {
 							properties: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 25
 									index: 49
@@ -159,7 +159,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 29
 									index: 53
@@ -184,7 +184,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "core/regression/use-strict-with-pre-semi/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -199,7 +199,7 @@ JSRoot {
 				params: Array [
 					JSBindingAssignmentPattern {
 						loc: Object {
-							filename: "input.js"
+							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -214,7 +214,7 @@ JSRoot {
 						right: JSArrayExpression {
 							elements: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -230,7 +230,7 @@ JSRoot {
 						left: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -246,7 +246,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "core/regression/use-strict-with-pre-semi/input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -263,7 +263,7 @@ JSRoot {
 								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
-										filename: "input.js"
+										filename: "core/regression/use-strict-with-pre-semi/input.js"
 										identifierName: "a"
 										end: Object {
 											column: 14
@@ -280,7 +280,7 @@ JSRoot {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "core/regression/use-strict-with-pre-semi/input.js"
 											end: Object {
 												column: 14
 												index: 14

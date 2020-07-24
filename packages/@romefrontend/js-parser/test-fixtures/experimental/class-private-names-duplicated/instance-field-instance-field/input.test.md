@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 		end: Object {
 			column: 1
 			index: 31
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 				end: Object {
 					column: 1
 					index: 31
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 					end: Object {
 						column: 1
 						index: 31
@@ -87,7 +87,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -119,7 +119,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -134,7 +134,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 							end: Object {
 								column: 9
 								index: 19
@@ -159,7 +159,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 14
@@ -178,7 +178,7 @@ JSRoot {
 							id: JSIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -193,7 +193,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 24
@@ -210,7 +210,7 @@ JSRoot {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 8
 									index: 28
@@ -225,7 +225,7 @@ JSRoot {
 						}
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 							end: Object {
 								column: 9
 								index: 29
@@ -250,7 +250,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-private-names-duplicated/instance-field-instance-field/input.js"
 								end: Object {
 									column: 4
 									index: 24

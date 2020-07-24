@@ -32,10 +32,10 @@ type VisitorKeys<T> = {[K in JustNodeKeys<T>]: true};
 
 type BindingKeys<T> = {[K in JustNodeKeys<T>]?: true};
 
-type CreateBuilderOptions<Node> = {
+interface CreateBuilderOptions<Node> {
 	bindingKeys: BindingKeys<Node>;
 	visitorKeys: VisitorKeys<Node>;
-};
+}
 
 function declareBuilder<Node>(type: string, opts: CreateBuilderOptions<Node>) {
 	nodeNames.add(type);

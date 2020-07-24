@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/328/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/328/input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/328/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/328/input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -75,7 +75,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/328/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -90,7 +90,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/328/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -105,7 +105,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/328/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 10
@@ -123,7 +123,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/328/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -138,7 +138,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/328/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -153,7 +153,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/328/input.js"
 						identifierName: "x"
 						end: Object {
 							column: 12
@@ -171,7 +171,7 @@ JSRoot {
 					value: 10
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/328/input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -194,7 +194,7 @@ JSRoot {
 
 ```
 
- input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/328/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

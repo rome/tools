@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/293/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/293/input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unknown start to an if test"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/293/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -59,7 +59,7 @@ JSRoot {
 		JSIfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/293/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -73,7 +73,7 @@ JSRoot {
 			}
 			test: JSSequenceExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/293/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -89,7 +89,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/293/input.js"
 							identifierName: "b"
 							end: Object {
 								column: 5
@@ -106,7 +106,7 @@ JSRoot {
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/293/input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -123,7 +123,7 @@ JSRoot {
 			}
 			consequent: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/293/input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -137,7 +137,7 @@ JSRoot {
 				}
 				expression: JSSequenceExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/293/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -153,7 +153,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/293/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 10
@@ -170,7 +170,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/293/input.js"
 								end: Object {
 									column: 13
 									index: 13
@@ -195,7 +195,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/293/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an if test
 

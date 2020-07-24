@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/expression-grouping/migrated_0001/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/expression-grouping/migrated_0001/input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/expression-grouping/migrated_0001/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "<<"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/expression-grouping/migrated_0001/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -65,7 +65,7 @@ JSRoot {
 					value: 6
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-grouping/migrated_0001/input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -81,7 +81,7 @@ JSRoot {
 				left: JSBinaryExpression {
 					operator: "+"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/expression-grouping/migrated_0001/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -97,7 +97,7 @@ JSRoot {
 						value: 4
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-grouping/migrated_0001/input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -114,7 +114,7 @@ JSRoot {
 						value: 5
 						format: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/expression-grouping/migrated_0001/input.js"
 							end: Object {
 								column: 5
 								index: 5

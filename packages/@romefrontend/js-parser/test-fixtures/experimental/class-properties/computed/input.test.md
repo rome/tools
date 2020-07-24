@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/class-properties/computed/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/class-properties/computed/input.js"
 		end: Object {
 			column: 0
 			index: 62
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/computed/input.js"
 					identifierName: "Foo"
 					end: Object {
 						column: 9
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/computed/input.js"
 				end: Object {
 					column: 1
 					index: 27
@@ -69,7 +69,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/computed/input.js"
 					end: Object {
 						column: 1
 						index: 27
@@ -87,7 +87,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/computed/input.js"
 									identifierName: "x"
 									end: Object {
 										column: 4
@@ -102,7 +102,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 17
@@ -119,7 +119,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/computed/input.js"
 							end: Object {
 								column: 5
 								index: 17
@@ -144,7 +144,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 17
@@ -163,7 +163,7 @@ JSRoot {
 							value: JSStringLiteral {
 								value: "y"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/computed/input.js"
 									end: Object {
 										column: 6
 										index: 24
@@ -177,7 +177,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 7
 									index: 25
@@ -194,7 +194,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/computed/input.js"
 							end: Object {
 								column: 7
 								index: 25
@@ -219,7 +219,7 @@ JSRoot {
 								line: 3
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 7
 									index: 25
@@ -240,7 +240,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "Foo2"
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/computed/input.js"
 					identifierName: "Foo2"
 					end: Object {
 						column: 10
@@ -255,7 +255,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/class-properties/computed/input.js"
 				end: Object {
 					column: 1
 					index: 61
@@ -273,7 +273,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/class-properties/computed/input.js"
 					end: Object {
 						column: 1
 						index: 61
@@ -291,7 +291,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "p"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/computed/input.js"
 									identifierName: "p"
 									end: Object {
 										column: 4
@@ -306,7 +306,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 47
@@ -323,7 +323,7 @@ JSRoot {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/computed/input.js"
 							end: Object {
 								column: 5
 								index: 47
@@ -348,7 +348,7 @@ JSRoot {
 								line: 7
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 47
@@ -368,7 +368,7 @@ JSRoot {
 							value: JSReferenceIdentifier {
 								name: "m"
 								loc: Object {
-									filename: "input.js"
+									filename: "experimental/class-properties/computed/input.js"
 									identifierName: "m"
 									end: Object {
 										column: 4
@@ -383,7 +383,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 53
@@ -397,7 +397,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "experimental/class-properties/computed/input.js"
 							end: Object {
 								column: 11
 								index: 59
@@ -413,7 +413,7 @@ JSRoot {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 11
 									index: 59
@@ -436,7 +436,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 8
 									index: 56
@@ -462,7 +462,7 @@ JSRoot {
 								line: 8
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "experimental/class-properties/computed/input.js"
 								end: Object {
 									column: 5
 									index: 53

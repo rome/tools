@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "input.js"
+	filename: "es2015/uncategorised/123/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/123/input.js"
 		end: Object {
 			column: 51
 			index: 51
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/123/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -61,7 +61,7 @@ JSRoot {
 				]
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/123/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -80,7 +80,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/123/input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -96,7 +96,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/123/input.js"
 						identifierName: "A"
 						end: Object {
 							column: 22
@@ -111,7 +111,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/123/input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -129,7 +129,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/123/input.js"
 						end: Object {
 							column: 50
 							index: 50
@@ -148,7 +148,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "constructor"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/123/input.js"
 										identifierName: "constructor"
 										end: Object {
 											column: 35
@@ -163,7 +163,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/123/input.js"
 									end: Object {
 										column: 35
 										index: 35
@@ -177,7 +177,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/123/input.js"
 								end: Object {
 									column: 49
 									index: 49
@@ -199,7 +199,7 @@ JSRoot {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/123/input.js"
 									end: Object {
 										column: 37
 										index: 37
@@ -225,7 +225,7 @@ JSRoot {
 									line: 1
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/123/input.js"
 									end: Object {
 										column: 35
 										index: 35
@@ -241,7 +241,7 @@ JSRoot {
 							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/123/input.js"
 									end: Object {
 										column: 49
 										index: 49
@@ -256,7 +256,7 @@ JSRoot {
 								body: Array [
 									JSExpressionStatement {
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/123/input.js"
 											end: Object {
 												column: 47
 												index: 47
@@ -271,7 +271,7 @@ JSRoot {
 										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/123/input.js"
 												end: Object {
 													column: 47
 													index: 47
@@ -285,7 +285,7 @@ JSRoot {
 											}
 											callee: JSSuper {
 												loc: Object {
-													filename: "input.js"
+													filename: "es2015/uncategorised/123/input.js"
 													end: Object {
 														column: 45
 														index: 45
@@ -315,7 +315,7 @@ JSRoot {
 
 ```
 
- input.js:1:40 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/123/input.js:1:40 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super() is only valid inside a class constructor of a subclass
 

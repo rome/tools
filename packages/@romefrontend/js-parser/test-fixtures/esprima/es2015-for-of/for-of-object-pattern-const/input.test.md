@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -35,7 +35,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -49,7 +49,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -65,7 +65,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "z"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 					identifierName: "z"
 					end: Object {
 						column: 22
@@ -82,7 +82,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -99,7 +99,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -117,7 +117,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "x"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 												identifierName: "x"
 												end: Object {
 													column: 13
@@ -132,7 +132,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -148,7 +148,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 											identifierName: "x"
 											end: Object {
 												column: 13
@@ -163,7 +163,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 										end: Object {
 											column: 13
 											index: 13
@@ -181,7 +181,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "y"
 											loc: Object {
-												filename: "input.js"
+												filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 												identifierName: "y"
 												end: Object {
 													column: 16
@@ -196,7 +196,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 											end: Object {
 												column: 16
 												index: 16
@@ -212,7 +212,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
-											filename: "input.js"
+											filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 											identifierName: "y"
 											end: Object {
 												column: 16
@@ -227,7 +227,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -244,7 +244,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 							end: Object {
 								column: 17
 								index: 17

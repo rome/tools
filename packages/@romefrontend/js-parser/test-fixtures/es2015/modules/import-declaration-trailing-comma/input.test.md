@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 		end: Object {
 			column: 0
 			index: 77
@@ -35,7 +35,7 @@ JSRoot {
 			id: "1"
 			value: " One "
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 11
 					index: 20
@@ -52,7 +52,7 @@ JSRoot {
 			id: "2"
 			value: " Two "
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 11
 					index: 36
@@ -69,7 +69,7 @@ JSRoot {
 			id: "3"
 			value: " Three "
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 13
 					index: 51
@@ -86,7 +86,7 @@ JSRoot {
 			id: "4"
 			value: " Four "
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 12
 					index: 64
@@ -106,7 +106,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 24
 					index: 76
@@ -121,7 +121,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 					end: Object {
 						column: 23
 						index: 75
@@ -143,7 +143,7 @@ JSRoot {
 						"4"
 					]
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 						end: Object {
 							column: 15
 							index: 24
@@ -160,7 +160,7 @@ JSRoot {
 						leadingComments: undefined
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 							identifierName: "Foo"
 							end: Object {
 								column: 15
@@ -181,7 +181,7 @@ JSRoot {
 							leadingComments: undefined
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 								identifierName: "Foo"
 								end: Object {
 									column: 15
@@ -199,7 +199,7 @@ JSRoot {
 						leadingComments: undefined
 						trailingComments: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 							end: Object {
 								column: 15
 								index: 24

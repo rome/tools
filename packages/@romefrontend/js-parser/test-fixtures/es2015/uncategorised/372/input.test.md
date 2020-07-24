@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/372/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/372/input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "enum is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/372/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/372/input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/372/input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/372/input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -108,7 +108,7 @@ JSRoot {
 										value: JSIdentifier {
 											name: "enum"
 											loc: Object {
-												filename: "input.js"
+												filename: "es2015/uncategorised/372/input.js"
 												identifierName: "enum"
 												end: Object {
 													column: 12
@@ -123,7 +123,7 @@ JSRoot {
 											}
 										}
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/372/input.js"
 											end: Object {
 												column: 12
 												index: 12
@@ -139,7 +139,7 @@ JSRoot {
 									value: JSBindingIdentifier {
 										name: "enum"
 										loc: Object {
-											filename: "input.js"
+											filename: "es2015/uncategorised/372/input.js"
 											identifierName: "enum"
 											end: Object {
 												column: 12
@@ -154,7 +154,7 @@ JSRoot {
 										}
 									}
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/372/input.js"
 										end: Object {
 											column: 12
 											index: 12
@@ -170,7 +170,7 @@ JSRoot {
 							]
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/372/input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -185,7 +185,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/372/input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -200,7 +200,7 @@ JSRoot {
 							callee: JSReferenceIdentifier {
 								name: "foo"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/372/input.js"
 									identifierName: "foo"
 									end: Object {
 										column: 20
@@ -227,7 +227,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/372/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ enum is a reserved word
 

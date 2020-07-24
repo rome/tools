@@ -10,14 +10,14 @@
 JSRoot {
 	comments: Array []
 	corrupt: true
-	filename: "input.js"
+	filename: "es2015/uncategorised/333/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/333/input.js"
 		end: Object {
 			column: 39
 			index: 39
@@ -33,7 +33,7 @@ JSRoot {
 		JSDirective {
 			value: "use strict"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/333/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,7 +56,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/333/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -75,7 +75,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/333/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -90,7 +90,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/333/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -105,7 +105,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "defValue"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/333/input.js"
 						identifierName: "defValue"
 						end: Object {
 							column: 31
@@ -122,7 +122,7 @@ JSRoot {
 				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/333/input.js"
 						end: Object {
 							column: 20
 							index: 20
@@ -140,7 +140,7 @@ JSRoot {
 								value: JSIdentifier {
 									name: "eval"
 									loc: Object {
-										filename: "input.js"
+										filename: "es2015/uncategorised/333/input.js"
 										identifierName: "eval"
 										end: Object {
 											column: 20
@@ -155,7 +155,7 @@ JSRoot {
 									}
 								}
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/333/input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -171,7 +171,7 @@ JSRoot {
 							value: JSAssignmentIdentifier {
 								name: "eval"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2015/uncategorised/333/input.js"
 									identifierName: "eval"
 									end: Object {
 										column: 20
@@ -186,7 +186,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/uncategorised/333/input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -205,7 +205,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/333/input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -220,7 +220,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/333/input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -235,7 +235,7 @@ JSRoot {
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/333/input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -251,7 +251,7 @@ JSRoot {
 				right: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/333/input.js"
 						identifierName: "obj"
 						end: Object {
 							column: 38
@@ -269,7 +269,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/333/input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -284,7 +284,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/333/input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -306,7 +306,7 @@ JSRoot {
 
 ```
 
- input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/333/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

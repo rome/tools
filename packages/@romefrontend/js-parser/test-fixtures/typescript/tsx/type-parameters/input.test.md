@@ -12,7 +12,7 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.tsx"
+	filename: "typescript/tsx/type-parameters/input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
@@ -22,7 +22,7 @@ JSRoot {
 		"jsx"
 	]
 	loc: Object {
-		filename: "input.tsx"
+		filename: "typescript/tsx/type-parameters/input.tsx"
 		end: Object {
 			column: 0
 			index: 33
@@ -39,7 +39,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-parameters/input.tsx"
 					identifierName: "f"
 					end: Object {
 						column: 10
@@ -54,7 +54,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.tsx"
+				filename: "typescript/tsx/type-parameters/input.tsx"
 				end: Object {
 					column: 32
 					index: 32
@@ -70,7 +70,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-parameters/input.tsx"
 					end: Object {
 						column: 32
 						index: 32
@@ -92,7 +92,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.tsx"
+					filename: "typescript/tsx/type-parameters/input.tsx"
 					end: Object {
 						column: 29
 						index: 29
@@ -106,7 +106,7 @@ JSRoot {
 				}
 				returnType: TSFunctionType {
 					loc: Object {
-						filename: "input.tsx"
+						filename: "typescript/tsx/type-parameters/input.tsx"
 						end: Object {
 							column: 29
 							index: 29
@@ -120,7 +120,7 @@ JSRoot {
 					}
 					typeAnnotation: TSNumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/tsx/type-parameters/input.tsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -137,7 +137,7 @@ JSRoot {
 						parameters: Array []
 						rest: undefined
 						loc: Object {
-							filename: "input.tsx"
+							filename: "typescript/tsx/type-parameters/input.tsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -151,7 +151,7 @@ JSRoot {
 						}
 						typeParameters: TSTypeParameterDeclaration {
 							loc: Object {
-								filename: "input.tsx"
+								filename: "typescript/tsx/type-parameters/input.tsx"
 								end: Object {
 									column: 17
 									index: 17
@@ -169,7 +169,7 @@ JSRoot {
 									constraint: undefined
 									default: undefined
 									loc: Object {
-										filename: "input.tsx"
+										filename: "typescript/tsx/type-parameters/input.tsx"
 										end: Object {
 											column: 16
 											index: 16

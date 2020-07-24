@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "experimental/top-level-await/inside-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "experimental/top-level-await/inside-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-arrow/input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			expression: JSArrowFunctionExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-arrow/input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -87,7 +87,7 @@ JSRoot {
 				body: JSReferenceIdentifier {
 					name: "await"
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/inside-arrow/input.js"
 						identifierName: "await"
 						end: Object {
 							column: 11
@@ -109,7 +109,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "experimental/top-level-await/inside-arrow/input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -126,7 +126,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "experimental/top-level-await/inside-arrow/input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -142,7 +142,7 @@ JSRoot {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "experimental/top-level-await/inside-arrow/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -164,7 +164,7 @@ JSRoot {
 
 ```
 
- input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/inside-arrow/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
 

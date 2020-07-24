@@ -12,12 +12,12 @@ import {
 } from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type TSImportEqualsDeclaration = NodeBaseWithComments & {
+export interface TSImportEqualsDeclaration extends NodeBaseWithComments {
 	type: "TSImportEqualsDeclaration";
 	id: JSBindingIdentifier;
 	moduleReference: AnyTSModuleReference;
 	isExport?: boolean;
-};
+}
 
 export const tsImportEqualsDeclaration = createBuilder<TSImportEqualsDeclaration>(
 	"TSImportEqualsDeclaration",

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -89,7 +89,7 @@ JSRoot {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -104,7 +104,7 @@ JSRoot {
 				}
 				left: JSSequenceExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -120,7 +120,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 2
@@ -137,7 +137,7 @@ JSRoot {
 						JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -162,7 +162,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

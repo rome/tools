@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/let/try-catch-let/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/let/try-catch-let/input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -35,7 +35,7 @@ JSRoot {
 		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/let/try-catch-let/input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -51,7 +51,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/try-catch-let/input.js"
 					end: Object {
 						column: 6
 						index: 6
@@ -66,7 +66,7 @@ JSRoot {
 			}
 			handler: JSCatchClause {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/let/try-catch-let/input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -82,7 +82,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/try-catch-let/input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -98,7 +98,7 @@ JSRoot {
 				param: JSBindingIdentifier {
 					name: "let"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/let/try-catch-let/input.js"
 						identifierName: "let"
 						end: Object {
 							column: 17

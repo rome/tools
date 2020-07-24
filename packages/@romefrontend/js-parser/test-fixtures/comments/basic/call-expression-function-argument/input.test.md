@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/basic/call-expression-function-argument/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/basic/call-expression-function-argument/input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " one"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/call-expression-function-argument/input.js"
 				end: Object {
 					column: 8
 					index: 39
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " two"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/call-expression-function-argument/input.js"
 				end: Object {
 					column: 6
 					index: 48
@@ -69,7 +69,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/basic/call-expression-function-argument/input.js"
 				end: Object {
 					column: 2
 					index: 51
@@ -83,7 +83,7 @@ JSRoot {
 			}
 			expression: JSCallExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/basic/call-expression-function-argument/input.js"
 					end: Object {
 						column: 1
 						index: 50
@@ -98,7 +98,7 @@ JSRoot {
 				callee: JSReferenceIdentifier {
 					name: "test"
 					loc: Object {
-						filename: "input.js"
+						filename: "comments/basic/call-expression-function-argument/input.js"
 						identifierName: "test"
 						end: Object {
 							column: 4
@@ -117,7 +117,7 @@ JSRoot {
 						id: undefined
 						trailingComments: Array ["1"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/basic/call-expression-function-argument/input.js"
 							end: Object {
 								column: 1
 								index: 41
@@ -139,7 +139,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/call-expression-function-argument/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -156,7 +156,7 @@ JSRoot {
 							directives: Array []
 							trailingComments: Array ["1"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/basic/call-expression-function-argument/input.js"
 								end: Object {
 									column: 1
 									index: 41
@@ -172,7 +172,7 @@ JSRoot {
 								JSVariableDeclarationStatement {
 									trailingComments: Array ["0"]
 									loc: Object {
-										filename: "input.js"
+										filename: "comments/basic/call-expression-function-argument/input.js"
 										end: Object {
 											column: 12
 											index: 30
@@ -188,7 +188,7 @@ JSRoot {
 										kind: "var"
 										trailingComments: undefined
 										loc: Object {
-											filename: "input.js"
+											filename: "comments/basic/call-expression-function-argument/input.js"
 											end: Object {
 												column: 12
 												index: 30
@@ -205,7 +205,7 @@ JSRoot {
 												id: JSBindingIdentifier {
 													name: "a"
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/basic/call-expression-function-argument/input.js"
 														identifierName: "a"
 														end: Object {
 															column: 7
@@ -220,7 +220,7 @@ JSRoot {
 													}
 												}
 												loc: Object {
-													filename: "input.js"
+													filename: "comments/basic/call-expression-function-argument/input.js"
 													end: Object {
 														column: 11
 														index: 29
@@ -236,7 +236,7 @@ JSRoot {
 													value: 1
 													format: undefined
 													loc: Object {
-														filename: "input.js"
+														filename: "comments/basic/call-expression-function-argument/input.js"
 														end: Object {
 															column: 11
 															index: 29

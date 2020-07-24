@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 5
@@ -105,7 +105,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -120,7 +120,7 @@ JSRoot {
 						init: JSCallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -134,7 +134,7 @@ JSRoot {
 							}
 							callee: JSSuper {
 								loc: Object {
-									filename: "input.js"
+									filename: "esprima/es2015-super-property/invalid_super_not_inside_function/input.js"
 									end: Object {
 										column: 13
 										index: 13
@@ -160,7 +160,7 @@ JSRoot {
 
 ```
 
- input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-super-property/invalid_super_not_inside_function/input.js:1:8 parse/js ━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2020/optional-chaining/class-contructor-call/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2020/optional-chaining/class-contructor-call/input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/class-contructor-call/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/class-contructor-call/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2020/optional-chaining/class-contructor-call/input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -95,7 +95,7 @@ JSRoot {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2020/optional-chaining/class-contructor-call/input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -109,7 +109,7 @@ JSRoot {
 				}
 				callee: JSMemberExpression {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2020/optional-chaining/class-contructor-call/input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -125,7 +125,7 @@ JSRoot {
 						value: JSIdentifier {
 							name: "d"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/class-contructor-call/input.js"
 								identifierName: "d"
 								end: Object {
 									column: 10
@@ -140,7 +140,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/class-contructor-call/input.js"
 							identifierName: "d"
 							end: Object {
 								column: 10
@@ -156,7 +156,7 @@ JSRoot {
 					}
 					object: JSMemberExpression {
 						loc: Object {
-							filename: "input.js"
+							filename: "es2020/optional-chaining/class-contructor-call/input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -171,7 +171,7 @@ JSRoot {
 						object: JSReferenceIdentifier {
 							name: "C"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/class-contructor-call/input.js"
 								identifierName: "C"
 								end: Object {
 									column: 5
@@ -189,7 +189,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "b"
 								loc: Object {
-									filename: "input.js"
+									filename: "es2020/optional-chaining/class-contructor-call/input.js"
 									identifierName: "b"
 									end: Object {
 										column: 8
@@ -205,7 +205,7 @@ JSRoot {
 							}
 							optional: true
 							loc: Object {
-								filename: "input.js"
+								filename: "es2020/optional-chaining/class-contructor-call/input.js"
 								identifierName: "b"
 								end: Object {
 									column: 8
@@ -231,7 +231,7 @@ JSRoot {
 
 ```
 
- input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/optional-chaining/class-contructor-call/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ constructors in/after an Optional Chain are not allowed
 

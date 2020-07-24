@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/statement-iteration/migrated_0026/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/statement-iteration/migrated_0026/input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSForInStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/statement-iteration/migrated_0026/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -48,7 +48,7 @@ JSRoot {
 			}
 			body: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0026/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -64,7 +64,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0026/input.js"
 					identifierName: "a"
 					end: Object {
 						column: 14
@@ -80,7 +80,7 @@ JSRoot {
 			}
 			left: JSMemberExpression {
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/statement-iteration/migrated_0026/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -95,7 +95,7 @@ JSRoot {
 				object: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0026/input.js"
 						identifierName: "a"
 						end: Object {
 							column: 6
@@ -113,7 +113,7 @@ JSRoot {
 					value: JSIdentifier {
 						name: "in"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/statement-iteration/migrated_0026/input.js"
 							identifierName: "in"
 							end: Object {
 								column: 9
@@ -128,7 +128,7 @@ JSRoot {
 						}
 					}
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/statement-iteration/migrated_0026/input.js"
 						identifierName: "in"
 						end: Object {
 							column: 9

@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/export/equals/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/export/equals/input.ts"
 		end: Object {
 			column: 0
 			index: 12
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		TSExportAssignment {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/export/equals/input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -49,7 +49,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "f"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/export/equals/input.ts"
 					identifierName: "f"
 					end: Object {
 						column: 10

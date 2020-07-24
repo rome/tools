@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -36,7 +36,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "singleElementWithLeading"
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 					identifierName: "singleElementWithLeading"
 					end: Object {
 						column: 33
@@ -51,7 +51,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -67,7 +67,7 @@ JSRoot {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -88,7 +88,7 @@ JSRoot {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -104,7 +104,7 @@ JSRoot {
 					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 							identifierName: "x"
 							end: Object {
 								column: 35
@@ -121,7 +121,7 @@ JSRoot {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -139,7 +139,7 @@ JSRoot {
 				rest: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 						end: Object {
 							column: 43
 							index: 43
@@ -155,7 +155,7 @@ JSRoot {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 							end: Object {
 								column: 43
 								index: 43
@@ -172,7 +172,7 @@ JSRoot {
 						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
-								filename: "input.js"
+								filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 								identifierName: "a"
 								end: Object {
 									column: 42
@@ -189,7 +189,7 @@ JSRoot {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
-									filename: "input.js"
+									filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 									end: Object {
 										column: 42
 										index: 42

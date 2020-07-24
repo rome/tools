@@ -10,11 +10,11 @@ import {createBuilder} from "../../utils";
 
 export type JSVariableDeclarationKind = "var" | "let" | "const";
 
-export type JSVariableDeclaration = NodeBaseWithComments & {
+export interface JSVariableDeclaration extends NodeBaseWithComments {
 	type: "JSVariableDeclaration";
 	kind: JSVariableDeclarationKind;
 	declarations: Array<JSVariableDeclarator>;
-};
+}
 
 export const jsVariableDeclaration = createBuilder<JSVariableDeclaration>(
 	"JSVariableDeclaration",

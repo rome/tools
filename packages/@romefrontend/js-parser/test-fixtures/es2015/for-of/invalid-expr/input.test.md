@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/for-of/invalid-expr/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/for-of/invalid-expr/input.js"
 		end: Object {
 			column: 0
 			index: 23
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-expr/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/invalid-expr/input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -79,7 +79,7 @@ JSRoot {
 		JSForOfStatement {
 			await: false
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-expr/input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -94,7 +94,7 @@ JSRoot {
 			right: JSReferenceIdentifier {
 				name: "y"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-expr/input.js"
 					identifierName: "y"
 					end: Object {
 						column: 15
@@ -110,7 +110,7 @@ JSRoot {
 			}
 			body: JSExpressionStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-expr/input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -125,7 +125,7 @@ JSRoot {
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/for-of/invalid-expr/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -142,7 +142,7 @@ JSRoot {
 			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-expr/input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -159,7 +159,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.js"
+								filename: "es2015/for-of/invalid-expr/input.js"
 								identifierName: "x"
 								end: Object {
 									column: 10
@@ -175,7 +175,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/for-of/invalid-expr/input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -193,7 +193,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-expr/input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -208,7 +208,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "z"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-expr/input.js"
 					identifierName: "z"
 					end: Object {
 						column: 18
@@ -225,7 +225,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-expr/input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -240,7 +240,7 @@ JSRoot {
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/for-of/invalid-expr/input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -258,7 +258,7 @@ JSRoot {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/for-of/invalid-expr/input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -279,7 +279,7 @@ JSRoot {
 
 ```
 
- input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/for-of/invalid-expr/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed for head
 

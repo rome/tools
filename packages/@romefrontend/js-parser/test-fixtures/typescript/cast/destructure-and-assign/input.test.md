@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/cast/destructure-and-assign/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/cast/destructure-and-assign/input.ts"
 		end: Object {
 			column: 0
 			index: 42
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/destructure-and-assign/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/destructure-and-assign/input.ts"
 				end: Object {
 					column: 21
 					index: 21
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/destructure-and-assign/input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -87,7 +87,7 @@ JSRoot {
 				}
 				right: JSArrayExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/destructure-and-assign/input.ts"
 						end: Object {
 							column: 20
 							index: 20
@@ -104,7 +104,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {
 									column: 19
 									index: 19
@@ -122,7 +122,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/destructure-and-assign/input.ts"
 						end: Object {
 							column: 13
 							index: 13
@@ -137,7 +137,7 @@ JSRoot {
 					elements: Array [
 						TSAssignmentAsExpression {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -151,7 +151,7 @@ JSRoot {
 							}
 							typeAnnotation: TSNumberKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/destructure-and-assign/input.ts"
 									end: Object {
 										column: 12
 										index: 12
@@ -167,7 +167,7 @@ JSRoot {
 							expression: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/destructure-and-assign/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 2
@@ -188,7 +188,7 @@ JSRoot {
 		}
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/cast/destructure-and-assign/input.ts"
 				end: Object {
 					column: 19
 					index: 41
@@ -203,7 +203,7 @@ JSRoot {
 			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/cast/destructure-and-assign/input.ts"
 					end: Object {
 						column: 18
 						index: 40
@@ -217,7 +217,7 @@ JSRoot {
 				}
 				right: JSArrayExpression {
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/destructure-and-assign/input.ts"
 						end: Object {
 							column: 18
 							index: 40
@@ -234,7 +234,7 @@ JSRoot {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {
 									column: 17
 									index: 39
@@ -252,7 +252,7 @@ JSRoot {
 				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: "input.ts"
+						filename: "typescript/cast/destructure-and-assign/input.ts"
 						end: Object {
 							column: 11
 							index: 33
@@ -267,7 +267,7 @@ JSRoot {
 					elements: Array [
 						TSAssignmentTypeAssertion {
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {
 									column: 10
 									index: 32
@@ -281,7 +281,7 @@ JSRoot {
 							}
 							typeAnnotation: TSNumberKeywordTypeAnnotation {
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/destructure-and-assign/input.ts"
 									end: Object {
 										column: 8
 										index: 30
@@ -297,7 +297,7 @@ JSRoot {
 							expression: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/cast/destructure-and-assign/input.ts"
 									identifierName: "a"
 									end: Object {
 										column: 10
@@ -324,7 +324,7 @@ JSRoot {
 
 ```
 
- input.ts:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/cast/destructure-and-assign/input.ts:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected type cast in parameter position
 

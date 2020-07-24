@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/basic/8/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/basic/8/input.jsx"
 		end: Object {
 			column: 27
 			index: 27
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/basic/8/input.jsx"
 				end: Object {
 					column: 27
 					index: 27
@@ -50,7 +50,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "a"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/basic/8/input.jsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -67,7 +67,7 @@ JSRoot {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/basic/8/input.jsx"
 					end: Object {
 						column: 27
 						index: 27
@@ -84,7 +84,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "b"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/8/input.jsx"
 								end: Object {
 									column: 4
 									index: 4
@@ -99,7 +99,7 @@ JSRoot {
 						}
 						value: JSXExpressionContainer {
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/basic/8/input.jsx"
 								end: Object {
 									column: 24
 									index: 24
@@ -113,7 +113,7 @@ JSRoot {
 							}
 							expression: JSConditionalExpression {
 								loc: Object {
-									filename: "input.jsx"
+									filename: "jsx/basic/8/input.jsx"
 									end: Object {
 										column: 23
 										index: 23
@@ -128,7 +128,7 @@ JSRoot {
 								test: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/basic/8/input.jsx"
 										identifierName: "x"
 										end: Object {
 											column: 7
@@ -146,7 +146,7 @@ JSRoot {
 									name: JSXIdentifier {
 										name: "d"
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/basic/8/input.jsx"
 											end: Object {
 												column: 20
 												index: 20
@@ -164,7 +164,7 @@ JSRoot {
 									selfClosing: true
 									typeArguments: undefined
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/basic/8/input.jsx"
 										end: Object {
 											column: 23
 											index: 23
@@ -181,7 +181,7 @@ JSRoot {
 									name: JSXIdentifier {
 										name: "c"
 										loc: Object {
-											filename: "input.jsx"
+											filename: "jsx/basic/8/input.jsx"
 											end: Object {
 												column: 12
 												index: 12
@@ -199,7 +199,7 @@ JSRoot {
 									selfClosing: true
 									typeArguments: undefined
 									loc: Object {
-										filename: "input.jsx"
+										filename: "jsx/basic/8/input.jsx"
 										end: Object {
 											column: 15
 											index: 15
@@ -215,7 +215,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/basic/8/input.jsx"
 							end: Object {
 								column: 24
 								index: 24

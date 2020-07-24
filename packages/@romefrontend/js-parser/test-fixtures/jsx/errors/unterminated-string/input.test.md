@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.jsx"
+	filename: "jsx/errors/unterminated-string/input.jsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
-		filename: "input.jsx"
+		filename: "jsx/errors/unterminated-string/input.jsx"
 		end: Object {
 			column: 1
 			index: 12
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unterminated-string/input.jsx"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.jsx"
+				filename: "jsx/errors/unterminated-string/input.jsx"
 				end: Object {
 					column: 1
 					index: 12
@@ -74,7 +74,7 @@ JSRoot {
 				name: JSXIdentifier {
 					name: "foo"
 					loc: Object {
-						filename: "input.jsx"
+						filename: "jsx/errors/unterminated-string/input.jsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -91,7 +91,7 @@ JSRoot {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: "input.jsx"
+					filename: "jsx/errors/unterminated-string/input.jsx"
 					end: Object {
 						column: 1
 						index: 12
@@ -108,7 +108,7 @@ JSRoot {
 						name: JSXIdentifier {
 							name: "bar"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/unterminated-string/input.jsx"
 								end: Object {
 									column: 8
 									index: 8
@@ -124,7 +124,7 @@ JSRoot {
 						value: JSStringLiteral {
 							value: "\n"
 							loc: Object {
-								filename: "input.jsx"
+								filename: "jsx/errors/unterminated-string/input.jsx"
 								end: Object {
 									column: 1
 									index: 12
@@ -138,7 +138,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.jsx"
+							filename: "jsx/errors/unterminated-string/input.jsx"
 							end: Object {
 								column: 1
 								index: 12
@@ -162,7 +162,7 @@ JSRoot {
 
 ```
 
- input.jsx:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/unterminated-string/input.jsx:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

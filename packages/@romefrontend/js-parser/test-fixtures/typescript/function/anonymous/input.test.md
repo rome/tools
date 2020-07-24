@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/function/anonymous/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/function/anonymous/input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -34,7 +34,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/function/anonymous/input.ts"
 				end: Object {
 					column: 35
 					index: 35
@@ -49,7 +49,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/function/anonymous/input.ts"
 					end: Object {
 						column: 35
 						index: 35
@@ -66,7 +66,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/anonymous/input.ts"
 								identifierName: "f"
 								end: Object {
 									column: 7
@@ -81,7 +81,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/function/anonymous/input.ts"
 							end: Object {
 								column: 34
 								index: 34
@@ -96,7 +96,7 @@ JSRoot {
 						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/function/anonymous/input.ts"
 								end: Object {
 									column: 34
 									index: 34
@@ -112,7 +112,7 @@ JSRoot {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/anonymous/input.ts"
 									end: Object {
 										column: 34
 										index: 34
@@ -132,7 +132,7 @@ JSRoot {
 								rest: undefined
 								thisType: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/function/anonymous/input.ts"
 									end: Object {
 										column: 31
 										index: 31
@@ -147,7 +147,7 @@ JSRoot {
 								returnType: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/anonymous/input.ts"
 										end: Object {
 											column: 31
 											index: 31
@@ -162,7 +162,7 @@ JSRoot {
 									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous/input.ts"
 											identifierName: "T"
 											end: Object {
 												column: 31
@@ -179,7 +179,7 @@ JSRoot {
 								}
 								typeParameters: TSTypeParameterDeclaration {
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/function/anonymous/input.ts"
 										end: Object {
 											column: 21
 											index: 21
@@ -197,7 +197,7 @@ JSRoot {
 											constraint: undefined
 											default: undefined
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/anonymous/input.ts"
 												end: Object {
 													column: 20
 													index: 20
@@ -216,7 +216,7 @@ JSRoot {
 									JSBindingIdentifier {
 										name: "x"
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/function/anonymous/input.ts"
 											identifierName: "x"
 											end: Object {
 												column: 23
@@ -232,7 +232,7 @@ JSRoot {
 										meta: JSPatternMeta {
 											optional: true
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/function/anonymous/input.ts"
 												end: Object {
 													column: 27
 													index: 27
@@ -247,7 +247,7 @@ JSRoot {
 											typeAnnotation: TSTypeReference {
 												typeParameters: undefined
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/function/anonymous/input.ts"
 													end: Object {
 														column: 27
 														index: 27
@@ -262,7 +262,7 @@ JSRoot {
 												typeName: JSReferenceIdentifier {
 													name: "T"
 													loc: Object {
-														filename: "input.ts"
+														filename: "typescript/function/anonymous/input.ts"
 														identifierName: "T"
 														end: Object {
 															column: 27

@@ -20,14 +20,14 @@ export type AnyExportExternalSpecifier =
 	| JSExportDefaultSpecifier
 	| JSExportExternalSpecifier;
 
-export type JSExportExternalDeclaration = NodeBaseWithComments & {
+export interface JSExportExternalDeclaration extends NodeBaseWithComments {
 	type: "JSExportExternalDeclaration";
 	defaultSpecifier?: JSExportDefaultSpecifier;
 	namespaceSpecifier?: JSExportNamespaceSpecifier;
 	namedSpecifiers: Array<JSExportExternalSpecifier>;
 	source: JSStringLiteral;
 	exportKind?: ConstJSExportModuleKind;
-};
+}
 
 export const jsExportExternalDeclaration = createBuilder<JSExportExternalDeclaration>(
 	"JSExportExternalDeclaration",

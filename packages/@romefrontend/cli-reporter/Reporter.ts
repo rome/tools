@@ -30,6 +30,7 @@ import {
 	ReporterStreamMeta,
 	SelectArguments,
 	SelectOptions,
+	SelectOptionsKeys,
 } from "./types";
 import Progress from "./Progress";
 import prettyFormat from "@romefrontend/pretty-format";
@@ -352,8 +353,8 @@ export default class Reporter {
 		}
 	}
 
-	getMessagePrefix(): string {
-		return "";
+	getMessagePrefix(): Markup {
+		return markup``;
 	}
 
 	redirectOutToErr(should: boolean): boolean {
@@ -562,7 +563,7 @@ export default class Reporter {
 	async radio<Options extends SelectOptions>(
 		message: Markup,
 		arg: SelectArguments<Options>,
-	): Promise<keyof Options> {
+	): Promise<SelectOptionsKeys<Options>> {
 		const set = await this.select(message, {...arg, radio: true});
 
 		// Should always have at least one element
@@ -572,7 +573,7 @@ export default class Reporter {
 	async select<Options extends SelectOptions>(
 		message: Markup,
 		args: SelectArguments<Options>,
-	): Promise<Set<keyof Options>> {
+	): Promise<Set<SelectOptionsKeys<Options>>> {
 		return select(this, message, args);
 	}
 
@@ -815,7 +816,9 @@ export default class Reporter {
 		}
 
 		const prefix = this.getMessagePrefix();
-		let built = prefix === "" ? str : markup`${prefix}<view>${str}</view>`;
+		let built = isEmptyMarkup(prefix)
+			? str
+			: markup`${prefix}<view>${str}</view>`;
 
 		const shouldIndent =
 			this.indentLevel > 0 && this.streamsWithNewlineEnd.has(stream);

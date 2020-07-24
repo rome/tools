@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.ts"
+	filename: "typescript/types/tuple-rest-invalid/input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
-		filename: "input.ts"
+		filename: "typescript/types/tuple-rest-invalid/input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-rest-invalid/input.ts"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
-				filename: "input.ts"
+				filename: "typescript/types/tuple-rest-invalid/input.ts"
 				end: Object {
 					column: 28
 					index: 28
@@ -73,7 +73,7 @@ JSRoot {
 			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
-					filename: "input.ts"
+					filename: "typescript/types/tuple-rest-invalid/input.ts"
 					end: Object {
 						column: 28
 						index: 28
@@ -90,7 +90,7 @@ JSRoot {
 						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
-								filename: "input.ts"
+								filename: "typescript/types/tuple-rest-invalid/input.ts"
 								end: Object {
 									column: 28
 									index: 28
@@ -105,7 +105,7 @@ JSRoot {
 							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: "input.ts"
+									filename: "typescript/types/tuple-rest-invalid/input.ts"
 									end: Object {
 										column: 28
 										index: 28
@@ -120,7 +120,7 @@ JSRoot {
 								typeAnnotation: TSTupleType {
 									elementTypes: Array []
 									loc: Object {
-										filename: "input.ts"
+										filename: "typescript/types/tuple-rest-invalid/input.ts"
 										end: Object {
 											column: 28
 											index: 28
@@ -136,7 +136,7 @@ JSRoot {
 										name: undefined
 										optional: false
 										loc: Object {
-											filename: "input.ts"
+											filename: "typescript/types/tuple-rest-invalid/input.ts"
 											end: Object {
 												column: 19
 												index: 19
@@ -150,7 +150,7 @@ JSRoot {
 										}
 										typeAnnotation: TSArrayType {
 											loc: Object {
-												filename: "input.ts"
+												filename: "typescript/types/tuple-rest-invalid/input.ts"
 												end: Object {
 													column: 19
 													index: 19
@@ -164,7 +164,7 @@ JSRoot {
 											}
 											elementType: TSNumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: "input.ts"
+													filename: "typescript/types/tuple-rest-invalid/input.ts"
 													end: Object {
 														column: 17
 														index: 17
@@ -184,7 +184,7 @@ JSRoot {
 						}
 						init: undefined
 						loc: Object {
-							filename: "input.ts"
+							filename: "typescript/types/tuple-rest-invalid/input.ts"
 							end: Object {
 								column: 28
 								index: 28
@@ -208,7 +208,7 @@ JSRoot {
 
 ```
 
- input.ts:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/tuple-rest-invalid/input.ts:1:19 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
 

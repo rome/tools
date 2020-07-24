@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/331/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/331/input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/331/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSIfStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/331/input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -72,7 +72,7 @@ JSRoot {
 			}
 			consequent: JSEmptyStatement {
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/331/input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -89,7 +89,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/331/input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -106,7 +106,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "Cls"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/331/input.js"
 						identifierName: "Cls"
 						end: Object {
 							column: 23
@@ -121,7 +121,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/331/input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -140,7 +140,7 @@ JSRoot {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/331/input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -163,7 +163,7 @@ JSRoot {
 
 ```
 
- input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/331/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

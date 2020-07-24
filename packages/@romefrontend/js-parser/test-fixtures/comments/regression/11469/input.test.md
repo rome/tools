@@ -11,14 +11,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "comments/regression/11469/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "comments/regression/11469/input.js"
 		end: Object {
 			column: 0
 			index: 194
@@ -35,7 +35,7 @@ JSRoot {
 			id: "0"
 			value: " this.member = 'value';"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 29
 					index: 50
@@ -52,7 +52,7 @@ JSRoot {
 			id: "1"
 			value: " Trailing comment "
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 24
 					index: 80
@@ -69,7 +69,7 @@ JSRoot {
 			id: "2"
 			value: " this.member = 'value';"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 29
 					index: 134
@@ -86,7 +86,7 @@ JSRoot {
 			id: "3"
 			value: " this.member = 'value';"
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 27
 					index: 191
@@ -105,7 +105,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					identifierName: "A"
 					end: Object {
 						column: 7
@@ -120,7 +120,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 1
 					index: 82
@@ -138,7 +138,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					end: Object {
 						column: 1
 						index: 82
@@ -157,7 +157,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/11469/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 6
@@ -172,7 +172,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -187,7 +187,7 @@ JSRoot {
 						}
 						trailingComments: Array ["1"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/11469/input.js"
 							end: Object {
 								column: 3
 								index: 54
@@ -205,7 +205,7 @@ JSRoot {
 							trailingComments: undefined
 							innerComments: Array ["0"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 3
 									index: 54
@@ -228,7 +228,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 8
 									index: 18
@@ -254,7 +254,7 @@ JSRoot {
 								line: 2
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 16
@@ -275,7 +275,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "B"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					identifierName: "B"
 					end: Object {
 						column: 7
@@ -290,7 +290,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 1
 					index: 140
@@ -308,7 +308,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					end: Object {
 						column: 1
 						index: 140
@@ -327,7 +327,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/11469/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 6
@@ -342,7 +342,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 100
@@ -356,7 +356,7 @@ JSRoot {
 							}
 						}
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/11469/input.js"
 							end: Object {
 								column: 3
 								index: 138
@@ -374,7 +374,7 @@ JSRoot {
 							trailingComments: Array []
 							innerComments: Array ["2"]
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 3
 									index: 138
@@ -397,7 +397,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 8
 									index: 102
@@ -423,7 +423,7 @@ JSRoot {
 								line: 10
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 100
@@ -444,7 +444,7 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					identifierName: "C"
 					end: Object {
 						column: 7
@@ -459,7 +459,7 @@ JSRoot {
 				}
 			}
 			loc: Object {
-				filename: "input.js"
+				filename: "comments/regression/11469/input.js"
 				end: Object {
 					column: 1
 					index: 193
@@ -477,7 +477,7 @@ JSRoot {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: "input.js"
+					filename: "comments/regression/11469/input.js"
 					end: Object {
 						column: 1
 						index: 193
@@ -496,7 +496,7 @@ JSRoot {
 							value: JSIdentifier {
 								name: "test"
 								loc: Object {
-									filename: "input.js"
+									filename: "comments/regression/11469/input.js"
 									identifierName: "test"
 									end: Object {
 										column: 6
@@ -511,7 +511,7 @@ JSRoot {
 								}
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 158
@@ -526,7 +526,7 @@ JSRoot {
 						}
 						trailingComments: Array ["3"]
 						loc: Object {
-							filename: "input.js"
+							filename: "comments/regression/11469/input.js"
 							end: Object {
 								column: 11
 								index: 163
@@ -543,7 +543,7 @@ JSRoot {
 							directives: Array []
 							trailingComments: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 11
 									index: 163
@@ -566,7 +566,7 @@ JSRoot {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 8
 									index: 160
@@ -592,7 +592,7 @@ JSRoot {
 								line: 16
 							}
 							loc: Object {
-								filename: "input.js"
+								filename: "comments/regression/11469/input.js"
 								end: Object {
 									column: 6
 									index: 158

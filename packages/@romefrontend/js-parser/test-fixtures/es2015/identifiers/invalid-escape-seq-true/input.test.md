@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -39,7 +39,7 @@ JSRoot {
 				message: SAFE_MARKUP {value: "Escape sequence in keyword true"}
 			}
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 	body: Array [
 		JSExpressionStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -73,7 +73,7 @@ JSRoot {
 			expression: JSBooleanLiteral {
 				value: true
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -95,7 +95,7 @@ JSRoot {
 
 ```
 
- input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-true/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword true
 

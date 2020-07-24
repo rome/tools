@@ -1,10 +1,10 @@
 import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type MarkdownDividerBlock = NodeBaseWithComments & {
+export interface MarkdownDividerBlock extends NodeBaseWithComments {
 	type: "MarkdownDividerBlock";
 	value: string;
-};
+}
 
 export const markdownDividerBlock = createBuilder<MarkdownDividerBlock>(
 	"MarkdownDividerBlock",

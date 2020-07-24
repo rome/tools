@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/uncategorised/90/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/uncategorised/90/input.js"
 		end: Object {
 			column: 31
 			index: 31
@@ -37,7 +37,7 @@ JSRoot {
 			exportKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/uncategorised/90/input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "other"
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/uncategorised/90/input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/uncategorised/90/input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -83,7 +83,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/90/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 16
@@ -100,7 +100,7 @@ JSRoot {
 					local: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/uncategorised/90/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 16

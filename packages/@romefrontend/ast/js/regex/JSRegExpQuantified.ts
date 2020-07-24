@@ -8,13 +8,13 @@
 import {AnyJSRegExpBodyItem, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
-export type JSRegExpQuantified = NodeBaseWithComments & {
+export interface JSRegExpQuantified extends NodeBaseWithComments {
 	type: "JSRegExpQuantified";
 	target: AnyJSRegExpBodyItem;
 	lazy?: boolean;
 	min: number;
 	max?: number;
-};
+}
 
 export const jsRegExpQuantified = createBuilder<JSRegExpQuantified>(
 	"JSRegExpQuantified",

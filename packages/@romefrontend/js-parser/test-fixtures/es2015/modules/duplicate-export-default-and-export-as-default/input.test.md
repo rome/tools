@@ -11,14 +11,14 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "input.js"
+	filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -34,7 +34,7 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				mtime: undefined
 				sourceText: undefined
 				end: Object {
@@ -58,7 +58,7 @@ JSRoot {
 					}
 					frame {
 						location: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -78,7 +78,7 @@ JSRoot {
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -94,7 +94,7 @@ JSRoot {
 				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -108,7 +108,7 @@ JSRoot {
 					}
 				}
 				loc: Object {
-					filename: "input.js"
+					filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -124,7 +124,7 @@ JSRoot {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -147,7 +147,7 @@ JSRoot {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -164,7 +164,7 @@ JSRoot {
 		}
 		JSEmptyStatement {
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -181,7 +181,7 @@ JSRoot {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
-				filename: "input.js"
+				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 26
 					index: 56
@@ -196,7 +196,7 @@ JSRoot {
 			specifiers: Array [
 				JSExportLocalSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 23
 							index: 53
@@ -211,7 +211,7 @@ JSRoot {
 					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 23
@@ -228,7 +228,7 @@ JSRoot {
 					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
-							filename: "input.js"
+							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 							identifierName: "foo"
 							end: Object {
 								column: 12
@@ -253,7 +253,7 @@ JSRoot {
 
 ```
 
- input.js:2:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/duplicate-export-default-and-export-as-default/input.js:2:9 parse/js ━━━━━━━━━━━━━━━
 
   ✖ Only one default export allowed per module.
 

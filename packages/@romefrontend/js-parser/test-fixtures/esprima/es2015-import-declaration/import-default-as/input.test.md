@@ -12,14 +12,14 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "input.js"
+	filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: "input.js"
+		filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 		end: Object {
 			column: 0
 			index: 36
@@ -37,7 +37,7 @@ JSRoot {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: "input.js"
+				filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -52,7 +52,7 @@ JSRoot {
 			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
-					filename: "input.js"
+					filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -68,7 +68,7 @@ JSRoot {
 			namedSpecifiers: Array [
 				JSImportSpecifier {
 					loc: Object {
-						filename: "input.js"
+						filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -83,7 +83,7 @@ JSRoot {
 					imported: JSIdentifier {
 						name: "default"
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 							identifierName: "default"
 							end: Object {
 								column: 15
@@ -101,7 +101,7 @@ JSRoot {
 						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
-								filename: "input.js"
+								filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 								identifierName: "foo"
 								end: Object {
 									column: 22
@@ -117,7 +117,7 @@ JSRoot {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: "input.js"
+							filename: "esprima/es2015-import-declaration/import-default-as/input.js"
 							end: Object {
 								column: 22
 								index: 22
