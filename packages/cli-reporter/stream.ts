@@ -6,6 +6,15 @@ import {
 } from "./types";
 import {LogOptions} from "./Reporter";
 import {ansiEscapes} from "@romefrontend/cli-layout";
+import {
+	Number0,
+	ob1Add,
+	ob1Dec,
+	ob1Get0,
+	ob1Inc,
+	ob1Number0,
+	ob1Sub,
+} from "@romefrontend/ob1";
 
 export function getLeadingNewlineCount({state}: ReporterStreamAttached): number {
 	if (!state.leadingNewline) {
@@ -26,17 +35,16 @@ export function getLeadingNewlineCount({state}: ReporterStreamAttached): number 
 
 function calculateBufferPosition(
 	{state}: ReporterStreamAttached,
-	targetLine: number,
+	targetLine: Number0,
 ): {
 	lineDiff: number;
 	bufferIndex: number;
 } {
-	let lineDiff = state.currentLine - targetLine;
+	let lineDiff = ob1Get0(ob1Sub(state.currentLine, targetLine));
 	let bufferIndex = state.buffer.length - lineDiff;
 
 	if (!state.leadingNewline) {
 		bufferIndex--;
-		lineDiff--;
 	}
 
 	return {lineDiff, bufferIndex};
@@ -72,11 +80,11 @@ export function removeLine(
 
 	// Update snapshots
 	for (const [snapshot, line] of stream.state.lineSnapshots) {
-		stream.state.lineSnapshots.set(snapshot, line - 1);
+		stream.state.lineSnapshots.set(snapshot, ob1Dec(line));
 	}
 
 	// Update line since we've shifted at least one
-	stream.state.currentLine--;
+	stream.state.currentLine = ob1Dec(stream.state.currentLine);
 
 	// Go to the line right above where we want to remove
 	stream.write(ansiEscapes.cursorUp(lineDiff + 1), false);
@@ -97,7 +105,7 @@ export function removeLine(
 export function createStreamState(): ReporterStreamState {
 	return {
 		lineSnapshots: new Map(),
-		currentLine: 0,
+		currentLine: ob1Number0,
 		leadingNewline: false,
 		buffer: [],
 		nextLineInsertLeadingNewline: false,
@@ -125,7 +133,7 @@ export function log(
 			);
 			pushBuffer = true;
 		} else if (isANSICursorStream(stream)) {
-			replaceLine += lineOffset;
+			replaceLine = ob1Add(replaceLine, lineOffset);
 			logReplace(stream, msg, replaceLine, stderr);
 			return;
 		}
@@ -185,14 +193,14 @@ function clearCurrentLine(stream: ReporterStreamAttached) {
 
 function newline(stream: ReporterStreamAttached, stderr: boolean) {
 	stream.state.leadingNewline = true;
-	stream.state.currentLine++;
+	stream.state.currentLine = ob1Inc(stream.state.currentLine);
 	stream.write("\n", stderr);
 }
 
 function logReplace(
 	stream: ReporterStreamAttached,
 	msg: string,
-	targetLine: number,
+	targetLine: Number0,
 	stderr: boolean,
 ) {
 	const {lineDiff, bufferIndex} = calculateBufferPosition(stream, targetLine);

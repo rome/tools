@@ -8,6 +8,7 @@
 import {Event} from "@romefrontend/events";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
 import {AnyMarkup, Markup} from "@romefrontend/cli-layout";
+import {Number0} from "@romefrontend/ob1";
 
 export type SelectOption = {
 	label: Markup;
@@ -35,8 +36,8 @@ export type ReporterStreamLineSnapshot = {
 };
 
 export type ReporterStreamState = {
-	lineSnapshots: Map<ReporterStreamLineSnapshot, number>;
-	currentLine: number;
+	lineSnapshots: Map<ReporterStreamLineSnapshot, Number0>;
+	currentLine: Number0;
 	buffer: Array<string>;
 	leadingNewline: boolean;
 	nextLineInsertLeadingNewline: boolean;
