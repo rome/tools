@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// These are copied from packages/@romefrontend/codec-json/types.ts
+// These are copied from packages/codec-json/types.ts
 export type JSONValue =
 	| null
 	| string

@@ -7,7 +7,7 @@
 
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
 import {consumeJSON} from "@romefrontend/codec-json";
-import {TestHelper, test, testOptions} from "@romefrontend-runtime/rome";
+import {TestHelper, test, testOptions} from "rome";
 
 import {
 	AbsoluteFilePath,

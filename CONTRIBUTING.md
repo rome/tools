@@ -113,7 +113,7 @@ This is used to generate new lint rules and boilperlate.
 ./rome run scripts/lint-create-rule [category]/[ruleName]
 ```
 
-The `category` is one of the lint category folders defined in [`packages/@romefrontend/compiler/lint/rules`](https://github.com/romefrontend/rome/tree/main/packages/@romefrontend/compiler/lint/rules). Some of these represent specific languages, or general themes.
+The `category` is one of the lint category folders defined in [`packages/compiler/lint/rules`](https://github.com/romefrontend/rome/tree/main/packages/compiler/lint/rules). Some of these represent specific languages, or general themes.
 
 For example, to create a rule in the `js` category called `camelCase` run:
 
@@ -131,7 +131,7 @@ This is used to generate new ast nodes and boilerplate.
 ./rome run scripts/ast-create-node [language] [nodeType] [category]
 ```
 
-The `language` is one of the language folders defined in [`https://github.com/romefrontend/rome/tree/main/packages/@romefrontend/ast/`]
+The `language` is one of the language folders defined in [`https://github.com/romefrontend/rome/tree/main/packages/ast/`]
 
 The `category` is one of the category folders inside the `language` folders.
 

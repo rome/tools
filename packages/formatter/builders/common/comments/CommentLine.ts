@@ -7,7 +7,7 @@
 
 import {Token} from "@romefrontend/formatter";
 
-// Printing of comments is handled in packages/@romefrontend/formatter/builders/comments.ts
+// Printing of comments is handled in packages/formatter/builders/comments.ts
 export default function CommentLine(): Token {
 	throw new Error("Unexpected comment printing");
 }

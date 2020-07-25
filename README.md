@@ -24,7 +24,7 @@
 
 **Rome** is written completely in TypeScript with sparing usage of loose types.
 
-**Rome** is a monorepo with [internal packages](packages/@romefrontend) to delineate code boundaries.
+**Rome** is a monorepo with [internal packages](packages) to delineate code boundaries.
 
 **Rome** is [self-hosted](<https://en.wikipedia.org/wiki/Self-hosting_(compilers)>) and compiles itself with an old version.
 

@@ -23,16 +23,19 @@
 		"baseUrl": ".",
 		"paths": {
 			"@romefrontend/*": [
-				"packages/@romefrontend/*"
-			],
-			"@romefrontend-web/*": [
-				"packages/@romefrontend-web/*"
+				"packages/*"
 			],
 			"@romefrontend-runtime/*": [
 				"packages/@romefrontend-runtime/*"
 			],
-			"*": [
-				"packages/@romefrontend-runtime/*"
+			"@romefrontend-integration/*": [
+				"packages/@romefrontend-integration/*"
+			],
+			"@romefrontend-web/*": [
+				"packages/@romefrontend-web/*"
+			],
+			"rome": [
+				"packages/@romefrontend-runtime/rome"
 			]
 		}
 	},
@@ -40,7 +43,6 @@
 		"node_modules",
 		"vendor",
 		"type-libs",
-		"test-fixtures",
-		"packages/@romefrontend/js-parser/test-fixtures"
+		"**/test-fixtures/**/*"
 	]
 }

@@ -39,7 +39,7 @@ modules.set(
 			"types.ts",
 			{
 				"mtime": 1_594_195_489_483.7175,
-				"content": "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from packages/@romefrontend/codec-json/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n",
+				"content": "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from packages/codec-json/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n",
 			},
 		],
 	]),
