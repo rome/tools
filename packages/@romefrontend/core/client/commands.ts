@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import init from "./commands/init";
 import start from "./commands/start";
 import develop from "./commands/develop";
 import stop from "./commands/stop";
@@ -35,7 +34,6 @@ export function createLocalCommand<Flags extends Dict<unknown>>(
 
 // rome-ignore lint/js/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
-localCommands.set("init", init);
 localCommands.set("start", start);
 localCommands.set("develop", develop);
 localCommands.set("stop", stop);

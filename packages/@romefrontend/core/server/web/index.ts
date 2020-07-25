@@ -10,7 +10,7 @@ import Bundler from "../bundler/Bundler";
 import {WebSocketInterface} from "@romefrontend/codec-websocket";
 import prettyFormat from "@romefrontend/pretty-format";
 import http = require("http");
-import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
+import {Reporter} from "@romefrontend/cli-reporter";
 import {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -87,33 +87,33 @@ export class WebServer {
 			this.clientHistory.set(client.id, data);
 			this.refreshRequests();
 
-			const ansiReporterStream: ReporterStream = {
-				type: "all",
+			const ansiReporterStream = client.reporter.addStream({
 				format: "ansi",
 				features: DEFAULT_TERMINAL_FEATURES,
 				write(chunk) {
 					data.stdoutAnsi += chunk;
 				},
-			};
+			});
 
-			const htmlReporterStream: ReporterStream = {
-				type: "all",
+			const htmlReporterStream = client.reporter.addStream({
 				format: "html",
 				features: DEFAULT_TERMINAL_FEATURES,
 				write(chunk) {
 					data.stdoutHTML += chunk;
 				},
-			};
+			});
 
-			client.reporter.addStream(ansiReporterStream);
-			server.connectedReporters.addStream(ansiReporterStream);
-
-			client.reporter.addStream(htmlReporterStream);
-			server.connectedReporters.addStream(htmlReporterStream);
+			const handles = [
+				ansiReporterStream,
+				htmlReporterStream,
+				server.connectedReporters.addAttachedStream(ansiReporterStream.stream),
+				server.connectedReporters.addAttachedStream(htmlReporterStream.stream),
+			];
 
 			client.bridge.endEvent.subscribe(() => {
-				server.connectedReporters.removeStream(ansiReporterStream);
-				server.connectedReporters.removeStream(htmlReporterStream);
+				for (const handle of handles) {
+					handle.remove();
+				}
 
 				data.endTime = Date.now();
 				this.refreshRequests();
@@ -225,7 +225,7 @@ export class WebServer {
 			case "group":
 			case "groupCollapsed":
 			case "groupEnd":
-				reporter.logAll(markup`TODO`);
+				reporter.log(markup`TODO`);
 		}
 	}
 

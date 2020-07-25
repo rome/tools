@@ -400,7 +400,7 @@ export default class Parser<T> {
 				},
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
-				this.reporter.logAll(markup`${version}`);
+				this.reporter.log(markup`${version}`);
 				this.exit(0);
 			}
 		}
@@ -559,7 +559,7 @@ export default class Parser<T> {
 		]);
 	}
 
-	showUsageHelp(
+	async showUsageHelp(
 		description?: Markup,
 		usage: string = "[flags]",
 		prefix?: string,
@@ -567,11 +567,11 @@ export default class Parser<T> {
 		const {reporter} = this;
 		const {programName} = this.opts;
 
-		reporter.section(
+		await reporter.section(
 			markup`Usage`,
 			() => {
 				if (description !== undefined) {
-					reporter.logAll(description);
+					reporter.log(description);
 					reporter.br(true);
 				}
 
@@ -587,13 +587,13 @@ export default class Parser<T> {
 		);
 	}
 
-	showFocusedCommandHelp(command: AnyCommandOptions) {
+	async showFocusedCommandHelp(command: AnyCommandOptions) {
 		const {reporter} = this;
 		const {name, usage, description, examples} = command;
 
 		reporter.br(true);
-		this.showUsageHelp(description, usage, name);
-		this.showHelpExamples(examples, name);
+		await this.showUsageHelp(description, usage, name);
+		await this.showHelpExamples(examples, name);
 
 		// Find arguments that belong to this command
 		const argKeys = [];
@@ -605,7 +605,7 @@ export default class Parser<T> {
 
 		const optRows = this.buildOptionsHelp(argKeys);
 		if (optRows.length > 0) {
-			reporter.section(
+			await reporter.section(
 				markup`Command Flags`,
 				() => {
 					reporter.table([], optRows);
@@ -613,7 +613,7 @@ export default class Parser<T> {
 			);
 		}
 
-		reporter.section(
+		await reporter.section(
 			markup`Global Flags`,
 			() => {
 				reporter.info(markup`To view global flags run`);
@@ -622,9 +622,9 @@ export default class Parser<T> {
 		);
 	}
 
-	showGlobalFlags() {
+	async showGlobalFlags() {
 		const {reporter} = this;
-		reporter.section(
+		await reporter.section(
 			markup`Global Flags`,
 			() => {
 				// Show options not attached to any commands
@@ -657,11 +657,11 @@ export default class Parser<T> {
 
 		switch (shell) {
 			case "bash": {
-				reporter.logAllRaw(this.genBashCompletions(programName));
+				reporter.logRaw(this.genBashCompletions(programName));
 				break;
 			}
 			case "fish": {
-				reporter.logAllRaw(this.genFishCompletions(programName));
+				reporter.logRaw(this.genFishCompletions(programName));
 				break;
 			}
 		}
@@ -789,15 +789,15 @@ export default class Parser<T> {
 
 	async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
 		if (command !== undefined) {
-			this.showFocusedCommandHelp(command);
+			await this.showFocusedCommandHelp(command);
 			return;
 		}
 
 		const {reporter} = this;
 		const {description, usage, examples, programName} = this.opts;
 
-		this.showUsageHelp(description, usage);
-		this.showGlobalFlags();
+		await this.showUsageHelp(description, usage);
+		await this.showGlobalFlags();
 
 		// Sort commands into their appropriate categories for output
 		const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
@@ -817,7 +817,7 @@ export default class Parser<T> {
 			categoryNames.add(category);
 		}
 
-		reporter.section(
+		await reporter.section(
 			markup`Commands`,
 			() => {
 				const sortedCategoryNames: Array<string | undefined> = Array.from(
@@ -840,7 +840,7 @@ export default class Parser<T> {
 					}
 
 					if (category !== undefined) {
-						reporter.logAll(markup`<emphasis>${category} Commands</emphasis>`);
+						reporter.log(markup`<emphasis>${category} Commands</emphasis>`);
 					}
 
 					// Sort by name
@@ -862,10 +862,10 @@ export default class Parser<T> {
 			},
 		);
 
-		this.showHelpExamples(examples);
+		await this.showHelpExamples(examples);
 	}
 
-	showHelpExamples(examples?: Examples, prefix?: string) {
+	async showHelpExamples(examples?: Examples, prefix?: string) {
 		const {programName} = this.opts;
 		const {reporter} = this;
 
@@ -873,7 +873,7 @@ export default class Parser<T> {
 			return;
 		}
 
-		reporter.section(
+		await reporter.section(
 			markup`Examples`,
 			() => {
 				for (const {description, command} of examples) {
@@ -890,7 +890,7 @@ export default class Parser<T> {
 
 					reporter.br();
 					if (description !== undefined) {
-						reporter.logAll(description);
+						reporter.log(description);
 					}
 					reporter.command(builtCommand);
 				}

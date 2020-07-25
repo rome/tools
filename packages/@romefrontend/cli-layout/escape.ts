@@ -56,6 +56,7 @@ export function convertToMarkupFromRandomString(unsafe: string): Markup {
 }
 
 type InterpolatedValue =
+	| undefined
 	| number
 	| RelativeFilePath
 	| AbsoluteFilePath
@@ -79,7 +80,6 @@ export function markup(
 
 	for (let i = 0; i < strs.length; i++) {
 		const str = strs[i];
-
 		if (str !== "") {
 			parts.push({
 				type: "RAW_MARKUP",
@@ -87,9 +87,8 @@ export function markup(
 			});
 		}
 
-		if (i !== strs.length - 1) {
-			const value = values[i];
-
+		const value = values[i];
+		if (value !== undefined) {
 			if (typeof value === "number") {
 				parts.push(toRawMarkup(`<number>${String(value)}</number>`));
 			} else if (value instanceof URLFilePath) {

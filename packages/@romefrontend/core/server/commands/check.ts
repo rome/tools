@@ -125,7 +125,7 @@ export default createServerCommand<Flags>({
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();
 		} else {
-			await linter.runSingle();
+			await linter.throwSingle();
 		}
 	},
 });

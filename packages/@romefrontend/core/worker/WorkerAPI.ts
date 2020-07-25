@@ -33,7 +33,7 @@ import {
 import Logger from "../common/utils/Logger";
 import * as jsAnalysis from "@romefrontend/js-analysis";
 import {ExtensionLintResult} from "../common/file-handlers/types";
-import {getFileHandlerAssert} from "../common/file-handlers/index";
+import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {
 	AnalyzeDependencyResult,
 	UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
@@ -357,7 +357,7 @@ export default class WorkerAPI {
 		const project = this.worker.getProject(ref.project);
 		this.logger.info(markup`Formatting: ${ref.real}`);
 
-		const {handler} = getFileHandlerAssert(ref.real, project.config);
+		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
 		if (!handler.canFormat) {
 			return;
@@ -402,7 +402,7 @@ export default class WorkerAPI {
 		this.logger.info(markup`Linting: ${ref.real}`);
 
 		// Get the extension handler
-		const {handler} = getFileHandlerAssert(ref.real, project.config);
+		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
 		if (!handler.canLint && !handler.canFormat) {
 			return {

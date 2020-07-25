@@ -46,8 +46,8 @@ import {
 } from "@romefrontend/test-helpers";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {
-	getFileHandlerAssert,
 	getFileHandlerExtensions,
+	getFileHandlerFromPathAssert,
 } from "../core/common/file-handlers";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import crypto = require("crypto");
@@ -77,6 +77,7 @@ type IntegrationTestHelper = {
 };
 
 type IntegrationTestOptions = {
+	disableProjectConfig?: boolean;
 	userConfig?: UserConfig;
 	files?: Dict<string>;
 	projectConfig?: JSONObject;
@@ -127,7 +128,7 @@ export function findFixtureInput(
 		if (input !== undefined) {
 			return {
 				input,
-				handler: getFileHandlerAssert(
+				handler: getFileHandlerFromPathAssert(
 					createUnknownFilePath(`input.${ext}`),
 					projectConfig,
 				).handler,
@@ -339,7 +340,11 @@ export function createIntegrationTest(
 
 			// Add serialized project config. We skip this if there's already a project config files entry to allow
 			// some flexibility if we want invalid project config tests.
-			if (files["rome.json"] === undefined && files["rome.rjson"] === undefined) {
+			if (
+				!opts.disableProjectConfig &&
+				files["rome.json"] === undefined &&
+				files["rome.rjson"] === undefined
+			) {
 				files["rome.json"] = stringifyJSON(projectConfig) + "\n";
 			}
 

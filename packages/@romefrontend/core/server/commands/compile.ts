@@ -51,6 +51,6 @@ export default createServerCommand({
 			);
 		}
 
-		reporter.writeAll(compiledCode);
+		reporter.write(compiledCode);
 	},
 });

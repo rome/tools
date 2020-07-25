@@ -6,6 +6,7 @@ test(
 	"should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",
 	createIntegrationTest(
 		{
+			disableProjectConfig: true,
 			files: {
 				"index.js": "unknownVariable",
 				"config.yml": dedent`
@@ -24,6 +25,7 @@ test(
 	"should not create the .editorconfig file if it exists",
 	createIntegrationTest(
 		{
+			disableProjectConfig: true,
 			files: {
 				".editorconfig": "",
 			},

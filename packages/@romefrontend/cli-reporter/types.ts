@@ -7,7 +7,7 @@
 
 import {Event} from "@romefrontend/events";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {Markup} from "@romefrontend/cli-layout";
+import {AnyMarkup, Markup} from "@romefrontend/cli-layout";
 
 export type SelectOption = {
 	label: Markup;
@@ -30,30 +30,51 @@ export type SelectArguments<Options extends SelectOptions> = {
 	yes?: boolean;
 };
 
-export type Package = {
-	name: string;
-	version?: string;
+export type ReporterStreamLineSnapshot = {
+	close: () => void;
 };
 
-export type ReporterStreamMeta = {
-	type: "out" | "error" | "all";
-	features: TerminalFeatures;
-	format: "markup" | "ansi" | "html" | "none";
+export type ReporterStreamState = {
+	lineSnapshots: Map<ReporterStreamLineSnapshot, number>;
+	currentLine: number;
+	buffer: Array<string>;
+	leadingNewline: boolean;
+	nextLineInsertLeadingNewline: boolean;
 };
+
+export interface ReporterNamespace {
+	success: (msg: AnyMarkup) => void;
+	info: (msg: AnyMarkup) => void;
+	error: (msg: AnyMarkup) => void;
+	warn: (msg: AnyMarkup) => void;
+	log: (msg: AnyMarkup) => void;
+}
 
 export type ReporterConditionalStream = {
 	update: () => boolean;
 };
 
-export type ReporterStream = ReporterStreamMeta & {
-	write: (chunk: string) => void;
+export interface ReporterStream {
+	features: TerminalFeatures;
+	format: "markup" | "ansi" | "html" | "none";
+	write: (chunk: string, error: boolean) => void;
 	init?: () => void;
 	teardown?: () => void;
-};
+}
+
+export interface ReporterStreamAttached extends ReporterStream {
+	handles: Set<ReporterStreamHandle>;
+	state: ReporterStreamState;
+	updateFeatures: (features: TerminalFeatures) => void;
+}
+
+export interface ReporterStreamHandle {
+	stream: ReporterStreamAttached;
+	remove: () => void;
+}
 
 export type ReporterDerivedStreams = {
-	stdoutWrite: (chunk: string) => void;
-	stderrWrite: (chunk: string) => void;
+	handle: ReporterStreamHandle;
 	format: ReporterStream["format"];
 	features: TerminalFeatures;
 	featuresUpdated: Event<TerminalFeatures, void>;
@@ -81,63 +102,3 @@ export type ReporterProgress = {
 	pause: () => void;
 	resume: () => void;
 };
-
-export type RemoteReporterReceiveMessage = {
-	type: "ENDED";
-	id: string;
-};
-
-export type RemoteReporterClientMessage =
-	| {
-			type: "PROGRESS_CREATE";
-			id: string;
-			opts: undefined | ReporterProgressOptions;
-		}
-	| {
-			type: "PROGRESS_SET_CURRENT";
-			current: number;
-			id: string;
-		}
-	| {
-			type: "PROGRESS_SET_APPROXIMATE_ETA";
-			duration: number;
-			id: string;
-		}
-	| {
-			type: "PROGRESS_SET_TOTAL";
-			total: number;
-			id: string;
-			approximate: boolean;
-		}
-	| {
-			type: "PROGRESS_SET_TEXT";
-			text: Markup;
-			id: string;
-		}
-	| {
-			type: "PROGRESS_PUSH_TEXT";
-			text: Markup;
-			textId: string;
-			id: string;
-		}
-	| {
-			type: "PROGRESS_POP_TEXT";
-			textId: string;
-			id: string;
-		}
-	| {
-			type: "PROGRESS_TICK";
-			id: string;
-		}
-	| {
-			type: "PROGRESS_END";
-			id: string;
-		}
-	| {
-			type: "PROGRESS_PAUSE";
-			id: string;
-		}
-	| {
-			type: "PROGRESS_RESUME";
-			id: string;
-		};

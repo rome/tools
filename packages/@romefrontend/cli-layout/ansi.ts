@@ -6,23 +6,15 @@
  */
 
 import {TerminalFeatures} from "@romefrontend/cli-environment";
+import {MarkupRGB} from "./types";
 
-type RGB = [number, number, number];
+const ESC = "\x1b";
 
-const ESC = "\x1b[";
-
-export const pattern = [
-	"[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
-	"(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
-].join("|");
-
-export const regex = new RegExp(pattern, "g");
-
-function createEscape(num: number): string {
-	return `${ESC}${String(num)}m`;
+function createColorEscape(num: string | number): string {
+	return `${ESC}[${String(num)}m`;
 }
 
-function rgbTo8BitAnsi([r, g, b]: RGB): number {
+function rgbTo8BitAnsi([r, g, b]: MarkupRGB): number {
 	if (r === g && g === b) {
 		if (r < 8) {
 			return 16;
@@ -44,7 +36,7 @@ function rgbTo8BitAnsi([r, g, b]: RGB): number {
 	return ansi;
 }
 
-function saturation(rgb: RGB): number {
+function saturation(rgb: MarkupRGB): number {
 	const r = rgb[0] / 255;
 	const g = rgb[1] / 255;
 	const b = rgb[2] / 255;
@@ -61,7 +53,7 @@ function saturation(rgb: RGB): number {
 	return s * 100;
 }
 
-function rgbTo4BitAnsi(color: RGB): number {
+function rgbTo4BitAnsi(color: MarkupRGB): number {
 	const [r, g, b] = color;
 	let value = saturation(color);
 
@@ -82,29 +74,50 @@ function rgbTo4BitAnsi(color: RGB): number {
 	return ansi;
 }
 
-export function formatAnsiRGB(
-	str: string,
-	color: RGB,
-	features: TerminalFeatures,
-): string {
-	switch (features.colorDepth) {
+type RGBOptions = {
+	value: string;
+	color: MarkupRGB;
+	features: TerminalFeatures;
+	background?: boolean;
+};
+
+// 4 and 8 bit ANSi color codes can be switched from foreground to background by adding 10
+function fgToMaybeBgCode(code: number, opts: RGBOptions): string {
+	return String(opts.background ? code + 10 : code);
+}
+
+function formatAnsiRGBReset(opts: RGBOptions): string {
+	return createColorEscape(fgToMaybeBgCode(39, opts));
+}
+
+export function formatAnsiRGB(opts: RGBOptions): string {
+	const {color, value} = opts;
+	switch (opts.features.colorDepth) {
 		case 1:
-			return str;
+			return value;
 
-		case 4:
-			return createEscape(rgbTo4BitAnsi(color)) + str + createEscape(39);
+		case 4: {
+			const colorCode = fgToMaybeBgCode(rgbTo4BitAnsi(color), opts);
+			return createColorEscape(colorCode) + value + formatAnsiRGBReset(opts);
+		}
 
-		case 8:
-			return `\u001b[38;5;${rgbTo8BitAnsi(color)}m${str}${createEscape(39)}`;
+		case 8: {
+			const tableCode = rgbTo8BitAnsi(color);
+			const colorCode = `${fgToMaybeBgCode(38, opts)};5;${String(tableCode)}`;
+			return createColorEscape(colorCode) + value + formatAnsiRGBReset(opts);
+		}
 
-		case 24:
-			return formatAnsi.rgb(str, color);
+		case 24: {
+			const tuple = color.join(";");
+			const colorCode = `${fgToMaybeBgCode(38, opts)};2;${tuple}`;
+			return createColorEscape(colorCode) + value + formatAnsiRGBReset(opts);
+		}
 	}
 }
 
 export const formatAnsi = {
 	reset(str: string): string {
-		return createEscape(0) + str + createEscape(0);
+		return createColorEscape(0) + str + createColorEscape(0);
 	},
 	fileHyperlink(name: string, filename: string): string {
 		let href = "file://";
@@ -116,152 +129,141 @@ export const formatAnsi = {
 		return formatAnsi.hyperlink(name, href);
 	},
 	hyperlink(name: string, href: string): string {
-		return `\u001b]8;;${href}\u0007${name}\u001b]8;;\u0007`;
-	},
-	rgb(str: string, color: RGB): string {
-		return `\u001b[38;2;${color.join(";")}m${str}${createEscape(39)}`;
-	},
-	bgRgb(str: string, color: RGB): string {
-		return `\u001b[48;2;${color.join(";")}m${str}${createEscape(49)}`;
+		return `${ESC}]8;;${href}\u0007${name}${ESC}]8;;\u0007`;
 	},
 	bold(str: string): string {
-		return createEscape(1) + str + createEscape(22);
+		return createColorEscape(1) + str + createColorEscape(22);
 	},
 	dim(str: string): string {
-		return createEscape(2) + str + createEscape(22);
+		return createColorEscape(2) + str + createColorEscape(22);
 	},
 	italic(str: string): string {
-		return createEscape(3) + str + createEscape(23);
+		return createColorEscape(3) + str + createColorEscape(23);
 	},
 	underline(str: string): string {
-		return createEscape(4) + str + createEscape(24);
+		return createColorEscape(4) + str + createColorEscape(24);
 	},
 	inverse(str: string): string {
-		return createEscape(7) + str + createEscape(27);
+		return createColorEscape(7) + str + createColorEscape(27);
 	},
 	hidden(str: string): string {
-		return createEscape(8) + str + createEscape(28);
+		return createColorEscape(8) + str + createColorEscape(28);
 	},
 	strikethrough(str: string): string {
-		return createEscape(9) + str + createEscape(29);
+		return createColorEscape(9) + str + createColorEscape(29);
 	},
 	black(str: string): string {
-		return createEscape(30) + str + createEscape(39);
+		return createColorEscape(30) + str + createColorEscape(39);
 	},
 	brightBlack(str: string): string {
-		return createEscape(90) + str + createEscape(39);
+		return createColorEscape(90) + str + createColorEscape(39);
 	},
 	red(str: string): string {
-		return createEscape(31) + str + createEscape(39);
+		return createColorEscape(31) + str + createColorEscape(39);
 	},
 	brightRed(str: string): string {
-		return createEscape(91) + str + createEscape(39);
+		return createColorEscape(91) + str + createColorEscape(39);
 	},
 	green(str: string): string {
-		return createEscape(32) + str + createEscape(39);
+		return createColorEscape(32) + str + createColorEscape(39);
 	},
 	brightGreen(str: string): string {
-		return createEscape(92) + str + createEscape(39);
+		return createColorEscape(92) + str + createColorEscape(39);
 	},
 	yellow(str: string): string {
-		return createEscape(33) + str + createEscape(39);
+		return createColorEscape(33) + str + createColorEscape(39);
 	},
 	brightYellow(str: string): string {
-		return createEscape(93) + str + createEscape(39);
+		return createColorEscape(93) + str + createColorEscape(39);
 	},
 	blue(str: string): string {
-		return createEscape(34) + str + createEscape(39);
+		return createColorEscape(34) + str + createColorEscape(39);
 	},
 	brightBlue(str: string): string {
-		return createEscape(94) + str + createEscape(39);
+		return createColorEscape(94) + str + createColorEscape(39);
 	},
 	magenta(str: string): string {
-		return createEscape(35) + str + createEscape(39);
+		return createColorEscape(35) + str + createColorEscape(39);
 	},
 	brightMagenta(str: string): string {
-		return createEscape(95) + str + createEscape(39);
+		return createColorEscape(95) + str + createColorEscape(39);
 	},
 	cyan(str: string): string {
-		return createEscape(36) + str + createEscape(39);
+		return createColorEscape(36) + str + createColorEscape(39);
 	},
 	brightCyan(str: string): string {
-		return createEscape(96) + str + createEscape(39);
+		return createColorEscape(96) + str + createColorEscape(39);
 	},
 	white(str: string): string {
-		return createEscape(37) + str + createEscape(39);
+		return createColorEscape(37) + str + createColorEscape(39);
 	},
 	brightWhite(str: string): string {
-		return createEscape(97) + str + createEscape(39);
+		return createColorEscape(97) + str + createColorEscape(39);
 	},
 	bgBlack(str: string): string {
-		return createEscape(40) + str + createEscape(49);
+		return createColorEscape(40) + str + createColorEscape(49);
 	},
 	bgBrightBlack(str: string): string {
-		return createEscape(100) + str + createEscape(49);
+		return createColorEscape(100) + str + createColorEscape(49);
 	},
 	bgRed(str: string): string {
-		return createEscape(41) + str + createEscape(49);
+		return createColorEscape(41) + str + createColorEscape(49);
 	},
 	bgBrightRed(str: string): string {
-		return createEscape(101) + str + createEscape(49);
+		return createColorEscape(101) + str + createColorEscape(49);
 	},
 	bgGreen(str: string): string {
-		return createEscape(42) + str + createEscape(49);
+		return createColorEscape(42) + str + createColorEscape(49);
 	},
 	bgBrightGreen(str: string): string {
-		return createEscape(102) + str + createEscape(49);
+		return createColorEscape(102) + str + createColorEscape(49);
 	},
 	bgYellow(str: string): string {
-		return createEscape(43) + str + createEscape(49);
+		return createColorEscape(43) + str + createColorEscape(49);
 	},
 	bgBrightYellow(str: string): string {
-		return createEscape(103) + str + createEscape(49);
+		return createColorEscape(103) + str + createColorEscape(49);
 	},
 	bgBlue(str: string): string {
-		return createEscape(44) + str + createEscape(49);
+		return createColorEscape(44) + str + createColorEscape(49);
 	},
 	bgBrightBlue(str: string): string {
-		return createEscape(104) + str + createEscape(49);
+		return createColorEscape(104) + str + createColorEscape(49);
 	},
 	bgMagenta(str: string): string {
-		return createEscape(45) + str + createEscape(49);
+		return createColorEscape(45) + str + createColorEscape(49);
 	},
 	bgBrightMagenta(str: string): string {
-		return createEscape(105) + str + createEscape(49);
+		return createColorEscape(105) + str + createColorEscape(49);
 	},
 	bgCyan(str: string): string {
-		return createEscape(46) + str + createEscape(49);
+		return createColorEscape(46) + str + createColorEscape(49);
 	},
 	bgBrightCyan(str: string): string {
-		return createEscape(106) + str + createEscape(49);
+		return createColorEscape(106) + str + createColorEscape(49);
 	},
 	bgWhite(str: string): string {
-		return createEscape(47) + str + createEscape(49);
+		return createColorEscape(47) + str + createColorEscape(49);
 	},
 	bgBrightWhite(str: string): string {
-		return createEscape(107) + str + createEscape(49);
+		return createColorEscape(107) + str + createColorEscape(49);
 	},
 };
 
-export function stripAnsi(str: string): string {
-	return str.replace(regex, "");
-}
-
-export function hasAnsi(str: string): boolean {
-	return regex.test(str);
-}
-
 export const ansiEscapes = {
 	clearScreen: "\x1bc",
-	eraseLine: `${ESC}2K`,
+	eraseLine: `${ESC}[2K`,
 	cursorUp(count: number = 1): string {
-		return `${ESC}${count}A`;
+		return `${ESC}[${count}A`;
+	},
+	cursorDown(count: number = 1): string {
+		return `${ESC}[${count}B`;
 	},
 	cursorTo(x: number, y?: number): string {
 		if (y === undefined) {
-			return `${ESC}${x + 1}G`;
+			return `${ESC}[${x + 1}G`;
 		}
 
-		return `${ESC}${y + 1};${x + 1}H`;
+		return `${ESC}[${y + 1};${x + 1}H`;
 	},
 };

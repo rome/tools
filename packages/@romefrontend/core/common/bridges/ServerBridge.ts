@@ -10,11 +10,7 @@ import {Diagnostics} from "@romefrontend/diagnostics";
 import {ClientFlagsJSON, ClientRequestFlags} from "../types/client";
 import {Bridge} from "@romefrontend/events";
 import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
-import {
-	RemoteReporterClientMessage,
-	RemoteReporterReceiveMessage,
-	ReporterStream,
-} from "@romefrontend/cli-reporter";
+import {ReporterStream, ReporterStreamState} from "@romefrontend/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
 import {Dict} from "@romefrontend/typescript-helpers";
@@ -96,8 +92,9 @@ export type ProfilingStartData = {
 
 export type ServerBridgeInfo = {
 	version: string;
-	hasClearScreen: boolean;
-	useRemoteReporter: boolean;
+	streamState: Omit<ReporterStreamState, "lineSnapshots"> & {
+		lineSnapshots: undefined;
+	};
 	outputSupport: TerminalFeatures;
 	outputFormat: ReporterStream["format"];
 	flags: ClientFlagsJSON;
@@ -132,22 +129,6 @@ export default class ServerBridge extends Bridge {
 
 	updateFeatures = this.createEvent<TerminalFeatures, void>({
 		name: "updateFeatures",
-		direction: "server<-client",
-	});
-
-	reporterRemoteServerMessage = this.createEvent<
-		RemoteReporterClientMessage,
-		void
-	>({
-		name: "reporterRemoteToLocalMessage",
-		direction: "server->client",
-	});
-
-	reporterRemoteClientMessage = this.createEvent<
-		RemoteReporterReceiveMessage,
-		void
-	>({
-		name: "reporterLocalToRemoteMessage",
 		direction: "server<-client",
 	});
 

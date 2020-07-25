@@ -108,10 +108,10 @@ export default createServerCommand<Flags>({
 					reporter.heading(markup`Recovery stores`);
 
 					for (const {storeId, timestamp, command, entries} of stores) {
-						reporter.section(
+						await reporter.section(
 							markup`${storeId}`,
 							() => {
-								reporter.logAll(
+								reporter.log(
 									markup`<emphasis>Ran <duration>${String(
 										Date.now() - new Date(timestamp).valueOf(),
 									)}</duration> ago</emphasis> <dim>(${timestamp})</dim>`,

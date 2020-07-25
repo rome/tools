@@ -23,7 +23,15 @@ const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 export function consume(
 	opts: RequiredProps<Partial<ConsumerOptions>, "context">,
 ): Consumer {
-	return new Consumer(mergeObjects(EMPTY_CONSUME_OPTIONS, opts));
+	return new Consumer(
+		mergeObjects(
+			{
+				...EMPTY_CONSUME_OPTIONS,
+				context: opts.context,
+			},
+			opts,
+		),
+	);
 }
 
 export function consumeUnknown(
