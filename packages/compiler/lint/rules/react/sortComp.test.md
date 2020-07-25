@@ -392,7 +392,7 @@ class Hello extends React.Component {
 // Must ignore stateless components
 function Hello(props) {
 	return <div>
-		Hello
+		Hello 
 		{props.name}
 	</div>;
 }
@@ -412,7 +412,7 @@ function Hello(props) {
 // Must ignore stateless components (arrow function with explicit return)
 var Hello = (props) =>
 	<div>
-		Hello
+		Hello 
 		{props.name}
 	</div>
 ;

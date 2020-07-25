@@ -67,7 +67,7 @@ class Foo extends React.Component {
 	render() {
 		[1, 2, 3].map((num) => {
 			return <div>
-				 Foo
+				 Foo 
 			</div>;
 		});
 	}
