@@ -16,25 +16,7 @@ import {
 	getCreateElementType,
 	isCreateElement,
 } from "../../utils/react";
-
-const VOID_DOM_ELEMENTS = new Set([
-	"area",
-	"base",
-	"br",
-	"col",
-	"embed",
-	"hr",
-	"img",
-	"input",
-	"keygen",
-	"link",
-	"menuitem",
-	"meta",
-	"param",
-	"source",
-	"track",
-	"wbr",
-]);
+import {VOID_DOM_ELEMENTS} from "../../utils/constants";
 
 export default {
 	name: "react/voidDomElementsNoChildren",

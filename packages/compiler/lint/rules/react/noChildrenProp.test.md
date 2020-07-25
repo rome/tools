@@ -27,8 +27,7 @@
 ### `0: formatted`
 
 ```
-<MyComponent children={"foo"}>
-</MyComponent>;
+<MyComponent children={"foo"} />;
 
 ```
 

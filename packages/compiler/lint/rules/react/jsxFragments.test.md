@@ -511,8 +511,7 @@ function Hello() {
 ### `13: formatted`
 
 ```
-<Fragment key="id">
-</Fragment>;
+<Fragment key="id" />;
 
 ```
 
@@ -609,8 +608,7 @@ const Hello = <React.Fragment key="id">
 
 ```
 function Foo() {
-	let bar = <React.Fragment key="word">
-	</React.Fragment>;
+	let bar = <React.Fragment key="word" />;
 	return bar;
 }
 
@@ -680,8 +678,7 @@ function Hello() {
 
 ```
 function Hello() {
-	return <React.Fragment key="id">
-	</React.Fragment>;
+	return <React.Fragment key="id" />;
 }
 
 ```
@@ -697,8 +694,7 @@ function Hello() {
 
 ```
 function Hello() {
-	return <Fragment key="id">
-	</Fragment>;
+	return <Fragment key="id" />;
 }
 
 ```

@@ -78,8 +78,7 @@
 ### `2: formatted`
 
 ```
-<th scope={scope}>
-</th>;
+<th scope={scope} />;
 
 ```
 
@@ -93,7 +92,6 @@
 ### `3: formatted`
 
 ```
-<th scope="col">
-</th>;
+<th scope="col" />;
 
 ```
