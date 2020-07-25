@@ -29,12 +29,18 @@ import {
 import {LSPTransport} from "./protocol";
 import LSPProgress from "./LSPProgress";
 import {
+	convertDiagnosticLocationToLSPRange,
 	convertDiagnosticsToLSP,
 	diffTextEdits,
+	doRangesOverlap,
+	getDecisionFromAdviceAction,
+	getLSPRange,
 	getPathFromTextDocument,
 	getWorkerBufferPatches,
 } from "./utils";
 import {markup, readMarkup} from "@internal/markup";
+import {LSPCodeAction} from "./types";
+import {Event} from "@internal/events";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
@@ -45,6 +51,10 @@ export default class LSPServer {
 		this.lintSessionsPending = new AbsoluteFilePathSet();
 		this.lintSessions = new AbsoluteFilePathMap();
 		this.fileBuffers = new AbsoluteFilePathSet();
+		this.fileVersions = new AbsoluteFilePathMap();
+		this.pathToDiagnostics = new AbsoluteFilePathMap();
+
+		this.watchProjectEvent = new Event({name: "watchProject"});
 
 		request.endEvent.subscribe(async () => {
 			await this.shutdown();
@@ -73,8 +83,12 @@ export default class LSPServer {
 	private server: Server;
 
 	private fileBuffers: AbsoluteFilePathSet;
+	private fileVersions: AbsoluteFilePathMap<number>;
 	private lintSessionsPending: AbsoluteFilePathSet;
 	private lintSessions: AbsoluteFilePathMap<ServerRequest>;
+	private pathToDiagnostics: AbsoluteFilePathMap<Diagnostics>;
+
+	public watchProjectEvent: Event<AbsoluteFilePath, void>;
 
 	private logMessage(path: AbsoluteFilePath, message: string) {
 		this.server.logger.info(markup`[LSPServer] ${message}`);
@@ -188,6 +202,11 @@ export default class LSPServer {
 					});
 					processor.addDiagnostics(diagnostics);
 
+					this.pathToDiagnostics.set(
+						createAbsoluteFilePath(filename),
+						processor.getDiagnostics(),
+					);
+
 					this.transport.write({
 						method: "textDocument/publishDiagnostics",
 						params: {
@@ -211,6 +230,7 @@ export default class LSPServer {
 
 		const date = new Date();
 		this.logMessage(path, `Watching ${path.join()} at ${date.toTimeString()}`);
+		this.watchProjectEvent.send(path);
 	}
 
 	private async shutdown() {
@@ -265,6 +285,10 @@ export default class LSPServer {
 							change: 2,
 						},
 						documentFormattingProvider: true,
+						codeActionProvider: true,
+						executeCommandProvider: {
+							commands: ["rome.check.decisions", "rome.check.apply"],
+						},
 						workspaceDirectories: {
 							supported: true,
 							changeNotifications: true,
@@ -274,6 +298,132 @@ export default class LSPServer {
 						name: "rome",
 					},
 				};
+			}
+
+			case "textDocument/codeAction": {
+				const path = getPathFromTextDocument(params.get("textDocument"));
+				const codeActionRange = getLSPRange(params.get("range"));
+
+				const codeActions: Array<LSPCodeAction> = [];
+				const seenDecisions = new Set<string>();
+
+				const diagnostics = this.pathToDiagnostics.get(path);
+				if (diagnostics === undefined) {
+					return codeActions;
+				}
+
+				for (const diag of diagnostics) {
+					const diagRange = convertDiagnosticLocationToLSPRange(diag.location);
+
+					if (!doRangesOverlap(diagRange, codeActionRange)) {
+						continue;
+					}
+					for (const advice of diag.description.advice) {
+						if (advice.type !== "action" || advice.extra === true) {
+							continue;
+						}
+
+						const decision = getDecisionFromAdviceAction(advice);
+						if (decision === undefined || seenDecisions.has(decision)) {
+							continue;
+						}
+						seenDecisions.add(decision);
+
+						codeActions.push({
+							title: `${readMarkup(advice.noun)}: ${diag.description.category}`,
+							command: {
+								title: "Rome: Check",
+								command: "rome.check.decisions",
+								arguments: [path.join(), decision],
+							},
+						});
+					}
+				}
+
+				codeActions.push({
+					title: "Rome: Fix All",
+					kind: "source.fixAll.rome",
+					command: {
+						title: "Rome: Fix All",
+						command: "rome.check.apply",
+						arguments: [path.join()],
+					},
+				});
+
+				return codeActions;
+			}
+
+			case "workspace/executeCommand": {
+				const command = params.get("command").asString();
+				const filename = params.get("arguments").getIndex(0).asString();
+
+				const path = createAbsoluteFilePath(filename);
+				const startVersion = this.fileVersions.get(path);
+
+				let req: PartialServerQueryRequest | undefined;
+
+				if (command === "rome.check.apply") {
+					req = {
+						commandName: "check",
+						args: [filename],
+						commandFlags: {apply: true},
+						noFileWrites: true,
+					};
+				}
+
+				if (command === "rome.check.decisions") {
+					const decisions = params.get("arguments").getIndex(1).asString();
+					req = {
+						commandName: "check",
+						args: [filename],
+						commandFlags: {decisions},
+						noFileWrites: true,
+					};
+				}
+
+				if (req === undefined) {
+					return null;
+				}
+
+				const response = await this.sendClientRequest(req);
+
+				if (response.type === "SUCCESS" || response.type === "DIAGNOSTICS") {
+					const original = await this.request.requestWorkerGetBuffer(path);
+					const saveFile = response.files[filename];
+					if (original === undefined || saveFile === undefined) {
+						return null;
+					}
+					const endVersion = this.fileVersions.get(path);
+					if (startVersion !== endVersion) {
+						this.logMessage(
+							path,
+							`Can't update ${filename} because it was modified,`,
+						);
+						return null;
+					}
+
+					const edits = diffTextEdits(original, saveFile.content);
+
+					await this.transport.request({
+						method: "workspace/applyEdit",
+						params: {
+							label: "Rome Action",
+							edit: {
+								documentChanges: [
+									{
+										textDocument: {
+											uri: `file://${filename}`,
+											version: endVersion,
+										},
+										edits,
+									},
+								],
+							},
+						},
+					});
+				}
+
+				return null;
 			}
 
 			case "textDocument/formatting": {
@@ -324,12 +474,14 @@ export default class LSPServer {
 			}
 
 			case "textDocument/didOpen": {
-				const path = getPathFromTextDocument(params.get("textDocument"));
+				const textDocument = params.get("textDocument");
+				const path = getPathFromTextDocument(textDocument);
 				const project = this.server.projectManager.findLoadedProject(path);
 				if (project === undefined) {
 					return;
 				}
-				const content = params.get("textDocument").get("text").asString();
+				this.fileVersions.set(path, textDocument.get("version").asNumber());
+				const content = textDocument.get("text").asString();
 				await this.request.requestWorkerUpdateBuffer(path, content);
 				this.fileBuffers.add(path);
 				this.logMessage(path, `Opened: ${path.join()}`);
@@ -337,10 +489,12 @@ export default class LSPServer {
 			}
 
 			case "textDocument/didChange": {
-				const path = getPathFromTextDocument(params.get("textDocument"));
+				const textDocument = params.get("textDocument");
+				const path = getPathFromTextDocument(textDocument);
 				if (!this.fileBuffers.has(path)) {
 					return;
 				}
+				this.fileVersions.set(path, textDocument.get("version").asNumber());
 				const contentChanges = params.get("contentChanges");
 
 				if (contentChanges.getIndex(0).has("range")) {
@@ -359,6 +513,7 @@ export default class LSPServer {
 					return;
 				}
 				this.fileBuffers.delete(path);
+				this.fileVersions.delete(path);
 				await this.request.requestWorkerClearBuffer(path);
 				this.logMessage(path, `Closed: ${path.join()}`);
 				break;

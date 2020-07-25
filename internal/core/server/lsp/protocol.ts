@@ -1,7 +1,7 @@
 import {Event} from "@internal/events";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
 import {Consumer, consumeUnknown} from "@internal/consume";
-import {LSPResponseMessage} from "./types";
+import {LSPRequestMessage, LSPResponseMessage} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {AnyMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
@@ -53,6 +53,8 @@ export class LSPTransport {
 		this.buffer = "";
 		this.bufferLength = 0;
 		this.reporter = reporter;
+		this.requestIdCounter = 0;
+		this.requestCallbacks = new Map();
 
 		this.requestEvent = new Event({name: "request"});
 		this.notificationEvent = new Event({name: "notification"});
@@ -65,6 +67,14 @@ export class LSPTransport {
 	private buffer: string;
 	private bufferLength: number;
 	private reporter: Reporter;
+	private requestIdCounter: number;
+	private requestCallbacks: Map<
+		number,
+		{
+			resolve: (data: Consumer) => void;
+			reject: (err: Consumer) => void;
+		}
+	>;
 
 	public notificationEvent: Event<MessageEvent, void>;
 	public errorEvent: Event<Error, void>;
@@ -75,6 +85,14 @@ export class LSPTransport {
 		const json = JSON.stringify(res);
 		const out = `Content-Length: ${Buffer.byteLength(json)}${HEADERS_END}${json}`;
 		this.writeEvent.send(out);
+	}
+
+	public async request(req: Omit<LSPRequestMessage, "id">): Promise<Consumer> {
+		return new Promise((resolve, reject) => {
+			const id = ++this.requestIdCounter;
+			this.requestCallbacks.set(id, {resolve, reject});
+			this.write({...req, id});
+		});
 	}
 
 	private normalizeMessage(content: string): undefined | Consumer {
@@ -99,6 +117,20 @@ export class LSPTransport {
 		}
 
 		if (!consumer.has("method")) {
+			if (!consumer.has("id")) {
+				return;
+			}
+			const id = consumer.get("id").asNumber();
+			const callbacks = this.requestCallbacks.get(id);
+			this.requestCallbacks.delete(id);
+			if (callbacks === undefined) {
+				return;
+			}
+			if (consumer.has("result")) {
+				callbacks.resolve(consumer.get("result"));
+			} else if (consumer.has("error")) {
+				callbacks.reject(consumer.get("error"));
+			}
 			return;
 		}
 

@@ -6,7 +6,7 @@
  */
 
 import {Number0} from "@internal/ob1";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-json";
 
 export type LSPRequestMessage = {
 	/**
@@ -22,7 +22,7 @@ export type LSPRequestMessage = {
 	/**
    * The method's params.
    */
-	params?: unknown;
+	params?: JSONArray | JSONObject;
 };
 
 export type LSPResponseMessage = {
@@ -265,4 +265,120 @@ export type LSPTextEdit = {
    * empty string.
    */
 	newText: string;
+};
+
+export type LSPCommand = {
+	/**
+	 * Title of the command, like `save`.
+	 */
+	title: string;
+	/**
+	 * The identifier of the actual command handler.
+	 */
+	command: string;
+	/**
+	 * Arguments that the command handler should be
+	 * invoked with.
+	 */
+	arguments?: Array<string>;
+};
+
+export type LSPCodeActionKind = string;
+
+export type LSPCodeAction = {
+	/**
+	 * A short, human-readable, title for this code action.
+	 */
+	title: string;
+
+	/**
+	 * The kind of the code action.
+	 *
+	 * Used to filter code actions.
+	 */
+	kind?: LSPCodeActionKind;
+
+	/**
+	 * The diagnostics that this code action resolves.
+	 */
+	diagnostics?: Array<LSPDiagnostic>;
+
+	/**
+	 * Marks this as a preferred action. Preferred actions are used by the `auto fix` command and can be targeted
+	 * by keybindings.
+	 *
+	 * A quick fix should be marked preferred if it properly addresses the underlying error.
+	 * A refactoring should be marked preferred if it is the most reasonable choice of actions to take.
+	 *
+	 * @since 3.15.0
+	 */
+	isPreferred?: boolean;
+
+	/**
+	 * The workspace edit this code action performs.
+	 */
+	edit?: LSPWorkspaceEdit;
+
+	/**
+	 * A command this code action executes. If a code action
+	 * provides an edit and a command, first the edit is
+	 * executed and then the command.
+	 */
+	command?: LSPCommand;
+};
+
+export type LSPWorkspaceEdit = {
+	/**
+	 * Holds changes to existing resources.
+	 */
+	changes?: {
+		[uri: string]: Array<LSPTextEdit>;
+	};
+
+	/**
+	 * Depending on the client capability `workspace.workspaceEdit.resourceOperations` document changes
+	 * are either an array of `TextDocumentEdit`s to express changes to n different text documents
+	 * where each text document edit addresses a specific version of a text document. Or it can contain
+	 * above `TextDocumentEdit`s mixed with create, rename and delete file / folder operations.
+	 *
+	 * Whether a client supports versioned document edits is expressed via
+	 * `workspace.workspaceEdit.documentChanges` client capability.
+	 *
+	 * If a client neither supports `documentChanges` nor `workspace.workspaceEdit.resourceOperations` then
+	 * only plain `TextEdit`s using the `changes` property are supported.
+	 */
+	documentChanges?: Array<LSPTextDocumentEdit>;
+};
+
+export type LSPTextDocumentEdit = {
+	/**
+	 * The text document to change.
+	 */
+	textDocument: LSPVersionedTextDocumentIdentifier;
+
+	/**
+	 * The edits to be applied.
+	 */
+	edits: Array<LSPTextEdit>;
+};
+
+export type LSPTextDocumentIdentifier = {
+	/**
+	 * The text document's URI.
+	 */
+	uri: LSPDocumentUri;
+};
+
+export type LSPVersionedTextDocumentIdentifier = LSPTextDocumentIdentifier & {
+	/**
+	 * The version number of this document. If a versioned text document identifier
+	 * is sent from the server to the client and the file is not open in the editor
+	 * (the server has not received an open notification before) the server can send
+	 * `null` to indicate that the version is known and the content on disk is the
+	 * master (as speced with document content ownership).
+	 *
+	 * The version number of a document will increase after each change, including
+	 * undo/redo. The number doesn't need to be consecutive.
+	 */
+	version: number | null;
 };

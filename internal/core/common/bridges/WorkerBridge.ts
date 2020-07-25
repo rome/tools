@@ -279,6 +279,16 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
+	public getBuffer = this.createEvent<
+		{
+			ref: JSONFileReference;
+		},
+		string | undefined
+	>({
+		name: "getBuffer",
+		direction: "server->client",
+	});
+
 	public updateBuffer = this.createEvent<
 		{
 			ref: JSONFileReference;

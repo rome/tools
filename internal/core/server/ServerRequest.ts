@@ -745,6 +745,20 @@ export default class ServerRequest {
 		}
 	}
 
+	public async requestWorkerGetBuffer(
+		path: AbsoluteFilePath,
+	): Promise<string | undefined> {
+		this.checkCancelled();
+
+		return this.wrapRequestDiagnostic(
+			"getBuffer",
+			path,
+			async (bridge, ref) => {
+				return bridge.getBuffer.call({ref});
+			},
+		);
+	}
+
 	public async requestWorkerUpdateBuffer(
 		path: AbsoluteFilePath,
 		content: string,
