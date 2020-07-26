@@ -18,8 +18,8 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
 
 	eleventyConfig.setLiquidOptions({
-    cache: true,
-  });
+		cache: true,
+	});
 
 	eleventyConfig.addPlugin(
 		pluginSass,
@@ -99,21 +99,24 @@ module.exports = function(eleventyConfig) {
 
 	const jsminCache = new Map();
 
-	eleventyConfig.addFilter("jsmin", function(code) {
-		const cached = jsminCache.get(code);
-		if (cached !== undefined) {
-			return cached;
-		}
+	eleventyConfig.addFilter(
+		"jsmin",
+		function(code) {
+			const cached = jsminCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
 
-    const minified = terser.minify(code);
-    if (minified.error) {
-			console.log("Terser error: ", minified.error);
-			return code;
-    }
+			const minified = terser.minify(code);
+			if (minified.error) {
+				console.log("Terser error: ", minified.error);
+				return code;
+			}
 
-		jsminCache.set(code, minified.code);
-    return minified.code;
-	});
+			jsminCache.set(code, minified.code);
+			return minified.code;
+		},
+	);
 
 	eleventyConfig.addFilter(
 		"dateFormat",

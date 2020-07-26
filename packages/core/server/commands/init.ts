@@ -10,7 +10,6 @@ import {getFileHandlerFromPath} from "@romefrontend/core/common/file-handlers";
 import Linter from "../linter/Linter";
 import {ProjectDefinition} from "@romefrontend/project";
 import {AbsoluteFilePathMap} from "@romefrontend/path";
-import {VERSION} from "@romefrontend/core/common/constants";
 import {getVCSClient} from "@romefrontend/vcs";
 
 type Flags = {

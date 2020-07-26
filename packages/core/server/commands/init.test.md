@@ -89,7 +89,6 @@ lint: {
 		"unknownVariable"
 ]
 }
-version: "^0.0.26-dev"
 
 ```
 
@@ -144,7 +143,6 @@ version: "^0.0.26-dev"
 
 # rome.rjson
 name: "project"
-version: "^0.0.26-dev"
 
 
 ```

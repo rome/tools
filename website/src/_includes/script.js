@@ -1,12 +1,13 @@
 // @ts-check
-
 const mobileHandleTOC = document.querySelector(".mobile-handle-toc");
 const mobileHandleNav = document.querySelector(".mobile-handle-nav");
 const toc = document.querySelector(".toc-container");
 const sidebar = document.querySelector(".sidebar");
 
-/** @type {NodeListOf<HTMLElement>} */
-const headings = document.querySelectorAll(".content h1, .content h2, .content h3");
+/** @type {NodeListOf<HTMLElement>}*/
+const headings = document.querySelectorAll(
+	".content h1, .content h2, .content h3",
+);
 const headerMobile = document.querySelector(".header-mobile");
 
 /**
@@ -145,7 +146,7 @@ const siteNavigationContainer = document.querySelector(".site-navigation");
 const siteNavigationHeight = siteNavigationContainer.clientHeight;
 function setSiteNavigationHeight() {
 	console.log({siteNavigationHeight, scrollY});
-	siteNavigationContainer.style.height = (siteNavigationHeight - scrollY) + 'px';
+	siteNavigationContainer.style.height = `${siteNavigationHeight - scrollY}px`;
 }
 setSiteNavigationHeight();
 
@@ -262,11 +263,7 @@ function toggleColorSchemeSwitch() {
 }
 
 const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
-colorSchemeSwitcher.addEventListener(
-	"click",
-	toggleColorSchemeSwitch,
-	false,
-);
+colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
 
 //# Hide WIP banner after scrolling
 

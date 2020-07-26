@@ -33,7 +33,13 @@ export class VCSClient {
 
 	root: AbsoluteFilePath;
 
-	async exec(command: string, args: Array<string>): Promise<{stdout: string, exitCode: number}> {
+	async exec(
+		command: string,
+		args: Array<string>,
+	): Promise<{
+		stdout: string;
+		exitCode: number;
+	}> {
 		return new Promise((resolve, reject) => {
 			const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
 			let stderr = "";
@@ -104,7 +110,10 @@ class GitVCSClient extends VCSClient {
 	}
 
 	async getDefaultBranch(): Promise<string> {
-		const {exitCode} = await this.exec("git", ["show-ref", "--verify", "--quiet", "refs/heads/main"]);
+		const {exitCode} = await this.exec(
+			"git",
+			["show-ref", "--verify", "--quiet", "refs/heads/main"],
+		);
 		return exitCode === 0 ? "main" : "master";
 	}
 

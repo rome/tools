@@ -27,12 +27,7 @@ export async function main(args: Array<string>) {
 
 	reporter.info(markup`Generating files`);
 
-	await Promise.all([
-		virtualModulesMain(),
-		ast(),
-		lintRules(),
-		lintRulesDocs(),
-	]);
+	await Promise.all([virtualModulesMain(), ast(), lintRules(), lintRulesDocs()]);
 
 	reporter.hr();
 
