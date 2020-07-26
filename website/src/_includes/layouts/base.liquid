@@ -21,22 +21,28 @@
 		<meta property="twitter:card" content="summary_large_image">
 
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
-		<link rel="stylesheet" href="/styles/index.css">
+		{% capture styles %}
+			{% include styles.css %}
+			{{ "node_modules/docsearch.js/dist/cdn/docsearch.css" | includeraw | safe }}
+		{% endcapture %}
+		<style>{{ styles | cssmin | safe }}</style>
 
 		<script>
-			(function () {
-				document.documentElement.classList.remove("js-disabled");
-				document.documentElement.classList.add("js-enabled");
+			{% capture preJS %}
+				(function () {
+					document.documentElement.classList.remove("js-disabled");
+					document.documentElement.classList.add("js-enabled");
 
-				// Fix white flickering when on dark mode and respect color scheme preference
-				let currentTheme = localStorage.getItem('data-theme');
-				const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
-				if (!currentTheme)	{
-					currentTheme = prefersDarkMode ? 'dark' : 'light';
-				}
-				document.documentElement.setAttribute("data-theme", currentTheme);
-			})();
+					// Fix white flickering when on dark mode and respect color scheme preference
+					let currentTheme = localStorage.getItem('data-theme');
+					const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
+					if (!currentTheme)	{
+						currentTheme = prefersDarkMode ? 'dark' : 'light';
+					}
+					document.documentElement.setAttribute("data-theme", currentTheme);
+				})();
+			{% endcapture %}
+			{{ preJS | jsmin | safe }}
 		</script>
 	</head>
 
@@ -67,20 +73,19 @@
 			</div>
 
 			<div class="sidebar-container">
-				<div class="sidebar">
-					<div class="sidebar-top">
-						<div class="sidebar-stripe"></div>
-						<div class="header-desktop">
-							<a class="logo" href="/">
-								{% include svg/rome-logo.svg %}
-								<h1 class="logo-text sr-only">Rome</h1>
-							</a>
-						</div>
+				<div class="sidebar-stripe"></div>
 
-						<div class="docsearch-container">
-							{% include svg/search-icon.svg %}
-							<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
-						</div>
+				<div class="sidebar">
+					<div class="header-desktop">
+						<a class="logo" href="/">
+							{% include svg/rome-logo.svg %}
+							<h1 class="logo-text sr-only">Rome</h1>
+						</a>
+					</div>
+
+					<div class="docsearch-container">
+						{% include svg/search-icon.svg %}
+						<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
 					</div>
 
 					<div class="site-navigation-container">
@@ -106,13 +111,11 @@
 						{{ content | toc | safe }}
 					</nav>
 
-					<div class="sidebar-bottom">
-						<div class="color-scheme-switch-container hide-no-js">
-							<div class="color-scheme-switch">
-								<div class="selector"></div>
-								{% include svg/moon.svg %}
-								{% include svg/sun.svg %}
-							</div>
+					<div class="color-scheme-switch-container hide-no-js">
+						<div class="color-scheme-switch">
+							<div class="selector"></div>
+							{% include svg/moon.svg %}
+							{% include svg/sun.svg %}
 						</div>
 					</div>
 				</div>
@@ -166,7 +169,8 @@
 
 					<div class="netlify-badge">
 						<a href="https://www.netlify.com">
-							<img src="https://www.netlify.com/img/global/badges/netlify-color-accent.svg" alt="Deploys by Netlify" />
+							<span class="sr-only">Deploys by Netlify</span>
+							{% include svg/netlify.svg %}
 						</a>
 					</div>
 				</div>
@@ -178,7 +182,7 @@
 			</div>
 		</footer>
 
-		{% capture js %}{% include ../script.js %}{% endcapture %}
-		<script>{{ js | jsmin | safe }}</script>
+		{% capture script %}{% include ../script.js %}{% endcapture %}
+		<script>{{ script | jsmin | safe }}</script>
 	</body>
 </html>

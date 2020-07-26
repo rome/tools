@@ -3,16 +3,19 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
-const pluginSass = require("eleventy-plugin-sass");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
 const terser = require("terser");
+const CleanCSS = require("clean-css");
+const htmlmin = require("html-minifier");
 
 /**
  * @type {any}
  */
 const grayMatter = require("gray-matter");
+
+const isProduction = process.env.ELEVENTY_ENV === "production";
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
@@ -20,14 +23,6 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.setLiquidOptions({
 		cache: true,
 	});
-
-	eleventyConfig.addPlugin(
-		pluginSass,
-		{
-			sourcemaps: true,
-			watch: ["src/**/*.{scss,sass}"],
-		},
-	);
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 
@@ -56,6 +51,7 @@ module.exports = function(eleventyConfig) {
 
 	eleventyConfig.setLibrary("md", md);
 
+	// Render a markdown from the root of the repo
 	eleventyConfig.addShortcode(
 		"rootmd",
 		function(file) {
@@ -97,26 +93,76 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
-	const jsminCache = new Map();
+	// Used for including raw files without having them processed by liquid
+	const includerawCache = new Map();
+	eleventyConfig.addFilter(
+		"includeraw",
+		function(loc) {
+			const cached = includerawCache.get(loc);
+			if (cached !== undefined) {
+				return undefined;
+			}
 
+			const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
+			includerawCache.set(loc, file);
+			return file;
+		},
+	);
+
+	const minCache = new Map();
+
+	// Minify JS in production
 	eleventyConfig.addFilter(
 		"jsmin",
 		function(code) {
-			const cached = jsminCache.get(code);
+			if (!isProduction) {
+				return code;
+			}
+
+			const cached = minCache.get(code);
 			if (cached !== undefined) {
 				return cached;
 			}
 
 			const minified = terser.minify(code);
 			if (minified.error) {
-				console.log("Terser error: ", minified.error);
-				return code;
+				throw minified.error;
 			}
 
-			jsminCache.set(code, minified.code);
+			minCache.set(code, minified.code);
 			return minified.code;
 		},
 	);
+
+	// Minify CSS in production
+	eleventyConfig.addFilter("cssmin", function(code) {
+		if (!isProduction) {
+			return code;
+		}
+
+		const cached = minCache.get(code);
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		const minified = new CleanCSS({}).minify(code).styles;
+		minCache.set(code, minified);
+		return minified;
+	});
+
+	// Minify HTML in production
+	eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
+    if (isProduction && outputPath.endsWith(".html")) {
+      let minified = htmlmin.minify(content, {
+        useShortDoctype: true,
+        removeComments: true,
+        collapseWhitespace: true
+      });
+      return minified;
+    }
+
+    return content;
+  });
 
 	eleventyConfig.addFilter(
 		"dateFormat",

@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -41,7 +41,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong> <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -58,7 +58,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -75,7 +75,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">++</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">++</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -92,7 +92,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -109,7 +109,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -126,7 +126,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token keyword">in</span> <span class="token variable">y</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token keyword">in</span> <span class="token variable">y</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -143,7 +143,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">+=</span><span class="token number">1</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">+=</span><span class="token number">1</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -160,7 +160,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token variable">as</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
@@ -177,7 +177,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>

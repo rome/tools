@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unterminated string constant</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">user</span> <span class="token operator">=</span> <span class="token string">&apos;Faustina&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>               <span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user};</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong>               <span class="token keyword">const</span> <span class="token variable">helloUser</span> <span class="token operator">=</span> <span class="token string">&apos;Hello, ${user};</span>
      <strong> │ </strong>                                                 <span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}

@@ -30,7 +30,7 @@ MISSING DOCUMENTATION
 
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
   <strong>  3</strong><strong> │ </strong>  <span class="token variable">test2</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>  <span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 4</strong><strong> │ </strong>  <span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 

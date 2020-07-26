@@ -56,7 +56,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The parameter variable </span><span style="color: Tomato;"><strong>myVar</strong></span><span style="color: Tomato;"> is unused.</span>
 
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">myVar</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">myVar</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
      <strong> │ </strong>             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -84,7 +84,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The parameter variable </span><span style="color: Tomato;"><strong>myVar</strong></span><span style="color: Tomato;"> is unused.</span>
 
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">myVar</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">myVar</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
      <strong> │ </strong>             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
@@ -96,7 +96,7 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -104,7 +104,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The parameter variable </span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;"> is unused.</span>
 
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
      <strong> │ </strong>             <span style="color: Tomato;"><strong>^</strong></span>
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
@@ -125,7 +125,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">_</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">_</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}

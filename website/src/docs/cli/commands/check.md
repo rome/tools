@@ -9,7 +9,7 @@ layout: layouts/page.liquid
 
 ### `--apply`
 
-### `--changed <branch/commit>`
+### `--changed \<branch/commit>`
 
 Only include files that were changed between the specified `branch/commit`. This can be useful for performance in large projects.
 

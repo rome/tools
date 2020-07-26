@@ -2,8 +2,11 @@
 	"name": "rome-website",
 	"private": true,
 	"scripts": {
-		"build": "cross-env ELEVENTY_ENV=production eleventy",
-		"start": "eleventy --serve"
+		"build": "sass --style=compressed src/styles/index.scss src/_includes/styles.css && cross-env ELEVENTY_ENV=production eleventy",
+		"build:styles": "sass --style=compressed src/styles/index.scss src/_includes/styles.css",
+		"start": "npm-run-all build:styles --parallel watch:*",
+		"watch:eleventy": "eleventy --serve",
+		"watch:sass": "npm run build:styles -- --watch"
 	},
 	"devDependencies": {
 		"@11ty/eleventy": "^0.11.0",
@@ -11,9 +14,13 @@
 		"eleventy-plugin-nesting-toc": "^1.2.0",
 		"markdown-it-anchor": "^5.3.0",
 		"@11ty/eleventy-navigation": "^0.1.6",
-		"eleventy-plugin-sass": "^1.0.0",
+		"npm-run-all": "^4.1.5",
 		"cross-env": "^7.0.2",
-		"terser": "^4.8.0"
+		"sass": "^1.26.5",
+		"terser": "^4.8.0",
+		"clean-css": "^4.2.3",
+		"docsearch.js": "^2.6.3",
+		"html-minifier": "^4.0.0"
 	},
 	"rome": {
 		"extends": "../package.json",
@@ -27,7 +34,9 @@
 				"eleventy-plugin-nesting-toc",
 				"gray-matter",
 				"prismjs/plugins/autolinker/prism-autolinker",
-				"terser"
+				"terser",
+				"clean-css",
+				"html-minifier"
 			]
 		}
 	}

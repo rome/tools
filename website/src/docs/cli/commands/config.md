@@ -11,22 +11,22 @@ Before your project config is saved, we will validate it for errors. It is not p
 
 ## Subcommands
 
-### `rome config enable <key>`
+### `rome config enable \<key>`
 
 Set the `key` to `true`.
 
-### `rome config disable <key>`
+### `rome config disable \<key>`
 
 Set the `key` to `false`.
 
-### `rome config set <key> <value>`
+### `rome config set \<key> \<value>`
 
 Set the `key` to a string `value`.
 
-### `rome config set-directory <key> <value>`
+### `rome config set-directory \<key> \<value>`
 
 Set the `key` to the string `value`. If `value` is an absolute path then it will be made relative to the project base directory.
 
-### `rome config push <key> <value>`
+### `rome config push \<key> \<value>`
 
 Push the string `value` to an array at `key`. If `key` doesn't exist then it will be created.

@@ -9,6 +9,7 @@
 }
 
 .sidebar-stripe {
+	display: flex;
 	@include inset-border-top;
 	height: 5px;
 	width: 100%;
@@ -25,12 +26,7 @@
 	border-right: 1px solid var(--soft-border-color);
 	border-left: 1px solid var(--soft-border-color);
 	background-color: var(--container-color);
-
-	.nav-bottom {
-		position: sticky;
-		z-index: 2;
-		top: 0;
-	}
+	overflow: hidden;
 
 	@include desktop-only() {
 		border-top-width: 0;
@@ -38,13 +34,6 @@
 
 		margin-top: 0;
 		min-width: 256px;
-
-		.nav-top {
-			position: sticky;
-			z-index: 2;
-			top: 0;
-			background-color: var(--container-color);
-		}
 	}
 
 	@include mobile-only() {
@@ -82,6 +71,7 @@
 	}
 
 	.toc-menu {
+		height: 100%;
 		overflow: auto;
 	}
 

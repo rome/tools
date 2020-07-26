@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This is an invalid use of the </span><span style="color: Tomato;"><strong>delete</strong></span><span style="color: Tomato;"> operator.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">delete</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">delete</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Only object properties can be deleted.</span>

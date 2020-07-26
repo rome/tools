@@ -42,15 +42,15 @@ Show the contents of the recovery store. Including the command that was ran, at 
 
 ### `rome recover pop`
 
-Revert the last command. Equivalent to `rome recover apply <MOST_RECENT_STORE_ID>`.
+Revert the last command. Equivalent to `rome recover apply \<MOST_RECENT_STORE_ID>`.
 
-### `rome recover apply <id>`
+### `rome recover apply \<id>`
 
 Revert the changes that were made by the corresponding `id`. You can find the `id` by running `rome recover list`.
 
 Running this command will also produce a new store entry with the files that were reverted.
 
-### `rome recover diff <id>`
+### `rome recover diff \<id>`
 
 Produce a diff of changes between existing files and those included in the `id` store.
 
