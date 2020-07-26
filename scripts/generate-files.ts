@@ -2,7 +2,6 @@ import {main as virtualModulesMain} from "./generated-files/virtual-modules";
 import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";
 import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
-import {main as sitemap} from "./generated-files/sitemap";
 import {reporter, setForceGenerated} from "./_utils";
 import {parseCLIFlags} from "@romefrontend/cli-flags";
 import child = require("child_process");
@@ -33,7 +32,6 @@ export async function main(args: Array<string>) {
 		ast(),
 		lintRules(),
 		lintRulesDocs(),
-		sitemap(),
 	]);
 
 	reporter.hr();

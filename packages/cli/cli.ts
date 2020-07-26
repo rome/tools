@@ -222,7 +222,7 @@ export default async function cli() {
 						{
 							description: markup`Run a command multiple times, calculating average`,
 						},
-					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites),
+					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
 					benchmarkIterations: c.get(
 						"benchmarkIterations",
 						{

@@ -16,7 +16,7 @@
 }
 
 @mixin pattern {
-	background-color: var(--background-color);
+	background-color: var(--container-color);
 	background-image: var(--pattern-img-path), linear-gradient(180deg, var(--pattern-color) 20%, var(--pattern-color-2) 100%);
 	background-repeat: repeat;
 	background-position: 50%;

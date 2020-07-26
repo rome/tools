@@ -18,6 +18,10 @@
 	}
 }
 
+.homepage h1 {
+	display: none;
+}
+
 ul.home-actions {
 	margin: 0;
 	padding: 0;
@@ -29,6 +33,10 @@ ul.home-actions {
 	text-align: center;
 	justify-items: center;
 
+	li {
+		list-style: none;
+	}
+
 	@media only screen and (max-width: 1060px) {
 		flex-direction: column;
 	}
@@ -38,27 +46,7 @@ ul.home-actions {
 		height: 40px;
 	}
 
-	a.getting-started {
-		border-bottom: $color-2 5px solid;
-		border-top: $color-2 1px solid;
-		border-right: $color-2 1px solid;
-		border-left: $color-2 1px solid;
-		background: var(--primary-color);
-		border-radius: 8px;
-		padding: 12px 32px;
-		perspective: inherit;
-		position: relative;
-		color: #27272A;
-		text-decoration: none;
-		display: inline;
-
-		&:hover{
-			border-color: $color-4;
-			background: $color-6;
-		}
-	}
-
-	//align text to icon
+	// Align text to icon
 	a {
 		display: flex;
 		align-items: center;
@@ -78,7 +66,6 @@ ul.home-actions {
 		padding: 10px;
 		flex: 1;
 		text-align: center;
-		list-style: none;
 		border-right: 1px solid var(--soft-border-color);
 		white-space: nowrap;
 

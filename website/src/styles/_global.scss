@@ -32,36 +32,37 @@ code {
 	padding: 0 5px;
 }
 
-p {
-	margin-bottom: 1.5em;
-}
-
 h1 {
 	font-size: 2em;
 	line-height: $body-line-height / 2em;
+  margin: .67em 0;
 }
 
 h2 {
 	font-size: 1.5em;
 	line-height: $body-line-height / 1.5em;
+	margin: 0.83em 0;
 }
 
 h3 {
-	font-size: 1em;
-	line-height: $body-line-height / 1em;
+	font-size: 1.2em;
+	line-height: $body-line-height / 1.2em;
+	margin: 1em 0;
 }
 
-h4 {
-	font-size: 0.7em;
-	line-height: $body-line-height / 0.7em;
+h4, h5 {
+	font-size: 1em;
+	line-height: $body-line-height / 1em;
 }
 
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
 	font-family: Libre Baskerville, serif;
 	color: var(--logo-font-color);
+	font-weight: bold;
 }
 
 a {
@@ -85,7 +86,6 @@ ul.breadcrumbs {
 	background-color: var(--background-color);
 	border-bottom: 1px solid var(--soft-border-color);
 	display: flex;
-	height: $breadcrumbs-height;
 	margin: 0;
 	padding: 0;
 
@@ -94,11 +94,11 @@ ul.breadcrumbs {
 		overflow-y: hidden;
 	}
 
-	a{
+	a {
 		text-decoration: none;
 		color: var(--font-color);
 
-		&:hover{
+		&:hover {
 			background: var(--breadcrumbs-background-hover);
 			color: var(--font-color);
 		}
@@ -113,7 +113,12 @@ ul.breadcrumbs {
 	> li {
 		padding: 0;
 		position: relative;
-		list-style: none;
+		height: $breadcrumbs-height;
+
+		/* Collapse breadcrumbs if we only have one item */
+		&:only-child {
+			display: none;
+		}
 
 		&:first-child a {
 			padding-left: 32px;
@@ -178,10 +183,7 @@ ul.breadcrumbs {
 		position: absolute;
 		top: $breadcrumbs-height;
 		left: 0;
-		list-style: none;
-		margin-left: 0;
 		background-color: var(--background-color);
-		padding: 0;
 		max-height: 400px;
 		min-width: 100%;
 		overflow: auto;
@@ -201,6 +203,7 @@ ul.breadcrumbs {
 }
 
 .main {
+	background-color: var(--container-color);
 	overflow: hidden;
 	width: 100%;
 	margin-top: 5px;

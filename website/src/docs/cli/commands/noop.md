@@ -1,8 +1,14 @@
 ---
 title: rome noop
-layout: layouts/page.njk
+layout: layouts/page.liquid
 ---
 
 # `rome noop`
 
-Does nothing.
+This command does nothing.
+
+## Flags
+
+### `--hang`
+
+Instead of immediately exiting, hang the command and never exit unless forced.

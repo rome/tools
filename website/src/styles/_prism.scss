@@ -36,6 +36,10 @@ pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
 	overflow: auto;
+
+	a {
+		color: inherit;
+	}
 }
 
 :not(pre) > code[class*="language-"], pre[class*="language-"] {

@@ -1,5 +1,4 @@
-// using a different element for desktop header and mobile header
-// so i can align the website in the middle of the page
+// Using different element for desktop header and mobile header align the website in the middle of the page
 
 .header-mobile {
 	background: var(--background-color);
@@ -20,7 +19,7 @@
 
 	@include mobile-only() {
 		width: 100%;
-		border-bottom: 1px solid var(--soft-border-color);
+		border-bottom: 1px soli"#docsearch"d var(--soft-border-color);
 		display: flex;
 	}
 }

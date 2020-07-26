@@ -85,7 +85,6 @@ export default createServerCommand<Flags>({
 		// the config actually looks like on disk
 		let config: JSONObject = {
 			name: projectPath.getBasename(),
-			version: `^${VERSION}`,
 		};
 
 		// Ensure project is evicted and recreated properly

@@ -7,6 +7,7 @@ const pluginSass = require("eleventy-plugin-sass");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
+const terser = require("terser");
 
 /**
  * @type {any}
@@ -15,6 +16,10 @@ const grayMatter = require("gray-matter");
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
+
+	eleventyConfig.setLiquidOptions({
+    cache: true,
+  });
 
 	eleventyConfig.addPlugin(
 		pluginSass,
@@ -29,9 +34,9 @@ module.exports = function(eleventyConfig) {
 	eleventyConfig.addPlugin(
 		pluginTOC,
 		{
-			tags: ["h2", "h3"],
+			tags: ["h2", "h3", "h4"],
 			wrapper: "div  ",
-			wrapperClass: "fixed toc",
+			wrapperClass: "toc",
 		},
 	);
 
@@ -45,7 +50,7 @@ module.exports = function(eleventyConfig) {
 		markdownItAnchor,
 		{
 			permalink: true,
-			permalinkSymbol: "#",
+			permalinkSymbol: "",
 		},
 	);
 
@@ -70,7 +75,7 @@ module.exports = function(eleventyConfig) {
 
 					tags = tags.filter(function(item) {
 						switch (item) {
-							// this list should match the `filter` list in tags.njk
+							// this list should match the `filter` list in tags.liquid
 							case "all":
 							case "nav":
 							case "post":
@@ -92,6 +97,24 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
+	const jsminCache = new Map();
+
+	eleventyConfig.addFilter("jsmin", function(code) {
+		const cached = jsminCache.get(code);
+		if (cached !== undefined) {
+			return cached;
+		}
+
+    const minified = terser.minify(code);
+    if (minified.error) {
+			console.log("Terser error: ", minified.error);
+			return code;
+    }
+
+		jsminCache.set(code, minified.code);
+    return minified.code;
+	});
+
 	eleventyConfig.addFilter(
 		"dateFormat",
 		function(value) {
@@ -106,18 +129,6 @@ module.exports = function(eleventyConfig) {
 		"kebabCase",
 		function(string) {
 			return string.toLowerCase().replace(/\s/g, "-");
-		},
-	);
-
-	eleventyConfig.addFilter(
-		"shouldIncludeTOC",
-		function(content) {
-			const li = content.match(/<li/g);
-			if (li == null || li.length <= 2) {
-				return "";
-			} else {
-				return content;
-			}
 		},
 	);
 
@@ -139,7 +150,7 @@ module.exports = function(eleventyConfig) {
 			input: "src",
 			output: "build",
 		},
-		templateFormats: ["njk", "md", "css", "html", "yml"],
-		htmlTemplateEngine: "njk",
+		templateFormats: ["liquid", "md", "css", "html", "yml"],
+		htmlTemplateEngine: "liquid",
 	};
 };

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule js/undeclaredVariables
-layout: layouts/page.njk
+layout: layouts/page.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/js/undeclaredVariables

@@ -11,58 +11,6 @@ import childProcess = require("child_process");
 
 const TIMEOUT = 10_000;
 
-async function exec(command: string, args: Array<string>): Promise<string> {
-	return new Promise((resolve, reject) => {
-		const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
-		let stderr = "";
-		let stdout = "";
-
-		proc.stdout.on(
-			"data",
-			(data) => {
-				stdout += data;
-			},
-		);
-
-		proc.stderr.on(
-			"data",
-			(data) => {
-				stderr += data;
-			},
-		);
-
-		function error(message: string) {
-			reject(
-				new Error(
-					`Error while running ${command} ${args.join(" ")}: ${message}. stderr: ${stderr}`,
-				),
-			);
-		}
-
-		proc.on(
-			"error",
-			(err: NodeJS.ErrnoException) => {
-				if (err.code === "ETIMEDOUT") {
-					error(`Timed out after ${TIMEOUT}ms`);
-				} else {
-					error(err.message);
-				}
-			},
-		);
-
-		proc.on(
-			"close",
-			(code) => {
-				if (code === 0) {
-					resolve(stdout);
-				} else {
-					error(`Exited with code ${code}`);
-				}
-			},
-		);
-	});
-}
-
 function extractFileList(out: string): Array<string> {
 	const lines = out.trim().split("\n");
 
@@ -81,11 +29,65 @@ function extractFileList(out: string): Array<string> {
 export class VCSClient {
 	constructor(root: AbsoluteFilePath) {
 		this.root = root;
-		this.trunkBranch = "unknown";
 	}
 
 	root: AbsoluteFilePath;
-	trunkBranch: string;
+
+	async exec(command: string, args: Array<string>): Promise<{stdout: string, exitCode: number}> {
+		return new Promise((resolve, reject) => {
+			const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
+			let stderr = "";
+			let stdout = "";
+
+			proc.stdout.on(
+				"data",
+				(data) => {
+					stdout += data;
+				},
+			);
+
+			proc.stderr.on(
+				"data",
+				(data) => {
+					stderr += data;
+				},
+			);
+
+			function error(message: string) {
+				reject(
+					new Error(
+						`Error while running ${command} ${args.join(" ")}: ${message}. stderr: ${stderr}`,
+					),
+				);
+			}
+
+			proc.on(
+				"error",
+				(err: NodeJS.ErrnoException) => {
+					if (err.code === "ETIMEDOUT") {
+						error(`Timed out after ${TIMEOUT}ms`);
+					} else {
+						error(err.message);
+					}
+				},
+			);
+
+			proc.on(
+				"close",
+				(exitCode) => {
+					if (exitCode === 0) {
+						resolve({stdout, exitCode});
+					} else {
+						error(`Exited with code ${exitCode}`);
+					}
+				},
+			);
+		});
+	}
+
+	getDefaultBranch(): Promise<string> {
+		throw new Error("unimplemented");
+	}
 
 	getModifiedFiles(branch: string): Promise<Array<string>> {
 		throw new Error("unimplemented");
@@ -99,17 +101,21 @@ export class VCSClient {
 class GitVCSClient extends VCSClient {
 	constructor(root: AbsoluteFilePath) {
 		super(root);
-		this.trunkBranch = "main";
+	}
+
+	async getDefaultBranch(): Promise<string> {
+		const {exitCode} = await this.exec("git", ["show-ref", "--verify", "--quiet", "refs/heads/main"]);
+		return exitCode === 0 ? "main" : "master";
 	}
 
 	async getUncommittedFiles(): Promise<Array<string>> {
-		const out = await exec("git", ["status", "--short"]);
-		return extractFileList(out);
+		const {stdout} = await this.exec("git", ["status", "--short"]);
+		return extractFileList(stdout);
 	}
 
 	async getModifiedFiles(branch: string): Promise<Array<string>> {
-		const out = await exec("git", ["diff", "--name-status", branch]);
-		return extractFileList(out);
+		const {stdout} = await this.exec("git", ["diff", "--name-status", branch]);
+		return extractFileList(stdout);
 	}
 }
 

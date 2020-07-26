@@ -27,16 +27,16 @@ export function htmlFormatText(
 			return `<strong>${value}</strong>`;
 
 		case "dim":
-			return `<span style="opacity: 0.8;">${value}</span>"`;
+			return `<span style="opacity: 0.8;">${value}</span>`;
 
 		case "italic":
-			return `<i>${value}</i>"`;
+			return `<i>${value}</i>`;
 
 		case "underline":
-			return `<u>${value}</u>"`;
+			return `<u>${value}</u>`;
 
 		case "strike":
-			return `<strike>${value}</strike>"`;
+			return `<strike>${value}</strike>`;
 
 		case "error":
 			return `<span style="color: Tomato;">${value}</span>`;
