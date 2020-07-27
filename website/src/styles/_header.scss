@@ -1,7 +1,7 @@
 // Using different element for desktop header and mobile header align the website in the middle of the page
 
 .header-mobile {
-	background: var(--background-color);
+	background: var(--container-color);
 	z-index: 3;
 	height: $unit * 4;
 	display: none;
@@ -12,15 +12,16 @@
 	align-items: center;
 	padding-left: $unit;
 	border-top: 5px solid var(--top-border-color);
+	width: 100%;
+	border-bottom: 1px solid var(--soft-border-color);
+	display: flex;
+
+	@include desktop-only() {
+		display: none;
+	}
 
 	.stretch {
 		flex-grow: 1;
-	}
-
-	@include mobile-only() {
-		width: 100%;
-		border-bottom: 1px soli"#docsearch"d var(--soft-border-color);
-		display: flex;
 	}
 }
 
@@ -97,20 +98,16 @@
 	align-items: center;
 	justify-content: center;
 
-	&.mobile-handle-toc, &.mobile-handle-nav{
-		&.active{
-			.icon{
-				display: none;
-			}
-		}
-	}
-
-	.close{
+	.close {
 		display: none;
 	}
 
 	&.active {
-		.close{
+		.icon {
+			display: none;
+		}
+
+		.close {
 			display: inline !important;
 		}
 	}

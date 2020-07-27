@@ -1,4 +1,6 @@
 .sidebar-container {
+	display: flex;
+	flex-direction: column;
 	position: sticky;
 	z-index: 2;
 	top: 0;
@@ -10,6 +12,7 @@
 
 .sidebar-stripe {
 	display: flex;
+	flex-shrink: 0;
 	@include inset-border-top;
 	height: 5px;
 	width: 100%;
@@ -26,7 +29,6 @@
 	border-right: 1px solid var(--soft-border-color);
 	border-left: 1px solid var(--soft-border-color);
 	background-color: var(--container-color);
-	overflow: hidden;
 
 	@include desktop-only() {
 		border-top-width: 0;
@@ -40,7 +42,7 @@
 		transform: translateX(-100%);
 		position: fixed;
 		padding-top: 59px;
-		background: var(--background-color);
+		background: var(--container-color);
 		height: 100%;
 		-webkit-overflow-scrolling: touch;
 
@@ -86,59 +88,63 @@
 		position: sticky;
 		bottom: 0;
 	}
+}
 
-	.toc {
-		font-size: .95rem;
-		padding-left: 16px;
+.toc {
+	font-size: .95rem;
+	padding-left: 16px;
 
-		> ol > li {
-			margin-bottom: 8px;
-		}
-
-		li {
-			padding-left: 16px;
-
-			a {
-				display: block;
-			}
-
-			&.active > a {
-				font-weight: bold;
-			}
-		}
+	> ol > li {
+		margin-bottom: 8px;
 	}
 
-	.site-navigation {
-		border-bottom: 1px solid var(--soft-border-color);
-		font-weight: bold;
-		overflow: hidden;
+	li {
+		padding-left: 16px;
 
 		a {
-			height: auto;
-			padding: $unit / 5 $unit / 2;
-			display: inline-block;
-			padding-left: 32px;
-			margin-left: 0;
-			width: 100%;
-			font-size: 1.1em;
-			padding-left: 32px;
-			@include transition-timing;
-			transition-duration: 100ms;
-			transition-property: padding-left;
+			display: block;
+		}
 
-			&:hover {
-				background: rgba(0, 0, 0, .05);
-				color: var(--font-color);
-			}
+		&.active > a {
+			font-weight: bold;
+		}
+	}
+}
 
-			&:active {
-				color: var(--primary-color);
-			}
+.site-navigation-container {
+	overflow: hidden;
+	flex-shrink: 0;
+	border-bottom: 1px solid var(--soft-border-color);
+}
 
-			@include mobile-only() {
-				padding-top: 6px;
-				padding-bottom: 6px;
-			}
+.site-navigation {
+	font-weight: bold;
+
+	a {
+		height: auto;
+		padding: $unit / 5 $unit / 2;
+		display: inline-block;
+		padding-left: 32px;
+		margin-left: 0;
+		width: 100%;
+		font-size: 1.1em;
+		padding-left: 32px;
+		@include transition-timing;
+		transition-duration: 100ms;
+		transition-property: padding-left;
+
+		&:hover {
+			background: rgba(0, 0, 0, .05);
+			color: var(--font-color);
+		}
+
+		&:active {
+			color: var(--primary-color);
+		}
+
+		@include mobile-only() {
+			padding-top: 6px;
+			padding-bottom: 6px;
 		}
 	}
 }
