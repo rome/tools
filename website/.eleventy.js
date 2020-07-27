@@ -9,6 +9,7 @@ const path = require("path");
 const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
+const {base64Encode} = require("./utils");
 
 /**
  * @type {any}
@@ -19,6 +20,8 @@ const isProduction = process.env.ELEVENTY_ENV === "production";
 
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
+	eleventyConfig.setUseGitIgnore(false);
+	eleventyConfig.addWatchTarget("./src/_includes/styles.css");
 
 	eleventyConfig.setLiquidOptions({
 		cache: true,
@@ -100,7 +103,7 @@ module.exports = function(eleventyConfig) {
 		function(loc) {
 			const cached = includerawCache.get(loc);
 			if (cached !== undefined) {
-				return undefined;
+				return cached;
 			}
 
 			const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
@@ -108,6 +111,10 @@ module.exports = function(eleventyConfig) {
 			return file;
 		},
 	);
+
+	eleventyConfig.addFilter("toBase64", (content, ext) => {
+		return base64Encode(new Buffer(content), ext);
+	});
 
 	const minCache = new Map();
 
