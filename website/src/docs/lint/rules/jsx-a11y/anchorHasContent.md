@@ -16,13 +16,13 @@ MISSING DOCUMENTATION
 
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.jsx:1</span> <strong>lint/jsx-a11y/anchorHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>anchor</strong></span><span style="color: Tomato;"> elements.</span>
 
-    \<<span class="token attr-name">a</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">a</span> <span class="token operator">/</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">All links on a page should have content that is accessible to screen</span>
@@ -32,13 +32,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span>>\<<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>>\<<span class="token operator">/</span><span class="token attr-name">a</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.jsx:1</span> <strong>lint/jsx-a11y/anchorHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>anchor</strong></span><span style="color: Tomato;"> elements.</span>
 
-    \<<span class="token attr-name">a</span>>\<<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>>\<<span class="token operator">/</span><span class="token attr-name">a</span>>
+    &lt;<span class="token attr-name">a</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">All links on a page should have content that is accessible to screen</span>
@@ -46,7 +46,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span>>Anchor Content!\<<span class="token operator">/</span><span class="token attr-name">a</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span>>\<<span class="token attr-name">TextWrapper</span> <span class="token operator">/</span>>\<<span class="token operator">/</span><span class="token attr-name">a</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;foo&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">a</span>>\<<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>> visible content\<<span class="token operator">/</span><span class="token attr-name">a</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span>&gt;Anchor Content!&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;foo&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt; visible content&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}

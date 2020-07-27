@@ -17,12 +17,12 @@
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide </span><span style="color: Tomato;"><strong>alt</strong></span><span style="color: Tomato;"> text when using </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>area</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>input type=&apos;image&apos;</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>object</strong></span>
     <span style="color: Tomato;">elements.</span>
 
-   <strong>  6 │ </strong> <span class="token keyword">return</span> \<<span class="token variable">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App&quot;</span>>
-   <strong>  7 │ </strong>      \<<span class="token variable">header</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-header&quot;</span>>
-   <strong><span style="color: Tomato;">></span></strong><strong> 8 │ </strong>        \<<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">logo2</span><span class="token punctuation">}</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-logo&quot;</span> <span class="token operator">/</span>>
+   <strong>  6 │ </strong> <span class="token keyword">return</span> &lt;<span class="token variable">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App&quot;</span>>
+   <strong>  7 │ </strong>      &lt;<span class="token variable">header</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-header&quot;</span>>
+   <strong><span style="color: Tomato;">></span></strong><strong> 8 │ </strong>        &lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">logo2</span><span class="token punctuation">}</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-logo&quot;</span> <span class="token operator">/</span>>
       <strong> │ </strong>        <span style="color: Tomato;"><strong>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</strong></span>
-   <strong>  9 │ </strong>        \<<span class="token variable">p</span>>
-  <strong>  10 │ </strong>          Edit \<<span class="token variable">code</span>>src/App.js\<<span class="token operator">/</span><span class="token variable">code</span>> and save to reload.
+   <strong>  9 │ </strong>        &lt;<span class="token variable">p</span>>
+  <strong>  10 │ </strong>          Edit &lt;<span class="token variable">code</span>>src/App.js&lt;<span class="token operator">/</span><span class="token variable">code</span>> and save to reload.
 
   <strong><span style="color: DodgerBlue;">ℹ&#xFE0E; </span></strong><span style="color: DodgerBlue;">Meaningful alternative text on elements helps users relying on screen</span>
     <span style="color: DodgerBlue;">readers to understand content&apos;s purpose within a page.</span>
@@ -31,12 +31,12 @@
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>logo2</strong></span><span style="color: Tomato;"> variable is undeclared.</span>
 
-   <strong>  6 │ </strong> <span class="token keyword">return</span> \<<span class="token variable">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App&quot;</span>>
-   <strong>  7 │ </strong>      \<<span class="token variable">header</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-header&quot;</span>>
-   <strong><span style="color: Tomato;">></span></strong><strong> 8 │ </strong>        \<<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">logo2</span><span class="token punctuation">}</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-logo&quot;</span> <span class="token operator">/</span>>
+   <strong>  6 │ </strong> <span class="token keyword">return</span> &lt;<span class="token variable">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App&quot;</span>>
+   <strong>  7 │ </strong>      &lt;<span class="token variable">header</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-header&quot;</span>>
+   <strong><span style="color: Tomato;">></span></strong><strong> 8 │ </strong>        &lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">logo2</span><span class="token punctuation">}</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&quot;App-logo&quot;</span> <span class="token operator">/</span>>
       <strong> │ </strong>                  <span style="color: Tomato;"><strong>^^^^^</strong></span>
-   <strong>  9 │ </strong>        \<<span class="token variable">p</span>>
-  <strong>  10 │ </strong>          Edit \<<span class="token variable">code</span>>src/App.js\<<span class="token operator">/</span><span class="token variable">code</span>> and save to reload.
+   <strong>  9 │ </strong>        &lt;<span class="token variable">p</span>>
+  <strong>  10 │ </strong>          Edit &lt;<span class="token variable">code</span>>src/App.js&lt;<span class="token operator">/</span><span class="token variable">code</span>> and save to reload.
 
   <strong><span style="color: DodgerBlue;">ℹ&#xFE0E; </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>logo</strong></span><span style="color: DodgerBlue;">?</span>
 

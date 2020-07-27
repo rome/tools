@@ -16,7 +16,7 @@ MISSING DOCUMENTATION
 
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:7</span> <strong>lint/jsx/noDuplicateProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -24,14 +24,14 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
 
-    \<<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>&gt;
                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:5</span> <strong>lint/jsx/noDuplicateProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -39,7 +39,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
 
-    \<<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;
                     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
  <span style="text-decoration-style: dotted;">file.tsx:1:27</span> <strong>lint/jsx/noDuplicateProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -50,5 +50,5 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">div</span>  <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>  <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}

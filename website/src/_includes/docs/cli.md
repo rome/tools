@@ -1,24 +1,10 @@
 ## CLI
 
-### Commands
-
-- [`check`](/docs/cli/commands/check)
-- [`config`](/docs/cli/commands/config)
-- [`init`](/docs/cli/commands/init)
-- [`logs`](/docs/cli/commands/logs)
-- [`lsp`](/docs/cli/commands/lsp)
-- [`noop`](/docs/cli/commands/noop)
-- [`rage`](/docs/cli/commands/rage)
-- [`recover`](/docs/cli/commands/recover)
-- [`start`](/docs/cli/commands/start)
-- [`status`](/docs/cli/commands/status)
-- [`stop`](/docs/cli/commands/stop)
-
 ### Global Flags
 
 These are flags that can be added to any Rome command.
 
-##### `--cwd \<dir>`
+##### `--cwd <dir>`
 
 Allows you to explicitly set the current working directory. Otherwise it is the shell cwd when executing the CLI.
 
@@ -26,7 +12,7 @@ Allows you to explicitly set the current working directory. Otherwise it is the 
 
 Adds some flavor to diagnostics.
 
-##### `--max-diagnostics \<num>`
+##### `--max-diagnostics <num>`
 
 ##### `--show-all-diagnostics`
 
@@ -46,7 +32,7 @@ Run a command multiple times and output timing information. The amount of iterat
 
 This is especially useful as it will benchmark the command after server initialization and can reuse cache from previous runs making it a realistic information for a user with a server enabled.
 
-##### `--benchmark-iterations \<count>`
+##### `--benchmark-iterations <count>`
 
 The amount of iterations to perform when using the `--benchmark` flag. Defaults to `10`.
 
@@ -58,11 +44,11 @@ Enables server logs and outputs them to the console.
 
 Enables worker logs, by default these are not output when running `--logs`.
 
-##### `--log-path \<path>`
+##### `--log-path <path>`
 
 Instead of logging to the console, write logs to a specific file.
 
-##### `--markers-path \<path>`
+##### `--markers-path <path>`
 
 Collect performance markers.
 
@@ -74,15 +60,15 @@ This profile can be loaded into the Chrome Devtools Performance panel.
 
 By default the profile is written to `Profile-TIMESTAMP.json` and can be customized with the `--profile-path` flag.
 
-##### `--profile-path \<path>`
+##### `--profile-path <path>`
 
 Change the path that `--profile` will write to.
 
-##### `--profile-sampling \<microsec>`
+##### `--profile-sampling <microsec>`
 
 The way the CPU profiler works is that every `microsec` it will check what code is being ran and use it in the profile. This means that work that happens very quickly often times wont be captured in a profile. You can customize this to reduce or increase the profile resolution. Defaults to `200`.
 
-##### `--profile-timeout \<millisec>`
+##### `--profile-timeout <millisec>`
 
 Write the profile after `millisec` have passed. This is useful for commands that take a long time to run and produce very large profiles.
 
@@ -94,7 +80,7 @@ Don't include workers in the profile.
 
 This flag is used to produce a rage archive. A rage archive is a `.tar.gz` file that contains information that is useful for debugging performance or bugs. It contains environment information, a CPU profile, logs, and the command.
 
-##### `--rage-path \<path>`
+##### `--rage-path <path>`
 
 Change the path that `--rage` will write to.
 
@@ -102,12 +88,13 @@ Change the path that `--rage` will write to.
 
 Output basic timing information on command completion.
 
+{% include docs/cli-commands.md %}
+
 ### Shell Autocomplete
 
 ```bash
 rome --generate-autocomplete bash
 ```
-
 
 ### Server
 

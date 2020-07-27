@@ -27,7 +27,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
      <strong> │ </strong>           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -38,8 +38,8 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">num</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-			<span class="token keyword">return</span> \<<span class="token attr-name">div</span>> Foo \<<span class="token operator">/</span><span class="token attr-name">div</span>>
+		<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">num</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+			<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt; Foo &lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
 		<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -50,12 +50,12 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
      <strong> │ </strong>           <span style="color: Tomato;"><strong>^</strong></span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 4</strong><strong> │ </strong>    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">num</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 5</strong><strong> │ </strong>      <span class="token keyword">return</span> \<<span class="token attr-name">div</span>> Foo \<<span class="token operator">/</span><span class="token attr-name">div</span>>
-  <strong><span style="color: Tomato;">></span></strong><strong> 6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>    <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">num</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>      <span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt; Foo &lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  8</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -65,7 +65,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -74,7 +74,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -84,7 +84,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">Component</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">Component</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -93,7 +93,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">Component</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -103,7 +103,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -112,7 +112,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -122,7 +122,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">Component</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">Component</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -131,7 +131,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">Component</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">Component</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -141,7 +141,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -150,7 +150,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -160,7 +160,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">PureComponent</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:3:16</span> <strong>lint/react/requireRenderReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -169,7 +169,7 @@ MISSING DOCUMENTATION
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">import</span> <span class="token variable">React</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">PureComponent</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
   <strong>  2</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token keyword">extends</span> <span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
      <strong> │ </strong>                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
 
@@ -178,24 +178,24 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-		<span class="token keyword">return</span> \<<span class="token attr-name">div</span>>Foo\<<span class="token operator">/</span><span class="token attr-name">div</span>><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;Foo&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-			<span class="token keyword">return</span> \<<span class="token attr-name">div</span>>Foo\<<span class="token operator">/</span><span class="token attr-name">div</span>><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;Foo&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 		<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
 			<span class="token keyword">return</span> <span class="token keyword">void</span> <span class="token number">0</span><span class="token punctuation">;</span>
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span> <span class="token keyword">return</span> \<>\<<span class="token operator">/</span>> <span class="token punctuation">}</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> &lt;&gt;&lt;<span class="token operator">/</span>&gt; <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token punctuation">{</span>
-	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span>\<>\<<span class="token operator">/</span>><span class="token punctuation">)</span>
+	<span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>&lt;&gt;&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">Bar</span> <span class="token punctuation">{</span>
 	<span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>

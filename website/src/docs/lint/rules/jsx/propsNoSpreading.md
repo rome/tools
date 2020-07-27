@@ -16,13 +16,13 @@ MISSING DOCUMENTATION
 
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:5</span> <strong>lint/jsx/propsNoSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using property spreading in JSX components.</span>
 
-    \<<span class="token attr-name">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">App</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Explicit JSX attributes enhance the readability of code by clearly</span>
@@ -32,13 +32,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:19</span> <strong>lint/jsx/propsNoSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using property spreading in JSX components.</span>
 
-    \<<span class="token attr-name">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">MyCustomComponent</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Explicit JSX attributes enhance the readability of code by clearly</span>
@@ -48,13 +48,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:53</span> <strong>lint/jsx/propsNoSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using property spreading in JSX components.</span>
 
-    \<<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">some_other_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">some_other_prop</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
                                                          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Explicit JSX attributes enhance the readability of code by clearly</span>
@@ -64,13 +64,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:5</span> <strong>lint/jsx/propsNoSpreading</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using property spreading in JSX components.</span>
 
-    \<<span class="token attr-name">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>>
+    &lt;<span class="token attr-name">img</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Explicit JSX attributes enhance the readability of code by clearly</span>
@@ -78,5 +78,5 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">one_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">one_prop</span><span class="token punctuation">}</span> <span class="token attr-name">two_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">two_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">src</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">alt</span><span class="token punctuation">}</span> <span class="token operator">/</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">MyCustomComponent</span> <span class="token attr-name">one_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">one_prop</span><span class="token punctuation">}</span> <span class="token attr-name">two_prop</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">two_prop</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">src</span><span class="token punctuation">}</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">alt</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}

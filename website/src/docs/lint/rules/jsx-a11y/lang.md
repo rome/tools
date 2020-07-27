@@ -16,52 +16,52 @@ MISSING DOCUMENTATION
 
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:6</span> <strong>lint/jsx-a11y/lang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a valid value for the </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute.</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:6</span> <strong>lint/jsx-a11y/lang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a valid value for the </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute.</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;ex&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:6</span> <strong>lint/jsx-a11y/lang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a valid value for the </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute.</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo-bar&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:6</span> <strong>lint/jsx-a11y/lang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a valid value for the </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute.</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>aa-AF</strong></span><span style="color: DodgerBlue;">?</span>
@@ -87,13 +87,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:6</span> <strong>lint/jsx-a11y/lang</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a valid value for the </span><span style="color: Tomato;"><strong>lang</strong></span><span style="color: Tomato;"> attribute.</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>az-AF</strong></span><span style="color: DodgerBlue;">?</span>
@@ -119,17 +119,17 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2>\</html></span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2&gt;&lt;/html&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:23</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unterminated string constant</span>
 
-    \<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2>\</html></span>
+    &lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en2&gt;&lt;/html&gt;</span>
                            <span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en-US&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en&apos;</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">\<<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">lang</span><span class="token punctuation">}</span>>\<<span class="token operator">/</span><span class="token attr-name">html</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en-US&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">lang</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}

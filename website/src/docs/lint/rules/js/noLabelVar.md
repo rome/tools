@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not use the x variable name as a label.</span>
 
   <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">x</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span>
-  <strong><span style="color: Tomato;">></span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">expr</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">expr</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Creating a label with the same name as an in-scope variable leads to</span>

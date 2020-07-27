@@ -2,12 +2,12 @@
 <html lang="en" data-theme="light" class="js-disabled">
 	<head>
 		<meta charset="utf8" />
-		<title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
+		<title>{% if title %}{{ title }} &mdash; {% endif %}Rome Frontend Toolchain</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#000000">
+		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#FFC905">
 		<link rel="alternate icon" type="image/png" href="/img/favicon.png">
-		<link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+		<link rel="icon" type="image/svg+xml" href="{{ "static/img/favicon.svg" | includeraw | toBase64: "svg" | safe }}">
 
 		<meta name="description" content="Standardizing the web development experience.">
 		<meta name="theme-color" content="#FFC905">
@@ -20,10 +20,8 @@
 		<meta property="twitter:image:alt" content="Logo for the Rome Frontend Toolchain Project">
 		<meta property="twitter:card" content="summary_large_image">
 
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Libre+Baskerville:wght@400;700&display=swap" />
 		{% capture styles %}
 			{% include styles.css %}
-			{{ "node_modules/docsearch.js/dist/cdn/docsearch.css" | includeraw | safe }}
 		{% endcapture %}
 		<style>{{ styles | cssmin | safe }}</style>
 
@@ -61,12 +59,7 @@
 				</a>
 				<div class="stretch"></div>
 
-				<a href="#" class="mobile-handle mobile-handle-toc">
-					{% include svg/search-icon.svg %}
-					{% include svg/close-icon.svg %}
-				</a>
-
-				<a href="#" class="mobile-handle mobile-handle-nav">
+				<a href="#" class="mobile-handle">
 					{% include svg/mobile-nav-handle.svg %}
 					{% include svg/close-icon.svg %}
 				</a>
@@ -182,7 +175,7 @@
 			</div>
 		</footer>
 
-		{% capture script %}{% include ../script.js %}{% endcapture %}
+		{% capture script %}{% include ../scripts/index.liquid %}{% endcapture %}
 		<script>{{ script | jsmin | safe }}</script>
 	</body>
 </html>

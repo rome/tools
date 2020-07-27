@@ -16,13 +16,13 @@ MISSING DOCUMENTATION
 
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>// comment\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;// comment&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:15</span> <strong>lint/jsx/noCommentText</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>// comment\<<span class="token operator">/</span><span class="token attr-name">div</span>>
+    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;// comment&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
@@ -37,13 +37,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>/* comment */\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;/* comment */&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:15</span> <strong>lint/jsx/noCommentText</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>/* comment */\<<span class="token operator">/</span><span class="token attr-name">div</span>>
+    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;/* comment */&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
@@ -58,13 +58,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>/** comment */\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;/** comment */&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dotted;">file.tsx:1:15</span> <strong>lint/jsx/noCommentText</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Wrap </span><span style="color: Tomato;"><strong>comments</strong></span><span style="color: Tomato;"> inside children within </span><span style="color: Tomato;"><strong>braces</strong></span><span style="color: Tomato;">.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>>/** comment */\<<span class="token operator">/</span><span class="token attr-name">div</span>>
+    <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;/** comment */&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
@@ -77,6 +77,6 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>><span class="token punctuation">{</span><span class="token comment">/* comment */</span><span class="token punctuation">}</span>\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span>><span class="token punctuation">{</span><span class="token comment">/** comment */</span><span class="token punctuation">}</span>\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> \<<span class="token attr-name">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;cls&quot;</span> <span class="token comment">/* comment */</span><span class="token punctuation">}</span>>\<<span class="token operator">/</span><span class="token attr-name">div</span>></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token comment">/* comment */</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token comment">/** comment */</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&quot;cls&quot;</span> <span class="token comment">/* comment */</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
