@@ -41,7 +41,7 @@
 	@include mobile-only() {
 		transform: translateX(-100%);
 		position: fixed;
-		padding-top: 59px;
+		padding-top: 64px;
 		background: var(--container-color);
 		height: 100%;
 		-webkit-overflow-scrolling: touch;
