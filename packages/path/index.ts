@@ -174,6 +174,14 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		return segments;
 	}
 
+	preferExplicitRelative(): Super | RelativeFilePath {
+		if (this.isRelative()) {
+			return this.toExplicitRelative();
+		} else {
+			return this._assert();
+		}
+	}
+
 	toExplicitRelative(): RelativeFilePath {
 		const relative = this.assertRelative();
 		if (relative.isExplicitRelative()) {

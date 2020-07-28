@@ -602,7 +602,7 @@ export default class Server {
 				format: outputFormat,
 				features: outputSupport,
 				write(chunk: string, error: boolean) {
-					if (flags.silent) {
+					if (flags.silent && !error) {
 						return;
 					}
 
@@ -620,11 +620,9 @@ export default class Server {
 		const streamHandles = [streamHandle];
 
 		// Add reporter to connected set, important logs may be output to these
-		if (!flags.silent) {
-			streamHandles.push(
-				this.connectedReporters.addAttachedStream(streamHandle.stream),
-			);
-		}
+		streamHandles.push(
+			this.connectedReporters.addAttachedStream(streamHandle.stream),
+		);
 
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
 		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {

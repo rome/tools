@@ -16,6 +16,7 @@ import {
 	VERSION,
 	localCommands,
 	serverCommands,
+	USER_CONFIG_DIRECTORY,
 } from "@romefrontend/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";
@@ -61,6 +62,7 @@ export default async function cli() {
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
+		shellCompletionDirectory: USER_CONFIG_DIRECTORY,
 		commandSuggestions: {
 			lint: {
 				commandName: "check",
