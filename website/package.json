@@ -36,7 +36,8 @@
 				"prismjs/plugins/autolinker/prism-autolinker",
 				"terser",
 				"clean-css",
-				"html-minifier"
+				"html-minifier",
+				"node-sass"
 			]
 		}
 	}

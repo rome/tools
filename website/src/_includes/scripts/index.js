@@ -1,4 +1,22 @@
 // @ts-check
+
+//# Responsive width
+const mobileMatchMedia = matchMedia("(max-width: 768px)");
+let isMobile = mobileMatchMedia.matches;
+
+mobileMatchMedia.addEventListener(
+	"change",
+	(e) => {
+		isMobile = e.matches;
+
+		// Close the mobile sidebar when switching from mobile to desktop
+		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+			toggleMobileSidebar();
+		}
+	},
+);
+
+//# Table of Contents
 const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
 const tocList = document.querySelector(".toc");
@@ -291,22 +309,6 @@ class TableOfContents {
 
 const toc = new TableOfContents();
 toc.attach();
-
-//# Responsive width
-const mobileMatchMedia = matchMedia("(max-width: 768px)");
-let isMobile = mobileMatchMedia.matches;
-
-mobileMatchMedia.addEventListener(
-	"change",
-	(e) => {
-		isMobile = e.matches;
-
-		// Close the mobile sidebar when switching from mobile to desktop
-		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
-			toggleMobileSidebar();
-		}
-	},
-);
 
 //# Team list shuffle
 
