@@ -1,14 +1,12 @@
 // @ts-check
-
 const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
-const sidebar = document.querySelector(".sidebar");
 const tocList = document.querySelector(".toc");
 
-/** @type {HTMLElement} */
+/** @type {HTMLElement}*/
 const tocContainer = document.querySelector(".toc-menu");
 
-/** @type {Array<HTMLAnchorElement>} */
+/** @type {Array<HTMLAnchorElement>}*/
 const tocLinks = Array.from(document.querySelectorAll(".toc a"));
 
 /** @type {Array<{
@@ -17,11 +15,12 @@ const tocLinks = Array.from(document.querySelectorAll(".toc a"));
  * }>} */
 const headingElements = tocLinks.map((link) => {
 	return {
-		heading: document.querySelector(`[id="${link.getAttribute("href").slice(1)}"]`),
+		heading: document.querySelector(
+			`[id="${link.getAttribute("href").slice(1)}"]`,
+		),
 		link,
 	};
 });
-
 
 /**
  * @typedef {Object} CalculatedHeading
@@ -35,10 +34,10 @@ const headingElements = tocLinks.map((link) => {
 
 class TableOfContents {
 	constructor() {
-		/** @type {Array<CalculatedHeading>} */
+		/** @type {Array<CalculatedHeading>}*/
 		this.headingsCalculated = [];
 
-		/** @type {undefined | number} */
+		/** @type {undefined | number}*/
 		this.lastActiveHeading = undefined;
 	}
 
@@ -85,7 +84,11 @@ class TableOfContents {
 	 * @returns {number}
 	 */
 	getHeadingTop(heading) {
-		return heading.offsetTop -  parseFloat(window.getComputedStyle(heading).marginTop) - this.getScrollOffset();
+		return (
+			heading.offsetTop -
+			parseFloat(window.getComputedStyle(heading).marginTop) -
+			this.getScrollOffset()
+		);
 	}
 
 	/**
@@ -101,7 +104,7 @@ class TableOfContents {
 		const level = Number(heading.tagName[1]);
 
 		// Get the headings above this one for us in document.title
-		/** @type {Array<string>} */
+		/** @type {Array<string>}*/
 		let titles = [heading.textContent.trim()];
 		for (let i = stack.length - 1; i >= 0; i--) {
 			const heading = stack[i];
@@ -137,7 +140,9 @@ class TableOfContents {
 
 		this.headingsCalculated = [];
 		for (let i = 0; i < headingElements.length; i++) {
-			this.headingsCalculated.push(this.calculateHeading(i, this.headingsCalculated));
+			this.headingsCalculated.push(
+				this.calculateHeading(i, this.headingsCalculated),
+			);
 		}
 	}
 
@@ -164,7 +169,7 @@ class TableOfContents {
 			document.title = originalTitle;
 		}
 
-		/** @type {null | Element} */
+		/** @type {null | Element}*/
 		let target = link;
 		while (target != null && target.tagName !== "DIV") {
 			if (target.tagName === "LI") {
@@ -191,7 +196,8 @@ class TableOfContents {
 				this.toggleActive(i, true);
 
 				// Make sure TOC link is visible
-				let linkTop = this.headingsCalculated[i].link.offsetTop - tocContainer.offsetTop;
+				let linkTop =
+					this.headingsCalculated[i].link.offsetTop - tocContainer.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
@@ -199,7 +205,7 @@ class TableOfContents {
 				const visibleEnd = tocContainer.scrollTop + tocContainer.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
-					tocContainer.scrollTop =  linkTop;
+					tocContainer.scrollTop = linkTop;
 				}
 
 				break;
@@ -228,7 +234,10 @@ class TableOfContents {
 		const i = headingElements.length - 1;
 		const existing = this.headingsCalculated[i];
 		const recalculated = this.calculateHeading(i, []);
-		if (recalculated.start !== existing.start || recalculated.end !== existing.end) {
+		if (
+			recalculated.start !== existing.start ||
+			recalculated.end !== existing.end
+		) {
 			this.calculateHeadingsPositions();
 		}
 	}
@@ -242,9 +251,21 @@ class TableOfContents {
 		}
 
 		tocList.addEventListener("click", this.handleTOCClick.bind(this), false);
-		window.addEventListener("resize", this.onResize.bind(this), {capture: false, passive: true});
-		window.addEventListener("scroll", this.checkActive.bind(this), {capture: false, passive: true});
-		window.addEventListener("resize", this.checkActive.bind(this), {capture: false, passive: true});
+		window.addEventListener(
+			"resize",
+			this.onResize.bind(this),
+			{capture: false, passive: true},
+		);
+		window.addEventListener(
+			"scroll",
+			this.checkActive.bind(this),
+			{capture: false, passive: true},
+		);
+		window.addEventListener(
+			"resize",
+			this.checkActive.bind(this),
+			{capture: false, passive: true},
+		);
 
 		document.addEventListener(
 			"click",
@@ -270,3 +291,160 @@ class TableOfContents {
 
 const toc = new TableOfContents();
 toc.attach();
+
+//# Responsive width
+const mobileMatchMedia = matchMedia("(max-width: 768px)");
+let isMobile = mobileMatchMedia.matches;
+
+mobileMatchMedia.addEventListener(
+	"change",
+	(e) => {
+		isMobile = e.matches;
+
+		// Close the mobile sidebar when switching from mobile to desktop
+		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+			toggleMobileSidebar();
+		}
+	},
+);
+
+//# Team list shuffle
+
+/**
+ * @template T
+ * @param {Array<T>} array
+ * @returns {Array<T>}
+ */
+function randomShuffle(array) {
+	let count = array.length;
+	let temp;
+	let index;
+	while (count) {
+		index = Math.floor(Math.random() * count--);
+		temp = array[count];
+		array[count] = array[index];
+		array[index] = temp;
+	}
+
+	return array;
+}
+
+const teamList = document.querySelector(".team-list");
+const teamArr = document.querySelectorAll(".team-list li");
+if (teamArr.length > 0) {
+	for (const li of randomShuffle(Array.from(teamArr))) {
+		teamList.appendChild(li);
+	}
+}
+
+//# Homepage example expander
+
+const homepageExample = document.querySelector(".homepage-example");
+if (homepageExample != null) {
+	homepageExample.addEventListener(
+		"click",
+		() => {
+			homepageExample.classList.remove("collapsed");
+		},
+	);
+}
+
+//# Hide WIP banner after scrolling
+
+const wipBanner = document.querySelector(".wip-banner");
+if (wipBanner) {
+	let hasScrolled = false;
+
+	window.addEventListener(
+		"scroll",
+		() => {
+			if (hasScrolled) {
+				return;
+			}
+
+			if (window.scrollY > 0) {
+				hasScrolled = true;
+				setTimeout(
+					() => {
+						wipBanner.classList.add("hidden");
+					},
+					2_000,
+				);
+			}
+		},
+		{
+			passive: true,
+		},
+	);
+}
+
+//# Color scheme switcher
+
+function toggleColorSchemeSwitch() {
+	let currentScheme = window.localStorage.getItem("data-theme");
+	if (currentScheme === undefined) {
+		const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)").matches;
+		currentScheme = prefersDarkMode ? "dark" : "light";
+	}
+
+	const newScheme = currentScheme === "dark" ? "light" : "dark";
+	window.localStorage.setItem("data-theme", newScheme);
+	document.documentElement.setAttribute("data-theme", newScheme);
+}
+
+const colorSchemeSwitcher = document.querySelector(".color-scheme-switch");
+colorSchemeSwitcher.addEventListener("click", toggleColorSchemeSwitch, false);
+
+//# Mobile navigation
+
+const mobileSidebarHandle = document.querySelector(".mobile-handle");
+const sidebar = document.querySelector(".sidebar");
+let isMobileSidebarVisible = false;
+function toggleMobileSidebar() {
+	isMobileSidebarVisible = !isMobileSidebarVisible;
+	mobileSidebarHandle.classList.toggle("active");
+	sidebar.classList.toggle("visible");
+	document.body.classList.toggle("no-scroll");
+}
+mobileSidebarHandle.addEventListener(
+	"click",
+	(event) => {
+		event.preventDefault();
+		toggleMobileSidebar();
+	},
+	false,
+);
+
+//# Docsearch
+// Only initialize on focus
+
+const docsearchInput = document.querySelector("#docsearch");
+docsearchInput.addEventListener(
+	"focus",
+	() => {
+		// Stylesheet
+		const link = document.createElement("link");
+		link.href = "/docsearch.css";
+		link.rel = "stylesheet";
+		document.body.appendChild(link);
+
+		// Script
+		const script = document.createElement("script");
+		script.src = "/docsearch.js";
+		script.async = true;
+		script.defer = true;
+		script.addEventListener(
+			"load",
+			() => {
+				return window.docsearch({
+					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
+					indexName: "romefrontend",
+					inputSelector: "#docsearch",
+					debug: false, // Set debug to true if you want to inspect the dropdown
+				});
+			},
+		);
+		document.body.appendChild(script);
+	},
+	{once: true},
+);

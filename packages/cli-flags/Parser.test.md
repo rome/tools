@@ -14,8 +14,9 @@
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,8 +65,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,8 +90,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,8 +117,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -165,8 +169,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -209,8 +214,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -251,8 +257,9 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -297,9 +304,10 @@ Object {name: "sebastian"}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -333,9 +341,10 @@ Object {name: "sebastian"}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  the name of the coolest person in the world
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    the name of the coolest person in the world
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -369,9 +378,10 @@ Object {run: false}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --run                           no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --run                             no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -405,9 +415,10 @@ Object {run: true}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --run                           no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --run                             no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -441,9 +452,10 @@ Object {run: true}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --run                           no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --run                             no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -477,9 +489,10 @@ Object {name: "sebastian"}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -513,9 +526,10 @@ Object {name: undefined}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -549,9 +563,10 @@ Object {run: true}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --run                           no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --run                             no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -585,9 +600,10 @@ Object {run: true}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --run                           no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --run                             no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -621,9 +637,10 @@ Object {name: "sebastian"}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -651,9 +668,10 @@ Object {name: "sebastian"}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-  --help                          Show this help screen
-  --name <input>                  no description found
+  --help                            Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --name <input>                    no description found
+  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

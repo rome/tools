@@ -112,9 +112,12 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
-	eleventyConfig.addFilter("toBase64", (content, ext) => {
-		return base64Encode(new Buffer(content), ext);
-	});
+	eleventyConfig.addFilter(
+		"toBase64",
+		(content, ext) => {
+			return base64Encode(new Buffer(content), ext);
+		},
+	);
 
 	const minCache = new Map();
 
@@ -142,34 +145,43 @@ module.exports = function(eleventyConfig) {
 	);
 
 	// Minify CSS in production
-	eleventyConfig.addFilter("cssmin", function(code) {
-		if (!isProduction) {
-			return code;
-		}
+	eleventyConfig.addFilter(
+		"cssmin",
+		function(code) {
+			if (!isProduction) {
+				return code;
+			}
 
-		const cached = minCache.get(code);
-		if (cached !== undefined) {
-			return cached;
-		}
+			const cached = minCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
 
-		const minified = new CleanCSS({}).minify(code).styles;
-		minCache.set(code, minified);
-		return minified;
-	});
+			const minified = new CleanCSS({}).minify(code).styles;
+			minCache.set(code, minified);
+			return minified;
+		},
+	);
 
 	// Minify HTML in production
-	eleventyConfig.addTransform("htmlmin", function(content, outputPath) {
-    if (isProduction && outputPath.endsWith(".html")) {
-      let minified = htmlmin.minify(content, {
-        useShortDoctype: true,
-        removeComments: true,
-        collapseWhitespace: true
-      });
-      return minified;
-    }
+	eleventyConfig.addTransform(
+		"htmlmin",
+		function(content, outputPath) {
+			if (isProduction && outputPath.endsWith(".html")) {
+				let minified = htmlmin.minify(
+					content,
+					{
+						useShortDoctype: true,
+						removeComments: true,
+						collapseWhitespace: true,
+					},
+				);
+				return minified;
+			}
 
-    return content;
-  });
+			return content;
+		},
+	);
 
 	eleventyConfig.addFilter(
 		"dateFormat",

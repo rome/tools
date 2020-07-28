@@ -13,10 +13,10 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
+	USER_CONFIG_DIRECTORY,
 	VERSION,
 	localCommands,
 	serverCommands,
-	USER_CONFIG_DIRECTORY,
 } from "@romefrontend/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";

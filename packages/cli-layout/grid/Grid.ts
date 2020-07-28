@@ -356,7 +356,9 @@ export default class Grid {
 			let lastEnd: number | undefined = undefined;
 
 			function catchUp(end: number) {
-				const start = opts.normalizeText(joinColumns(columns.slice(end, lastEnd)));
+				const start = opts.normalizeText(
+					joinColumns(columns.slice(end, lastEnd)),
+				);
 				line = `${start}${line}`;
 				lastEnd = end;
 			}

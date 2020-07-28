@@ -20,7 +20,11 @@ import {
 	toCamelCase,
 	toKebabCase,
 } from "@romefrontend/string-utils";
-import {createUnknownFilePath, AbsoluteFilePath, HOME_PATH} from "@romefrontend/path";
+import {
+	AbsoluteFilePath,
+	HOME_PATH,
+	createUnknownFilePath,
+} from "@romefrontend/path";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Markup, markup} from "@romefrontend/cli-layout";
 import {
@@ -29,7 +33,7 @@ import {
 	descriptions,
 } from "@romefrontend/diagnostics";
 import {JSONObject} from "@romefrontend/codec-json";
-import {writeFile, exists, readFileText} from "@romefrontend/fs";
+import {exists, readFileText, writeFile} from "@romefrontend/fs";
 
 export type Examples = Array<{
 	description: Markup;
@@ -388,33 +392,45 @@ export default class Parser<T> {
 		consumer.enforceUsedProperties("flag", false);
 	}
 
-	async writeShellCompletions(shell: SupportedCompletionShells, directory: AbsoluteFilePath = HOME_PATH) {
+	async writeShellCompletions(
+		shell: SupportedCompletionShells,
+		directory: AbsoluteFilePath = HOME_PATH,
+	) {
 		const {programName} = this.opts;
 		const {reporter} = this;
 		let path;
 
 		// Figure out profiles and basename to use for the completion script
 		switch (shell) {
-			case "bash":
+			case "bash": {
 				path = directory.append(`.${programName}-completion.sh`);
 				break;
+			}
 
-			case "fish":
-				path = HOME_PATH.appendList(".config", "fish", "completions", `${programName}.fish`);
+			case "fish": {
+				path = HOME_PATH.appendList(
+					".config",
+					"fish",
+					"completions",
+					`${programName}.fish`,
+				);
 				break;
+			}
 		}
 
 		// Write completions
 		const res = await this.generateShellCompletions(shell);
 		await writeFile(path, res);
-		reporter.success(markup`Wrote shell completions to <emphasis>${path}</emphasis>`);
+		reporter.success(
+			markup`Wrote shell completions to <emphasis>${path}</emphasis>`,
+		);
 
 		// Tell the user the next step
 		switch (shell) {
 			case "bash": {
 				const possibleProfiles = [];
-				possibleProfiles.push(HOME_PATH.append(`.bashrc`));
-				possibleProfiles.push(HOME_PATH.append(`.bash_profile`));
+				possibleProfiles.push(HOME_PATH.append(".bashrc"));
+				possibleProfiles.push(HOME_PATH.append(".bash_profile"));
 
 				// Find the profile
 				let profilePath;
@@ -425,21 +441,29 @@ export default class Parser<T> {
 					}
 				}
 				if (profilePath === undefined) {
-					reporter.error(markup`Could not find your bash profile. Tried the following:`);
-					reporter.list(possibleProfiles.map((path) => {
-						return markup`${path}`;
-					}));
+					reporter.error(
+						markup`Could not find your bash profile. Tried the following:`,
+					);
+					reporter.list(
+						possibleProfiles.map((path) => {
+							return markup`${path}`;
+						}),
+					);
 				} else {
 					let file = await readFileText(profilePath);
 					if (file.includes(path.getBasename())) {
-						reporter.warn(markup`Skipped <emphasis>${profilePath}</emphasis> modifications as looks like it was already included`);
+						reporter.warn(
+							markup`Skipped <emphasis>${profilePath}</emphasis> modifications as looks like it was already included`,
+						);
 					} else {
 						file = file.trim();
 						file += "\n";
 						file += `source ${path.relative(profilePath).preferExplicitRelative().join()}`;
 						file += "\n";
 						await writeFile(profilePath, file);
-						reporter.success(markup`Added completions to <emphasis>${profilePath}</emphasis>`);
+						reporter.success(
+							markup`Added completions to <emphasis>${profilePath}</emphasis>`,
+						);
 					}
 				}
 				break;
@@ -485,7 +509,10 @@ export default class Parser<T> {
 			},
 		).asStringSetOrVoid(["fish", "bash"]);
 		if (writeShellCompletions !== undefined) {
-			await this.writeShellCompletions(writeShellCompletions, shellCompletionDirectory);
+			await this.writeShellCompletions(
+				writeShellCompletions,
+				shellCompletionDirectory,
+			);
 		}
 
 		// `--generate-shell-completions <SHELL>` writes the commands to stdout
@@ -721,10 +748,11 @@ export default class Parser<T> {
 		);
 	}
 
-	async generateShellCompletions(shell: SupportedCompletionShells): Promise<string> {
+	async generateShellCompletions(
+		shell: SupportedCompletionShells,
+	): Promise<string> {
 		// Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
 		// But to generate autocomplete we want all the flags to be declared for all commands.
-
 		const {flags} = this.getFlagsConsumer();
 		for (const command of this.commands.values()) {
 			// capture() will cause diagnostics to be suppressed

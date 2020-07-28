@@ -8,7 +8,7 @@ function base64Encode(buffer, ext) {
 		mime = "application/x-font-woff";
 	}
 
-	return `data:${mime};base64,${buffer.toString('base64')}`;
+	return `data:${mime};base64,${buffer.toString("base64")}`;
 }
 
 exports.base64Encode = base64Encode;
