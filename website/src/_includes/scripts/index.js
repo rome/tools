@@ -55,6 +55,9 @@ class TableOfContents {
 		/** @type {Array<CalculatedHeading>}*/
 		this.headingsCalculated = [];
 
+		/** @type {boolean} */
+		this.hasInitializedHeadings = false;
+
 		/** @type {undefined | number}*/
 		this.lastActiveHeading = undefined;
 	}
@@ -104,7 +107,6 @@ class TableOfContents {
 	getHeadingTop(heading) {
 		return (
 			heading.offsetTop -
-			parseFloat(window.getComputedStyle(heading).marginTop) -
 			this.getScrollOffset()
 		);
 	}
@@ -154,8 +156,27 @@ class TableOfContents {
 	}
 
 	calculateHeadingsPositions() {
-		console.log("Recalculating TOC headings positions");
+		// Don't calculate heading positions unless we've scrolled down
+		if (!this.hasInitializedHeadings && scrollY <= 100) {
+			return;
+		}
 
+		// If we've calculated all the headings then we just need to validate the last one
+		// and if it's the same we can skip.
+		if (this.hasInitializedHeadings) {
+			const i = headingElements.length - 1;
+			const existing = this.headingsCalculated[i];
+			const recalculated = this.calculateHeading(i, []);
+			if (
+				recalculated.start === existing.start &&
+				recalculated.end === existing.end
+			) {
+				return;
+			}
+		}
+
+		console.log("Calculating TOC headings positions");
+		this.hasInitializedHeadings = true;
 		this.headingsCalculated = [];
 		for (let i = 0; i < headingElements.length; i++) {
 			this.headingsCalculated.push(
@@ -207,6 +228,10 @@ class TableOfContents {
 			}
 		}
 
+		if (!this.hasInitializedHeadings) {
+			this.calculateHeadingsPositions();
+		}
+
 		for (let i = 0; i < this.headingsCalculated.length; i++) {
 			if (this.isActive(i)) {
 				// Set the heading as active
@@ -247,23 +272,7 @@ class TableOfContents {
 		this.checkActive();
 	}
 
-	onResize() {
-		// In order to decide if we need to recalculate all the headings, we only need to compare the last one
-		const i = headingElements.length - 1;
-		const existing = this.headingsCalculated[i];
-		const recalculated = this.calculateHeading(i, []);
-		if (
-			recalculated.start !== existing.start ||
-			recalculated.end !== existing.end
-		) {
-			this.calculateHeadingsPositions();
-		}
-	}
-
 	attach() {
-		this.calculateHeadingsPositions();
-		this.checkActive();
-
 		if (window.location.hash !== "") {
 			this.scrollToHeading(window.location.hash);
 		}
@@ -271,7 +280,7 @@ class TableOfContents {
 		tocList.addEventListener("click", this.handleTOCClick.bind(this), false);
 		window.addEventListener(
 			"resize",
-			this.onResize.bind(this),
+			this.calculateHeadingsPositions.bind(this),
 			{capture: false, passive: true},
 		);
 		window.addEventListener(
@@ -308,7 +317,10 @@ class TableOfContents {
 }
 
 const toc = new TableOfContents();
-toc.attach();
+
+window.addEventListener("load", () => {
+	toc.attach();
+});
 
 //# Team list shuffle
 
