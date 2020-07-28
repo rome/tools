@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light" class="js-disabled">
+<html lang="en" data-theme="light">
 	<head>
 		<meta charset="utf8" />
 		<title>{% if title %}{{ title }} &mdash; {% endif %}Rome Frontend Toolchain</title>
@@ -28,9 +28,6 @@
 		<script>
 			{% capture preJS %}
 				(function () {
-					document.documentElement.classList.remove("js-disabled");
-					document.documentElement.classList.add("js-enabled");
-
 					// Fix white flickering when on dark mode and respect color scheme preference
 					let currentTheme = localStorage.getItem('data-theme');
 					const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
