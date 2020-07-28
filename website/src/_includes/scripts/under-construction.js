@@ -37,5 +37,4 @@ if (!location.href.includes("veryfunny")) {
 		}
 	`;
 	document.head.appendChild(style);
-	const {documentElement} = document;
 }
