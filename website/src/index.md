@@ -14,7 +14,7 @@ layout: layouts/homepage.njk
 
 **Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://romefrontend.dev/about#philosophy).
 
-**Rome** is maintained by a [team of volunteers](https://romefrontend.dev/contributing/team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
+**Rome** is maintained by a [team of volunteers](https://romefrontend.dev/about/#team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 ## Preview
 
