@@ -10,7 +10,7 @@ const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
-const purify = require("purify-css")
+const purify = require("purify-css");
 
 /**
  * @type {any}
@@ -172,11 +172,14 @@ module.exports = function(eleventyConfig) {
 				const styleMatch = content.match(/<style>(.*?)<\/style>/);
 				if (styleMatch != null) {
 					const css = styleMatch[1];
-					content = content.replace(/<style>(.*?)<\/style>/, `<style></style>`);
+					content = content.replace(/<style>(.*?)<\/style>/, "<style></style>");
 					// Remove unused styles, minify, and insert back
 					const usedCSS = purify(content, css);
 					const minifiedCSS = new CleanCSS({}).minify(usedCSS).styles;
-					content = content.replace("<style></style>", `<style>${minifiedCSS}</style>`);
+					content = content.replace(
+						"<style></style>",
+						`<style>${minifiedCSS}</style>`,
+					);
 				}
 
 				let minified = htmlmin.minify(

@@ -1,23 +1,25 @@
 // @ts-check
-
 //# Responsive width
 let isMobile = false;
-window.addEventListener("load", () => {
-	const mobileMatchMedia = matchMedia("(max-width: 768px)");
-	isMobile = mobileMatchMedia.matches;
+window.addEventListener(
+	"load",
+	() => {
+		const mobileMatchMedia = matchMedia("(max-width: 768px)");
+		isMobile = mobileMatchMedia.matches;
 
-	mobileMatchMedia.addEventListener(
-		"change",
-		(e) => {
-			isMobile = e.matches;
+		mobileMatchMedia.addEventListener(
+			"change",
+			(e) => {
+				isMobile = e.matches;
 
-			// Close the mobile sidebar when switching from mobile to desktop
-			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
-				toggleMobileSidebar();
-			}
-		},
-	);
-});
+				// Close the mobile sidebar when switching from mobile to desktop
+				if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+					toggleMobileSidebar();
+				}
+			},
+		);
+	},
+);
 
 //# Table of Contents
 const originalTitle = document.title;
@@ -58,7 +60,7 @@ class TableOfContents {
 		/** @type {Array<CalculatedHeading>}*/
 		this.headingsCalculated = [];
 
-		/** @type {boolean} */
+		/** @type {boolean}*/
 		this.hasInitializedHeadings = false;
 
 		/** @type {undefined | number}*/
@@ -108,10 +110,7 @@ class TableOfContents {
 	 * @returns {number}
 	 */
 	getHeadingTop(heading) {
-		return (
-			heading.offsetTop -
-			this.getScrollOffset()
-		);
+		return heading.offsetTop - this.getScrollOffset();
 	}
 
 	/**
@@ -321,9 +320,12 @@ class TableOfContents {
 
 const toc = new TableOfContents();
 
-window.addEventListener("load", () => {
-	toc.attach();
-});
+window.addEventListener(
+	"load",
+	() => {
+		toc.attach();
+	},
+);
 
 //# Team list shuffle
 
