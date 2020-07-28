@@ -85,7 +85,8 @@ export default createServerCommand<Flags>({
 			req.expectArgumentLength(0);
 
 			const client = await req.getVCSClient();
-			const target = flags.changed === "" ? client.trunkBranch : flags.changed;
+			const target =
+				flags.changed === "" ? await client.getDefaultBranch() : flags.changed;
 			args = await client.getModifiedFiles(target);
 
 			// Only include lintable files

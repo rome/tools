@@ -1,6 +1,6 @@
 ---
 title: Governance
-layout: layouts/page.njk
+layout: layouts/page.liquid
 ---
 
 {% rootmd "GOVERNANCE.md" %}

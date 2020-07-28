@@ -1,0 +1,18 @@
+@import "_variables";
+@import "_mixins";
+
+// Force open homepage example
+.homepage-example {
+	height: auto !important;
+	overflow: auto !important;
+	box-shadow: none !important;
+	cursor: initial !important;
+
+	.expand {
+		display: block;
+	}
+}
+
+.color-scheme-switch-container {
+	display: none;
+}

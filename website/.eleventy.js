@@ -3,35 +3,38 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItAnchor = require("markdown-it-anchor");
-const pluginSass = require("eleventy-plugin-sass");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
+const terser = require("terser");
+const CleanCSS = require("clean-css");
+const htmlmin = require("html-minifier");
+const {base64Encode} = require("./utils");
+const purify = require("purify-css");
 
 /**
  * @type {any}
  */
 const grayMatter = require("gray-matter");
 
+const isProduction = process.env.ELEVENTY_ENV === "production";
+
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
+	eleventyConfig.setUseGitIgnore(false);
 
-	eleventyConfig.addPlugin(
-		pluginSass,
-		{
-			sourcemaps: true,
-			watch: ["src/**/*.{scss,sass}"],
-		},
-	);
+	eleventyConfig.setLiquidOptions({
+		cache: true,
+	});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
 
 	eleventyConfig.addPlugin(
 		pluginTOC,
 		{
-			tags: ["h2", "h3"],
+			tags: ["h2", "h3", "h4"],
 			wrapper: "div  ",
-			wrapperClass: "fixed toc",
+			wrapperClass: "toc",
 		},
 	);
 
@@ -45,12 +48,13 @@ module.exports = function(eleventyConfig) {
 		markdownItAnchor,
 		{
 			permalink: true,
-			permalinkSymbol: "#",
+			permalinkSymbol: "",
 		},
 	);
 
 	eleventyConfig.setLibrary("md", md);
 
+	// Render a markdown from the root of the repo
 	eleventyConfig.addShortcode(
 		"rootmd",
 		function(file) {
@@ -70,7 +74,7 @@ module.exports = function(eleventyConfig) {
 
 					tags = tags.filter(function(item) {
 						switch (item) {
-							// this list should match the `filter` list in tags.njk
+							// this list should match the `filter` list in tags.liquid
 							case "all":
 							case "nav":
 							case "post":
@@ -92,6 +96,107 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
+	// Used for including raw files without having them processed by liquid
+	const includerawCache = new Map();
+	eleventyConfig.addFilter(
+		"includeraw",
+		function(loc) {
+			const cached = includerawCache.get(loc);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const file = fs.readFileSync(path.resolve(__dirname, loc), "utf8");
+			includerawCache.set(loc, file);
+			return file;
+		},
+	);
+
+	eleventyConfig.addFilter(
+		"toBase64",
+		(content, ext) => {
+			return base64Encode(new Buffer(content), ext);
+		},
+	);
+
+	const minCache = new Map();
+
+	// Minify JS in production
+	eleventyConfig.addFilter(
+		"jsmin",
+		function(code) {
+			if (!isProduction) {
+				return code;
+			}
+
+			const cached = minCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const minified = terser.minify(code);
+			if (minified.error) {
+				throw minified.error;
+			}
+
+			minCache.set(code, minified.code);
+			return minified.code;
+		},
+	);
+
+	// Minify CSS in production
+	eleventyConfig.addFilter(
+		"cssmin",
+		function(code) {
+			if (!isProduction) {
+				return code;
+			}
+
+			const cached = minCache.get(code);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const minified = new CleanCSS({}).minify(code).styles;
+			minCache.set(code, minified);
+			return minified;
+		},
+	);
+
+	// Minify HTML in production
+	eleventyConfig.addTransform(
+		"htmlmin",
+		function(content, outputPath) {
+			if (isProduction && outputPath.endsWith(".html")) {
+				// Extract CSS
+				const styleMatch = content.match(/<style>(.*?)<\/style>/);
+				if (styleMatch != null) {
+					const css = styleMatch[1];
+					content = content.replace(/<style>(.*?)<\/style>/, "<style></style>");
+					// Remove unused styles, minify, and insert back
+					const usedCSS = purify(content, css);
+					const minifiedCSS = new CleanCSS({}).minify(usedCSS).styles;
+					content = content.replace(
+						"<style></style>",
+						`<style>${minifiedCSS}</style>`,
+					);
+				}
+
+				let minified = htmlmin.minify(
+					content,
+					{
+						useShortDoctype: true,
+						removeComments: true,
+						collapseWhitespace: true,
+					},
+				);
+				return minified;
+			}
+
+			return content;
+		},
+	);
+
 	eleventyConfig.addFilter(
 		"dateFormat",
 		function(value) {
@@ -106,18 +211,6 @@ module.exports = function(eleventyConfig) {
 		"kebabCase",
 		function(string) {
 			return string.toLowerCase().replace(/\s/g, "-");
-		},
-	);
-
-	eleventyConfig.addFilter(
-		"shouldIncludeTOC",
-		function(content) {
-			const li = content.match(/<li/g);
-			if (li == null || li.length <= 2) {
-				return "";
-			} else {
-				return content;
-			}
 		},
 	);
 
@@ -139,7 +232,7 @@ module.exports = function(eleventyConfig) {
 			input: "src",
 			output: "build",
 		},
-		templateFormats: ["njk", "md", "css", "html", "yml"],
-		htmlTemplateEngine: "njk",
+		templateFormats: ["liquid", "md", "css", "html", "yml"],
+		htmlTemplateEngine: "liquid",
 	};
 };

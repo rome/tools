@@ -13,6 +13,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
+	USER_CONFIG_DIRECTORY,
 	VERSION,
 	localCommands,
 	serverCommands,
@@ -61,6 +62,7 @@ export default async function cli() {
 		usage: "[command] [flags]",
 		version: VERSION,
 		commandRequired: true,
+		shellCompletionDirectory: USER_CONFIG_DIRECTORY,
 		commandSuggestions: {
 			lint: {
 				commandName: "check",
@@ -222,7 +224,7 @@ export default async function cli() {
 						{
 							description: markup`Run a command multiple times, calculating average`,
 						},
-					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.unsafeWrites),
+					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
 					benchmarkIterations: c.get(
 						"benchmarkIterations",
 						{

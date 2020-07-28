@@ -38,7 +38,7 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 
 			// If there's no other parts then a wildcard matches any buffer
 			if (nextPart === undefined) {
-				return buffer.length > 0;
+				return buffer.length >= 0;
 			}
 
 			// Keep removing characters until we match the next part

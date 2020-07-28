@@ -4,18 +4,15 @@
 * @author Lea Verou
 */
 
-code[class*="language-"],
 pre[class*="language-"] {
 	color: #ABB2BF;
 	background: none;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: normal;
 	line-height: 1.5;
-	tab-size: 2;
 	hyphens: none;
 }
 
@@ -36,6 +33,14 @@ pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
 	overflow: auto;
+
+	* {
+		text-decoration-color: rgba(255, 255, 255, 0.4);
+	}
+
+	a {
+		color: inherit;
+	}
 }
 
 :not(pre) > code[class*="language-"], pre[class*="language-"] {

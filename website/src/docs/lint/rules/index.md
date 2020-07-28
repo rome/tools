@@ -1,6 +1,6 @@
 ---
 title: Lint Rules
-layout: layouts/page.njk
+layout: layouts/page.liquid
 eleventyNavigation:
 	key: lint-rules
 	parent: linting

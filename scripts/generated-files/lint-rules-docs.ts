@@ -17,7 +17,7 @@ import {concatMarkup, markup} from "@romefrontend/cli-layout";
 const {worker, performFileOperation} = createMockWorker();
 
 function pre(inner: string): string {
-	return `<pre class="language-text"><code class="language-text">${inner}</code></pre>`;
+	return `{% raw %}<pre class="language-text"><code class="language-text">${inner}</code></pre>{% endraw %}`;
 }
 
 function highlightPre(filename: string, code: string): string {

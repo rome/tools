@@ -11,9 +11,7 @@ html {
 
 body {
 	font-size: 16px;
-	font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell,
-		"Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-		sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-family: $body-font;
 	text-rendering: optimizelegibility;
 	-webkit-font-smoothing: antialiased;
 	color: var(--font-color);
@@ -26,14 +24,16 @@ body {
 }
 
 code {
-	font-family: "Fira Code", monospace !important;
-	tab-size: 2 !important;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	-moz-tab-size: 2;
+	tab-size: 2;
 	background-color: rgba(0, 0, 0, 0.08);
 	padding: 0 5px;
 }
 
-p {
-	margin-bottom: 1.5em;
+pre code {
+	background: none;
+	padding: 0;
 }
 
 h1 {
@@ -47,21 +47,23 @@ h2 {
 }
 
 h3 {
-	font-size: 1em;
-	line-height: $body-line-height / 1em;
+	font-size: 1.2em;
+	line-height: $body-line-height / 1.2em;
 }
 
-h4 {
-	font-size: 0.7em;
-	line-height: $body-line-height / 0.7em;
+h4, h5 {
+	font-size: 1em;
+	line-height: $body-line-height / 1em;
 }
 
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5 {
 	font-family: Libre Baskerville, serif;
 	color: var(--logo-font-color);
+	font-weight: bold;
 }
 
 a {
@@ -85,7 +87,6 @@ ul.breadcrumbs {
 	background-color: var(--background-color);
 	border-bottom: 1px solid var(--soft-border-color);
 	display: flex;
-	height: $breadcrumbs-height;
 	margin: 0;
 	padding: 0;
 
@@ -94,11 +95,11 @@ ul.breadcrumbs {
 		overflow-y: hidden;
 	}
 
-	a{
+	a {
 		text-decoration: none;
 		color: var(--font-color);
 
-		&:hover{
+		&:hover {
 			background: var(--breadcrumbs-background-hover);
 			color: var(--font-color);
 		}
@@ -113,7 +114,12 @@ ul.breadcrumbs {
 	> li {
 		padding: 0;
 		position: relative;
-		list-style: none;
+		height: $breadcrumbs-height;
+
+		/* Collapse breadcrumbs if we only have one item */
+		&:only-child {
+			display: none;
+		}
 
 		&:first-child a {
 			padding-left: 32px;
@@ -178,10 +184,7 @@ ul.breadcrumbs {
 		position: absolute;
 		top: $breadcrumbs-height;
 		left: 0;
-		list-style: none;
-		margin-left: 0;
 		background-color: var(--background-color);
-		padding: 0;
 		max-height: 400px;
 		min-width: 100%;
 		overflow: auto;
@@ -201,6 +204,7 @@ ul.breadcrumbs {
 }
 
 .main {
+	background-color: var(--container-color);
 	overflow: hidden;
 	width: 100%;
 	margin-top: 5px;
@@ -258,10 +262,6 @@ ul.breadcrumbs {
 	overflow: visible !important;
 	clip: auto !important;
 	white-space: normal !important;
-}
-
-html.js-disabled .hide-no-js {
-	display: none;
 }
 
 .icon {

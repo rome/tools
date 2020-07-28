@@ -17,26 +17,26 @@ export function htmlFormatText(
 			// We probably don't need filelinks if it's just for presentation in the browser?
 			//const filename = getFileLinkFilename(attributes, opts);
 			//return `<a href="file://${escapeXHTMLEntities(filename)}">${value}</a>`;
-			return `<span style="text-decoration-style: dotted;">${value}</span>`;
+			return `<span style="text-decoration-style: dashed; text-decoration-line: underline;">${value}</span>`;
 		}
 
 		case "inverse":
-			return `<span style="color: white; background-color: #ddd;">${value}</span>`;
+			return `<span style="color: #000; background-color: #ddd;">${value}</span>`;
 
 		case "emphasis":
 			return `<strong>${value}</strong>`;
 
 		case "dim":
-			return `<span style="opacity: 0.8;">${value}</span>"`;
+			return `<span style="opacity: 0.8;">${value}</span>`;
 
 		case "italic":
-			return `<i>${value}</i>"`;
+			return `<i>${value}</i>`;
 
 		case "underline":
-			return `<u>${value}</u>"`;
+			return `<u>${value}</u>`;
 
 		case "strike":
-			return `<strike>${value}</strike>"`;
+			return `<strike>${value}</strike>`;
 
 		case "error":
 			return `<span style="color: Tomato;">${value}</span>`;

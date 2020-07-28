@@ -553,7 +553,7 @@ export default class Reporter implements ReporterNamespace {
 
 	write(msg: string, stderr: boolean = false) {
 		for (const {stream} of this.getStreamHandles()) {
-			stream.write(msg, stderr);
+			stream.write(msg, stderr || this.shouldRedirectOutToErr);
 		}
 	}
 
@@ -714,6 +714,11 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	logRaw(msg: string, opts: LogOptions = {}) {
+		opts = {
+			...opts,
+			stderr: opts.stderr || this.shouldRedirectOutToErr,
+		};
+
 		for (const {stream} of this.getStreamHandles()) {
 			streamUtils.log(stream, msg, opts);
 		}
@@ -731,6 +736,7 @@ export default class Reporter implements ReporterNamespace {
 				lines[i],
 				{
 					...opts,
+					stderr: opts.stderr || this.shouldRedirectOutToErr,
 					noNewline: i === lines.length - 1 ? opts.noNewline : false,
 				},
 				i,
