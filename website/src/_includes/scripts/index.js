@@ -365,35 +365,6 @@ if (homepageExample != null) {
 	);
 }
 
-//# Hide WIP banner after scrolling
-
-const wipBanner = document.querySelector(".wip-banner");
-if (wipBanner) {
-	let hasScrolled = false;
-
-	window.addEventListener(
-		"scroll",
-		() => {
-			if (hasScrolled) {
-				return;
-			}
-
-			if (window.scrollY > 0) {
-				hasScrolled = true;
-				setTimeout(
-					() => {
-						wipBanner.classList.add("hidden");
-					},
-					2_000,
-				);
-			}
-		},
-		{
-			passive: true,
-		},
-	);
-}
-
 //# Color scheme switcher
 
 function toggleColorSchemeSwitch() {
