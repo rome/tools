@@ -317,6 +317,10 @@ export default class LSPServer {
 
 			case "textDocument/didOpen": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
+				const project = this.server.projectManager.findProjectExisting(path);
+				if (project === undefined) {
+					return;
+				}
 				const content = params.get("textDocument").get("text").asString();
 				await this.request.requestWorkerUpdateBuffer(path, content);
 				this.fileBuffers.add(path);
@@ -326,6 +330,9 @@ export default class LSPServer {
 
 			case "textDocument/didChange": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
+				if (!this.fileBuffers.has(path)) {
+					return;
+				}
 				const contentChanges = params.get("contentChanges");
 
 				if (contentChanges.getIndex(0).has("range")) {
@@ -340,6 +347,9 @@ export default class LSPServer {
 
 			case "textDocument/didClose": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
+				if (!this.fileBuffers.has(path)) {
+					return;
+				}
 				this.fileBuffers.delete(path);
 				await this.request.requestWorkerClearBuffer(path);
 				this.logMessage(path, `Closed: ${path.join()}`);
