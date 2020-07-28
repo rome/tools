@@ -24,10 +24,16 @@ body {
 }
 
 code {
-	font-family: "Fira Code", monospace !important;
-	tab-size: 2 !important;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	-moz-tab-size: 2;
+	tab-size: 2;
 	background-color: rgba(0, 0, 0, 0.08);
 	padding: 0 5px;
+}
+
+pre code {
+	background: none;
+	padding: 0;
 }
 
 h1 {

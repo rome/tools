@@ -177,7 +177,6 @@ module.exports = function(eleventyConfig) {
 					const usedCSS = purify(content, css);
 					const minifiedCSS = new CleanCSS({}).minify(usedCSS).styles;
 					content = content.replace("<style></style>", `<style>${minifiedCSS}</style>`);
-					return content;
 				}
 
 				let minified = htmlmin.minify(

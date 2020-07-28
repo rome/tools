@@ -13,6 +13,14 @@
 		line-height: 1.5em;
 	}
 
+	h1 {
+		margin: 0.67em 0;
+	}
+
+	h2 {
+
+	}
+
 	> :last-child {
 		margin-bottom: 0;
 	}
@@ -126,6 +134,10 @@ article.latest-post {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+
+	h2 {
+		margin-bottom: 0.83em;
+	}
 
 	@include desktop-only() {
 		min-height: 32px + 64px;
