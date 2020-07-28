@@ -20,7 +20,8 @@
 		"clean-css": "^4.2.3",
 		"docsearch.js": "^2.6.3",
 		"html-minifier": "^4.0.0",
-		"node-sass": "^4.14.1"
+		"node-sass": "^4.14.1",
+		"purify-css": "^1.2.5"
 	},
 	"rome": {
 		"extends": "../package.json",
@@ -37,7 +38,8 @@
 				"terser",
 				"clean-css",
 				"html-minifier",
-				"node-sass"
+				"node-sass",
+				"purify-css"
 			]
 		}
 	}

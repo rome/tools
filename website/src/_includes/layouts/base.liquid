@@ -24,27 +24,6 @@
 			{% include styles/index.css %}
 		{% endcapture %}
 		<style>{{ styles | cssmin | safe }}</style>
-		<noscript>
-			{% capture nojsstyles %}
-				{% include styles/nojs.css %}
-			{% endcapture %}
-			<style>{{ nojsstyles | cssmin | safe }}</style>
-		</noscript>
-
-		<script>
-			{% capture preJS %}
-				(function () {
-					// Fix white flickering when on dark mode and respect color scheme preference
-					let currentTheme = localStorage.getItem('data-theme');
-					const prefersDarkMode = matchMedia('(prefers-color-scheme: dark)').matches;
-					if (!currentTheme)	{
-						currentTheme = prefersDarkMode ? 'dark' : 'light';
-					}
-					document.documentElement.setAttribute("data-theme", currentTheme);
-				})();
-			{% endcapture %}
-			{{ preJS | jsmin | safe }}
-		</script>
 	</head>
 
 	<body>

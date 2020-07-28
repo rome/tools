@@ -1,20 +1,23 @@
 // @ts-check
 
 //# Responsive width
-const mobileMatchMedia = matchMedia("(max-width: 768px)");
-let isMobile = mobileMatchMedia.matches;
+let isMobile = false;
+window.addEventListener("load", () => {
+	const mobileMatchMedia = matchMedia("(max-width: 768px)");
+	isMobile = mobileMatchMedia.matches;
 
-mobileMatchMedia.addEventListener(
-	"change",
-	(e) => {
-		isMobile = e.matches;
+	mobileMatchMedia.addEventListener(
+		"change",
+		(e) => {
+			isMobile = e.matches;
 
-		// Close the mobile sidebar when switching from mobile to desktop
-		if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
-			toggleMobileSidebar();
-		}
-	},
-);
+			// Close the mobile sidebar when switching from mobile to desktop
+			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+				toggleMobileSidebar();
+			}
+		},
+	);
+});
 
 //# Table of Contents
 const originalTitle = document.title;
