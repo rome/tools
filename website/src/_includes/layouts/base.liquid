@@ -27,6 +27,14 @@
 	</head>
 
 	<body>
+		{% if environment == "production" %}
+			<div class="wip-banner">
+				<p>
+					<strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
+				</p>
+			</div>
+		{% endif %}
+
 		<div class="container">
 			<div class="skip-to-content">
 				<a href="#main-content">Skip to main content</a>
@@ -100,14 +108,6 @@
 				{{ content | safe }}
 			</div>
 		</div>
-
-		{% if environment == "production" %}
-			<div class="wip-banner">
-				<p>
-					<strong>Rome is still in development</strong>. We have not had an official supported release so documentation may appear out of date until then.
-				</p>
-			</div>
-		{% endif %}
 
 		<footer aria-labelledby="footer">
 			<h1 id="footer" class="sr-only">Footer</h1>
