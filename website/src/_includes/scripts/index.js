@@ -7,17 +7,14 @@ window.addEventListener(
 		const mobileMatchMedia = matchMedia("(max-width: 768px)");
 		isMobile = mobileMatchMedia.matches;
 
-		mobileMatchMedia.addEventListener(
-			"change",
-			(e) => {
-				isMobile = e.matches;
+		mobileMatchMedia.addListener((e) => {
+			isMobile = e.matches;
 
-				// Close the mobile sidebar when switching from mobile to desktop
-				if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
-					toggleMobileSidebar();
-				}
-			},
-		);
+			// Close the mobile sidebar when switching from mobile to desktop
+			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
+				toggleMobileSidebar();
+			}
+		});
 	},
 );
 
@@ -408,6 +405,7 @@ function toggleColorSchemeSwitch() {
 
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
 	window.localStorage.setItem("data-theme", newScheme);
+	document.documentElement.classList.add("transition");
 	document.documentElement.setAttribute("data-theme", newScheme);
 }
 

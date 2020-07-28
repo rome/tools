@@ -4,9 +4,12 @@ html {
 }
 
 html {
+	background: var(--background-color);
+}
+
+html.transition {
 	@include transition-timing;
 	transition-property: background;
-	background: var(--background-color);
 }
 
 body {
