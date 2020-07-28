@@ -21,7 +21,6 @@ const isProduction = process.env.ELEVENTY_ENV === "production";
 module.exports = function(eleventyConfig) {
 	eleventyConfig.addPassthroughCopy({"static": "."});
 	eleventyConfig.setUseGitIgnore(false);
-	eleventyConfig.addWatchTarget("./src/_includes/styles.css");
 
 	eleventyConfig.setLiquidOptions({
 		cache: true,

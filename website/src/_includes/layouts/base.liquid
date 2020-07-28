@@ -21,9 +21,15 @@
 		<meta property="twitter:card" content="summary_large_image">
 
 		{% capture styles %}
-			{% include styles.css %}
+			{% include styles/index.css %}
 		{% endcapture %}
 		<style>{{ styles | cssmin | safe }}</style>
+		<noscript>
+			{% capture nojsstyles %}
+				{% include styles/nojs.css %}
+			{% endcapture %}
+			<style>{{ nojsstyles | cssmin | safe }}</style>
+		</noscript>
 
 		<script>
 			{% capture preJS %}

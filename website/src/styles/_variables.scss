@@ -15,29 +15,6 @@ $gray-6: lighten(#27272A, 45%);
 $gray-7: lighten(#27272A, 70%);
 $gray-8: lighten(#27272A, 80%);
 
-:root {
-	--primary-color: #{$color-4};
-	--logo-font-color: #{$gray-4};
-	--background-color: rgba(0, 0, 0, 0.05);
-	--container-color: #fff;
-	--font-color: #{$gray-4};
-	--sub-text-color: #{$gray-6};
-	--top-border-color: #{$gray-4};
-	--soft-border-color: rgba(39, 39, 42, 0.2);
-	--pattern-color: #{rgba($gray-7, 0.6)};
-	--pattern-color-2: #{rgba(255, 255, 255, 0)};
-	--pattern-img-path: url(#{inline-url("img/pattern-white.png")});
-	--toc-background-active: #{$gray-8};
-	--toc-link-color-hover: #{$gray-6};
-	--toc-link-color-active: #{$gray-4};
-	--blockquote-color: #{$gray-7};
-	--link-hover-color: #{lighten(#27272A, 20%)};
-	--breadcrumbs-background-active: #{lighten(#27272A, 70%)};
-	--breadcrumbs-background-hover: #{$gray-7};
-	--breadcrumbs-submenu-shadow-color: #{$gray-6};
-	--color-scheme-switcher-color: #{$gray-4};
-}
-
 @mixin dark-root {
 	--logo-font-color: #{$gray-8};
 	--background-color: #{$gray-4};
@@ -57,10 +34,6 @@ $gray-8: lighten(#27272A, 80%);
 	--breadcrumbs-background-hover: #{darken(#27272A, 4%)};
 	--breadcrumbs-submenu-shadow-color: #{$gray-2};
 	--color-scheme-switcher-color: #000;
-}
-
-html[data-theme='dark'] {
-	@include dark-root;
 }
 
 $body-font: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
