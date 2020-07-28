@@ -37,6 +37,10 @@ pre[class*="language-"] {
 	margin: .5em 0;
 	overflow: auto;
 
+	* {
+		text-decoration-color: rgba(255, 255, 255, 0.4);
+	}
+
 	a {
 		color: inherit;
 	}
