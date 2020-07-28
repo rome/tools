@@ -290,26 +290,3 @@ pre[class*=language-] {
 		margin-right: -32px;
 	}
 }
-
-.wip-banner {
-	text-align: center;
-	position: fixed;
-	z-index: 99999999;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	color: #fff;
-	background-color: tomato;
-	transition: height 500ms ease-in-out;
-	line-height: 50px;
-	height: 50px;
-
-	&.hidden {
-		height: 0;
-	}
-
-	p {
-		margin: 0;
-		padding: 0 10px;
-	}
-}
