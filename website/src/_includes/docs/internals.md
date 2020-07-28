@@ -8,11 +8,13 @@ Rome consists of three process types:
  - **Server**. Where the magic happens. Watches the file system and maintains an in-memory copy for fast lookups. Spawns workers and distributes and coordinates work between them. Responds to requests from the CLI.
  - **Worker**. Where distributed work occurs. These are operations that are specific to a certain file. Produces artifacts that can be easily cached. Computed values contain enough information to aggregate with other file operations to provide cross-file analysis.
 
-### Immutable AST and Recoverable Parsers
+### Immutable AST
 
 All parsed ASTs are treated as immutable. This allows reference equality to be used to quickly determine if a node has been modified and can be used as keys in a `WeakMap` for effective memory caching.
 
-All Rome parsers are recoverable, always deriving an AST despite syntax errors. This allows operations that validate code to be chained together. This surfaces as many problems as possible at once and reduces the waterfall of fixing errors only to be faced with more.
+### Recoverable Parsers
+
+All parsers are recoverable, always deriving an AST despite syntax errors. This allows operations that validate code to be chained together. This surfaces as many problems as possible at once and reduces the waterfall of fixing errors only to be faced with more.
 
 ### Portable Cache
 
