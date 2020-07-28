@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day&gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>month</strong></span><span style="color: Tomato;"> group.</span>
 
@@ -28,7 +28,7 @@ MISSING DOCUMENTATION
     <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
     <span style="color: Tomato;"><strong>^</strong></span>
 
- <span style="text-decoration-style: dotted;">file.ts:1:17</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:17</span> <strong>lint/js/noDuplicateGroupNamesInRegularExpressions</strong> ━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>year</strong></span><span style="color: Tomato;"> group.</span>
 

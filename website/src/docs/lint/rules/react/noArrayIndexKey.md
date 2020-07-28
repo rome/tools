@@ -20,7 +20,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -32,7 +32,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -47,7 +47,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -60,7 +60,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -76,7 +76,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -90,7 +90,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -105,7 +105,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -125,7 +125,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -146,7 +146,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -167,7 +167,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -179,7 +179,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -194,7 +194,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -214,7 +214,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -226,7 +226,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -241,7 +241,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -254,7 +254,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -270,7 +270,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -284,7 +284,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -299,7 +299,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -319,7 +319,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -340,7 +340,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -361,7 +361,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -373,7 +373,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -388,7 +388,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -408,7 +408,7 @@ MISSING DOCUMENTATION
 	&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -428,7 +428,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:9</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:9</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -448,7 +448,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -460,7 +460,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
     <span style="color: DodgerBlue;">information.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -475,7 +475,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -495,7 +495,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -515,7 +515,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -535,7 +535,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -555,7 +555,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -575,7 +575,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -595,7 +595,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -615,7 +615,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -635,7 +635,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token variable">push</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:18</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -655,7 +655,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">collection</span><span class="token punctuation">.</span><span class="token variable">concat</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -675,7 +675,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token variable">concat</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:26</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:26</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -695,7 +695,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">collection</span><span class="token punctuation">.</span><span class="token variable">concat</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
@@ -715,7 +715,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token variable">concat</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:26</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:26</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 

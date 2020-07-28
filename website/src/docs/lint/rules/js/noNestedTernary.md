@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:24</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:24</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
     <span style="color: Tomato;">understand.</span>
@@ -32,7 +32,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:36</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:36</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
     <span style="color: Tomato;">understand.</span>
@@ -40,7 +40,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
                                         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
- <span style="text-decoration-style: dotted;">file.ts:1:18</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
     <span style="color: Tomato;">understand.</span>
@@ -51,7 +51,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token variable">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:6</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:6</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Nesting ternary expressions can make code more difficult to</span>
     <span style="color: Tomato;">understand.</span>

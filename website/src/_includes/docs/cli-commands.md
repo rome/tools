@@ -1,5 +1,3 @@
-### Commands
-
 #### `rome check`
 
 ##### Flags
@@ -10,7 +8,7 @@
 
 Only include files that were changed between the specified `branch/commit`. This can be useful for performance in large projects.
 
-If the `branch/commit` is ommitted then we default to the default branch, either `main` or `master`. ie. `rome check --changed` is equivalent to `rome check --changed main`.
+If the `branch/commit` is omitted then we default to the default branch, either `main` or `master`. ie. `rome check --changed` is equivalent to `rome check --changed main`.
 
 #### `rome config`
 
@@ -44,7 +42,7 @@ Push the string `value` to an array at `key`. If `key` doesn't exist then it wil
 This command assists in the creation of a new Rome project. Actions that are performed:
 
  - `rome.rjson` is created that serves as your [project configuration](/docs/project-config).
- - `.editorconfig` is created that correctly sets editor indentation for those that support [EditorConfig](https://editorconfig.org/).
+ - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
  - `rome check --apply` is ran which will automatically format and autofix your files.
  - Global variables are extracted from previous errors and automatically added to your project config.
 
@@ -67,9 +65,9 @@ You can bypass this restriction by adding the `--allow-dirty` flag.
 
  <strong>Files created</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dotted;">rome.rjson</span></strong>: Your project configuration. Documentation:
+  <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dashed; text-decoration-line: underline;">rome.rjson</span></strong>: Your project configuration. Documentation:
     <a href="https://romefrontend.dev/docs/project-config/">https://romefrontend.dev/docs/project-config/</a>
-  <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dotted;">.editorconfig</span></strong>: Sets editor formatting and indentation options.
+  <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dashed; text-decoration-line: underline;">.editorconfig</span></strong>: Sets editor formatting and indentation options.
     Documentation: <a href="https://editorconfig.org/">https://editorconfig.org/</a>
 
  <strong>What next?</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -106,7 +104,7 @@ Running this command will start a long-running server and communicate via the [L
 
 #### `rome noop`
 
-This command does nothing.
+This command does nothing. Used in conjunction with other global flags such as [`--logs`](#--logs) and [`--rage`](#--rage).
 
 ##### Flags
 
@@ -139,8 +137,8 @@ Show the contents of the recovery store. Including the command that was ran, at 
   <strong>Ran </strong><strong>42m21s</strong><strong> ago</strong> <span style="opacity: 0.8;">(2020-07-24T05:58:29.210Z)</span>"
   <span style="opacity: 0.8;">$ rome lint --apply</span>"
 
-  <span style="opacity: 0.8;">- </span><span style="text-decoration-style: dotted;">src/App.ts</span>
-  <span style="opacity: 0.8;">- </span><span style="text-decoration-style: dotted;">src/UserPage.ts</span>
+  <span style="opacity: 0.8;">- </span><span style="text-decoration-style: dashed; text-decoration-line: underline;">src/App.ts</span>
+  <span style="opacity: 0.8;">- </span><span style="text-decoration-style: dashed; text-decoration-line: underline;">src/UserPage.ts</span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">To select specific files to patch run:</span>
   <span style="opacity: 0.8;">$ rome recover apply 1595570309210-lint-0 --select</span>"
@@ -173,16 +171,16 @@ Clear the entire contents of the recovery store.
 
 #### `rome restart`
 
-Equivalent to running [`rome stop`](/docs/cli/commands/stop) and [`rome start`](/docs/cli/commands/start).
+Equivalent to running [`rome stop`](/docs/cli/commands/stop) and then [`rome start`](/docs/cli/commands/start).
 
 #### `rome start`
 
-This command will start a Rome [server](/docs/server), if one isn't already running.
+Start a [daemon](#daemon), if one isn't already running.
 
 #### `rome status`
 
-This command will check if a Rome [server](/docs/server) and if so, output some status information such as uptime and worker count.
+Output the status of a running [daemon](#daemon). This includes uptime, file count, and other useful scaling statistics.
 
 #### `rome stop`
 
-This command will stop a Rome [server](/docs/server), if one is running.
+Stop a [daemon](#daemon), if one is running.

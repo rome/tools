@@ -20,7 +20,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">UNSAFE_componentWillMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>UNSAFE_componentWillMount</strong></span><span style="color: Tomato;"> method is unsafe for use in async</span>
     <span style="color: Tomato;">rendering. Use the </span><span style="color: Tomato;"><strong>componentDidMount</strong></span><span style="color: Tomato;"> method instead.</span>
@@ -42,7 +42,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">UNSAFE_componentWillReceiveProps</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>UNSAFE_componentWillReceiveProps</strong></span><span style="color: Tomato;"> method is unsafe for use in</span>
     <span style="color: Tomato;">async rendering. Use the </span><span style="color: Tomato;"><strong>getDerivedStateFromProps</strong></span><span style="color: Tomato;"> method instead.</span>
@@ -64,7 +64,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">UNSAFE_componentWillUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noUnsafe</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>UNSAFE_componentWillUpdate</strong></span><span style="color: Tomato;"> method is unsafe for use in async</span>
     <span style="color: Tomato;">rendering. Use the </span><span style="color: Tomato;"><strong>componentDidUpdate</strong></span><span style="color: Tomato;"> method instead.</span>

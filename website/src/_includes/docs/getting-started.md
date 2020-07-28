@@ -16,16 +16,14 @@ npm install rome
 
 ### Creating a Project
 
-A project is a folder and a configuration file. It tells Rome that the folder is your base directory and all files inside can be processed by Rome.
-
-To automatically create a project, you can use the [`rome init`](/docs/cli/commands/init) command:
+In order for Rome to find your files it needs a project configuration. To automatically create a project, you can use the [`rome init`](#rome-init) command:
 
 ```bash
 rome init
 ```
 
-This will lint, autofix, and format all the files in the directory, and create a `rome.rjson` that contains your project config.
+This will create a `rome.rjson` that contains your project config. This will also lint, autofix, and format all the files in the directory.
 
-Refer to [Project Configuration](/docs/project-config) for configuration options.
+Refer to [Project Configuration](#project-config) for configuration options.
 
-> Note: The `.rjson` extension. [RJSON](/docs/rjson) is a superset of JSON that supports more-concise syntax and features such as comments.
+> Note: The `.rjson` extension. [RJSON](#rome-json) is a superset of JSON that supports more-concise syntax and features such as comments.

@@ -2,11 +2,13 @@
 
 Rome JSON (RJSON) is a superset of JSON. It does not add any new data types. It just makes some syntax optional for the sake of readability.
 
-We wanted to allow comments inside Rome configuration files. Existing JSON supersets either add new data types (effecting portability), or offered no way for a program to edit the JSON, and retain the original comments. So we decided to write our own JSON parser to do this.
+We wanted to allow comments inside Rome configuration files. Existing JSON supersets either add new data types (effecting portability), introduce syntax variants, or offer no way to edit the JSON and retain the original comments. This necessitated the creation of our own JSON parser.
+
+RJSON is a superset, meaning that it is backwards compatible and accepts all existing JSON. All places where RJSON files are allowed, you can alternatively use a regular JSON file where these syntax extensions wont be allowed.
 
 ##### Implicit top level object
 
-You can omit the curly braces for a top level object and we will treat it as an object.
+You can omit the curly braces for a top-level object and we will treat it as an object.
 
 ```json
 foo: "bar"
@@ -42,8 +44,6 @@ If a property key is a valid identifier then the quotes can be omitted, just lik
 ##### Optional commas
 
 Commas are not required to separate elements of an array:
-
-**Example**
 
 ```json
 [

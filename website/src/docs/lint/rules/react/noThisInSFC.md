@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token operator">&lt;</span><span class="token regex">/div&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:44</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:44</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unterminated regular expression</span>
 
@@ -35,7 +35,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:8</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:8</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -60,7 +60,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -83,7 +83,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:8</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:8</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -110,7 +110,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -135,7 +135,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:4:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -149,7 +149,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: DodgerBlue;">instead.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:4:23</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:23</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -170,7 +170,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -183,7 +183,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: DodgerBlue;">instead.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -205,7 +205,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:5</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:5</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -218,7 +218,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: DodgerBlue;">instead.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:7:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:7:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -242,7 +242,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:21</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:21</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -255,7 +255,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: DodgerBlue;">instead.</span>
 
- <span style="text-decoration-style: dotted;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -274,7 +274,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:4:9</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:9</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -298,7 +298,7 @@ MISSING DOCUMENTATION
 	&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:3</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:3</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -322,7 +322,7 @@ MISSING DOCUMENTATION
 	&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:3</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:3</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
@@ -347,7 +347,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">)</span>
 <span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 

@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -44,7 +44,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -70,7 +70,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -96,7 +96,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -123,7 +123,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -149,7 +149,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -178,7 +178,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -210,7 +210,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -241,7 +241,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -271,7 +271,7 @@ MISSING DOCUMENTATION
 						<span class="token keyword">return</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;
 					<span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:13</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -299,7 +299,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -325,7 +325,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>

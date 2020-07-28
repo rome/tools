@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid calling </span><span style="color: Tomato;"><strong>this.setState</strong></span><span style="color: Tomato;"> in the </span><span style="color: Tomato;"><strong>componentDidMount</strong></span><span style="color: Tomato;"> method.</span>
 
@@ -51,7 +51,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:4:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid calling </span><span style="color: Tomato;"><strong>this.setState</strong></span><span style="color: Tomato;"> in the </span><span style="color: Tomato;"><strong>componentDidMount</strong></span><span style="color: Tomato;"> method.</span>
 
@@ -77,7 +77,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid calling </span><span style="color: Tomato;"><strong>this.setState</strong></span><span style="color: Tomato;"> in the </span><span style="color: Tomato;"><strong>componentDidMount</strong></span><span style="color: Tomato;"> method.</span>
 
@@ -104,7 +104,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:4:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:2</span> <strong>lint/react/noDidMountSetState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid calling </span><span style="color: Tomato;"><strong>this.setState</strong></span><span style="color: Tomato;"> in the </span><span style="color: Tomato;"><strong>componentDidMount</strong></span><span style="color: Tomato;"> method.</span>
 

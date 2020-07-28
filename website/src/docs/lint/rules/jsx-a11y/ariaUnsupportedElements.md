@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token attr-name">aria-hidden</span><span class="token operator">=</span><span class="token string">&apos;false&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -35,7 +35,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;meta&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -52,7 +52,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">aria-required</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -69,7 +69,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;html&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -86,7 +86,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">script</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&apos;script&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">script</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -103,7 +103,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">script</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;script&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">script</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -120,7 +120,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">style</span> <span class="token attr-name">aria-labelledby</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">style</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>
@@ -137,7 +137,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">style</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;style&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">style</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/ariaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid the </span><span style="color: Tomato;"><strong>role</strong></span><span style="color: Tomato;"> attribute and </span><span style="color: Tomato;"><strong>aria-*</strong></span><span style="color: Tomato;"> attributes when using </span><span style="color: Tomato;"><strong>meta</strong></span><span style="color: Tomato;">, </span><span style="color: Tomato;"><strong>html</strong></span><span style="color: Tomato;">,</span>
     <span style="color: Tomato;"><strong>script</strong></span><span style="color: Tomato;">, and </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> elements.</span>

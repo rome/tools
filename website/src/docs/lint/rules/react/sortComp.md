@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">displayName</span> <span class="token operator">=</span> <span class="token string">&apos;Hello&apos;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>displayName</strong></span><span style="color: Tomato;">.</span>
 
@@ -51,7 +51,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">onClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;">.</span>
 
@@ -80,7 +80,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:4:2</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:2</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;">.</span>
 
@@ -109,7 +109,7 @@ MISSING DOCUMENTATION
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>props</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;">.</span>
 

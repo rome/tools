@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:12</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:12</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -31,7 +31,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:19</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -44,7 +44,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token boolean">null</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -57,7 +57,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -72,7 +72,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">react</span><span class="token punctuation">:</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -88,7 +88,7 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:6</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:6</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
@@ -104,7 +104,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:2:8</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 

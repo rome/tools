@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
@@ -40,7 +40,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/  foo/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
@@ -62,7 +62,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
@@ -84,7 +84,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo  bar/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
@@ -106,7 +106,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo   bar    baz/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
@@ -128,7 +128,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo [ba]r  b(a|z)/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:1:10</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span>
 <span style="color: white; background-color: #ddd;"> </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>

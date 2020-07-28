@@ -18,7 +18,7 @@ MISSING DOCUMENTATION
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>checkbox</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -34,7 +34,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;switch&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>switch</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -50,7 +50,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>spinbutton</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -70,7 +70,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>spinbutton</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -88,7 +88,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>spinbutton</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -106,7 +106,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;spinbutton&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>spinbutton</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -123,7 +123,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>slider</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -141,7 +141,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>slider</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -159,7 +159,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;slider&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>slider</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -175,7 +175,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>separator</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -193,7 +193,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>separator</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -211,7 +211,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;separator&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>separator</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -227,7 +227,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>scrollbar</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -249,7 +249,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>scrollbar</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -271,7 +271,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>scrollbar</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -291,7 +291,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;scrollbar&apos;</span> <span class="token attr-name">aria-valuemin</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> <span class="token attr-name">aria-valuemax</span><span class="token operator">=</span><span class="token string">&apos;100&apos;</span> <span class="token attr-name">aria-orientation</span><span class="token operator">=</span><span class="token string">&apos;horizontal&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>scrollbar</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -310,7 +310,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;radio&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>radio</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -326,7 +326,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>option</strong></span><span style="color: Tomato;"> ARIA role does not have the required ARIA</span>
     <span style="color: Tomato;">attributes.</span>
@@ -342,7 +342,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -358,7 +358,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>combobox</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -376,7 +376,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>combobox</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -392,7 +392,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>combobox</strong></span><span style="color: Tomato;"> ARIA role does not have the required</span>
     <span style="color: Tomato;">ARIA attributes.</span>
@@ -408,7 +408,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>menuitemcheckbox</strong></span><span style="color: Tomato;"> ARIA role does not have the</span>
     <span style="color: Tomato;">required ARIA attributes.</span>
@@ -424,7 +424,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/roleHasRequiredAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The element with the </span><span style="color: Tomato;"><strong>menuitemradio</strong></span><span style="color: Tomato;"> ARIA role does not have the</span>
     <span style="color: Tomato;">required ARIA attributes.</span>

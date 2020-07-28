@@ -2,17 +2,15 @@
 
 Rome needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your config can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and allows you to omit a lot of syntax.
+Your config can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and allows you to omit syntax.
 
-All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, even if you have comments they will be retained through modification.
+All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
 
-### Properties
+We are deliberately lean with our configuration. Any additional options increases the potential for bugs, makes it harder to maintain, and .
+
 
 ```json
-// Your project name. Used for
 name: "project-name"
-
-// The version of Rome your project is tied to.
 version: "^0.0.0"
 
 lint: {
@@ -21,7 +19,9 @@ lint: {
 }
 ```
 
-##### `name`
+### Properties
+
+#### `name`
 
 This is your project name. It is typically whatever you have set as `name` in `package.json`. This is never shown to you, and is used internally to refer to your project.
 
@@ -31,7 +31,7 @@ The Rome cache is portable, meaning it contains no references to absolute paths.
 rome config set name "project-name"
 ```
 
-##### `version`
+#### `version`
 
 This is a semver range of the Rome version you want to set your project to. It is an optional layer of protection and can avoid version mismatches in large monorepos and projects.
 
@@ -39,7 +39,7 @@ This is a semver range of the Rome version you want to set your project to. It i
 rome config set version "^0.0.0"
 ```
 
-##### `lint.ignore`
+#### `lint.ignore`
 
 [Path patterns](#path-patterns) that you want to ignore from linting.
 
@@ -47,7 +47,7 @@ rome config set version "^0.0.0"
 rome config push lint.ignore "some-path"
 ```
 
-##### `lint.globals`
+#### `lint.globals`
 
 Custom variables you want to declare as global.
 
@@ -63,7 +63,7 @@ You can specify your project config in a few different places.
 
 This is the recommend location. It's the file we create when running `rome init`.
 
-It can contains Rome's flavor of JSON, [RJSON](/docs/rjson), that allows comments and a simpler syntax.
+It can contains Rome's flavor of JSON, [RJSON](/docs/rjson), that allows comments and simpler syntax.
 
 ##### `rome.json`
 

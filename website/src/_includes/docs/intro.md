@@ -1,14 +1,14 @@
-**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
+**Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://romefrontend.dev/about#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](/about#philosophy).
 
-**Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** contains no dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
+**Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
 
 **Rome** is maintained by a [team of volunteers](/about#eam). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
 
-{% include homepage-screenshot.md %}
+{% include docs/intro-screenshot.md %}
 
 <ul class="home-actions">
 	<li>
@@ -42,6 +42,7 @@ Once our usage as a linter has matured we will work on releasing the other parts
 | JavaScript   | ✅        | ✅           | ✅        |
 | &mdash; TypeScript | ✅        | ✅           | ✅        |
 | &mdash; JSX        | ✅        | ✅           | ✅        |
+| JSON       | ✅        | ✅           | ❓        |
 | HTML         | ✅        | ✅          | ❌        |
 | CSS          | ✅        | ✅           | ❌        |
 | Markdown     | ✅        | ✅           | ❌        |

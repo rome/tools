@@ -20,7 +20,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">shouldComponentUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/react/noRedundantShouldComponentUpdate</strong> ━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noRedundantShouldComponentUpdate</strong> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not implement </span><span style="color: Tomato;"><strong>shouldComponentUpdate</strong></span><span style="color: Tomato;"> when extending </span>
     <span style="color: Tomato;"><strong>React.PureComponent</strong></span><span style="color: Tomato;">.</span>
@@ -42,7 +42,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">shouldComponentUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.tsx:1</span> <strong>lint/react/noRedundantShouldComponentUpdate</strong> ━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noRedundantShouldComponentUpdate</strong> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not implement </span><span style="color: Tomato;"><strong>shouldComponentUpdate</strong></span><span style="color: Tomato;"> when extending </span>
     <span style="color: Tomato;"><strong>React.PureComponent</strong></span><span style="color: Tomato;">.</span>

@@ -23,7 +23,7 @@ MISSING DOCUMENTATION
 		<span class="token function">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.ts:3:1</span> <strong>lint/js/caseSingleStatement</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:3:1</span> <strong>lint/js/caseSingleStatement</strong> <span style="color: white; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">A switch case should only have a single statement. If you want more,</span>
     <span style="color: Tomato;">then wrap it in a block.</span>

@@ -20,7 +20,7 @@ MISSING DOCUMENTATION
 	<span class="token comment">//</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.js:1:18</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.js:1:18</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate function arguments. Check the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> argument.</span>
 
@@ -37,7 +37,7 @@ MISSING DOCUMENTATION
 	<span class="token comment">//</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.js:1:18</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.js:1:18</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Argument </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> name clash in strict mode</span>
 
@@ -56,7 +56,7 @@ MISSING DOCUMENTATION
 	<span class="token comment">//</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dotted;">file.js:1:27</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.js:1:27</span> <strong>lint/js/noDupeArgs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate function arguments. Check the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> argument.</span>
 
