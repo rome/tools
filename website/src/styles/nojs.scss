@@ -1,13 +1,6 @@
 @import "_variables";
 @import "_mixins";
 
-// If JS is disabled then we just force prefers-color-scheme
-@media (prefers-color-scheme: dark) {
-	:root {
-		@include dark-root;
-	}
-}
-
 // Force open homepage example
 .homepage-example {
 	height: auto !important;
@@ -18,4 +11,8 @@
 	.expand {
 		display: block;
 	}
+}
+
+.color-scheme-switch-container {
+	display: none;
 }

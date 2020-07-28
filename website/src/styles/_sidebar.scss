@@ -227,19 +227,30 @@
 	}
 }
 
-html[data-theme='dark'] .color-scheme-switch{
-	&:after {
-		left: 50%;
-		margin-right: 5px;
-		transform: translateX(100%);
-		border-radius: 32px 96px 96px 32px;
-	}
+@mixin show-dark-color-switch {
+	.color-scheme-switch{
+		&:after {
+			left: 50%;
+			margin-right: 5px;
+			transform: translateX(100%);
+			border-radius: 32px 96px 96px 32px;
+		}
 
-	.selector {
-		left: 33px;
+		.selector {
+			left: 33px;
+		}
 	}
 }
 
+@media (prefers-color-scheme: dark) {
+	html[data-theme="auto"] {
+		@include show-dark-color-switch;
+	}
+}
+
+html[data-theme='dark'] {
+	@include show-dark-color-switch;
+}
 
 .color-scheme-switch-container {
 	padding: 18px 0;

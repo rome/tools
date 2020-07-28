@@ -15,27 +15,6 @@ $gray-6: lighten(#27272A, 45%);
 $gray-7: lighten(#27272A, 70%);
 $gray-8: lighten(#27272A, 80%);
 
-@mixin dark-root {
-	--logo-font-color: #{$gray-8};
-	--background-color: #{$gray-4};
-	--container-color: #{$gray-4};
-	--font-color: #{lighten(#27272A, 65%)};
-	--top-border-color: #{$color-4};
-	--soft-border-color: rgba(0, 0, 0, 0.2);
-	--pattern-color: #{$gray-3};
-	--pattern-color-2: #{rgba(0, 0, 0, 0)};
-	--pattern-img-path: url(#{inline-url("img/pattern-black.png")});
-	--toc-background-active: #{$gray-3};
-	--toc-link-color-hover: #{$gray-6};
-	--toc-link-color-active: #{$gray-8};
-	--blockquote-color: #{$gray-7};
-	--link-hover-color: #{lighten(#27272A, 60%)};
-	--breadcrumbs-background-active: #{darken(#27272A, 7%)};
-	--breadcrumbs-background-hover: #{darken(#27272A, 4%)};
-	--breadcrumbs-submenu-shadow-color: #{$gray-2};
-	--color-scheme-switcher-color: #000;
-}
-
 $body-font: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 $body-line-height: 1.5em;
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="auto">
 	<head>
 		<meta charset="utf8" />
 		<title>{% if title %}{{ title }} &mdash; {% endif %}Rome Frontend Toolchain</title>
@@ -24,6 +24,24 @@
 			{% include styles/index.css %}
 		{% endcapture %}
 		<style>{{ styles | cssmin | safe }}</style>
+		<noscript>
+			{% capture nojsstyles %}
+				{% include styles/nojs.css %}
+			{% endcapture %}
+			<style>{{ nojsstyles | cssmin | safe }}</style>
+		</noscript>
+
+		<script>
+			{% capture preJS %}
+				(function () {
+					const currentTheme = localStorage.getItem('data-theme');
+					if (currentTheme != null) {
+						document.documentElement.setAttribute("data-theme", currentTheme);
+					}
+				})();
+			{% endcapture %}
+			{{ preJS | jsmin | safe }}
+		</script>
 	</head>
 
 	<body>
@@ -94,7 +112,7 @@
 						{{ content | toc | safe }}
 					</nav>
 
-					<div class="color-scheme-switch-container hide-no-js">
+					<div class="color-scheme-switch-container">
 						<div class="color-scheme-switch">
 							<div class="selector"></div>
 							{% include svg/moon.svg %}

@@ -401,7 +401,7 @@ if (wipBanner) {
 
 function toggleColorSchemeSwitch() {
 	let currentScheme = window.localStorage.getItem("data-theme");
-	if (currentScheme === undefined) {
+	if (currentScheme == null) {
 		const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)").matches;
 		currentScheme = prefersDarkMode ? "dark" : "light";
 	}
