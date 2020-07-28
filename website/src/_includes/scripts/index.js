@@ -1,5 +1,4 @@
 // @ts-check
-
 //# Responsive width
 let isMobile = false;
 window.addEventListener(
