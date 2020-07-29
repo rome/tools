@@ -1,6 +1,7 @@
 import {INTERNAL, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
+import {dedent} from "@romefrontend/string-utils";
 
 const astFolder = INTERNAL.append("ast");
 
@@ -92,7 +93,11 @@ export async function main() {
 					return `\n	| n.${def.nodeType}`;
 				},
 				wrapCallback(buff) {
-					return `export type AnyNode = ${buff};`;
+					return dedent`
+						export type AnyNodes = AnyNode | Array<AnyNode>;
+						
+						export type AnyNode = ${buff};						
+					`;
 				},
 			},
 		],
