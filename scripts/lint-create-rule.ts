@@ -4,7 +4,7 @@ import {readFileText} from "@romefrontend/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
 import {markup} from "@romefrontend/cli-layout";
 
-const rulesPath = PACKAGES.appendList("compiler", "lint", "rules");
+const rulesPath = PACKAGES.append("compiler", "lint", "rules");
 
 export async function main([ruleName]: Array<string>): Promise<number> {
 	if (ruleName === undefined) {
@@ -22,7 +22,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 
 	// Write rule
 	await writeFile(
-		rulesPath.appendList(`${ruleName}.ts`),
+		rulesPath.append(`${ruleName}.ts`),
 		dedent`
 			import {createVisitor, signals} from "@romefrontend/compiler";
 			import {descriptions} from "@romefrontend/diagnostics";
@@ -47,7 +47,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 
 	// Write test fixture
 	await writeFile(
-		rulesPath.appendList(`${ruleName}.test.rjson`),
+		rulesPath.append(`${ruleName}.test.rjson`),
 		dedent`
 			filename: "filename.ts"
 			invalid: [
@@ -65,7 +65,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 
 	// Write docs
 	await writeFile(
-		ROOT.appendList("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
+		ROOT.append("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
 		`
 			---
 			title: Lint Rule ${ruleName}
@@ -85,7 +85,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	);
 
 	// Add description
-	const diagDescriptionsPath = PACKAGES.appendList(
+	const diagDescriptionsPath = PACKAGES.append(
 		"diagnostics",
 		"descriptions",
 		"lint.ts",

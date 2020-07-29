@@ -252,7 +252,7 @@ function getPathSuggestions(
 	// Try parent directories of the origin
 
 	for (const path of originDirectory.getChain()) {
-		tryPathSuggestions(resolver, suggestions, path.appendList(...sourceParts));
+		tryPathSuggestions(resolver, suggestions, path.append(...sourceParts));
 	}
 
 	return suggestions;
@@ -311,7 +311,7 @@ function tryPathSuggestions(
 				tryPathSuggestions(
 					resolver,
 					suggestions,
-					createUnknownFilePath(rating.target).appendList(...segments.slice(1)).assertAbsolute(),
+					createUnknownFilePath(rating.target).append(...segments.slice(1)).assertAbsolute(),
 				);
 			}
 		}
