@@ -39,7 +39,7 @@ export async function main(
 			import {createBuilder} from "../../utils";
 
 			interface ${nodeType} extends NodeBaseWithComments {
-				type: "${nodeType}";
+				readonly type: "${nodeType}";
 			}
 
 			export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {

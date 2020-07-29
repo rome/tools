@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXSpreadAttribute extends NodeBaseWithComments {
-	type: "JSXSpreadAttribute";
-	argument: AnyJSExpression;
+	readonly type: "JSXSpreadAttribute";
+	readonly argument: AnyJSExpression;
 }
 
 export const jsxSpreadAttribute = createBuilder<JSXSpreadAttribute>(

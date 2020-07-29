@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSSuper extends NodeBaseWithComments {
-	type: "JSSuper";
+	readonly type: "JSSuper";
 }
 
 export const jsSuper = createBuilder<JSSuper>(

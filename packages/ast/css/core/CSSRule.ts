@@ -3,9 +3,9 @@ import {createBuilder} from "@romefrontend/ast/utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSRule extends NodeBaseWithComments {
-	type: "CSSRule";
-	prelude: Array<AnyCSSValue>;
-	block?: CSSBlock;
+	readonly type: "CSSRule";
+	readonly prelude: Array<AnyCSSValue>;
+	readonly block?: CSSBlock;
 }
 export const cssRule = createBuilder<CSSRule>(
 	"CSSRule",

@@ -17,8 +17,8 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSXAttribute extends NodeBaseWithComments {
-	type: "JSXAttribute";
-	name: JSXIdentifier | JSXNamespacedName;
+	readonly type: "JSXAttribute";
+	readonly name: JSXIdentifier | JSXNamespacedName;
 	value?:
 		| undefined
 		| JSXElement

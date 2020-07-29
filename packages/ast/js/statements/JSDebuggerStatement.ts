@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSDebuggerStatement extends NodeBaseWithComments {
-	type: "JSDebuggerStatement";
+	readonly type: "JSDebuggerStatement";
 }
 
 export const jsDebuggerStatement = createBuilder<JSDebuggerStatement>(

@@ -11,9 +11,9 @@ import {createBuilder} from "../../utils";
 export type JSVariableDeclarationKind = "var" | "let" | "const";
 
 export interface JSVariableDeclaration extends NodeBaseWithComments {
-	type: "JSVariableDeclaration";
-	kind: JSVariableDeclarationKind;
-	declarations: Array<JSVariableDeclarator>;
+	readonly type: "JSVariableDeclaration";
+	readonly kind: JSVariableDeclarationKind;
+	readonly declarations: Array<JSVariableDeclarator>;
 }
 
 export const jsVariableDeclaration = createBuilder<JSVariableDeclaration>(

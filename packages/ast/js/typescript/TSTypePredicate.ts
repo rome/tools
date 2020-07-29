@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTypePredicate extends NodeBaseWithComments {
-	type: "TSTypePredicate";
-	asserts: boolean;
-	parameterName: JSIdentifier | TSThisType;
-	typeAnnotation?: AnyTSPrimary;
+	readonly type: "TSTypePredicate";
+	readonly asserts: boolean;
+	readonly parameterName: JSIdentifier | TSThisType;
+	readonly typeAnnotation?: AnyTSPrimary;
 }
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(

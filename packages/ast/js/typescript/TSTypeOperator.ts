@@ -9,9 +9,9 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTypeOperator extends NodeBaseWithComments {
-	type: "TSTypeOperator";
-	operator: "keyof" | "unique" | "readonly";
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSTypeOperator";
+	readonly operator: "keyof" | "unique" | "readonly";
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsTypeOperator = createBuilder<TSTypeOperator>(

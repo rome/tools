@@ -9,8 +9,8 @@ import {AnyTSTypeElement, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSObjectTypeAnnotation extends NodeBaseWithComments {
-	type: "TSObjectTypeAnnotation";
-	members: Array<AnyTSTypeElement>;
+	readonly type: "TSObjectTypeAnnotation";
+	readonly members: Array<AnyTSTypeElement>;
 }
 
 export const tsObjectTypeAnnotation = createBuilder<TSObjectTypeAnnotation>(

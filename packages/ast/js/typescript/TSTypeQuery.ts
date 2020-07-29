@@ -13,8 +13,8 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTypeQuery extends NodeBaseWithComments {
-	type: "TSTypeQuery";
-	exprName: TSImportType | AnyTSEntityName;
+	readonly type: "TSTypeQuery";
+	readonly exprName: TSImportType | AnyTSEntityName;
 }
 
 export const tsTypeQuery = createBuilder<TSTypeQuery>(

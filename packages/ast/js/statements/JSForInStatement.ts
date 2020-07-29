@@ -15,10 +15,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSForInStatement extends NodeBaseWithComments {
-	type: "JSForInStatement";
-	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
-	right: AnyJSExpression;
-	body: AnyJSStatement;
+	readonly type: "JSForInStatement";
+	readonly left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
+	readonly right: AnyJSExpression;
+	readonly body: AnyJSStatement;
 }
 
 export const jsForInStatement = createBuilder<JSForInStatement>(

@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSArrayHole extends NodeBaseWithComments {
-	type: "JSArrayHole";
+	readonly type: "JSArrayHole";
 }
 
 export const jsArrayHole = createBuilder<JSArrayHole>(

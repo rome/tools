@@ -9,9 +9,9 @@ import {AnyJSRegExpExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpGroupCapture extends NodeBaseWithComments {
-	type: "JSRegExpGroupCapture";
-	expression: AnyJSRegExpExpression;
-	name?: string;
+	readonly type: "JSRegExpGroupCapture";
+	readonly expression: AnyJSRegExpExpression;
+	readonly name?: string;
 }
 
 export const jsRegExpGroupCapture = createBuilder<JSRegExpGroupCapture>(

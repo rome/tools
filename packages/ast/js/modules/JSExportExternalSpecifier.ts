@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSExportExternalSpecifier extends NodeBaseWithComments {
-	type: "JSExportExternalSpecifier";
-	exported: JSIdentifier;
-	local: JSIdentifier;
-	exportKind?: ConstJSExportModuleKind;
+	readonly type: "JSExportExternalSpecifier";
+	readonly exported: JSIdentifier;
+	readonly local: JSIdentifier;
+	readonly exportKind?: ConstJSExportModuleKind;
 }
 
 export const jsExportExternalSpecifier = createBuilder<JSExportExternalSpecifier>(

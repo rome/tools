@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSThisExpression extends NodeBaseWithComments {
-	type: "JSThisExpression";
+	readonly type: "JSThisExpression";
 }
 
 export const jsThisExpression = createBuilder<JSThisExpression>(

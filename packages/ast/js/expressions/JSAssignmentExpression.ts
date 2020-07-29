@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSAssignmentExpression extends NodeBaseWithComments {
-	type: "JSAssignmentExpression";
-	operator: AssignmentOperator;
-	left: AnyJSAssignmentPattern;
-	right: AnyJSExpression;
+	readonly type: "JSAssignmentExpression";
+	readonly operator: AssignmentOperator;
+	readonly left: AnyJSAssignmentPattern;
+	readonly right: AnyJSExpression;
 }
 
 export type AssignmentOperator =

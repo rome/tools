@@ -9,12 +9,12 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSPatternMeta extends NodeBaseWithComments {
-	type: "JSPatternMeta";
-	typeAnnotation?: AnyTSPrimary;
-	optional?: boolean;
-	accessibility?: string;
-	definite?: boolean;
-	readonly?: boolean;
+	readonly type: "JSPatternMeta";
+	readonly typeAnnotation?: AnyTSPrimary;
+	readonly optional?: boolean;
+	readonly accessibility?: string;
+	readonly definite?: boolean;
+	readonly readonly?: boolean;
 }
 
 export const jsPatternMeta = createQuickBuilder<JSPatternMeta, "typeAnnotation">(

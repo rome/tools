@@ -15,11 +15,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSNewExpression extends NodeBaseWithComments {
-	type: "JSNewExpression";
-	callee: AnyJSExpression | JSSuper;
-	arguments: Array<AnyJSExpression | JSSpreadElement>;
-	typeArguments?: undefined | TSTypeParameterInstantiation;
-	optional?: boolean;
+	readonly type: "JSNewExpression";
+	readonly callee: AnyJSExpression | JSSuper;
+	readonly arguments: Array<AnyJSExpression | JSSpreadElement>;
+	readonly typeArguments?: undefined | TSTypeParameterInstantiation;
+	readonly optional?: boolean;
 }
 
 export const jsNewExpression = createBuilder<JSNewExpression>(

@@ -13,9 +13,9 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSBlockStatement extends NodeBaseWithComments {
-	type: "JSBlockStatement";
-	body: Array<AnyJSStatement>;
-	directives?: Array<JSDirective>;
+	readonly type: "JSBlockStatement";
+	readonly body: Array<AnyJSStatement>;
+	readonly directives?: Array<JSDirective>;
 }
 
 export const jsBlockStatement = createQuickBuilder<JSBlockStatement, "body">(

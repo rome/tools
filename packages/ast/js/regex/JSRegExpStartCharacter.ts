@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpStartCharacter extends NodeBaseWithComments {
-	type: "JSRegExpStartCharacter";
+	readonly type: "JSRegExpStartCharacter";
 }
 
 export const jsRegExpStartCharacter = createBuilder<JSRegExpStartCharacter>(

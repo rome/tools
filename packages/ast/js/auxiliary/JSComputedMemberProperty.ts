@@ -9,9 +9,9 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSComputedMemberProperty extends NodeBaseWithComments {
-	type: "JSComputedMemberProperty";
-	value: AnyJSExpression;
-	optional?: boolean;
+	readonly type: "JSComputedMemberProperty";
+	readonly value: AnyJSExpression;
+	readonly optional?: boolean;
 }
 
 export const jsComputedMemberProperty = createQuickBuilder<

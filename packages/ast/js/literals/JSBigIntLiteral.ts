@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSBigIntLiteral extends NodeBaseWithComments {
-	type: "JSBigIntLiteral";
-	value: string;
+	readonly type: "JSBigIntLiteral";
+	readonly value: string;
 }
 
 export const jsBigIntLiteral = createBuilder<JSBigIntLiteral>(

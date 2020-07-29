@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSFunctionExpression extends NodeBaseWithComments {
-	type: "JSFunctionExpression";
-	id?: JSBindingIdentifier;
-	head: JSFunctionHead;
-	body: JSBlockStatement;
+	readonly type: "JSFunctionExpression";
+	readonly id?: JSBindingIdentifier;
+	readonly head: JSFunctionHead;
+	readonly body: JSBlockStatement;
 }
 
 export const jsFunctionExpression = createBuilder<JSFunctionExpression>(

@@ -14,13 +14,13 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSXMemberExpression extends NodeBaseWithComments {
-	type: "JSXMemberExpression";
+	readonly type: "JSXMemberExpression";
 	object:
 		| JSXMemberExpression
 		| JSXIdentifier
 		| JSXReferenceIdentifier
 		| JSXNamespacedName;
-	property: JSXIdentifier;
+	readonly property: JSXIdentifier;
 }
 
 export const jsxMemberExpression = createBuilder<JSXMemberExpression>(

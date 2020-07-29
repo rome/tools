@@ -16,15 +16,15 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSFunctionHead extends NodeBaseWithComments {
-	type: "JSFunctionHead";
-	params: Array<AnyJSParamBindingPattern>;
-	rest?: AnyJSTargetBindingPattern;
-	thisType?: JSBindingIdentifier;
-	hasHoistedVars?: boolean;
-	generator?: boolean;
-	async?: boolean;
-	typeParameters?: TSTypeParameterDeclaration;
-	returnType?: AnyTSPrimary;
+	readonly type: "JSFunctionHead";
+	readonly params: Array<AnyJSParamBindingPattern>;
+	readonly rest?: AnyJSTargetBindingPattern;
+	readonly thisType?: JSBindingIdentifier;
+	readonly hasHoistedVars?: boolean;
+	readonly generator?: boolean;
+	readonly async?: boolean;
+	readonly typeParameters?: TSTypeParameterDeclaration;
+	readonly returnType?: AnyTSPrimary;
 }
 
 export const jsFunctionHead = createQuickBuilder<JSFunctionHead, "params">(

@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTypeReference extends NodeBaseWithComments {
-	type: "TSTypeReference";
-	typeName: AnyTSEntityName;
-	typeParameters?: TSTypeParameterInstantiation;
+	readonly type: "TSTypeReference";
+	readonly typeName: AnyTSEntityName;
+	readonly typeParameters?: TSTypeParameterInstantiation;
 }
 
 export const tsTypeReference = createBuilder<TSTypeReference>(

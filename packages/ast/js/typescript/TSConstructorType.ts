@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSConstructorType extends NodeBaseWithComments {
-	type: "TSConstructorType";
-	meta: TSSignatureDeclarationMeta;
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSConstructorType";
+	readonly meta: TSSignatureDeclarationMeta;
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsConstructorType = createBuilder<TSConstructorType>(

@@ -9,9 +9,9 @@ import {JSNumericLiteral, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSNumericLiteralTypeAnnotation extends NodeBaseWithComments {
-	type: "TSNumericLiteralTypeAnnotation";
-	value: number;
-	format?: JSNumericLiteral["format"];
+	readonly type: "TSNumericLiteralTypeAnnotation";
+	readonly value: number;
+	readonly format?: JSNumericLiteral["format"];
 }
 
 export const tsNumericLiteralTypeAnnotation = createBuilder<TSNumericLiteralTypeAnnotation>(

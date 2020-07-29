@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpDigitCharacter extends NodeBaseWithComments {
-	type: "JSRegExpDigitCharacter";
+	readonly type: "JSRegExpDigitCharacter";
 }
 
 export const jsRegExpDigitCharacter = createBuilder<JSRegExpDigitCharacter>(

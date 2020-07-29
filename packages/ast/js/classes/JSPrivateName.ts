@@ -9,8 +9,8 @@ import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSPrivateName extends NodeBaseWithComments {
-	type: "JSPrivateName";
-	id: JSIdentifier;
+	readonly type: "JSPrivateName";
+	readonly id: JSIdentifier;
 }
 
 export const jsPrivateName = createBuilder<JSPrivateName>(

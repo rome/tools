@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSExportAllDeclaration extends NodeBaseWithComments {
-	type: "JSExportAllDeclaration";
-	source: JSStringLiteral;
-	exportKind?: ConstJSExportModuleKind;
-	declare?: boolean;
+	readonly type: "JSExportAllDeclaration";
+	readonly source: JSStringLiteral;
+	readonly exportKind?: ConstJSExportModuleKind;
+	readonly declare?: boolean;
 }
 
 export const jsExportAllDeclaration = createBuilder<JSExportAllDeclaration>(

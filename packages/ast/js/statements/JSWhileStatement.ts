@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSWhileStatement extends NodeBaseWithComments {
-	type: "JSWhileStatement";
-	test: AnyJSExpression;
-	body: AnyJSStatement;
+	readonly type: "JSWhileStatement";
+	readonly test: AnyJSExpression;
+	readonly body: AnyJSStatement;
 }
 
 export const jsWhileStatement = createBuilder<JSWhileStatement>(

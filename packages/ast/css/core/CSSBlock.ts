@@ -8,9 +8,11 @@ import {createBuilder} from "@romefrontend/ast/utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSBlock extends NodeBaseWithComments {
-	type: "CSSBlock";
-	startingTokenValue?: string;
-	value?: Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration | undefined>;
+	readonly type: "CSSBlock";
+	readonly startingTokenValue?: string;
+	readonly value?: Array<
+		AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration | undefined
+	>;
 }
 export const cssBlock = createBuilder<CSSBlock>(
 	"CSSBlock",

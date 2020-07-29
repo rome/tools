@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXEmptyExpression extends NodeBaseWithComments {
-	type: "JSXEmptyExpression";
+	readonly type: "JSXEmptyExpression";
 }
 
 export const jsxEmptyExpression = createBuilder<JSXEmptyExpression>(

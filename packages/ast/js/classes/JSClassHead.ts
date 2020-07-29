@@ -16,12 +16,12 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSClassHead extends NodeBaseWithComments {
-	type: "JSClassHead";
-	superClass?: AnyJSExpression;
-	body: Array<AnyJSClassMember>;
-	typeParameters?: TSTypeParameterDeclaration;
-	superTypeParameters?: TSTypeParameterInstantiation;
-	implements?: undefined | Array<TSExpressionWithTypeArguments>;
+	readonly type: "JSClassHead";
+	readonly superClass?: AnyJSExpression;
+	readonly body: Array<AnyJSClassMember>;
+	readonly typeParameters?: TSTypeParameterDeclaration;
+	readonly superTypeParameters?: TSTypeParameterInstantiation;
+	readonly implements?: undefined | Array<TSExpressionWithTypeArguments>;
 }
 
 export const jsClassHead = createQuickBuilder<JSClassHead, "body">(

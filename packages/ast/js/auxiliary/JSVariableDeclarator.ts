@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSVariableDeclarator extends NodeBaseWithComments {
-	type: "JSVariableDeclarator";
-	id: AnyJSTargetBindingPattern;
-	init?: AnyJSExpression;
+	readonly type: "JSVariableDeclarator";
+	readonly id: AnyJSTargetBindingPattern;
+	readonly init?: AnyJSExpression;
 }
 
 export const jsVariableDeclarator = createBuilder<JSVariableDeclarator>(

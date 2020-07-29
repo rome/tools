@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSAssignmentTypeAssertion extends NodeBaseWithComments {
-	type: "TSAssignmentTypeAssertion";
-	typeAnnotation: AnyTSPrimary;
-	expression: AnyJSTargetAssignmentPattern;
+	readonly type: "TSAssignmentTypeAssertion";
+	readonly typeAnnotation: AnyTSPrimary;
+	readonly expression: AnyJSTargetAssignmentPattern;
 }
 
 export const tsAssignmentTypeAssertion = createBuilder<TSAssignmentTypeAssertion>(

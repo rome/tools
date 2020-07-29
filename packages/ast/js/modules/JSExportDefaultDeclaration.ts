@@ -16,15 +16,15 @@ import {createBuilder} from "../../utils";
 import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 
 export interface JSExportDefaultDeclaration extends NodeBaseWithComments {
-	type: "JSExportDefaultDeclaration";
+	readonly type: "JSExportDefaultDeclaration";
 	declaration:
 		| JSFunctionDeclaration
 		| JSClassDeclaration
 		| TSInterfaceDeclaration
 		| TSDeclareFunction
 		| AnyJSExpression;
-	exportKind?: undefined;
-	declare?: boolean;
+	readonly exportKind?: undefined;
+	readonly declare?: boolean;
 }
 
 export const jsExportDefaultDeclaration = createBuilder<JSExportDefaultDeclaration>(

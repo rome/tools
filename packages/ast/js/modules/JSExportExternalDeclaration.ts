@@ -21,12 +21,12 @@ export type AnyExportExternalSpecifier =
 	| JSExportExternalSpecifier;
 
 export interface JSExportExternalDeclaration extends NodeBaseWithComments {
-	type: "JSExportExternalDeclaration";
-	defaultSpecifier?: JSExportDefaultSpecifier;
-	namespaceSpecifier?: JSExportNamespaceSpecifier;
-	namedSpecifiers: Array<JSExportExternalSpecifier>;
-	source: JSStringLiteral;
-	exportKind?: ConstJSExportModuleKind;
+	readonly type: "JSExportExternalDeclaration";
+	readonly defaultSpecifier?: JSExportDefaultSpecifier;
+	readonly namespaceSpecifier?: JSExportNamespaceSpecifier;
+	readonly namedSpecifiers: Array<JSExportExternalSpecifier>;
+	readonly source: JSStringLiteral;
+	readonly exportKind?: ConstJSExportModuleKind;
 }
 
 export const jsExportExternalDeclaration = createBuilder<JSExportExternalDeclaration>(

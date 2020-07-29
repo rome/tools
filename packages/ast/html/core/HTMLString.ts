@@ -2,8 +2,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface HTMLString extends NodeBaseWithComments {
-	type: "HTMLString";
-	value: string;
+	readonly type: "HTMLString";
+	readonly value: string;
 }
 
 export const htmlString = createBuilder<HTMLString>(

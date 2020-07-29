@@ -9,12 +9,12 @@ import {ConstTSAccessibility, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSClassPropertyMeta extends NodeBaseWithComments {
-	type: "JSClassPropertyMeta";
-	static?: boolean;
-	accessibility?: ConstTSAccessibility;
-	optional?: boolean;
-	readonly?: boolean;
-	abstract?: boolean;
+	readonly type: "JSClassPropertyMeta";
+	readonly static?: boolean;
+	readonly accessibility?: ConstTSAccessibility;
+	readonly optional?: boolean;
+	readonly readonly?: boolean;
+	readonly abstract?: boolean;
 }
 
 export const jsClassPropertyMeta = createBuilder<JSClassPropertyMeta>(

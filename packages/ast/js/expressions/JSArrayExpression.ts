@@ -14,8 +14,8 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSArrayExpression extends NodeBaseWithComments {
-	type: "JSArrayExpression";
-	elements: Array<JSArrayHole | AnyJSExpression | JSSpreadElement>;
+	readonly type: "JSArrayExpression";
+	readonly elements: Array<JSArrayHole | AnyJSExpression | JSSpreadElement>;
 }
 
 export const jsArrayExpression = createQuickBuilder<

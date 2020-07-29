@@ -3134,7 +3134,7 @@ export function parseFunctionBodyAndFinish(
 	}
 
 	const headEnd = parser.getLastEndPosition();
-	const head = parser.finishNodeAt(
+	let head = parser.finishNodeAt(
 		opts.headStart,
 		headEnd,
 		createFunctionHead(
@@ -3176,7 +3176,10 @@ export function parseFunctionBodyAndFinish(
 		body,
 	);
 
-	head.hasHoistedVars = hasHoistedVars;
+	head = {
+		...head,
+		hasHoistedVars,
+	};
 
 	return {
 		head,

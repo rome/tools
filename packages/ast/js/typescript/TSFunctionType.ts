@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSFunctionType extends NodeBaseWithComments {
-	type: "TSFunctionType";
-	meta: TSSignatureDeclarationMeta;
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSFunctionType";
+	readonly meta: TSSignatureDeclarationMeta;
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsFunctionType = createBuilder<TSFunctionType>(

@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSBindingObjectPatternProperty extends NodeBaseWithComments {
-	type: "JSBindingObjectPatternProperty";
-	key: AnyJSObjectPropertyKey;
-	value: AnyJSBindingPattern;
-	meta?: undefined;
+	readonly type: "JSBindingObjectPatternProperty";
+	readonly key: AnyJSObjectPropertyKey;
+	readonly value: AnyJSBindingPattern;
+	readonly meta?: undefined;
 }
 
 export const jsBindingObjectPatternProperty = createBuilder<JSBindingObjectPatternProperty>(

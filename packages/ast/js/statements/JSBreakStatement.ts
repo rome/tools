@@ -9,8 +9,8 @@ import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSBreakStatement extends NodeBaseWithComments {
-	type: "JSBreakStatement";
-	label?: JSIdentifier;
+	readonly type: "JSBreakStatement";
+	readonly label?: JSIdentifier;
 }
 
 export const jsBreakStatement = createBuilder<JSBreakStatement>(

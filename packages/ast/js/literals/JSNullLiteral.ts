@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSNullLiteral extends NodeBaseWithComments {
-	type: "JSNullLiteral";
+	readonly type: "JSNullLiteral";
 }
 
 export const jsNullLiteral = createBuilder<JSNullLiteral>(

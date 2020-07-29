@@ -16,12 +16,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSSignatureDeclarationMeta extends NodeBaseWithComments {
-	type: "TSSignatureDeclarationMeta";
-	parameters: Array<
+	readonly type: "TSSignatureDeclarationMeta";
+	readonly parameters: Array<
 		JSBindingIdentifier | JSBindingObjectPattern | JSBindingArrayPattern
 	>;
-	rest: undefined | AnyJSTargetBindingPattern;
-	typeParameters: undefined | TSTypeParameterDeclaration;
+	readonly rest: undefined | AnyJSTargetBindingPattern;
+	readonly typeParameters: undefined | TSTypeParameterDeclaration;
 }
 
 export const tsSignatureDeclarationMeta = createBuilder<TSSignatureDeclarationMeta>(

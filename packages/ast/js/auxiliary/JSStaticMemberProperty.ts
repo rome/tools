@@ -13,9 +13,9 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSStaticMemberProperty extends NodeBaseWithComments {
-	type: "JSStaticMemberProperty";
-	value: JSIdentifier | JSPrivateName;
-	optional?: boolean;
+	readonly type: "JSStaticMemberProperty";
+	readonly value: JSIdentifier | JSPrivateName;
+	readonly optional?: boolean;
 }
 
 export const jsStaticMemberProperty = createQuickBuilder<
