@@ -1,4 +1,4 @@
-if (!location.href.includes("veryfunny")) {
+if (!location.href.includes("veryfunny") && !location.href.includes("netlify.app")) {
 	const style = document.createElement("style");
 	style.textContent = `
 		html {
