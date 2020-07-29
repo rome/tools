@@ -1,5 +1,4 @@
-import {Path} from "@romefrontend/compiler";
-import {TransformExitResult} from "@romefrontend/compiler/types";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {JSXElement} from "@romefrontend/ast";
 import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
@@ -21,9 +20,9 @@ function hasAriaAttributes(node: JSXElement): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/ariaUnsupportedElements",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -32,7 +31,7 @@ export default {
 			isJSXElement(node, "script") ||
 			isJSXElement(node, "style"))
 		) {
-			return node;
+			return signals.retain;
 		}
 
 		if (hasAriaAttributes(node)) {
@@ -42,6 +41,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -1,9 +1,9 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "jsx/preferSelfClosingElements",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -11,18 +11,17 @@ export default {
 			!node.selfClosing &&
 			node.children.length === 0
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						selfClosing: true,
-					},
+					}),
 				},
 				descriptions.LINT.JSX_PREFER_SELF_CLOSING_ELEMENTS,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

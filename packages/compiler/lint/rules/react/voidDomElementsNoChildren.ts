@@ -5,10 +5,8 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {Path, REDUCE_REMOVE} from "@romefrontend/compiler";
-
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
-import {TransformExitResult} from "@romefrontend/compiler/types";
 import {JSStringLiteral} from "@romefrontend/ast";
 import {
 	getCreateElementChildren,
@@ -18,10 +16,10 @@ import {
 } from "../../utils/react";
 import {VOID_DOM_ELEMENTS} from "../../utils/constants";
 
-export default {
+export default createVisitor({
 	name: "react/voidDomElementsNoChildren",
-	enter(path: Path): TransformExitResult {
-		const {node, context, scope} = path;
+	enter(path) {
+		const {node, scope} = path;
 		const elementType = getCreateElementType(node, scope);
 
 		if (
@@ -35,26 +33,28 @@ export default {
 				scope,
 				"dangerouslySetInnerHTML",
 			);
+
 			if (Array.isArray(childrenNode)) {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
 						target: node.arguments,
-						old: node,
-						fixed: {
+						fixed: signals.replace({
 							...node,
 							arguments: [node.arguments[0], node.arguments[1]],
-						},
+						}),
 					},
 					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						(node.arguments[0] as JSStringLiteral).value,
 						["children"],
 					),
 				);
-			} else if (elementType && childrenNode) {
-				return context.addFixableDiagnostic(
+			}
+
+			if (elementType && childrenNode) {
+				return path.addFixableDiagnostic(
 					{
-						old: childrenNode,
-						fixed: REDUCE_REMOVE,
+						target: childrenNode,
+						fixed: signals.remove,
 					},
 					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						elementType,
@@ -64,10 +64,10 @@ export default {
 			}
 
 			if (elementType && dangerNode) {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: dangerNode,
-						fixed: REDUCE_REMOVE,
+						target: dangerNode,
+						fixed: signals.remove,
 					},
 					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						elementType,
@@ -106,15 +106,14 @@ export default {
 			}
 
 			if (properties.size > 0) {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: {
+						fixed: signals.replace({
 							...node,
 							attributes: newAttributes,
 							children: [],
 							selfClosing: true,
-						},
+						}),
 					},
 					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						element,
@@ -124,6 +123,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

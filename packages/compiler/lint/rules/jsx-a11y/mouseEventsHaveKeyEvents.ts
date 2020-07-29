@@ -1,10 +1,10 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/mouseEventsHaveKeyEvents",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSXElement") {
@@ -35,6 +35,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

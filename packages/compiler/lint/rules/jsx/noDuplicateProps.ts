@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {DiagnosticsDuplicateHelper} from "@romefrontend/compiler/lib/DiagnosticsDuplicateHelper";
 import {JSXAttribute} from "@romefrontend/ast";
@@ -8,14 +8,14 @@ function getAttributeKey(node: JSXAttribute): string {
 	return typeof name === "string" ? name : name.name;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx/noDuplicateProps",
 
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 
 		if (node.type !== "JSXElement") {
-			return node;
+			return signals.retain;
 		}
 
 		const duplicates = new DiagnosticsDuplicateHelper(
@@ -31,6 +31,6 @@ export default {
 
 		duplicates.process();
 
-		return node;
+		return signals.retain;
 	},
-};
+});

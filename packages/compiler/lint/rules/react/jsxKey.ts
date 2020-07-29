@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode, JSCallExpression, JSXElement} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
+import {JSCallExpression, JSXElement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
 
@@ -36,9 +36,9 @@ function getMapCallback(node: JSCallExpression) {
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "react/jsxKey",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		// JSXElement in array literal
@@ -73,7 +73,7 @@ export default {
 				fn.type === "JSArrowFunctionExpression") &&
 				fn.body.type === "JSBlockStatement"
 			) {
-				fn.body.body.forEach((statement) => {
+				for (const statement of fn.body.body) {
 					if (
 						statement.type === "JSReturnStatement" &&
 						statement.argument?.type === "JSXElement" &&
@@ -84,10 +84,10 @@ export default {
 							descriptions.LINT.REACT_JSX_KEY("iterator"),
 						);
 					}
-				});
+				}
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
-	AnyNode,
 	JSFunctionExpression,
 	jsBlockStatement,
 	jsFunctionExpression,
@@ -16,9 +15,9 @@ import {
 import {template} from "@romefrontend/js-ast-utils";
 import {getOptions} from "../_utils";
 
-export default {
+export default createVisitor({
 	name: "magicCJSTransform",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope, context} = path;
 		const options = getOptions(context);
 
@@ -34,7 +33,7 @@ export default {
 
 			// Maybe error?
 			if (args.length !== 1 || arg.type !== "JSStringLiteral") {
-				return node;
+				return signals.retain;
 			}
 
 			const source = arg.value;
@@ -49,7 +48,9 @@ export default {
 				const sourceNode = jsStringLiteral.create({
 					value: resolved,
 				});
-				return template.expression`Rome.requireNamespace(${sourceNode})`;
+				return signals.replace(
+					template.expression`Rome.requireNamespace(${sourceNode})`,
+				);
 			}
 		}
 
@@ -58,12 +59,12 @@ export default {
 			node.name === "require" &&
 			scope.getBinding("require") === undefined
 		) {
-			return template.expression`Rome.requireNamespace`;
+			return signals.replace(template.expression`Rome.requireNamespace`);
 		}
 
-		return node;
+		return signals.retain;
 	},
-	exit(path: Path): AnyNode {
+	exit(path) {
 		const {node, context} = path;
 		const options = getOptions(context);
 
@@ -93,13 +94,13 @@ export default {
 					: template.expression`Rome.declareCJS`;
 			const wrapper = template.statement`${declare}(${source}, ${factory})`;
 
-			return {
+			return signals.replace({
 				...node,
 				directives: [],
 				body: [wrapper],
-			};
+			});
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

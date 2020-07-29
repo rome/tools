@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode, JSClassHead} from "@romefrontend/ast";
 import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
@@ -211,9 +211,9 @@ function findOutOfOrderNodes(
 	return {nodesToMove, nodesInOrder};
 }
 
-export default {
+export default createVisitor({
 	name: "react/sortComp",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		// Look for classes and Check if the classes are react components
@@ -293,6 +293,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

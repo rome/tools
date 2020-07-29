@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	jsAssignmentExpression,
 	jsMemberExpression,
@@ -13,10 +13,10 @@ import {
 } from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noDelete",
-	enter(path: Path): TransformExitResult {
-		const {context, node} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (
 			node.type === "JSUnaryExpression" &&
@@ -24,27 +24,28 @@ export default {
 			node.argument.type === "JSMemberExpression"
 		) {
 			const left = node.argument;
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: jsAssignmentExpression.create(
-						{
-							operator: "=",
-							left: jsMemberExpression.create({
-								object: left.object,
-								property: left.property,
-							}),
-							right: jsReferenceIdentifier.create({
-								name: "undefined",
-							}),
-						},
-						node,
+					fixed: signals.replace(
+						jsAssignmentExpression.create(
+							{
+								operator: "=",
+								left: jsMemberExpression.create({
+									object: left.object,
+									property: left.property,
+								}),
+								right: jsReferenceIdentifier.create({
+									name: "undefined",
+								}),
+							},
+							node,
+						),
 					),
 				},
 				descriptions.LINT.JS_NO_DELETE,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

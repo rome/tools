@@ -784,7 +784,7 @@ export default class TestAPI implements TestHelper {
 				let markupMessage;
 
 				if (message === undefined) {
-					markupMessage = markup`Snapshot ${entryName} at <emphasis>${snapshotPath}</emphasis> doesn't match`;
+					markupMessage = markup`Snapshot <emphasis>"${entryName}"</emphasis> at <emphasis>${snapshotPath}</emphasis> doesn't match`;
 				} else {
 					markupMessage = markup`${message}`;
 

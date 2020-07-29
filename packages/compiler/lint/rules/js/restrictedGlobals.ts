@@ -5,16 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {isInTypeAnnotation} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
 const RESTRICTED_GLOBALS = ["event", "error"];
 
-export default {
+export default createVisitor({
 	name: "js/restrictedGlobal",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (
@@ -36,6 +35,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

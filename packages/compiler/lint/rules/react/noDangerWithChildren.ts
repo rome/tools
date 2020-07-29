@@ -7,7 +7,7 @@
 
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
-import {Path, Scope} from "@romefrontend/compiler";
+import {Scope, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	getCreateElementChildren,
 	getCreateElementProp,
@@ -50,10 +50,10 @@ function createElementDangerWithChildren(node: AnyNode, scope: Scope): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "react/noDangerWithChildren",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (
@@ -67,6 +67,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

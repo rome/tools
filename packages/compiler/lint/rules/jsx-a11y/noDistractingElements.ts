@@ -1,13 +1,13 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
 
 const DISTRACTING_TYPES = ["blink", "marquee"];
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/noDistractingElements",
 
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		const distractingType =
@@ -21,6 +21,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

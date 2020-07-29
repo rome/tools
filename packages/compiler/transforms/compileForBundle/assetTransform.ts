@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getOptions} from "./_utils";
 import {ASSET_EXPORT_TEMPORARY_VALUE} from "@romefrontend/core/common/file-handlers/index";
 
-export default {
+export default createVisitor({
 	name: "asset",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 		const options = getOptions(path.context);
 
@@ -21,15 +21,15 @@ export default {
 			node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
 			options.assetPath !== undefined
 		) {
-			return {
+			return signals.replace({
 				...node,
 				declaration: {
 					...node.declaration,
 					value: options.moduleId,
 				},
-			};
+			});
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

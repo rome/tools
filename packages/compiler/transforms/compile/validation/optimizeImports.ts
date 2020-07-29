@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path, TransformExitResult} from "@romefrontend/compiler";
+import {Binding, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyNode,
 	JSImportDeclaration,
@@ -46,13 +46,13 @@ function getName(node: AnyNode): undefined | string {
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "optimizeImports",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type !== "JSRoot") {
-			return node;
+			return signals.retain;
 		}
 
 		// Check if we have any wildcard imports
@@ -86,11 +86,10 @@ export default {
 			}
 		}
 		if (wildcardImports.size === 0) {
-			return node;
+			return signals.retain;
 		}
 
 		// - Find all imported names from this namespace
-
 		// - Remove the namespaces that have computed property access
 		path.traverse(
 			"optimizeImportsWildcardCollector",
@@ -133,7 +132,7 @@ export default {
 			},
 		);
 		if (wildcardImports.size === 0) {
-			return node;
+			return signals.retain;
 		}
 
 		// Populate the `mappings` field with a uid
@@ -143,9 +142,9 @@ export default {
 			}
 		}
 
-		return path.reduce({
+		return path.reduceSignal({
 			name: "optimizeImportWilcards",
-			enter(path): AnyNode {
+			enter(path) {
 				const {node} = path;
 
 				// Replace all member expressions with their uids
@@ -167,9 +166,9 @@ export default {
 						}
 
 						if (node.type === "JSXMemberExpression") {
-							return jsxIdentifier.quick(newName);
+							return signals.replace(jsxIdentifier.quick(newName));
 						} else {
-							return jsReferenceIdentifier.quick(newName);
+							return signals.replace(jsReferenceIdentifier.quick(newName));
 						}
 					}
 				}
@@ -187,7 +186,7 @@ export default {
 					const wildcardInfo = wildcardImports.get(local);
 					if (wildcardInfo === undefined) {
 						// We would have deopted earlier
-						return node;
+						return signals.retain;
 					}
 
 					// Remove wildcard specifier
@@ -207,15 +206,17 @@ export default {
 						);
 					}
 
-					return jsImportDeclaration.create({
-						...node,
-						namespaceSpecifier: undefined,
-						namedSpecifiers,
-					});
+					return signals.replace(
+						jsImportDeclaration.create({
+							...node,
+							namespaceSpecifier: undefined,
+							namedSpecifiers,
+						}),
+					);
 				}
 
-				return node;
+				return signals.retain;
 			},
 		});
 	},
-};
+});

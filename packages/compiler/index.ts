@@ -23,12 +23,22 @@ export {
 	mergeAnalyzeDependencies,
 } from "./api/analyzeDependencies/index";
 
-// scope
 export {default as Scope} from "./scope/Scope";
 export * from "./scope/bindings";
 
-// utils
+export * from "./utils";
 export * from "./constants";
+
+import * as signals from "./signals";
+export {signals};
+export {
+	EnterSignal,
+	ExitSignal,
+	ParentSignal,
+	RemoveSignal,
+	ReplaceSignal,
+	SkipSignal,
+} from "./signals";
 
 export {areAnalyzeDependencyResultsEqual} from "./api/analyzeDependencies/utils";
 export {getPrefixedNamespace as getPrefixedBundleNamespace} from "./transforms/compileForBundle/_utils";
@@ -38,7 +48,6 @@ export {
 	matchesSuppression,
 } from "./suppressions";
 
-// types
 export {LintResult} from "./lint/index";
 export {CompileResult} from "./api/compile";
 export {HookDescriptor} from "./api/createHook";

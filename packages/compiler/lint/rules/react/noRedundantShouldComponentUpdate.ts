@@ -1,10 +1,10 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default {
+export default createVisitor({
 	name: "react/noRedundantShouldComponentUpdate",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (
@@ -29,6 +29,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

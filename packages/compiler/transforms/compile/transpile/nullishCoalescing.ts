@@ -5,19 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {template} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "nullishCoalescing",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSLogicalExpression" && node.operator === "??") {
 			// TODO assign `node.left` to a variable and use it as a reference
-			return template.expression`${node.left} == null ? ${node.right} : ${node.left}`;
+			return signals.replace(
+				template.expression`${node.left} == null ? ${node.right} : ${node.left}`,
+			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -1,23 +1,15 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "ts/noExplicitAny",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {context, node} = path;
 
 		if (node.type === "TSAnyKeywordTypeAnnotation") {
 			context.addNodeDiagnostic(node, descriptions.LINT.TS_NO_EXPLICIT_ANY);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

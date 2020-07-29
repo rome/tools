@@ -12,11 +12,7 @@ import {
 	JSRegExpSubExpression,
 	jsRegExpQuantified,
 } from "@romefrontend/ast";
-import {
-	CompilerContext,
-	Path,
-	TransformExitResult,
-} from "@romefrontend/compiler";
+import {ExitSignal, Path, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 function isSpaceChar(
@@ -29,10 +25,7 @@ function isSpaceChar(
 	);
 }
 
-function checkRegex(
-	node: JSRegExpSubExpression,
-	context: CompilerContext,
-): TransformExitResult {
+function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
 	const newBody: Array<AnyJSRegExpBodyItem> = [];
 	const diagnosticTargets: Array<AnyJSRegExpBodyItem> = [];
 
@@ -69,30 +62,29 @@ function checkRegex(
 			...node,
 			body: newBody,
 		};
-		return context.addFixableDiagnostic(
+		return path.addFixableDiagnostic(
 			{
 				target: diagnosticTargets,
-				old: node,
-				fixed: newRegex,
+				fixed: signals.replace(newRegex),
 			},
 			descriptions.LINT.JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
 				diagnosticTargets.length,
 			),
 		);
 	} else {
-		return node;
+		return signals.retain;
 	}
 }
 
-export default {
+export default createVisitor({
 	name: "js/noMultipleSpacesInRegularExpressionLiterals",
-	enter(path: Path): TransformExitResult {
-		const {context, node} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "JSRegExpSubExpression") {
-			return checkRegex(node, context);
+			return checkRegex(path, node);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

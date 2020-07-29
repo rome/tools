@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 function isAssignment(path: Path): boolean {
@@ -24,9 +23,9 @@ function isAssignment(path: Path): boolean {
 	}
 }
 
-export default {
+export default createVisitor({
 	name: "js/noImportAssign",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (
@@ -43,6 +42,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -1,8 +1,5 @@
-import {
-	CompilerContext,
-	Path,
-	TransformExitResult,
-} from "@romefrontend/compiler";
+import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
+
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
 
@@ -16,9 +13,9 @@ function isJSXFile(context: CompilerContext): boolean {
 	return JSX_FILE_EXTENSIONS.includes(context.path.getExtensions());
 }
 
-export default {
+export default createVisitor({
 	name: "jsx/fileExtension",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context} = path;
 
 		if (isJSXNode(node) && !isJSXFile(context)) {
@@ -31,6 +28,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

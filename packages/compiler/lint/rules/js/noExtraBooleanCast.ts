@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyNode,
 	JSConditionalExpression,
@@ -59,9 +59,9 @@ function getNode(path: Path): undefined | AnyNode {
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "js/noExtraBooleanCast",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {context} = path;
 
 		let node = getNode(path);
@@ -83,6 +83,6 @@ export default {
 			}
 		}
 
-		return path.node;
+		return signals.retain;
 	},
-};
+});

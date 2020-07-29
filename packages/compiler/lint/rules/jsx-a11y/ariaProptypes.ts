@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {isEmptyTemplateLiteral} from "@romefrontend/js-ast-utils";
 import {
@@ -81,9 +81,9 @@ function isCorrectValue(
 	}
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/ariaProptypes",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSXAttribute") {
@@ -144,6 +144,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

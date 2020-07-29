@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {markup} from "@romefrontend/cli-layout";
 
 const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 
-export default {
+export default createVisitor({
 	name: "js/doubleEquals",
-	enter(path: Path) {
-		const {node, context} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (
 			node.type === "JSBinaryExpression" &&
@@ -22,17 +22,16 @@ export default {
 			node.left.type !== "JSNullLiteral"
 		) {
 			if (node.operator === "!=") {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
 						suggestions: [
 							{
 								title: markup`Use !==`,
 								description: SUGGESTION_DESCRIPTION,
-								fixed: {
+								fixed: signals.replace({
 									...node,
 									operator: "!==",
-								},
+								}),
 							},
 						],
 					},
@@ -41,17 +40,16 @@ export default {
 			}
 
 			if (node.operator === "==") {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
 						suggestions: [
 							{
 								title: markup`Use ===`,
 								description: SUGGESTION_DESCRIPTION,
-								fixed: {
+								fixed: signals.replace({
 									...node,
 									operator: "===",
-								},
+								}),
 							},
 						],
 					},
@@ -60,6 +58,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

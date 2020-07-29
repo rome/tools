@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {JSXElement} from "@romefrontend/ast";
 import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
@@ -11,17 +11,17 @@ function hasTrack(node: JSXElement): boolean {
 	return node.children.some((child) => isJSXElement(child, "track"));
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/mediaHasCaption",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (!(isJSXElement(node, "video") || isJSXElement(node, "audio"))) {
-			return node;
+			return signals.retain;
 		}
 
 		if (isJSXElement(node, "video") && hasMuted(node)) {
-			return node;
+			return signals.retain;
 		}
 
 		if (!hasTrack(node)) {
@@ -31,6 +31,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

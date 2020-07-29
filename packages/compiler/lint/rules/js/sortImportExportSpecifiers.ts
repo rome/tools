@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	JSExportExternalSpecifier,
 	JSExportLocalSpecifier,
@@ -47,10 +47,10 @@ function shouldReorder<T>(a: Array<T>, b: Array<T>) {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "js/sortImportExportSpecifiers",
-	enter(path: Path): TransformExitResult {
-		const {context, node} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "JSImportDeclaration") {
 			if (node.namedSpecifiers.length > 1) {
@@ -59,10 +59,12 @@ export default {
 					compareImportSpecifiers,
 				);
 				if (shouldReorder(specifiers, sortedSpecifiers)) {
-					return context.addFixableDiagnostic(
+					return path.addFixableDiagnostic(
 						{
-							old: node,
-							fixed: {...node, namedSpecifiers: sortedSpecifiers},
+							fixed: signals.replace({
+								...node,
+								namedSpecifiers: sortedSpecifiers,
+							}),
 						},
 						descriptions.LINT.JS_SORT_IMPORT_SPECIFIERS,
 					);
@@ -75,10 +77,12 @@ export default {
 					compareExportSpecifiers,
 				);
 				if (shouldReorder(specifiers, sortedSpecifiers)) {
-					return context.addFixableDiagnostic(
+					return path.addFixableDiagnostic(
 						{
-							old: node,
-							fixed: {...node, namedSpecifiers: sortedSpecifiers},
+							fixed: signals.replace({
+								...node,
+								namedSpecifiers: sortedSpecifiers,
+							}),
 						},
 						descriptions.LINT.JS_SORT_EXPORT_SPECIFIERS,
 					);
@@ -91,10 +95,9 @@ export default {
 					compareExportSpecifiers,
 				);
 				if (shouldReorder(specifiers, sortedSpecifiers)) {
-					return context.addFixableDiagnostic(
+					return path.addFixableDiagnostic(
 						{
-							old: node,
-							fixed: {...node, specifiers: sortedSpecifiers},
+							fixed: signals.replace({...node, specifiers: sortedSpecifiers}),
 						},
 						descriptions.LINT.JS_SORT_EXPORT_SPECIFIERS,
 					);
@@ -102,6 +105,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -1,4 +1,4 @@
-import {Path, Scope, TransformExitResult} from "@romefrontend/compiler";
+import {Scope, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
 import {
@@ -46,9 +46,9 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "react/buttonHasType",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (createElementMissingType(node, scope) || jsxMissingType(node, scope)) {
@@ -58,6 +58,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

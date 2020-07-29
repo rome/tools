@@ -6,8 +6,7 @@
 */
 
 import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 const reactDOMConfig = {
@@ -15,10 +14,10 @@ const reactDOMConfig = {
 	importName: "ReactDOM",
 };
 
-export default {
+export default createVisitor({
 	name: "react/noFindDOMNode",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (
@@ -42,6 +41,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

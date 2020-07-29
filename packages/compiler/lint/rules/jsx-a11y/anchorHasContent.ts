@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {JSXElement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
@@ -13,10 +13,11 @@ function hasAnchorContent(node: JSXElement): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/anchorHasContent",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
+
 		if (isJSXElement(node, "a") && !hasAnchorContent(node)) {
 			path.context.addNodeDiagnostic(
 				node,
@@ -24,6 +25,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -7,7 +7,6 @@
 
 import {
 	AnyJSExpression,
-	AnyNode,
 	JSCallExpression,
 	JSMemberExpression,
 	JSObjectProperties,
@@ -38,7 +37,7 @@ import {
 	jsxExpressionContainer,
 	jsxIdentifier,
 } from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	cleanJSXText,
 	inheritLoc,
@@ -233,9 +232,9 @@ function buildChildren(
 	return elems;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context, parent} = path;
 
 		if (node.type === "JSXElement") {
@@ -260,23 +259,27 @@ export default {
 
 			// If we're a JSX element child then we need to be wrapped
 			if (parent.type === "JSXElement") {
-				return jsxExpressionContainer.create({
-					expression: call,
-				});
+				return signals.replace(
+					jsxExpressionContainer.create({
+						expression: call,
+					}),
+				);
 			} else {
-				return call;
+				return signals.replace(call);
 			}
 		}
 
 		if (node.type === "JSXFragment") {
 			const type = template.expression`React.Fragment`;
 			const attribs = template.expression`null`;
-			return jsCallExpression.create({
-				callee: template.expression`React.createElement`,
-				arguments: [type, attribs, ...buildChildren(node.children)],
-			});
+			return signals.replace(
+				jsCallExpression.create({
+					callee: template.expression`React.createElement`,
+					arguments: [type, attribs, ...buildChildren(node.children)],
+				}),
+			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

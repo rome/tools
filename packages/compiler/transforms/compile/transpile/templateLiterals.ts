@@ -5,17 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyJSExpression,
-	AnyNode,
 	jsBinaryExpression,
 	jsStringLiteral,
 } from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "jsTemplateLiterals",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, parent} = path;
 
 		if (node.type === "JSTaggedTemplateExpression") {
@@ -48,11 +47,11 @@ export default {
 			}
 
 			if (nodes.length === 0) {
-				return jsStringLiteral.quick("");
+				return signals.replace(jsStringLiteral.quick(""));
 			}
 
 			if (nodes.length === 1) {
-				return nodes[0];
+				return signals.replace(nodes[0]);
 			}
 
 			// Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
@@ -72,9 +71,9 @@ export default {
 					right: nodes[i],
 				});
 			}
-			return root;
+			return signals.replace(root);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
