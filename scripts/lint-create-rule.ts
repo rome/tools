@@ -69,7 +69,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 		`
 			---
 			title: Lint Rule ${ruleName}
-			layout: layouts/page.njk
+			layout: layouts/page.liquid
 			showHero: false
 			description: MISSING DOCUMENTATION
 			eleventyNavigation:

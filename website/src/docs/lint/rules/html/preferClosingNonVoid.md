@@ -1,6 +1,6 @@
 ---
 title: Lint Rule html/preferClosingNonVoid
-layout: layouts/page.njk
+layout: layouts/page.liquid
 showHero: false
 description: MISSING DOCUMENTATION
 eleventyNavigation:
