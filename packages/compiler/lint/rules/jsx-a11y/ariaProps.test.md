@@ -138,8 +138,7 @@
 ### `5: formatted`
 
 ```
-<div>
-</div>;
+<div />;
 
 ```
 
@@ -153,8 +152,7 @@
 ### `6: formatted`
 
 ```
-<div aria="wee">
-</div>;
+<div aria="wee" />;
 
 ```
 
@@ -168,8 +166,7 @@
 ### `7: formatted`
 
 ```
-<div abcARIAdef="true">
-</div>;
+<div abcARIAdef="true" />;
 
 ```
 
@@ -183,8 +180,7 @@
 ### `8: formatted`
 
 ```
-<div fooaria-foobar="true">
-</div>;
+<div fooaria-foobar="true" />;
 
 ```
 
@@ -198,8 +194,7 @@
 ### `9: formatted`
 
 ```
-<div fooaria-hidden="true">
-</div>;
+<div fooaria-hidden="true" />;
 
 ```
 

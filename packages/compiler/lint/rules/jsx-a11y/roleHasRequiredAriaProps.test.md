@@ -26,8 +26,7 @@
 ### `0: formatted`
 
 ```
-<span role="checkbox">
-</span>;
+<span role="checkbox" />;
 
 ```
 
@@ -53,8 +52,7 @@
 ### `1: formatted`
 
 ```
-<span role="switch">
-</span>;
+<span role="switch" />;
 
 ```
 
@@ -84,8 +82,7 @@
 ### `2: formatted`
 
 ```
-<span role="spinbutton">
-</span>;
+<span role="spinbutton" />;
 
 ```
 
@@ -113,8 +110,7 @@
 ### `3: formatted`
 
 ```
-<span role="spinbutton" aria-valuemax="100">
-</span>;
+<span role="spinbutton" aria-valuemax="100" />;
 
 ```
 
@@ -142,8 +138,7 @@
 ### `4: formatted`
 
 ```
-<span role="spinbutton" aria-valuemin="0">
-</span>;
+<span role="spinbutton" aria-valuemin="0" />;
 
 ```
 
@@ -169,8 +164,7 @@
 ### `5: formatted`
 
 ```
-<span role="spinbutton" aria-valuemin="0" aria-valuemax="100">
-</span>;
+<span role="spinbutton" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
 
@@ -198,8 +192,7 @@
 ### `6: formatted`
 
 ```
-<span role="slider" aria-valuemin="0">
-</span>;
+<span role="slider" aria-valuemin="0" />;
 
 ```
 
@@ -227,8 +220,7 @@
 ### `7: formatted`
 
 ```
-<span role="slider" aria-valuemax="100">
-</span>;
+<span role="slider" aria-valuemax="100" />;
 
 ```
 
@@ -254,8 +246,7 @@
 ### `8: formatted`
 
 ```
-<span role="slider" aria-valuemin="0" aria-valuemax="100">
-</span>;
+<span role="slider" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
 
@@ -284,8 +275,7 @@
 ### `9: formatted`
 
 ```
-<span role="separator" aria-valuemin="0">
-</span>;
+<span role="separator" aria-valuemin="0" />;
 
 ```
 
@@ -314,8 +304,7 @@
 ### `10: formatted`
 
 ```
-<span role="separator" aria-valuemax="100">
-</span>;
+<span role="separator" aria-valuemax="100" />;
 
 ```
 
@@ -342,8 +331,7 @@
 ### `11: formatted`
 
 ```
-<span role="separator" aria-valuemin="0" aria-valuemax="100">
-</span>;
+<span role="separator" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
 
@@ -376,8 +364,7 @@
 ### `12: formatted`
 
 ```
-<span role="scrollbar" aria-valuemin="0">
-</span>;
+<span role="scrollbar" aria-valuemin="0" />;
 
 ```
 
@@ -410,8 +397,7 @@
 ### `13: formatted`
 
 ```
-<span role="scrollbar" aria-valuemax="100">
-</span>;
+<span role="scrollbar" aria-valuemax="100" />;
 
 ```
 
@@ -442,8 +428,7 @@
 ### `14: formatted`
 
 ```
-<span role="scrollbar" aria-valuemin="0" aria-valuemax="100">
-</span>;
+<span role="scrollbar" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
 
@@ -476,8 +461,7 @@
 <span role="scrollbar"
 aria-valuemin="0"
 aria-valuemax="100"
-aria-orientation="horizontal">
-</span>;
+aria-orientation="horizontal" />;
 
 ```
 
@@ -504,8 +488,7 @@ aria-orientation="horizontal">
 ### `16: formatted`
 
 ```
-<span role="radio">
-</span>;
+<span role="radio" />;
 
 ```
 
@@ -532,8 +515,7 @@ aria-orientation="horizontal">
 ### `17: formatted`
 
 ```
-<span role="option">
-</span>;
+<span role="option" />;
 
 ```
 
@@ -560,8 +542,7 @@ aria-orientation="horizontal">
 ### `18: formatted`
 
 ```
-<span role="heading">
-</span>;
+<span role="heading" />;
 
 ```
 
@@ -590,8 +571,7 @@ aria-orientation="horizontal">
 ### `19: formatted`
 
 ```
-<span role="combobox">
-</span>;
+<span role="combobox" />;
 
 ```
 
@@ -618,8 +598,7 @@ aria-orientation="horizontal">
 ### `20: formatted`
 
 ```
-<span role="combobox" aria-expanded="true">
-</span>;
+<span role="combobox" aria-expanded="true" />;
 
 ```
 
@@ -646,8 +625,7 @@ aria-orientation="horizontal">
 ### `21: formatted`
 
 ```
-<span role="combobox" aria-controls="true">
-</span>;
+<span role="combobox" aria-controls="true" />;
 
 ```
 
@@ -674,8 +652,7 @@ aria-orientation="horizontal">
 ### `22: formatted`
 
 ```
-<span role="menuitemcheckbox">
-</span>;
+<span role="menuitemcheckbox" />;
 
 ```
 
@@ -702,8 +679,7 @@ aria-orientation="horizontal">
 ### `23: formatted`
 
 ```
-<span role="menuitemradio">
-</span>;
+<span role="menuitemradio" />;
 
 ```
 
@@ -717,8 +693,7 @@ aria-orientation="horizontal">
 ### `24: formatted`
 
 ```
-<span role="checkbox" aria-checked="true">
-</span>;
+<span role="checkbox" aria-checked="true" />;
 
 ```
 
@@ -732,8 +707,7 @@ aria-orientation="horizontal">
 ### `25: formatted`
 
 ```
-<span role="switch" aria-checked="true">
-</span>;
+<span role="switch" aria-checked="true" />;
 
 ```
 
@@ -750,8 +724,7 @@ aria-orientation="horizontal">
 <span role="spinbutton"
 aria-valuemax="100"
 aria-valuemin="0"
-aria-valuenow="50">
-</span>;
+aria-valuenow="50" />;
 
 ```
 
@@ -765,8 +738,7 @@ aria-valuenow="50">
 ### `27: formatted`
 
 ```
-<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50">
-</span>;
+<span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" />;
 
 ```
 
@@ -780,8 +752,10 @@ aria-valuenow="50">
 ### `28: formatted`
 
 ```
-<span role="separator" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50">
-</span>;
+<span role="separator"
+aria-valuemax="100"
+aria-valuemin="0"
+aria-valuenow="50" />;
 
 ```
 
@@ -800,8 +774,7 @@ aria-valuemax="100"
 aria-valuemin="0"
 aria-valuenow="50"
 aria-orientation="horizontal"
-aria-controls="123">
-</span>;
+aria-controls="123" />;
 
 ```
 
@@ -815,8 +788,7 @@ aria-controls="123">
 ### `30: formatted`
 
 ```
-<span role="radio" aria-checked="true">
-</span>;
+<span role="radio" aria-checked="true" />;
 
 ```
 
@@ -830,8 +802,7 @@ aria-controls="123">
 ### `31: formatted`
 
 ```
-<span role="option" aria-selected="true">
-</span>;
+<span role="option" aria-selected="true" />;
 
 ```
 
@@ -845,8 +816,7 @@ aria-controls="123">
 ### `32: formatted`
 
 ```
-<span role="heading" aria-level="1">
-</span>;
+<span role="heading" aria-level="1" />;
 
 ```
 
@@ -860,8 +830,7 @@ aria-controls="123">
 ### `33: formatted`
 
 ```
-<span role="combobox" aria-controls="true" aria-expanded="true">
-</span>;
+<span role="combobox" aria-controls="true" aria-expanded="true" />;
 
 ```
 
@@ -875,8 +844,7 @@ aria-controls="123">
 ### `34: formatted`
 
 ```
-<span role="menuitemcheckbox" aria-checked="true">
-</span>;
+<span role="menuitemcheckbox" aria-checked="true" />;
 
 ```
 
@@ -890,7 +858,6 @@ aria-controls="123">
 ### `35: formatted`
 
 ```
-<span role="menuitemradio" aria-checked="true">
-</span>;
+<span role="menuitemradio" aria-checked="true" />;
 
 ```

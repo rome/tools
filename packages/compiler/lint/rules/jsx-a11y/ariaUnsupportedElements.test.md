@@ -108,8 +108,7 @@
 ### `3: formatted`
 
 ```
-<html role="html">
-</html>;
+<html role="html" />;
 
 ```
 
@@ -136,8 +135,7 @@
 ### `4: formatted`
 
 ```
-<script aria-label="script">
-</script>;
+<script aria-label="script" />;
 
 ```
 
@@ -164,8 +162,7 @@
 ### `5: formatted`
 
 ```
-<script role="script">
-</script>;
+<script role="script" />;
 
 ```
 
@@ -192,8 +189,7 @@
 ### `6: formatted`
 
 ```
-<style aria-labelledby={true}>
-</style>;
+<style aria-labelledby={true} />;
 
 ```
 
@@ -220,8 +216,7 @@
 ### `7: formatted`
 
 ```
-<style role="style">
-</style>;
+<style role="style" />;
 
 ```
 
@@ -249,8 +244,7 @@
 ### `9: formatted`
 
 ```
-<html maria="text">
-</html>;
+<html maria="text" />;
 
 ```
 
@@ -264,8 +258,7 @@
 ### `10: formatted`
 
 ```
-<script>
-</script>;
+<script />;
 
 ```
 
@@ -279,7 +272,6 @@
 ### `11: formatted`
 
 ```
-<style parole={true}>
-</style>;
+<style parole={true} />;
 
 ```

@@ -24,8 +24,7 @@
 ### `0: formatted`
 
 ```
-<span role="checkbox" aria-checked="test">
-</span>;
+<span role="checkbox" aria-checked="test" />;
 
 ```
 
@@ -51,8 +50,7 @@
 ### `1: formatted`
 
 ```
-<span aria-autocomplete="test">
-</span>;
+<span aria-autocomplete="test" />;
 
 ```
 
@@ -78,8 +76,7 @@
 ### `2: formatted`
 
 ```
-<span aria-invalid="foo">
-</span>;
+<span aria-invalid="foo" />;
 
 ```
 
@@ -103,8 +100,7 @@
 ### `3: formatted`
 
 ```
-<span aria-errormessage="">
-</span>;
+<span aria-errormessage="" />;
 
 ```
 
@@ -131,8 +127,7 @@
 ### `4: formatted`
 
 ```
-<span aria-relevant="fancy">
-</span>;
+<span aria-relevant="fancy" />;
 
 ```
 
@@ -156,8 +151,7 @@
 ### `5: formatted`
 
 ```
-<span aria-labelledby="">
-</span>;
+<span aria-labelledby="" />;
 
 ```
 
@@ -181,8 +175,7 @@
 ### `6: formatted`
 
 ```
-<span aria-labelledby={""}>
-</span>;
+<span aria-labelledby={""} />;
 
 ```
 
@@ -206,8 +199,7 @@
 ### `7: formatted`
 
 ```
-<span aria-details="">
-</span>;
+<span aria-details="" />;
 
 ```
 
@@ -221,8 +213,7 @@
 ### `8: formatted`
 
 ```
-<span role="checkbox" aria-checked={checked}>
-</span>;
+<span role="checkbox" aria-checked={checked} />;
 
 ```
 
@@ -236,8 +227,7 @@
 ### `9: formatted`
 
 ```
-<span role="checkbox" aria-checked="true">
-</span>;
+<span role="checkbox" aria-checked="true" />;
 
 ```
 
@@ -251,8 +241,7 @@
 ### `10: formatted`
 
 ```
-<span role="checkbox" aria-checked={true}>
-</span>;
+<span role="checkbox" aria-checked={true} />;
 
 ```
 
@@ -266,8 +255,7 @@
 ### `11: formatted`
 
 ```
-<span role="checkbox" aria-checked="false">
-</span>;
+<span role="checkbox" aria-checked="false" />;
 
 ```
 
@@ -281,8 +269,7 @@
 ### `12: formatted`
 
 ```
-<span role="checkbox" aria-checked="mixed">
-</span>;
+<span role="checkbox" aria-checked="mixed" />;
 
 ```
 
@@ -296,8 +283,7 @@
 ### `13: formatted`
 
 ```
-<span role="checkbox" aria-autocomplete="both">
-</span>;
+<span role="checkbox" aria-autocomplete="both" />;
 
 ```
 
@@ -311,8 +297,7 @@
 ### `14: formatted`
 
 ```
-<span role="checkbox" aria-autocomplete="inline">
-</span>;
+<span role="checkbox" aria-autocomplete="inline" />;
 
 ```
 
@@ -326,8 +311,7 @@
 ### `15: formatted`
 
 ```
-<span role="checkbox" aria-autocomplete="list">
-</span>;
+<span role="checkbox" aria-autocomplete="list" />;
 
 ```
 
@@ -341,8 +325,7 @@
 ### `16: formatted`
 
 ```
-<span role="checkbox" aria-autocomplete="none">
-</span>;
+<span role="checkbox" aria-autocomplete="none" />;
 
 ```
 
@@ -356,8 +339,7 @@
 ### `17: formatted`
 
 ```
-<span aria-invalid="true">
-</span>;
+<span aria-invalid="true" />;
 
 ```
 
@@ -371,8 +353,7 @@
 ### `18: formatted`
 
 ```
-<span aria-invalid="grammar">
-</span>;
+<span aria-invalid="grammar" />;
 
 ```
 
@@ -386,8 +367,7 @@
 ### `19: formatted`
 
 ```
-<span aria-invalid="false">
-</span>;
+<span aria-invalid="false" />;
 
 ```
 
@@ -401,8 +381,7 @@
 ### `20: formatted`
 
 ```
-<span aria-invalid={false}>
-</span>;
+<span aria-invalid={false} />;
 
 ```
 
@@ -416,8 +395,7 @@
 ### `21: formatted`
 
 ```
-<span role="checkbox" aria-errormessage="someid">
-</span>;
+<span role="checkbox" aria-errormessage="someid" />;
 
 ```
 
@@ -431,8 +409,7 @@
 ### `22: formatted`
 
 ```
-<span role="checkbox" aria-relevant="additions">
-</span>;
+<span role="checkbox" aria-relevant="additions" />;
 
 ```
 
@@ -446,8 +423,7 @@
 ### `23: formatted`
 
 ```
-<span role="checkbox" aria-relevant="additions all">
-</span>;
+<span role="checkbox" aria-relevant="additions all" />;
 
 ```
 
@@ -461,8 +437,7 @@
 ### `24: formatted`
 
 ```
-<span aria-labelledby="id">
-</span>;
+<span aria-labelledby="id" />;
 
 ```
 
@@ -476,8 +451,7 @@
 ### `25: formatted`
 
 ```
-<span aria-labelledby="fooId barId">
-</span>;
+<span aria-labelledby="fooId barId" />;
 
 ```
 
@@ -491,7 +465,6 @@
 ### `26: formatted`
 
 ```
-<span aria-details="someid">
-</span>;
+<span aria-details="someid" />;
 
 ```

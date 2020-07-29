@@ -27,8 +27,7 @@ lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━�
 ### `0: formatted`
 
 ```
-<h1 role="checkbox">
-</h1>;
+<h1 role="checkbox" />;
 
 ```
 
@@ -42,7 +41,6 @@ lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━�
 ### `1: formatted`
 
 ```
-<h1 role="article">
-</h1>;
+<h1 role="article" />;
 
 ```
