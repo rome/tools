@@ -1,0 +1,1 @@
+feat: commit with a feat commit type

@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/commit-parser",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

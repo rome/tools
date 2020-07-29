@@ -27,6 +27,7 @@ import {resolver} from "./resolver";
 import {spdx} from "./spdx";
 import {jsParser} from "./jsParser";
 import {cssParser} from "./cssParser";
+import {commitParser} from "./commitParser";
 import {typeCheck} from "./typeCheck";
 import {consume} from "./consume";
 import {manifest} from "./manifest";
@@ -137,6 +138,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 }
 
 export const descriptions = {
+	COMMIT_PARSER: commitParser,
 	FLAGS: flags,
 	PARSER_CORE: parserCore,
 	REGEX_PARSER: regexp,
