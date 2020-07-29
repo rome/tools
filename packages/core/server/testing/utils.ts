@@ -7,7 +7,7 @@
 
 import {naturalCompare} from "@romefrontend/string-utils";
 import {CoverageDirectory} from "./types";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);

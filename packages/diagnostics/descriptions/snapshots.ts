@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import stringDiff from "@romefrontend/string-diff";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const snapshots = createDiagnosticsCategory({
 	MISSING_NEWLINE_AFTER_CODE_BLOCK: {

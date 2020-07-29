@@ -9,7 +9,7 @@ import {ServerRequest} from "@romefrontend/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = {
 	allowDiagnostics: boolean;

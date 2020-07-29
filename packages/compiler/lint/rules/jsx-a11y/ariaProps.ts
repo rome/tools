@@ -5,7 +5,7 @@ import {
 	ARIAProperty,
 	ariaPropsMap,
 } from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export default createVisitor({
 	name: "jsx-a11y/ariaProps",

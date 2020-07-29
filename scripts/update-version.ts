@@ -5,7 +5,7 @@ import http = require("http");
 
 import child = require("child_process");
 import {readFileText} from "@romefrontend/fs";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 async function runNPMVersion(
 	args: Array<string>,

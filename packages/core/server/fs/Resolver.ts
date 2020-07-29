@@ -29,7 +29,7 @@ import https = require("https");
 
 import {MOCKS_DIRECTORY_NAME} from "@romefrontend/core/common/constants";
 import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function request(
 	url: string,

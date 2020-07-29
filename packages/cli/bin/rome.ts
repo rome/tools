@@ -23,7 +23,7 @@ import {
 } from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
 import {Reporter} from "@romefrontend/cli-reporter";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 async function main(): Promise<void> {
 	switch (

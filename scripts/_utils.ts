@@ -5,7 +5,7 @@ import {createMockWorker} from "@romefrontend/test-helpers";
 
 import crypto = require("crypto");
 import child = require("child_process");
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();

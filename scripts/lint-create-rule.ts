@@ -2,7 +2,7 @@ import {PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
 import {readFileText} from "@romefrontend/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 const rulesPath = PACKAGES.append("compiler", "lint", "rules");
 

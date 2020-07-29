@@ -7,7 +7,7 @@
 
 import {Consumer} from "@romefrontend/consume";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 import {Examples} from "@romefrontend/cli-flags/Parser";
 
 export type SharedCommand<Flags extends Dict<unknown>> = {

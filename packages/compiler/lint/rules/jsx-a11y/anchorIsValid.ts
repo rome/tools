@@ -6,7 +6,7 @@ import {
 	isJSXElement,
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 	if (attr === undefined) {

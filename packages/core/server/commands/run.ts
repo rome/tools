@@ -12,7 +12,7 @@ import Bundler from "../bundler/Bundler";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {AbsoluteFilePath, createRelativeFilePath} from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {

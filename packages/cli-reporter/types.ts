@@ -7,7 +7,7 @@
 
 import {Event} from "@romefrontend/events";
 import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {AnyMarkup, Markup} from "@romefrontend/cli-layout";
+import {AnyMarkup, Markup} from "@romefrontend/markup";
 import {Number0} from "@romefrontend/ob1";
 
 export type SelectOption = {

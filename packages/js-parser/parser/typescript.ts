@@ -98,7 +98,7 @@ import {
 import {descriptions} from "@romefrontend/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type ParsingContext =
 	| "EnumMembers"

@@ -13,7 +13,7 @@ import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {ClientRequestFlags} from "@romefrontend/core";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;

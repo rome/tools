@@ -14,7 +14,7 @@ import {
 	HOME_PATH,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {descriptions, interceptDiagnostics} from "@romefrontend/diagnostics";
 import {Consumer} from "@romefrontend/consume";
 import {

@@ -45,7 +45,7 @@ import {
 } from "../test-worker/SnapshotManager";
 import {FormatterOptions, formatAST} from "@romefrontend/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romefrontend/js-ast-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows

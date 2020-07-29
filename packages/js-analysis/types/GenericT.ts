@@ -11,7 +11,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";
 import ClassT from "./ClassT";
 import InstanceT from "./InstanceT";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class GenericT extends T {
 	constructor(

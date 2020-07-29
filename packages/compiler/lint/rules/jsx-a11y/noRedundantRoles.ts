@@ -11,7 +11,7 @@ import {
 	ARIARoleDefinition,
 	ariaRolesMap,
 } from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type CreateFixableDiagnostic = {
 	path: Path;

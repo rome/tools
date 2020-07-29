@@ -12,7 +12,7 @@ import {
 } from "@romefrontend/diagnostics";
 import Consumer from "./Consumer";
 import {UnknownFilePath} from "@romefrontend/path";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 
 export type ConsumeComments = Array<string>;
 

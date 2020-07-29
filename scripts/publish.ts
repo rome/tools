@@ -2,7 +2,7 @@ import {TEMP_PATH} from "@romefrontend/path";
 import {readFileText, removeDirectory, writeFile} from "@romefrontend/fs";
 import {exec, reporter} from "./_utils";
 import {main as buildRelease} from "./build-release";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 const releaseFolder = TEMP_PATH.append("rome-publish-release");
 const releaseManifest = releaseFolder.append("package.json");

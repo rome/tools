@@ -14,7 +14,7 @@ import {createAbsoluteFilePath} from "@romefrontend/path";
 import {createSingleDiagnosticError} from "@romefrontend/diagnostics";
 import {SourceMapConsumer} from "@romefrontend/codec-source-map";
 import {getEnvVar} from "@romefrontend/cli-environment";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,

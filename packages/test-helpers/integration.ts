@@ -59,9 +59,9 @@ import {
 } from "@romefrontend/diagnostics";
 import {
 	convertToMarkupFromRandomString,
-	markupToPlainText,
-} from "@romefrontend/cli-layout";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
+	joinMarkupLines,
+} from "@romefrontend/markup";
+import {markupToPlainText} from "@romefrontend/cli-layout";
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;

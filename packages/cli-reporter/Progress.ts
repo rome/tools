@@ -13,7 +13,8 @@ import {
 	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {Markup, formatAnsi} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
+import {formatAnsi} from "@romefrontend/cli-layout";
 import {Number1, ob1Get1} from "@romefrontend/ob1";
 import * as streamUtils from "./stream";
 

@@ -9,7 +9,7 @@ import {SourceLocation} from "@romefrontend/parser-core";
 import {JSRoot} from "@romefrontend/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 
 export type CheckProvider = {
 	libs?: Array<JSRoot>;

@@ -8,7 +8,7 @@
 import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = {
 	hang: boolean;

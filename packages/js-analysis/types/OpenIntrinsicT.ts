@@ -10,7 +10,7 @@ import {HydrateData} from "../Evaluator";
 import T from "./T";
 import OpenT from "./OpenT";
 import {AnyNode} from "@romefrontend/ast";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class OpenIntrinsicT extends OpenT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {

@@ -11,7 +11,7 @@ import {ob1Coerce0} from "@romefrontend/ob1";
 import {isIdentifierish} from "@romefrontend/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@romefrontend/diagnostics";
 import {preserveCasing} from "@romefrontend/string-utils";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 type ConfusingLanguage = Array<{
 	description: Markup;

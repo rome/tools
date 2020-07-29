@@ -10,7 +10,7 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {Consumer} from "@romefrontend/consume";
 import {SourceLocation} from "@romefrontend/parser-core";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = {
 	focusSource: undefined | string;

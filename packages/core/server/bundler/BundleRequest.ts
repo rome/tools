@@ -30,7 +30,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {Reporter} from "@romefrontend/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
 import {dedent} from "@romefrontend/string-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export type BundleOptions = {
 	prefix?: string;

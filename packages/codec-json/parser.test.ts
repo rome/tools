@@ -11,7 +11,7 @@ import {parseJSON} from "@romefrontend/codec-json";
 import {test} from "rome";
 import {ParserOptions} from "@romefrontend/parser-core";
 import {createUnknownFilePath} from "@romefrontend/path";
-import {readMarkup} from "@romefrontend/cli-layout";
+import {readMarkup} from "@romefrontend/markup";
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
 function parseExtJSON(opts: ParserOptions) {

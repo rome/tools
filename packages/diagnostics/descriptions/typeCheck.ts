@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@romefrontend/parser-core";
 

@@ -17,7 +17,7 @@ import http = require("http");
 import net = require("net");
 
 import {Reporter} from "@romefrontend/cli-reporter";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
 
 export function createKey(key: string): string {

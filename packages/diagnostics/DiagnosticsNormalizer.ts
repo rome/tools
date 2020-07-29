@@ -11,7 +11,7 @@ import {
 	Markup,
 	MarkupFormatNormalizeOptions,
 	normalizeMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
 import {RequiredProps} from "@romefrontend/typescript-helpers";
 import {Position} from "@romefrontend/parser-core";

@@ -26,7 +26,7 @@ import {
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,

@@ -39,7 +39,7 @@ import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export type ParseResult = {
 	ast: AnyRoot;

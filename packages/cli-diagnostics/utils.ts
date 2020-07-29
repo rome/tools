@@ -9,17 +9,16 @@ import highlightCode, {AnsiHighlightOptions} from "./highlightCode";
 import {NEWLINE, nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
 import {
-	joinMarkupLines,
-	markupToPlainText,
-} from "@romefrontend/cli-layout/format";
-import {AnyRoot} from "@romefrontend/ast";
-import {DiagnosticLanguage} from "@romefrontend/diagnostics";
-import {
 	Markup,
 	convertToMarkupFromRandomString,
+	joinMarkupLines,
 	markup,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
+import {AnyRoot} from "@romefrontend/ast";
+import {DiagnosticLanguage} from "@romefrontend/diagnostics";
+
+import {markupToPlainText} from "@romefrontend/cli-layout";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 

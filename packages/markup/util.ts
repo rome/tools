@@ -1,5 +1,5 @@
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import {MarkupFormatOptions, TagAttributes} from "./types";
+import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@romefrontend/string-utils";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
@@ -23,7 +23,7 @@ export function humanizeMarkupFilename(
 }
 
 export function buildFileLink(
-	attributes: TagAttributes,
+	attributes: MarkupParsedAttributes,
 	opts: MarkupFormatOptions,
 ): {
 	text: string;
@@ -71,7 +71,7 @@ export function buildFileLink(
 	};
 }
 
-export function formatApprox(attributes: TagAttributes, value: string) {
+export function formatApprox(attributes: MarkupParsedAttributes, value: string) {
 	if (attributes.get("approx").asUnknown() === true) {
 		return `~${value}`;
 	} else {
@@ -79,7 +79,10 @@ export function formatApprox(attributes: TagAttributes, value: string) {
 	}
 }
 
-export function formatGrammarNumber(attributes: TagAttributes, value: string) {
+export function formatGrammarNumber(
+	attributes: MarkupParsedAttributes,
+	value: string,
+) {
 	const num = Number(value);
 
 	const none = attributes.get("none").asStringOrVoid();
@@ -100,7 +103,7 @@ export function formatGrammarNumber(attributes: TagAttributes, value: string) {
 	return "";
 }
 
-export function formatNumber(attributes: TagAttributes, value: string) {
+export function formatNumber(attributes: MarkupParsedAttributes, value: string) {
 	const num = Number(value);
 	const human = humanizeNumber(num);
 	const humanWithApprox = formatApprox(attributes, human);

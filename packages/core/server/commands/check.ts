@@ -10,7 +10,7 @@ import Linter, {
 	LinterCompilerOptionsPerFile,
 	LinterOptions,
 } from "../linter/Linter";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {createServerCommand} from "../commands";
 import {
 	LintCompilerOptionsDecisions,

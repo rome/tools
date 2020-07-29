@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 // @romefrontend/markdown-parser
 export const markdownParser = createDiagnosticsCategory({

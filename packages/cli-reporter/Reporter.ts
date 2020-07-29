@@ -6,21 +6,26 @@
  */
 
 import {
+	UserGridOptions,
+	ansiEscapes,
+	markupToAnsi,
+	markupToHtml,
+	markupToPlainText,
+} from "@romefrontend/cli-layout";
+import {
 	AnyMarkup,
 	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
-	UserMarkupFormatGridOptions,
-	ansiEscapes,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkupLines,
 	markup,
 	markupTag,
-	markupToAnsi,
-	markupToPlainText,
+	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
@@ -43,11 +48,7 @@ import {CWD_PATH} from "@romefrontend/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
-import {
-	joinMarkupLines,
-	markupToHtml,
-	normalizeMarkup,
-} from "@romefrontend/cli-layout/format";
+
 import {
 	DEFAULT_TERMINAL_FEATURES,
 	Stdout,
@@ -684,7 +685,7 @@ export default class Reporter implements ReporterNamespace {
 			}
 		}
 
-		const gridMarkupOptions: UserMarkupFormatGridOptions = {
+		const gridMarkupOptions: UserGridOptions = {
 			...this.markupOptions,
 			columns: stream.features.columns,
 			features: stream.features,

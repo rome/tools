@@ -58,7 +58,7 @@ import {
 	createURLFilePath,
 	createUnknownFilePath,
 } from "@romefrontend/path";
-import {Markup, markup, readMarkup} from "@romefrontend/cli-layout";
+import {Markup, markup, readMarkup} from "@romefrontend/markup";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;

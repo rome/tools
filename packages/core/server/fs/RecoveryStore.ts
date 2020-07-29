@@ -25,7 +25,7 @@ import {
 } from "@romefrontend/diagnostics";
 
 import fs = require("fs");
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 

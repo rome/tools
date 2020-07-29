@@ -7,7 +7,7 @@ import {
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
 import {insideClassComponent} from "../../utils/react";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function containsStringLiteral(attribute: JSXAttribute): boolean {
 	return attribute.value?.type === "JSStringLiteral";
