@@ -1,7 +1,6 @@
 .content {
 	max-width: 100%;
 	margin: 0 auto;
-	padding: 0 $unit * 2 $unit * 2 $unit * 2;
 
 	.header-anchor {
 		display: none;
@@ -15,6 +14,18 @@
 		&::before {
 			content: "#";
 		}
+	}
+
+	section {
+		padding: 0 $unit * 2 $unit * 2 $unit * 2;
+		background-color: var(--container-color);
+		margin-bottom: $unit;
+		margin-left: $unit;
+
+		@include desktop-only() {
+			border: 1px solid var(--soft-border-color);
+		}
+
 	}
 
 	p, ul, ol, pre, h4, h5 {
@@ -61,18 +72,6 @@
 
 	h2 {
 		margin: 0.83em 0;
-
-		&::before {
-			content: '';
-			display: block;
-			height: 10px;
-			background: rgba(0, 0, 0, 0.05);
-			margin: 0 -32px;
-			margin-bottom: 32px;
-			border: 1px solid var(--soft-border-color);
-			border-left: none;
-			border-right: none;
-		}
 	}
 
 	h3 {

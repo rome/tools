@@ -207,14 +207,9 @@ ul.breadcrumbs {
 }
 
 .main {
-	background-color: var(--container-color);
 	overflow: hidden;
 	width: 100%;
 	margin-top: 5px;
-
-	@include desktop-only() {
-		border-right: 1px solid var(--soft-border-color);
-	}
 
 	@include mobile-only() {
 		margin-top: $unit * 4;

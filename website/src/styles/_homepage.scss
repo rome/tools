@@ -1,7 +1,9 @@
 .hero {
 	padding: $unit * 2;
-	border-bottom: 1px solid var(--soft-border-color);
+	border-right: 1px solid var(--soft-border-color);
+	border-left: 1px solid var(--soft-border-color);
 	display: flex;
+	margin-left: $unit;
   flex-direction: column;
   justify-content: center;
 	color: black;
@@ -139,7 +141,8 @@ pre.homepage-example {
 
 article.latest-post {
 	border-bottom: 1px solid var(--soft-border-color);
-	padding: $unit $unit * 2;
+	padding: $unit $unit;
+	margin-left: $unit;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
