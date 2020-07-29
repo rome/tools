@@ -9,8 +9,8 @@ import {AnyJSRegExpBodyItem, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpSubExpression extends NodeBaseWithComments {
-	type: "JSRegExpSubExpression";
-	body: Array<AnyJSRegExpBodyItem>;
+	readonly type: "JSRegExpSubExpression";
+	readonly body: Array<AnyJSRegExpBodyItem>;
 }
 
 export const jsRegExpSubExpression = createBuilder<JSRegExpSubExpression>(

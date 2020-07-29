@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSQualifiedName extends NodeBaseWithComments {
-	type: "TSQualifiedName";
-	left: AnyTSEntityName;
-	right: JSIdentifier;
+	readonly type: "TSQualifiedName";
+	readonly left: AnyTSEntityName;
+	readonly right: JSIdentifier;
 }
 
 export const tsQualifiedName = createBuilder<TSQualifiedName>(

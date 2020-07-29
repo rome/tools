@@ -9,9 +9,9 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface CommentLine extends NodeBaseWithComments {
-	type: "CommentLine";
-	value: string;
-	id: string;
+	readonly type: "CommentLine";
+	readonly value: string;
+	readonly id: string;
 }
 
 export const jsCommentLine = createBuilder<CommentLine>(

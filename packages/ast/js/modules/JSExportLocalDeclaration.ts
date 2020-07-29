@@ -21,7 +21,7 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSExportLocalDeclaration extends NodeBaseWithComments {
-	type: "JSExportLocalDeclaration";
+	readonly type: "JSExportLocalDeclaration";
 	declaration?:
 		| undefined
 		| JSVariableDeclarationStatement
@@ -32,9 +32,9 @@ export interface JSExportLocalDeclaration extends NodeBaseWithComments {
 		| TSTypeAlias
 		| TSInterfaceDeclaration
 		| TSDeclareFunction;
-	specifiers?: Array<JSExportLocalSpecifier>;
-	exportKind?: ConstJSExportModuleKind;
-	declare?: boolean;
+	readonly specifiers?: Array<JSExportLocalSpecifier>;
+	readonly exportKind?: ConstJSExportModuleKind;
+	readonly declare?: boolean;
 }
 
 export const jsExportLocalDeclaration = createBuilder<JSExportLocalDeclaration>(

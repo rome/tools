@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSThrowStatement extends NodeBaseWithComments {
-	type: "JSThrowStatement";
-	argument: AnyJSExpression;
+	readonly type: "JSThrowStatement";
+	readonly argument: AnyJSExpression;
 }
 
 export const jsThrowStatement = createBuilder<JSThrowStatement>(

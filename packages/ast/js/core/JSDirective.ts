@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSDirective extends NodeBaseWithComments {
-	type: "JSDirective";
-	value: string;
+	readonly type: "JSDirective";
+	readonly value: string;
 }
 
 export const jsDirective = createBuilder<JSDirective>(

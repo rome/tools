@@ -9,9 +9,9 @@ import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSMetaProperty extends NodeBaseWithComments {
-	type: "JSMetaProperty";
-	meta: JSIdentifier;
-	property: JSIdentifier;
+	readonly type: "JSMetaProperty";
+	readonly meta: JSIdentifier;
+	readonly property: JSIdentifier;
 }
 
 export const jsMetaProperty = createBuilder<JSMetaProperty>(

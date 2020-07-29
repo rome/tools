@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSAsExpression extends NodeBaseWithComments {
-	type: "TSAsExpression";
-	typeAnnotation: AnyTSPrimary;
-	expression: AnyJSExpression;
+	readonly type: "TSAsExpression";
+	readonly typeAnnotation: AnyTSPrimary;
+	readonly expression: AnyJSExpression;
 }
 
 export const tsAsExpression = createBuilder<TSAsExpression>(

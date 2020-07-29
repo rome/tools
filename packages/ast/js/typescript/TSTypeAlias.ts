@@ -14,11 +14,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTypeAlias extends NodeBaseWithComments {
-	type: "TSTypeAlias";
-	id: JSBindingIdentifier;
-	typeParameters?: TSTypeParameterDeclaration;
-	right: AnyTSPrimary;
-	declare?: boolean | undefined;
+	readonly type: "TSTypeAlias";
+	readonly id: JSBindingIdentifier;
+	readonly typeParameters?: TSTypeParameterDeclaration;
+	readonly right: AnyTSPrimary;
+	readonly declare?: boolean | undefined;
 }
 
 export const tsTypeAlias = createBuilder<TSTypeAlias>(

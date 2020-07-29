@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSArrowFunctionExpression extends NodeBaseWithComments {
-	type: "JSArrowFunctionExpression";
-	head: JSFunctionHead;
-	body: JSBlockStatement | AnyJSExpression;
-	generator?: void;
+	readonly type: "JSArrowFunctionExpression";
+	readonly head: JSFunctionHead;
+	readonly body: JSBlockStatement | AnyJSExpression;
+	readonly generator?: void;
 }
 
 export const jsArrowFunctionExpression = createBuilder<JSArrowFunctionExpression>(

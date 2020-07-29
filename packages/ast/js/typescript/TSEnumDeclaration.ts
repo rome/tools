@@ -13,11 +13,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSEnumDeclaration extends NodeBaseWithComments {
-	type: "TSEnumDeclaration";
-	id: JSBindingIdentifier;
-	const?: boolean;
-	members: Array<TSEnumMember>;
-	declare?: boolean;
+	readonly type: "TSEnumDeclaration";
+	readonly id: JSBindingIdentifier;
+	readonly const?: boolean;
+	readonly members: Array<TSEnumMember>;
+	readonly declare?: boolean;
 }
 
 export const tsEnumDeclaration = createBuilder<TSEnumDeclaration>(

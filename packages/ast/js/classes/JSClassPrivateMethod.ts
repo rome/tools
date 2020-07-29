@@ -16,12 +16,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSClassPrivateMethod extends NodeBaseWithComments {
-	type: "JSClassPrivateMethod";
-	kind: JSClassMethodKind;
-	key: JSPrivateName;
-	head: JSFunctionHead;
-	body: JSBlockStatement;
-	meta: JSClassPropertyMeta;
+	readonly type: "JSClassPrivateMethod";
+	readonly kind: JSClassMethodKind;
+	readonly key: JSPrivateName;
+	readonly head: JSFunctionHead;
+	readonly body: JSBlockStatement;
+	readonly meta: JSClassPropertyMeta;
 }
 
 export const jsClassPrivateMethod = createBuilder<JSClassPrivateMethod>(

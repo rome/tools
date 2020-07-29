@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSStringLiteral extends NodeBaseWithComments {
-	type: "JSStringLiteral";
-	value: string;
+	readonly type: "JSStringLiteral";
+	readonly value: string;
 }
 
 export const jsStringLiteral = createQuickBuilder<JSStringLiteral, "value">(

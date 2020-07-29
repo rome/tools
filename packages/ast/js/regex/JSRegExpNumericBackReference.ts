@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpNumericBackReference extends NodeBaseWithComments {
-	type: "JSRegExpNumericBackReference";
-	value: number;
+	readonly type: "JSRegExpNumericBackReference";
+	readonly value: number;
 }
 
 export const jsRegExpNumericBackReference = createBuilder<JSRegExpNumericBackReference>(

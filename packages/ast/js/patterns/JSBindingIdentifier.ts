@@ -9,10 +9,10 @@ import {JSPatternMeta, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSBindingIdentifier extends NodeBaseWithComments {
-	type: "JSBindingIdentifier";
-	name: string;
-	definite?: boolean;
-	meta?: JSPatternMeta;
+	readonly type: "JSBindingIdentifier";
+	readonly name: string;
+	readonly definite?: boolean;
+	readonly meta?: JSPatternMeta;
 }
 
 export const jsBindingIdentifier = createQuickBuilder<

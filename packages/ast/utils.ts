@@ -82,11 +82,11 @@ class Builder<Node extends AnyNode> {
 
 	create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
 		// @ts-ignore
-		return {
+		return Object.freeze({
 			loc: inheritNode === undefined ? undefined : inheritLoc(inheritNode),
 			...opts,
 			type: this.type,
-		};
+		});
 	}
 
 	assert(res: undefined | AnyNodes): Node {

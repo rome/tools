@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface MockParent extends NodeBaseWithComments {
-	type: "MockParent";
+	readonly type: "MockParent";
 }
 
 export const jsMockParent = createBuilder<MockParent>(

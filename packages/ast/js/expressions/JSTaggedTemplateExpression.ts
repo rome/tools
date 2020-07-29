@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSTaggedTemplateExpression extends NodeBaseWithComments {
-	type: "JSTaggedTemplateExpression";
-	tag: AnyJSExpression;
-	quasi: JSTemplateLiteral;
-	typeArguments?: TSTypeParameterInstantiation;
+	readonly type: "JSTaggedTemplateExpression";
+	readonly tag: AnyJSExpression;
+	readonly quasi: JSTemplateLiteral;
+	readonly typeArguments?: TSTypeParameterInstantiation;
 }
 
 export const jsTaggedTemplateExpression = createBuilder<JSTaggedTemplateExpression>(

@@ -13,8 +13,8 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSXExpressionContainer extends NodeBaseWithComments {
-	type: "JSXExpressionContainer";
-	expression: AnyJSExpression | JSXEmptyExpression;
+	readonly type: "JSXExpressionContainer";
+	readonly expression: AnyJSExpression | JSXEmptyExpression;
 }
 
 export const jsxExpressionContainer = createBuilder<JSXExpressionContainer>(

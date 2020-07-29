@@ -14,11 +14,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSFunctionDeclaration extends NodeBaseWithComments {
-	type: "JSFunctionDeclaration";
-	id: JSBindingIdentifier;
-	declare?: boolean;
-	head: JSFunctionHead;
-	body: JSBlockStatement;
+	readonly type: "JSFunctionDeclaration";
+	readonly id: JSBindingIdentifier;
+	readonly declare?: boolean;
+	readonly head: JSFunctionHead;
+	readonly body: JSBlockStatement;
 }
 
 export const jsFunctionDeclaration = createBuilder<JSFunctionDeclaration>(

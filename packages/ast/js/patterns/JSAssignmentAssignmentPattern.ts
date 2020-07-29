@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSAssignmentAssignmentPattern extends NodeBaseWithComments {
-	type: "JSAssignmentAssignmentPattern";
-	left: AnyJSTargetAssignmentPattern;
-	right: AnyJSExpression;
-	meta?: JSPatternMeta;
+	readonly type: "JSAssignmentAssignmentPattern";
+	readonly left: AnyJSTargetAssignmentPattern;
+	readonly right: AnyJSExpression;
+	readonly meta?: JSPatternMeta;
 }
 
 export const jsAssignmentAssignmentPattern = createBuilder<JSAssignmentAssignmentPattern>(

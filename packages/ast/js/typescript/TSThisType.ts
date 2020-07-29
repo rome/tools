@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSThisType extends NodeBaseWithComments {
-	type: "TSThisType";
+	readonly type: "TSThisType";
 }
 
 export const tsThisType = createBuilder<TSThisType>(

@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSComputedPropertyKey extends NodeBaseWithComments {
-	type: "JSComputedPropertyKey";
-	value: AnyJSExpression;
+	readonly type: "JSComputedPropertyKey";
+	readonly value: AnyJSExpression;
 }
 
 export const jsComputedPropertyKey = createQuickBuilder<

@@ -9,11 +9,11 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSConditionalType extends NodeBaseWithComments {
-	type: "TSConditionalType";
-	checkType: AnyTSPrimary;
-	extendsType: AnyTSPrimary;
-	trueType: AnyTSPrimary;
-	falseType: AnyTSPrimary;
+	readonly type: "TSConditionalType";
+	readonly checkType: AnyTSPrimary;
+	readonly extendsType: AnyTSPrimary;
+	readonly trueType: AnyTSPrimary;
+	readonly falseType: AnyTSPrimary;
 }
 
 export const tsConditionalType = createBuilder<TSConditionalType>(

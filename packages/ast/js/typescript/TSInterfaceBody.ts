@@ -9,8 +9,8 @@ import {AnyTSTypeElement, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSInterfaceBody extends NodeBaseWithComments {
-	type: "TSInterfaceBody";
-	body: Array<AnyTSTypeElement>;
+	readonly type: "TSInterfaceBody";
+	readonly body: Array<AnyTSTypeElement>;
 }
 
 export const tsInterfaceBody = createBuilder<TSInterfaceBody>(

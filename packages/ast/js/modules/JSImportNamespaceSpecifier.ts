@@ -9,8 +9,8 @@ import {JSImportSpecifierLocal, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSImportNamespaceSpecifier extends NodeBaseWithComments {
-	type: "JSImportNamespaceSpecifier";
-	local: JSImportSpecifierLocal;
+	readonly type: "JSImportNamespaceSpecifier";
+	readonly local: JSImportSpecifierLocal;
 }
 
 export const jsImportNamespaceSpecifier = createBuilder<JSImportNamespaceSpecifier>(

@@ -4,8 +4,8 @@ import {AnyHTMLChildNode} from "@romefrontend/ast/html/unions";
 
 export interface HTMLRoot extends NodeBaseWithComments,
 RootBase {
-	type: "HTMLRoot";
-	body: Array<AnyHTMLChildNode>;
+	readonly type: "HTMLRoot";
+	readonly body: Array<AnyHTMLChildNode>;
 }
 
 export const htmlRoot = createBuilder<HTMLRoot>(

@@ -15,9 +15,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSMemberExpression extends NodeBaseWithComments {
-	type: "JSMemberExpression";
-	object: AnyJSExpression | JSSuper;
-	property: JSStaticMemberProperty | JSComputedMemberProperty;
+	readonly type: "JSMemberExpression";
+	readonly object: AnyJSExpression | JSSuper;
+	readonly property: JSStaticMemberProperty | JSComputedMemberProperty;
 }
 
 export const jsMemberExpression = createBuilder<JSMemberExpression>(

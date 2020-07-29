@@ -9,8 +9,8 @@ import {JSObjectProperties, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSObjectExpression extends NodeBaseWithComments {
-	type: "JSObjectExpression";
-	properties: JSObjectProperties;
+	readonly type: "JSObjectExpression";
+	readonly properties: JSObjectProperties;
 }
 
 export const jsObjectExpression = createQuickBuilder<

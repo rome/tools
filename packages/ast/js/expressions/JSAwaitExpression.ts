@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSAwaitExpression extends NodeBaseWithComments {
-	type: "JSAwaitExpression";
-	argument?: AnyJSExpression;
+	readonly type: "JSAwaitExpression";
+	readonly argument?: AnyJSExpression;
 }
 
 export const jsAwaitExpression = createBuilder<JSAwaitExpression>(

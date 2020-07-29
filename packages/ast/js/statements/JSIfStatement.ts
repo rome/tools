@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSIfStatement extends NodeBaseWithComments {
-	type: "JSIfStatement";
-	test: AnyJSExpression;
-	consequent: AnyJSStatement;
-	alternate?: AnyJSStatement;
+	readonly type: "JSIfStatement";
+	readonly test: AnyJSExpression;
+	readonly consequent: AnyJSStatement;
+	readonly alternate?: AnyJSStatement;
 }
 
 export const jsIfStatement = createBuilder<JSIfStatement>(

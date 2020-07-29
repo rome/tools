@@ -9,8 +9,8 @@ import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSExportDefaultSpecifier extends NodeBaseWithComments {
-	type: "JSExportDefaultSpecifier";
-	exported: JSIdentifier;
+	readonly type: "JSExportDefaultSpecifier";
+	readonly exported: JSIdentifier;
 }
 
 export const jsExportDefaultSpecifier = createBuilder<JSExportDefaultSpecifier>(

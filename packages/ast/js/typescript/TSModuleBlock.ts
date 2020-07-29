@@ -9,8 +9,8 @@ import {AnyJSStatement, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSModuleBlock extends NodeBaseWithComments {
-	type: "TSModuleBlock";
-	body: Array<AnyJSStatement>;
+	readonly type: "TSModuleBlock";
+	readonly body: Array<AnyJSStatement>;
 }
 
 export const tsModuleBlock = createBuilder<TSModuleBlock>(

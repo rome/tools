@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSImportEqualsDeclaration extends NodeBaseWithComments {
-	type: "TSImportEqualsDeclaration";
-	id: JSBindingIdentifier;
-	moduleReference: AnyTSModuleReference;
-	isExport?: boolean;
+	readonly type: "TSImportEqualsDeclaration";
+	readonly id: JSBindingIdentifier;
+	readonly moduleReference: AnyTSModuleReference;
+	readonly isExport?: boolean;
 }
 
 export const tsImportEqualsDeclaration = createBuilder<TSImportEqualsDeclaration>(

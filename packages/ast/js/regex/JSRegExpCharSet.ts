@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpCharSet extends NodeBaseWithComments {
-	type: "JSRegExpCharSet";
-	invert?: boolean;
-	body: Array<JSRegExpCharSetRange | AnyJSRegExpEscapedCharacter>;
+	readonly type: "JSRegExpCharSet";
+	readonly invert?: boolean;
+	readonly body: Array<JSRegExpCharSetRange | AnyJSRegExpEscapedCharacter>;
 }
 
 export const jsRegExpCharSet = createBuilder<JSRegExpCharSet>(

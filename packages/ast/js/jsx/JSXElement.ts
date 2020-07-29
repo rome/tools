@@ -22,16 +22,16 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSXElement extends NodeBaseWithComments {
-	type: "JSXElement";
+	readonly type: "JSXElement";
 	name:
 		| JSXReferenceIdentifier
 		| JSXIdentifier
 		| JSXNamespacedName
 		| JSXMemberExpression;
-	typeArguments?: TSTypeParameterInstantiation;
-	attributes: Array<JSXSpreadAttribute | JSXAttribute>;
-	selfClosing?: boolean;
-	children: Array<
+	readonly typeArguments?: TSTypeParameterInstantiation;
+	readonly attributes: Array<JSXSpreadAttribute | JSXAttribute>;
+	readonly selfClosing?: boolean;
+	readonly children: Array<
 		JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
 	>;
 }

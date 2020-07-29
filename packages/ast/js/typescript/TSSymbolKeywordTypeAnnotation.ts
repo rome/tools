@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSSymbolKeywordTypeAnnotation extends NodeBaseWithComments {
-	type: "TSSymbolKeywordTypeAnnotation";
+	readonly type: "TSSymbolKeywordTypeAnnotation";
 }
 
 export const tsSymbolKeywordTypeAnnotation = createBuilder<TSSymbolKeywordTypeAnnotation>(

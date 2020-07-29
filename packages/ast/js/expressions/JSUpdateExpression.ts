@@ -9,10 +9,10 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSUpdateExpression extends NodeBaseWithComments {
-	type: "JSUpdateExpression";
-	operator: UpdateOperator;
-	argument: AnyJSExpression;
-	prefix?: boolean;
+	readonly type: "JSUpdateExpression";
+	readonly operator: UpdateOperator;
+	readonly argument: AnyJSExpression;
+	readonly prefix?: boolean;
 }
 
 export type UpdateOperator = "++" | "--";

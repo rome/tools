@@ -13,10 +13,10 @@
 import {createBuilder} from "../../utils";
 
 export interface JSBindingArrayPattern extends NodeBaseWithComments {
-	type: "JSBindingArrayPattern";
-	meta?: JSPatternMeta;
-	elements: Array<JSArrayHole | AnyJSParamBindingPattern>;
-	rest: undefined | AnyJSTargetBindingPattern;
+	readonly type: "JSBindingArrayPattern";
+	readonly meta?: JSPatternMeta;
+	readonly elements: Array<JSArrayHole | AnyJSParamBindingPattern>;
+	readonly rest: undefined | AnyJSTargetBindingPattern;
 }
 
 export const jsBindingArrayPattern = createBuilder<JSBindingArrayPattern>(

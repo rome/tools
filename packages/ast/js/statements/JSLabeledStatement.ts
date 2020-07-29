@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSLabeledStatement extends NodeBaseWithComments {
-	type: "JSLabeledStatement";
-	label: JSIdentifier;
-	body: AnyJSStatement;
+	readonly type: "JSLabeledStatement";
+	readonly label: JSIdentifier;
+	readonly body: AnyJSStatement;
 }
 
 export const jsLabeledStatement = createBuilder<JSLabeledStatement>(

@@ -9,8 +9,8 @@ import {JSBlockStatement, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSDoExpression extends NodeBaseWithComments {
-	type: "JSDoExpression";
-	body: JSBlockStatement;
+	readonly type: "JSDoExpression";
+	readonly body: JSBlockStatement;
 }
 
 export const jsDoExpression = createBuilder<JSDoExpression>(

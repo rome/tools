@@ -15,11 +15,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSClassPrivateProperty extends NodeBaseWithComments {
-	type: "JSClassPrivateProperty";
-	key: JSPrivateName;
-	meta: JSClassPropertyMeta;
-	value: undefined | AnyJSExpression;
-	typeAnnotation?: AnyTSPrimary;
+	readonly type: "JSClassPrivateProperty";
+	readonly key: JSPrivateName;
+	readonly meta: JSClassPropertyMeta;
+	readonly value: undefined | AnyJSExpression;
+	readonly typeAnnotation?: AnyTSPrimary;
 }
 
 export const jsClassPrivateProperty = createBuilder<JSClassPrivateProperty>(

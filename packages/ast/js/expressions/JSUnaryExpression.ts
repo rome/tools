@@ -9,10 +9,10 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSUnaryExpression extends NodeBaseWithComments {
-	type: "JSUnaryExpression";
-	operator: UnaryOperator;
-	prefix?: boolean;
-	argument: AnyJSExpression;
+	readonly type: "JSUnaryExpression";
+	readonly operator: UnaryOperator;
+	readonly prefix?: boolean;
+	readonly argument: AnyJSExpression;
 }
 
 export type UnaryOperator =

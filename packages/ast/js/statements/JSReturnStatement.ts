@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSReturnStatement extends NodeBaseWithComments {
-	type: "JSReturnStatement";
-	argument?: AnyJSExpression;
+	readonly type: "JSReturnStatement";
+	readonly argument?: AnyJSExpression;
 }
 
 export const jsReturnStatement = createQuickBuilder<

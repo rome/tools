@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSExpressionWithTypeArguments extends NodeBaseWithComments {
-	type: "TSExpressionWithTypeArguments";
-	expression: AnyTSEntityName;
-	typeParameters?: TSTypeParameterInstantiation;
+	readonly type: "TSExpressionWithTypeArguments";
+	readonly expression: AnyTSEntityName;
+	readonly typeParameters?: TSTypeParameterInstantiation;
 }
 
 export const tsExpressionWithTypeArguments = createBuilder<TSExpressionWithTypeArguments>(

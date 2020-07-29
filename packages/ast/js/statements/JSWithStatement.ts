@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSWithStatement extends NodeBaseWithComments {
-	type: "JSWithStatement";
-	object: AnyJSExpression;
-	body: AnyJSStatement;
+	readonly type: "JSWithStatement";
+	readonly object: AnyJSExpression;
+	readonly body: AnyJSStatement;
 }
 
 export const jsWithStatement = createBuilder<JSWithStatement>(

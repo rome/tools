@@ -9,10 +9,10 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSBinaryExpression extends NodeBaseWithComments {
-	type: "JSBinaryExpression";
-	operator: BinaryOperator;
-	left: AnyJSExpression;
-	right: AnyJSExpression;
+	readonly type: "JSBinaryExpression";
+	readonly operator: BinaryOperator;
+	readonly left: AnyJSExpression;
+	readonly right: AnyJSExpression;
 }
 
 export type BinaryOperator =

@@ -15,11 +15,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSForOfStatement extends NodeBaseWithComments {
-	type: "JSForOfStatement";
-	await?: boolean;
-	left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
-	right: AnyJSExpression;
-	body: AnyJSStatement;
+	readonly type: "JSForOfStatement";
+	readonly await?: boolean;
+	readonly left: JSVariableDeclaration | AnyJSTargetAssignmentPattern;
+	readonly right: AnyJSExpression;
+	readonly body: AnyJSStatement;
 }
 
 export const jsForOfStatement = createBuilder<JSForOfStatement>(

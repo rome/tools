@@ -9,8 +9,8 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSParenthesizedType extends NodeBaseWithComments {
-	type: "TSParenthesizedType";
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSParenthesizedType";
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsParenthesizedType = createBuilder<TSParenthesizedType>(

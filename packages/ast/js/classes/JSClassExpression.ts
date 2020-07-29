@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSClassExpression extends NodeBaseWithComments {
-	type: "JSClassExpression";
-	id?: JSBindingIdentifier;
-	meta: JSClassHead;
+	readonly type: "JSClassExpression";
+	readonly id?: JSBindingIdentifier;
+	readonly meta: JSClassHead;
 }
 
 export const jsClassExpression = createBuilder<JSClassExpression>(

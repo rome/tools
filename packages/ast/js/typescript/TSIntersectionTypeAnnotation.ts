@@ -9,8 +9,8 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSIntersectionTypeAnnotation extends NodeBaseWithComments {
-	type: "TSIntersectionTypeAnnotation";
-	types: Array<AnyTSPrimary>;
+	readonly type: "TSIntersectionTypeAnnotation";
+	readonly types: Array<AnyTSPrimary>;
 }
 
 export const tsIntersectionTypeAnnotation = createBuilder<TSIntersectionTypeAnnotation>(

@@ -14,11 +14,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSModuleDeclaration extends NodeBaseWithComments {
-	type: "TSModuleDeclaration";
-	id: JSBindingIdentifier | JSStringLiteral;
-	global?: boolean;
-	body?: TSModuleBlock | TSModuleDeclaration;
-	declare?: boolean;
+	readonly type: "TSModuleDeclaration";
+	readonly id: JSBindingIdentifier | JSStringLiteral;
+	readonly global?: boolean;
+	readonly body?: TSModuleBlock | TSModuleDeclaration;
+	readonly declare?: boolean;
 }
 
 export const tsModuleDeclaration = createBuilder<TSModuleDeclaration>(

@@ -9,8 +9,8 @@ import {NodeBaseWithComments, TSTypeParameter} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSInferType extends NodeBaseWithComments {
-	type: "TSInferType";
-	typeParameter: TSTypeParameter;
+	readonly type: "TSInferType";
+	readonly typeParameter: TSTypeParameter;
 }
 
 export const tsInferType = createBuilder<TSInferType>(

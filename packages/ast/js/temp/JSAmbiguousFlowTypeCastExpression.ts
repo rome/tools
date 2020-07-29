@@ -14,14 +14,14 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSAmbiguousFlowTypeCastExpression extends NodeBaseWithComments {
-	type: "JSAmbiguousFlowTypeCastExpression";
-	expression: AnyJSExpression | JSSpreadElement;
-	typeAnnotation?: AnyTSPrimary;
+	readonly type: "JSAmbiguousFlowTypeCastExpression";
+	readonly expression: AnyJSExpression | JSSpreadElement;
+	readonly typeAnnotation?: AnyTSPrimary;
 
 	// This is for js-parser so that we can convert type casts to parameters
 
 	// We should figure out some way to remove this
-	optional?: boolean;
+	readonly optional?: boolean;
 }
 
 export const jsAmbiguousFlowTypeCastExpression = createBuilder<JSAmbiguousFlowTypeCastExpression>(
