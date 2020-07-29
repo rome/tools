@@ -3,12 +3,16 @@
 	margin: 0 auto;
 
 	.header-anchor {
-		display: none;
+		@extend .sr-only;
 		text-decoration: none;
 		color: $color-4;
 
 		&:hover {
 			text-decoration: underline;
+		}
+
+		&:focus{
+			@extend .not-sr-only;
 		}
 
 		&::before {
@@ -51,8 +55,8 @@
 	}
 
 	h1, h2, h3, h4, h5 {
-		&:hover .header-anchor {
-			display: inline-block;
+		&:hover .header-anchor{
+			@extend .not-sr-only;
 		}
 	}
 
