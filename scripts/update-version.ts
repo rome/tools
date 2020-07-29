@@ -79,7 +79,7 @@ export async function main(args: Array<string>) {
 	// Create commit and tag
 	await exec("git", ["commit", "-am", `Release v${version}`]);
 	await exec("git", ["tag", `v${version}`]);
-	await exec("git", ["push"]);
+	await exec("git", ["push", "--tags"]);
 	await exec("git", ["push", "origin", `v${version}`]);
 
 	reporter.success(markup`Created tag and release commit. To publish run:`);
