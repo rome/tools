@@ -408,7 +408,7 @@ export default class Parser<T> {
 			}
 
 			case "fish": {
-				path = HOME_PATH.appendList(
+				path = HOME_PATH.append(
 					".config",
 					"fish",
 					"completions",

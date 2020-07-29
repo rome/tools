@@ -4,7 +4,7 @@ import {AbsoluteFilePath} from "@romefrontend/path";
 
 const lintRulesFolder = PACKAGES.appendList("compiler", "lint", "rules");
 
-const lintRulesDocFolder = ROOT.appendList(
+const lintRulesDocFolder = ROOT.append(
 	"website",
 	"src",
 	"docs",

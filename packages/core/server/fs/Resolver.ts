@@ -740,7 +740,7 @@ export default class Resolver {
 		return this.resolvePath(
 			{
 				...query,
-				source: manifestDef.directory.appendList(...moduleNameParts),
+				source: manifestDef.directory.append(...moduleNameParts),
 			},
 			true,
 			["package"],
@@ -821,7 +821,7 @@ export default class Resolver {
 			return this.resolvePath(
 				{
 					...query,
-					source: virtualResolved.appendList(...moduleNameParts),
+					source: virtualResolved.append(...moduleNameParts),
 				},
 				true,
 				["virtual"],

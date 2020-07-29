@@ -20,7 +20,7 @@ export const MAP = BIN.addExtension(".map");
 const MEGABYTE = 10_000;
 
 // Where we store user configuration, recoverable files etc
-export const USER_CONFIG_DIRECTORY = HOME_PATH.appendList(".rome");
+export const USER_CONFIG_DIRECTORY = HOME_PATH.append(".rome");
 export const USER_CONFIG_FILENAMES: Array<string> = [
 	"config.json",
 	"config.rjson",

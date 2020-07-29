@@ -65,7 +65,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 
 	// Write docs
 	await writeFile(
-		ROOT.appendList("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
+		ROOT.append("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
 		`
 			---
 			title: Lint Rule ${ruleName}

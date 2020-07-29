@@ -458,7 +458,24 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 	}
 
-	append(item: FilePathOrString): Super {
+	append(...items: Array<FilePathOrString>): Super {
+		if (items.length === 0) {
+			return this._assert();
+		}
+
+		if (items.length === 1) {
+			return this._append(items[0]);
+		}
+
+		let target: Super = this._assert();
+		for (const item of items) {
+			// @ts-ignore
+			target = target._append(item);
+		}
+		return target;
+	}
+
+	_append(item: FilePathOrString): Super {
 		if (typeof item === "string") {
 			const cached = this.memoizedChildren.get(item);
 			if (cached !== undefined) {
@@ -477,19 +494,6 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 
 		return child;
-	}
-
-	appendList(...items: Array<FilePathOrString>): Super {
-		if (items.length === 0) {
-			return this._assert();
-		}
-
-		let target: Super = this._assert();
-		for (const item of items) {
-			// @ts-ignore
-			target = target.append(item);
-		}
-		return target;
 	}
 }
 
