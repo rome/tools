@@ -7,15 +7,27 @@
 
 import {
 	CompilerContext,
+	ExitSignal,
 	Path,
 	PathOptions,
-	REDUCE_REMOVE,
-	REDUCE_SKIP_SUBTREE,
-	TransformExitResult,
 	TransformVisitors,
+	signals,
 } from "@romefrontend/compiler";
-import {AnyNode, visitorKeys as allVisitorKeys} from "@romefrontend/ast";
+import {
+	AnyNode,
+	AnyNodes,
+	visitorKeys as allVisitorKeys,
+} from "@romefrontend/ast";
 import {isNodeLike} from "@romefrontend/js-ast-utils";
+import {TransformVisitor} from "../types";
+import {pretty} from "@romefrontend/pretty-format";
+import {
+	EnterSignal,
+	ParentSignal,
+	RemoveSignal,
+	ReplaceSignal,
+	RetainSignal,
+} from "../signals";
 
 const BAIL_EXIT: "BAIL" = "BAIL";
 const KEEP_EXIT: "KEEP" = "KEEP";
@@ -25,23 +37,11 @@ const KEEP_EXIT: "KEEP" = "KEEP";
  */
 function validateTransformReturn(
 	transformName: string,
-	node: unknown,
+	signal: ExitSignal,
 	path: Path,
 ) {
-	// Ignore some constants that will be handled later
-	if (node === REDUCE_REMOVE) {
-		return;
-	}
-
-	// If this function hits a symbol then it's invalid as we would have dealt with it before if it were a valid constant
-	if (typeof node === "symbol") {
-		throw new Error(
-			`Returned a symbol from transform ${transformName} that doesn't correspond to any reduce constant`,
-		);
-	}
-
 	// Verify common mistake of forgetting to return something
-	if (typeof node === "undefined") {
+	if (typeof signal === "undefined") {
 		throw new Error(
 			"Returned `undefined` from transform " +
 			transformName +
@@ -50,8 +50,13 @@ function validateTransformReturn(
 		);
 	}
 
+	// Ignore some constants that will be handled later
+	if (signal.type === "REMOVE") {
+		return;
+	}
+
 	// Handle returning an array of nodes
-	if (Array.isArray(node)) {
+	if (signal.type === "REPLACE" && Array.isArray(signal.value)) {
 		// keyed nodes cannot be replaced with an array of nodes
 		if (path.opts.noArrays === true) {
 			throw new Error(
@@ -62,22 +67,67 @@ function validateTransformReturn(
 	}
 
 	// Verify that it's a valid node
-	if (!isNodeLike(node)) {
+	if (signal.type === "REPLACE" && !isNodeLike(signal.value)) {
 		throw new Error(
 			`Expected a return value of a plain object with a \`type\` property or a reduce constant - originated from 'transform ${transformName}`,
 		);
 	}
 }
 
+// Consider a replace signal with the same value as the path to be a retain signal
+// Many reasons we could emit a replace when we mean a retain just by nature of
+// passing nodes around.
+function isRetainSignal(
+	node: AnyNode,
+	signal: ExitSignal,
+): signal is RetainSignal {
+	switch (signal.type) {
+		case "RETAIN":
+			return true;
+
+		case "REPLACE":
+			return node === signal.value;
+
+		default:
+			return false;
+	}
+}
+
+function maybeFork(path: Path, signal: ReplaceSignal | RetainSignal): Path {
+	if (isRetainSignal(path.node, signal)) {
+		return path;
+	} else {
+		const {value} = signal;
+		if (Array.isArray(value)) {
+			throw new Error(
+				"Should have already refined away a replace of Arrays with shouldBailReduce",
+			);
+		}
+		return path.fork(value);
+	}
+}
+
+// Process a parent signal. If it refers to this node, it's a replacement, otherwise bubble it up.
+function normalizeParentSignalReturn(
+	node: AnyNode,
+	signal: ParentSignal,
+): ExitSignal {
+	if (signal.parent === node) {
+		return signal.signal;
+	} else {
+		return signal;
+	}
+}
+
 /**
  * Given a return value from a transform, determine if we should bail out.
- * Bailing out means returning the actual node and making the parent reduce
+ * Bailing out means returning the actual signal and making the parent reduce
  * call handle it (if any).
  */
 function shouldBailReduce(
-	node: unknown,
-): node is Array<AnyNode> | typeof REDUCE_REMOVE {
-	if (Array.isArray(node)) {
+	signal: EnterSignal,
+): signal is RemoveSignal | ParentSignal {
+	if (signal.type === "REPLACE" && Array.isArray(signal.value)) {
 		// We just return the array of nodes, without transforming them
 		// reduce() calls higher in the chain will splice this array and do it's
 		// own transform call so when the transform is performed on the node it's
@@ -86,7 +136,12 @@ function shouldBailReduce(
 	}
 
 	// This node is being removed, no point recursing into it
-	if (node === REDUCE_REMOVE) {
+	if (signal.type === "REMOVE") {
+		return true;
+	}
+
+	// Bail on parent signals. We'll be handled higher in the tree.
+	if (signal.type === "PARENT") {
 		return true;
 	}
 
@@ -100,38 +155,81 @@ function shouldBailReduce(
 function runExit<State>(
 	path: Path,
 	name: string,
-	callback: (path: Path, state: State) => TransformExitResult,
+	callback: (path: Path, state: State) => ExitSignal,
 	state: State,
-): [typeof BAIL_EXIT, TransformExitResult] | [typeof KEEP_EXIT, Path] {
+): [typeof BAIL_EXIT, ExitSignal] | [typeof KEEP_EXIT, Path] {
 	// Call transformer
-	let transformedNode = callback(path, state);
+	let signal = callback(path, state);
 
 	if (path.context.frozen) {
 		return [KEEP_EXIT, path];
 	}
 
 	// Validate the node
-	validateTransformReturn(name, transformedNode, path);
+	validateTransformReturn(name, signal, path);
 
 	// Check if we need to bail out
-	if (shouldBailReduce(transformedNode)) {
-		return [BAIL_EXIT, transformedNode];
+	if (shouldBailReduce(signal)) {
+		return [BAIL_EXIT, signal];
 	}
 
-	// create new path if node has been changed
-	if (transformedNode !== path.node) {
-		path = path.fork(transformedNode);
-	}
+	path = maybeFork(path, signal);
 
 	return [KEEP_EXIT, path];
 }
 
-export default function reduce(
+export function reduceNode(
+	ast: AnyNode,
+	visitors: TransformVisitor | TransformVisitors,
+	context: CompilerContext,
+	pathOpts: PathOptions = {},
+): AnyNodes {
+	const res = _reduceSignal(
+		ast,
+		Array.isArray(visitors) ? visitors : [visitors],
+		context,
+		pathOpts,
+	);
+
+	switch (res.type) {
+		case "REMOVE":
+			throw new Error(
+				pretty`reduceEntry: Invalid symbol returned from reduceChild. Result: ${res}`,
+			);
+
+		case "PARENT":
+			throw new Error(
+				pretty`reduceEntry: Invalid parent signal returned from reduceChild. Parent was not in the tree. Result: ${res}`,
+			);
+
+		case "RETAIN":
+			return ast;
+
+		case "REPLACE":
+			return res.value;
+	}
+}
+
+export function reduceSignal(
+	ast: AnyNode,
+	visitors: TransformVisitor | TransformVisitors,
+	context: CompilerContext,
+	pathOpts: PathOptions = {},
+): ExitSignal {
+	return _reduceSignal(
+		ast,
+		Array.isArray(visitors) ? visitors : [visitors],
+		context,
+		pathOpts,
+	);
+}
+
+function _reduceSignal(
 	origNode: AnyNode,
 	visitors: TransformVisitors,
 	context: CompilerContext,
-	pathOpts: PathOptions = {},
-): TransformExitResult {
+	pathOpts: PathOptions,
+): ExitSignal {
 	// Initialize first path
 	let path: Path = new Path(origNode, context, pathOpts);
 
@@ -143,26 +241,24 @@ export default function reduce(
 		}
 
 		// Call transformer
-		let transformedNode = enter(path);
+		let signal = enter(path);
 
 		if (!path.context.frozen) {
 			// When returning this symbol, it indicates we should skip the subtree
-			if (transformedNode === REDUCE_SKIP_SUBTREE) {
-				return origNode;
+			if (signal.type === "SKIP") {
+				return signals.retain;
 			}
 
 			// Validate the return value
-			validateTransformReturn(visitor.name, transformedNode, path);
+			validateTransformReturn(visitor.name, signal, path);
 
 			// Check if we need to bail out. See the comment for shouldBailReduce on what that means
-			if (shouldBailReduce(transformedNode)) {
-				return transformedNode;
+			if (shouldBailReduce(signal)) {
+				return signal;
 			}
 
 			// Create new path if node has been changed
-			if (transformedNode !== path.node) {
-				path = path.fork(transformedNode);
-			}
+			path = maybeFork(path, signal);
 		}
 	}
 
@@ -201,7 +297,7 @@ export default function reduce(
 					// An example of a property with empty elements is an JSArrayExpression with holes
 					if (isNodeLike(child)) {
 						// Run transforms on this node
-						const newChild = reduce(
+						const newSignal = _reduceSignal(
 							child,
 							visitors,
 							context,
@@ -214,16 +310,20 @@ export default function reduce(
 							},
 						);
 
+						if (newSignal.type === "PARENT") {
+							return normalizeParentSignalReturn(node, newSignal);
+						}
+
 						// If this item has been changed then...
-						if (newChild !== child && !context.frozen) {
+						if (!isRetainSignal(child, newSignal) && !context.frozen) {
 							// Clone the children array
 							children = children.slice();
 
 							// Check if the item is to be deleted
 							// REDUCE_REMOVE or an empty array are considered equivalent
 							if (
-								newChild === REDUCE_REMOVE ||
-								(Array.isArray(newChild) && newChild.length === 0)
+								newSignal.type === "REMOVE" ||
+								(Array.isArray(newSignal.value) && newSignal.value.length === 0)
 							) {
 								// Remove the item from the array
 								children.splice(correctedIndex, 1);
@@ -231,22 +331,22 @@ export default function reduce(
 								// Since the array now has one less item, change the offset so all
 								// future indices will be correct
 								childrenOffset--;
-							} else if (Array.isArray(newChild)) {
+							} else if (Array.isArray(newSignal.value)) {
 								// Remove the previous, and add the new items to the array
-								children.splice(correctedIndex, 1, ...newChild);
+								children.splice(correctedIndex, 1, ...newSignal.value);
 
 								// We increase the length of the array so that this loop covers
 								// the newly inserted nodes
 								// `childrenOffset` is not used here because that's just used to
 								// skip elements
-								length += newChild.length;
+								length += newSignal.value.length;
 
 								// Revisit the current index, this is necessary as there's now a
 								// new node at this position
 								i--;
 							} else {
 								// Otherwise it's a valid node so set it
-								children[correctedIndex] = newChild;
+								children[correctedIndex] = newSignal.value;
 
 								// Revisit the current index, the node has changed and some
 								// transforms may care about it
@@ -266,7 +366,7 @@ export default function reduce(
 				}
 			} else if (isNodeLike(oldVal)) {
 				// Run transforms on this node
-				let newVal: undefined | TransformExitResult = reduce(
+				let newSignal: undefined | ExitSignal = _reduceSignal(
 					oldVal,
 					visitors,
 					context,
@@ -279,22 +379,29 @@ export default function reduce(
 					},
 				);
 
+				if (newSignal.type === "PARENT") {
+					return normalizeParentSignalReturn(node, newSignal);
+				}
+
 				// If this value has been changed then...
-				if (newVal !== oldVal && !context.frozen) {
+				if (!isRetainSignal(oldVal, newSignal) && !context.frozen) {
+					let newValue = undefined;
+					if (newSignal.type === "REPLACE") {
+						newValue = newSignal.value;
+					} else if (newSignal.type === "REMOVE") {
+						// If the node is deleted then use `undefined` instead
+						newValue = undefined;
+					}
+
 					// When replacing a key value, we cannot replace it with an array
-					if (Array.isArray(newVal)) {
+					if (Array.isArray(newValue)) {
 						throw new Error(
 							"Cannot replace a key value node with an array of nodes",
 						);
 					}
 
-					// If the node is deleted then use `void` instead
-					if (newVal === REDUCE_REMOVE) {
-						newVal = undefined;
-					}
-
 					// Mutate the original object - funky typing since Flow doesn't understand the mutation
-					node = ({...node, [key]: newVal} as AnyNode);
+					node = ({...node, [key]: newValue} as AnyNode);
 
 					// Create a new node path for it
 					path = path.fork(node);
@@ -337,5 +444,9 @@ export default function reduce(
 		}
 	}
 
-	return path.node;
+	if (context.frozen) {
+		return signals.retain;
+	} else {
+		return signals.maybeReplace(origNode, path.node);
+	}
 }

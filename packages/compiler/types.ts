@@ -10,10 +10,10 @@ import {
 	BundlerMode,
 	FileReference,
 } from "@romefrontend/core";
-import {Path, REDUCE_REMOVE} from "@romefrontend/compiler";
-import {AnyNode, AnyRoot} from "@romefrontend/ast";
+import {Path} from "@romefrontend/compiler";
+import {AnyRoot} from "@romefrontend/ast";
 import {ProjectConfig} from "@romefrontend/project";
-import {REDUCE_SKIP_SUBTREE} from "./constants";
+import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {SourceMap} from "@romefrontend/codec-source-map";
@@ -39,21 +39,11 @@ export type Transform =
 
 export type Transforms = Array<Transform>;
 
-export type TransformExitResult =
-	| Array<AnyNode>
-	| AnyNode
-	| typeof REDUCE_REMOVE;
-
-export type TransformEnterResult =
-	| TransformExitResult
-	| typeof REDUCE_SKIP_SUBTREE;
-
-export type TransformVisitor = {
+export interface TransformVisitor {
 	name: string;
-	enter?: (path: Path) => TransformEnterResult;
-	exit?: (path: Path) => TransformExitResult;
-};
-
+	enter?: (path: Path) => EnterSignal;
+	exit?: (path: Path) => ExitSignal;
+}
 export type TransformVisitors = Array<TransformVisitor>;
 
 export type CompileRequest = TransformRequest & {
