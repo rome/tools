@@ -1,11 +1,19 @@
 .hero {
-	position: relative;
 	padding: $unit * 2;
 	border-bottom: 1px solid var(--soft-border-color);
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+	color: black;
+	text-align: center;
+
 	@include pattern;
 
+	@media only screen and (min-width: 880px) {
+		height: 127px + 49px;
+	}
+
 	@include mobile-only() {
-		text-align: center;
 		padding: $unit * 2 $unit;
 	}
 
@@ -14,11 +22,12 @@
 	}
 
 	h1 {
-		margin: 0.67em 0;
+		margin-bottom: 0.3em;
 	}
 
 	h2 {
-
+		font-family: $body-font;
+		color: var(--sub-text-color);
 	}
 
 	> :last-child {
