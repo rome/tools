@@ -2,7 +2,7 @@ import {PACKAGES, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@romefrontend/fs";
 
 const runtimeModules = ROOT.append("packages", "@romefrontend-runtime");
-const runtimeIndex = PACKAGES.appendList("core", "common", "virtual-modules.ts");
+const runtimeIndex = PACKAGES.append("core", "common", "virtual-modules.ts");
 
 export async function main() {
 	await modifyGeneratedFile(

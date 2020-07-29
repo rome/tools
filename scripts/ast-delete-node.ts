@@ -21,17 +21,11 @@ export async function main([filename]: Array<string>) {
 	const [, category, nodeName] = segments;
 
 	// Remove files
+	await removeFile(PACKAGES.append("formatter", "builders", `${filename}.ts`));
 	await removeFile(
-		PACKAGES.appendList("formatter", "builders", `${filename}.ts`),
+		PACKAGES.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`),
 	);
-	await removeFile(
-		PACKAGES.appendList(
-			"js-analysis",
-			"evaluators",
-			`${category}/${nodeName}.ts`,
-		),
-	);
-	await removeFile(PACKAGES.appendList("ast", `${filename}.ts`));
+	await removeFile(PACKAGES.append("ast", `${filename}.ts`));
 
 	// Regenerate indexes
 	await generateAST();
