@@ -32,7 +32,7 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {Dict} from "@romefrontend/typescript-helpers";
 
 function formatLineView(

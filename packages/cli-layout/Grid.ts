@@ -6,17 +6,22 @@
  */
 
 import {
-	ChildNode,
-	Children,
-	GridOutputFormat,
-	MarkupFormatGridOptions,
 	MarkupLineWrapMode,
-	MarkupPointer,
+	MarkupParsedAttributes,
+	MarkupParsedChild,
+	MarkupParsedChildren,
+	MarkupParsedTag,
+	MarkupParsedText,
 	MarkupTagName,
-	TagAttributes,
-	TagNode,
-	TextNode,
-} from "../types";
+	buildFileLink,
+	createEmptyAttributes,
+	formatApprox,
+	formatGrammarNumber,
+	formatNumber,
+	lineWrapValidator,
+	parseMarkup,
+} from "@romefrontend/markup";
+import {GridOptions, GridOutputFormat, GridPointer} from "./types";
 import {
 	Number1,
 	ob1Add,
@@ -33,13 +38,6 @@ import {
 	humanizeNumber,
 	humanizeTime,
 } from "@romefrontend/string-utils";
-import {
-	buildFileLink,
-	createEmptyAttributes,
-	formatApprox,
-	formatGrammarNumber,
-	formatNumber,
-} from "../util";
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
@@ -47,10 +45,8 @@ import {
 	DEFAULT_TERMINAL_FEATURES,
 	TerminalFeatures,
 } from "@romefrontend/cli-environment";
-import {parseMarkup} from "../parse";
 import {Position} from "@romefrontend/parser-core";
-import {lineWrapValidator} from "../tags";
-import {formatAnsi} from "../ansi";
+import {formatAnsi} from "./ansi";
 import {pretty} from "@romefrontend/pretty-format";
 
 type Cursor = {
@@ -58,18 +54,18 @@ type Cursor = {
 	column: Number1;
 };
 
-type Rows = Array<Array<TagNode>>;
+type Rows = Array<Array<MarkupParsedTag>>;
 
-type Ancestry = Array<TagNode>;
+type Ancestry = Array<MarkupParsedTag>;
 
 type Column = string | symbol;
 type Columns = Array<Column>;
 
 function createTag(
-	name: TagNode["name"],
-	attributes: TagNode["attributes"] = createEmptyAttributes(),
-	children: TagNode["children"] = [],
-): TagNode {
+	name: MarkupParsedTag["name"],
+	attributes: MarkupParsedTag["attributes"] = createEmptyAttributes(),
+	children: MarkupParsedTag["children"] = [],
+): MarkupParsedTag {
 	return {
 		type: "Tag",
 		name,
@@ -87,15 +83,15 @@ function sliceColumns(columns: Columns, start: Number1, end: Number1): string {
 }
 
 function extractViewTags(
-	tag: TagNode,
+	tag: MarkupParsedTag,
 ): {
-	pointer: undefined | TagNode;
-	linePrefixes: Array<TagNode>;
-	children: Children;
+	pointer: undefined | MarkupParsedTag;
+	linePrefixes: Array<MarkupParsedTag>;
+	children: MarkupParsedChildren;
 } {
-	let pointer: undefined | TagNode;
-	let linePrefixes: Array<TagNode> = [];
-	let children: Children = [];
+	let pointer: undefined | MarkupParsedTag;
+	let linePrefixes: Array<MarkupParsedTag> = [];
+	let children: MarkupParsedChildren = [];
 
 	for (const child of tag.children) {
 		if (child.type === "Tag") {
@@ -130,7 +126,7 @@ function isWhitespace(char: Column): boolean {
 }
 
 export default class Grid {
-	constructor(opts: MarkupFormatGridOptions) {
+	constructor(opts: GridOptions) {
 		this.viewportWidth = opts.columns === undefined ? undefined : opts.columns;
 		this.options = opts;
 
@@ -179,7 +175,7 @@ export default class Grid {
 
 	features: TerminalFeatures;
 	lineWrapMode: MarkupLineWrapMode;
-	options: MarkupFormatGridOptions;
+	options: GridOptions;
 	lines: Array<GridLine>;
 	cursor: Cursor;
 	width: Number1;
@@ -341,7 +337,7 @@ export default class Grid {
 	getFormattedLines(
 		opts: {
 			normalizeText: (text: string) => string;
-			formatTag: (tag: TagNode, inner: string) => string;
+			formatTag: (tag: MarkupParsedTag, inner: string) => string;
 			wrapRange: (text: string) => string;
 		},
 	): Array<string> {
@@ -569,7 +565,7 @@ export default class Grid {
 		this.moveCursorRight();
 	}
 
-	drawText(tag: TextNode, ancestry: Ancestry) {
+	drawText(tag: MarkupParsedText, ancestry: Ancestry) {
 		this.writeText(tag.value, ancestry, tag.source);
 
 		if (!tag.source && tag.sourceValue !== undefined) {
@@ -750,8 +746,8 @@ export default class Grid {
 		}
 	}
 
-	drawListTag(tag: TagNode, ancestry: Ancestry) {
-		let items: Array<TagNode> = [];
+	drawListTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+		let items: Array<MarkupParsedTag> = [];
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "li") {
 				items.push(child);
@@ -866,7 +862,10 @@ export default class Grid {
 		return true;
 	}
 
-	parse(sub: undefined | string, offsetPosition: undefined | Position): Children {
+	parse(
+		sub: undefined | string,
+		offsetPosition: undefined | Position,
+	): MarkupParsedChildren {
 		if (sub === undefined) {
 			return [];
 		}
@@ -876,7 +875,10 @@ export default class Grid {
 		);
 	}
 
-	parseAttribute(attributes: TagAttributes, key: string): Children {
+	parseAttribute(
+		attributes: MarkupParsedAttributes,
+		key: string,
+	): MarkupParsedChildren {
 		return this.parse(
 			attributes.get(key).asStringOrVoid(),
 			attributes.get(key).getDiagnosticLocation("inner-value").start,
@@ -884,7 +886,7 @@ export default class Grid {
 	}
 
 	getViewLinePrefixes(
-		children: Array<TagNode>,
+		children: Array<MarkupParsedTag>,
 		ancestry: Ancestry,
 	): {
 		width: Number1;
@@ -893,12 +895,12 @@ export default class Grid {
 		middle: undefined | Grid;
 		last: undefined | Grid;
 	} {
-		const prefixes: Array<TagNode> = [];
+		const prefixes: Array<MarkupParsedTag> = [];
 
-		let linePrefixFirst: undefined | TagNode;
-		let linePrefixMiddle: undefined | TagNode;
-		let linePrefixLast: undefined | TagNode;
-		let linePrefixPointer: undefined | TagNode;
+		let linePrefixFirst: undefined | MarkupParsedTag;
+		let linePrefixMiddle: undefined | MarkupParsedTag;
+		let linePrefixLast: undefined | MarkupParsedTag;
+		let linePrefixPointer: undefined | MarkupParsedTag;
 
 		// Extract viewLinePrefix tags
 		for (const child of children) {
@@ -956,7 +958,7 @@ export default class Grid {
 			}
 		}
 
-		const childrenToGrid: Map<undefined | TagNode, Grid> = new Map();
+		const childrenToGrid: Map<undefined | MarkupParsedTag, Grid> = new Map();
 		let maxWidth = ob1Coerce1(0);
 
 		// Get the maxWidth
@@ -986,7 +988,7 @@ export default class Grid {
 		};
 	}
 
-	getViewPointer({attributes, children}: TagNode): MarkupPointer {
+	getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
 		return {
 			char: this.parse(
 				attributes.get("char").asString(""),
@@ -999,7 +1001,11 @@ export default class Grid {
 		};
 	}
 
-	drawViewTag(tag: TagNode, ancestry: Ancestry, shrinkViewport?: Number1) {
+	drawViewTag(
+		tag: MarkupParsedTag,
+		ancestry: Ancestry,
+		shrinkViewport?: Number1,
+	) {
 		const tags = extractViewTags(tag);
 		const {children} = tags;
 		const {attributes} = tag;
@@ -1105,12 +1111,12 @@ export default class Grid {
 		this.newline();
 	}
 
-	drawTableTag(tag: TagNode, ancestry: Ancestry) {
+	drawTableTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		const rows: Rows = [];
 
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "tr") {
-				const row: Array<TagNode> = [];
+				const row: Array<MarkupParsedTag> = [];
 
 				for (const field of child.children) {
 					if (field.type === "Tag" && field.name === "td") {
@@ -1193,10 +1199,10 @@ export default class Grid {
 		}
 	}
 
-	drawIndentTag(tag: TagNode, ancestry: Ancestry) {
+	drawIndentTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		// Optimization for nested indents
 		let levels = 1;
-		let children: Children = tag.children;
+		let children: MarkupParsedChildren = tag.children;
 		while (
 			children.length === 1 &&
 			children[0].type === "Tag" &&
@@ -1218,7 +1224,7 @@ export default class Grid {
 	}
 
 	// Sometimes we derive a Grid from a tag that accepts an align attribute
-	maybeAlign(tag: TagNode) {
+	maybeAlign(tag: MarkupParsedTag) {
 		if (tag.attributes.get("align").asStringOrVoid() === "right") {
 			this.alignRight();
 		}
@@ -1256,7 +1262,7 @@ export default class Grid {
 		}
 	}
 
-	drawTag(tag: TagNode, ancestry: Ancestry) {
+	drawTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		const hook = hooks.get(tag.name);
 
 		const subAncestry: Ancestry = [...ancestry, tag];
@@ -1298,7 +1304,7 @@ export default class Grid {
 		}
 	}
 
-	drawChild(child: ChildNode, ancestry: Ancestry) {
+	drawChild(child: MarkupParsedChild, ancestry: Ancestry) {
 		if (child.type === "Text") {
 			this.drawText(child, ancestry);
 		} else {
@@ -1306,14 +1312,14 @@ export default class Grid {
 		}
 	}
 
-	drawChildren(children: Children, ancestry: Ancestry) {
+	drawChildren(children: MarkupParsedChildren, ancestry: Ancestry) {
 		for (const child of children) {
 			this.drawChild(child, ancestry);
 		}
 	}
 
-	normalizeChildren(children: Children): Children {
-		let newChildren: Children = [];
+	normalizeChildren(children: MarkupParsedChildren): MarkupParsedChildren {
+		let newChildren: MarkupParsedChildren = [];
 
 		for (const child of children) {
 			newChildren = newChildren.concat(this.normalizeChild(child));
@@ -1322,13 +1328,13 @@ export default class Grid {
 		return newChildren;
 	}
 
-	normalizeChild(child: ChildNode): Children {
+	normalizeChild(child: MarkupParsedChild): MarkupParsedChildren {
 		if (child.type === "Text") {
 			let {value} = child;
 
 			if (this.options.convertTabs && value.includes("\t")) {
 				const splitTabs = value.split("\t");
-				const children: Children = [];
+				const children: MarkupParsedChildren = [];
 
 				for (let i = 0; i < splitTabs.length; i++) {
 					if (i > 0) {
@@ -1417,7 +1423,7 @@ export default class Grid {
 			const width = attributes.get("width").asNumber(0);
 			const paddingSize = width - textLength;
 			if (paddingSize > 0) {
-				const paddingTextNode: TextNode = {
+				const paddingTextNode: MarkupParsedText = {
 					type: "Text",
 					source: false,
 					value: joinColumns(this.getSpaces(paddingSize)),
@@ -1586,7 +1592,7 @@ export default class Grid {
 	}
 }
 
-function getChildrenTextLength(children: Children): number {
+function getChildrenTextLength(children: MarkupParsedChildren): number {
 	let length = 0;
 
 	for (const child of children) {
@@ -1605,8 +1611,8 @@ function getChildrenTextLength(children: Children): number {
 const hooks: Map<
 	MarkupTagName,
 	{
-		before?: (tag: TagNode, grid: Grid, ancestry: Ancestry) => void;
-		after?: (tag: TagNode, grid: Grid, ancestry: Ancestry) => void;
+		before?: (tag: MarkupParsedTag, grid: Grid, ancestry: Ancestry) => void;
+		after?: (tag: MarkupParsedTag, grid: Grid, ancestry: Ancestry) => void;
 	}
 > = new Map();
 

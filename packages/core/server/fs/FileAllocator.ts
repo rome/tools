@@ -10,7 +10,7 @@ import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 export default class FileAllocator {

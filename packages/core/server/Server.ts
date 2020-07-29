@@ -66,7 +66,7 @@ import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/Diagnostics
 import {toKebabCase} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 import {getEnvVar} from "@romefrontend/cli-environment";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
 import {convertPossibleNodeError} from "@romefrontend/node";
 import RecoveryStore from "./fs/RecoveryStore";

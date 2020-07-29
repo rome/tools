@@ -1,7 +1,7 @@
 import {PACKAGES, reporter, writeFile} from "./_utils";
 import {exists} from "@romefrontend/fs";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {main as generateAST} from "./generated-files/ast";
 
 export async function main(

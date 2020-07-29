@@ -45,7 +45,7 @@ import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import crypto = require("crypto");
 import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];

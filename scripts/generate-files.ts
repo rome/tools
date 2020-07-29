@@ -5,7 +5,7 @@ import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {reporter, setForceGenerated} from "./_utils";
 import {parseCLIFlags} from "@romefrontend/cli-flags";
 import child = require("child_process");
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export async function main(args: Array<string>) {
 	const flags = await parseCLIFlags(

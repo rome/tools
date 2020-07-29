@@ -29,16 +29,14 @@ import {
 import {commandCategories} from "@romefrontend/core/common/commands";
 import {writeFile} from "@romefrontend/fs";
 import fs = require("fs");
+import {markupToPlainText} from "@romefrontend/cli-layout";
 import {
 	convertToMarkupFromRandomString,
+	joinMarkupLines,
 	markup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/cli-environment";
-import {
-	joinMarkupLines,
-	markupToPlainText,
-} from "@romefrontend/cli-layout/format";
 
 type CLIFlags = {
 	logs: boolean;

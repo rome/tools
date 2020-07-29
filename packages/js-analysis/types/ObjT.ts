@@ -11,7 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
 import ObjPropT from "./ObjPropT";
-import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup} from "@romefrontend/markup";
 
 export default class ObjT extends T {
 	constructor(

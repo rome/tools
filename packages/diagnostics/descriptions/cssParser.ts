@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const cssParser = createDiagnosticsCategory({
 	INVALID_BLOCK_START: {message: markup`Invalid block start`},

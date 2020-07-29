@@ -13,7 +13,7 @@ import {HumanBuilder} from "../Utils";
 import StringLiteralT from "./StringLiteralT";
 import GetPropT from "./GetPropT";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class InstanceT extends ObjT {
 	constructor(

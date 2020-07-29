@@ -12,7 +12,7 @@ import {createServerCommand} from "../commands";
 import {DiagnosticsError} from "@romefrontend/diagnostics";
 import {Consumer} from "@romefrontend/consume";
 import Bundler from "../bundler/Bundler";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = {
 	bundle: boolean;

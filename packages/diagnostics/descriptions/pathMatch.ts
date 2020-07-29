@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const pathMatch = createDiagnosticsCategory({
 	INVALID_PATTERN_SEGMENT_PART: {message: markup`Invalid pattern segment part`},

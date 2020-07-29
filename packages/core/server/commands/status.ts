@@ -9,7 +9,7 @@ import {ServerRequest} from "@romefrontend/core";
 import {WorkerStatus} from "../../common/bridges/WorkerBridge";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type StatusResult = {
 	server: {

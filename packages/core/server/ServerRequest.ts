@@ -87,7 +87,7 @@ import {
 } from "@romefrontend/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
 import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
-import {markup, readMarkup} from "@romefrontend/cli-layout";
+import {markup, readMarkup} from "@romefrontend/markup";
 import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
 import {JSONObject} from "@romefrontend/codec-json";
 import {VCSClient} from "@romefrontend/vcs";

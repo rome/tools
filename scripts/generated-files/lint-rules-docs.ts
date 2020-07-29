@@ -7,12 +7,12 @@ import {
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import highlightCode from "@romefrontend/cli-diagnostics/highlightCode";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
-import {joinMarkupLines, markupToHtml} from "@romefrontend/cli-layout/format";
+import {concatMarkup, joinMarkupLines, markup} from "@romefrontend/markup";
+import {markupToHtml} from "@romefrontend/cli-layout";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {dedent} from "@romefrontend/string-utils";
 import {ob1Coerce1} from "@romefrontend/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
-import {concatMarkup, markup} from "@romefrontend/cli-layout";
 
 const {worker, performFileOperation} = createMockWorker();
 

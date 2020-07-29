@@ -36,7 +36,7 @@ import {userConfig} from "./userConfig";
 import {htmlParser} from "./htmlParser";
 import {recoveryStore} from "./recoveryStore";
 import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
-import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup} from "@romefrontend/markup";
 
 export function join(conjunction: string, items: Array<Markup>): Markup {
 	if (items.length === 0) {

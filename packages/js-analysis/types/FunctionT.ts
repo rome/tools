@@ -11,7 +11,7 @@ import T, {SerialTypeFactory} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class FunctionT extends ObjT {
 	constructor(

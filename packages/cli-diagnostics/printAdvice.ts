@@ -34,7 +34,7 @@ import {
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";

@@ -14,11 +14,11 @@ import {
 	isAlpha,
 } from "@romefrontend/parser-core";
 import {
-	ChildNode,
-	Children,
+	MarkupParsedAttributes,
+	MarkupParsedChild,
+	MarkupParsedChildren,
+	MarkupParsedTag,
 	MarkupTagName,
-	TagAttributes,
-	TagNode,
 	Tokens,
 } from "./types";
 import {isEscaped} from "@romefrontend/string-utils";
@@ -167,7 +167,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 		parseTag(
 			headStart: Position,
 			parentTagName: undefined | MarkupTagName,
-		): TagNode {
+		): MarkupParsedTag {
 			const nameToken = this.expectToken("Word");
 			const tagName = (nameToken.value as MarkupTagName);
 
@@ -215,8 +215,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				}
 			}
 
-			const attributes: TagAttributes = createEmptyAttributes();
-			const children: Children = [];
+			const attributes: MarkupParsedAttributes = createEmptyAttributes();
+			const children: MarkupParsedChildren = [];
 			let selfClosing = false;
 
 			// Parse attributes
@@ -372,7 +372,9 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseChild(parentTagName: undefined | MarkupTagName): undefined | ChildNode {
+		parseChild(
+			parentTagName: undefined | MarkupTagName,
+		): undefined | MarkupParsedChild {
 			const start = this.getPosition();
 			const token = this.getToken();
 			this.nextToken();
@@ -410,8 +412,8 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			}
 		}
 
-		parse(): Children {
-			const children: Children = [];
+		parse(): MarkupParsedChildren {
+			const children: MarkupParsedChildren = [];
 			while (!this.matchToken("EOF")) {
 				const child = this.parseChild(undefined);
 				if (child !== undefined) {

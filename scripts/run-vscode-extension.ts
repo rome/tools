@@ -1,6 +1,6 @@
 import {exec, execDev, reporter} from "./_utils";
 import {TEMP_PATH} from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export async function main(args: Array<string>) {
 	const outFolder = TEMP_PATH.append("rome-vscode-dev").join();

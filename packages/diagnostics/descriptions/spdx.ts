@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {buildSuggestionAdvice} from "../helpers";
 
 // @romefrontend/codec-spdx-license

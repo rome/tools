@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import stringDiff from "@romefrontend/string-diff";
 
 export const recoveryStore = createDiagnosticsCategory({

@@ -14,7 +14,7 @@ import {
 	catchDiagnostics,
 } from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 async function testParser<T>(
 	t: TestHelper,

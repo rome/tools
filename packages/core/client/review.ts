@@ -21,7 +21,7 @@ import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 import {ClientRequestFlags} from "../common/types/client";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type State = {
 	initial: boolean;

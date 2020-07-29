@@ -27,7 +27,7 @@ import {Dict} from "@romefrontend/typescript-helpers";
 import {readFile} from "@romefrontend/fs";
 import {flipPathPatterns} from "@romefrontend/path-match";
 import {stringifyJSON} from "@romefrontend/codec-json";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;

@@ -1,9 +1,8 @@
-import {TagNode} from "../types";
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
-import {validateColor} from "../tags";
+import {MarkupParsedTag, validateColor} from "@romefrontend/markup";
 
 export function htmlFormatText(
-	{name: tagName, attributes}: TagNode,
+	{name: tagName, attributes}: MarkupParsedTag,
 	value: string,
 ): string {
 	switch (tagName) {

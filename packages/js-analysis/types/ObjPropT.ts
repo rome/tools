@@ -11,7 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {AnyNode} from "@romefrontend/ast";
 
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 export default class ObjPropT extends T {
 	constructor(
 		scope: Scope,

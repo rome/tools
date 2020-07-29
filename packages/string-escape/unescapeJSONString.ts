@@ -9,7 +9,7 @@ import {isHexDigit} from "@romefrontend/parser-core";
 import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
 import {isEscaped} from "@romefrontend/string-utils";
 import {ob1Coerce0} from "@romefrontend/ob1";
-import {readMarkup} from "@romefrontend/cli-layout";
+import {readMarkup} from "@romefrontend/markup";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {

@@ -2,7 +2,7 @@ import {PACKAGES, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
 import {removeFile} from "@romefrontend/fs";
 import {createUnknownFilePath} from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export async function main([filename]: Array<string>) {
 	if (filename === undefined) {

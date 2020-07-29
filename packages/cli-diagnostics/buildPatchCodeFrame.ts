@@ -23,7 +23,7 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {

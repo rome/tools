@@ -36,7 +36,7 @@ import ServerRequest from "./ServerRequest";
 import {JSONPropertyValue} from "@romefrontend/codec-json";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 import init from "@romefrontend/core/server/commands/init";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {

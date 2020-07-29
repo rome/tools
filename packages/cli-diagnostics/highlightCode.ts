@@ -17,13 +17,14 @@ import {tokenizeJSON} from "@romefrontend/codec-json";
 import {UnknownFilePath} from "@romefrontend/path";
 import {
 	Markup,
+	MarkupTokenType,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/cli-layout";
-import {MarkupTokenType} from "@romefrontend/cli-layout/types";
+} from "@romefrontend/markup";
+
 import {tokenizeHTML} from "@romefrontend/html-parser";
 import {splitLines} from "./utils";
 

@@ -1,14 +1,19 @@
-import {MarkupColor, MarkupTokenType, TagNode} from "../types";
-import {formatAnsi, formatAnsiRGB} from "../ansi";
-import {buildFileLink} from "../util";
-import OneDarkPro from "../syntax-theme/OneDarkPro.json";
+import {formatAnsi, formatAnsiRGB} from "./ansi";
+import OneDarkPro from "./syntax-theme/OneDarkPro.json";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import {validateColor, validateTokenType} from "../tags";
+import {
+	MarkupColor,
+	MarkupParsedTag,
+	MarkupTokenType,
+	buildFileLink,
+	validateColor,
+	validateTokenType,
+} from "@romefrontend/markup";
 import Grid from "./Grid";
 
 export function ansiFormatText(
-	{name: tagName, attributes}: TagNode,
+	{name: tagName, attributes}: MarkupParsedTag,
 	value: string,
 	grid: Grid,
 ): string {

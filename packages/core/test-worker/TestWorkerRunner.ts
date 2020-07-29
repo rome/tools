@@ -49,7 +49,7 @@ import {
 	markup,
 	readMarkup,
 	serializeLazyMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {
 	ErrorFrames,
 	StructuredError,

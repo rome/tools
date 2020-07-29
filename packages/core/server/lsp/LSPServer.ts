@@ -34,7 +34,7 @@ import {
 	getPathFromTextDocument,
 	getWorkerBufferPatches,
 } from "./utils";
-import {markup, readMarkup} from "@romefrontend/cli-layout";
+import {markup, readMarkup} from "@romefrontend/markup";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {

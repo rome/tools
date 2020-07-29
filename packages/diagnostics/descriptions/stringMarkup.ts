@@ -1,6 +1,6 @@
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 import {DiagnosticLocation} from "../types";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {buildSuggestionAdvice} from "../helpers";
 
 // @romefrontend/cli-layout

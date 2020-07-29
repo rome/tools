@@ -48,16 +48,14 @@ import os = require("os");
 import child = require("child_process");
 import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
 import {
-	joinMarkupLines,
-	markupToHtml,
-	markupToPlainText,
-} from "@romefrontend/cli-layout/format";
-import {
 	AnyMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
+	joinMarkupLines,
 	markup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
+
+import {markupToHtml, markupToPlainText} from "@romefrontend/cli-layout";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");

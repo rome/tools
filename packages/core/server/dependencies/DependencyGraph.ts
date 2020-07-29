@@ -27,7 +27,7 @@ import {
 	createUnknownFilePath,
 } from "@romefrontend/path";
 import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
 
 export type DependencyGraphSeedResult = {

@@ -12,7 +12,7 @@ import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import NullT from "./NullT";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class MaybeT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {

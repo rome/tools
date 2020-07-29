@@ -24,7 +24,7 @@ import {isRoot} from "@romefrontend/ast-utils";
 import {RetainSignal} from "../signals";
 import stringDiff from "@romefrontend/string-diff";
 import {formatAST} from "@romefrontend/formatter";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import {DiagnosticDescription} from "@romefrontend/diagnostics";
 import {ContextDiagnostic} from "./CompilerContext";
 import {

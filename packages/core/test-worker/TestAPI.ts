@@ -21,7 +21,7 @@ import stringDiff from "@romefrontend/string-diff";
 import {getErrorStructure} from "@romefrontend/v8";
 import {prettyFormatToString} from "@romefrontend/pretty-format";
 import {FileReference} from "../common/types/files";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {
 	AsyncFunc,
 	ExpectedError,

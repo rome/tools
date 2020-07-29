@@ -8,7 +8,7 @@
 import {AnyNode} from "@romefrontend/ast";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class BlockT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, body: Array<T>) {

@@ -57,7 +57,7 @@ import {
 } from "../lint/decisions";
 import {isRoot} from "@romefrontend/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics/utils";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import cleanTransform from "../transforms/cleanTransform";
 import {assertSingleNode} from "@romefrontend/js-ast-utils";
 

@@ -10,7 +10,7 @@ import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {readFileText} from "@romefrontend/fs";
 import {parseJSON, stringifyJSON} from "@romefrontend/codec-json";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,

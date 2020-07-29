@@ -50,12 +50,7 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {
-	Markup,
-	concatMarkup,
-	markup,
-	readMarkup,
-} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup, readMarkup} from "@romefrontend/markup";
 import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
 import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
 import net = require("net");

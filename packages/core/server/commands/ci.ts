@@ -11,7 +11,7 @@ import {chainCommands, createServerCommand} from "../commands";
 import check from "./check";
 import test from "./test";
 import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = {
 	fix: boolean;

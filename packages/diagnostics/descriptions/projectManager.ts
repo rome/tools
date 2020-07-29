@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const projectManager = createDiagnosticsCategory({
 	NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) => ({

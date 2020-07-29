@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 

@@ -14,18 +14,14 @@ import {
 	DiagnosticsProcessor,
 	deriveRootAdviceFromDiagnostic,
 } from "@romefrontend/diagnostics";
+import {MarkupRGB, joinMarkupLines, markup} from "@romefrontend/markup";
 import {Reporter} from "@romefrontend/cli-reporter";
 import {
 	DiagnosticsFileReaders,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
-import {
-	MarkupRGB,
-	formatAnsiRGB,
-	markup,
-	markupToPlainText,
-} from "@romefrontend/cli-layout";
+import {formatAnsiRGB, markupToPlainText} from "@romefrontend/cli-layout";
 import {ToLines, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
@@ -41,7 +37,7 @@ import {
 } from "@romefrontend/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {exists, lstat, readFileText} from "@romefrontend/fs";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
+
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 
 type RawBanner = {
