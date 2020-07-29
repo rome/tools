@@ -93,17 +93,22 @@
 
 .toc {
 	font-size: .95rem;
-	padding-left: 16px;
+	padding-left: $unit;
 
 	> ol > li {
-		margin-bottom: 8px;
+		margin-bottom: $unit / 2;
+	}
+
+	ol li ol{
+		font-size: .88rem;
 	}
 
 	li {
-		padding-left: 16px;
+		padding-left: $unit;
 
 		a {
 			display: block;
+			padding: 1.5px 0;
 		}
 
 		&.active > a {
