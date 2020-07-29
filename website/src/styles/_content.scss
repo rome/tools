@@ -30,6 +30,10 @@
 			border: 1px solid var(--soft-border-color);
 		}
 
+		&:last-child{
+			margin-bottom: 0;
+		}
+
 	}
 
 	p, ul, ol, pre, h4, h5 {

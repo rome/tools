@@ -1,26 +1,62 @@
 footer {
+
+	--pattern-color: #{$gray-3};
+	--pattern-color-2: #{rgba(0, 0, 0, 0)};
+	--pattern-img-path: var(--pattern-dark-img-path);
+	--blockquote-color: #{$gray-7};
+	--font-color: #{lighten(#27272A, 65%)};
+	--soft-border-color: rgba(0, 0, 0, 0.2);
+	--container-color: #{$gray-4};
+	--link-hover-color: #{lighten(#27272A, 60%)};
+	--logo-font-color: #{$gray-8};
+
 	max-width: 100%;
 	margin: 0 auto;
-	padding: $unit;
-	padding-bottom: $unit * 2;
+	margin-top: $unit;
 	border-top: 1px solid var(--soft-border-color);
+
+	nav {
+		flex-grow: 1;
+	}
+
+	> .container{
+		padding: $unit $unit * 2;
+	}
+
+	.footnote{
+		background: $gray-3;
+		margin: 0;
+		padding: $unit $unit * 2;
+		text-align: center;
+
+		color: $gray-6;
+
+		.note{
+			width: 100%;
+			b{
+				font-weight: bold;
+			}
+		}
+
+		.netlify-badge {
+			margin-left: auto;
+		}
+
+		.container{
+			height: 100%;
+			align-items: center;
+			padding: 0 $unit;
+		}
+	}
+
 	@include pattern;
-
-	.footer-container {
-		margin: auto;
-		max-width: 1075px;
-	}
-
-	.netlify-badge {
-		margin: $unit 0;
-	}
 
 	.logo {
 		text-decoration: none;
 		font-size: 34px;
-		margin-bottom: $unit ;
 		display: flex;
 		justify-content: center;
+		margin: 0;
 
 		svg {
 			width: 170px;
@@ -29,7 +65,6 @@ footer {
 				width: 150px;
 			}
 
-			margin-right: $unit / 2;
 			opacity: 0.7;
 
 			.cls-1 {
@@ -51,10 +86,6 @@ footer {
 	h2 {
 		margin: $unit 0;
 		font-size: 1em;
-	}
-
-	.row > div{
-		margin-right: $unit;
 	}
 
 	ul {

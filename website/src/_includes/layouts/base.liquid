@@ -122,34 +122,39 @@
 		<footer aria-labelledby="footer">
 			<h1 id="footer" class="sr-only">Footer</h1>
 
-			<div class="footer-container">
-				<div class="row">
-					<div>
-						<nav aria-labelledby="community-navigation">
-							<h2 id="community-navigation">Community</h2>
-							<ul>
-								<li>
-									<a href="https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
-								</li>
-								<li>
-									<a href="https://discord.gg/9WxHa5d">Discord</a>
-								</li>
-								<li>
-									<a href="https://twitter.com/romefrontend">Twitter</a>
-								</li>
-							</ul>
-						</nav>
+			<div class="container">
+				<nav aria-labelledby="community-navigation">
+					<h2 id="community-navigation">Community</h2>
+					<ul>
+						<li>
+							<a href="https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a>
+						</li>
+						<li>
+							<a href="https://discord.gg/9WxHa5d">Discord</a>
+						</li>
+						<li>
+							<a href="https://twitter.com/romefrontend">Twitter</a>
+						</li>
+					</ul>
+				</nav>
+				<nav aria-labelledby="resources-navigation">
+					<h2 id="resources-navigation">Resources</h2>
+					<ul>
+						<li>
+							<a href="https://github.com/romefrontend/rome">GitHub</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="footnote">
+				<div class="container">
+					<div class="logo">
+						{% include svg/rome-logo.svg %}
+						<span class="logo-text sr-only">Rome</span>
 					</div>
 
-					<div>
-						<nav aria-labelledby="resources-navigation">
-							<h2 id="resources-navigation">Resources</h2>
-							<ul>
-								<li>
-									<a href="https://github.com/romefrontend/rome">GitHub</a>
-								</li>
-							</ul>
-						</nav>
+					<div class="note">
+						Currently <b>v0.0.26</b>. Under <b>MIT</b> licence.
 					</div>
 
 					<div class="netlify-badge">
@@ -158,11 +163,7 @@
 							{% include svg/netlify.svg %}
 						</a>
 					</div>
-				</div>
 
-				<div class="logo">
-					{% include svg/rome-logo.svg %}
-					<span class="logo-text sr-only">Rome</span>
 				</div>
 			</div>
 		</footer>
