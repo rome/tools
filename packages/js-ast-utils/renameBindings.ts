@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path} from "@romefrontend/compiler";
+import {Binding, Path, signals} from "@romefrontend/compiler";
 import {inheritLoc} from "./inheritLoc";
 import {
 	AnyJSVariableIdentifier,
@@ -84,10 +84,10 @@ export function renameBindings(
 	const replaced: Set<AnyNode> = new Set();
 
 	// replace the nodes
-	const renamedNode = path.reduce(
+	const renamedNode = path.reduceNode(
 		{
 			name: "renameBindings",
-			enter(path): AnyNode | Array<AnyNode> {
+			enter(path) {
 				const {node} = path;
 
 				// Retain the correct exported name for `export function` and `export class`
@@ -97,25 +97,25 @@ export function renameBindings(
 					(node.declaration.type === "JSFunctionDeclaration" ||
 					node.declaration.type === "JSClassDeclaration")
 				) {
-					const newName = replaceNodesWithName.get(node.declaration.id);
+					const id = node.declaration.id;
+					const oldName = id.name;
+					const newName = replaceNodesWithName.get(id);
 
 					if (newName !== undefined) {
-						replaced.add(node.declaration.id);
+						replaced.add(id);
 
-						const oldName = node.declaration.id.name;
-
-						return ([
+						return signals.replace([
 							node.declaration,
 							jsExportLocalDeclaration.create({
 								specifiers: [
 									jsExportLocalSpecifier.create({
-										loc: node.declaration.id.loc,
+										loc: id.loc,
 										local: jsReferenceIdentifier.quick(newName),
 										exported: jsIdentifier.quick(oldName),
 									}),
 								],
 							}),
-						] as Array<AnyNode>);
+						]);
 					}
 				}
 
@@ -134,7 +134,7 @@ export function renameBindings(
 					}
 
 					if (includesAny) {
-						return ([
+						return signals.replace([
 							node.declaration,
 							jsExportLocalDeclaration.create({
 								specifiers: bindings.map((node) => {
@@ -153,7 +153,7 @@ export function renameBindings(
 									});
 								}),
 							}),
-						] as Array<AnyNode>);
+						]);
 					}
 				}
 
@@ -161,15 +161,15 @@ export function renameBindings(
 					const newName = replaceNodesWithName.get(node);
 					if (newName !== undefined) {
 						replaced.add(node);
-						return {
+						return signals.replace({
 							...node,
 							name: newName,
 							loc: inheritLoc(node, node.name),
-						};
+						});
 					}
 				}
 
-				return node;
+				return signals.retain;
 			},
 		},
 		{
@@ -179,7 +179,6 @@ export function renameBindings(
 
 	//
 	if (replaced.size !== replaceNodesWithName.size) {
-		console.log({replaced, replaceNodesWithName});
 		throw new Error("Missed some bindings");
 	}
 

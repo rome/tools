@@ -5,9 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PROGRAM, NodeBaseWithComments} from "@romefrontend/ast";
+import {
+	AnyNode,
+	AnyNodes,
+	MOCK_PROGRAM,
+	NodeBaseWithComments,
+} from "@romefrontend/ast";
 import {createDefaultProjectConfig} from "@romefrontend/project";
-import {CompilerContext, Path, TransformVisitors} from "@romefrontend/compiler";
+import {
+	CompilerContext,
+	Path,
+	TransformVisitors,
+	signals,
+} from "@romefrontend/compiler";
 import {SourceLocation} from "@romefrontend/parser-core";
 
 function removeProp<T extends {
@@ -23,8 +33,9 @@ const removeLocTransform: TransformVisitors = [
 		name: "removeLocTransform",
 		enter(path: Path) {
 			const {node} = path;
+
 			if (node.loc === undefined) {
-				return node;
+				return signals.retain;
 			} else {
 				const newNode: NodeBaseWithComments = removeProp(node);
 
@@ -38,13 +49,13 @@ const removeLocTransform: TransformVisitors = [
 					}
 				}
 
-				return (newNode as AnyNode);
+				return signals.replace((newNode as AnyNode));
 			}
 		},
 	},
 ];
 
-export function removeLoc(ast: AnyNode) {
+export function removeLoc(ast: AnyNode): AnyNodes {
 	const context = new CompilerContext({
 		ast: MOCK_PROGRAM,
 		project: {

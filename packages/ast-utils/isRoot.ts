@@ -1,13 +1,10 @@
-import {AnyRoot} from "@romefrontend/ast/unions";
-import {TransformExitResult} from "@romefrontend/compiler";
+import {AnyNode, AnyRoot} from "@romefrontend/ast";
 
-export function isRoot(node: TransformExitResult): node is AnyRoot {
+export function isRoot(node: AnyNode): node is AnyRoot {
 	return (
-		!Array.isArray(node) &&
-		typeof node !== "symbol" &&
-		(node.type === "JSRoot" ||
+		node.type === "JSRoot" ||
 		node.type === "CSSRoot" ||
 		node.type === "MarkdownRoot" ||
-		node.type === "HTMLRoot")
+		node.type === "HTMLRoot"
 	);
 }

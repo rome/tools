@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {ExitSignal, Path} from "@romefrontend/compiler";
 
 export type HookCallReturn<CallReturn, State> = {
 	bubble?: boolean;
@@ -21,7 +21,7 @@ export type HookDescriptor<State, CallArg, CallReturn> = {
 		state: State,
 		arg: CallArg,
 	) => HookCallReturn<CallReturn, State>;
-	exit?: (path: Path, state: State) => TransformExitResult;
+	exit?: (path: Path, state: State) => ExitSignal;
 };
 
 // rome-ignore lint/js/noExplicitAny

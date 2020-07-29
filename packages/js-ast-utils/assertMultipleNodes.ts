@@ -5,16 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode, AnyNodes} from "@romefrontend/ast";
 
-export function assertMultipleNodes(result: TransformExitResult): Array<AnyNode> {
+export function assertMultipleNodes(result: AnyNodes): Array<AnyNode> {
 	if (Array.isArray(result)) {
 		return result;
 	} else if (result === undefined) {
 		return [];
-	} else if (typeof result === "symbol") {
-		throw new Error("No symbols expected here");
 	} else {
 		return [result];
 	}

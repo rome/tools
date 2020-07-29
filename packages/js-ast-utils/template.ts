@@ -12,7 +12,7 @@ import {
 	AnyNode,
 	jsRoot,
 } from "@romefrontend/ast";
-import {CompilerContext, Path} from "@romefrontend/compiler";
+import {CompilerContext, Path, signals} from "@romefrontend/compiler";
 import {removeLoc} from "@romefrontend/ast-utils";
 import {parseJS} from "@romefrontend/js-parser";
 import {createUnknownFilePath} from "@romefrontend/path";
@@ -83,7 +83,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 				path: path.getPathKeys(),
 			};
 		}
-		return node;
+		return signals.retain;
 	}
 
 	const context = new CompilerContext({

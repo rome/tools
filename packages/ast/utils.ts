@@ -7,9 +7,8 @@
 
 import {assertSingleNode, inheritLoc} from "@romefrontend/js-ast-utils";
 import {NodeBase} from "@romefrontend/parser-core";
-import {AnyNode} from "./index";
+import {AnyNode, AnyNodes} from "./index";
 import {NodeBaseWithComments} from "./base";
-import {TransformExitResult} from "@romefrontend/compiler";
 
 export const bindingKeys: Map<string, Array<string>> = new Map();
 export const visitorKeys: Map<string, Array<string>> = new Map();
@@ -90,7 +89,7 @@ class Builder<Node extends AnyNode> {
 		};
 	}
 
-	assert(res: undefined | TransformExitResult): Node {
+	assert(res: undefined | AnyNodes): Node {
 		if (res === undefined) {
 			throw new Error(`Expected ${this.type} Node but got undefined`);
 		}

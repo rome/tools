@@ -24,24 +24,24 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	await writeFile(
 		rulesPath.appendList(`${ruleName}.ts`),
 		dedent`
-			import {Path, TransformExitResult} from "@romefrontend/compiler";
+			import {createVisitor, signals} from "@romefrontend/compiler";
 			import {descriptions} from "@romefrontend/diagnostics";
 
-			export default {
-			name: "${ruleName}",
-			enter(path: Path): TransformExitResult {
-				const {node} = path;
+			export default createVisitor({
+				name: "${ruleName}",
+				enter(path) {
+					const {node} = path;
 
-				if (false) {
+					if (false) {
 						path.context.addNodeDiagnostic(
 							node,
 							descriptions.LINT.${descriptionKey},
 						);
-				}
+					}
 
-				return node;
-			},
-			};
+					return signals.retain;
+				},
+			});
 		`,
 	);
 

@@ -5,19 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode, AnyNodes} from "@romefrontend/ast";
 
-export function assertSingleNode(result: TransformExitResult): AnyNode {
+export function assertSingleNode(result: AnyNodes): AnyNode {
 	if (Array.isArray(result)) {
 		if (result.length !== 1) {
 			throw new Error(`Expected node list length of 1 but got ${result.length}`);
 		}
 		return result[0];
 	} else if (result === undefined) {
-		throw new Error("Expected node or node list but got null");
-	} else if (typeof result === "symbol") {
-		throw new Error("No symbols expected here");
+		throw new Error("Expected node or node list but got undefined");
 	} else {
 		return result;
 	}

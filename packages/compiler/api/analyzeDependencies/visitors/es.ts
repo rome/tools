@@ -9,7 +9,7 @@ import {
 	ConstJSExportModuleKind,
 	ConstJSImportModuleKind,
 } from "@romefrontend/ast";
-import {ImportBinding, Path} from "@romefrontend/compiler";
+import {ImportBinding, createVisitor, signals} from "@romefrontend/compiler";
 import {AnalyzeDependencyName} from "@romefrontend/core";
 import {
 	getBindingIdentifiers,
@@ -34,9 +34,9 @@ import {
 	maybeTypeBinding,
 } from "../utils";
 
-export default {
+export default createVisitor({
 	name: "analyzeDependenciesES",
-	enter(path: Path) {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		// import('./bar');
@@ -232,7 +232,6 @@ export default {
 		}
 
 		// import {} from '';
-
 		// import * as foo from '';
 		if (node.type === "JSImportDeclaration") {
 			let hasNamespaceSpecifier = false;
@@ -300,11 +299,10 @@ export default {
 
 				// We can skip this if it's referencing a namespace
 				if (meta.type !== "name") {
-					return node;
+					return signals.retain;
 				}
 
 				// These are nodes that will defer the execution of code outside the init path
-
 				// (They could still be triggered with an actual function call but this is just for some basic analysis)
 				const deferredExecution = path.findAncestry((path) =>
 					isFunctionNode(path.node) || path.node.type === "JSClassProperty"
@@ -331,6 +329,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
