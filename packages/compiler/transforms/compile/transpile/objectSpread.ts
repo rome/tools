@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyJSObjectMember,
 	AnyJSStatement,
@@ -208,22 +208,22 @@ function transformRestProperty(
 	return nodes;
 }
 
-export default {
+export default createVisitor({
 	name: "objectSpread",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
 			node.type === "JSVariableDeclarationStatement" &&
 			getRestProperty(node) !== undefined
 		) {
-			return transformRestProperty(path, node.declaration);
+			return signals.replace(transformRestProperty(path, node.declaration));
 		}
 
 		if (node.type === "JSObjectExpression" && hasSpreadProperty(node.properties)) {
-			return transformSpreadProperty(path, node);
+			return signals.replace(transformSpreadProperty(path, node));
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

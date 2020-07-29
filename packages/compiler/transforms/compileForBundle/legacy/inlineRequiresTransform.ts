@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, AnyNode, JSVariableDeclarator} from "@romefrontend/ast";
-import {ConstBinding, Path} from "@romefrontend/compiler";
+import {AnyJSStatement, JSVariableDeclarator} from "@romefrontend/ast";
+import {ConstBinding, createVisitor, signals} from "@romefrontend/compiler";
 import {getRequireSource, isInTypeAnnotation} from "@romefrontend/js-ast-utils";
 
 const NON_INLINED_REQUIRES: Array<string> = [];
 
-export default {
+export default createVisitor({
 	name: "inlineRequiresTransform",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSReferenceIdentifier") {
@@ -28,14 +28,14 @@ export default {
 					!isInTypeAnnotation(path) &&
 					binding.value !== undefined
 				) {
-					return binding.value;
+					return signals.replace(binding.value);
 				}
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-	exit(path: Path): AnyNode {
+	exit(path) {
 		const {node} = path;
 
 		if (node.type === "JSRoot" || node.type === "JSBlockStatement") {
@@ -92,15 +92,15 @@ export default {
 			}
 
 			if (!hadRequires) {
-				return node;
+				return signals.retain;
 			}
 
-			return {
+			return signals.replace({
 				...node,
 				body,
-			};
+			});
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

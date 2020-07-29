@@ -8,10 +8,9 @@
 import {
 	FunctionBinding,
 	ImportBinding,
-	Path,
-	REDUCE_REMOVE,
-	TransformExitResult,
 	TypeBinding,
+	createVisitor,
+	signals,
 } from "@romefrontend/compiler";
 import {
 	getModuleId,
@@ -44,10 +43,11 @@ import {
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
 } from "@romefrontend/ast";
+import {pretty} from "@romefrontend/pretty-format";
 
-export default {
+export default createVisitor({
 	name: "esToRefTransform",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		const opts = getOptions(context);
@@ -172,7 +172,7 @@ export default {
 					if (child.type === "JSExportLocalDeclaration") {
 						if (child.declaration !== undefined) {
 							throw new Error(
-								"No export declarations should be here as they have been removed by renameBindings",
+								pretty`No export declarations should be here as they have been removed by renameBindings. Node: ${child}`,
 							);
 						}
 
@@ -226,7 +226,7 @@ export default {
 
 				const exportObj = jsObjectExpression.create({properties: exportObjProps});
 
-				return {
+				return signals.replace({
 					...newProgram,
 					type: "JSRoot",
 					body: [
@@ -245,15 +245,15 @@ export default {
 						),
 						...newProgram.body,
 					],
-				};
+				});
 			} else {
-				return newProgram;
+				return signals.replace(newProgram);
 			}
 		}
 
 		if (node.type === "JSImportDeclaration") {
 			// should have already been handled with the JSRoot branch
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
 		if (node.type === "JSExportDefaultDeclaration") {
@@ -263,7 +263,7 @@ export default {
 				declaration.type === "JSClassDeclaration"
 			) {
 				if (declaration.id === undefined) {
-					return {
+					return signals.replace({
 						// give it the correct name
 						...node,
 						declaration: {
@@ -272,23 +272,25 @@ export default {
 								name: getPrefixedName("default", opts.moduleId, opts),
 							}),
 						},
-					};
+					});
 				} else {
 					// if the export was named then we'll have already given it the correct name
-					return declaration;
+					return signals.replace(declaration);
 				}
 			} else {
-				return template.statement`const ${getPrefixedName(
-					"default",
-					opts.moduleId,
-					opts,
-				)} = ${declaration};`;
+				return signals.replace(
+					template.statement`const ${getPrefixedName(
+						"default",
+						opts.moduleId,
+						opts,
+					)} = ${declaration};`,
+				);
 			}
 		}
 
 		if (node.type === "JSExportExternalDeclaration") {
 			// Remove external exports with a source as they will be resolved correctly and never point here
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
 		if (node.type === "JSExportLocalDeclaration") {
@@ -300,7 +302,7 @@ export default {
 						"No specifiers or declaration existed, if there's no specifiers then there should be a declaration",
 					);
 				}
-				return declaration;
+				return signals.replace(declaration);
 			} else {
 				// check if any of the specifiers reference a global or import
 				// if so, we need to insert declarations for them
@@ -336,9 +338,9 @@ export default {
 				}
 
 				if (nodes.length === 0) {
-					return REDUCE_REMOVE;
+					return signals.remove;
 				} else {
-					return nodes;
+					return signals.replace(nodes);
 				}
 			}
 		}
@@ -346,12 +348,13 @@ export default {
 		if (node.type === "JSExportAllDeclaration" && opts.moduleAll === true) {
 			const moduleId = getModuleId(node.source.value, opts);
 			if (moduleId === undefined) {
-				return node;
+				return signals.retain;
 			}
 
 			const theirNamespace = getPrefixedNamespace(moduleId);
 			const ourNamespace = getPrefixedNamespace(opts.moduleId);
-			return template.statement`
+			return signals.replace(
+				template.statement`
         Object.keys(${theirNamespace}).forEach(function (key) {
           if (key === 'default') return undefined;
           Object.defineProperty(${ourNamespace}, key, {
@@ -362,14 +365,15 @@ export default {
             }
           });
         });
-      `;
+      `,
+			);
 		}
 
 		if (node.type === "JSExportAllDeclaration" && opts.moduleAll !== true) {
 			// We can remove these, this signature has already been flagged by analyze() and we'll automatically forward it
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

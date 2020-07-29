@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {template} from "@romefrontend/js-ast-utils";
-import {AnyNode, jsStringLiteral} from "@romefrontend/ast";
+import {jsStringLiteral} from "@romefrontend/ast";
 import {getModuleId, getOptions} from "../_utils";
 
-export default {
+export default createVisitor({
 	name: "asyncImportTransform",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 		const opts = getOptions(context);
 
@@ -24,10 +24,10 @@ export default {
 					loc: node.argument.loc,
 					value: moduleId,
 				});
-				return template.expression`Rome.import(${id})`;
+				return signals.replace(template.expression`Rome.import(${id})`);
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -5,13 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 
-export default {
+export default createVisitor({
 	name: "propertyLiterals",
-	enter(path: Path): AnyNode {
-		const {node} = path;
-		return node;
+	enter() {
+		return signals.retain;
 	},
-};
+});

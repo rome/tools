@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode, jsBindingIdentifier} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
+import {jsBindingIdentifier} from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "paramlessCatch",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSCatchClause" && node.param === undefined) {
-			return {
+			return signals.replace({
 				...node,
 				param: jsBindingIdentifier.create({
 					name: path.scope.generateUid(),
 				}),
-			};
+			});
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

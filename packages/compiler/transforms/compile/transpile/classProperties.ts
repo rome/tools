@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerContext, Path, Scope} from "@romefrontend/compiler";
+import {
+	CompilerContext,
+	Scope,
+	createVisitor,
+	signals,
+} from "@romefrontend/compiler";
 import {
 	AnyJSExpression,
 	AnyJSStatement,
@@ -134,7 +139,7 @@ function transformClass(
 								const {node} = path;
 
 								if (visited.has(node)) {
-									return node;
+									return signals.retain;
 								}
 
 								if (
@@ -144,9 +149,11 @@ function transformClass(
 									visited.add(node);
 
 									// TODO retain proper value of super()
-									return jsSequenceExpression.create({
-										expressions: [node, ...constructorAssignments],
-									});
+									return signals.replace(
+										jsSequenceExpression.create({
+											expressions: [node, ...constructorAssignments],
+										}),
+									);
 								}
 
 								if (
@@ -155,13 +162,12 @@ function transformClass(
 								) {
 									visited.add(node);
 
-									return ([
-										node,
-										...toExpressionStatements(constructorAssignments),
-									] as Array<AnyNode>);
+									return signals.replace(
+										([node, ...toExpressionStatements(constructorAssignments)] as Array<AnyNode>),
+									);
 								}
 
-								return node;
+								return signals.retain;
 							},
 						},
 					],
@@ -224,9 +230,9 @@ function transformClass(
 	};
 }
 
-export default {
+export default createVisitor({
 	name: "classProperties",
-	enter(path: Path) {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		// correctly replace an export class with the class node then append the declarations
@@ -242,13 +248,13 @@ export default {
 				scope,
 				context,
 			);
-			return ([
+			return signals.replace([
 				{
 					...node,
 					declaration: newClass,
 				},
 				...declarations,
-			] as Array<AnyNode>);
+			]);
 		}
 
 		// turn a class expression into an IIFE that returns a class declaration
@@ -256,31 +262,33 @@ export default {
 			const className =
 				node.id === undefined ? scope.generateUid("class") : node.id.name;
 
-			return jsCallExpression.create({
-				callee: jsArrowFunctionExpression.create({
-					head: jsFunctionHead.quick([]),
-					body: jsBlockStatement.create({
-						body: [
-							{
-								...node,
-								type: "JSClassDeclaration",
-								id: jsBindingIdentifier.quick(className),
-							},
-							jsReturnStatement.create({
-								argument: jsReferenceIdentifier.quick(className),
-							}),
-						],
+			return signals.replace(
+				jsCallExpression.create({
+					callee: jsArrowFunctionExpression.create({
+						head: jsFunctionHead.quick([]),
+						body: jsBlockStatement.create({
+							body: [
+								{
+									...node,
+									type: "JSClassDeclaration",
+									id: jsBindingIdentifier.quick(className),
+								},
+								jsReturnStatement.create({
+									argument: jsReferenceIdentifier.quick(className),
+								}),
+							],
+						}),
 					}),
+					arguments: [],
 				}),
-				arguments: [],
-			});
+			);
 		}
 
 		if (node.type === "JSClassDeclaration" && hasClassProps(node)) {
 			const {newClass, declarations} = transformClass(node, scope, context);
-			return ([newClass, ...declarations] as Array<AnyNode>);
+			return signals.replace([newClass, ...declarations]);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

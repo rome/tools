@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode, jsReferenceIdentifier} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
+import {jsReferenceIdentifier} from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "asyncImport",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSCallExpression" && node.callee.type === "JSImportCall") {
-			return {
+			return signals.replace({
 				...node,
 				callee: jsReferenceIdentifier.create({
 					name: "require",
 				}),
-			};
+			});
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

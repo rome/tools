@@ -7,7 +7,6 @@
 
 import {
 	AnyJSStatement,
-	AnyNode,
 	JSClassExpression,
 	JSFunctionExpression,
 	jsStringLiteral,
@@ -18,15 +17,15 @@ import {
 	template,
 } from "@romefrontend/js-ast-utils";
 import {getModuleId, getOptions} from "../_utils";
-import {FunctionBinding, Path} from "@romefrontend/compiler";
+import {FunctionBinding, createVisitor, signals} from "@romefrontend/compiler";
 
-export default {
+export default createVisitor({
 	name: "esToCJSTransform",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type !== "JSRoot") {
-			return node;
+			return signals.retain;
 		}
 
 		const options = getOptions(path.context);
@@ -224,9 +223,9 @@ export default {
 			bottomBody.push(bodyNode);
 		}
 
-		return {
+		return signals.replace({
 			...node,
 			body: [...topBody, ...bottomBody],
-		};
+		});
 	},
-};
+});

@@ -5,13 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
 import {
-	AnyNode,
+	JSFunctionExpression,
 	JSIdentifier,
 	JSThisExpression,
 	jsBindingIdentifier,
+	jsBlockStatement,
 	jsIdentifier,
+	jsReturnStatement,
 	jsThisExpression,
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
@@ -66,7 +68,7 @@ const arrowProvider = createHook<State, JSThisExpression, JSIdentifier>({
 			},
 		};
 	},
-	exit(path: Path, state: State): AnyNode {
+	exit(path: Path, state: State) {
 		const {node} = path;
 
 		if (
@@ -79,9 +81,9 @@ const arrowProvider = createHook<State, JSThisExpression, JSIdentifier>({
 		// This is called after the subtree has been transformed
 		if (state.id === undefined) {
 			// No `ThisExpression`s were rewritten
-			return node;
+			return signals.retain;
 		} else {
-			return {
+			return signals.replace({
 				// Inject the binding into the function block
 				...node,
 				body: {
@@ -101,14 +103,14 @@ const arrowProvider = createHook<State, JSThisExpression, JSIdentifier>({
 						...node.body.body,
 					],
 				},
-			};
+			});
 		}
 	},
 });
 
-export default {
+export default createVisitor({
 	name: "arrowFunctions",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -121,23 +123,27 @@ export default {
 
 		if (node.type === "JSThisExpression" && isInsideArrow(path)) {
 			// If we're a this expression and we're inside of an arrow then consume us by a descendent provider
-			return path.callHook(arrowProvider, node);
+			return signals.replace(path.callHook(arrowProvider, node));
 		}
 
-		return node;
+		return signals.retain;
 	},
-	exit(path: Path) {
+	exit(path) {
 		const {node} = path;
 
 		if (node.type === "JSArrowFunctionExpression") {
-			return {
+			const newNode: JSFunctionExpression = {
 				// Convert all arrow functions into normal functions, we do this in the `exit` method because we
 				// still need the arrow to be in the tree for the `isInsideArrow` call in `enter to work
 				...node,
 				type: "JSFunctionExpression",
+				body: node.body.type === "JSBlockStatement"
+					? node.body
+					: jsBlockStatement.quick([jsReturnStatement.create(node.body)]),
 			};
+			return signals.replace(newNode);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
