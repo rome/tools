@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {TransformExitResult} from "@romefrontend/compiler/types";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {AnyNode} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
@@ -26,9 +25,9 @@ function isEmpty(node: AnyNode): boolean {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "js/emptyBlocks",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSIfStatement") {
@@ -47,6 +46,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

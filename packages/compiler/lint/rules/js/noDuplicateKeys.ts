@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {JSObjectMethod, JSObjectProperty} from "@romefrontend/ast";
-import {TransformExitResult} from "@romefrontend/compiler/types";
 import {descriptions} from "@romefrontend/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
@@ -31,9 +30,9 @@ function extractPropertyKey(
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "js/noDuplicateKeys",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSObjectExpression") {
@@ -56,6 +55,6 @@ export default {
 			duplicates.process();
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

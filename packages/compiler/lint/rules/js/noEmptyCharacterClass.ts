@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, REDUCE_REMOVE, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noEmptyCharacterClass",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 
 		if (
@@ -19,9 +19,9 @@ export default {
 			!node.invert
 		) {
 			context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_EMPTY_CHAR_SET);
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

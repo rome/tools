@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getCompletionRecords} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/getterReturn",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -29,6 +28,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

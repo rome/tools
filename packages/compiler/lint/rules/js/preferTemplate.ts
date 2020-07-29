@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyJSExpression,
 	AnyNode,
@@ -259,9 +259,9 @@ function shouldReplace(expressions: Array<AnyJSExpression>): boolean {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "js/preferTemplate",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (isUnnecessaryStringConcatExpression(node)) {
@@ -272,16 +272,15 @@ export default {
 				const combinedParts = combineTemplateParts(templateParts);
 				const template = convertTemplatePartsToTemplateLiteral(combinedParts);
 
-				return path.context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: template,
+						fixed: signals.replace(template),
 					},
 					descriptions.LINT.JS_PREFER_TEMPLATE,
 				);
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

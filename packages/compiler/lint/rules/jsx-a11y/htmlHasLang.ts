@@ -1,6 +1,6 @@
 import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode, JSXElement} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {JSXElement} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
@@ -30,10 +30,10 @@ function validLang(node: JSXElement) {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/htmlHasLang",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 		if (isJSXElement(node, "html")) {
 			if (!hasJSXAttribute(node, "lang") || !validLang(node)) {
@@ -44,6 +44,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

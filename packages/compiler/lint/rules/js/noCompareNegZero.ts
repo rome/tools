@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {template} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
@@ -20,9 +20,9 @@ function isNegZero(node: AnyNode): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "js/noCompareNegZero",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -31,10 +31,11 @@ export default {
 			(isNegZero(node.left) || isNegZero(node.right))
 		) {
 			if (node.operator === "===") {
-				return path.context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: template.expression`Object.is(${node.left}, ${node.right})`,
+						fixed: signals.replace(
+							template.expression`Object.is(${node.left}, ${node.right})`,
+						),
 					},
 					descriptions.LINT.JS_NO_COMPARE_NEG_ZERO(node.operator),
 				);
@@ -46,6 +47,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

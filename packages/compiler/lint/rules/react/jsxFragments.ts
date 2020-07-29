@@ -1,13 +1,13 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {jsxFragment} from "@romefrontend/ast";
 import {hasJSXAttribute} from "@romefrontend/js-ast-utils";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default {
+export default createVisitor({
 	name: "react/jsxFragments",
-	enter(path: Path): TransformExitResult {
-		const {node, context, scope} = path;
+	enter(path) {
+		const {node, scope} = path;
 
 		if (
 			node.type === "JSXElement" &&
@@ -15,17 +15,18 @@ export default {
 			doesNodeMatchReactPattern(node.name, scope, "React.Fragment")) &&
 			!hasJSXAttribute(node, "key")
 		) {
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: jsxFragment.create({
-						children: node.children,
-					}),
+					fixed: signals.replace(
+						jsxFragment.create({
+							children: node.children,
+						}),
+					),
 				},
 				descriptions.LINT.REACT_JSX_FRAGMENTS,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

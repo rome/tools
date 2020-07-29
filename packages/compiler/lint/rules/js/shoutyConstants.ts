@@ -1,9 +1,9 @@
-import {ConstBinding, Path, TransformExitResult} from "@romefrontend/compiler";
+import {ConstBinding, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/shoutyConstants",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (node.type === "JSReferenceIdentifier") {
@@ -16,16 +16,15 @@ export default {
 				!binding.isExported &&
 				(binding.scope.kind === "block" || binding.scope.kind === "program")
 			) {
-				return path.context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: binding.value,
+						fixed: signals.replace(binding.value),
 					},
 					descriptions.LINT.JS_SHOUTY_CONSTANTS(binding.node.loc),
 				);
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
-export default {
+export default createVisitor({
 	name: "js/noDuplicateGroupNamesInRegularExpressions",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {context, node} = path;
 
 		if (node.type === "JSRegExpSubExpression") {
@@ -34,6 +33,6 @@ export default {
 			duplicates.process();
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

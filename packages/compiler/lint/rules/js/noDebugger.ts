@@ -6,23 +6,22 @@
  */
 
 import {descriptions} from "@romefrontend/diagnostics";
-import {Path, REDUCE_REMOVE, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 
-export default {
+export default createVisitor({
 	name: "js/noDebugger",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSDebuggerStatement") {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: REDUCE_REMOVE,
+					fixed: signals.remove,
 				},
 				descriptions.LINT.JS_NO_DEBUGGER,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

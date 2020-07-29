@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {jsUnaryExpression} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/unsafeNegation",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -20,21 +20,22 @@ export default {
 			node.left.type === "JSUnaryExpression" &&
 			node.left.operator === "!"
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: jsUnaryExpression.create({
-						operator: node.left.operator,
-						argument: {
-							...node,
-							left: node.left.argument,
-						},
-					}),
+					fixed: signals.replace(
+						jsUnaryExpression.create({
+							operator: node.left.operator,
+							argument: {
+								...node,
+								left: node.left.argument,
+							},
+						}),
+					),
 				},
 				descriptions.LINT.JS_UNSAFE_NEGATION,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

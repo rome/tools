@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {AnyJSExpression, JSUnaryExpression} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
@@ -17,9 +17,9 @@ function isNegation(node: AnyJSExpression): node is JSUnaryExpression {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "js/negationElse",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -27,35 +27,33 @@ export default {
 			node.alternate !== undefined &&
 			isNegation(node.test)
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						test: node.test.argument,
 						consequent: node.alternate,
 						alternate: node.consequent,
-					},
+					}),
 				},
 				descriptions.LINT.JS_NEGATION_ELSE,
 			);
 		}
 
 		if (node.type === "JSConditionalExpression" && isNegation(node.test)) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						test: node.test.argument,
 						consequent: node.alternate,
 						alternate: node.consequent,
-					},
+					}),
 				},
 				descriptions.LINT.JS_NEGATION_ELSE,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

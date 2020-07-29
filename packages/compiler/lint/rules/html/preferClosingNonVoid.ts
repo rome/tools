@@ -1,10 +1,10 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {VOID_DOM_ELEMENTS} from "../../utils/constants";
 
-export default {
+export default createVisitor({
 	name: "html/preferClosingNonVoid",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -12,18 +12,17 @@ export default {
 			node.selfClosing &&
 			!VOID_DOM_ELEMENTS.has(node.name.name)
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						selfClosing: false,
-					},
+					}),
 				},
 				descriptions.LINT.HTML_PREFER_CLOSING_NON_VOID,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

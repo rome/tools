@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {JSXElement} from "@romefrontend/ast";
 import {
@@ -446,9 +446,9 @@ function langSupported(lang: string): boolean {
 
 	return false;
 }
-export default {
+export default createVisitor({
 	name: "jsx-a11y/lang",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (isJSXElement(node, "html") && hasJSXAttribute(node, "lang")) {
@@ -462,6 +462,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

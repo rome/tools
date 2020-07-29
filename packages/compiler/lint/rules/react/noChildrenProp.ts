@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getJSXAttribute} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
+import {AnyNode} from "@romefrontend/ast";
 
 function getJSXChildrenProp(node: AnyNode) {
 	return node.type === "JSXElement" && getJSXAttribute(node, "children");
 }
 
-export default {
+export default createVisitor({
 	name: "react/noChildrenProp",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 		const childrenProp =
 			getJSXChildrenProp(node) || getCreateElementProp(node, scope, "children");
@@ -28,6 +28,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

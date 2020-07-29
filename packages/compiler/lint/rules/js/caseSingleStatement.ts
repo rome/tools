@@ -5,28 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {jsBlockStatement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/caseSingleStatement",
-	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "JSSwitchCase" && node.consequent.length > 1) {
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						consequent: [jsBlockStatement.quick(node.consequent)],
-					},
+					}),
 				},
 				descriptions.LINT.JS_CASE_SINGLE_STATEMENT,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

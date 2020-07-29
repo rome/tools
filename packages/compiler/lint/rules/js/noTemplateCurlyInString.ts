@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noTemplateCurlyInString",
-	enter(path: Path) {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSStringLiteral") {
@@ -24,6 +24,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

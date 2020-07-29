@@ -1,9 +1,10 @@
-import {Path, Scope, TransformExitResult} from "@romefrontend/compiler";
+import {Path, Scope, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {hasJSXAttribute, isFunctionNode} from "@romefrontend/js-ast-utils";
-import {AnyNode, JSXElement, JSXFragment} from "@romefrontend/ast";
-import {REDUCE_REMOVE} from "@romefrontend/compiler/constants";
+import {JSXElement, JSXFragment} from "@romefrontend/ast";
+
 import {doesNodeMatchReactPattern} from "../../utils/react";
+import {ExitSignal} from "@romefrontend/compiler/signals";
 
 function isChildOfHtmlElement(path: Path): boolean {
 	const parentNode = path.parent;
@@ -27,25 +28,23 @@ function hasLessThanTwoChildren(node: JSXFragment | JSXElement): boolean {
 	return node.children.length < 2;
 }
 
-function getChildrenNode(
-	node: JSXFragment | JSXElement,
-): AnyNode | typeof REDUCE_REMOVE | Array<AnyNode> {
+function getChildrenNode(node: JSXFragment | JSXElement): ExitSignal {
 	if (node.children.length === 0) {
-		return REDUCE_REMOVE;
+		return signals.remove;
 	}
 	if (node.children.length === 1) {
-		return node.children[0];
+		return signals.replace(node.children[0]);
 	}
-	return node.children;
+	return signals.replace(node.children);
 }
 
-export default {
+export default createVisitor({
 	name: "noUselessFragment",
-	enter(path: Path): TransformExitResult {
-		const {node, context, scope} = path;
+	enter(path) {
+		const {node, scope} = path;
 
 		if (node.type !== "JSXFragment" && node.type !== "JSXElement") {
-			return node;
+			return signals.retain;
 		}
 
 		if (
@@ -56,15 +55,14 @@ export default {
 			!(node.type === "JSXElement" && hasJSXAttribute(node, "key")) &&
 			(hasLessThanTwoChildren(node) || isChildOfHtmlElement(path))
 		) {
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
 					fixed: getChildrenNode(node),
 				},
 				descriptions.LINT.REACT_NO_USELESS_FRAGMENT,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

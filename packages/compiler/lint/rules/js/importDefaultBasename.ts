@@ -5,28 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {filenameToId} from "./defaultExportSameBasename";
 
-export default {
+export default createVisitor({
 	name: "js/importDefaultBasename",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSImportDeclaration") {
 			const {defaultSpecifier} = node;
 			if (defaultSpecifier === undefined) {
-				return node;
+				return signals.retain;
 			}
 
 			const filePath = createUnknownFilePath(node.source.value);
 			const expectedName = filenameToId(filePath, false);
 			const expectedNameCapital = filenameToId(filePath, true);
 			if (expectedName === undefined || expectedNameCapital === undefined) {
-				return node;
+				return signals.retain;
 			}
 
 			const localName = defaultSpecifier.local.name.name;
@@ -41,6 +40,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

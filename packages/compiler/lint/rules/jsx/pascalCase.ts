@@ -1,11 +1,11 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {normalizeCamelCase} from "../js/camelCase";
 import {toCamelCase} from "@romefrontend/string-utils";
 
-export default {
+export default createVisitor({
 	name: "jsx/pascalCase",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -28,6 +28,6 @@ export default {
 				);
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

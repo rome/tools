@@ -1,4 +1,4 @@
-import {Path, Scope, TransformExitResult} from "@romefrontend/compiler";
+import {Path, Scope, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
 import {
@@ -119,9 +119,9 @@ function hasArrayIndexKey(keyValue: string, node: AnyNode) {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "react/noArrayIndexKey",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (doesNodeMatchReactPattern(node, scope, "cloneElement")) {
@@ -199,6 +199,6 @@ export default {
 				}
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

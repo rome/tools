@@ -4,9 +4,8 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {Path, createHook} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
 import {
-	AnyNode,
 	JSFunctionDeclaration,
 	JSThisExpression,
 	JSVariableDeclarationStatement,
@@ -46,18 +45,12 @@ const hook = createHook<State, Arg, JSThisExpression>({
 			},
 		};
 	},
-	exit(
-		path: Path,
-		state: State,
-	):
-		| JSVariableDeclarationStatement
-		| JSFunctionDeclaration
-		| Array<JSVariableDeclarationStatement | JSFunctionDeclaration> {
+	exit(path: Path, state: State) {
 		const node = jsVariableDeclarationStatement.assert(path.node);
 
 		// We may have invalidated all declarations
 		if (state.declarators.length === 0) {
-			return node;
+			return signals.retain;
 		}
 
 		const nodes: Array<JSVariableDeclarationStatement | JSFunctionDeclaration> = [];
@@ -120,16 +113,16 @@ const hook = createHook<State, Arg, JSThisExpression>({
 		}
 
 		if (nodes.length === 1) {
-			return nodes[0];
+			return signals.replace(nodes[0]);
 		}
 
-		return nodes;
+		return signals.replace(nodes);
 	},
 });
 
-export default {
+export default createVisitor({
 	name: "js/preferFunctionDeclarations",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -175,17 +168,19 @@ export default {
 
 			// We'll only return an JSArrowFunctionExpression if it was inside of a JSVariableDeclarator
 			if (func !== undefined && func.node.type === "JSArrowFunctionExpression") {
-				return path.callHook(
-					hook,
-					{
-						declarator: jsVariableDeclarator.assert(func.parent),
+				return signals.replace(
+					path.callHook(
+						hook,
+						{
+							declarator: jsVariableDeclarator.assert(func.parent),
+							node,
+						},
 						node,
-					},
-					node,
+					),
 				);
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

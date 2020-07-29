@@ -6,7 +6,7 @@
  */
 
 import {AnyComment, AnyNode, AnyRoot} from "@romefrontend/ast";
-import {CompilerContext} from "@romefrontend/compiler";
+import {CompilerContext, signals} from "@romefrontend/compiler";
 import {Number1, ob1Get1} from "@romefrontend/ob1";
 import Path from "../lib/Path";
 import {SUPPRESSION_START} from "../suppressions";
@@ -106,7 +106,7 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 		ast,
 		{
 			name: "suppressionVisitor",
-			enter(path: Path) {
+			enter(path) {
 				const {node} = path;
 
 				// Don't allow attaching suppression comments to a comment or program...
@@ -115,21 +115,21 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 					node.type === "CommentLine" ||
 					node.type === "JSRoot"
 				) {
-					return node;
+					return signals.retain;
 				}
 
 				const line = getStartLine(node);
 				if (line === undefined || visitedLines.has(line)) {
-					return node;
+					return signals.retain;
 				}
 
 				const decisions = context.getLintDecisions(String(ob1Get1(line)));
 				if (decisions.length === 0) {
-					return node;
+					return signals.retain;
 				}
 
 				visitedLines.add(line);
-				return addComment(path, node, decisions);
+				return signals.replace(addComment(path, node, decisions));
 			},
 		},
 	);

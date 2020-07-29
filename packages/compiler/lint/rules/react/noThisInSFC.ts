@@ -1,10 +1,10 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {isFunctionNode} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "react/noThisInSFC",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSThisExpression") {
@@ -52,6 +52,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

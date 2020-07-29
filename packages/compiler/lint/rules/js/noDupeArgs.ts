@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noDupeArgs",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSFunctionHead") {
@@ -32,6 +31,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

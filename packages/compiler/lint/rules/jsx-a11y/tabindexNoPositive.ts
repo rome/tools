@@ -1,27 +1,27 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
 import {JSXAttribute, JSXElement} from "@romefrontend/ast";
 
 function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute) {
-	return path.context.addFixableDiagnostic(
+	return path.addFixableDiagnostic(
 		{
-			old: attribute,
-			fixed: {
+			target: attribute,
+			fixed: signals.replace({
 				...node,
 				attributes: node.attributes.filter((attribute) =>
 					attribute.type !== "JSXAttribute" ||
 					attribute.name.name !== "tabIndex"
 				),
-			},
+			}),
 		},
 		descriptions.LINT.JSX_A11Y_TABINDEX_NO_POSITIVE,
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/tabindexNoPositive",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSXElement" && hasJSXAttribute(node, "tabIndex")) {
@@ -54,6 +54,6 @@ export default {
 				}
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

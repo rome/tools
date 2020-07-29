@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {JSXElement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
@@ -63,14 +63,14 @@ function hasTypeImage(node: JSXElement): boolean {
 	attr.value.value === "image");
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/altText",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSXElement" && node.name.type === "JSXIdentifier") {
 			if (!/(img)|(area)|(input)|(object)/.test(node.name.name)) {
-				return node;
+				return signals.retain;
 			}
 
 			if (
@@ -87,6 +87,6 @@ export default {
 				);
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

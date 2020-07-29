@@ -5,16 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSRegExpCharSet} from "@romefrontend/ast";
-import {CompilerContext, Path} from "@romefrontend/compiler";
+import {JSRegExpCharSet} from "@romefrontend/ast";
+import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 function checkRegEx(
 	node: JSRegExpCharSet,
 	context: CompilerContext,
 ): JSRegExpCharSet {
-	node.body.forEach((currNode, i) => {
+	for (let i = 0; i < node.body.length; i++) {
 		const nextNode = node.body[i + 1];
+		const currNode = node.body[i];
 		const lastNode = node.body[node.body.length - 1];
 		if (
 			currNode.type === "JSRegExpCharacter" &&
@@ -31,20 +32,20 @@ function checkRegEx(
 				{fixable: false},
 			);
 		}
-	});
+	}
 
 	return node;
 }
 
-export default {
+export default createVisitor({
 	name: "js/noPosixInRegularExpression",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {context, node} = path;
 
 		if (node.type === "JSRegExpCharSet" && node.body.length > 2) {
-			return checkRegEx(node, context);
+			return signals.replace(checkRegEx(node, context));
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
 import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getJSXAttribute} from "@romefrontend/js-ast-utils";
 import {descriptions} from "@romefrontend/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
@@ -18,9 +18,9 @@ function getJSXDangerProp(node: AnyNode) {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "react/noDanger",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 		const dangerProp =
 			getJSXDangerProp(node) ||
@@ -32,6 +32,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

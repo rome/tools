@@ -5,8 +5,8 @@ import {
 	isEmptyTemplateLiteral,
 	isJSXElement,
 } from "@romefrontend/js-ast-utils";
-import {AnyNode, JSXElement} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {JSXElement} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 
 function validTitle(node: JSXElement) {
 	if (hasJSXAttribute(node, "title")) {
@@ -33,10 +33,10 @@ function validTitle(node: JSXElement) {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/iframeHasTitle",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 		if (isJSXElement(node, "iframe")) {
 			if (!hasJSXAttribute(node, "title") || !validTitle(node)) {
@@ -47,6 +47,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

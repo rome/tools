@@ -6,38 +6,39 @@
  */
 
 import {descriptions} from "@romefrontend/diagnostics";
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {jsBooleanLiteral, jsWhileStatement} from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "js/preferWhile",
-	enter(path: Path): TransformExitResult {
-		const {context, node} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (
 			node.type === "JSForStatement" &&
 			node.init === undefined &&
 			node.update === undefined
 		) {
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: jsWhileStatement.create(
-						{
-							test: node.test !== undefined
-								? node.test
-								: jsBooleanLiteral.quick(true),
-							body: node.body,
-							leadingComments: node.leadingComments,
-							trailingComments: node.trailingComments,
-						},
-						node,
+					fixed: signals.replace(
+						jsWhileStatement.create(
+							{
+								test: node.test !== undefined
+									? node.test
+									: jsBooleanLiteral.quick(true),
+								body: node.body,
+								leadingComments: node.leadingComments,
+								trailingComments: node.trailingComments,
+							},
+							node,
+						),
 					),
 				},
 				descriptions.LINT.JS_PREFER_WHILE,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
