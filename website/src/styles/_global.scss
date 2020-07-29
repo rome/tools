@@ -59,12 +59,15 @@ h4, h5 {
 	line-height: $body-line-height / 1em;
 }
 
+h1, h2{
+	font-family: Libre Baskerville, serif;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5 {
-	font-family: Libre Baskerville, serif;
 	color: var(--logo-font-color);
 	font-weight: bold;
 }
