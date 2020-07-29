@@ -168,6 +168,6 @@
 		</footer>
 
 		{% capture script %}{% include ../scripts/index.liquid %}{% endcapture %}
-		<script>{{ script | jsmin | safe }}</script>
+		<script async defer>{{ script | jsmin | safe }}</script>
 	</body>
 </html>

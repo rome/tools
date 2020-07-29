@@ -2,7 +2,7 @@
 //# Responsive width
 let isMobile = false;
 window.addEventListener(
-	"load",
+	"DOMContentLoaded",
 	() => {
 		const mobileMatchMedia = matchMedia("(max-width: 768px)");
 		isMobile = mobileMatchMedia.matches;
@@ -318,7 +318,7 @@ class TableOfContents {
 const toc = new TableOfContents();
 
 window.addEventListener(
-	"load",
+	"DOMContentLoaded",
 	() => {
 		toc.attach();
 	},
