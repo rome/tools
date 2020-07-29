@@ -33,7 +33,7 @@
 	@include desktop-only() {
 		border-top-width: 0;
 		transition-duration: 150ms;
-
+		height: calc(100% - 5px);
 		margin-top: 0;
 		min-width: 256px;
 	}
