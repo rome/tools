@@ -26,8 +26,7 @@
 ### `0: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: "child"}}>
-</div>;
+<div dangerouslySetInnerHTML={{__html: "child"}} />;
 
 ```
 

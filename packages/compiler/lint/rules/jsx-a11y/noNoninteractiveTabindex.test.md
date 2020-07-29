@@ -27,8 +27,7 @@
 ### `0: formatted`
 
 ```
-<div tabIndex="0">
-</div>;
+<div tabIndex="0" />;
 
 ```
 
@@ -55,8 +54,7 @@
 ### `1: formatted`
 
 ```
-<div role="article" tabIndex="0">
-</div>;
+<div role="article" tabIndex="0" />;
 
 ```
 
@@ -97,8 +95,7 @@
 ### `3: formatted`
 
 ```
-<button tabIndex="0">
-</button>;
+<button tabIndex="0" />;
 
 ```
 
@@ -112,8 +109,7 @@
 ### `4: formatted`
 
 ```
-<span role="button" tabIndex="0">
-</span>;
+<span role="button" tabIndex="0" />;
 
 ```
 
@@ -127,8 +123,7 @@
 ### `5: formatted`
 
 ```
-<span role="article" tabIndex="-1">
-</span>;
+<span role="article" tabIndex="-1" />;
 
 ```
 
@@ -156,8 +151,7 @@
 ### `7: formatted`
 
 ```
-<article tabIndex="-1">
-</article>;
+<article tabIndex="-1" />;
 
 ```
 
@@ -171,8 +165,7 @@
 ### `8: formatted`
 
 ```
-<div tabIndex="-1">
-</div>;
+<div tabIndex="-1" />;
 
 ```
 
@@ -186,8 +179,7 @@
 ### `9: formatted`
 
 ```
-<article tabIndex={-1}>
-</article>;
+<article tabIndex={-1} />;
 
 ```
 
@@ -201,8 +193,7 @@
 ### `10: formatted`
 
 ```
-<div tabIndex={-1}>
-</div>;
+<div tabIndex={-1} />;
 
 ```
 
@@ -216,8 +207,7 @@
 ### `11: formatted`
 
 ```
-<div>
-</div>;
+<div />;
 
 ```
 
@@ -231,7 +221,6 @@
 ### `12: formatted`
 
 ```
-<button tabindex="-1">
-</button>;
+<button tabindex="-1" />;
 
 ```

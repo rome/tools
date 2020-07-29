@@ -154,7 +154,6 @@ undefined
 ### `6: formatted`
 
 ```
-<video muted={true} {...props}>
-</video>;
+<video muted={true} {...props} />;
 
 ```

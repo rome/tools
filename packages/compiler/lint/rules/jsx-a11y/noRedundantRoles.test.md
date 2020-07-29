@@ -32,8 +32,7 @@
 ### `0: formatted`
 
 ```
-<article role="article">
-</article>;
+<article role="article" />;
 
 ```
 
@@ -65,8 +64,7 @@
 ### `1: formatted`
 
 ```
-<button role="button">
-</button>;
+<button role="button" />;
 
 ```
 
@@ -98,8 +96,7 @@
 ### `2: formatted`
 
 ```
-<h1 role="heading" aria-level="1">
-</h1>;
+<h1 role="heading" aria-level="1" />;
 
 ```
 
@@ -131,8 +128,7 @@
 ### `3: formatted`
 
 ```
-<h1 role="heading">
-</h1>;
+<h1 role="heading" />;
 
 ```
 
@@ -164,8 +160,7 @@
 ### `4: formatted`
 
 ```
-<dialog role="dialog">
-</dialog>;
+<dialog role="dialog" />;
 
 ```
 
@@ -228,8 +223,7 @@
 ### `6: formatted`
 
 ```
-<figure role="figure">
-</figure>;
+<figure role="figure" />;
 
 ```
 
@@ -261,8 +255,7 @@
 ### `7: formatted`
 
 ```
-<form role="form">
-</form>;
+<form role="form" />;
 
 ```
 
@@ -294,8 +287,7 @@
 ### `8: formatted`
 
 ```
-<table role="grid">
-</table>;
+<table role="grid" />;
 
 ```
 
@@ -327,8 +319,7 @@
 ### `9: formatted`
 
 ```
-<td role="gridcell">
-</td>;
+<td role="gridcell" />;
 
 ```
 
@@ -360,8 +351,7 @@
 ### `10: formatted`
 
 ```
-<fieldset role="group">
-</fieldset>;
+<fieldset role="group" />;
 
 ```
 
@@ -424,8 +414,7 @@
 ### `12: formatted`
 
 ```
-<a role="link">
-</a>;
+<a role="link" />;
 
 ```
 
@@ -488,8 +477,7 @@
 ### `14: formatted`
 
 ```
-<ol role="list">
-</ol>;
+<ol role="list" />;
 
 ```
 
@@ -521,8 +509,7 @@
 ### `15: formatted`
 
 ```
-<ul role="list">
-</ul>;
+<ul role="list" />;
 
 ```
 
@@ -554,8 +541,7 @@
 ### `16: formatted`
 
 ```
-<select role="listbox">
-</select>;
+<select role="listbox" />;
 
 ```
 
@@ -587,8 +573,7 @@
 ### `17: formatted`
 
 ```
-<li role="listitem">
-</li>;
+<li role="listitem" />;
 
 ```
 
@@ -620,8 +605,7 @@
 ### `18: formatted`
 
 ```
-<nav role="navigation">
-</nav>;
+<nav role="navigation" />;
 
 ```
 
@@ -653,8 +637,7 @@
 ### `19: formatted`
 
 ```
-<option role="option">
-</option>;
+<option role="option" />;
 
 ```
 
@@ -686,8 +669,7 @@
 ### `20: formatted`
 
 ```
-<tr role="row">
-</tr>;
+<tr role="row" />;
 
 ```
 
@@ -719,8 +701,7 @@
 ### `21: formatted`
 
 ```
-<tbody role="rowgroup">
-</tbody>;
+<tbody role="rowgroup" />;
 
 ```
 
@@ -752,8 +733,7 @@
 ### `22: formatted`
 
 ```
-<tfoot role="rowgroup">
-</tfoot>;
+<tfoot role="rowgroup" />;
 
 ```
 
@@ -785,8 +765,7 @@
 ### `23: formatted`
 
 ```
-<thead role="rowgroup">
-</thead>;
+<thead role="rowgroup" />;
 
 ```
 
@@ -818,8 +797,7 @@
 ### `24: formatted`
 
 ```
-<th scope="row" role="rowheader">
-</th>;
+<th scope="row" role="rowheader" />;
 
 ```
 
@@ -882,8 +860,7 @@
 ### `26: formatted`
 
 ```
-<table role="table">
-</table>;
+<table role="table" />;
 
 ```
 
@@ -915,8 +892,7 @@
 ### `27: formatted`
 
 ```
-<dt role="term">
-</dt>;
+<dt role="term" />;
 
 ```
 
@@ -948,8 +924,7 @@
 ### `28: formatted`
 
 ```
-<textarea role="textbox">
-</textarea>;
+<textarea role="textbox" />;
 
 ```
 
@@ -994,8 +969,7 @@
 ### `30: formatted`
 
 ```
-<article role="presentation">
-</article>;
+<article role="presentation" />;
 
 ```
 
@@ -1009,8 +983,7 @@
 ### `31: formatted`
 
 ```
-<Button role="button">
-</Button>;
+<Button role="button" />;
 
 ```
 
@@ -1024,7 +997,6 @@
 ### `32: formatted`
 
 ```
-<span>
-</span>;
+<span />;
 
 ```

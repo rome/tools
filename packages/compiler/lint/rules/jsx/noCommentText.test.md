@@ -148,7 +148,6 @@ const a = <div>
 ### `5: formatted`
 
 ```
-const a = <div className={"cls" /* comment */}>
-</div>;
+const a = <div className={"cls" /* comment */} />;
 
 ```
