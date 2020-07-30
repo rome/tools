@@ -1,6 +1,8 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {markup} from "@romefrontend/markup";
+import {filePathToMarkup, markup} from "@romefrontend/markup";
+import {buildSuggestionAdvice} from "../helpers";
+import {AbsoluteFilePath} from "@romefrontend/path";
 
 export const projectManager = createDiagnosticsCategory({
 	NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) => ({
@@ -52,10 +54,48 @@ export const projectManager = createDiagnosticsCategory({
 			},
 		],
 	},
-	INCORRECT_CONFIG_FILENAME: (validFilenames: Array<string>) => ({
-		category: "projectManager/incorrectConfigFilename",
-		message: markup`Invalid rome config filename, <emphasis>${validFilenames.join(
-			" or ",
-		)}</emphasis> are the only valid filename`,
+	INITING_SENSITIVE: (directory: AbsoluteFilePath) => ({
+		category: "projectManager/sensitiveDirectory",
+		message: markup`Cannot create a project config in sensitive directory <emphasis>${filePathToMarkup(
+			directory,
+			true,
+		)}</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`A project created here is always a mistake. Try another folder.`,
+			},
+		],
+	}),
+	LOADING_SENSITIVE: (directory: AbsoluteFilePath) => ({
+		category: "projectManager/sensitiveDirectory",
+		message: markup`Cannot load a project config in sensitive directory <emphasis>${filePathToMarkup(
+			directory,
+			true,
+		)}</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`A project created here is always a mistake. Check why this config exists and if necessary delete and try again.`,
+			},
+		],
+	}),
+	TYPO_CONFIG_FILENAME: (invalidFilename: string, validFilenames: Array<string>) => ({
+		category: "projectManager/typoConfigFilename",
+		message: markup`Invalid Rome config filename <emphasis>${invalidFilename}</emphasis>`,
+		advice: buildSuggestionAdvice(invalidFilename, validFilenames),
+	}),
+	MISPLACED_CONFIG: (misplacedName: string) => ({
+		category: "projectManager/misplacedConfig",
+		message: markup`Misplaced project config <emphasis>${misplacedName}</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`This should be inside of a <emphasis>.config</emphasis> folder`,
+			},
+		],
 	}),
 });

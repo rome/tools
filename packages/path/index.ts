@@ -370,13 +370,37 @@ class BaseFilePath<Super extends UnknownFilePath> {
 			}
 		}
 
+		// Treat all Windows drive paths as case insensitive
+		// Convert all segments to lowercase. Bail if they were all lowercase.
+		// TODO this causes issues with file maps/sets
+		/*if (this.absoluteType === "windows-drive") {
+			const hadSegments = segments !== undefined;
+			if (segments === undefined) {
+				segments = this.getRawSegments();
+			}
+
+			let didModify = false;
+			segments = segments.map((part) => {
+				const lower = part.toLowerCase();
+				if (lower !== part) {
+					didModify = true;
+				}
+				return lower;
+			});
+			if (!didModify && !hadSegments) {
+				segments = undefined;
+			}
+		}*/
+
+		let path: Super;
 		if (segments === undefined) {
-			return this._assert();
+			// Cache ourselves as it could have been expensive determining that we are already unique
+			path = this._assert();
 		} else {
-			const path = this._fork(parsePathSegments(segments), {});
-			this.memoizedUnique = path;
-			return path;
+			path = this._fork(parsePathSegments(segments), {});
 		}
+		this.memoizedUnique = path;
+		return path;
 	}
 
 	// Support some bad string coercion. Such as serialization in CLI flags.
@@ -402,14 +426,19 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	}
 
 	equal(other: UnknownFilePath): boolean {
-		const a = this.getSegments();
-		const b = other.getSegments();
+		if (other === this) {
+			return true;
+		}
+
+		const a = this.getUnique().getSegments();
+		const b = other.getUnique().getSegments();
 
 		// Quick check
 		if (a.length !== b.length) {
 			return false;
 		}
 
+		// Check validity of a
 		for (let i = 0; i < a.length; i++) {
 			if (a[i] !== b[i]) {
 				return false;
@@ -430,7 +459,6 @@ class BaseFilePath<Super extends UnknownFilePath> {
 			const relativeToHome = HOME_PATH.relative(this._assert());
 
 			// Add tilde and push it as a possible name
-
 			// We construct this manually to get around the segment normalization which would explode ~
 			names.push(
 				new RelativeFilePath(

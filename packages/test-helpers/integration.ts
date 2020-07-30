@@ -60,8 +60,14 @@ import {
 import {
 	convertToMarkupFromRandomString,
 	joinMarkupLines,
+	normalizeMarkup,
 } from "@romefrontend/markup";
 import {markupToPlainText} from "@romefrontend/cli-layout";
+import child = require("child_process");
+import util = require("util");
+import {Reporter} from "@romefrontend/cli-reporter";
+
+const exec = util.promisify(child.exec);
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;
@@ -77,6 +83,7 @@ type IntegrationTestHelper = {
 };
 
 type IntegrationTestOptions = {
+	gitInitialize?: boolean;
 	disableProjectConfig?: boolean;
 	userConfig?: UserConfig;
 	files?: Dict<string>;
@@ -307,6 +314,10 @@ export function createIntegrationTest(
 		const projectPath = temp.append("project");
 		await createDirectory(projectPath);
 
+		if (opts.gitInitialize) {
+			await exec("git init", {cwd: projectPath.join()});
+		}
+
 		const virtualModulesPath = temp.append("virtual");
 		await createDirectory(virtualModulesPath);
 
@@ -342,10 +353,10 @@ export function createIntegrationTest(
 			// some flexibility if we want invalid project config tests.
 			if (
 				!opts.disableProjectConfig &&
-				files["rome.json"] === undefined &&
-				files["rome.rjson"] === undefined
+				files[".config/rome.json"] === undefined &&
+				files[".config/rome.rjson"] === undefined
 			) {
-				files["rome.json"] = stringifyJSON(projectConfig) + "\n";
+				files[".config/rome.json"] = stringifyJSON(projectConfig) + "\n";
 			}
 
 			// Materialize files
@@ -357,11 +368,26 @@ export function createIntegrationTest(
 				await writeFile(path, content);
 			}
 
+			// Use this reporter for markup rendering
+			const reporter = new Reporter();
+			const clientStream = reporter.attachCaptureStream();
+
 			// Mock and capture stdout
-			let terminalOutput = "";
 			const stdout: Stdout = new stream.Writable({
 				write(chunk, encoding, callback) {
-					terminalOutput += chunk;
+					const str = chunk.toString();
+					const markup = convertToMarkupFromRandomString(str);
+
+					// Strip filelink text that could have absolute paths
+					const stripped = normalizeMarkup(
+						markup,
+						{
+							stripFilelinkText: true,
+							cwd: temp,
+						},
+					);
+
+					reporter.log(stripped.text, {noNewline: true});
 					callback();
 				},
 			});
@@ -370,10 +396,11 @@ export function createIntegrationTest(
 			const client = new Client({
 				terminalFeatures: {
 					...DEFAULT_TERMINAL_FEATURES,
-					format: "none",
+					format: "markup",
 				},
 				globalErrorHandlers: false,
 				flags: {
+					realCwd: projectPath,
 					cwd: projectPath,
 					...flags,
 				},
@@ -451,7 +478,7 @@ export function createIntegrationTest(
 				await client.end();
 
 				// Console
-				t.namedSnapshot("console", terminalOutput);
+				t.namedSnapshot("console", clientStream.read());
 
 				// Files
 				const files: Array<string> = [];
@@ -461,7 +488,12 @@ export function createIntegrationTest(
 					const stat = await lstat(path);
 
 					if (stat.isDirectory()) {
-						queue = [...queue, ...(await readDirectory(path))];
+						if (path.getBasename() === ".git") {
+							// Don't output the entire .git directory
+							queue = [...queue, path.append("HEAD")];
+						} else {
+							queue = [...queue, ...(await readDirectory(path))];
+						}
 					} else {
 						files.push(projectPath.relative(path).join());
 					}

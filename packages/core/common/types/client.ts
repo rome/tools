@@ -17,6 +17,7 @@ import {TerminalFeatures} from "@romefrontend/cli-environment";
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",
 	cwd: CWD_PATH,
+	realCwd: CWD_PATH,
 	silent: false,
 };
 
@@ -60,9 +61,11 @@ export type ClientTerminalFeatures = Partial<TerminalFeatures> & {
 export type ClientFlags = {
 	clientName: string;
 	cwd: AbsoluteFilePath;
+	realCwd: AbsoluteFilePath;
 	silent: boolean;
 };
 
-export type ClientFlagsJSON = Omit<ClientFlags, "cwd"> & {
+export type ClientFlagsJSON = Omit<ClientFlags, "cwd" | "realCwd"> & {
 	cwd: string;
+	realCwd: string;
 };

@@ -3,23 +3,20 @@ import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";
 import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {reporter, setForceGenerated} from "./_utils";
-import {parseCLIFlags} from "@romefrontend/cli-flags";
+import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";
 import child = require("child_process");
 import {markup} from "@romefrontend/markup";
 
 export async function main(args: Array<string>) {
-	const flags = await parseCLIFlags(
+	const flags = await parseCLIFlagsFromProcess({
 		reporter,
 		args,
-		{
-			programName: "./rome run scripts/lint-rules-docs",
-			defineFlags(c) {
-				return {
-					force: c.get("force").asBoolean(false),
-				};
-			},
+		defineFlags(c) {
+			return {
+				force: c.get("force").asBoolean(false),
+			};
 		},
-	).init();
+	}).init();
 
 	if (flags.force) {
 		setForceGenerated(true);

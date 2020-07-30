@@ -99,6 +99,7 @@ export type MarkupFormatOptions = {
 };
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 	stripPositions?: boolean;
+	stripFilelinkText?: boolean;
 };
 
 export type MarkupLinesAndWidth = {
@@ -123,7 +124,8 @@ export type MarkupTokenType =
 	| "attr-equals"
 	| "tag"
 	| "function"
-	| "boolean";
+	| "boolean"
+	| "important";
 
 export type MarkupColor =
 	| "black"

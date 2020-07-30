@@ -17,5 +17,3 @@ export const nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\
 
 // rome-ignore lint/js/emptyMatches
 export const skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
-
-export const NEWLINE = /\r\n|[\n\r\u2028\u2029]/;

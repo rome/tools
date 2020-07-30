@@ -1,6 +1,6 @@
-import {createDiagnosticsCategory} from "./index";
+import {createDiagnosticsCategory} from "../index";
 import {markup} from "@romefrontend/markup";
-import {buildSuggestionAdvice} from "../helpers";
+import {buildSuggestionAdvice} from "../../helpers";
 
 // @romefrontend/codec-spdx-license
 export const spdx = createDiagnosticsCategory({

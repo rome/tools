@@ -71,6 +71,7 @@ Object {}
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+
   - bar
   - foo
 
@@ -95,6 +96,7 @@ Object {}
   --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
   - bar
   - foo
@@ -122,6 +124,7 @@ Object {}
   --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
   - foobar
 

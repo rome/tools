@@ -8,7 +8,12 @@
 import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import {ErrorFrame} from "@romefrontend/v8";
 import {ob1Coerce1, ob1Coerce1To0} from "@romefrontend/ob1";
-import {ERROR_FRAMES_PROP, ErrorWithFrames, getErrorStructure} from "./errors";
+import {
+	ERROR_FRAMES_PROP,
+	ErrorWithFrames,
+	getErrorStructure,
+	setErrorFrames,
+} from "./errors";
 
 let inited: boolean = false;
 
@@ -166,7 +171,7 @@ function addErrorFrames(
 		}
 	});
 
-	err[ERROR_FRAMES_PROP] = builtFrames;
+	setErrorFrames(err, builtFrames);
 }
 
 const sourceMaps = new SourceMapConsumerCollection();

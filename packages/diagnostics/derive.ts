@@ -236,16 +236,28 @@ export function getErrorStackAdvice(
 		}
 		cleanStack = cleanStack.trim();
 
-		advice.push({
-			type: "log",
-			category: "warn",
-			text: markup`Raw stack trace is being displayed as we did not receive any frames`,
-		});
+		const cleanStackList = cleanStack.split("\n").map((line) =>
+			markup`${line.trim()}`
+		);
 
-		advice.push({
-			type: "list",
-			list: cleanStack.split("\n").map((line) => markup`${line.trim()}`),
-		});
+		if (cleanStackList.length === 1 && isEmptyMarkup(cleanStackList[0])) {
+			advice.push({
+				type: "log",
+				category: "warn",
+				text: markup`We did not receive any frames and no raw stack trace found`,
+			});
+		} else {
+			advice.push({
+				type: "log",
+				category: "warn",
+				text: markup`Raw stack trace is being displayed as we did not receive any frames`,
+			});
+
+			advice.push({
+				type: "list",
+				list: cleanStackList,
+			});
+		}
 	} else {
 		const adviceFrames: DiagnosticAdviceStacktrace["frames"] = frames.map((
 			frame,

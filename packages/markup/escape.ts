@@ -55,6 +55,27 @@ export function convertToMarkupFromRandomString(unsafe: string): Markup {
 	};
 }
 
+export function filePathToMarkup(
+	path: URLFilePath | RelativeFilePath | AbsoluteFilePath,
+	explicit: boolean = false,
+): Markup {
+	let tagName: MarkupTagName = "filelink";
+	if (path instanceof URLFilePath) {
+		tagName = "hyperlink";
+	}
+
+	const target = path.join();
+	const text = explicit ? markup`${target}` : markup``;
+
+	return markupTag(
+		tagName,
+		text,
+		{
+			target,
+		},
+	);
+}
+
 type InterpolatedValue =
 	| undefined
 	| number
@@ -91,17 +112,12 @@ export function markup(
 		if (value !== undefined) {
 			if (typeof value === "number") {
 				parts.push(toRawMarkup(`<number>${String(value)}</number>`));
-			} else if (value instanceof URLFilePath) {
-				parts.push(
-					toRawMarkup(`<hyperlink target="${escapeMarkup(value.join())}" />`),
-				);
 			} else if (
 				value instanceof RelativeFilePath ||
-				value instanceof AbsoluteFilePath
+				value instanceof AbsoluteFilePath ||
+				value instanceof URLFilePath
 			) {
-				parts.push(
-					toRawMarkup(`<filelink target="${escapeMarkup(value.join())}" />`),
-				);
+				parts.push(filePathToMarkup(value));
 			} else {
 				if (typeof value === "function" || isLazyMarkup(value)) {
 					hasLazy = true;

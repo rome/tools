@@ -830,11 +830,11 @@ export default class Reporter implements ReporterNamespace {
 
 	namespace(prefix: AnyMarkup): ReporterNamespace {
 		return {
-			success: (suffix) => this.success(markup`${prefix}${suffix}`),
-			info: (suffix) => this.info(markup`${prefix}${suffix}`),
-			error: (suffix) => this.error(markup`${prefix}${suffix}`),
-			warn: (suffix) => this.warn(markup`${prefix}${suffix}`),
-			log: (suffix) => this.log(markup`${prefix}${suffix}`),
+			success: (suffix) => this.success(markup`${prefix} ${suffix}`),
+			info: (suffix) => this.info(markup`${prefix} ${suffix}`),
+			error: (suffix) => this.error(markup`${prefix} ${suffix}`),
+			warn: (suffix) => this.warn(markup`${prefix} ${suffix}`),
+			log: (suffix) => this.log(markup`${prefix} ${suffix}`),
 		};
 	}
 

@@ -8,7 +8,7 @@
 
 ```
 
- index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The foobar variable is undeclared
 
@@ -26,17 +26,17 @@
 ### `files`
 
 ```
-# index.js
-
-
-foobar();
-
-# rome.json
+# .config/rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
 
+
+# index.js
+
+
+foobar();
 
 ```

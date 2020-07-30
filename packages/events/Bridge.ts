@@ -20,10 +20,10 @@ import BridgeError from "./BridgeError";
 import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
 import Event from "./Event";
 import {
-	ERROR_FRAMES_PROP,
 	ErrorWithFrames,
 	StructuredError,
 	getErrorStructure,
+	setErrorFrames,
 } from "@romefrontend/v8";
 
 type ErrorJSON = {
@@ -293,7 +293,7 @@ export default class Bridge {
 			const err: ErrorWithFrames = new Error(struct.message);
 			err.name = struct.name || "Error";
 			err.stack = struct.stack;
-			err[ERROR_FRAMES_PROP] = struct.frames;
+			setErrorFrames(err, struct.frames);
 			return err;
 		} else {
 			return transport.hydrate(struct, data);

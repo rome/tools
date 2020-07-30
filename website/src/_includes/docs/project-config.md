@@ -59,13 +59,13 @@ rome config push lint.globals SomeGlobal
 
 You can specify your project config in a few different places.
 
-##### `rome.rjson` (recommended)
+##### `.config/rome.rjson` (recommended)
 
 This is the recommend location. It's the file we create when running `rome init`.
 
 It can contains Rome's flavor of JSON, [RJSON](/docs/rjson), that allows comments and simpler syntax.
 
-##### `rome.json`
+##### `.config/rome.json`
 
 You can also use `rome.json` with regular JSON. This is useful if you think you might want to process and manipulate project configuration with another tool or language.
 

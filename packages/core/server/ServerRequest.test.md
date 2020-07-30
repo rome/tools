@@ -13,18 +13,18 @@
 ### `files`
 
 ```
-# foo.js
-bar
-
-# foo.txt
-bar
-
-# rome.json
+# .config/rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
 
+
+# foo.js
+bar
+
+# foo.txt
+bar
 
 ```

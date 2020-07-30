@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {humanizeNumber, humanizeTime} from "@romefrontend/string-utils";
+import {
+	humanizeNumber,
+	humanizeTime,
+	splitChars,
+} from "@romefrontend/string-utils";
 import {Reporter} from "@romefrontend/cli-reporter";
 import {
 	ReporterProgressOptions,
@@ -232,7 +236,7 @@ export default class Progress extends ProgressBase {
 	}
 
 	splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
-		return str.split("").map((char, i) => {
+		return splitChars(str).map((char, i) => {
 			if (this.isBoldCharacter(i, boldRanges)) {
 				return [i, formatAnsi.bold(char)];
 			} else {

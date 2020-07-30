@@ -1,7 +1,7 @@
-import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
-import {DiagnosticLocation} from "../types";
+import {addEmphasis, createDiagnosticsCategory, orJoin} from "../index";
+import {DiagnosticLocation} from "../../types";
 import {markup} from "@romefrontend/markup";
-import {buildSuggestionAdvice} from "../helpers";
+import {buildSuggestionAdvice} from "../../helpers";
 
 // @romefrontend/cli-layout
 export const stringMarkup = createDiagnosticsCategory({

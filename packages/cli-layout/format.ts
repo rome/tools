@@ -10,7 +10,7 @@ import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
 import {ob1Get1} from "@romefrontend/ob1";
 
-function renderGrid(
+export function renderGrid(
 	safe: AnyMarkup,
 	opts: UserGridOptions = {},
 	format: GridOutputFormat,

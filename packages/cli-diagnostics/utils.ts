@@ -5,9 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import highlightCode, {AnsiHighlightOptions} from "./highlightCode";
-import {NEWLINE, nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {
+	AnsiHighlightOptions,
+	highlightCode,
+} from "@romefrontend/markup-syntax-highlight";
+import {nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
+import {removeCarriageReturn, splitLines} from "@romefrontend/string-utils";
 import {
 	Markup,
 	convertToMarkupFromRandomString,
@@ -17,7 +20,6 @@ import {
 } from "@romefrontend/markup";
 import {AnyRoot} from "@romefrontend/ast";
 import {DiagnosticLanguage} from "@romefrontend/diagnostics";
-
 import {markupToPlainText} from "@romefrontend/cli-layout";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
@@ -149,10 +151,6 @@ export function cleanEquivalentString(safe: string | Markup): string {
 	str = str.replace(/^"(.*?)"$/, "$1");
 
 	return str;
-}
-
-export function splitLines(src: string): Array<string> {
-	return src.split(NEWLINE);
 }
 
 export type ToLines = Array<[string, Markup]>;

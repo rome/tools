@@ -20,12 +20,14 @@
 
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - rome.rjson: Your project configuration. Documentation:
+
+  - project/.config/rome.rjson: Your project configuration. Documentation:
     https://romefrontend.dev/docs/project-config/
-  - .editorconfig: Sets editor formatting and indentation options. Documentation:
+  - project/.editorconfig: Sets editor formatting and indentation options. Documentation:
     https://editorconfig.org/
 
  What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:
@@ -49,6 +51,14 @@
 ### `files`
 
 ```
+# .config/rome.rjson
+name: "project"
+lint: {
+	globals: [
+		"unknownVariable"
+]
+}
+
 # .editorconfig
 [*]
 end_of_line = lf
@@ -82,14 +92,6 @@ something: foo
 unknownVariable;
 
 
-# rome.rjson
-name: "project"
-lint: {
-	globals: [
-		"unknownVariable"
-]
-}
-
 ```
 
 ## `should not create the .editorconfig file if it exists`
@@ -102,7 +104,7 @@ lint: {
 
 [1/2] Generating lint config and apply formatting
 [2/2] Generating .editorconfig
-⚠ .editorconfig already exists
+⚠ project/.editorconfig already exists
 
  Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -111,10 +113,12 @@ lint: {
 
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - rome.rjson: Your project configuration. Documentation:
+
+  - project/.config/rome.rjson: Your project configuration. Documentation:
     https://romefrontend.dev/docs/project-config/
 
  What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:
@@ -138,11 +142,11 @@ lint: {
 ### `files`
 
 ```
-# .editorconfig
-
-
-# rome.rjson
+# .config/rome.rjson
 name: "project"
+
+
+# .editorconfig
 
 
 ```

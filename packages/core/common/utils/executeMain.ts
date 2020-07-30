@@ -43,7 +43,7 @@ export default async function executeMain(
 	// Create global context
 	const sandbox: UnknownObject = {
 		process: {
-			argv: [process.argv[0], filename, ...args],
+			argv: ["rome", "run", filename, "--", ...args],
 			__proto__: process,
 		},
 		Buffer,
