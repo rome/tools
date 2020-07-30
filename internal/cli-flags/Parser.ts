@@ -1036,9 +1036,7 @@ export default class Parser<T> {
 								defaultFlags,
 								flags: rawFlags,
 							},
-							{
-								type: "none",
-							},
+							"none",
 						).sourceText,
 					);
 					break;
@@ -1056,9 +1054,7 @@ export default class Parser<T> {
 					defaultFlags,
 					flags: rawFlags,
 				},
-				{
-					type: "command",
-				},
+				"command",
 			),
 		};
 

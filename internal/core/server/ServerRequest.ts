@@ -553,7 +553,7 @@ export default class ServerRequest {
 	throwDiagnosticFlagError(
 		{
 			description,
-			target = {type: "none"},
+			target = "none",
 			showHelp = true,
 		}: {
 			description: RequiredProps<Partial<DiagnosticDescription>, "message">;
@@ -566,7 +566,8 @@ export default class ServerRequest {
 		let {category} = description;
 		if (category === undefined) {
 			category =
-				target.type === "arg" || target.type === "arg-range"
+				typeof target !== "string" &&
+				(target.type === "arg" || target.type === "arg-range")
 					? "args/invalid"
 					: "flags/invalid";
 		}

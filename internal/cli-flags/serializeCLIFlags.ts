@@ -27,7 +27,7 @@ export type SerializeCLIOptions = {
 	prefix?: string;
 };
 
-export type SerializeCLITarget =
+type SerializeCLITargetObjects =
 	| {
 			type: "flag";
 			key: string;
@@ -41,19 +41,20 @@ export type SerializeCLITarget =
 			type: "arg-range";
 			from: number;
 			to?: number;
-		}
-	| {
-			type: "none";
-		}
-	| {
-			type: "command";
-		}
-	| {
-			type: "program";
-		}
-	| {
-			type: "cwd";
 		};
+
+export type SerializeCLITarget =
+	| SerializeCLITargetObjects
+	| "none"
+	| "command"
+	| "program"
+	| "cwd";
+
+function isObjectTarget(
+	target: SerializeCLITarget,
+): target is SerializeCLITargetObjects {
+	return typeof target !== "string";
+}
 
 export function serializeCLIFlags(
 	{
@@ -100,16 +101,16 @@ export function serializeCLIFlags(
 	}
 
 	// Only output cwd if it's the target
-	if (cwd !== undefined && target.type === "cwd") {
+	if (cwd !== undefined && target === "cwd") {
 		push(cwd.join(), true);
 	}
 
 	code += prefix;
 
-	push(`${programName} `, target.type === "program");
+	push(`${programName} `, target === "program");
 
 	if (commandName !== undefined) {
-		push(`${commandName} `, target.type === "command");
+		push(`${commandName} `, target === "command");
 	}
 
 	// Add args
@@ -117,10 +118,14 @@ export function serializeCLIFlags(
 		const arg = args[i];
 
 		let isTarget = false;
-		if (target.type === "arg" && i === target.key) {
+		if (isObjectTarget(target) && target.type === "arg" && i === target.key) {
 			isTarget = true;
 		}
-		if (target.type === "arg-range" && target.from === i) {
+		if (
+			isObjectTarget(target) &&
+			target.type === "arg-range" &&
+			target.from === i
+		) {
 			isTarget = true;
 		}
 
@@ -134,6 +139,7 @@ export function serializeCLIFlags(
 
 		// We are the end target if we're within the from-to range or we're greater than from with no to
 		if (
+			isObjectTarget(target) &&
 			target.type === "arg-range" &&
 			i > target.from &&
 			(target.to === undefined || target.to <= i)
@@ -157,7 +163,8 @@ export function serializeCLIFlags(
 
 		const values = Array.isArray(val) ? val : [val];
 
-		const isTarget = target.type === "flag" && key === target.key;
+		const isTarget =
+			isObjectTarget(target) && target.type === "flag" && key === target.key;
 
 		if (isTarget) {
 			setStartColumn();
@@ -177,6 +184,7 @@ export function serializeCLIFlags(
 				// Only point to the value for flags that specify it
 				if (
 					isTarget &&
+					isObjectTarget(target) &&
 					target.type === "flag" &&
 					(target.target === "value" || target.target === "inner-value")
 				) {
@@ -210,7 +218,7 @@ export function serializeCLIFlags(
 		index: endColumn,
 	};
 
-	if (target.type === "none") {
+	if (target === "none") {
 		start = undefined;
 		end = undefined;
 	}
