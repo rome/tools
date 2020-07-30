@@ -1,5 +1,5 @@
 {
-  "name": "@romefrontend-web/frontend",
+  "name": "@internal/web-ui",
   "private": true,
   "type": "module",
   "main": "index.tsx",

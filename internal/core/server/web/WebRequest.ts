@@ -236,7 +236,7 @@ export default class WebRequest {
 		);
 		const resolved = await this.server.resolver.resolveEntryAssertPath({
 			origin: this.serverRequest.client.flags.cwd,
-			source: createUnknownFilePath("@romefrontend-web/frontend"),
+			source: createUnknownFilePath("@internal/web-ui"),
 		});
 		const bundle = await bundler.bundle(resolved);
 		res.end(bundle.entry.js);
