@@ -1,4 +1,4 @@
-import {PACKAGES, ROOT, exec, reporter} from "./_utils";
+import {INTERNAL, ROOT, exec, reporter} from "./_utils";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import https = require("https");
 import http = require("http");
@@ -74,7 +74,7 @@ export async function main(args: Array<string>) {
 	}
 
 	// Update rome package
-	await runNPMVersion([version], PACKAGES.append("rome"));
+	await runNPMVersion([version], INTERNAL.append("rome"));
 
 	// Create commit and tag
 	await exec("git", ["commit", "-am", `Release v${version}`]);

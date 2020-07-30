@@ -23,19 +23,19 @@
 		"baseUrl": ".",
 		"paths": {
 			"@romefrontend/*": [
-				"packages/*"
+				"internal/*"
 			],
 			"@romefrontend-runtime/*": [
-				"packages/@romefrontend-runtime/*"
+				"internal/@romefrontend-runtime/*"
 			],
 			"@romefrontend-integration/*": [
-				"packages/@romefrontend-integration/*"
+				"internal/@romefrontend-integration/*"
 			],
 			"@romefrontend-web/*": [
-				"packages/@romefrontend-web/*"
+				"internal/@romefrontend-web/*"
 			],
 			"rome": [
-				"packages/@romefrontend-runtime/rome"
+				"internal/@romefrontend-runtime/rome"
 			]
 		}
 	},

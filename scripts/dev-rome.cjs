@@ -90,7 +90,7 @@ const tempDevBuildFolder = path.join(os.tmpdir(), "rome-dev");
 //# Init
 
 async function isDevDaemonRunning() {
-	// Path and version logic copied from packages/core/common/constants.ts
+	// Path and version logic copied from internal/core/common/constants.ts
 	// If there is a running daemon then we shouldn't build and just use the existing bundle
 	// We'll log to let the developer know what's going on
 	const version = `${packageJson.version}-dev`;
@@ -140,7 +140,7 @@ async function buildTrunk() {
 		let args = [
 			path.join(__dirname, "vendor/rome.cjs"),
 			"bundle",
-			path.join(projectRoot, "packages/cli/bin/rome.ts"),
+			path.join(projectRoot, "internal/cli/bin/rome.ts"),
 			tempDevBuildFolder,
 			"--quiet",
 		];

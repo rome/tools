@@ -1,10 +1,10 @@
-import {PACKAGES, ROOT, reporter, writeFile} from "./_utils";
+import {INTERNAL, ROOT, reporter, writeFile} from "./_utils";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
 import {readFileText} from "@romefrontend/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
 import {markup} from "@romefrontend/markup";
 
-const rulesPath = PACKAGES.append("compiler", "lint", "rules");
+const rulesPath = INTERNAL.append("compiler", "lint", "rules");
 
 export async function main([ruleName]: Array<string>): Promise<number> {
 	if (ruleName === undefined) {
@@ -85,7 +85,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	);
 
 	// Add description
-	const diagDescriptionsPath = PACKAGES.append(
+	const diagDescriptionsPath = INTERNAL.append(
 		"diagnostics",
 		"descriptions",
 		"lint.ts",

@@ -26,8 +26,6 @@
 
 **Rome** runs on Node.js.
 
-**Rome** is a monorepo with [internal packages](packages) to delineate code boundaries.
-
 **Rome** is [self-hosted](<https://en.wikipedia.org/wiki/Self-hosting_(compilers)>) and compiles itself with an old version.
 
 **Rome** supports processing [JSX](https://reactjs.org/docs/introducing-jsx.html) and [TypeScript](https://www.typescriptlang.org/) annotated code.

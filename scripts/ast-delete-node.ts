@@ -1,4 +1,4 @@
-import {PACKAGES, reporter} from "./_utils";
+import {INTERNAL, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
 import {removeFile} from "@romefrontend/fs";
 import {createUnknownFilePath} from "@romefrontend/path";
@@ -21,11 +21,11 @@ export async function main([filename]: Array<string>) {
 	const [, category, nodeName] = segments;
 
 	// Remove files
-	await removeFile(PACKAGES.append("formatter", "builders", `${filename}.ts`));
+	await removeFile(INTERNAL.append("formatter", "builders", `${filename}.ts`));
 	await removeFile(
-		PACKAGES.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`),
+		INTERNAL.append("js-analysis", "evaluators", `${category}/${nodeName}.ts`),
 	);
-	await removeFile(PACKAGES.append("ast", `${filename}.ts`));
+	await removeFile(INTERNAL.append("ast", `${filename}.ts`));
 
 	// Regenerate indexes
 	await generateAST();

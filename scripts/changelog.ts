@@ -2,7 +2,7 @@ import {markup} from "@romefrontend/markup";
 import {parseCommit} from "@romefrontend/commit-parser";
 import {readFileText} from "@romefrontend/fs";
 import {AbsoluteFilePath} from "@romefrontend/path";
-import {PACKAGES, ROOT, reporter} from "./_utils";
+import {INTERNAL, ROOT, reporter} from "./_utils";
 
 import child = require("child_process");
 import fs = require("fs");
@@ -351,7 +351,7 @@ export async function main() {
 	);
 
 	// Update the rome package version
-	updateVersion(newVersion, PACKAGES.append("rome"));
+	updateVersion(newVersion, INTERNAL.append("rome"));
 	reporter.success(
 		markup`The rome package version was updated to <emphasis>${newVersion}</emphasis>.`,
 	);
