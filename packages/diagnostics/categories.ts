@@ -30,6 +30,7 @@ export type DiagnosticCategory =
 	| "lint/pendingFixes"
 	| "lsp/parse"
 	| "parse/html"
+	| "parse/commit"
 	| "parse/css"
 	| "parse/js"
 	| "parse/json"

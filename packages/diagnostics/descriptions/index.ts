@@ -24,6 +24,7 @@ import {suppressions} from "./suppressions";
 import {snapshots} from "./snapshots";
 import {bundler} from "./bundler";
 import {resolver} from "./resolver";
+import {commitParser} from "./commitParser";
 import {spdx} from "./parsers/spdx";
 import {jsParser} from "./parsers/jsParser";
 import {cssParser} from "./parsers/cssParser";
@@ -138,6 +139,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 }
 
 export const descriptions = {
+	COMMIT_PARSER: commitParser,
 	FLAGS: flags,
 	PARSER_CORE: parserCore,
 	REGEX_PARSER: regexp,

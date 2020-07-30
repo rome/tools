@@ -184,5 +184,8 @@ export function inferDiagnosticLanguageFromRootAST(
 
 		case "MarkdownRoot":
 			return "md";
+
+		case "CommitRoot":
+			return "commit";
 	}
 }

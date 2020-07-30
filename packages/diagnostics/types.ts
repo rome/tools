@@ -61,6 +61,7 @@ export type DiagnosticLanguage =
 	| "json"
 	| "js"
 	| "url"
+	| "commit"
 	| "shell"
 	| "css"
 	| "html"
