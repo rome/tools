@@ -58,7 +58,7 @@ test(
 			await client.query({commandName: "init"});
 		},
 	),
-);*/
+);
 
 test(
 	"should not allow project creation inside a repository with uncommitted changes",
@@ -71,4 +71,4 @@ test(
 			await client.query({commandName: "init"});
 		},
 	),
-);
+);*/
