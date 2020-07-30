@@ -11,6 +11,7 @@ const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
 const purify = require("purify-css");
+const romePackage = require("../package.json");
 
 /**
  * @type {any}
@@ -213,6 +214,11 @@ module.exports = function(eleventyConfig) {
 			return string.toLowerCase().replace(/\s/g, "-");
 		},
 	);
+
+	eleventyConfig.addShortcode("romeVersion", function() {
+		return romePackage.version;
+	 });
+
 
 	// Customize YAML engine so we can parse hard tabs lol...
 	eleventyConfig.setFrontMatterParsingOptions({

@@ -41,6 +41,14 @@ footer {
 
 		color: $gray-6;
 
+		a{
+			opacity: 0.6;
+		}
+
+		a:active, a:focus{
+			opacity: 1;
+		}
+
 		.note{
 			width: 100%;
 			b{
@@ -54,6 +62,9 @@ footer {
 
 		.netlify-badge {
 			margin-left: auto;
+			a {
+				opacity: 1;
+			}
 			@include mobile-only() {
 				margin: auto;
 			}
