@@ -211,7 +211,7 @@ export default class DiagnosticsProcessor {
 	}
 
 	buildDedupeKeys(diag: Diagnostic): Array<string> {
-		if (diag.unique) {
+		if (diag.tags && diag.tags.unique) {
 			return [];
 		}
 

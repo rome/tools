@@ -29,7 +29,7 @@ function checkRegEx(
 			context.addNodeDiagnostic(
 				currNode,
 				descriptions.LINT.JS_NO_POSIX_IN_REGULAR_EXPRESSION,
-				{fixable: false},
+				{tags: {fixable: true}},
 			);
 		}
 	}

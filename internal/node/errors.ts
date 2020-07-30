@@ -3,7 +3,7 @@ import {Markup, joinMarkupLines, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
-	INTERNAL_ERROR_LOG_ADVICE,
+	createInternalDiagnostic,
 	createSingleDiagnosticError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
@@ -38,17 +38,17 @@ function changeMessage(
 			advice = getErrorStackAdvice(struct);
 		}
 
-		const diag: Diagnostic = {
+		const diag: Diagnostic = createInternalDiagnostic({
 			description: {
 				category: "internalError/fs",
 				message: msg,
-				advice: [...advice, INTERNAL_ERROR_LOG_ADVICE],
+				advice: [],
 			},
 
 			location: {
 				filename: old.path,
 			},
-		};
+		});
 
 		// Create diagnostic error
 		err = createSingleDiagnosticError(diag);

@@ -8,7 +8,8 @@
 
 ```
 
- lint/js/noPosixInRegularExpression/reject/1/file.ts:1:18 lint/js/noPosixInRegularExpression ━━━━━━━
+ lint/js/noPosixInRegularExpression/reject/1/file.ts:1:18 lint/js/noPosixInRegularExpression
+FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use POSIX character classes and collating sequences.
 
@@ -34,7 +35,8 @@ const pattern = /[[:alpha:]\]/;
 
 ```
 
- lint/js/noPosixInRegularExpression/reject/2/file.ts:1:18 lint/js/noPosixInRegularExpression ━━━━━━━
+ lint/js/noPosixInRegularExpression/reject/2/file.ts:1:18 lint/js/noPosixInRegularExpression
+FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use POSIX character classes and collating sequences.
 
