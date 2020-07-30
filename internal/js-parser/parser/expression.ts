@@ -227,9 +227,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 		);
 
 		// Remove `tc.j_expr` and `tc.j_oTag` from 'context added
-
 		// by parsing `jsxTagStart` to stop the JSX plugin from
-
 		// messing with the tokens
 		const cLength = parser.state.context.length;
 		if (parser.state.context[cLength - 1] === tc.jsxOpenTag) {
@@ -282,19 +280,18 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 		});
 	}
 
-	branches.add(() => {
-		return _parseMaybeAssign<T>(
-			parser,
-			context,
-			noIn,
-			refShorthandDefaultPos,
-			afterLeftParse,
-			refNeedsArrowPos,
-		);
-	});
+	if (branches.hasOptimalBranch()) {
+		return branches.pick();
+	}
 
-	// Pick the branch with the least amount of errors
-	return branches.pick();
+	return _parseMaybeAssign<T>(
+		parser,
+		context,
+		noIn,
+		refShorthandDefaultPos,
+		afterLeftParse,
+		refNeedsArrowPos,
+	);
 }
 
 type MaybeAssignAfterParse<T> = (
@@ -453,9 +450,7 @@ export function parseConditional(
 	}
 
 	// This is to handle a case like this: const foo = (foo?: bar) => {};
-
 	// We'll be called due to the `?`, and we should mark ourselves as an
-
 	// expected arrow function if parsing as a regular conditional fails
 	if (refNeedsArrowPos) {
 		const branch = parser.createBranch<AnyJSExpression>();
