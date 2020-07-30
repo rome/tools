@@ -1,4 +1,4 @@
-import {createDiagnosticsCategory} from "./index";
+import {createDiagnosticsCategory} from "../index";
 import {markup} from "@romefrontend/markup";
 
 export const pathMatch = createDiagnosticsCategory({

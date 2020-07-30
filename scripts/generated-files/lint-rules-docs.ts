@@ -5,7 +5,7 @@ import {
 	DiagnosticsProcessor,
 } from "@romefrontend/diagnostics";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import highlightCode from "@romefrontend/cli-diagnostics/highlightCode";
+import {highlightCode} from "@romefrontend/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
 import {concatMarkup, joinMarkupLines, markup} from "@romefrontend/markup";
 import {markupToHtml} from "@romefrontend/cli-layout";

@@ -1,7 +1,7 @@
-import {createDiagnosticsCategory} from "./index";
-import {DiagnosticAdvice, DiagnosticLocation} from "../types";
+import {createDiagnosticsCategory} from "../index";
+import {DiagnosticAdvice, DiagnosticLocation} from "../../types";
 import {SourceLocation} from "@romefrontend/parser-core";
-import {buildDuplicateLocationAdvice} from "../helpers";
+import {buildDuplicateLocationAdvice} from "../../helpers";
 import {markup} from "@romefrontend/markup";
 
 function buildJSXOpeningAdvice(

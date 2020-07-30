@@ -1,6 +1,6 @@
-import {createDiagnosticsCategory} from "./index";
+import {createDiagnosticsCategory} from "../index";
 import {markup} from "@romefrontend/markup";
-import {DiagnosticLocation} from "../types";
+import {DiagnosticLocation} from "../../types";
 
 // @romefrontend/html-parser
 export const htmlParser = createDiagnosticsCategory({

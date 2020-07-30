@@ -38,12 +38,11 @@ import {
 	getUserConfigFile,
 	loadUserConfig,
 } from "../common/userConfig";
-import {removeFile} from "@romefrontend/fs";
+import {createWriteStream, removeFile} from "@romefrontend/fs";
 import {stringifyJSON} from "@romefrontend/codec-json";
 import stream = require("stream");
 import net = require("net");
 import zlib = require("zlib");
-import fs = require("fs");
 import os = require("os");
 import child = require("child_process");
 import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
@@ -56,6 +55,7 @@ import {
 } from "@romefrontend/markup";
 
 import {markupToHtml, markupToPlainText} from "@romefrontend/cli-layout";
+import {AbsoluteFilePath} from "@romefrontend/path";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -179,6 +179,7 @@ export default class Client {
 	getClientJSONFlags(): ClientFlagsJSON {
 		return {
 			...this.flags,
+			realCwd: this.flags.realCwd.join(),
 			cwd: this.flags.cwd.join(),
 		};
 	}
@@ -398,7 +399,7 @@ export default class Client {
 		return concatMarkup(summary);
 	}
 
-	async rage(ragePath: string, profileOpts: ClientProfileOptions) {
+	async rage(ragePath: AbsoluteFilePath, profileOpts: ClientProfileOptions) {
 		const {bridge} = this.assertBridgeStatus();
 
 		this.reporter.info(markup`Rage enabled \u{1f620}`);
@@ -442,7 +443,7 @@ export default class Client {
 
 		this.endEvent.subscribe(async () => {
 			const stream = zlib.createGzip();
-			stream.pipe(fs.createWriteStream(ragePath));
+			stream.pipe(createWriteStream(ragePath));
 
 			const writer = new TarWriter(stream);
 

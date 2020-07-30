@@ -22,3 +22,5 @@ export {removeSuffix} from "./removeSuffix";
 export {CamelCaseOptions, toCamelCase} from "./toCamelCase";
 export {toKebabCase} from "./toKebabCase";
 export {sliceEscaped} from "./sliceEscaped";
+export {splitLines} from "./splitLines";
+export {splitChars} from "./splitChars";

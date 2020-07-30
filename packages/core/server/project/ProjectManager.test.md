@@ -13,13 +13,7 @@
 ### `files`
 
 ```
-# bar/rome.rjson
-name: "bar"
-
-# bar/test.ts
-
-
-# rome.json
+# .config/rome.json
 {
 	"name": "foo",
 	"root": true,
@@ -27,6 +21,12 @@ name: "bar"
 		"vendorPath": "../remote"
 	}
 }
+
+
+# bar/.config/rome.rjson
+name: "bar"
+
+# bar/test.ts
 
 
 ```

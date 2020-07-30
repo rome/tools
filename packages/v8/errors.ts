@@ -9,7 +9,7 @@ import {Position, SourceLocation} from "@romefrontend/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
 import {isPlainObject} from "@romefrontend/typescript-helpers";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
-import {convertPossibleNodeError} from "@romefrontend/node";
+import {convertPossibleNodeErrorToDiagnostic} from "@romefrontend/node";
 
 export * from "./types";
 
@@ -26,13 +26,21 @@ export type StructuredError = {
 	frames: ErrorFrames;
 };
 
+export function setErrorFrames(
+	err: ErrorWithFrames,
+	frames: undefined | ErrorFrames,
+) {
+	err[ERROR_FRAMES_PROP] = frames;
+}
+
 export function getErrorStructure(
 	err: unknown,
 	framesToShift: number = 0,
+	shouldConvertPossibleNodeError: boolean = true,
 ): StructuredError {
 	// Make some node errors more pretty
-	if (err instanceof Error) {
-		err = convertPossibleNodeError(err);
+	if (err instanceof Error && shouldConvertPossibleNodeError) {
+		err = convertPossibleNodeErrorToDiagnostic(err);
 	}
 
 	let name = "Error";

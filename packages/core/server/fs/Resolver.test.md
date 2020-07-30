@@ -13,18 +13,18 @@
 ### `files`
 
 ```
-# index.ios.js
-
-
-# index.js
-
-
-# rome.json
+# .config/rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
+
+
+# index.ios.js
+
+
+# index.js
 
 
 ```

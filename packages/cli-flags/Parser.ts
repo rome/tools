@@ -6,7 +6,7 @@
  */
 
 import {Reporter} from "@romefrontend/cli-reporter";
-import {serializeCLIFlags} from "./serializeCLIFlags";
+import {SerializeCLIOptions, serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
 	ConsumePropertyDefinition,
@@ -72,8 +72,13 @@ type DefinedCommand = {
 };
 
 export type ParserOptions<T> = {
-	examples?: Examples;
+	reporter: Reporter;
 	programName: string;
+	cwd: AbsoluteFilePath;
+	args: Array<string>;
+	defineFlags: (consumer: Consumer) => T;
+
+	examples?: Examples;
 	usage?: string;
 	description?: Markup;
 	version?: string;
@@ -85,7 +90,6 @@ export type ParserOptions<T> = {
 		description: Markup;
 	}>;
 	shellCompletionDirectory?: AbsoluteFilePath;
-	defineFlags: (consumer: Consumer) => T;
 };
 
 function splitCommandName(cmd: string): Array<string> {
@@ -104,12 +108,8 @@ export type FlagValue = _FlagValue | Array<_FlagValue>;
 type SupportedCompletionShells = "bash" | "fish";
 
 export default class Parser<T> {
-	constructor(
-		reporter: Reporter,
-		opts: ParserOptions<T>,
-		rawArgs: Array<string>,
-	) {
-		this.reporter = reporter;
+	constructor(opts: ParserOptions<T>) {
+		this.reporter = opts.reporter;
 		this.opts = opts;
 
 		this.shorthandFlags = new Set();
@@ -123,7 +123,7 @@ export default class Parser<T> {
 		this.flagToArgIndex = new Map();
 		this.flagToArgOffset = 0;
 
-		this.consumeRawArgs(rawArgs);
+		this.consumeRawArgs(opts.args);
 
 		this.commands = new Map();
 		this.ranCommand = undefined;
@@ -304,13 +304,9 @@ export default class Parser<T> {
 				) => {
 					return serializeCLIFlags(
 						{
-							programName: this.opts.programName,
-							commandName: this.currentCommand,
-							args: this.args,
+							...this.getSerializeOptions(),
 							defaultFlags,
 							flags,
-							incorrectCaseFlags: this.incorrectCaseFlags,
-							shorthandFlags: this.shorthandFlags,
 						},
 						{
 							type: "flag",
@@ -1034,13 +1030,11 @@ export default class Parser<T> {
 						suggestion.description,
 						serializeCLIFlags(
 							{
-								programName,
+								...this.getSerializeOptions(),
 								commandName: suggestion.commandName,
 								args,
 								defaultFlags,
 								flags: rawFlags,
-								incorrectCaseFlags: this.incorrectCaseFlags,
-								shorthandFlags: this.shorthandFlags,
 							},
 							{
 								type: "none",
@@ -1056,13 +1050,11 @@ export default class Parser<T> {
 			description,
 			location: serializeCLIFlags(
 				{
-					programName,
+					...this.getSerializeOptions(),
 					commandName,
 					args,
 					defaultFlags,
 					flags: rawFlags,
-					incorrectCaseFlags: this.incorrectCaseFlags,
-					shorthandFlags: this.shorthandFlags,
 				},
 				{
 					type: "command",
@@ -1071,6 +1063,25 @@ export default class Parser<T> {
 		};
 
 		throw new DiagnosticsError("Unknown command", [diag]);
+	}
+
+	getSerializeOptions(): Pick<
+		SerializeCLIOptions,
+		| "programName"
+		| "commandName"
+		| "args"
+		| "incorrectCaseFlags"
+		| "shorthandFlags"
+		| "cwd"
+	> {
+		return {
+			programName: this.opts.programName,
+			commandName: this.currentCommand,
+			args: this.args,
+			incorrectCaseFlags: this.incorrectCaseFlags,
+			shorthandFlags: this.shorthandFlags,
+			cwd: this.opts.cwd,
+		};
 	}
 
 	addCommand(opts: AnyCommandOptions) {

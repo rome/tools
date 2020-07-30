@@ -77,6 +77,7 @@ export class WebServer {
 				id: client.id,
 				flags: {
 					...client.flags,
+					realCwd: client.flags.realCwd.join(),
 					cwd: client.flags.cwd.join(),
 				},
 				startTime: Date.now(),

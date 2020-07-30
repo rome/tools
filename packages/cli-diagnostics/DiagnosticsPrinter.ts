@@ -9,6 +9,7 @@ import {
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticLanguage,
+	DiagnosticLocation,
 	DiagnosticSourceType,
 	Diagnostics,
 	DiagnosticsProcessor,
@@ -28,7 +29,6 @@ import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
-	AbsoluteFilePathSet,
 	CWD_PATH,
 	UnknownFilePath,
 	UnknownFilePathMap,
@@ -52,7 +52,7 @@ type PositionLike = {
 
 const DEFAULT_FILE_READERS: DiagnosticsFileReaders = {
 	async read(path) {
-		if (await exists(path)) {
+		if ((await exists(path)) && (await lstat(path)).isFile()) {
 			return await readFileText(path);
 		} else {
 			return undefined;
@@ -103,7 +103,7 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 type ChangeFileDependency = {
 	type: "change";
 	path: UnknownFilePath;
-	mtime: number;
+	mtime: undefined | number;
 };
 
 // Dependency that will have a code frame in the output diagnostic
@@ -117,6 +117,10 @@ type ReferenceFileDependency = {
 };
 
 type FileDependency = ChangeFileDependency | ReferenceFileDependency;
+
+function hasFrame(loc: DiagnosticLocation): boolean {
+	return loc.start !== undefined && loc.end !== undefined;
+}
 
 export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
 	sourceText: string;
@@ -149,7 +153,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.truncatedCount = 0;
 
 		this.hasTruncatedDiagnostics = false;
-		this.missingFileSources = new AbsoluteFilePathSet();
+		this.missingFileSources = new UnknownFilePathSet();
 		this.fileSources = new UnknownFilePathMap();
 		this.fileMtimes = new UnknownFilePathMap();
 		this.onFooterPrintCallbacks = [];
@@ -163,7 +167,7 @@ export default class DiagnosticsPrinter extends Error {
 	cwd: AbsoluteFilePath;
 	fileReaders: Array<DiagnosticsFileReaders>;
 	hasTruncatedDiagnostics: boolean;
-	missingFileSources: AbsoluteFilePathSet;
+	missingFileSources: UnknownFilePathSet;
 	fileSources: DiagnosticsPrinterFileSources;
 	fileMtimes: DiagnosticsPrinterFileMtimes;
 
@@ -172,11 +176,7 @@ export default class DiagnosticsPrinter extends Error {
 	filteredCount: number;
 	truncatedCount: number;
 
-	createFilePath(filename: undefined | string): UnknownFilePath {
-		if (filename === undefined) {
-			filename = "unknown";
-		}
-
+	createFilePath(filename: string): UnknownFilePath {
 		const {normalizePosition} = this.reporter.markupOptions;
 
 		if (normalizePosition === undefined) {
@@ -304,14 +304,23 @@ export default class DiagnosticsPrinter extends Error {
 			} = diag;
 
 			if (filename !== undefined) {
-				deps.push({
-					type: "reference",
-					path: this.createFilePath(filename),
-					mtime,
-					language,
-					sourceTypeJS,
-					sourceText,
-				});
+				const path = this.createFilePath(filename);
+				if (hasFrame(diag.location)) {
+					deps.push({
+						type: "reference",
+						path,
+						mtime,
+						language,
+						sourceTypeJS,
+						sourceText,
+					});
+				} else {
+					deps.push({
+						type: "change",
+						path,
+						mtime,
+					});
+				}
 			}
 
 			if (dependencies !== undefined) {
@@ -328,27 +337,51 @@ export default class DiagnosticsPrinter extends Error {
 				if (item.type === "frame") {
 					const {location} = item;
 					if (location.filename !== undefined) {
-						deps.push({
-							type: "reference",
-							path: this.createFilePath(location.filename),
-							language: location.language,
-							sourceTypeJS: location.sourceTypeJS,
-							mtime: location.mtime,
-							sourceText: location.sourceText,
-						});
+						const path = this.createFilePath(location.filename);
+						if (hasFrame(location)) {
+							deps.push({
+								type: "reference",
+								path,
+								language: location.language,
+								sourceTypeJS: location.sourceTypeJS,
+								mtime: location.mtime,
+								sourceText: location.sourceText,
+							});
+						} else {
+							deps.push({
+								type: "change",
+								path,
+								mtime,
+							});
+						}
 					}
 				}
 
 				if (item.type === "stacktrace") {
-					for (const frame of item.frames) {
-						deps.push({
-							type: "reference",
-							path: this.createFilePath(frame.filename),
-							language: undefined,
-							sourceTypeJS: undefined,
-							mtime: undefined,
-							sourceText: frame.sourceText,
-						});
+					for (const {filename, line, column, sourceText} of item.frames) {
+						if (filename !== undefined) {
+							const path = this.createFilePath(filename);
+							if (
+								filename !== undefined &&
+								line !== undefined &&
+								column !== undefined
+							) {
+								deps.push({
+									type: "reference",
+									path,
+									language: undefined,
+									sourceTypeJS: undefined,
+									mtime: undefined,
+									sourceText,
+								});
+							} else {
+								deps.push({
+									type: "change",
+									path,
+									mtime: undefined,
+								});
+							}
+						}
 					}
 				}
 			}
@@ -469,11 +502,12 @@ export default class DiagnosticsPrinter extends Error {
 			mtime: expectedMtime,
 		} of this.getDependenciesFromDiagnostics([diag])) {
 			const mtime = this.fileMtimes.get(path);
-			if (
-				mtime !== undefined &&
-				expectedMtime !== undefined &&
-				mtime > expectedMtime
-			) {
+
+			// Consider us outdated if the other file is newer than what we want or doesn't have an mtime
+			const isOutdated =
+				mtime === undefined ||
+				(expectedMtime !== undefined && mtime > expectedMtime);
+			if (isOutdated) {
 				outdatedFiles.add(path);
 			}
 		}
@@ -539,7 +573,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Determine if we should skip showing the frame at the top of the diagnostic output
 		// We check if there are any frame advice entries that match us exactly, this is
-		// useful for stuff like reporting call stacks
+		// useful for simplifying stacktraces
 		let skipFrame = false;
 		if (start !== undefined && end !== undefined) {
 			adviceLoop: for (const item of advice) {
@@ -564,8 +598,27 @@ export default class DiagnosticsPrinter extends Error {
 			}
 		}
 
+		// Check for outdated files
 		const outdatedAdvice: DiagnosticAdvice = [];
 		const outdatedFiles = this.getOutdatedFiles(diag);
+
+		// Check if this file doesn't even exist
+		if (filename !== undefined) {
+			const path = this.createFilePath(filename);
+			const isMissing = this.missingFileSources.has(path);
+			if (isMissing) {
+				outdatedAdvice.push({
+					type: "log",
+					category: "warn",
+					text: markup`This diagnostic refers to a file that does not exist`,
+				});
+				// Don't need to duplicate this path
+				outdatedFiles.delete(path);
+				skipFrame = true;
+			}
+		}
+
+		// List outdated
 		const isOutdated = outdatedFiles.size > 0;
 		if (isOutdated) {
 			const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());

@@ -31,13 +31,19 @@ function buildTag(
 			attributes = attributes.copy();
 
 			const {filename, line, column, text} = buildFileLink(attributes, opts);
-			inner = markup`${text}`;
-			attributes.get("column").setValue(column);
-			attributes.get("line").setValue(line);
+
 			attributes.get("target").setValue(filename);
+
+			if (isEmptyMarkup(inner) || opts.stripFilelinkText) {
+				inner = markup`${text}`;
+			}
+
 			if (opts.stripPositions) {
 				attributes.get("line").setValue(undefined);
 				attributes.get("column").setValue(undefined);
+			} else {
+				attributes.get("column").setValue(column);
+				attributes.get("line").setValue(line);
 			}
 			break;
 		}

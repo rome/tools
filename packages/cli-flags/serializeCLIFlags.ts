@@ -16,13 +16,17 @@ import {
 } from "@romefrontend/ob1";
 import {Dict, RequiredProps} from "@romefrontend/typescript-helpers";
 import {FlagValue} from "./Parser";
+import {AbsoluteFilePath} from "@romefrontend/path";
 
-type SerializeCLIData = {
-	programName?: string;
+export type SerializeCLIOptions = {
+	programName: string;
+	args: Array<string>;
+	flags: Dict<FlagValue>;
+
+	// Optional
+	cwd?: AbsoluteFilePath;
 	commandName?: string;
-	args?: Array<string>;
 	defaultFlags?: Dict<FlagValue>;
-	flags?: Dict<FlagValue>;
 	incorrectCaseFlags?: Set<string>;
 	shorthandFlags?: Set<string>;
 	prefix?: string;
@@ -51,24 +55,29 @@ export type SerializeCLITarget =
 		}
 	| {
 			type: "program";
+		}
+	| {
+			type: "cwd";
 		};
 
 export function serializeCLIFlags(
 	{
-		args = [],
-		flags = {},
+		args,
+		flags,
+		cwd,
 		programName,
 		commandName,
+
 		defaultFlags = {},
 		shorthandFlags = new Set(),
 		incorrectCaseFlags = new Set(),
 		prefix = "$ ",
-	}: SerializeCLIData,
+	}: SerializeCLIOptions,
 	target: SerializeCLITarget,
 ): RequiredProps<DiagnosticLocation, "sourceText"> {
 	let startColumn: Number0 = ob1Number0Neg1;
 	let endColumn: Number0 = ob1Number0Neg1;
-	let code = prefix;
+	let code = "";
 
 	function setStartColumn() {
 		startColumn = ob1Coerce0(code.length);
@@ -83,28 +92,29 @@ export function serializeCLIFlags(
 		}
 	}
 
-	if (programName !== undefined) {
-		if (target.type === "program") {
+	function push(str: string, set: boolean) {
+		if (set) {
 			setStartColumn();
 		}
 
-		code += `${programName} `;
+		code += str;
 
-		if (target.type === "program") {
+		if (set) {
 			setEndColumn();
 		}
 	}
 
+	// Only output cwd if it's the target
+	if (cwd !== undefined && target.type === "cwd") {
+		push(cwd.join(), true);
+	}
+
+	code += prefix;
+
+	push(`${programName} `, target.type === "program");
+
 	if (commandName !== undefined) {
-		if (target.type === "command") {
-			setStartColumn();
-		}
-
-		code += `${commandName} `;
-
-		if (target.type === "command") {
-			setEndColumn();
-		}
+		push(`${commandName} `, target.type === "command");
 	}
 
 	// Add args

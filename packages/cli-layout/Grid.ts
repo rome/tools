@@ -37,6 +37,7 @@ import {
 	humanizeFileSize,
 	humanizeNumber,
 	humanizeTime,
+	splitChars,
 } from "@romefrontend/string-utils";
 import {escapeXHTMLEntities} from "@romefrontend/html-parser";
 import {ansiFormatText} from "./formatANSI";
@@ -154,7 +155,14 @@ export default class Grid {
 		this.lineWrapMode = lineWrapMode;
 		this.width = ob1Number1;
 
-		this.lines = [];
+		this.lines = [
+			// First line that we're going to fill.
+			// If it isn't here then any height measurements before anything has been written will be wrong
+			{
+				ranges: [],
+				columns: [],
+			},
+		];
 
 		// TODO make the tab width customizable in userConfig
 		this.tabSize = 2;
@@ -198,6 +206,8 @@ export default class Grid {
 	debugState(): object {
 		return {
 			cursor: this.cursor,
+			width: this.width,
+			height: this.getHeight(),
 			lines: this.lines.map(({columns, ranges}) => {
 				return {
 					line: joinColumns(columns),
@@ -632,7 +642,7 @@ export default class Grid {
 			}
 			forceNextWordOverflow = false;
 
-			for (const char of word.split(/(?:){1}/u)) {
+			for (const char of splitChars(word)) {
 				this.userChar(char);
 
 				if (source) {

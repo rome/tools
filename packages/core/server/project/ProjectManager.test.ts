@@ -11,7 +11,7 @@ test(
 				root: true,
 			},
 			files: {
-				"bar/rome.rjson": `name: "bar"`,
+				"bar/.config/rome.rjson": `name: "bar"`,
 				"bar/test.ts": "",
 			},
 		},
