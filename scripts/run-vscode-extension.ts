@@ -6,7 +6,7 @@ export async function main(args: Array<string>) {
 	const outFolder = TEMP_PATH.append("rome-vscode-dev").join();
 
 	reporter.heading(markup`Bundling extension`);
-	await execDev(["bundle", "@romefrontend-integration/vscode", outFolder]);
+	await execDev(["bundle", "vscode-rome", outFolder]);
 
 	reporter.heading(markup`Running VSCode`);
 	await exec(
