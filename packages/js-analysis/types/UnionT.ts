@@ -10,7 +10,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
-import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
+import {Markup, concatMarkup, markup} from "@romefrontend/markup";
 
 export default class UnionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {

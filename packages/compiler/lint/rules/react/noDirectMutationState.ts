@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {AnyNode} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
@@ -52,9 +52,9 @@ function isStateMutated(node: AnyNode): boolean {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "react/noDirectMutationState",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		// If the state is mutated anywhere except in a constructor, show message
@@ -69,6 +69,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

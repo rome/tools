@@ -15,12 +15,12 @@ import {createBuilder} from "../../utils";
 import {AnyJSObjectPropertyKey} from "../unions";
 
 export interface JSClassMethod extends NodeBaseWithComments {
-	type: "JSClassMethod";
-	meta: JSClassPropertyMeta;
-	key: AnyJSObjectPropertyKey;
-	kind: JSClassMethodKind;
-	head: JSFunctionHead;
-	body: JSBlockStatement;
+	readonly type: "JSClassMethod";
+	readonly meta: JSClassPropertyMeta;
+	readonly key: AnyJSObjectPropertyKey;
+	readonly kind: JSClassMethodKind;
+	readonly head: JSFunctionHead;
+	readonly body: JSBlockStatement;
 }
 
 export type JSClassMethodKind = "constructor" | "method" | "get" | "set";

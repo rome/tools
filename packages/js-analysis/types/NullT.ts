@@ -9,7 +9,7 @@ import {AnyNode} from "@romefrontend/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class NullT extends T {
 	static type = "NullT";

@@ -13,14 +13,14 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpLiteral extends NodeBaseWithComments {
-	type: "JSRegExpLiteral";
-	expression: JSRegExpSubExpression | JSRegExpAlternation;
-	global?: boolean;
-	multiline?: boolean;
-	sticky?: boolean;
-	insensitive?: boolean;
-	noDotNewline?: boolean;
-	unicode?: boolean;
+	readonly type: "JSRegExpLiteral";
+	readonly expression: JSRegExpSubExpression | JSRegExpAlternation;
+	readonly global?: boolean;
+	readonly multiline?: boolean;
+	readonly sticky?: boolean;
+	readonly insensitive?: boolean;
+	readonly noDotNewline?: boolean;
+	readonly unicode?: boolean;
 }
 
 export const jsRegExpLiteral = createBuilder<JSRegExpLiteral>(

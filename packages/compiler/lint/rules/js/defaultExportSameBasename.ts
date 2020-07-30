@@ -11,10 +11,9 @@ import {
 	JSExportDefaultDeclaration,
 	JSFunctionDeclaration,
 } from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {UnknownFilePath} from "@romefrontend/path";
 import {renameBindings} from "@romefrontend/js-ast-utils";
-import {TransformExitResult} from "@romefrontend/compiler/types";
 import {descriptions} from "@romefrontend/diagnostics";
 import {normalizeCamelCase} from "./camelCase";
 import {toCamelCase} from "@romefrontend/string-utils";
@@ -53,9 +52,9 @@ export function filenameToId(
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "js/defaultExportSameBasename",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 
 		if (node.type === "JSRoot") {
@@ -83,11 +82,12 @@ export default {
 					if (basename !== undefined && basename !== id.name) {
 						const correctFilename = id.name + context.path.getExtensions();
 
-						return context.addFixableDiagnostic(
+						return path.addFixableDiagnostic(
 							{
 								target: id,
-								old: node,
-								fixed: renameBindings(path, new Map([[id.name, basename]])),
+								fixed: signals.replace(
+									renameBindings(path, new Map([[id.name, basename]])),
+								),
 							},
 							descriptions.LINT.JS_DEFAULT_EXPORT_SAME_BASENAME({
 								defaultName: id.name,
@@ -101,6 +101,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

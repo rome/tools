@@ -21,7 +21,7 @@ import stringDiff from "@romefrontend/string-diff";
 import {getErrorStructure} from "@romefrontend/v8";
 import {prettyFormatToString} from "@romefrontend/pretty-format";
 import {FileReference} from "../common/types/files";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {
 	AsyncFunc,
 	ExpectedError,
@@ -784,7 +784,7 @@ export default class TestAPI implements TestHelper {
 				let markupMessage;
 
 				if (message === undefined) {
-					markupMessage = markup`Snapshot ${entryName} at <emphasis>${snapshotPath}</emphasis> doesn't match`;
+					markupMessage = markup`Snapshot <emphasis>"${entryName}"</emphasis> at <emphasis>${snapshotPath}</emphasis> doesn't match`;
 				} else {
 					markupMessage = markup`${message}`;
 

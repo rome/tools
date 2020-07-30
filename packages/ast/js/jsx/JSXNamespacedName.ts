@@ -9,9 +9,9 @@ import {JSXIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXNamespacedName extends NodeBaseWithComments {
-	type: "JSXNamespacedName";
-	namespace: JSXIdentifier;
-	name: JSXIdentifier;
+	readonly type: "JSXNamespacedName";
+	readonly namespace: JSXIdentifier;
+	readonly name: JSXIdentifier;
 }
 
 export const jsxNamespacedName = createBuilder<JSXNamespacedName>(

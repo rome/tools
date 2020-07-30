@@ -7,32 +7,40 @@
 
 import Parser, {ParserInterface, ParserOptions} from "./Parser";
 import {Reporter} from "@romefrontend/cli-reporter";
+import {OptionalProps} from "@romefrontend/typescript-helpers";
+import {CWD_PATH} from "@romefrontend/path";
 
 export {FlagValue} from "./Parser";
 export {ParserInterface as FlagParser};
 
-export function parseCLIFlags<T>(
-	reporter: Reporter,
-	args: Array<string>,
-	opts: ParserOptions<T>,
-): ParserInterface<T> {
-	const parser = new Parser(reporter, opts, args);
+export function parseCLIFlags<T>(opts: ParserOptions<T>): ParserInterface<T> {
+	const parser = new Parser(opts);
 	return parser.getInterface();
 }
 
 export function parseCLIFlagsFromProcess<T>(
-	opts: ParserOptions<T>,
+	opts: OptionalProps<
+		ParserOptions<T>,
+		"cwd" | "programName" | "args" | "reporter"
+	>,
 ): ParserInterface<T> {
-	return parseCLIFlags(
-		Reporter.fromProcess(),
-		process.argv.slice(2),
-		{
-			...opts,
-			programName: opts.programName === undefined
-				? process.argv[1]
-				: opts.programName,
-		},
-	);
+	let programName = "";
+	let args: Array<string> = [];
+
+	if (opts.args === undefined) {
+		programName = process.argv[1];
+		args = process.argv.slice(2);
+	} else {
+		programName = process.argv.join(" ");
+	}
+
+	return parseCLIFlags({
+		...opts,
+		reporter: opts.reporter ?? Reporter.fromProcess(),
+		args,
+		cwd: opts.cwd ?? CWD_PATH,
+		programName: opts.programName ?? programName,
+	});
 }
 
 export * from "./serializeCLIFlags";

@@ -1,5 +1,11 @@
 import {AnyNode} from "@romefrontend/ast";
-import {Path, Scope, createHook} from "@romefrontend/compiler";
+import {
+	Path,
+	Scope,
+	createHook,
+	createVisitor,
+	signals,
+} from "@romefrontend/compiler";
 import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
 import {Dict} from "@romefrontend/typescript-helpers";
 import {
@@ -76,13 +82,13 @@ const provider = createHook<State, undefined, AnyNode>({
 			}
 		}
 
-		return path.node;
+		return signals.retain;
 	},
 });
 
-export default {
+export default createVisitor({
 	name: "js/unusedVariables",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (scope.node === node) {
@@ -109,7 +115,7 @@ export default {
 			}
 
 			if (!hasBindings) {
-				return node;
+				return signals.retain;
 			}
 
 			// For functions, special case parameters
@@ -189,9 +195,9 @@ export default {
 			node.type === "JSXReferenceIdentifier" ||
 			node.type === "JSReferenceIdentifier"
 		) {
-			return path.callHook(provider, undefined, node);
+			return signals.replace(path.callHook(provider, undefined, node));
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

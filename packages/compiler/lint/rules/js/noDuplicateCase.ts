@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {DiagnosticsDuplicateHelper} from "@romefrontend/compiler/lib/DiagnosticsDuplicateHelper";
 import {
@@ -15,9 +14,9 @@ import {
 } from "@romefrontend/js-ast-utils";
 import {prettyFormatToString} from "@romefrontend/pretty-format";
 
-export default {
+export default createVisitor({
 	name: "js/noDuplicateCase",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSSwitchStatement") {
@@ -51,6 +50,6 @@ export default {
 			duplicates.process();
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

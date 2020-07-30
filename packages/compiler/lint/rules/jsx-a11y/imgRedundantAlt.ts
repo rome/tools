@@ -7,7 +7,7 @@
 
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
 
 function jsxImgRedundantAlt(node: AnyNode) {
@@ -24,10 +24,10 @@ function jsxImgRedundantAlt(node: AnyNode) {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/imgRedundantAlt",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (jsxImgRedundantAlt(node)) {
@@ -37,6 +37,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -14,11 +14,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSMethodSignature extends NodeBaseWithComments {
-	key: AnyJSObjectPropertyKey;
-	type: "TSMethodSignature";
-	optional?: boolean;
-	meta: TSSignatureDeclarationMeta;
-	returnType?: AnyTSPrimary;
+	readonly key: AnyJSObjectPropertyKey;
+	readonly type: "TSMethodSignature";
+	readonly optional?: boolean;
+	readonly meta: TSSignatureDeclarationMeta;
+	readonly returnType?: AnyTSPrimary;
 }
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(

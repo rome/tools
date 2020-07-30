@@ -49,7 +49,7 @@ import {
 	markup,
 	readMarkup,
 	serializeLazyMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {
 	ErrorFrames,
 	StructuredError,
@@ -605,7 +605,7 @@ export default class TestWorkerRunner {
 		// Execute all the tests
 		for (const test of foundTests.values()) {
 			const {options} = test;
-			if (this.hasFocusedTests && !this.isFocusedTest(test)) {
+			if (this.hasFocusedTests && !this.isFocusedTest(test.options)) {
 				continue;
 			}
 

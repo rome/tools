@@ -1,17 +1,24 @@
 import {createServerCommand} from "@romefrontend/core/server/commands";
 import {commandCategories} from "@romefrontend/core/common/commands";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import {ServerRequest} from "@romefrontend/core";
 import {ExtensionHandler} from "@romefrontend/core/common/file-handlers/types";
 import {dedent} from "@romefrontend/string-utils";
-import {exists, writeFile} from "@romefrontend/fs";
+import {createDirectory, exists, writeFile} from "@romefrontend/fs";
 import {JSONObject, stringifyRJSON} from "@romefrontend/codec-json";
 import {getFileHandlerFromPath} from "@romefrontend/core/common/file-handlers";
 import Linter from "../linter/Linter";
-import {ProjectDefinition} from "@romefrontend/project";
+import {
+	PROJECT_CONFIG_DIRECTORY,
+	ProjectDefinition,
+} from "@romefrontend/project";
 import {AbsoluteFilePathMap} from "@romefrontend/path";
-import {VERSION} from "@romefrontend/core/common/constants";
 import {getVCSClient} from "@romefrontend/vcs";
+import {
+	Diagnostic,
+	createSingleDiagnosticError,
+	descriptions,
+} from "@romefrontend/diagnostics";
 
 type Flags = {
 	allowDirty: boolean;
@@ -36,21 +43,31 @@ export default createServerCommand<Flags>({
 		const {server, client, reporter} = req;
 		const {cwd} = client.flags;
 
+		// Check for sensitive directory
+		if (server.projectManager.isBannedProjectPath(cwd)) {
+			const diagnostic: Diagnostic = {
+				description: descriptions.PROJECT_MANAGER.INITING_SENSITIVE(cwd),
+				location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+			};
+			throw createSingleDiagnosticError(diagnostic);
+		}
+
+		// Check for no or dirty repo
 		if (!flags.allowDirty) {
 			const vcsClient = await getVCSClient(cwd);
-			if (vcsClient !== undefined) {
+
+			if (vcsClient === undefined) {
+				throw createSingleDiagnosticError({
+					location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+					description: descriptions.INIT_COMMAND.EXPECTED_REPO,
+				});
+			} else {
 				const uncommittedFiles = await vcsClient.getUncommittedFiles();
 				if (uncommittedFiles.length > 0) {
-					reporter.error(
-						markup`Looks like you're trying to run this command with <emphasis>uncommitted changes</emphasis>.`,
-					);
-					reporter.warn(
-						markup`This command will format and autofix all files within this directory. We recommend committing your changes so you can recover them if the changes are undesirable.`,
-					);
-					reporter.info(
-						markup`You can bypass the restriction with the <code>--allow-dirty</code> flag.`,
-					);
-					return false;
+					throw createSingleDiagnosticError({
+						location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+						description: descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
+					});
 				}
 			}
 		}
@@ -69,8 +86,7 @@ export default createServerCommand<Flags>({
 
 		reporter.heading(markup`Welcome to Rome! Let's get you started...`);
 
-		const projectPath = cwd;
-		const configPath = projectPath.append("rome.rjson");
+		const configPath = cwd.append(PROJECT_CONFIG_DIRECTORY, "rome.rjson");
 
 		// Track some information about our project generation
 		let savedCheckFiles = 0;
@@ -84,8 +100,7 @@ export default createServerCommand<Flags>({
 		// We are only using JSONObject here because we don't have an accurate type definition for what
 		// the config actually looks like on disk
 		let config: JSONObject = {
-			name: projectPath.getBasename(),
-			version: `^${VERSION}`,
+			name: cwd.getBasename(),
 		};
 
 		// Ensure project is evicted and recreated properly
@@ -104,10 +119,11 @@ export default createServerCommand<Flags>({
 			await writeFile(configPath, stringifyRJSON(config));
 
 			// Add it again
-			project = await server.projectManager.assertProject(projectPath);
+			project = await server.projectManager.assertProject(cwd);
 		}
 
 		// Create initial project config
+		await createDirectory(configPath.getParent());
 		await updateConfig();
 
 		// Generate files
@@ -146,7 +162,7 @@ export default createServerCommand<Flags>({
 			{
 				message: markup`Generating .editorconfig`,
 				async callback() {
-					const editorConfigPath = projectPath.append(".editorconfig");
+					const editorConfigPath = cwd.append(".editorconfig");
 					if (await exists(editorConfigPath)) {
 						reporter.warn(
 							markup`<emphasis>${editorConfigPath}</emphasis> already exists`,
@@ -154,11 +170,11 @@ export default createServerCommand<Flags>({
 						return;
 					}
 
-					await server.projectManager.assertProject(projectPath);
+					await server.projectManager.assertProject(cwd);
 
 					// Get unique handlers
 					const uniqueHandlers: Map<string, ExtensionHandler> = new Map();
-					for (const path of server.memoryFs.glob(projectPath)) {
+					for (const path of server.memoryFs.glob(cwd)) {
 						const {handler} = getFileHandlerFromPath(path, undefined);
 						if (handler !== undefined) {
 							uniqueHandlers.set(handler.ext, handler);

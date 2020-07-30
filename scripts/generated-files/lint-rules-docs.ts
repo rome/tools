@@ -5,19 +5,19 @@ import {
 	DiagnosticsProcessor,
 } from "@romefrontend/diagnostics";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import highlightCode from "@romefrontend/cli-diagnostics/highlightCode";
+import {highlightCode} from "@romefrontend/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
-import {joinMarkupLines, markupToHtml} from "@romefrontend/cli-layout/format";
+import {concatMarkup, joinMarkupLines, markup} from "@romefrontend/markup";
+import {markupToHtml} from "@romefrontend/cli-layout";
 import {createUnknownFilePath} from "@romefrontend/path";
 import {dedent} from "@romefrontend/string-utils";
 import {ob1Coerce1} from "@romefrontend/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
-import {concatMarkup, markup} from "@romefrontend/cli-layout";
 
 const {worker, performFileOperation} = createMockWorker();
 
 function pre(inner: string): string {
-	return `<pre class="language-text"><code class="language-text">${inner}</code></pre>`;
+	return `{% raw %}<pre class="language-text"><code class="language-text">${inner}</code></pre>{% endraw %}`;
 }
 
 function highlightPre(filename: string, code: string): string {

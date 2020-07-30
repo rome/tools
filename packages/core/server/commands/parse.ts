@@ -11,7 +11,8 @@ import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {ConstJSSourceType} from "@romefrontend/ast";
 import {assertRoot, removeLoc} from "@romefrontend/ast-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
+import {assertSingleNode} from "@romefrontend/js-ast-utils";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -45,7 +46,7 @@ export default createServerCommand({
 		);
 
 		if (flags.compact) {
-			ast = assertRoot(removeLoc(ast));
+			ast = assertRoot(assertSingleNode(removeLoc(ast)));
 		}
 
 		reporter.inspect(ast);

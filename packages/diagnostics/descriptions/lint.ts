@@ -11,12 +11,20 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import stringDiff from "@romefrontend/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	HTML_PREFER_CLOSING_NON_VOID: {
+		category: "lint/html/preferClosingNonVoid",
+		message: markup`Non-void HTML elements cannot be self-closing. This is valid when using JSX, but not when using HTML.`,
+	},
+	JSX_PREFER_SELF_CLOSING_ELEMENTS: {
+		category: "lint/jsx/preferSelfClosingElements",
+		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
+	},
 	JS_SHOUTY_CONSTANTS: (constantLocation: DiagnosticLocation = {}) => ({
 		category: "lint/js/shoutyConstants",
 		message: markup`Redundant constant reference`,

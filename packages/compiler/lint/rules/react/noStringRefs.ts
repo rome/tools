@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
 	doesNodeMatchPattern,
@@ -7,7 +7,7 @@ import {
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
 import {insideClassComponent} from "../../utils/react";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function containsStringLiteral(attribute: JSXAttribute): boolean {
 	return attribute.value?.type === "JSStringLiteral";
@@ -24,9 +24,9 @@ function containsStringContainer(attribute: JSXAttribute): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "react/noStringRefs",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 
 		if (insideClassComponent(path) && doesNodeMatchPattern(node, "this.refs")) {
@@ -42,7 +42,7 @@ export default {
 			const ref = getJSXAttribute(node, "ref");
 
 			if (ref === undefined) {
-				return node;
+				return signals.retain;
 			}
 
 			if (containsStringLiteral(ref) || containsStringContainer(ref)) {
@@ -55,6 +55,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

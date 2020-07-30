@@ -8,7 +8,8 @@
 import {
 	CompilerContext,
 	Path,
-	TransformExitResult,
+	createVisitor,
+	signals,
 } from "@romefrontend/compiler";
 import {
 	AnyJSStatement,
@@ -104,7 +105,7 @@ function transformClass(
 	}
 
 	const newNode = jsClassDeclaration.assert(
-		path.reduce({
+		path.reduceNode({
 			name: "classesSuperTransform",
 			enter(path) {
 				if (superClassRef === undefined) {
@@ -116,13 +117,17 @@ function transformClass(
 				// TODO correctly support super() by using return value
 				if (node.type === "JSCallExpression" && node.callee.type === "JSSuper") {
 					// replace super(...args); with JSSuper.call(this, ...args);
-					return jsCallExpression.create({
-						callee: jsMemberExpression.create({
-							object: superClassRef,
-							property: jsStaticMemberProperty.quick(jsIdentifier.quick("call")),
+					return signals.replace(
+						jsCallExpression.create({
+							callee: jsMemberExpression.create({
+								object: superClassRef,
+								property: jsStaticMemberProperty.quick(
+									jsIdentifier.quick("call"),
+								),
+							}),
+							arguments: [jsThisExpression.create({}), ...node.arguments],
 						}),
-						arguments: [jsThisExpression.create({}), ...node.arguments],
-					});
+					);
 				}
 
 				// TODO super.foo
@@ -139,10 +144,12 @@ function transformClass(
 					const {property} = node;
 
 					if (isStatic) {
-						return jsMemberExpression.create({
-							object: superClassRef,
-							property,
-						});
+						return signals.replace(
+							jsMemberExpression.create({
+								object: superClassRef,
+								property,
+							}),
+						);
 					}
 
 					const superProtoRef = jsMemberExpression.create({
@@ -151,10 +158,12 @@ function transformClass(
 							jsIdentifier.quick("prototype"),
 						),
 					});
-					return jsMemberExpression.create({
-						object: superProtoRef,
-						property,
-					});
+					return signals.replace(
+						jsMemberExpression.create({
+							object: superProtoRef,
+							property,
+						}),
+					);
 				}
 
 				// super.foo();
@@ -182,15 +191,17 @@ function transformClass(
 							object: superClassRef,
 							property,
 						});
-						return jsCallExpression.create({
-							callee: jsMemberExpression.create({
-								object: methodRef,
-								property: jsStaticMemberProperty.quick(
-									jsIdentifier.quick("call"),
-								),
+						return signals.replace(
+							jsCallExpression.create({
+								callee: jsMemberExpression.create({
+									object: methodRef,
+									property: jsStaticMemberProperty.quick(
+										jsIdentifier.quick("call"),
+									),
+								}),
+								arguments: [jsReferenceIdentifier.quick(className), ...args],
 							}),
-							arguments: [jsReferenceIdentifier.quick(className), ...args],
-						});
+						);
 					}
 
 					// for instance methods replace `super.foo(...args)` with `Super.prototype.call(this, ...args)`
@@ -205,17 +216,21 @@ function transformClass(
 						object: prototypeRef,
 						property,
 					});
-					return jsCallExpression.create({
-						callee: jsMemberExpression.create({
-							object: methodRef,
-							property: jsStaticMemberProperty.quick(jsIdentifier.quick("call")),
+					return signals.replace(
+						jsCallExpression.create({
+							callee: jsMemberExpression.create({
+								object: methodRef,
+								property: jsStaticMemberProperty.quick(
+									jsIdentifier.quick("call"),
+								),
+							}),
+							arguments: [jsThisExpression.create({}), ...args],
 						}),
-						arguments: [jsThisExpression.create({}), ...args],
-					});
+					);
 				}
 
 				// TODO break when inside of functions
-				return node;
+				return signals.retain;
 			},
 		}),
 	);
@@ -287,9 +302,9 @@ function transformClass(
 	return {_constructor, prependDeclarations, declarations};
 }
 
-export default {
+export default createVisitor({
 	name: "classes",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		// correctly replace an export class with the class node then append the declarations
@@ -312,7 +327,7 @@ export default {
 				},
 				...declarations,
 			];
-			return nodes;
+			return signals.replace(nodes);
 		}
 
 		if (node.type === "JSClassDeclaration") {
@@ -321,7 +336,11 @@ export default {
 				path,
 				context,
 			);
-			return [...prependDeclarations, _constructor, ...declarations];
+			return signals.replace([
+				...prependDeclarations,
+				_constructor,
+				...declarations,
+			]);
 		}
 
 		// turn a class expression into an IIFE that returns a class declaration
@@ -329,26 +348,28 @@ export default {
 			const className =
 				node.id === undefined ? scope.generateUid("class") : node.id.name;
 
-			return jsCallExpression.create({
-				callee: jsArrowFunctionExpression.create({
-					head: jsFunctionHead.quick([]),
-					body: jsBlockStatement.create({
-						body: [
-							{
-								...node,
-								type: "JSClassDeclaration",
-								id: jsBindingIdentifier.quick(className),
-							},
-							jsReturnStatement.create({
-								argument: jsReferenceIdentifier.quick(className),
-							}),
-						],
+			return signals.replace(
+				jsCallExpression.create({
+					callee: jsArrowFunctionExpression.create({
+						head: jsFunctionHead.quick([]),
+						body: jsBlockStatement.create({
+							body: [
+								{
+									...node,
+									type: "JSClassDeclaration",
+									id: jsBindingIdentifier.quick(className),
+								},
+								jsReturnStatement.create({
+									argument: jsReferenceIdentifier.quick(className),
+								}),
+							],
+						}),
 					}),
+					arguments: [],
 				}),
-				arguments: [],
-			});
+			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

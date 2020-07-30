@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSUndefinedKeywordTypeAnnotation extends NodeBaseWithComments {
-	type: "TSUndefinedKeywordTypeAnnotation";
+	readonly type: "TSUndefinedKeywordTypeAnnotation";
 }
 
 export const tsUndefinedKeywordTypeAnnotation = createBuilder<TSUndefinedKeywordTypeAnnotation>(

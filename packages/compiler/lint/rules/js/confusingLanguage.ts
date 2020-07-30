@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {PositionTracker, SourceLocation} from "@romefrontend/parser-core";
 import {ob1Coerce0} from "@romefrontend/ob1";
 import {isIdentifierish} from "@romefrontend/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@romefrontend/diagnostics";
 import {preserveCasing} from "@romefrontend/string-utils";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 type ConfusingLanguage = Array<{
 	description: Markup;
@@ -129,9 +128,9 @@ function check(
 	};
 }
 
-export default {
+export default createVisitor({
 	name: "js/inconsiderateLanguage",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		const {loc} = node;
@@ -168,22 +167,22 @@ export default {
 				// Autofix if not suppressed
 				if (results.length > 0 && !suppressed) {
 					if (node.type === "CommentBlock" || node.type === "CommentLine") {
-						return {
+						return signals.replace({
 							...node,
 							value: fixed,
-						};
+						});
 					}
 
 					if (isIdentifierish(node)) {
-						return {
+						return signals.replace({
 							...node,
 							name: fixed,
-						};
+						});
 					}
 				}
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -13,7 +13,7 @@ import {HumanBuilder} from "../Utils";
 import E, {ErrorDefinition} from "./errors/E";
 import AnyT from "./AnyT";
 import {descriptions} from "@romefrontend/diagnostics";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 class ENotExhaustive extends E {
 	constructor(

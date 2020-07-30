@@ -3,7 +3,7 @@ import {catchDiagnosticsSync} from "@romefrontend/diagnostics";
 import {markupToPlainText} from "./format";
 import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
 import {ob1Coerce1} from "@romefrontend/ob1";
-import {markup} from "./escape";
+import {markup} from "../markup/escape";
 
 const SYNTAX_ERROR_TESTS = [
 	markup`<view pointerChar="<emphasis" pointerLine="1" pointerStart="1" pointerEnd="3">foobar</view>`,

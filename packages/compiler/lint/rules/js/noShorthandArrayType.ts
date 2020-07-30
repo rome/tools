@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {TransformExitResult} from "@romefrontend/compiler/types";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	jsReferenceIdentifier,
 	tsTypeParameterInstantiation,
@@ -14,26 +13,27 @@ import {
 } from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noShorthandArrayType",
-	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "TSArrayType") {
-			return context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: tsTypeReference.create({
-						typeName: jsReferenceIdentifier.quick("Array"),
-						typeParameters: tsTypeParameterInstantiation.create({
-							params: [node.elementType],
+					fixed: signals.replace(
+						tsTypeReference.create({
+							typeName: jsReferenceIdentifier.quick("Array"),
+							typeParameters: tsTypeParameterInstantiation.create({
+								params: [node.elementType],
+							}),
 						}),
-					}),
+					),
 				},
 				descriptions.LINT.JS_NO_SHORTHAND_ARRAY_TYPE,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

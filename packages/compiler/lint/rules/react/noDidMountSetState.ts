@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {doesNodeMatchPattern, isConditional} from "@romefrontend/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
@@ -16,9 +16,9 @@ function inComponentDidMount(path: Path): boolean {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "react/noDidMountSetState",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -32,6 +32,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

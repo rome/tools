@@ -5,25 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {jsReferenceIdentifier} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/sparseArray",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, parent} = path;
 
 		if (node.type === "JSArrayHole" && parent.type === "JSArrayExpression") {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: node,
-					fixed: jsReferenceIdentifier.create({name: "undefined"}),
+					fixed: signals.replace(
+						jsReferenceIdentifier.create({name: "undefined"}),
+					),
 				},
 				descriptions.LINT.JS_SPARSE_ARRAY,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

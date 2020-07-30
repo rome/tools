@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTypeAssertion extends NodeBaseWithComments {
-	type: "TSTypeAssertion";
-	expression: AnyJSExpression;
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSTypeAssertion";
+	readonly expression: AnyJSExpression;
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsTypeAssertion = createBuilder<TSTypeAssertion>(

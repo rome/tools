@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	JSVariableDeclarationStatement,
 	jsVariableDeclaration,
@@ -13,9 +13,9 @@ import {
 } from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/singleVarDeclarator",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -36,12 +36,12 @@ export default {
 				);
 			}
 
-			return path.context.addFixableDiagnostic(
-				{old: node, fixed},
+			return path.addFixableDiagnostic(
+				{fixed: signals.replace(fixed)},
 				descriptions.LINT.JS_SINGLE_VAR_DECLARATOR,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

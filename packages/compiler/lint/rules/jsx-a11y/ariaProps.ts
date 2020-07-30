@@ -1,16 +1,15 @@
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {findClosestStringMatch, toKebabCase} from "@romefrontend/string-utils";
 import {descriptions} from "@romefrontend/diagnostics";
-import {TransformExitResult} from "@romefrontend/compiler/types";
 import {
 	ARIAProperty,
 	ariaPropsMap,
 } from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/ariaProps",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context} = path;
 
 		if (
@@ -44,14 +43,13 @@ export default {
 				(node.name.name as ARIAProperty),
 			);
 			if (fixed !== undefined && isInvalidAriaProperty) {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
 						suggestions: [
 							{
 								title: markup`ARIA Spelling Mistake`,
 								description: markup``,
-								fixed,
+								fixed: signals.replace(fixed),
 							},
 						],
 					},
@@ -64,6 +62,6 @@ export default {
 				);
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

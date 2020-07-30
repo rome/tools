@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noArguments",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (node.type === "JSReferenceIdentifier" && node.name === "arguments") {
@@ -21,6 +20,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -257,6 +257,8 @@ export * from "./js/typescript/TSUnionTypeAnnotation";
 export * from "./js/typescript/TSUnknownKeywordTypeAnnotation";
 export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 
+export type AnyNodes = AnyNode | Array<AnyNode>;
+
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommitRoot

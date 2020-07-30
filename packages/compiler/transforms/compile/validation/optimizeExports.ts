@@ -5,9 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportBinding, Path} from "@romefrontend/compiler";
 import {
-	AnyNode,
+	ImportBinding,
+	Path,
+	createVisitor,
+	signals,
+} from "@romefrontend/compiler";
+import {
 	JSExportExternalDeclaration,
 	JSExportLocalDeclaration,
 	jsExportExternalDeclaration,
@@ -17,11 +21,9 @@ import {
 	jsStringLiteral,
 } from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "optimizeExports",
-	enter(
-		path: Path,
-	): AnyNode | Array<JSExportExternalDeclaration | JSExportLocalDeclaration> {
+	enter(path: Path) {
 		const {node} = path;
 
 		// turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
@@ -64,16 +66,16 @@ export default {
 			}
 
 			if (specifiers.length === node.specifiers.length && nodes.length === 0) {
-				return node;
+				return signals.retain;
 			}
 
 			if (specifiers.length !== 0) {
 				nodes.push(jsExportLocalDeclaration.create({specifiers}));
 			}
 
-			return nodes;
+			return signals.replace(nodes);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	doesNodeMatchPattern,
 	getNodeReferenceParts,
@@ -24,9 +24,9 @@ import {
 	isOptional,
 } from "../utils";
 
-export default {
+export default createVisitor({
 	name: "analyzeDependenciesCJS",
-	enter(path: Path) {
+	enter(path) {
 		const {node, parent, scope, context} = path;
 
 		// Handle require()
@@ -200,6 +200,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

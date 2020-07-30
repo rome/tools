@@ -6,12 +6,11 @@
  */
 
 import {DiagnosticAdvice, DiagnosticLocation} from "./types";
-import {orderBySimilarity} from "@romefrontend/string-utils";
+import {orderBySimilarity, splitLines} from "@romefrontend/string-utils";
 import stringDiff from "@romefrontend/string-diff";
 import {Position} from "@romefrontend/parser-core";
 import {ob1Get1} from "@romefrontend/ob1";
-import {NEWLINE} from "@romefrontend/js-parser-utils";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -113,7 +112,7 @@ export function truncateSourceText(
 	start: Position,
 	end: Position,
 ): string {
-	const lines = code.split(NEWLINE);
+	const lines = splitLines(code);
 
 	// Pad the starting and ending lines by 10
 	const fromLine = Math.max(ob1Get1(start.line) - 10, 0);

@@ -21,6 +21,7 @@ import {
 	analyzeDependencies,
 	compile,
 	lint,
+	signals,
 } from "@romefrontend/compiler";
 import {
 	WorkerCompilerOptions,
@@ -44,7 +45,7 @@ import {
 } from "../test-worker/SnapshotManager";
 import {FormatterOptions, formatAST} from "@romefrontend/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romefrontend/js-ast-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
@@ -140,10 +141,10 @@ export default class WorkerAPI {
 			ast,
 			{
 				name: "updateInlineSnapshots",
-				enter(path: Path): AnyNode {
+				enter(path: Path) {
 					const {node} = path;
 					if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
-						return node;
+						return signals.retain;
 					}
 
 					let matchedUpdate: undefined | InlineSnapshotUpdate;
@@ -176,7 +177,7 @@ export default class WorkerAPI {
 								node,
 								descriptions.SNAPSHOTS.INLINE_COLLISION,
 							);
-							return node;
+							return signals.retain;
 						}
 
 						pendingUpdates.delete(matchedUpdate);
@@ -188,16 +189,16 @@ export default class WorkerAPI {
 								node,
 								descriptions.SNAPSHOTS.INLINE_MISSING_RECEIVED,
 							);
-							return node;
+							return signals.retain;
 						}
 
-						return {
+						return signals.replace({
 							...node,
 							arguments: [args[0], valueToNode(matchedUpdate.snapshot)],
-						};
+						});
 					}
 
-					return node;
+					return signals.retain;
 				},
 			},
 		);

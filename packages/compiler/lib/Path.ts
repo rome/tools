@@ -5,21 +5,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PARENT} from "@romefrontend/ast";
+import {AnyNode, AnyNodes, MOCK_PARENT} from "@romefrontend/ast";
 import {
 	CompilerContext,
+	ExitSignal,
 	Scope,
 	TransformVisitor,
 	TransformVisitors,
+	signals,
 } from "@romefrontend/compiler";
 import {
 	AnyHookDescriptor,
 	HookDescriptor,
 	HookInstance,
 } from "../api/createHook";
-import reduce from "../methods/reduce";
-import {TransformExitResult} from "../types";
+import {reduceNode, reduceSignal} from "../methods/reduce";
 import {isRoot} from "@romefrontend/ast-utils";
+import {RetainSignal} from "../signals";
+import stringDiff from "@romefrontend/string-diff";
+import {formatAST} from "@romefrontend/formatter";
+import {Markup, markup} from "@romefrontend/markup";
+import {DiagnosticDescription} from "@romefrontend/diagnostics";
+import {ContextDiagnostic} from "./CompilerContext";
+import {
+	buildLintDecisionAdviceAction,
+	buildLintDecisionGlobalString,
+	buildLintDecisionString,
+	deriveDecisionPositionKey,
+} from "../lint/decisions";
 
 export type PathOptions = {
 	ancestryPaths?: Array<Path>;
@@ -34,6 +47,39 @@ export type PathOptions = {
 };
 
 type Handlers = Array<HookInstance>;
+
+// Given a signal, calculate what the formatted code would be
+function getFormattedCodeFromSignal(signal: ExitSignal, path: Path): string {
+	switch (signal.type) {
+		case "REMOVE":
+			return "";
+
+		case "REPLACE": {
+			const {value} = signal;
+			if (Array.isArray(value)) {
+				return value.map((node) => {
+					return formatAST(node).code;
+				}).filter((str) => str !== "").join("\n");
+			} else {
+				return formatAST(value).code;
+			}
+		}
+
+		case "PARENT": {
+			for (const possiblePath of path.ancestryPaths) {
+				if (possiblePath.node === signal.parent) {
+					return getFormattedCodeFromSignal(signal.signal, path);
+				}
+			}
+
+			// Will later be an error in reduce since this parent was not found
+			return "";
+		}
+
+		case "RETAIN":
+			return getFormattedCodeFromSignal(signals.replace(path.node), path);
+	}
+}
 
 export default class Path {
 	constructor(node: AnyNode, context: CompilerContext, opts: PathOptions) {
@@ -130,7 +176,7 @@ export default class Path {
 		// rome-ignore lint/js/noExplicitAny
 		descriptor: HookDescriptor<State, any, any>,
 		state?: State,
-	): AnyNode {
+	): RetainSignal {
 		this.hooks.push({
 			state: {
 				...descriptor.initialState,
@@ -139,7 +185,7 @@ export default class Path {
 			descriptor,
 		});
 
-		return this.node;
+		return signals.retain;
 	}
 
 	findHook(
@@ -255,24 +301,213 @@ export default class Path {
 	}
 
 	traverse(name: string, callback: (path: Path) => void) {
-		this.reduce({
+		this.reduceNode({
 			name,
-			enter(path: Path) {
+			enter(path) {
 				callback(path);
-				return path.node;
+				return signals.retain;
 			},
 		});
 	}
 
-	reduce(
+	reduceNode(
 		visitors: TransformVisitor | TransformVisitors,
 		opts?: Partial<PathOptions>,
-	): TransformExitResult {
-		return reduce(
+	): AnyNodes {
+		return reduceNode(
 			this.node,
-			Array.isArray(visitors) ? visitors : [visitors],
+			visitors,
 			this.context,
 			{...this.getPathOptions(), ...opts},
 		);
+	}
+
+	reduceSignal(
+		visitors: TransformVisitor | TransformVisitors,
+		opts?: Partial<PathOptions>,
+	): ExitSignal {
+		return reduceSignal(
+			this.node,
+			visitors,
+			this.context,
+			{...this.getPathOptions(), ...opts},
+		);
+	}
+
+	addFixableDiagnostic(
+		nodes: {
+			target?: AnyNode | Array<AnyNode>;
+			fixed?: ExitSignal;
+			suggestions?: Array<{
+				description: Markup;
+				title: Markup;
+				fixed: ExitSignal;
+			}>;
+		},
+		description: DiagnosticDescription,
+		diag: ContextDiagnostic = {},
+	): ExitSignal {
+		const old = this.node;
+		const {context} = this;
+		const {fixed: defaultFixed, suggestions} = nodes;
+		const target = nodes.target === undefined ? old : nodes.target;
+
+		const {category} = description;
+		const advice = [...description.advice];
+		const loc = context.getLoc(target);
+
+		let fixed: undefined | ExitSignal = defaultFixed;
+
+		if (nodes.target !== undefined) {
+			// NB: The diff is going to refer to the old but diagnostic will be pointing to a different
+			// location. Probably ok since you can mentally infer from context but we could add a log if it's
+			// confusing.
+		}
+
+		// Add recommended fix
+		if (defaultFixed !== undefined) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`Recommended fix`,
+			});
+
+			advice.push({
+				type: "diff",
+				language: context.language,
+				diff: stringDiff(
+					getFormattedCodeFromSignal(signals.replace(old), this),
+					getFormattedCodeFromSignal(defaultFixed, this),
+				),
+			});
+
+			if (loc === undefined) {
+				advice.push({
+					type: "log",
+					category: "error",
+					text: markup`Unable to find target location`,
+				});
+			} else {
+				advice.push(
+					buildLintDecisionAdviceAction({
+						filename: context.displayFilename,
+						decision: buildLintDecisionString({
+							action: "fix",
+							filename: context.displayFilename,
+							category,
+							start: loc.start,
+						}),
+						shortcut: "f",
+						noun: markup`Apply fix`,
+						instruction: markup`To apply this fix run`,
+					}),
+				);
+
+				advice.push(
+					buildLintDecisionAdviceAction({
+						extra: true,
+						noun: markup`Apply fix for ALL files with this category`,
+						instruction: markup`To apply fix for ALL files with this category run`,
+						decision: buildLintDecisionGlobalString("fix", category),
+					}),
+				);
+			}
+		}
+
+		if (suggestions !== undefined) {
+			// If we have lint decisions then find the fix that corresponds with this suggestion
+			if (context.hasLintDecisions()) {
+				const decisions = context.getLintDecisions(
+					deriveDecisionPositionKey("fix", loc),
+				);
+				for (const decision of decisions) {
+					if (
+						decision.category === category &&
+						decision.action === "fix" &&
+						decision.id !== undefined
+					) {
+						const suggestion = suggestions[decision.id];
+						if (suggestion !== undefined) {
+							fixed = suggestion.fixed;
+						}
+					}
+				}
+			}
+
+			// Add advice suggestions
+			let index = 0;
+			for (const suggestion of suggestions) {
+				const num = index + 1;
+
+				const titlePrefix =
+					suggestions.length === 1 ? "Suggested fix" : `Suggested fix #${num}`;
+				advice.push({
+					type: "log",
+					category: "none",
+					text: markup`<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
+				});
+
+				advice.push({
+					type: "diff",
+					language: context.language,
+					diff: stringDiff(
+						getFormattedCodeFromSignal(signals.replace(old), this),
+						getFormattedCodeFromSignal(suggestion.fixed, this),
+					),
+				});
+
+				advice.push({
+					type: "log",
+					category: "info",
+					text: suggestion.description,
+				});
+
+				if (loc === undefined) {
+					advice.push({
+						type: "log",
+						category: "error",
+						text: markup`Unable to find target location`,
+					});
+				} else {
+					advice.push(
+						buildLintDecisionAdviceAction({
+							noun: suggestions.length === 1
+								? markup`Apply suggested fix`
+								: markup`Apply suggested fix "${suggestion.title}"`,
+							shortcut: String(num),
+							instruction: markup`To apply this fix run`,
+							filename: context.displayFilename,
+							decision: buildLintDecisionString({
+								filename: context.displayFilename,
+								action: "fix",
+								category,
+								start: loc.start,
+								id: index,
+							}),
+						}),
+					);
+				}
+
+				index++;
+			}
+		}
+
+		const {suppressed} = context.addLocDiagnostic(
+			loc,
+			{
+				...description,
+				advice,
+			},
+			{
+				...diag,
+				fixable: true,
+			},
+		);
+
+		if (suppressed || fixed === undefined) {
+			return signals.replace(old);
+		}
+
+		return fixed;
 	}
 }

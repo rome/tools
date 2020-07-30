@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode, AnyNodes} from "@romefrontend/ast";
 
 export function assertSingleOrMultipleNodes(
-	result: TransformExitResult,
+	result: AnyNodes,
 ): AnyNode | Array<AnyNode> {
 	if (result === undefined) {
 		throw new Error("Expected node or node list but got null");

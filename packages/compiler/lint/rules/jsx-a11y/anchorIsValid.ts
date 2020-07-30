@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
 	getJSXAttribute,
@@ -6,7 +6,7 @@ import {
 	isJSXElement,
 } from "@romefrontend/js-ast-utils";
 import {JSXAttribute} from "@romefrontend/ast";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 	if (attr === undefined) {
@@ -34,9 +34,9 @@ function falsyHref(attr: JSXAttribute | undefined): boolean {
 	return false;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/anchorIsValid",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (isJSXElement(node, "a")) {
@@ -76,6 +76,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

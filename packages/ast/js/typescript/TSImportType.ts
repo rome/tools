@@ -14,10 +14,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSImportType extends NodeBaseWithComments {
-	type: "TSImportType";
-	argument: AnyJSExpression;
-	typeParameters?: TSTypeParameterInstantiation;
-	qualifier?: AnyTSEntityName;
+	readonly type: "TSImportType";
+	readonly argument: AnyJSExpression;
+	readonly typeParameters?: TSTypeParameterInstantiation;
+	readonly qualifier?: AnyTSEntityName;
 }
 
 export const tsImportType = createBuilder<TSImportType>(

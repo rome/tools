@@ -4,23 +4,23 @@ import {
 	hasJSXAttribute,
 	isJSXElement,
 } from "@romefrontend/js-ast-utils";
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/noOnChange",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 
 		if (!isJSXElement(node, "select") && !isJSXElement(node, "option")) {
-			return node;
+			return signals.retain;
 		}
 
 		if (!hasJSXAttribute(node, "onChange")) {
-			return node;
+			return signals.retain;
 		}
 
 		if (hasJSXAttribute(node, "onBlur")) {
-			return node;
+			return signals.retain;
 		}
 
 		context.addNodeDiagnostic(
@@ -28,6 +28,6 @@ export default {
 			descriptions.LINT.JSX_A11Y_NO_ON_CHANGE,
 		);
 
-		return node;
+		return signals.retain;
 	},
-};
+});

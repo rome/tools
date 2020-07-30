@@ -34,11 +34,11 @@ import {
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romefrontend/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {AbsoluteFilePathSet, createUnknownFilePath} from "@romefrontend/path";
+import {UnknownFilePathSet, createUnknownFilePath} from "@romefrontend/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@romefrontend/string-diff";
 import {removeCarriageReturn} from "@romefrontend/string-utils";
@@ -48,7 +48,7 @@ import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/fil
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
 	flags: DiagnosticsPrinterFlags;
-	missingFileSources: AbsoluteFilePathSet;
+	missingFileSources: UnknownFilePathSet;
 	fileSources: DiagnosticsPrinterFileSources;
 	reporter: Reporter;
 	diagnostic: Diagnostic;
@@ -162,7 +162,7 @@ function printAction(
 			prefix: "",
 			programName: "rome",
 			commandName: item.command,
-			args: item.args,
+			args: item.args ?? [],
 			flags: {
 				...item.commandFlags,
 				...item.requestFlags,
@@ -346,7 +346,10 @@ function printFrame(
 	const {reporter} = opts;
 	const {marker, start, end, filename} = item.location;
 	let {sourceText} = item.location;
-	const path = opts.printer.createFilePath(filename);
+	const path =
+		filename === undefined
+			? createUnknownFilePath("unknown")
+			: opts.printer.createFilePath(filename);
 
 	let lines: ToLines = [];
 	if (sourceText !== undefined) {
@@ -370,7 +373,14 @@ function printFrame(
 		path.isAbsolute() &&
 		opts.missingFileSources.has(path.assertAbsolute())
 	) {
-		lines = [["File does not exist", markup`<dim>File does not exist</dim>`]];
+		return printLog(
+			{
+				type: "log",
+				category: "warn",
+				text: markup`File ${path} does not exist`,
+			},
+			opts,
+		);
 	}
 
 	if (sourceText === undefined) {

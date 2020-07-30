@@ -17,6 +17,7 @@ import {
 	parsePathPattern,
 } from "@romefrontend/path-match";
 import {
+	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	ProjectConfigCategoriesWithIgnore,
@@ -35,6 +36,7 @@ import {
 	AbsoluteFilePathSet,
 } from "@romefrontend/path";
 import {
+	FSWatcher,
 	exists,
 	lstat,
 	readDirectory,
@@ -43,9 +45,8 @@ import {
 } from "@romefrontend/fs";
 import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import crypto = require("crypto");
-import fs = require("fs");
 import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];
@@ -107,7 +108,7 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 }
 
 // Whenever we're performing an operation on a set of files, always do these first as they may influence how the rest are processed
-const PRIORITY_FILES = new Set([...PROJECT_CONFIG_FILENAMES, "package.json"]);
+const PRIORITY_FILES = new Set([PROJECT_CONFIG_DIRECTORY, "package.json"]);
 
 type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
@@ -154,7 +155,7 @@ async function createWatcher(
 		title: markup`Adding project ${projectDirectoryMarkup}`,
 	});
 
-	const watchers: AbsoluteFilePathMap<fs.FSWatcher> = new AbsoluteFilePathMap();
+	const watchers: AbsoluteFilePathMap<FSWatcher> = new AbsoluteFilePathMap();
 
 	try {
 		function onFoundDirectory(directoryPath: AbsoluteFilePath) {
@@ -978,12 +979,16 @@ export default class MemoryFileSystem {
 
 		// Warn about potentially incorrect Rome config filenames
 		const {projectManager} = this.server;
-		projectManager.checkConfigFile(path, opts.diagnostics);
+		projectManager.checkPathForIncorrectConfig(path, opts.diagnostics);
 
 		// Add project if this is a config
-		if (PROJECT_CONFIG_FILENAMES.includes(basename)) {
+		if (
+			dirname.getBasename() === PROJECT_CONFIG_DIRECTORY &&
+			PROJECT_CONFIG_FILENAMES.includes(basename)
+		) {
 			await projectManager.addDiskProject({
-				projectDirectory: dirname,
+				// Get the directory above .config
+				projectDirectory: dirname.getParent(),
 				configPath: path,
 			});
 		}

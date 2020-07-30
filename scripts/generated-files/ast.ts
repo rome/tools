@@ -100,7 +100,7 @@ export async function main() {
 
 	// Add to builders
 	await readIndexFile(
-		PACKAGES.appendList("formatter", "builders", "index.ts"),
+		PACKAGES.append("formatter", "builders", "index.ts"),
 		[
 			{
 				iterator({language, category, nodeType}) {
@@ -112,7 +112,7 @@ export async function main() {
 
 	// Add to analysis
 	await readIndexFile(
-		PACKAGES.appendList("js-analysis", "evaluators", "index.ts"),
+		PACKAGES.append("js-analysis", "evaluators", "index.ts"),
 		[
 			{
 				iterator({language, category, nodeType}) {

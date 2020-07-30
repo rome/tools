@@ -6,7 +6,7 @@
  */
 
 import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {MarkupRGB} from "./types";
+import {MarkupRGB} from "@romefrontend/markup";
 
 const ESC = "\x1b";
 

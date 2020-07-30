@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {template} from "@romefrontend/js-ast-utils";
 import {bindingInjector} from "../../defaultHooks/index";
 import {
@@ -19,9 +19,9 @@ import {
 	jsSequenceExpression,
 } from "@romefrontend/ast";
 
-export default {
+export default createVisitor({
 	name: "callSpread",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSCallExpression") {
@@ -29,7 +29,7 @@ export default {
 
 			// Impossible to transform a bare super call
 			if (func.type === "JSSuper") {
-				return node;
+				return signals.retain;
 			}
 
 			let hasSpread = false;
@@ -72,15 +72,17 @@ export default {
 				};
 
 				if (prepend === undefined) {
-					return call;
+					return signals.replace(call);
 				} else {
-					return jsSequenceExpression.create({
-						expressions: [prepend, call],
-					});
+					return signals.replace(
+						jsSequenceExpression.create({
+							expressions: [prepend, call],
+						}),
+					);
 				}
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSSequenceExpression extends NodeBaseWithComments {
-	type: "JSSequenceExpression";
-	expressions: Array<AnyJSExpression>;
+	readonly type: "JSSequenceExpression";
+	readonly expressions: Array<AnyJSExpression>;
 }
 
 export const jsSequenceExpression = createBuilder<JSSequenceExpression>(

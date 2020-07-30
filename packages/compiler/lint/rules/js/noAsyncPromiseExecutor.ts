@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {TransformExitResult} from "@romefrontend/compiler/types";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noAsyncPromiseExecutor",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context} = path;
 
 		if (
@@ -29,6 +28,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

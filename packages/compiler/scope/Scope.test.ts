@@ -3,6 +3,7 @@ import {parseJS} from "@romefrontend/js-parser";
 import CompilerContext from "../lib/CompilerContext";
 import Scope from "./Scope";
 import {dedent} from "@romefrontend/string-utils";
+import {signals} from "..";
 
 type ChildScopeMap = Map<Scope, Set<Scope>>;
 
@@ -57,7 +58,7 @@ function dumpScopeTree(input: string): string {
 					}
 				}
 
-				return node;
+				return signals.retain;
 			},
 		},
 	);

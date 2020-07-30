@@ -15,8 +15,12 @@ import {
 import {createQuickBuilder} from "../../utils";
 
 export interface JSStaticPropertyKey extends NodeBaseWithComments {
-	type: "JSStaticPropertyKey";
-	value: JSIdentifier | JSPrivateName | JSStringLiteral | JSNumericLiteral;
+	readonly type: "JSStaticPropertyKey";
+	readonly value:
+		| JSIdentifier
+		| JSPrivateName
+		| JSStringLiteral
+		| JSNumericLiteral;
 }
 
 export const jsStaticPropertyKey = createQuickBuilder<

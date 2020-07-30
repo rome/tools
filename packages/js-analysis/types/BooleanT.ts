@@ -10,7 +10,7 @@ import {HydrateData} from "../Evaluator";
 import BooleanLiteralT from "./BooleanLiteralT";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class BooleanT extends T {
 	static type = "BooleanT";

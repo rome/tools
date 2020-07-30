@@ -14,9 +14,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSObjectProperty extends NodeBaseWithComments {
-	type: "JSObjectProperty";
-	key: JSStaticPropertyKey | JSComputedPropertyKey;
-	value: AnyJSExpression;
+	readonly type: "JSObjectProperty";
+	readonly key: JSStaticPropertyKey | JSComputedPropertyKey;
+	readonly value: AnyJSExpression;
 }
 
 export const jsObjectProperty = createBuilder<JSObjectProperty>(

@@ -11,7 +11,7 @@ import {Scope} from "../scopes";
 import T from "./T";
 import NumericT from "./NumericT";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class NumericLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: number) {

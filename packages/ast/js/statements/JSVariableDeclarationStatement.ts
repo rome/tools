@@ -9,9 +9,9 @@ import {JSVariableDeclaration, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSVariableDeclarationStatement extends NodeBaseWithComments {
-	type: "JSVariableDeclarationStatement";
-	declaration: JSVariableDeclaration;
-	declare?: boolean;
+	readonly type: "JSVariableDeclarationStatement";
+	readonly declaration: JSVariableDeclaration;
+	readonly declare?: boolean;
 }
 
 export const jsVariableDeclarationStatement = createQuickBuilder<

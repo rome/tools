@@ -1,6 +1,6 @@
 ---
 title: Contributing
-layout: layouts/page.njk
+layout: layouts/page.liquid
 ---
 
 {% rootmd "CONTRIBUTING.md" %}

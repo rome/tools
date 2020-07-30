@@ -1,12 +1,11 @@
 import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
-export default {
+export default createVisitor({
 	name: "react/noRenderReturnValue",
 
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, parent, scope} = path;
 
 		if (
@@ -28,6 +27,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

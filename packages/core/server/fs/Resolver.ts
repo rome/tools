@@ -29,7 +29,7 @@ import https = require("https");
 
 import {MOCKS_DIRECTORY_NAME} from "@romefrontend/core/common/constants";
 import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 function request(
 	url: string,
@@ -740,7 +740,7 @@ export default class Resolver {
 		return this.resolvePath(
 			{
 				...query,
-				source: manifestDef.directory.appendList(...moduleNameParts),
+				source: manifestDef.directory.append(...moduleNameParts),
 			},
 			true,
 			["package"],
@@ -821,7 +821,7 @@ export default class Resolver {
 			return this.resolvePath(
 				{
 					...query,
-					source: virtualResolved.appendList(...moduleNameParts),
+					source: virtualResolved.append(...moduleNameParts),
 				},
 				true,
 				["virtual"],

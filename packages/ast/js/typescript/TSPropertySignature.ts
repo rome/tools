@@ -13,11 +13,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSPropertySignature extends NodeBaseWithComments {
-	type: "TSPropertySignature";
-	key: AnyJSObjectPropertyKey;
-	optional?: boolean;
-	readonly?: boolean;
-	typeAnnotation?: AnyTSPrimary;
+	readonly type: "TSPropertySignature";
+	readonly key: AnyJSObjectPropertyKey;
+	readonly optional?: boolean;
+	readonly readonly?: boolean;
+	readonly typeAnnotation?: AnyTSPrimary;
 }
 
 export const tsPropertySignature = createBuilder<TSPropertySignature>(

@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/markup",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

@@ -8,14 +8,14 @@
 
 ```
 
- index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unknownVariable variable is undeclared
 
     unknownVariable
     ^^^^^^^^^^^^^^^
 
- index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Pending formatting and recommended autofixes
 
@@ -39,16 +39,16 @@ $ rome check --review
 ### `files`
 
 ```
-# index.js
-unknownVariable
-
-# rome.json
+# .config/rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
 }
 
+
+# index.js
+unknownVariable
 
 ```
 
@@ -58,7 +58,7 @@ unknownVariable
 
 ```
 
- index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:1:4 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The unformatted variable is undeclared
 
@@ -67,7 +67,7 @@ unknownVariable
     2 │   swag;
     3 │ }
 
- index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ project/index.js:2:1 lint/js/undeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The swag variable is undeclared
 
@@ -87,17 +87,17 @@ unknownVariable
 ### `files`
 
 ```
-# index.js
-if (unformatted) {
-	swag;
-}
-
-
-# rome.json
+# .config/rome.json
 {
 	"files": {
 		"vendorPath": "../remote"
 	}
+}
+
+
+# index.js
+if (unformatted) {
+	swag;
 }
 
 

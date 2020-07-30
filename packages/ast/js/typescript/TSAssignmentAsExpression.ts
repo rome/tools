@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSAssignmentAsExpression extends NodeBaseWithComments {
-	type: "TSAssignmentAsExpression";
-	typeAnnotation: AnyTSPrimary;
-	expression: AnyJSTargetAssignmentPattern;
+	readonly type: "TSAssignmentAsExpression";
+	readonly typeAnnotation: AnyTSPrimary;
+	readonly expression: AnyJSTargetAssignmentPattern;
 }
 
 export const tsAssignmentAsExpression = createBuilder<TSAssignmentAsExpression>(

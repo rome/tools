@@ -9,7 +9,7 @@ import {HydrateData} from "../Evaluator";
 import {AnyNode} from "@romefrontend/ast";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class AnyT extends T {
 	static type = "AnyT";

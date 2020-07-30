@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSCatchClause extends NodeBaseWithComments {
-	type: "JSCatchClause";
-	param?: AnyJSBindingPattern;
-	body: JSBlockStatement;
+	readonly type: "JSCatchClause";
+	readonly param?: AnyJSBindingPattern;
+	readonly body: JSBlockStatement;
 }
 
 export const jsCatchClause = createBuilder<JSCatchClause>(

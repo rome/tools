@@ -9,7 +9,7 @@ import {ServerRequest} from "@romefrontend/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {ProjectDefinition} from "@romefrontend/project";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,

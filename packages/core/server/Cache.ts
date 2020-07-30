@@ -23,7 +23,7 @@ import {
 } from "@romefrontend/fs";
 import {stringifyJSON} from "@romefrontend/codec-json";
 import {getEnvVar} from "@romefrontend/cli-environment";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export type CacheEntry = {
 	version: string;

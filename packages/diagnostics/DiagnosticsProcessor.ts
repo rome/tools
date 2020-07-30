@@ -22,10 +22,7 @@ import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@romefrontend/compiler";
 import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {
-	MarkupFormatNormalizeOptions,
-	readMarkup,
-} from "@romefrontend/cli-layout";
+import {MarkupFormatNormalizeOptions, readMarkup} from "@romefrontend/markup";
 
 type UniquePart =
 	| "filename"

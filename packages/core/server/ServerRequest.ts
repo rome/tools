@@ -87,7 +87,7 @@ import {
 } from "@romefrontend/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
 import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
-import {markup, readMarkup} from "@romefrontend/cli-layout";
+import {markup, readMarkup} from "@romefrontend/markup";
 import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
 import {JSONObject} from "@romefrontend/codec-json";
 import {VCSClient} from "@romefrontend/vcs";
@@ -614,27 +614,25 @@ export default class ServerRequest {
 		prefix?: string,
 	): RequiredProps<DiagnosticLocation, "sourceText"> {
 		const {query} = this;
+		const clientFlags = this.client.flags;
 
-		const rawFlags = {
-			...this.client.flags,
+		const flags: Dict<FlagValue> = {
+			silent: clientFlags.silent,
 			...this.query.requestFlags,
 			...this.normalizedCommandFlags.flags,
 		};
-		const flags: Dict<FlagValue> = {
-			...rawFlags,
-			cwd: rawFlags.cwd.join(),
-		};
 
-		const rawDefaultFlags = {
-			...DEFAULT_CLIENT_FLAGS,
+		const defaultFlags = {
+			silent: DEFAULT_CLIENT_FLAGS.silent,
 			...DEFAULT_CLIENT_REQUEST_FLAGS,
 			...this.normalizedCommandFlags.defaultFlags,
 			clientName: this.client.flags.clientName,
 		};
-		const defaultFlags: Dict<FlagValue> = {
-			...rawDefaultFlags,
-			cwd: rawDefaultFlags.cwd.join(),
-		};
+
+		// Only include the cwd flag it was different from the cwd of the actual client
+		if (!clientFlags.cwd.equal(clientFlags.realCwd)) {
+			flags.cwd = clientFlags.cwd.join();
+		}
 
 		return serializeCLIFlags(
 			{
@@ -646,6 +644,7 @@ export default class ServerRequest {
 				defaultFlags,
 				incorrectCaseFlags: new Set(),
 				shorthandFlags: new Set(),
+				cwd: this.client.flags.cwd,
 			},
 			target,
 		);

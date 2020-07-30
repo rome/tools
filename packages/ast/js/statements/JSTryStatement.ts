@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSTryStatement extends NodeBaseWithComments {
-	type: "JSTryStatement";
-	block: JSBlockStatement;
-	handler: undefined | JSCatchClause;
-	finalizer: undefined | JSBlockStatement;
+	readonly type: "JSTryStatement";
+	readonly block: JSBlockStatement;
+	readonly handler: undefined | JSCatchClause;
+	readonly finalizer: undefined | JSBlockStatement;
 }
 
 export const jsTryStatement = createBuilder<JSTryStatement>(

@@ -2,5 +2,4 @@ node_modules
 build
 
 # Auto generated
-static/styles.css
-static/styles.css.map
+src/_includes/styles

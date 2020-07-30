@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyJSClassMember, AnyNode} from "@romefrontend/ast";
 import {getCompletionRecords} from "@romefrontend/js-ast-utils";
@@ -26,9 +26,9 @@ function getMethodBody(node: AnyJSClassMember) {
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "requireRenderReturn",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 		if (node.type === "JSClassHead" && insideClassComponent(path)) {
 			const renderMember = node.body.find(({key}) => isRenderProperty(key));
@@ -44,6 +44,6 @@ export default {
 				);
 			}
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -1,8 +1,4 @@
-import {
-	CompilerContext,
-	Path,
-	TransformExitResult,
-} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
 	getJSXAttribute,
@@ -15,10 +11,10 @@ import {
 	ARIARoleDefinition,
 	ariaRolesMap,
 } from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type CreateFixableDiagnostic = {
-	context: CompilerContext;
+	path: Path;
 	node: JSXElement;
 	mappedRole: ARIARoleDefinition | undefined;
 	roleAttribute: JSXAttribute;
@@ -27,7 +23,7 @@ type CreateFixableDiagnostic = {
 };
 
 function createFixableDiagnostic(
-	{context, node, mappedRole, roleAttribute, elementName, roleName}: CreateFixableDiagnostic,
+	{path, node, mappedRole, roleAttribute, elementName, roleName}: CreateFixableDiagnostic,
 ) {
 	let ariaAttributesToRemove: Array<AnyNode> = [];
 	if (mappedRole) {
@@ -48,7 +44,8 @@ function createFixableDiagnostic(
 		ariaAttributesToRemove.length > 0
 			? markup`Remove the role attribute and ARIA attributes.`
 			: markup`Remove the role attribute.`;
-	const fixed = {
+
+	const fixed: JSXElement = {
 		...node,
 		attributes: node.attributes.filter((attr) => {
 			return attr.type === "JSXAttribute" && attr.name.name !== "role";
@@ -67,15 +64,14 @@ function createFixableDiagnostic(
 		}),
 	};
 
-	return context.addFixableDiagnostic(
+	return path.addFixableDiagnostic(
 		{
 			target: [roleAttribute, ...ariaAttributesToRemove],
-			old: node,
 			suggestions: [
 				{
 					title: titleSuggestion,
 					description: markup``,
-					fixed,
+					fixed: signals.replace(fixed),
 				},
 			],
 		},
@@ -83,10 +79,10 @@ function createFixableDiagnostic(
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/noRedundantRoles",
-	enter(path: Path): TransformExitResult {
-		const {node, context} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "JSXElement" && hasJSXAttribute(node, "role")) {
 			const elementName = getJSXElementName(node);
@@ -129,7 +125,7 @@ export default {
 					createFixableDiagnostic({
 						roleAttribute,
 						node,
-						context,
+						path,
 						mappedRole,
 						elementName,
 						roleName: roleAttribute.value.value,
@@ -138,6 +134,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

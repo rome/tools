@@ -21,12 +21,12 @@ export type AnyImportSpecifier =
 	| JSImportSpecifier;
 
 export interface JSImportDeclaration extends NodeBaseWithComments {
-	type: "JSImportDeclaration";
-	defaultSpecifier?: JSImportDefaultSpecifier;
-	namespaceSpecifier?: JSImportNamespaceSpecifier;
-	namedSpecifiers: Array<JSImportSpecifier>;
-	source: JSStringLiteral;
-	importKind?: ConstJSImportModuleKind;
+	readonly type: "JSImportDeclaration";
+	readonly defaultSpecifier?: JSImportDefaultSpecifier;
+	readonly namespaceSpecifier?: JSImportNamespaceSpecifier;
+	readonly namedSpecifiers: Array<JSImportSpecifier>;
+	readonly source: JSStringLiteral;
+	readonly importKind?: ConstJSImportModuleKind;
 }
 
 export const jsImportDeclaration = createBuilder<JSImportDeclaration>(

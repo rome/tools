@@ -12,17 +12,17 @@ import {
 } from "@romefrontend/typescript-helpers";
 import {escapeJSString} from "@romefrontend/string-escape";
 import {naturalCompare} from "@romefrontend/string-utils";
+import {markupToPlainText} from "@romefrontend/cli-layout";
 import {
 	AnyMarkup,
 	LazyMarkupFactory,
 	Markup,
 	concatMarkup,
+	joinMarkupLines,
 	markup,
 	markupTag,
-	markupToPlainText,
 	readMarkup,
-} from "@romefrontend/cli-layout";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
+} from "@romefrontend/markup";
 
 type RecursiveStack = Array<unknown>;
 

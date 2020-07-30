@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode, JSRegExpGroupCapture} from "@romefrontend/ast";
+import {Path, createVisitor, signals} from "@romefrontend/compiler";
+import {JSRegExpGroupCapture} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 
 function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined {
@@ -28,9 +28,9 @@ function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined 
 	return captureGroups;
 }
 
-export default {
+export default createVisitor({
 	name: "js/noReferenceToNonExistingGroup",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "JSRegExpNumericBackReference") {
@@ -54,6 +54,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

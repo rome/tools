@@ -14,7 +14,7 @@ import TestServerRunner from "../testing/TestServerRunner";
 import Bundler from "../bundler/Bundler";
 import {JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {TestServerRunnerOptions, TestSources} from "../testing/types";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
 

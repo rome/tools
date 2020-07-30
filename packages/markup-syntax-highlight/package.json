@@ -1,0 +1,6 @@
+{
+	"name": "@romefrontend/markup-syntax-highlight",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

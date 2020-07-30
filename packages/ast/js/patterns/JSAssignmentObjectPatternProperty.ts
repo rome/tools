@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSAssignmentObjectPatternProperty extends NodeBaseWithComments {
-	type: "JSAssignmentObjectPatternProperty";
-	key: AnyJSObjectPropertyKey;
-	value: AnyJSAssignmentPattern;
+	readonly type: "JSAssignmentObjectPatternProperty";
+	readonly key: AnyJSObjectPropertyKey;
+	readonly value: AnyJSAssignmentPattern;
 }
 
 export const jsAssignmentObjectPatternProperty = createBuilder<JSAssignmentObjectPatternProperty>(

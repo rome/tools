@@ -66,9 +66,9 @@ import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/Diagnostics
 import {toKebabCase} from "@romefrontend/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 import {getEnvVar} from "@romefrontend/cli-environment";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
-import {convertPossibleNodeError} from "@romefrontend/node";
+import {convertPossibleNodeErrorToDiagnostic} from "@romefrontend/node";
 import RecoveryStore from "./fs/RecoveryStore";
 
 export type ServerClient = {
@@ -326,7 +326,7 @@ export default class Server {
 	}
 
 	onFatalError(err: Error) {
-		err = convertPossibleNodeError(err);
+		err = convertPossibleNodeErrorToDiagnostic(err);
 		const message = markup`<emphasis>Fatal error occurred</emphasis>: ${err.stack ||
 		err.message}`;
 		this.logger.error(message);
@@ -585,6 +585,7 @@ export default class Server {
 		// Turn the cwd back into a AbsoluteFilePath
 		const flags: ClientFlags = {
 			...rawFlags,
+			realCwd: createAbsoluteFilePath(rawFlags.realCwd),
 			cwd: createAbsoluteFilePath(rawFlags.cwd),
 		};
 
@@ -602,7 +603,7 @@ export default class Server {
 				format: outputFormat,
 				features: outputSupport,
 				write(chunk: string, error: boolean) {
-					if (flags.silent) {
+					if (flags.silent && !error) {
 						return;
 					}
 
@@ -620,11 +621,9 @@ export default class Server {
 		const streamHandles = [streamHandle];
 
 		// Add reporter to connected set, important logs may be output to these
-		if (!flags.silent) {
-			streamHandles.push(
-				this.connectedReporters.addAttachedStream(streamHandle.stream),
-			);
-		}
+		streamHandles.push(
+			this.connectedReporters.addAttachedStream(streamHandle.stream),
+		);
 
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
 		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
@@ -680,7 +679,7 @@ export default class Server {
 	}
 
 	async handleRequestStart(req: ServerRequest) {
-		req.logger.info(markup`Request start ${prettyFormat(req.query)}`);
+		req.logger.info(markup`Start ${prettyFormat(req.query)}`);
 
 		// Hook used by the web server to track and collect server requests
 		await this.requestStartEvent.callOptional(req);

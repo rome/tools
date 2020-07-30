@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSCallSignatureDeclaration extends NodeBaseWithComments {
-	type: "TSCallSignatureDeclaration";
-	meta: TSSignatureDeclarationMeta;
-	typeAnnotation?: AnyTSPrimary;
+	readonly type: "TSCallSignatureDeclaration";
+	readonly meta: TSSignatureDeclarationMeta;
+	readonly typeAnnotation?: AnyTSPrimary;
 }
 
 export const tsCallSignatureDeclaration = createBuilder<TSCallSignatureDeclaration>(

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {jsBlockStatement} from "@romefrontend/ast";
 import {descriptions} from "@romefrontend/diagnostics";
 import {commentInjector} from "../../../transforms/defaultHooks";
 
-export default {
+export default createVisitor({
 	name: "js/preferBlockStatements",
-	enter(path: Path): TransformExitResult {
-		const {context, node} = path;
+	enter(path) {
+		const {node} = path;
 
 		if (node.type === "JSIfStatement") {
 			let shouldFix = false;
@@ -35,14 +35,13 @@ export default {
 			}
 
 			if (shouldFix) {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: {
+						fixed: signals.replace({
 							...node,
 							consequent,
 							alternate,
-						},
+						}),
 					},
 					descriptions.LINT.JS_PREFER_BLOCK_STATEMENT,
 				);
@@ -64,35 +63,33 @@ export default {
 					},
 				);
 
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: {
+						fixed: signals.replace({
 							...node,
 							body: jsBlockStatement.create({
 								innerComments: [id],
 								body: [],
 							}),
-						},
+						}),
 					},
 					descriptions.LINT.JS_PREFER_BLOCK_STATEMENT,
 				);
 			}
 
 			if (node.body.type !== "JSBlockStatement") {
-				return context.addFixableDiagnostic(
+				return path.addFixableDiagnostic(
 					{
-						old: node,
-						fixed: {
+						fixed: signals.replace({
 							...node,
 							body: jsBlockStatement.quick([node.body]),
-						},
+						}),
 					},
 					descriptions.LINT.JS_PREFER_BLOCK_STATEMENT,
 				);
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

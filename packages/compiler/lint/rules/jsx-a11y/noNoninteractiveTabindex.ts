@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {
 	getJSXAttribute,
@@ -43,20 +43,20 @@ function hasValidTabIndexValue(
 	return undefined;
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/noNoninteractiveTabindex",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSXElement") {
 			// it's a component, we don't know how the tabIndex is handled
 			if (node.name && node.name.type === "JSXReferenceIdentifier") {
-				return node;
+				return signals.retain;
 			}
 
 			// not tabIndex, no worth continuing
 			if (!hasJSXAttribute(node, "tabIndex")) {
-				return node;
+				return signals.retain;
 			}
 
 			const tabIndexAttribute = getJSXAttribute(node, "tabIndex");
@@ -117,6 +117,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

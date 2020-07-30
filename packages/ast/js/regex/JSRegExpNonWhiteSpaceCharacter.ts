@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpNonWhiteSpaceCharacter extends NodeBaseWithComments {
-	type: "JSRegExpNonWhiteSpaceCharacter";
+	readonly type: "JSRegExpNonWhiteSpaceCharacter";
 }
 
 export const jsRegExpNonWhiteSpaceCharacter = createBuilder<JSRegExpNonWhiteSpaceCharacter>(

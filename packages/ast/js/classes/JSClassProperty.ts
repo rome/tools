@@ -15,12 +15,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSClassProperty extends NodeBaseWithComments {
-	type: "JSClassProperty";
-	key: AnyJSObjectPropertyKey;
-	meta: JSClassPropertyMeta;
-	value?: AnyJSExpression;
-	typeAnnotation?: AnyTSPrimary;
-	definite?: boolean;
+	readonly type: "JSClassProperty";
+	readonly key: AnyJSObjectPropertyKey;
+	readonly meta: JSClassPropertyMeta;
+	readonly value?: AnyJSExpression;
+	readonly typeAnnotation?: AnyTSPrimary;
+	readonly definite?: boolean;
 }
 
 export const jsClassProperty = createBuilder<JSClassProperty>(

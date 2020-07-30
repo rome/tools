@@ -11,11 +11,12 @@ import {
 import {
 	CompilerContext,
 	LetBinding,
-	Path,
 	Scope,
 	VarBinding,
+	createVisitor,
+	signals,
 } from "@romefrontend/compiler";
-import {REDUCE_REMOVE} from "@romefrontend/compiler/constants";
+
 import {descriptions} from "@romefrontend/diagnostics";
 import {template, tryStaticEvaluation} from "@romefrontend/js-ast-utils";
 import {EvalResult} from "@romefrontend/js-ast-utils/tryStaticEvaluation";
@@ -163,13 +164,13 @@ function translateEnumValues(
 	});
 }
 
-export default {
+export default createVisitor({
 	name: "enums",
-	enter(path: Path) {
+	enter(path) {
 		const {context, node, scope} = path;
 
 		if (node.type !== "TSEnumDeclaration") {
-			return node;
+			return signals.retain;
 		}
 
 		if (node.const) {
@@ -177,11 +178,11 @@ export default {
 				node,
 				descriptions.COMPILER.CONST_ENUMS_UNSUPPORTED,
 			);
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
 		if (node.declare) {
-			return REDUCE_REMOVE;
+			return signals.remove;
 		}
 
 		const fill = enumFill(node, scope, context);
@@ -199,11 +200,11 @@ export default {
 						scope: path.scope,
 					}),
 				);
-				return fill;
+				return signals.replace(fill);
 			}
 
 			default:
 				throw new Error(`Unexpected enum parent '${path.parent.type}`);
 		}
 	},
-};
+});

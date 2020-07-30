@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpAlternation extends NodeBaseWithComments {
-	type: "JSRegExpAlternation";
-	left: AnyJSRegExpExpression;
-	right: JSRegExpSubExpression;
+	readonly type: "JSRegExpAlternation";
+	readonly left: AnyJSRegExpExpression;
+	readonly right: JSRegExpSubExpression;
 }
 
 export const jsRegExpAlternation = createBuilder<JSRegExpAlternation>(

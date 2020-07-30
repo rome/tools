@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSEmptyStatement extends NodeBaseWithComments {
-	type: "JSEmptyStatement";
+	readonly type: "JSEmptyStatement";
 }
 
 export const jsEmptyStatement = createBuilder<JSEmptyStatement>(

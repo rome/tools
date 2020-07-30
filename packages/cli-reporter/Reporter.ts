@@ -6,21 +6,26 @@
  */
 
 import {
+	UserGridOptions,
+	ansiEscapes,
+	markupToAnsi,
+	markupToHtml,
+	markupToPlainText,
+} from "@romefrontend/cli-layout";
+import {
 	AnyMarkup,
 	Markup,
 	MarkupFormatOptions,
 	MarkupTagName,
-	UserMarkupFormatGridOptions,
-	ansiEscapes,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
+	joinMarkupLines,
 	markup,
 	markupTag,
-	markupToAnsi,
-	markupToPlainText,
+	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/cli-layout";
+} from "@romefrontend/markup";
 import {
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
@@ -43,11 +48,7 @@ import {CWD_PATH} from "@romefrontend/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
-import {
-	joinMarkupLines,
-	markupToHtml,
-	normalizeMarkup,
-} from "@romefrontend/cli-layout/format";
+
 import {
 	DEFAULT_TERMINAL_FEATURES,
 	Stdout,
@@ -553,7 +554,7 @@ export default class Reporter implements ReporterNamespace {
 
 	write(msg: string, stderr: boolean = false) {
 		for (const {stream} of this.getStreamHandles()) {
-			stream.write(msg, stderr);
+			stream.write(msg, stderr || this.shouldRedirectOutToErr);
 		}
 	}
 
@@ -684,7 +685,7 @@ export default class Reporter implements ReporterNamespace {
 			}
 		}
 
-		const gridMarkupOptions: UserMarkupFormatGridOptions = {
+		const gridMarkupOptions: UserGridOptions = {
 			...this.markupOptions,
 			columns: stream.features.columns,
 			features: stream.features,
@@ -714,6 +715,11 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	logRaw(msg: string, opts: LogOptions = {}) {
+		opts = {
+			...opts,
+			stderr: opts.stderr || this.shouldRedirectOutToErr,
+		};
+
 		for (const {stream} of this.getStreamHandles()) {
 			streamUtils.log(stream, msg, opts);
 		}
@@ -731,6 +737,7 @@ export default class Reporter implements ReporterNamespace {
 				lines[i],
 				{
 					...opts,
+					stderr: opts.stderr || this.shouldRedirectOutToErr,
 					noNewline: i === lines.length - 1 ? opts.noNewline : false,
 				},
 				i,
@@ -823,11 +830,11 @@ export default class Reporter implements ReporterNamespace {
 
 	namespace(prefix: AnyMarkup): ReporterNamespace {
 		return {
-			success: (suffix) => this.success(markup`${prefix}${suffix}`),
-			info: (suffix) => this.info(markup`${prefix}${suffix}`),
-			error: (suffix) => this.error(markup`${prefix}${suffix}`),
-			warn: (suffix) => this.warn(markup`${prefix}${suffix}`),
-			log: (suffix) => this.log(markup`${prefix}${suffix}`),
+			success: (suffix) => this.success(markup`${prefix} ${suffix}`),
+			info: (suffix) => this.info(markup`${prefix} ${suffix}`),
+			error: (suffix) => this.error(markup`${prefix} ${suffix}`),
+			warn: (suffix) => this.warn(markup`${prefix} ${suffix}`),
+			log: (suffix) => this.log(markup`${prefix} ${suffix}`),
 		};
 	}
 

@@ -6,11 +6,7 @@
  */
 
 import Scope from "./Scope";
-import {
-	ArgumentsBinding,
-	LetBinding,
-	REDUCE_SKIP_SUBTREE,
-} from "@romefrontend/compiler";
+import {ArgumentsBinding, LetBinding, signals} from "@romefrontend/compiler";
 import {
 	getBindingIdentifiers,
 	isFunctionNode,
@@ -92,7 +88,7 @@ export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 					const {node} = path;
 
 					if (isFunctionNode(node) && node !== topNode) {
-						return REDUCE_SKIP_SUBTREE;
+						return signals.skip;
 					}
 
 					if (node.type === "JSVariableDeclaration" && node.kind === "var") {
@@ -109,7 +105,7 @@ export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 						}
 					}
 
-					return node;
+					return signals.retain;
 				},
 			},
 		],

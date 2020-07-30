@@ -272,10 +272,10 @@ export function escapeXHTMLEntities(value: string, only?: Array<string>): string
 	let escaped = "";
 	for (const char of value) {
 		const entity = xhtmlEntityCharToName[char];
-		if (entity !== undefined && (only === undefined || only.includes(char))) {
-			escaped += `&${entity};`;
-		} else {
+		if (entity === undefined || (only !== undefined && !only.includes(char))) {
 			escaped += char;
+		} else {
+			escaped += `&${entity};`;
 		}
 	}
 	return escaped;

@@ -165,7 +165,7 @@ export type AnyJSExpression =
 export type AnyJSWhileStatement = n.JSWhileStatement | n.JSDoWhileStatement;
 
 type AnyStatementWithBodyReducer<T> = T extends {
-	body: AnyJSStatement;
+	readonly body: AnyJSStatement;
 }
 	? T
 	: never;

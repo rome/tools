@@ -10,7 +10,7 @@ import AnyT from "./types/AnyT";
 import E from "./types/errors/E";
 import Hub from "./Hub";
 import T, {TypeCompatibilityReturn} from "./types/T";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 class ReduceRecursionError extends Error {}
 

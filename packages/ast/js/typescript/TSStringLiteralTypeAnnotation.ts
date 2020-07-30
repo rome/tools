@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSStringLiteralTypeAnnotation extends NodeBaseWithComments {
-	type: "TSStringLiteralTypeAnnotation";
-	value: string;
+	readonly type: "TSStringLiteralTypeAnnotation";
+	readonly value: string;
 }
 
 export const tsStringLiteralTypeAnnotation = createBuilder<TSStringLiteralTypeAnnotation>(

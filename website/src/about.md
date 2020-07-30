@@ -1,13 +1,15 @@
 ---
 title: About
-layout: layouts/page.njk
+layout: layouts/page.liquid
 ---
 
 # About
 
-## History
+Rome was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
 
 ## Team
+
+Rome has a loose governance model that values core contributor autonomy. See [Governance](/contributing/governance) for the full governance document.
 
 <ul class="team-list">
 	<li>

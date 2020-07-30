@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/noDeleteVars",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -22,6 +21,6 @@ export default {
 			path.context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_DELETE_VARS);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

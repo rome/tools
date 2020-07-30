@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSImportSpecifier extends NodeBaseWithComments {
-	type: "JSImportSpecifier";
-	imported: JSIdentifier;
-	local: JSImportSpecifierLocal;
+	readonly type: "JSImportSpecifier";
+	readonly imported: JSIdentifier;
+	readonly local: JSImportSpecifierLocal;
 }
 
 export const jsImportSpecifier = createBuilder<JSImportSpecifier>(

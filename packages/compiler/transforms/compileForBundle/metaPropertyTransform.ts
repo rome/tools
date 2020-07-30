@@ -12,7 +12,7 @@ import {
 	jsStringLiteral,
 } from "@romefrontend/ast";
 import {template} from "@romefrontend/js-ast-utils";
-import {CompilerContext, Path} from "@romefrontend/compiler";
+import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
 
 function isImportMeta(node: AnyNode): node is JSMetaProperty {
 	return (
@@ -38,9 +38,9 @@ function getFilename(context: CompilerContext): string {
 	}
 }
 
-export default {
+export default createVisitor({
 	name: "jsMetaPropertyTransform",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node, context} = path;
 
 		// Inline __filenamd and __dirname
@@ -70,14 +70,16 @@ export default {
 			node.property.value.type === "JSIdentifier" &&
 			node.property.value.name === "url"
 		) {
-			return createURLString(context);
+			return signals.replace(createURLString(context));
 		}
 
 		// This is an escaped import.meta or else our other transform would have changed it
 		if (isImportMeta(node)) {
-			return template.expression`({url: ${createURLString(context)}})`;
+			return signals.replace(
+				template.expression`({url: ${createURLString(context)}})`,
+			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

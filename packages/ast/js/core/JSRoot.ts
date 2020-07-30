@@ -18,13 +18,13 @@ import {createBuilder} from "../../utils";
 
 export interface JSRoot extends NodeBaseWithComments,
 RootBase {
-	type: "JSRoot";
-	directives: Array<JSDirective>;
-	body: Array<AnyJSStatement>;
-	interpreter: undefined | JSInterpreterDirective;
-	sourceType: ConstJSSourceType;
-	syntax: Array<ConstJSProgramSyntax>;
-	hasHoistedVars: boolean;
+	readonly type: "JSRoot";
+	readonly directives: Array<JSDirective>;
+	readonly body: Array<AnyJSStatement>;
+	readonly interpreter: undefined | JSInterpreterDirective;
+	readonly sourceType: ConstJSSourceType;
+	readonly syntax: Array<ConstJSProgramSyntax>;
+	readonly hasHoistedVars: boolean;
 }
 
 export const MOCK_PROGRAM: JSRoot = {

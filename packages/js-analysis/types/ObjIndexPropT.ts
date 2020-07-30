@@ -10,7 +10,7 @@ import T, {SerialTypeFactory} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export default class ObjIndexPropT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {

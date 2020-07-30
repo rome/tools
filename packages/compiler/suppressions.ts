@@ -14,7 +14,7 @@ import {
 	descriptions,
 } from "@romefrontend/diagnostics";
 import CompilerContext from "./lib/CompilerContext";
-import Path from "./lib/Path";
+import {signals} from ".";
 
 export const SUPPRESSION_START = "rome-ignore";
 export const INCORRECT_SUPPRESSION_START = [
@@ -149,7 +149,7 @@ export function extractSuppressionsFromProgram(
 		ast,
 		{
 			name: "extractSuppressions",
-			enter(path: Path): AnyNode {
+			enter(path) {
 				const {node} = path;
 
 				for (const comment of context.comments.getCommentsFromIds(
@@ -158,7 +158,7 @@ export function extractSuppressionsFromProgram(
 					nodeToComment.set(comment, node);
 				}
 
-				return node;
+				return signals.retain;
 			},
 		},
 		{

@@ -26,7 +26,7 @@ import {
 } from "@romefrontend/events";
 import child = require("child_process");
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 

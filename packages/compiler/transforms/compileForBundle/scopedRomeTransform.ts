@@ -5,21 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {renameBindings} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "scopedRome",
-	enter(path: Path) {
+	enter(path) {
 		const {node, scope} = path;
 
 		if (scope.node === node && scope.hasBinding("Rome")) {
-			return renameBindings(
-				path,
-				new Map([["Rome", scope.generateUid("Rome")]]),
+			return signals.replace(
+				renameBindings(path, new Map([["Rome", scope.generateUid("Rome")]])),
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

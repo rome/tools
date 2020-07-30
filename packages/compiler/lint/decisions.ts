@@ -21,7 +21,7 @@ import {ob1Get0, ob1Get1} from "@romefrontend/ob1";
 import {AbsoluteFilePath} from "@romefrontend/path";
 import {LinterCompilerOptionsPerFile} from "@romefrontend/core/server/linter/Linter";
 import {escapeSplit} from "@romefrontend/string-utils";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 
 type UnexpectedDecision = (
 	description: DiagnosticDescriptionOptionalCategory,

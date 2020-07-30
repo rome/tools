@@ -1,4 +1,4 @@
-import {Path, Scope, TransformExitResult} from "@romefrontend/compiler";
+import {Scope, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyTSTypeElement,
 	TSExpressionWithTypeArguments,
@@ -59,9 +59,9 @@ function extractObjects(
 	return {extends: _extends, members};
 }
 
-export default {
+export default createVisitor({
 	name: "ts/preferInterfaces",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "TSTypeAlias") {
@@ -91,6 +91,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

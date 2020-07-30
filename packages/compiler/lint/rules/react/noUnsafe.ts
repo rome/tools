@@ -1,4 +1,4 @@
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode, JSIdentifier} from "@romefrontend/ast";
 
@@ -28,10 +28,10 @@ function getUnsafeDef(node: AnyNode) {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "react/noUnsafe",
 
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node} = path;
 
 		const unsafeDef = getUnsafeDef(node);
@@ -46,6 +46,6 @@ export default {
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

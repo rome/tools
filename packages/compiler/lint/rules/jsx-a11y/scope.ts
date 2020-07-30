@@ -1,35 +1,35 @@
 import {descriptions} from "@romefrontend/diagnostics";
-import {JSXElement} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
-import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@romefrontend/compiler";
+import {
+	doesNodeMatchPattern,
+	hasJSXAttribute,
+} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/scope",
 
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
-		const jsxNode = (node as JSXElement);
 
 		if (
 			node.type === "JSXElement" &&
 			hasJSXAttribute(node, "scope") &&
-			!isJSXElement(node, "th")
+			!doesNodeMatchPattern(node.name, "th")
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
-					old: jsxNode,
-					fixed: {
-						...jsxNode,
-						attributes: jsxNode.attributes.filter((attribute) =>
+					fixed: signals.replace({
+						...node,
+						attributes: node.attributes.filter((attribute) =>
 							attribute.type !== "JSXAttribute" ||
 							attribute.name.name !== "scope"
 						),
-					},
+					}),
 				},
 				descriptions.LINT.JSX_A11Y_NO_SCOPE,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

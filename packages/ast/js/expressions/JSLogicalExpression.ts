@@ -9,10 +9,10 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSLogicalExpression extends NodeBaseWithComments {
-	type: "JSLogicalExpression";
-	operator: LogicalOperator;
-	left: AnyJSExpression;
-	right: AnyJSExpression;
+	readonly type: "JSLogicalExpression";
+	readonly operator: LogicalOperator;
+	readonly left: AnyJSExpression;
+	readonly right: AnyJSExpression;
 }
 
 export type LogicalOperator = "||" | "&&" | "??";

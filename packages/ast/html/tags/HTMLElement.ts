@@ -7,11 +7,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface HTMLElement extends NodeBaseWithComments {
-	type: "HTMLElement";
-	name: HTMLIdentifier;
-	selfClosing?: boolean;
-	attributes: Array<HTMLAttribute>;
-	children: Array<AnyHTMLChildNode>;
+	readonly type: "HTMLElement";
+	readonly name: HTMLIdentifier;
+	readonly selfClosing?: boolean;
+	readonly attributes: Array<HTMLAttribute>;
+	readonly children: Array<AnyHTMLChildNode>;
 }
 
 export const htmlElement = createBuilder<HTMLElement>(

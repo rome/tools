@@ -15,12 +15,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSInterfaceDeclaration extends NodeBaseWithComments {
-	type: "TSInterfaceDeclaration";
-	id: JSBindingIdentifier;
-	body: TSInterfaceBody;
-	typeParameters?: TSTypeParameterDeclaration;
-	extends?: Array<TSExpressionWithTypeArguments>;
-	declare?: boolean;
+	readonly type: "TSInterfaceDeclaration";
+	readonly id: JSBindingIdentifier;
+	readonly body: TSInterfaceBody;
+	readonly typeParameters?: TSTypeParameterDeclaration;
+	readonly extends?: Array<TSExpressionWithTypeArguments>;
+	readonly declare?: boolean;
 }
 
 export const tsInterfaceDeclaration = createBuilder<TSInterfaceDeclaration>(

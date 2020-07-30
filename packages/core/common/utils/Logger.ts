@@ -11,7 +11,7 @@ import {
 	ReporterOptions,
 } from "@romefrontend/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
-import {AnyMarkup, markup} from "@romefrontend/cli-layout";
+import {AnyMarkup, markup} from "@romefrontend/markup";
 
 export default class Logger extends Reporter {
 	constructor(

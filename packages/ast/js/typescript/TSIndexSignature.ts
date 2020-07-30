@@ -13,10 +13,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSIndexSignature extends NodeBaseWithComments {
-	type: "TSIndexSignature";
-	readonly?: boolean;
-	key: JSBindingIdentifier;
-	typeAnnotation: undefined | AnyTSPrimary;
+	readonly type: "TSIndexSignature";
+	readonly readonly?: boolean;
+	readonly key: JSBindingIdentifier;
+	readonly typeAnnotation: undefined | AnyTSPrimary;
 }
 
 export const tsIndexSignature = createBuilder<TSIndexSignature>(

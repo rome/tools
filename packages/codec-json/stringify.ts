@@ -11,10 +11,8 @@ import {isValidWord} from "./parse";
 import {Consumer} from "@romefrontend/consume";
 import {PRIORITIZE_KEYS, formatNumber} from "@romefrontend/pretty-format";
 import {escapeJSString} from "@romefrontend/string-escape";
-import {
-	joinMarkupLines,
-	markupToPlainText,
-} from "@romefrontend/cli-layout/format";
+import {joinMarkupLines} from "@romefrontend/markup";
+import {markupToPlainText} from "@romefrontend/cli-layout";
 
 function joinList(
 	open: string,

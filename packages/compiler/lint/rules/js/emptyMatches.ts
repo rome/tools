@@ -6,7 +6,7 @@
  */
 
 import {AnyJSRegExpBodyItem, AnyJSRegExpExpression} from "@romefrontend/ast";
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {descriptions} from "@romefrontend/diagnostics";
 
 function isQuantifiedMinZero(el: AnyJSRegExpBodyItem): boolean {
@@ -35,13 +35,13 @@ function lintEmptyMatches(expr: AnyJSRegExpExpression): boolean {
 	}
 }
 
-export default {
+export default createVisitor({
 	name: "js/emptyMatches",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {context, node} = path;
 		if (node.type === "JSRegExpLiteral" && lintEmptyMatches(node.expression)) {
 			context.addNodeDiagnostic(node, descriptions.LINT.JS_EMPTY_MATCHES);
 		}
-		return node;
+		return signals.retain;
 	},
-};
+});

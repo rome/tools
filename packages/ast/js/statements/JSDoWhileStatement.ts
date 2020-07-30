@@ -13,9 +13,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSDoWhileStatement extends NodeBaseWithComments {
-	type: "JSDoWhileStatement";
-	body: AnyJSStatement;
-	test: AnyJSExpression;
+	readonly type: "JSDoWhileStatement";
+	readonly body: AnyJSStatement;
+	readonly test: AnyJSExpression;
 }
 
 export const jsDoWhileStatement = createBuilder<JSDoWhileStatement>(

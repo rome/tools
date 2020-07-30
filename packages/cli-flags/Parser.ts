@@ -6,7 +6,7 @@
  */
 
 import {Reporter} from "@romefrontend/cli-reporter";
-import {serializeCLIFlags} from "./serializeCLIFlags";
+import {SerializeCLIOptions, serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
 	ConsumePropertyDefinition,
@@ -20,15 +20,20 @@ import {
 	toCamelCase,
 	toKebabCase,
 } from "@romefrontend/string-utils";
-import {createUnknownFilePath} from "@romefrontend/path";
+import {
+	AbsoluteFilePath,
+	HOME_PATH,
+	createUnknownFilePath,
+} from "@romefrontend/path";
 import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
 	descriptions,
 } from "@romefrontend/diagnostics";
 import {JSONObject} from "@romefrontend/codec-json";
+import {exists, readFileText, writeFile} from "@romefrontend/fs";
 
 export type Examples = Array<{
 	description: Markup;
@@ -67,8 +72,13 @@ type DefinedCommand = {
 };
 
 export type ParserOptions<T> = {
-	examples?: Examples;
+	reporter: Reporter;
 	programName: string;
+	cwd: AbsoluteFilePath;
+	args: Array<string>;
+	defineFlags: (consumer: Consumer) => T;
+
+	examples?: Examples;
 	usage?: string;
 	description?: Markup;
 	version?: string;
@@ -79,7 +89,7 @@ export type ParserOptions<T> = {
 		commandName: string;
 		description: Markup;
 	}>;
-	defineFlags: (consumer: Consumer) => T;
+	shellCompletionDirectory?: AbsoluteFilePath;
 };
 
 function splitCommandName(cmd: string): Array<string> {
@@ -95,15 +105,11 @@ type _FlagValue = undefined | number | string | boolean;
 
 export type FlagValue = _FlagValue | Array<_FlagValue>;
 
-type SupportedAutocompleteShells = "bash" | "fish";
+type SupportedCompletionShells = "bash" | "fish";
 
 export default class Parser<T> {
-	constructor(
-		reporter: Reporter,
-		opts: ParserOptions<T>,
-		rawArgs: Array<string>,
-	) {
-		this.reporter = reporter;
+	constructor(opts: ParserOptions<T>) {
+		this.reporter = opts.reporter;
 		this.opts = opts;
 
 		this.shorthandFlags = new Set();
@@ -117,7 +123,7 @@ export default class Parser<T> {
 		this.flagToArgIndex = new Map();
 		this.flagToArgOffset = 0;
 
-		this.consumeRawArgs(rawArgs);
+		this.consumeRawArgs(opts.args);
 
 		this.commands = new Map();
 		this.ranCommand = undefined;
@@ -298,13 +304,9 @@ export default class Parser<T> {
 				) => {
 					return serializeCLIFlags(
 						{
-							programName: this.opts.programName,
-							commandName: this.currentCommand,
-							args: this.args,
+							...this.getSerializeOptions(),
 							defaultFlags,
 							flags,
-							incorrectCaseFlags: this.incorrectCaseFlags,
-							shorthandFlags: this.shorthandFlags,
 						},
 						{
 							type: "flag",
@@ -386,6 +388,94 @@ export default class Parser<T> {
 		consumer.enforceUsedProperties("flag", false);
 	}
 
+	async writeShellCompletions(
+		shell: SupportedCompletionShells,
+		directory: AbsoluteFilePath = HOME_PATH,
+	) {
+		const {programName} = this.opts;
+		const {reporter} = this;
+		let path;
+
+		// Figure out profiles and basename to use for the completion script
+		switch (shell) {
+			case "bash": {
+				path = directory.append(`.${programName}-completion.sh`);
+				break;
+			}
+
+			case "fish": {
+				path = HOME_PATH.append(
+					".config",
+					"fish",
+					"completions",
+					`${programName}.fish`,
+				);
+				break;
+			}
+		}
+
+		// Write completions
+		const res = await this.generateShellCompletions(shell);
+		await writeFile(path, res);
+		reporter.success(
+			markup`Wrote shell completions to <emphasis>${path}</emphasis>`,
+		);
+
+		// Tell the user the next step
+		switch (shell) {
+			case "bash": {
+				const possibleProfiles = [];
+				possibleProfiles.push(HOME_PATH.append(".bashrc"));
+				possibleProfiles.push(HOME_PATH.append(".bash_profile"));
+
+				// Find the profile
+				let profilePath;
+				for (const path of possibleProfiles) {
+					if (await exists(path)) {
+						profilePath = path;
+						break;
+					}
+				}
+				if (profilePath === undefined) {
+					reporter.error(
+						markup`Could not find your bash profile. Tried the following:`,
+					);
+					reporter.list(
+						possibleProfiles.map((path) => {
+							return markup`${path}`;
+						}),
+					);
+				} else {
+					let file = await readFileText(profilePath);
+					if (file.includes(path.getBasename())) {
+						reporter.warn(
+							markup`Skipped <emphasis>${profilePath}</emphasis> modifications as looks like it was already included`,
+						);
+					} else {
+						file = file.trim();
+						file += "\n";
+						file += `source ${path.relative(profilePath).preferExplicitRelative().join()}`;
+						file += "\n";
+						await writeFile(profilePath, file);
+						reporter.success(
+							markup`Added completions to <emphasis>${profilePath}</emphasis>`,
+						);
+					}
+				}
+				break;
+			}
+		}
+
+		reporter.info(markup`Restart your shell to enable!`);
+		this.exit(0);
+	}
+
+	async logShellCompletions(shell: SupportedCompletionShells) {
+		const res = await this.generateShellCompletions(shell);
+		this.reporter.logRaw(res);
+		this.exit(0);
+	}
+
 	async init(): Promise<T> {
 		const flagsConsumer = this.getFlagsConsumer();
 		const {flags} = flagsConsumer;
@@ -405,18 +495,32 @@ export default class Parser<T> {
 			}
 		}
 
-		// i could add a flag for dev-rome itself
-		// i could take the input command name from the flag
-		const generateAutocomplete: undefined | SupportedAutocompleteShells = flags.get(
-			"generateAutocomplete",
+		const {shellCompletionDirectory} = this.opts;
+		// `--write-shell-completions <SHELL>` writes the commands to a file
+		const writeShellCompletions: undefined | SupportedCompletionShells = flags.get(
+			"writeShellCompletions",
 			{
-				description: markup`Generate a shell autocomplete`,
+				description: markup`Write shell completion commands`,
 				inputName: "shell",
 			},
 		).asStringSetOrVoid(["fish", "bash"]);
-		if (generateAutocomplete !== undefined) {
-			await this.generateAutocomplete(generateAutocomplete);
-			this.exit(0);
+		if (writeShellCompletions !== undefined) {
+			await this.writeShellCompletions(
+				writeShellCompletions,
+				shellCompletionDirectory,
+			);
+		}
+
+		// `--generate-shell-completions <SHELL>` writes the commands to stdout
+		const logShellCompletions: undefined | SupportedCompletionShells = flags.get(
+			"logShellCompletions",
+			{
+				description: markup`Generate shell completion commands`,
+				inputName: "shell",
+			},
+		).asStringSetOrVoid(["fish", "bash"]);
+		if (logShellCompletions !== undefined) {
+			await this.logShellCompletions(logShellCompletions);
 		}
 
 		// Show help for --help
@@ -640,12 +744,11 @@ export default class Parser<T> {
 		);
 	}
 
-	async generateAutocomplete(shell: SupportedAutocompleteShells) {
-		const {reporter} = this;
-
+	async generateShellCompletions(
+		shell: SupportedCompletionShells,
+	): Promise<string> {
 		// Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
 		// But to generate autocomplete we want all the flags to be declared for all commands.
-
 		const {flags} = this.getFlagsConsumer();
 		for (const command of this.commands.values()) {
 			// capture() will cause diagnostics to be suppressed
@@ -657,12 +760,10 @@ export default class Parser<T> {
 
 		switch (shell) {
 			case "bash": {
-				reporter.logRaw(this.genBashCompletions(programName));
-				break;
+				return this.genBashCompletions(programName);
 			}
 			case "fish": {
-				reporter.logRaw(this.genFishCompletions(programName));
-				break;
+				return this.genFishCompletions(programName);
 			}
 		}
 	}
@@ -929,13 +1030,11 @@ export default class Parser<T> {
 						suggestion.description,
 						serializeCLIFlags(
 							{
-								programName,
+								...this.getSerializeOptions(),
 								commandName: suggestion.commandName,
 								args,
 								defaultFlags,
 								flags: rawFlags,
-								incorrectCaseFlags: this.incorrectCaseFlags,
-								shorthandFlags: this.shorthandFlags,
 							},
 							{
 								type: "none",
@@ -951,13 +1050,11 @@ export default class Parser<T> {
 			description,
 			location: serializeCLIFlags(
 				{
-					programName,
+					...this.getSerializeOptions(),
 					commandName,
 					args,
 					defaultFlags,
 					flags: rawFlags,
-					incorrectCaseFlags: this.incorrectCaseFlags,
-					shorthandFlags: this.shorthandFlags,
 				},
 				{
 					type: "command",
@@ -966,6 +1063,25 @@ export default class Parser<T> {
 		};
 
 		throw new DiagnosticsError("Unknown command", [diag]);
+	}
+
+	getSerializeOptions(): Pick<
+		SerializeCLIOptions,
+		| "programName"
+		| "commandName"
+		| "args"
+		| "incorrectCaseFlags"
+		| "shorthandFlags"
+		| "cwd"
+	> {
+		return {
+			programName: this.opts.programName,
+			commandName: this.currentCommand,
+			args: this.args,
+			incorrectCaseFlags: this.incorrectCaseFlags,
+			shorthandFlags: this.shorthandFlags,
+			cwd: this.opts.cwd,
+		};
 	}
 
 	addCommand(opts: AnyCommandOptions) {

@@ -15,10 +15,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSOptionalCallExpression extends NodeBaseWithComments {
-	type: "JSOptionalCallExpression";
-	callee: AnyJSExpression | JSSuper;
-	arguments: Array<AnyJSExpression | JSSpreadElement>;
-	typeArguments?: TSTypeParameterInstantiation;
+	readonly type: "JSOptionalCallExpression";
+	readonly callee: AnyJSExpression | JSSuper;
+	readonly arguments: Array<AnyJSExpression | JSSpreadElement>;
+	readonly typeArguments?: TSTypeParameterInstantiation;
 }
 
 export const jsOptionalCallExpression = createBuilder<JSOptionalCallExpression>(

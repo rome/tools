@@ -15,12 +15,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSDeclareMethod extends NodeBaseWithComments {
-	type: "TSDeclareMethod";
-	meta: JSClassPropertyMeta;
-	kind: JSClassMethodKind;
-	key: AnyJSObjectPropertyKey;
-	head: JSFunctionHead;
-	body?: void;
+	readonly type: "TSDeclareMethod";
+	readonly meta: JSClassPropertyMeta;
+	readonly kind: JSClassMethodKind;
+	readonly key: AnyJSObjectPropertyKey;
+	readonly head: JSFunctionHead;
+	readonly body?: void;
 }
 
 export const tsDeclareMethod = createBuilder<TSDeclareMethod>(

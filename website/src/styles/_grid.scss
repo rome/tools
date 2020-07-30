@@ -15,16 +15,6 @@
 .container {
 	display: flex;
 	flex-direction: row;
-	padding: 0 256px;
-	max-width: 1587px;
 	margin: auto;
-
-	@media only screen and (max-width: 1587px) {
-		padding: 0;
-		max-width: 1075px;
-	}
-
-	&.has-right-sidebar {
-		padding-right: 0;
-	}
+	max-width: 1200px;
 }

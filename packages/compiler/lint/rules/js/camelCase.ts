@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {toCamelCase} from "@romefrontend/string-utils";
 import {Binding} from "@romefrontend/compiler/scope/bindings";
 import {descriptions} from "@romefrontend/diagnostics";
@@ -26,9 +26,9 @@ export function normalizeCamelCase(name: string): undefined | string {
 	return name;
 }
 
-export default {
+export default createVisitor({
 	name: "js/camelCase",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		// Check variables
@@ -57,10 +57,10 @@ export default {
 			}
 
 			if (renames.size > 0) {
-				return renameBindings(path, renames);
+				return signals.replace(renameBindings(path, renames));
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

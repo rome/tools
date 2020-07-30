@@ -12,9 +12,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpCharSetRange extends NodeBaseWithComments {
-	type: "JSRegExpCharSetRange";
-	start: AnyJSRegExpEscapedCharacter;
-	end: AnyJSRegExpEscapedCharacter;
+	readonly type: "JSRegExpCharSetRange";
+	readonly start: AnyJSRegExpEscapedCharacter;
+	readonly end: AnyJSRegExpEscapedCharacter;
 }
 
 export const jsRegExpCharSetRange = createBuilder<JSRegExpCharSetRange>(

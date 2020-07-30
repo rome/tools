@@ -3,7 +3,7 @@ import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import stringDiff from "@romefrontend/string-diff";
 import {markupToPlainText} from "@romefrontend/cli-layout";
 import {dedent} from "@romefrontend/string-utils";
-import {joinMarkupLines} from "@romefrontend/cli-layout/format";
+import {joinMarkupLines} from "@romefrontend/markup";
 
 type Test = {
 	before: string;

@@ -7,8 +7,10 @@
 
 import Server from "../Server";
 import {
+	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	PROJECT_CONFIG_SENSITIVE_DIRECTORIES,
 	PROJECT_CONFIG_WARN_FILENAMES,
 	ProjectConfig,
 	ProjectConfigMeta,
@@ -798,6 +800,13 @@ export default class ProjectManager {
 			return syncProject;
 		}
 
+		const processor = DiagnosticsProcessor.createImmediateThrower([
+			{
+				category: "project-manager",
+				message: "Find project",
+			},
+		]);
+
 		const parentDirectories = cwd.getChain();
 
 		// If not then let's access the file system and try to find one
@@ -805,10 +814,15 @@ export default class ProjectManager {
 			// Check for dedicated project configs
 			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
 				// Check in root
-				const configPath = dir.append(configFilename);
+				const configPath = dir.append(PROJECT_CONFIG_DIRECTORY, configFilename);
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
+					if (this.isLoadingBannedProjectPath(dir, configPath, processor)) {
+						// Would have emitted a diagnostic
+						return;
+					}
+
 					await this.server.memoryFs.watch(dir);
 					return this.assertProjectExisting(cwd);
 				}
@@ -820,27 +834,34 @@ export default class ProjectManager {
 				const input = await readFileText(packagePath);
 				const json = await consumeJSON({input, path: packagePath});
 				if (json.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
+					if (this.isLoadingBannedProjectPath(dir, packagePath, processor)) {
+						// Would have emitted a diagnostic
+						return;
+					}
+
 					await this.server.memoryFs.watch(dir);
 					return this.assertProjectExisting(cwd);
 				}
 			}
 		}
 
-		// If we didn't find a project config then check for incorrect config filenames
+		// If we didn't find a project config then
 		for (const dir of parentDirectories) {
+			// Check for typo config filenames
 			for (const basename of PROJECT_CONFIG_WARN_FILENAMES) {
 				const path = dir.append(basename);
 
 				if (await this.server.memoryFs.existsHard(path)) {
-					this.warnIncorrectConfigFile(
-						path,
-						DiagnosticsProcessor.createImmediateThrower([
-							{
-								category: "project-manager",
-								message: "Find project",
-							},
-						]),
-					);
+					this.checkPathForIncorrectConfig(path, processor);
+				}
+			}
+
+			// Check for configs outside of a .config directory
+			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
+				const path = dir.append(configFilename);
+
+				if (await this.server.memoryFs.existsHard(path)) {
+					this.checkPathForIncorrectConfig(path, processor);
 				}
 			}
 		}
@@ -848,23 +869,63 @@ export default class ProjectManager {
 		return undefined;
 	}
 
-	checkConfigFile(path: AbsoluteFilePath, diagnostics: DiagnosticsProcessor) {
-		if (PROJECT_CONFIG_WARN_FILENAMES.includes(path.getBasename())) {
-			this.warnIncorrectConfigFile(path, diagnostics);
+	// Refuse to load project path or root as valid project directories
+	isBannedProjectPath(projectFolder: AbsoluteFilePath): boolean {
+		return (
+			projectFolder.isRoot() ||
+			PROJECT_CONFIG_SENSITIVE_DIRECTORIES.has(projectFolder)
+		);
+	}
+
+	// Create a diagnostic if the project folder is sensitive
+	isLoadingBannedProjectPath(
+		projectFolder: AbsoluteFilePath,
+		configPath: AbsoluteFilePath,
+		diagnostics: DiagnosticsProcessor,
+	): boolean {
+		if (this.isBannedProjectPath(projectFolder)) {
+			diagnostics.addDiagnostic({
+				description: descriptions.PROJECT_MANAGER.LOADING_SENSITIVE(
+					projectFolder,
+				),
+				location: {
+					filename: configPath.join(),
+				},
+			});
+			return true;
+		} else {
+			return false;
 		}
 	}
 
-	warnIncorrectConfigFile(
+	checkPathForIncorrectConfig(
 		path: AbsoluteFilePath,
 		diagnostics: DiagnosticsProcessor,
 	) {
-		diagnostics.addDiagnostic({
-			description: descriptions.PROJECT_MANAGER.INCORRECT_CONFIG_FILENAME(
-				PROJECT_CONFIG_FILENAMES,
-			),
-			location: {
-				filename: path.join(),
-			},
-		});
+		if (PROJECT_CONFIG_WARN_FILENAMES.includes(path.getBasename())) {
+			diagnostics.addDiagnostic({
+				description: descriptions.PROJECT_MANAGER.TYPO_CONFIG_FILENAME(
+					path.getBasename(),
+					PROJECT_CONFIG_FILENAMES,
+				),
+				location: {
+					filename: path.join(),
+				},
+			});
+		}
+
+		if (
+			PROJECT_CONFIG_FILENAMES.includes(path.getBasename()) &&
+			path.getParent().getBasename() !== PROJECT_CONFIG_DIRECTORY
+		) {
+			diagnostics.addDiagnostic({
+				description: descriptions.PROJECT_MANAGER.MISPLACED_CONFIG(
+					path.getBasename(),
+				),
+				location: {
+					filename: path.join(),
+				},
+			});
+		}
 	}
 }

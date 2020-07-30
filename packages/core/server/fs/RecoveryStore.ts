@@ -5,6 +5,7 @@ import {
 	AbsoluteFilePathSet,
 } from "@romefrontend/path";
 import {
+	FileHandle,
 	createDirectory,
 	exists,
 	lstat,
@@ -23,9 +24,7 @@ import {
 	createSingleDiagnosticError,
 	descriptions,
 } from "@romefrontend/diagnostics";
-
-import fs = require("fs");
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import prettyFormat from "@romefrontend/pretty-format";
 import {ReporterNamespace} from "@romefrontend/cli-reporter";
 
@@ -62,7 +61,7 @@ type WriteFilesEvents = {
 	onFileDone: (path: AbsoluteFilePath) => void;
 	beforeFileWrite: (
 		path: AbsoluteFilePath,
-		fh: fs.promises.FileHandle,
+		fh: FileHandle,
 	) => void | Promise<void>;
 	expectedExists: (path: AbsoluteFilePath) => void;
 	unexpectedExists: (path: AbsoluteFilePath) => void;
@@ -429,7 +428,7 @@ export default class RecoveryStore {
 				Array.from(
 					files,
 					async ([path, {mtime, content}]) => {
-						let fd: undefined | fs.promises.FileHandle;
+						let fd: undefined | FileHandle;
 
 						try {
 							if (mtime === undefined) {

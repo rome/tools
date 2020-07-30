@@ -1,6 +1,6 @@
 import {descriptions} from "@romefrontend/diagnostics";
 import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
 
 function jsxAnchorHasBlankTarget(node: AnyNode) {
@@ -43,10 +43,10 @@ function jsxAnchorHasExternalLink(node: AnyNode) {
 	);
 }
 
-export default {
+export default createVisitor({
 	name: "jsx-a11y/noTargetBlank",
 
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (
@@ -55,22 +55,21 @@ export default {
 			!jsxAnchorHasNoReferrer(node) &&
 			jsxAnchorHasExternalLink(node)
 		) {
-			return path.context.addFixableDiagnostic(
+			return path.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "target"),
-					old: node,
-					fixed: {
+					fixed: signals.replace({
 						...node,
 						attributes: node.attributes.filter((attribute) =>
 							attribute.type !== "JSXAttribute" ||
 							attribute.name.name !== "target"
 						),
-					},
+					}),
 				},
 				descriptions.LINT.JSX_A11Y_NO_TARGET_BLANK,
 			);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

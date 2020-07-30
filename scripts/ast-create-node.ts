@@ -1,7 +1,7 @@
 import {PACKAGES, reporter, writeFile} from "./_utils";
 import {exists} from "@romefrontend/fs";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {main as generateAST} from "./generated-files/ast";
 
 export async function main(
@@ -27,7 +27,7 @@ export async function main(
 	const builderName = toCamelCase(nodeType);
 
 	// Write AST def
-	const astDefPath = PACKAGES.appendList("ast", `${joined}.ts`);
+	const astDefPath = PACKAGES.append("ast", `${joined}.ts`);
 	if (await exists(astDefPath)) {
 		reporter.error(markup`AST node ${joined} already exists`);
 		return 1;
@@ -39,7 +39,7 @@ export async function main(
 			import {createBuilder} from "../../utils";
 
 			interface ${nodeType} extends NodeBaseWithComments {
-				type: "${nodeType}";
+				readonly type: "${nodeType}";
 			}
 
 			export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {
@@ -51,7 +51,7 @@ export async function main(
 
 	// Write builder
 	await writeFile(
-		PACKAGES.appendList("formatter", "builders", `${joined}.ts`),
+		PACKAGES.append("formatter", "builders", `${joined}.ts`),
 		dedent`
 			import {${nodeType}} from "@romefrontend/ast";
 			import {Builder, Token} from "@romefrontend/formatter";
@@ -65,12 +65,7 @@ export async function main(
 	// Write analysis
 	if (language === "js") {
 		await writeFile(
-			PACKAGES.appendList(
-				"js-analysis",
-				"evaluators",
-				category,
-				`${nodeType}.ts`,
-			),
+			PACKAGES.append("js-analysis", "evaluators", category, `${nodeType}.ts`),
 			dedent`
 				import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
 

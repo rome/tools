@@ -7,37 +7,38 @@
 
 import {DiagnosticAdvice, DiagnosticDescription} from "../types";
 import {flags} from "./flags";
-import {parserCore} from "./parserCore";
-import {regexp} from "./regexp";
+import {parserCore} from "./parsers/parserCore";
+import {regexp} from "./parsers/regexp";
 import {json} from "./json";
 import {semver} from "./semver";
 import {v8} from "./v8";
-import {lintCommand} from "./lintCommand";
+import {lintCommand} from "./commands/lintCommand";
 import {projectManager} from "./projectManager";
 import {compiler} from "./compiler";
 import {stringEscape} from "./stringEscape";
 import {analyzeDependencies} from "./analyzeDependencies";
-import {stringMarkup} from "./stringMarkup";
-import {pathMatch} from "./pathMatch";
+import {stringMarkup} from "./parsers/stringMarkup";
+import {pathMatch} from "./parsers/pathMatch";
 import {tests} from "./tests";
 import {suppressions} from "./suppressions";
 import {snapshots} from "./snapshots";
 import {bundler} from "./bundler";
 import {resolver} from "./resolver";
-import {spdx} from "./spdx";
-import {jsParser} from "./jsParser";
-import {cssParser} from "./cssParser";
 import {commitParser} from "./commitParser";
+import {spdx} from "./parsers/spdx";
+import {jsParser} from "./parsers/jsParser";
+import {cssParser} from "./parsers/cssParser";
 import {typeCheck} from "./typeCheck";
 import {consume} from "./consume";
 import {manifest} from "./manifest";
 import {projectConfig} from "./projectConfig";
 import {lint} from "./lint";
 import {userConfig} from "./userConfig";
-import {htmlParser} from "./htmlParser";
-import {recoveryStore} from "./recoveryStore";
-import {markdownParser} from "@romefrontend/diagnostics/descriptions/markdownParser";
-import {Markup, concatMarkup, markup} from "@romefrontend/cli-layout";
+import {htmlParser} from "./parsers/htmlParser";
+import {recoveryStore} from "./commands/recoveryStore";
+import {markdownParser} from "./parsers/markdownParser";
+import {initCommand} from "./commands/initCommand";
+import {Markup, concatMarkup, markup} from "@romefrontend/markup";
 
 export function join(conjunction: string, items: Array<Markup>): Markup {
 	if (items.length === 0) {
@@ -169,4 +170,5 @@ export const descriptions = {
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
+	INIT_COMMAND: initCommand,
 };

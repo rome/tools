@@ -6,10 +6,10 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSTupleElement extends NodeBaseWithComments {
-	type: "TSTupleElement";
-	name?: JSBindingIdentifier;
-	optional?: boolean;
-	typeAnnotation: AnyTSPrimary;
+	readonly type: "TSTupleElement";
+	readonly name?: JSBindingIdentifier;
+	readonly optional?: boolean;
+	readonly typeAnnotation: AnyTSPrimary;
 }
 
 export const tsTupleElement = createBuilder<TSTupleElement>(

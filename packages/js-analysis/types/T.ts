@@ -12,7 +12,7 @@ import Graph from "../Graph";
 import {Scope} from "../scopes";
 import Hub from "../Hub";
 import Utils, {HumanBuilder} from "../Utils";
-import {Markup} from "@romefrontend/cli-layout";
+import {Markup} from "@romefrontend/markup";
 
 let counter = 0;
 

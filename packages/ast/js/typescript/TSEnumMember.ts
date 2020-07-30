@@ -14,9 +14,9 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSEnumMember extends NodeBaseWithComments {
-	type: "TSEnumMember";
-	id: JSStringLiteral | JSIdentifier;
-	initializer?: AnyJSExpression;
+	readonly type: "TSEnumMember";
+	readonly id: JSStringLiteral | JSIdentifier;
+	readonly initializer?: AnyJSExpression;
 }
 
 export const tsEnumMember = createBuilder<TSEnumMember>(

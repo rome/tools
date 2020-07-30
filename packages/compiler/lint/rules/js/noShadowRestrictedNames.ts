@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {TransformExitResult} from "@romefrontend/compiler/types";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {
 	builtin,
 	es5,
@@ -17,9 +16,9 @@ import {descriptions} from "@romefrontend/diagnostics";
 
 const restrictedNames = new Set([...builtin, ...es5, ...es2015, ...es2017]);
 
-export default {
+export default createVisitor({
 	name: "js/noShadowRestrictedNames",
-	enter(path: Path): TransformExitResult {
+	enter(path) {
 		const {node, context, scope} = path;
 
 		if (scope.node === node) {
@@ -33,6 +32,6 @@ export default {
 			}
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

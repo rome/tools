@@ -9,8 +9,8 @@ import {JSXElement, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXFragment extends NodeBaseWithComments {
-	type: "JSXFragment";
-	children: JSXElement["children"];
+	readonly type: "JSXFragment";
+	readonly children: JSXElement["children"];
 }
 
 export const jsxFragment = createBuilder<JSXFragment>(

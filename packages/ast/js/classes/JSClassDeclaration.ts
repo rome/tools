@@ -13,11 +13,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSClassDeclaration extends NodeBaseWithComments {
-	type: "JSClassDeclaration";
-	id: JSBindingIdentifier;
-	meta: JSClassHead;
-	abstract?: boolean;
-	declare?: boolean;
+	readonly type: "JSClassDeclaration";
+	readonly id: JSBindingIdentifier;
+	readonly meta: JSClassHead;
+	readonly abstract?: boolean;
+	readonly declare?: boolean;
 }
 
 export const jsClassDeclaration = createBuilder<JSClassDeclaration>(

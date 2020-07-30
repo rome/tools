@@ -13,12 +13,12 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface TSDeclareFunction extends NodeBaseWithComments {
-	type: "TSDeclareFunction";
-	id: JSBindingIdentifier;
-	head: JSFunctionHead;
+	readonly type: "TSDeclareFunction";
+	readonly id: JSBindingIdentifier;
+	readonly head: JSFunctionHead;
 
 	// For consistency with JSFunctionDeclaration, this can mostly be ignored
-	declare?: boolean;
+	readonly declare?: boolean;
 }
 
 export const tsDeclareFunction = createBuilder<TSDeclareFunction>(

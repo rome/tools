@@ -9,7 +9,7 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSNeverKeywordTypeAnnotation extends NodeBaseWithComments {
-	type: "TSNeverKeywordTypeAnnotation";
+	readonly type: "TSNeverKeywordTypeAnnotation";
 }
 
 export const tsNeverKeywordTypeAnnotation = createBuilder<TSNeverKeywordTypeAnnotation>(

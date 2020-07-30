@@ -8,6 +8,7 @@
 import {
 	AnyComment,
 	AnyNode,
+	AnyNodes,
 	AnyRoot,
 	ConstJSSourceType,
 } from "@romefrontend/ast";
@@ -18,7 +19,6 @@ import {
 import {
 	CompilerOptions,
 	PathOptions,
-	TransformExitResult,
 	TransformVisitors,
 	Transforms,
 } from "@romefrontend/compiler";
@@ -34,7 +34,7 @@ import {
 } from "@romefrontend/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
-import reduce from "../methods/reduce";
+import {reduceNode} from "../methods/reduce";
 import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
 import {
 	LintCompilerOptionsDecision,
@@ -47,9 +47,6 @@ import {
 } from "../suppressions";
 import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
 import {hookVisitors} from "../transforms";
-import stringDiff from "@romefrontend/string-diff";
-import {formatAST} from "@romefrontend/formatter";
-import {REDUCE_REMOVE} from "../constants";
 import {FileReference} from "@romefrontend/core";
 import {createDefaultProjectConfig} from "@romefrontend/project";
 import {
@@ -60,7 +57,9 @@ import {
 } from "../lint/decisions";
 import {isRoot} from "@romefrontend/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics/utils";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
+import cleanTransform from "../transforms/cleanTransform";
+import {assertSingleNode} from "@romefrontend/js-ast-utils";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -79,7 +78,7 @@ type AddDiagnosticResult = {
 };
 
 // We only want a Context to create diagnostics that belong to itself
-type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
+export type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
 	marker?: Markup;
 };
 
@@ -91,18 +90,6 @@ type DiagnosticTarget =
 	| Array<{
 			loc?: SourceLocation;
 		}>;
-
-function getFormattedCodeFromExitResult(result: TransformExitResult): string {
-	if (Array.isArray(result)) {
-		return result.map((node) => {
-			return formatAST(node).code;
-		}).filter((str) => str !== "").join("\n");
-	} else if (result === REDUCE_REMOVE) {
-		return "";
-	} else {
-		return formatAST(result).code;
-	}
-}
 
 export default class CompilerContext {
 	constructor(arg: ContextArg) {
@@ -218,11 +205,17 @@ export default class CompilerContext {
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
 	): AnyRoot {
-		const node = reduce(
-			ast,
-			[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],
-			this,
-			pathOpts,
+		const node = assertSingleNode(
+			reduceNode(
+				ast,
+				[
+					...hookVisitors,
+					cleanTransform,
+					...(Array.isArray(visitors) ? visitors : [visitors]),
+				],
+				this,
+				pathOpts,
+			),
 		);
 		if (!isRoot(node)) {
 			throw new Error("Expected root to be returned from reduce");
@@ -234,13 +227,8 @@ export default class CompilerContext {
 		ast: AnyNode,
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
-	): TransformExitResult {
-		return reduce(
-			ast,
-			Array.isArray(visitors) ? visitors : [visitors],
-			this,
-			pathOpts,
-		);
+	): AnyNodes {
+		return reduceNode(ast, visitors, this, pathOpts);
 	}
 
 	record(record: Record) {
@@ -270,176 +258,6 @@ export default class CompilerContext {
 		}
 
 		return [...globalDecisions, ...(decisionsByPosition[key] || [])];
-	}
-
-	addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(
-		nodes: {
-			target?: AnyNode | Array<AnyNode>;
-			old: Old;
-			fixed?: New;
-			suggestions?: Array<{
-				description: Markup;
-				title: Markup;
-				fixed: New;
-			}>;
-		},
-		description: DiagnosticDescription,
-		diag: ContextDiagnostic = {},
-	): TransformExitResult {
-		const {old, fixed: defaultFixed, suggestions} = nodes;
-		const target = nodes.target === undefined ? nodes.old : nodes.target;
-
-		const {category} = description;
-		const advice = [...description.advice];
-		const loc = this.getLoc(target);
-
-		let fixed: undefined | New = defaultFixed;
-
-		// Add recommended fix
-		if (defaultFixed !== undefined) {
-			advice.push({
-				type: "log",
-				category: "info",
-				text: markup`Recommended fix`,
-			});
-
-			advice.push({
-				type: "diff",
-				language: this.language,
-				diff: stringDiff(
-					getFormattedCodeFromExitResult(old),
-					getFormattedCodeFromExitResult(defaultFixed),
-				),
-			});
-
-			if (loc === undefined) {
-				advice.push({
-					type: "log",
-					category: "error",
-					text: markup`Unable to find target location`,
-				});
-			} else {
-				advice.push(
-					buildLintDecisionAdviceAction({
-						filename: this.displayFilename,
-						decision: buildLintDecisionString({
-							action: "fix",
-							filename: this.displayFilename,
-							category,
-							start: loc.start,
-						}),
-						shortcut: "f",
-						noun: markup`Apply fix`,
-						instruction: markup`To apply this fix run`,
-					}),
-				);
-
-				advice.push(
-					buildLintDecisionAdviceAction({
-						extra: true,
-						noun: markup`Apply fix for ALL files with this category`,
-						instruction: markup`To apply fix for ALL files with this category run`,
-						decision: buildLintDecisionGlobalString("fix", category),
-					}),
-				);
-			}
-		}
-
-		if (suggestions !== undefined) {
-			// If we have lint decisions then find the fix that corresponds with this suggestion
-			if (this.hasLintDecisions()) {
-				const decisions = this.getLintDecisions(
-					deriveDecisionPositionKey("fix", loc),
-				);
-				for (const decision of decisions) {
-					if (
-						decision.category === category &&
-						decision.action === "fix" &&
-						decision.id !== undefined
-					) {
-						const suggestion = suggestions[decision.id];
-						if (suggestion !== undefined) {
-							fixed = suggestion.fixed;
-						}
-					}
-				}
-			}
-
-			// Add advice suggestions
-			let index = 0;
-			for (const suggestion of suggestions) {
-				const num = index + 1;
-
-				const titlePrefix =
-					suggestions.length === 1 ? "Suggested fix" : `Suggested fix #${num}`;
-				advice.push({
-					type: "log",
-					category: "none",
-					text: markup`<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
-				});
-
-				advice.push({
-					type: "diff",
-					language: this.language,
-					diff: stringDiff(
-						getFormattedCodeFromExitResult(old),
-						getFormattedCodeFromExitResult(suggestion.fixed),
-					),
-				});
-
-				advice.push({
-					type: "log",
-					category: "info",
-					text: suggestion.description,
-				});
-
-				if (loc === undefined) {
-					advice.push({
-						type: "log",
-						category: "error",
-						text: markup`Unable to find target location`,
-					});
-				} else {
-					advice.push(
-						buildLintDecisionAdviceAction({
-							noun: suggestions.length === 1
-								? markup`Apply suggested fix`
-								: markup`Apply suggested fix "${suggestion.title}"`,
-							shortcut: String(num),
-							instruction: markup`To apply this fix run`,
-							filename: this.displayFilename,
-							decision: buildLintDecisionString({
-								filename: this.displayFilename,
-								action: "fix",
-								category,
-								start: loc.start,
-								id: index,
-							}),
-						}),
-					);
-				}
-
-				index++;
-			}
-		}
-
-		const {suppressed} = this.addLocDiagnostic(
-			loc,
-			{
-				...description,
-				advice,
-			},
-			{
-				...diag,
-				fixable: true,
-			},
-		);
-
-		if (suppressed || fixed === undefined) {
-			return old;
-		}
-
-		return fixed;
 	}
 
 	addLocDiagnostic(

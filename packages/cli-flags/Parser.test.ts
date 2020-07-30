@@ -14,7 +14,8 @@ import {
 	catchDiagnostics,
 } from "@romefrontend/diagnostics";
 import {printDiagnostics} from "@romefrontend/cli-diagnostics";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
+import {createAbsoluteFilePath} from "@romefrontend/path";
 
 async function testParser<T>(
 	t: TestHelper,
@@ -35,15 +36,14 @@ async function testParser<T>(
 	const reporter = new Reporter();
 	const stream = reporter.attachCaptureStream();
 
-	const parser = new Parser(
-		reporter,
-		{
-			...opts,
-			programName: "test",
-			defineFlags,
-		},
+	const parser = new Parser({
+		...opts,
+		programName: "test",
+		defineFlags,
 		args,
-	);
+		reporter,
+		cwd: createAbsoluteFilePath("/"),
+	});
 
 	const {diagnostics} = await catchDiagnostics(async () => {
 		if (preInit !== undefined) {

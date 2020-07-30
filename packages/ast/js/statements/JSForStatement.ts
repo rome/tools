@@ -14,11 +14,11 @@ import {
 import {createBuilder} from "../../utils";
 
 export interface JSForStatement extends NodeBaseWithComments {
-	type: "JSForStatement";
-	init?: JSVariableDeclaration | AnyJSExpression;
-	test?: AnyJSExpression;
-	update?: AnyJSExpression;
-	body: AnyJSStatement;
+	readonly type: "JSForStatement";
+	readonly init?: JSVariableDeclaration | AnyJSExpression;
+	readonly test?: AnyJSExpression;
+	readonly update?: AnyJSExpression;
+	readonly body: AnyJSStatement;
 }
 
 export const jsForStatement = createBuilder<JSForStatement>(

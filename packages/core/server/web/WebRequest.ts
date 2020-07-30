@@ -21,7 +21,7 @@ import {ProjectDefinition} from "@romefrontend/project";
 import {HmrClientMessage} from "./hmr";
 import {ConsumableUrl, consumeUrl} from "@romefrontend/codec-url";
 import http = require("http");
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 const waitForever = new Promise(() => {});
 

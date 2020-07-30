@@ -9,10 +9,10 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSTemplateElement extends NodeBaseWithComments {
-	type: "JSTemplateElement";
-	tail?: boolean;
-	cooked: string;
-	raw: string;
+	readonly type: "JSTemplateElement";
+	readonly tail?: boolean;
+	readonly cooked: string;
+	readonly raw: string;
 }
 
 export const jsTemplateElement = createBuilder<JSTemplateElement>(

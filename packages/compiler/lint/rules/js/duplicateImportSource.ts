@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
-import {AnyJSStatement, AnyNode, JSImportDeclaration} from "@romefrontend/ast";
+import {createVisitor, signals} from "@romefrontend/compiler";
+import {AnyJSStatement, JSImportDeclaration} from "@romefrontend/ast";
 import {SourceLocation} from "@romefrontend/parser-core";
 import {descriptions} from "@romefrontend/diagnostics";
 
-export default {
+export default createVisitor({
 	name: "js/duplicateImport",
-	enter(path: Path): AnyNode {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSRoot") {
@@ -105,12 +105,13 @@ export default {
 					}
 				}
 
-				return {
+				return signals.replace({
 					...node,
 					body: newBody,
-				};
+				});
 			}
 		}
-		return node;
+
+		return signals.retain;
 	},
-};
+});

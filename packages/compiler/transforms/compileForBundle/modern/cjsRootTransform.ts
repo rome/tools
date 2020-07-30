@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@romefrontend/compiler";
 import {getOptions, getPrefixedNamespace, getPrivateName} from "../_utils";
 import {renameBindings} from "@romefrontend/js-ast-utils";
 
-export default {
+export default createVisitor({
 	name: "cjsRootTransform",
-	enter(path: Path) {
+	enter(path) {
 		const {node, scope, context} = path;
 
 		const {moduleId} = getOptions(context);
@@ -29,9 +29,9 @@ export default {
 			}
 
 			const newProgram = renameBindings(path, mappings);
-			return newProgram;
+			return signals.replace(newProgram);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});

@@ -9,7 +9,7 @@ import {Diagnostics, DiagnosticsProcessor} from "@romefrontend/diagnostics";
 import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
 import {Reporter} from "@romefrontend/cli-reporter";
-import {readMarkup} from "@romefrontend/cli-layout";
+import {readMarkup} from "@romefrontend/markup";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics

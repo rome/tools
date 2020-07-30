@@ -10,7 +10,7 @@ import Linter, {
 	LinterCompilerOptionsPerFile,
 	LinterOptions,
 } from "../linter/Linter";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 import {createServerCommand} from "../commands";
 import {
 	LintCompilerOptionsDecisions,
@@ -85,7 +85,8 @@ export default createServerCommand<Flags>({
 			req.expectArgumentLength(0);
 
 			const client = await req.getVCSClient();
-			const target = flags.changed === "" ? client.trunkBranch : flags.changed;
+			const target =
+				flags.changed === "" ? await client.getDefaultBranch() : flags.changed;
 			args = await client.getModifiedFiles(target);
 
 			// Only include lintable files

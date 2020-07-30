@@ -9,8 +9,8 @@ import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSArrayType extends NodeBaseWithComments {
-	type: "TSArrayType";
-	elementType: AnyTSPrimary;
+	readonly type: "TSArrayType";
+	readonly elementType: AnyTSPrimary;
 }
 
 export const tsArrayType = createBuilder<TSArrayType>(

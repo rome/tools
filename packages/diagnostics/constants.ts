@@ -6,10 +6,10 @@
  */
 
 import {DiagnosticAdviceItem} from "./types";
-import {markup} from "@romefrontend/cli-layout";
+import {markup} from "@romefrontend/markup";
 
 export const INTERNAL_ERROR_LOG_ADVICE: DiagnosticAdviceItem = {
 	type: "log",
 	category: "warn",
-	text: markup`This diagnostic was derived from an internal Rome error. The problem likely isn't with your code. Please report this if necessary`,
+	text: markup`This diagnostic was derived from an internal Rome error. Possible bug.`,
 };

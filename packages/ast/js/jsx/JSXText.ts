@@ -9,8 +9,8 @@ import {NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXText extends NodeBaseWithComments {
-	type: "JSXText";
-	value: string;
+	readonly type: "JSXText";
+	readonly value: string;
 }
 
 export const jsxText = createBuilder<JSXText>(

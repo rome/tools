@@ -9,8 +9,8 @@ import {JSBindingIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSImportSpecifierLocal extends NodeBaseWithComments {
-	type: "JSImportSpecifierLocal";
-	name: JSBindingIdentifier;
+	readonly type: "JSImportSpecifierLocal";
+	readonly name: JSBindingIdentifier;
 }
 
 export const jsImportSpecifierLocal = createQuickBuilder<

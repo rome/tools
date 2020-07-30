@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@romefrontend/cli-layout";
+import {Markup, markup} from "@romefrontend/markup";
 
 export const bundler = createDiagnosticsCategory({
 	TOP_LEVEL_AWAIT_IN_LEGACY: {

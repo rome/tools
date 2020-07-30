@@ -9,8 +9,8 @@ import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSExportAssignment extends NodeBaseWithComments {
-	type: "TSExportAssignment";
-	expression: AnyJSExpression;
+	readonly type: "TSExportAssignment";
+	readonly expression: AnyJSExpression;
 }
 
 export const tsExportAssignment = createBuilder<TSExportAssignment>(

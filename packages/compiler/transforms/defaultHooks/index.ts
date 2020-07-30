@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
 import {
 	AnyComment,
 	AnyCommentOptionalId,
 	AnyJSExpression,
-	AnyNode,
 	JSAssignmentIdentifier,
 	JSReferenceIdentifier,
 	jsAssignmentIdentifier,
@@ -58,7 +57,7 @@ export const bindingInjector = createHook<
 			},
 		};
 	},
-	exit(path: Path, state: VariableInjectorState): AnyNode {
+	exit(path: Path, state: VariableInjectorState) {
 		const {node} = path;
 
 		if (node.type !== "JSBlockStatement" && node.type !== "JSRoot") {
@@ -67,10 +66,10 @@ export const bindingInjector = createHook<
 
 		const {bindings} = state;
 		if (bindings.length === 0) {
-			return node;
+			return signals.retain;
 		}
 
-		return {
+		return signals.replace({
 			...node,
 			body: [
 				jsVariableDeclarationStatement.quick(
@@ -86,22 +85,22 @@ export const bindingInjector = createHook<
 				),
 				...node.body,
 			],
-		};
+		});
 	},
 });
 
-export const variableInjectorVisitor = {
+export const variableInjectorVisitor = createVisitor({
 	name: "variableInjector",
-	enter(path: Path) {
+	enter(path) {
 		const {node} = path;
 
 		if (node.type === "JSBlockStatement" || node.type === "JSRoot") {
 			path.provideHook(bindingInjector);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
 
 type CommentInjectorState = {
 	comments: Array<AnyComment>;
@@ -144,23 +143,23 @@ export const commentInjector = createHook<
 			},
 		};
 	},
-	exit(path: Path, state: CommentInjectorState): AnyNode {
+	exit(path: Path, state: CommentInjectorState) {
 		const {node} = path;
 
 		if (node.type !== "JSRoot") {
 			throw new Error("Never should have been used as a provider");
 		}
 
-		return {
+		return signals.replace({
 			...node,
 			comments: [...node.comments, ...state.comments],
-		};
+		});
 	},
 });
 
-export const commentInjectorVisitor = {
+export const commentInjectorVisitor = createVisitor({
 	name: "commentInjector",
-	enter(path: Path) {
+	enter(path) {
 		const {node, context} = path;
 
 		if (node.type === "CommentBlock" || node.type === "CommentLine") {
@@ -172,6 +171,6 @@ export const commentInjectorVisitor = {
 			return path.provideHook(commentInjector);
 		}
 
-		return node;
+		return signals.retain;
 	},
-};
+});
