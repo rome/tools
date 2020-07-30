@@ -372,7 +372,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 		// Treat all Windows drive paths as case insensitive
 		// Convert all segments to lowercase. Bail if they were all lowercase.
-		if (this.absoluteType === "windows-drive") {
+		// TODO this causes issues with file maps/sets
+		/*if (this.absoluteType === "windows-drive") {
 			const hadSegments = segments !== undefined;
 			if (segments === undefined) {
 				segments = this.getRawSegments();
@@ -389,7 +390,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 			if (!didModify && !hadSegments) {
 				segments = undefined;
 			}
-		}
+		}*/
 
 		let path: Super;
 		if (segments === undefined) {
