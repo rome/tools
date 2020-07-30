@@ -1,5 +1,4 @@
-import {markup} from "@romefrontend/cli-layout";
-
+import {markup} from "@romefrontend/markup";
 import {createDiagnosticsCategory} from "./index";
 
 // @romefrontend/commit-parser

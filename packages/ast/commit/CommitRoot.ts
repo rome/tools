@@ -1,7 +1,8 @@
 import {createBuilder} from "@romefrontend/ast/utils";
 import {NodeBaseWithComments, RootBase} from "..";
 
-export interface CommitRoot extends NodeBaseWithComments, RootBase {
+export interface CommitRoot extends NodeBaseWithComments,
+RootBase {
 	readonly type: "CommitRoot";
 	readonly breaking: boolean;
 	readonly commitType: string;

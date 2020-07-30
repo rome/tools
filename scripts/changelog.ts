@@ -1,17 +1,16 @@
-import child = require("child_process");
-import fs = require("fs");
-
-import {markup} from "@romefrontend/cli-layout";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {markup} from "@romefrontend/markup";
 import {parseCommit} from "@romefrontend/commit-parser";
 import {readFileText} from "@romefrontend/fs";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@romefrontend/path";
+import {PACKAGES, ROOT, reporter} from "./_utils";
 
+import child = require("child_process");
+import fs = require("fs");
 import https = require("https");
 import http = require("http");
+import {dedent} from "@romefrontend/string-utils";
+import {consumeJSON} from "@romefrontend/codec-json";
 
-import {PACKAGES, ROOT} from "./_util";
-const REPORTER = Reporter.fromProcess();
 const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
 const LINE_DELIM = "<--ROME-LINE-->";
 const GIT_PLACEHOLDERS = {
@@ -103,24 +102,27 @@ function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
 				).join("\n")}\n`
 			: "";
 	}
+
+	const list = Object.keys(tagMap).map((tag) => {
+		const commits = tagMap[tag];
+		const features = commits.filter(({meta}) => meta?.commitType === "feat");
+		const fixes = commits.filter(({meta}) => meta?.commitType === "fix");
+		const breaking = commits.filter(({meta}) => meta?.breaking);
+		const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
+		return dedent`
+			## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
+			${renderItems(features, "Features")}
+			${renderItems(fixes, "Bug fixes")}
+			${renderItems(breaking, "BREAKING CHANGES")}
+			${renderItems(misc, "Miscellaneous")}
+		`;
+	}).join("\n");
+
 	return dedent`
 		# Changelog
 
 		All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-		${Object.keys(tagMap).map((tag) => {
-				const commits = tagMap[tag];
-				const features = commits.filter(({meta}) => meta?.commitType === "feat");
-				const fixes = commits.filter(({meta}) => meta?.commitType === "fix");
-				const breaking = commits.filter(({meta}) => meta?.breaking);
-				const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
-				return `
-		## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
-
-		${renderItems(features, "Features")}
-		${renderItems(fixes, "Bug fixes")}
-		${renderItems(breaking, "BREAKING CHANGES")}
-		${renderItems(misc, "Miscellaneous")}`;
-			}).join("\n")}
+		${list}
 		\n\n\n\n\n
 		<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
 	`;
@@ -280,7 +282,7 @@ function parseCommitLog(
  * @param keepAlive - Indicates that this error should not be fatal
  */
 function raiseError(message: string, keepAlive = false): void {
-	REPORTER.error(markup`${message}`);
+	reporter.error(markup`${message}`);
 	!keepAlive && process.exit(1);
 }
 
@@ -310,20 +312,20 @@ export async function main() {
 	if (!isMainBranch()) {
 		raiseError("Change logs must be generated on the main branch.");
 	}
-	REPORTER.success(markup`The <emphasis>main</emphasis> branch is being used.`);
+	reporter.success(markup`The <emphasis>main</emphasis> branch is being used.`);
 
 	// Ensure the branch is clean
 	if (isDirty()) {
 		raiseError("Uncommitted changes exist on the main branch.");
 	}
-	REPORTER.success(
+	reporter.success(
 		markup`The main branch has <emphasis>no uncommitted changes</emphasis>.`,
 	);
 
 	// Update the root package version
 	const targetReleaseType = getReleaseType();
 	const newVersion = updateVersion(targetReleaseType, ROOT);
-	REPORTER.success(
+	reporter.success(
 		markup`The root package version was updated to <emphasis>${newVersion}</emphasis>.`,
 	);
 
@@ -333,7 +335,7 @@ export async function main() {
 	const markdown = generateMarkdown(tagMap);
 	fs.writeFileSync("./CHANGELOG.md", markdown);
 	child.spawnSync("git", ["add", "CHANGELOG.md"]);
-	REPORTER.success(
+	reporter.success(
 		markup`The <emphasis>CHANGELOG.md</emphasis> was successfully generated.`,
 	);
 
@@ -344,20 +346,20 @@ export async function main() {
 			true,
 		);
 	}
-	REPORTER.success(
+	reporter.success(
 		markup`The package version <emphasis>${newVersion}</emphasis> is clear to use.`,
 	);
 
 	// Update the rome package version
 	updateVersion(newVersion, PACKAGES.append("rome"));
-	REPORTER.success(
+	reporter.success(
 		markup`The rome package version was updated to <emphasis>${newVersion}</emphasis>.`,
 	);
 
 	// Create a resulting tag
 	createTag(newVersion);
-	REPORTER.success(
+	reporter.success(
 		markup`A new <emphasis>${newVersion}</emphasis> git tag was created. To publish, run:`,
 	);
-	REPORTER.info(markup`./rome run scripts/publish`);
+	reporter.info(markup`./rome run scripts/publish`);
 }

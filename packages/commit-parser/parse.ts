@@ -16,13 +16,13 @@ export const createCommitParser = createParser((ParserCore) =>
 		}
 
 		tokenize(index: Number0): undefined | TokenValues<Tokens> {
-			consr char = this.getInputCharOnly(index);
+			const char = this.getInputCharOnly(index);
 			switch (char) {
 				case Symbols.Space:
 				case Symbols.Tab: {
 					while (
-						char === Symbols.Space ||
-						char === Symbols.Tab
+						this.getInputCharOnly(index) === Symbols.Space ||
+						this.getInputCharOnly(index) === Symbols.Tab
 					) {
 						index = ob1Add(index, 1);
 					}
@@ -42,7 +42,7 @@ export const createCommitParser = createParser((ParserCore) =>
 					return this.finishToken("Colon");
 
 				default:
-					return this.finishValueToken("Word", char);	
+					return this.finishValueToken("Word", char);
 			}
 		}
 
