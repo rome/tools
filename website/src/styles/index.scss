@@ -38,6 +38,7 @@
 	--breadcrumbs-submenu-shadow-color: #{$gray-6};
 	--color-scheme-switcher-color: #{$gray-4};
 	--search-input-background-color: rgba(0, 0, 0, 0.07);
+	--table-even-row-color: rgba(0, 0, 0, 0.05);
 }
 
 @mixin dark-root {
@@ -61,6 +62,7 @@
 	--breadcrumbs-submenu-shadow-color: #{$gray-2};
 	--color-scheme-switcher-color: #000;
 	--search-input-background-color: rgba(0, 0, 0, 0.09);
+	--table-even-row-color: rgba(0, 0, 0, 0.09);
 }
 
 html[data-theme="dark"] {

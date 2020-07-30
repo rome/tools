@@ -47,7 +47,7 @@
 		}
 
 		.rule:nth-child(even) {
-			background-color: var(--search-input-background-color);
+			background-color: var(--table-even-row-color);
 		}
 
 	}
@@ -161,7 +161,7 @@
 	}
 
 	tbody tr:nth-child(even) {
-		background-color: var(--search-input-background-color);
+		background-color: var(--table-even-row-color);
 	}
 
 	blockquote {
