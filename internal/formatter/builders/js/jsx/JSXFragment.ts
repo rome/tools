@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, indent} from "@internal/formatter";
+import {Builder, Token, concat, hardline, indent} from "@internal/formatter";
 
 import {JSXFragment} from "@internal/ast";
-import {hardline} from "@internal/formatter/tokens";
 
 export default function JSXFragment(builder: Builder, node: JSXFragment): Token {
 	return concat([

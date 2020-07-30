@@ -6,15 +6,15 @@ import {
 } from "./types";
 import {
 	Markup,
+	MarkupTokenType,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	markup,
 	markupTag,
 	readMarkup,
-} from "@internal/markup/escape";
+} from "@internal/markup";
 import {splitLines} from "@internal/string-utils";
 import {ob1Get0} from "@internal/ob1";
-import {MarkupTokenType} from "@internal/markup/types";
 
 export function reduce<Token extends TokenShape>(
 	input: string,

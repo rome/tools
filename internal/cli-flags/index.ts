@@ -10,7 +10,7 @@ import {Reporter} from "@internal/cli-reporter";
 import {OptionalProps} from "@internal/typescript-helpers";
 import {CWD_PATH} from "@internal/path";
 
-export {FlagValue} from "./Parser";
+export {Examples, FlagValue} from "./Parser";
 export {ParserInterface as FlagParser};
 
 export function parseCLIFlags<T>(opts: ParserOptions<T>): ParserInterface<T> {

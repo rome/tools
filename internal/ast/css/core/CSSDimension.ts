@@ -1,5 +1,5 @@
 import {NodeBaseWithComments} from "@internal/ast";
-import {createBuilder} from "@internal/ast/utils";
+import {createBuilder} from "../../utils";
 
 export interface CSSDimension extends NodeBaseWithComments {
 	readonly type: "CSSDimension";

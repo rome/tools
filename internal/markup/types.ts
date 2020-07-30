@@ -7,7 +7,7 @@
 
 import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
 import {AbsoluteFilePath} from "@internal/path";
-import {UserConfig} from "@internal/core/common/userConfig";
+import {UserConfig} from "@internal/core";
 import {Number0, Number1} from "@internal/ob1";
 import {Consumer} from "@internal/consume";
 

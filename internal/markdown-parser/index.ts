@@ -1,5 +1,5 @@
 import {ParserOptionsWithRequiredPath} from "@internal/parser-core";
-import {createMarkdownParser} from "@internal/markdown-parser/parse";
+import {createMarkdownParser} from "./parse";
 
 export function parseMarkdown(opts: ParserOptionsWithRequiredPath) {
 	return createMarkdownParser(opts).parse();
@@ -8,3 +8,6 @@ export function parseMarkdown(opts: ParserOptionsWithRequiredPath) {
 export function tokenizeMarkdown(opts: ParserOptionsWithRequiredPath) {
 	return createMarkdownParser(opts).tokenizeAll();
 }
+
+export * from "./types";
+export * from "./utils";

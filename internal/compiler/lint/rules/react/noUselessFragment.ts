@@ -1,10 +1,14 @@
-import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {
+	ExitSignal,
+	Path,
+	Scope,
+	createVisitor,
+	signals,
+} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {hasJSXAttribute, isFunctionNode} from "@internal/js-ast-utils";
 import {JSXElement, JSXFragment} from "@internal/ast";
-
 import {doesNodeMatchReactPattern} from "../../utils/react";
-import {ExitSignal} from "@internal/compiler/signals";
 
 function isChildOfHtmlElement(path: Path): boolean {
 	const parentNode = path.parent;

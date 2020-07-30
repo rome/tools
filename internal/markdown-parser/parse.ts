@@ -4,11 +4,19 @@ import {
 	isDigit,
 	readUntilLineBreak,
 } from "@internal/parser-core";
-import {ListProperties, State, Tokens} from "@internal/markdown-parser/types";
 import {
+	ListProperties,
+	State,
+	Tokens,
+	hasThematicBreak,
+} from "@internal/markdown-parser";
+import {
+	AnyMarkdownInlineNode,
+	AnyMarkdownNode,
 	MarkdownDividerBlock,
 	MarkdownHeadingBlock,
 	MarkdownListBlock,
+	MarkdownListChildren,
 	MarkdownListItem,
 	MarkdownParagraph,
 	MarkdownRoot,
@@ -16,12 +24,7 @@ import {
 } from "@internal/ast";
 import {Number0, ob1Add} from "@internal/ob1";
 import {isEscaped} from "@internal/string-utils";
-import {
-	AnyMarkdownInlineNode,
-	AnyMarkdownNode,
-	MarkdownListChildren,
-} from "@internal/ast/markdown/unions";
-import {hasThematicBreak} from "@internal/markdown-parser/utils";
+
 import {descriptions} from "@internal/diagnostics";
 
 export const createMarkdownParser = createParser((

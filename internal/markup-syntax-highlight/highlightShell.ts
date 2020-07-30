@@ -1,5 +1,5 @@
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
-import {concatMarkup, filePathToMarkup, markup} from "@internal/markup/escape";
+import {concatMarkup, filePathToMarkup, markup} from "@internal/markup";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
 import {createUnknownFilePath} from "@internal/path";
 

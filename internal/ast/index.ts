@@ -5,6 +5,7 @@ export * from "./js/constants";
 
 export * from "./html/unions";
 export * from "./js/unions";
+export * from "./markdown/unions";
 export * from "./unions";
 
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";

@@ -16,6 +16,8 @@ import {types as tokTypes} from "./tokenizer/types";
 import {createJSParser} from "./parser";
 import "./tokenizer/context";
 
+export {default as CommentsConsumer} from "./CommentsConsumer";
+
 export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	const options: JSParserOptions = normalizeOptions(userOptions);
 	return createJSParser(options).parse();

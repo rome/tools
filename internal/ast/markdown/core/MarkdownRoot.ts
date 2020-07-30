@@ -1,6 +1,5 @@
-import {NodeBaseWithComments, RootBase} from "@internal/ast";
+import {AnyMarkdownNode, NodeBaseWithComments, RootBase} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyMarkdownNode} from "@internal/ast/markdown/unions";
 
 export interface MarkdownRoot extends NodeBaseWithComments,
 RootBase {

@@ -1,6 +1,5 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {AnyMarkdownInlineNode, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyMarkdownInlineNode} from "@internal/ast/markdown/unions";
 
 export interface MarkdownParagraph extends NodeBaseWithComments {
 	type: "MarkdownParagraph";

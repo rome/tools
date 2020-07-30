@@ -7,7 +7,7 @@
 
 import {AnyComment, AnyNode} from "@internal/ast";
 import {isTypeExpressionWrapperNode, isTypeNode} from "@internal/js-ast-utils";
-import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
+import {CommentsConsumer} from "@internal/js-parser";
 import {
 	tokenizeComment,
 	tokenizeLeadingComment,

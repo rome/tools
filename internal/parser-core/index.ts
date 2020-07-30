@@ -51,7 +51,7 @@ import {
 import {removeCarriageReturn} from "@internal/string-utils";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
 import {attachComments} from "./comments";
-import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
+import {CommentsConsumer} from "@internal/js-parser";
 
 export * from "./types";
 

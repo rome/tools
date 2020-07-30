@@ -10,6 +10,7 @@ import {
 	Token,
 	concat,
 	group,
+	hardline,
 	indent,
 	join,
 	lineOrSpace,
@@ -17,7 +18,6 @@ import {
 } from "@internal/formatter";
 
 import {JSXElement} from "@internal/ast";
-import {hardline} from "@internal/formatter/tokens";
 
 export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	const tokens: Array<Token> = [

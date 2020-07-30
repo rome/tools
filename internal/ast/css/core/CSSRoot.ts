@@ -4,7 +4,7 @@ import {
 	NodeBaseWithComments,
 	RootBase,
 } from "@internal/ast";
-import {createBuilder} from "@internal/ast/utils";
+import {createBuilder} from "../../utils";
 
 export type CSSRoot = NodeBaseWithComments &
 	RootBase & {

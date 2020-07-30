@@ -1,6 +1,5 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {MarkdownReference, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownReference} from "@internal/ast/markdown/unions";
 
 // [link](www.example.com)
 export interface MarkdownLinkInline extends NodeBaseWithComments {

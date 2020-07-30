@@ -45,7 +45,7 @@ import {
 	extractSuppressionsFromProgram,
 	matchesSuppression,
 } from "../suppressions";
-import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
+import {CommentsConsumer} from "@internal/js-parser";
 import {hookVisitors} from "../transforms";
 import {FileReference} from "@internal/core";
 import {createDefaultProjectConfig} from "@internal/project";

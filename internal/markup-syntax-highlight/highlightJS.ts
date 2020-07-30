@@ -2,7 +2,7 @@ import {tokenizeJS} from "@internal/js-parser";
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
 import {ConstJSSourceType} from "@internal/ast";
 import {invalidHighlight, reduce} from "./utils";
-import {readMarkup} from "@internal/markup/escape";
+import {readMarkup} from "@internal/markup";
 
 export default function highlightJS(
 	{input, path}: AnsiHighlightOptions,

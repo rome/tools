@@ -4,7 +4,7 @@ import {
 	CSSRule,
 	NodeBaseWithComments,
 } from "@internal/ast";
-import {createBuilder} from "@internal/ast/utils";
+import {createBuilder} from "../../utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSBlock extends NodeBaseWithComments {

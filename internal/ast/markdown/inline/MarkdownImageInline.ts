@@ -1,6 +1,5 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {MarkdownReference, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownReference} from "@internal/ast/markdown/unions";
 
 // ![Atl text](//url)
 // ![Atl text] [1]

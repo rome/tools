@@ -1,6 +1,5 @@
-import {NodeBaseWithComments} from "@internal/ast";
+import {MarkdownListChildren, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownListChildren} from "@internal/ast/markdown/unions";
 
 export interface MarkdownListItem extends NodeBaseWithComments {
 	type: "MarkdownListItem";
