@@ -41,12 +41,13 @@
 }
 
 @mixin dark-root {
-	--logo-font-color: #{$gray-8};
-	--background-color: #{$gray-4};
+	--logo-font-color: #{lighten(#27272A, 72%)};
+	--background-color: #{lighten(#27272A, 2%)};
 	--container-color: #{$gray-4};
 	--font-color: #{lighten(#27272A, 65%)};
+	--sub-text-color: #{lighten(#27272A, 55%)};
 	--top-border-color: #{$color-4};
-	--soft-border-color: rgba(0, 0, 0, 0.2);
+	--soft-border-color: rgba(0, 0, 0, 0.15);
 	--pattern-color: #{$gray-3};
 	--pattern-color-2: #{rgba(0, 0, 0, 0)};
 	--pattern-img-path: var(--pattern-dark-img-path);
