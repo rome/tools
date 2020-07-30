@@ -28,6 +28,9 @@ footer {
 
 	> .container{
 		padding: $unit $unit * 2;
+		@include mobile-only() {
+			flex-direction: column;
+		}
 	}
 
 	.footnote{
@@ -43,16 +46,26 @@ footer {
 			b{
 				font-weight: bold;
 			}
+
+			@include mobile-only() {
+				margin: $unit 0;
+			}
 		}
 
 		.netlify-badge {
 			margin-left: auto;
+			@include mobile-only() {
+				margin: auto;
+			}
 		}
 
 		.container{
 			height: 100%;
 			align-items: center;
 			padding: 0 $unit;
+			@include mobile-only() {
+				flex-direction: column;
+			}
 		}
 	}
 

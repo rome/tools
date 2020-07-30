@@ -17,6 +17,8 @@
 
 	@include mobile-only() {
 		padding: $unit * 2 $unit;
+		border: 0;
+		margin: 0;
 	}
 
 	h1, h2 {
@@ -146,6 +148,10 @@ article.latest-post {
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+
+	@include mobile-only() {
+		margin-left: 0;
+	}
 
 	h2 {
 		margin-bottom: 0.83em;

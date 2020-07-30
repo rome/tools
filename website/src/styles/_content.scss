@@ -30,6 +30,13 @@
 			border: 1px solid var(--soft-border-color);
 		}
 
+		@include mobile-only() {
+			padding: 0 $unit $unit * 2 $unit;
+			margin-left: 0;
+			border-bottom: 1px solid var(--soft-border-color);
+			border-top: 1px solid var(--soft-border-color);
+		}
+
 		&:last-child{
 			margin-bottom: 0;
 		}
