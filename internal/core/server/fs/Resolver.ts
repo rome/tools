@@ -42,7 +42,6 @@ function request(
 			url,
 			(res) => {
 				if (res.statusCode !== 200) {
-					console.log("non-200 return");
 					resolve({
 						type: "FETCH_ERROR",
 						source: undefined,

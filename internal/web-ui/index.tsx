@@ -375,8 +375,5 @@ event.subscribe(
 );
 
 socket.onopen = () => {
-	console.log("HANDSHAKE START");
-	bridge.handshake({second: true}).then(() => {
-		console.log("HANDSHAKE END");
-	});
+	bridge.handshake({second: true});
 };

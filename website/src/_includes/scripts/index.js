@@ -174,7 +174,6 @@ class TableOfContents {
 			}
 		}
 
-		console.log("Calculating TOC headings positions");
 		this.hasInitializedHeadings = true;
 		this.headingsCalculated = [];
 		for (let i = 0; i < headingElements.length; i++) {
