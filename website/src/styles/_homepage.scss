@@ -11,8 +11,8 @@
 
 	@include pattern;
 
-	@media only screen and (min-width: 880px) {
-		height: 127px + 49px;
+	@media only screen and (min-width: 970px) {
+		height: 127px + 48px;
 	}
 
 	@include mobile-only() {
@@ -27,6 +27,7 @@
 
 	h1 {
 		margin-bottom: 0.3em;
+		font-size: 2.3em;
 	}
 
 	h2 {

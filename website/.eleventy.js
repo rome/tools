@@ -215,10 +215,12 @@ module.exports = function(eleventyConfig) {
 		},
 	);
 
-	eleventyConfig.addShortcode("romeVersion", function() {
-		return romePackage.version;
-	 });
-
+	eleventyConfig.addShortcode(
+		"romeVersion",
+		function() {
+			return romePackage.version;
+		},
+	);
 
 	// Customize YAML engine so we can parse hard tabs lol...
 	eleventyConfig.setFrontMatterParsingOptions({
