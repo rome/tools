@@ -20,6 +20,8 @@
 		}
 	}
 
+
+
 	section.rules{
 
 		padding: 0;
@@ -55,6 +57,10 @@
 		background-color: var(--container-color);
 		margin-top: $unit;
 		margin-left: $unit;
+
+		> *:last-child {
+			margin-bottom: 0;
+		}
 
 		@include desktop-only() {
 			border: 1px solid var(--soft-border-color);
