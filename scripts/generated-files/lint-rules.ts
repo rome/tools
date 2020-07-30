@@ -155,9 +155,7 @@ export async function main() {
 					const description = getDocRuleDescription(docs, content);
 					lines.push(`<div class="rule">`);
 					lines.push(`<h3 data-toc-exclude id="${basename}">`);
-					lines.push(
-						`<a href="/docs/lint/rules/${ruleName}">${basename}</a>`,
-					);
+					lines.push(`<a href="/docs/lint/rules/${ruleName}">${basename}</a>`);
 					lines.push(`<a class="header-anchor" href="#${basename}"></a>`);
 					lines.push("</h3>");
 
