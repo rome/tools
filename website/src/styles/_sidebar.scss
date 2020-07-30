@@ -120,6 +120,7 @@
 
 .site-navigation-container {
 	overflow: hidden;
+	border-top: 1px solid var(--soft-border-color);
 	flex-shrink: 0;
 	border-bottom: 1px solid var(--soft-border-color);
 }
@@ -190,7 +191,6 @@
 
 .docsearch-container {
 	position: relative;
-	border-bottom: 1px solid var(--soft-border-color);
 
 	.search.icon {
 		z-index: 99999;
@@ -207,7 +207,8 @@
 		padding-left: 42px;
 		border: 0;
 		height: $unit * 2;
-		background: rgba(0, 0, 0, 0.05);
+		background: var(--search-input-background-color);
+		box-shadow: inset 0px 1px 2px 0px var(--search-input-background-color);
 		font-size: 1.1em;
 		color: inherit;
 		width: 100%;

@@ -37,6 +37,7 @@
 	--breadcrumbs-background-hover: #{$gray-7};
 	--breadcrumbs-submenu-shadow-color: #{$gray-6};
 	--color-scheme-switcher-color: #{$gray-4};
+	--search-input-background-color: rgba(0, 0, 0, 0.07);
 }
 
 @mixin dark-root {
@@ -58,6 +59,7 @@
 	--breadcrumbs-background-hover: #{darken(#27272A, 4%)};
 	--breadcrumbs-submenu-shadow-color: #{$gray-2};
 	--color-scheme-switcher-color: #000;
+	--search-input-background-color: rgba(0, 0, 0, 0.09);
 }
 
 html[data-theme="dark"] {
