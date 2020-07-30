@@ -43,7 +43,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 			},
 		});
 
-		formatAst = formatContext.reduceRoot(ast, lintTransforms);
+		formatAst = formatContext.reduceRoot(lintTransforms);
 		formatAst = addSuppressions(formatContext, formatAst);
 	}
 	const formattedCode = formatAST(formatAst).code;
@@ -59,7 +59,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		},
 		frozen: true,
 	});
-	const newAst = context.reduceRoot(ast, lintTransforms);
+	const newAst = context.reduceRoot(lintTransforms);
 	if (ast !== newAst) {
 		throw new Error("Expected the same ast. `frozen: true` is broken");
 	}

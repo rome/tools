@@ -41,7 +41,6 @@ function dumpScopeTree(input: string): string {
 	// Collect a map of scope to child scopes
 	const scopeToChildScopes: ChildScopeMap = new Map();
 	context.reduceRoot(
-		ast,
 		{
 			name: "test",
 			enter({node, scope}) {

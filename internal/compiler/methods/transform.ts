@@ -73,7 +73,7 @@ export default async function transform(
 		transforms,
 	);
 
-	const compiledAst = context.reduceRoot(ast, visitors);
+	const compiledAst = context.reduceRoot(visitors);
 
 	const res: TransformResult = {
 		suppressions: context.suppressions,

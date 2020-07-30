@@ -31,6 +31,7 @@ import {
 	DiagnosticOrigin,
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
+	descriptions,
 } from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
@@ -42,8 +43,7 @@ import {
 	TransformVisitor,
 } from "../types";
 import {
-	extractSuppressionsFromProgram,
-	matchesSuppression,
+	matchesSuppression, createSuppressionsVisitor,
 } from "../suppressions";
 import {CommentsConsumer} from "@internal/js-parser";
 import {hookVisitors} from "../transforms";
@@ -58,6 +58,7 @@ import {
 import {isRoot} from "@internal/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics/utils";
 import {Markup, markup} from "@internal/markup";
+import suppressionVisitor from "../transforms/suppressionVisitor";
 import cleanTransform from "../transforms/cleanTransform";
 import {assertSingleNode} from "@internal/js-ast-utils";
 
@@ -103,11 +104,12 @@ export default class CompilerContext {
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},
-			suppressions,
+			suppressions = [],
 		} = arg;
 
 		this.records = [];
 
+		this.ast = ast;
 		this.path = createUnknownFilePath(ast.filename);
 		this.filename = ast.filename;
 		this.displayFilename =
@@ -125,34 +127,31 @@ export default class CompilerContext {
 		this.comments = new CommentsConsumer(ast.comments);
 		this.diagnostics = new DiagnosticsProcessor();
 
-		if (suppressions === undefined) {
-			const {suppressions, diagnostics} = extractSuppressionsFromProgram(
-				this,
-				ast,
-			);
-			this.suppressions = suppressions;
-			this.diagnostics.addDiagnostics(diagnostics);
-		} else {
-			this.suppressions = suppressions;
-		}
+		this.reducedRoot = false;
+		this.suppressions = suppressions;
+		this.visitSuppressions = arg.suppressions === undefined;
 	}
 
 	displayFilename: string;
 	filename: string;
+	mtime: undefined | number;
 	path: UnknownFilePath;
 	project: TransformProjectDefinition;
-
 	language: DiagnosticLanguage;
 	sourceTypeJS: undefined | ConstJSSourceType;
+	reducedRoot: boolean;
+	rootScope: RootScope;
+	ast: AnyRoot;
 
 	comments: CommentsConsumer;
 	cacheDependencies: Set<string>;
 	records: Array<Record>;
+
 	diagnostics: DiagnosticsProcessor;
 	suppressions: DiagnosticSuppressions;
+	visitSuppressions: boolean;
+
 	frozen: boolean;
-	rootScope: RootScope;
-	mtime: undefined | number;
 	origin: undefined | DiagnosticOrigin;
 	options: CompilerOptions;
 
@@ -166,6 +165,33 @@ export default class CompilerContext {
 				}
 			}),
 		);
+	}
+
+	checkOverlappingSuppressions() {
+		// Check for overlapping suppressions
+		const nonOverlapSuppressions = new Map();
+		for (const suppression of this.suppressions) {
+			if (nonOverlapSuppressions.has(suppression.category)) {
+				const previousSuppression = nonOverlapSuppressions.get(
+					suppression.category,
+				);
+				const currentSuppression = suppression;
+				if (
+					currentSuppression.startLine > previousSuppression.startLine &&
+					currentSuppression.endLine <= previousSuppression.endLine
+				) {
+					this.diagnostics.addDiagnostic({
+						description: descriptions.SUPPRESSIONS.OVERLAP(suppression.category),
+						location: suppression.commentLocation,
+					});
+				} else {
+					// Replace suppression to compare to later suppressions
+					nonOverlapSuppressions.set(suppression.category, suppression);
+				}
+			} else {
+				nonOverlapSuppressions.set(suppression.category, suppression);
+			}
+		}
 	}
 
 	getComments(ids: undefined | Array<string>): Array<AnyComment> {
@@ -201,14 +227,19 @@ export default class CompilerContext {
 	}
 
 	reduceRoot(
-		ast: AnyRoot,
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
 	): AnyRoot {
+		if (this.reducedRoot) {
+			throw new Error("reduceRoot has already been called");
+		}
+
 		const node = assertSingleNode(
 			reduceNode(
-				ast,
+				this.ast,
 				[
+					createSuppressionsVisitor(),
+					suppressionVisitor,
 					...hookVisitors,
 					cleanTransform,
 					...(Array.isArray(visitors) ? visitors : [visitors]),
@@ -220,6 +251,11 @@ export default class CompilerContext {
 		if (!isRoot(node)) {
 			throw new Error("Expected root to be returned from reduce");
 		}
+
+		if (this.visitSuppressions) {
+			this.checkOverlappingSuppressions();
+		}
+
 		return node;
 	}
 

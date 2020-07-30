@@ -15,6 +15,8 @@ import {
 } from "@internal/diagnostics";
 import CompilerContext from "./lib/CompilerContext";
 import {signals} from ".";
+import { TransformVisitor } from "./types";
+import { createVisitor } from "./utils";
 
 export const SUPPRESSION_START = "rome-ignore";
 export const INCORRECT_SUPPRESSION_START = [
@@ -32,12 +34,10 @@ type ExtractedSuppressions = {
 	diagnostics: Diagnostics;
 };
 
-type NodeToComment = Map<AnyComment, AnyNode>;
-
 function extractSuppressionsFromComment(
 	context: CompilerContext,
 	comment: AnyComment,
-	nodeToComment: NodeToComment,
+	targetNode: undefined | AnyNode,
 ): undefined | ExtractedSuppressions {
 	const commentLocation = comment.loc;
 	if (commentLocation === undefined) {
@@ -70,17 +70,16 @@ function extractSuppressionsFromComment(
 			continue;
 		}
 
-		const nextNode = nodeToComment.get(comment);
-		if (nextNode === undefined || nextNode.loc === undefined) {
+		if (targetNode === undefined || targetNode.loc === undefined) {
 			diagnostics.push({
 				description: descriptions.SUPPRESSIONS.MISSING_TARGET,
 				location: commentLocation,
 			});
-			continue;
+			break;
 		}
 
-		const startLine = nextNode.loc.start.line;
-		const endLine = nextNode.loc.end.line;
+		const startLine = targetNode.loc.start.line;
+		const endLine = targetNode.loc.end.line;
 
 		const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
 		if (lineWithoutPrefix[0] !== " ") {
@@ -135,75 +134,41 @@ function extractSuppressionsFromComment(
 	}
 }
 
-export function extractSuppressionsFromProgram(
-	context: CompilerContext,
-	ast: AnyRoot,
-): ExtractedSuppressions {
-	const {comments} = ast;
+export function createSuppressionsVisitor(): TransformVisitor {
+	const visitedComments: Set<AnyComment> = new Set();
 
-	let diagnostics: Diagnostics = [];
-	let suppressions: DiagnosticSuppressions = [];
+	// TODO verify all comments
 
-	const nodeToComment: NodeToComment = new Map();
-	context.reduce(
-		ast,
-		{
-			name: "extractSuppressions",
-			enter(path) {
-				const {node} = path;
+	return createVisitor({
+		name: "suppressions",
 
+		enter(path) {
+			const {node, context} = path;
+
+			if (node.loc !== undefined && node.leadingComments !== undefined) {
 				for (const comment of context.comments.getCommentsFromIds(
 					node.leadingComments,
 				)) {
-					nodeToComment.set(comment, node);
+					if (visitedComments.has(comment)) {
+						continue;
+					}
+
+					visitedComments.add(comment);
+					const result = extractSuppressionsFromComment(
+						context,
+						comment,
+						node,
+					);
+					if (result !== undefined) {
+						context.diagnostics.addDiagnostics(result.diagnostics);
+						context.suppressions = context.suppressions.concat(result.suppressions);
+					}
 				}
-
-				return signals.retain;
-			},
-		},
-		{
-			noScopeCreation: true,
-		},
-	);
-
-	for (const comment of comments) {
-		const result = extractSuppressionsFromComment(
-			context,
-			comment,
-			nodeToComment,
-		);
-		if (result !== undefined) {
-			diagnostics = diagnostics.concat(result.diagnostics);
-			suppressions = suppressions.concat(result.suppressions);
-		}
-	}
-
-	// check for overlap suppressions
-	const nonOverlapSuppressions = new Map();
-	for (const suppression of suppressions) {
-		if (nonOverlapSuppressions.has(suppression.category)) {
-			const previousSuppression = nonOverlapSuppressions.get(
-				suppression.category,
-			);
-			const currentSuppression = suppression;
-			if (
-				currentSuppression.startLine > previousSuppression.startLine &&
-				currentSuppression.endLine <= previousSuppression.endLine
-			) {
-				diagnostics.push({
-					description: descriptions.SUPPRESSIONS.OVERLAP(suppression.category),
-					location: suppression.commentLocation,
-				});
-			} else {
-				// replace suppression to compare to later suppressions
-				nonOverlapSuppressions.set(suppression.category, suppression);
 			}
-		} else {
-			nonOverlapSuppressions.set(suppression.category, suppression);
-		}
-	}
 
-	return {suppressions, diagnostics};
+			return signals.retain;
+		}
+	});
 }
 
 export function matchesSuppression(

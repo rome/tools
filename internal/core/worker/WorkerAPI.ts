@@ -138,7 +138,6 @@ export default class WorkerAPI {
 			ref,
 		});
 		ast = context.reduceRoot(
-			ast,
 			{
 				name: "updateInlineSnapshots",
 				enter(path: Path) {

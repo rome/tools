@@ -15,7 +15,6 @@ function createReduceTest(
 			ast: oldAst,
 		});
 		const newAst = context.reduceRoot(
-			oldAst,
 			[
 				{
 					...visitor,

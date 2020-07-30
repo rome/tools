@@ -6,19 +6,28 @@
  */
 
 import {test} from "rome";
-import {extractSuppressionsFromProgram} from "./suppressions";
 import CompilerContext from "./lib/CompilerContext";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
+import { signals } from ".";
+import { DiagnosticSuppressions, Diagnostics } from "@internal/diagnostics";
 
-function extractSuppressionsFromSource(sourceText: string) {
+function extractSuppressionsFromSource(sourceText: string): {
+	suppressions: DiagnosticSuppressions;
+	diagnostics: Diagnostics;
+} {
 	const ast = parseJS({
 		sourceType: "script",
 		path: "unknown",
 		input: sourceText,
 	});
 	const context = new CompilerContext({ast});
-	return extractSuppressionsFromProgram(context, ast);
+	// Populate reducers
+	context.reduceRoot(() => signals.retain);
+	return {
+		diagnostics: context.diagnostics.getDiagnostics(),
+		suppressions: context.suppressions,
+	};
 }
 
 test(
