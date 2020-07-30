@@ -1,5 +1,5 @@
-import {ROOT, execDev} from "./_utils";
+import {PUBLIC_PACKAGES, execDev} from "./_utils";
 
 export async function main(args: Array<string>) {
-	await execDev(["bundle", ROOT.append("internal", "rome").join(), ...args]);
+	await execDev(["bundle", PUBLIC_PACKAGES.append("rome").join(), ...args]);
 }
