@@ -1,5 +1,5 @@
 import {createBuilder} from "@internal/ast/utils";
-import {NodeBaseWithComments, RootBase} from "..";
+import {NodeBaseWithComments, RootBase} from "../../index";
 
 export interface CommitRoot extends NodeBaseWithComments,
 RootBase {
