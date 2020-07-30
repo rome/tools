@@ -168,7 +168,7 @@ function printAction(
 				...item.requestFlags,
 			},
 		},
-		{type: "none"},
+		"none",
 	).sourceText;
 	opts.reporter.command(command);
 	return DID_PRINT;

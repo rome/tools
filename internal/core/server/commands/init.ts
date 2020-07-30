@@ -44,7 +44,7 @@ export default createServerCommand<Flags>({
 		if (server.projectManager.isBannedProjectPath(cwd)) {
 			const diagnostic: Diagnostic = {
 				description: descriptions.PROJECT_MANAGER.INITING_SENSITIVE(cwd),
-				location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+				location: req.getDiagnosticLocationFromFlags("cwd"),
 			};
 			throw createSingleDiagnosticError(diagnostic);
 		}
@@ -55,14 +55,14 @@ export default createServerCommand<Flags>({
 
 			if (vcsClient === undefined) {
 				throw createSingleDiagnosticError({
-					location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+					location: req.getDiagnosticLocationFromFlags("cwd"),
 					description: descriptions.INIT_COMMAND.EXPECTED_REPO,
 				});
 			} else {
 				const uncommittedFiles = await vcsClient.getUncommittedFiles();
 				if (uncommittedFiles.length > 0) {
 					throw createSingleDiagnosticError({
-						location: req.getDiagnosticLocationFromFlags({type: "cwd"}),
+						location: req.getDiagnosticLocationFromFlags("cwd"),
 						description: descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
 					});
 				}
