@@ -94,56 +94,6 @@ unknownVariable;
 
 ```
 
-## `should not allow project creation inside a repository with uncommitted changes`
-
-### `console`
-
-```
-
- argv:1 commands/init/uncommittedChanges ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Uncommitted changes in repository
-
-    project$ rome init
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      ^^^^
-
-  ⚠ This command is destructive and will format and autofix all files within. We recommend
-    committing your changes so you can recover them if you don't like the changes.
-
-  $ git add -A && git commit -m "Rome init backup"
-
-  ℹ If you still really want to do this, you can bypass the restriction and create a project in
-    this directory with the flag --allow-dirty:
-
-  $ rome init --allow-dirty
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `files`
-
-```
-# .config/rome.json
-{
-	"files": {
-		"vendorPath": "../remote"
-	}
-}
-
-
-# .git/HEAD
-ref: refs/heads/master
-
-
-# foo
-bar
-
-```
-
 ## `should not create the .editorconfig file if it exists`
 
 ### `console`
