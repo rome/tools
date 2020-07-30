@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React = require('react');
+import React = require("react");
 
-const {css, cx} = require('emotion');
+const {css, cx} = require("emotion");
 
-export default function Button(props: {
-  className?: string;
-  children: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <div
-      onClick={props.onClick}
-      className={cx(
-        css`
+export default function Button(
+	props: {
+		className?: string;
+		children: React.ReactNode;
+		onClick: () => void;
+	},
+) {
+	return <div onClick={props.onClick}
+	className={cx(
+		css`
           display: inline-block;
           background-color: #121212;
           border-radius: 5px;
@@ -31,9 +31,8 @@ export default function Button(props: {
             background-color: #1c1c1c;
           }
         `,
-        props.className,
-      )}>
-      {props.children}
-    </div>
-  );
+		props.className,
+	)}>
+		{props.children}
+	</div>;
 }

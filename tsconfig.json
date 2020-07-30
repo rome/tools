@@ -25,17 +25,11 @@
 			"@internal/*": [
 				"internal/*"
 			],
-			"@romefrontend-runtime/*": [
-				"internal/@romefrontend-runtime/*"
-			],
-			"@romefrontend-integration/*": [
-				"internal/@romefrontend-integration/*"
-			],
-			"@romefrontend-web/*": [
-				"internal/@romefrontend-web/*"
+			"@internal/virtual-*": [
+				"internal/virtual-packages/*"
 			],
 			"rome": [
-				"internal/@romefrontend-runtime/rome"
+				"internal/virtual-packages/rome"
 			]
 		}
 	},

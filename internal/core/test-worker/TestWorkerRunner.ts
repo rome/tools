@@ -23,7 +23,7 @@ import {
 	GlobalTestOptions,
 	TestCallback,
 	TestOptions,
-} from "@romefrontend-runtime/rome/test";
+} from "@internal/virtual-rome/test";
 import {
 	TestRef,
 	default as TestWorkerBridge,

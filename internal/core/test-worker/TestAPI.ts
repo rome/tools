@@ -29,7 +29,7 @@ import {
 	TestDiagnosticAdviceItem,
 	TestHelper,
 	TestSnapshotOptions,
-} from "@romefrontend-runtime/rome/test";
+} from "@internal/virtual-rome/test";
 import {cleanFrames} from "./TestWorkerRunner";
 
 function formatExpectedError(expected: ExpectedError): string {

@@ -32,7 +32,7 @@
 				"type-libs",
 				"lib/modules.js",
 				"prelude.ts",
-				"@romefrontend-web",
+				"internal/web-ui",
 				"out",
 				"vscode/node_modules"
 			]

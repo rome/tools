@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Bridge, createBridgeFromBrowserWebSocket} from '@internal/events';
-import ClientPage from './ClientPage';
-import Button from './Button';
-import Spinner from './Spinner';
-import React = require('react');
-import ReactDOM = require('react-dom');
-import {WebServerRequest, WebServerClient} from '@internal/core';
-import {humanizeTime} from '@internal/string-utils';
+import {Bridge, createBridgeFromBrowserWebSocket} from "@internal/events";
+import ClientPage from "./ClientPage";
+import Button from "./Button";
+import Spinner from "./Spinner";
+import React = require("react");
+import ReactDOM = require("react-dom");
+import {WebServerClient, WebServerRequest} from "@internal/core";
+import {humanizeTime} from "@internal/string-utils";
 
-const {css, injectGlobal} = require('emotion');
+const {css, injectGlobal} = require("emotion");
 
 type Data = {
-  clients: Array<WebServerClient>;
-  requests: Array<WebServerRequest>;
+	clients: Array<WebServerClient>;
+	requests: Array<WebServerRequest>;
 };
 
 injectGlobal`
@@ -211,51 +211,51 @@ injectGlobal`
 `;
 
 const DataContext = React.createContext<Data>({
-  clients: [],
-  requests: [],
+	clients: [],
+	requests: [],
 });
 
-function ClientItem({
-  client,
-  setFocused,
-}: {
-  client: WebServerClient;
-  setFocused: () => void;
-}) {
-  const endTime = client.endTime === undefined ? Date.now() : client.endTime;
-  const elapsed = endTime - client.startTime;
-  const data = React.useContext(DataContext);
+function ClientItem(
+	{
+		client,
+		setFocused,
+	}: {
+		client: WebServerClient;
+		setFocused: () => void;
+	},
+) {
+	const endTime = client.endTime === undefined ? Date.now() : client.endTime;
+	const elapsed = endTime - client.startTime;
+	const data = React.useContext(DataContext);
 
-  const requests = data.requests.filter(req => req.client === client.id);
+	const requests = data.requests.filter((req) => req.client === client.id);
 
-  const requestCount: Map<string, number> = new Map();
-  for (const request of requests) {
-    let count = requestCount.get(request.query.commandName);
-    if (count === undefined) {
-      count = 0;
-    }
-    count++;
-    requestCount.set(request.query.commandName, count);
-  }
+	const requestCount: Map<string, number> = new Map();
+	for (const request of requests) {
+		let count = requestCount.get(request.query.commandName);
+		if (count === undefined) {
+			count = 0;
+		}
+		count++;
+		requestCount.set(request.query.commandName, count);
+	}
 
-  let backgroundColor = '#121212';
-  const lastRequest = requests[requests.length - 1];
-  if (lastRequest !== undefined && lastRequest.response !== undefined) {
-    const lastResponse = lastRequest.response;
-    if (lastResponse.type === 'SUCCESS') {
-      backgroundColor = '#2DC55E';
-    } else if (lastResponse.type === 'ERROR') {
-      backgroundColor = 'orange';
-    } else if (lastResponse.type === 'DIAGNOSTICS') {
-      backgroundColor = '#F81118';
-    }
-  }
+	let backgroundColor = "#121212";
+	const lastRequest = requests[requests.length - 1];
+	if (lastRequest !== undefined && lastRequest.response !== undefined) {
+		const lastResponse = lastRequest.response;
+		if (lastResponse.type === "SUCCESS") {
+			backgroundColor = "#2DC55E";
+		} else if (lastResponse.type === "ERROR") {
+			backgroundColor = "orange";
+		} else if (lastResponse.type === "DIAGNOSTICS") {
+			backgroundColor = "#F81118";
+		}
+	}
 
-  return (
-    <Button
-      key={client.id}
-      onClick={setFocused}
-      className={css`
+	return <Button key={client.id}
+	onClick={setFocused}
+	className={css`
         width: 300px;
         height: 100px;
         padding: 15px;
@@ -264,125 +264,119 @@ function ClientItem({
         position: relative;
         background-color: ${backgroundColor};
       `}>
-      <div
-        className={css`
+		<div className={css`
           font-weight: bold;
         `}>
-        {client.flags.clientName} #{String(client.id)}{' '}
-        {client.endTime !== undefined ? <Spinner /> : null}
-      </div>
-
-      <ul>
-        {Array.from(requestCount, ([commandName, count]) => {
-          return (
-            <li key={commandName}>
-              {commandName}
-              {count === 1 ? '' : ` x ${String(count)}`}
-            </li>
-          );
-        })}
-      </ul>
-
-      <div
-        className={css`
+			{client.flags.clientName}
+			#
+			{String(client.id)}
+			{" "}
+			{client.endTime !== undefined ? <Spinner /> : null}
+		</div>
+		<ul>
+			{Array.from(
+				requestCount,
+				([commandName, count]) => {
+					return <li key={commandName}>
+						{commandName}
+						{count === 1 ? "" : ` x ${String(count)}`}
+					</li>;
+				},
+			)}
+		</ul>
+		<div className={css`
           position: absolute;
           right: 15px;
           bottom: 15px;
         `}>
-        {humanizeTime(elapsed)}
-      </div>
-    </Button>
-  );
+			{humanizeTime(elapsed)}
+		</div>
+	</Button>;
 }
 
 function Content() {
-  const data = React.useContext(DataContext);
+	const data = React.useContext(DataContext);
 
-  const [focusedClientId, setFocusedClient] = React.useState<
-    undefined | number
-  >(undefined);
+	const [focusedClientId, setFocusedClient] = React.useState<undefined | number>(
+		undefined,
+	);
 
-  let focusedClient: undefined | WebServerClient;
-  if (focusedClientId !== undefined) {
-    focusedClient = data.clients.find(client => client.id === focusedClientId);
-  }
+	let focusedClient: undefined | WebServerClient;
+	if (focusedClientId !== undefined) {
+		focusedClient = data.clients.find((client) => client.id === focusedClientId);
+	}
 
-  if (focusedClient === undefined) {
-    return (
-      <>
-        {data.clients.map(client => {
-          return (
-            <ClientItem
-              key={client.id}
-              client={client}
-              setFocused={() => {
-                setFocusedClient(client.id);
-              }}
-            />
-          );
-        })}
-      </>
-    );
-  } else {
-    const actualFocusClient: WebServerClient = focusedClient;
+	if (focusedClient === undefined) {
+		return <>
+			{data.clients.map((client) => {
+				return <ClientItem key={client.id}
+				client={client}
+				setFocused={() => {
+					setFocusedClient(client.id);
+				}} />;
+			})}
+		</>;
+	} else {
+		const actualFocusClient: WebServerClient = focusedClient;
 
-    const requests = data.requests.filter(
-      req => req.client === actualFocusClient.id,
-    );
+		const requests = data.requests.filter((req) =>
+			req.client === actualFocusClient.id
+		);
 
-    return (
-      <ClientPage
-        client={actualFocusClient}
-        requests={requests}
-        goBack={() => {
-          setFocusedClient(undefined);
-        }}
-      />
-    );
-  }
+		return <ClientPage client={actualFocusClient}
+		requests={requests}
+		goBack={() => {
+			setFocusedClient(undefined);
+		}} />;
+	}
 }
 
-function Container(props: {children: React.ReactNode}) {
-  return (
-    <div
-      className={css`
+function Container(
+	props: {
+		children: React.ReactNode;
+	},
+) {
+	return <div className={css`
         padding: 15px;
       `}>
-      {props.children}
-    </div>
-  );
+		{props.children}
+	</div>;
 }
 
 function App(props: Data) {
-  return (
-    <DataContext.Provider value={props}>
-      <Container>
-        <Content />
-      </Container>
-    </DataContext.Provider>
-  );
+	return <DataContext.Provider value={props}>
+		<Container>
+			<Content />
+		</Container>
+	</DataContext.Provider>;
 }
 
-const socket = new WebSocket('ws://localhost:8081/websocket', 'rome');
-const bridge = createBridgeFromBrowserWebSocket(Bridge, socket, {
-  type: 'server',
-});
+const socket = new WebSocket("ws://localhost:8081/websocket", "rome");
+const bridge = createBridgeFromBrowserWebSocket(
+	Bridge,
+	socket,
+	{
+		type: "server",
+	},
+);
 
 const event = bridge.createEvent({
-  name: 'WebBridge.requests',
-  direction: 'server<-client',
+	name: "WebBridge.requests",
+	direction: "server<-client",
 });
 
-event.subscribe((({requests, clients}: Data) => {
-  ReactDOM.render(
-    <App requests={requests} clients={clients} />,
-    document.querySelector('#app'),
-  );
-}) as any);
+event.subscribe(
+	((({requests, clients}: Data) => {
+		ReactDOM.render(
+			<App requests={requests} clients={clients} />,
+			document.querySelector("#app"),
+		);
+	}) as any),
+);
 
 socket.onopen = () => {
-  console.log('HANDSHAKE START');
-  bridge.handshake({second: true}).then(() => {
-    console.log('HANDSHAKE END');
-  });
+	console.log("HANDSHAKE START");
+	bridge.handshake({second: true}).then(() => {
+		console.log("HANDSHAKE END");
+	});
 };

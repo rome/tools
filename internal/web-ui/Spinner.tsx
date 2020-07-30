@@ -6,6 +6,6 @@
  */
 
 export default function Spinner() {
-  // @ts-ignore
-  return <span />;
+	// @ts-ignore
+	return <span />;
 }

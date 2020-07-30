@@ -25,7 +25,7 @@ modules.set(
 			"package.json",
 			{
 				"mtime": 1_594_195_489_483.4382,
-				"content": '{\n\t"name": "@romefrontend-runtime/rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
+				"content": '{\n\t"name": "@internal/runtime-rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
 			},
 		],
 		[

@@ -1,17 +1,17 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 
-const runtimeModules = ROOT.append("internal", "@romefrontend-runtime");
-const runtimeIndex = INTERNAL.append("core", "common", "virtual-modules.ts");
+const virtualModules = ROOT.append("internal", "virtual-packages");
+const virtualIndex = INTERNAL.append("core", "common", "virtual-modules.ts");
 
 export async function main() {
 	await modifyGeneratedFile(
-		runtimeIndex,
+		virtualIndex,
 		async () => {
 			let lines = [];
 			let hash = "";
 
-			for (const packagePath of await readDirectory(runtimeModules)) {
+			for (const packagePath of await readDirectory(virtualModules)) {
 				const packageName = packagePath.getBasename();
 
 				const files = [];
