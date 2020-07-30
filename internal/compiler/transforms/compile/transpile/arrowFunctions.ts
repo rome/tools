@@ -57,7 +57,7 @@ const arrowProvider = createHook<State, JSThisExpression, JSIdentifier>({
 		value: JSIdentifier;
 		state: State;
 	} {
-		const id = state.id === undefined ? path.scope.generateUid() : state.id;
+		const id = state.id ?? path.scope.generateUid();
 		return {
 			value: jsIdentifier.create({
 				name: id,

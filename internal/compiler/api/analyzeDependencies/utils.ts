@@ -45,13 +45,13 @@ export function isTypeKind(kind: undefined | ConstJSImportModuleKind): boolean {
 export function getImportKind(
 	kind: undefined | ConstJSImportModuleKind,
 ): ConstJSImportModuleKind {
-	return kind === undefined ? "value" : kind;
+	return kind ?? "value";
 }
 
 export function getExportKind(
 	kind: undefined | ConstJSExportModuleKind,
 ): ConstJSExportModuleKind {
-	return kind === undefined ? "value" : kind;
+	return kind ?? "value";
 }
 
 export function maybeTypeBinding(

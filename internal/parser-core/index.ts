@@ -169,7 +169,7 @@ export class ParserCore<
 		this.filename = this.path === undefined ? undefined : this.path.join();
 		this.mtime = mtime;
 		this.input = normalizeInput(opts);
-		this.sourceText = sourceText === undefined ? this.input : sourceText;
+		this.sourceText = sourceText ?? this.input;
 		this.length = ob1Coerce0(this.input.length);
 
 		this.eofToken = {

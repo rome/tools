@@ -213,7 +213,7 @@ export default class SourceMapConsumer {
 			return undefined;
 		}
 
-		const source = mapping.source === undefined ? this.file : mapping.source;
+		const source = mapping.source ?? this.file;
 		if (source === undefined) {
 			throw new Error("Mapping provided unknown source");
 		}

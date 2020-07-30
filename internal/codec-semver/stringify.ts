@@ -29,7 +29,7 @@ export default function stringify(node: RangeNode): string {
 		case "AbsoluteVersion": {
 			// Build up x.x.x format
 			let str = compactRight([node.major, node.minor, node.patch]).map((part) =>
-				part === undefined ? WILDCARD : part
+				part ?? WILDCARD
 			).join(".");
 
 			// add on qualifiers

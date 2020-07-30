@@ -527,7 +527,7 @@ export default class Resolver {
 			handler.canHaveScale === true &&
 			!callees.includes("implicitScale")
 		) {
-			const scale = query.scale === undefined ? 3 : query.scale;
+			const scale = query.scale ?? 3;
 			for (let i = scale; i >= 1; i--) {
 				yield* this._getFilenameVariants(
 					query,
@@ -542,11 +542,11 @@ export default class Resolver {
 
 	finishResolverQueryResponse(
 		path: AbsoluteFilePath,
-		types?: Array<ResolverQueryResponseFoundType>,
+		types: Array<ResolverQueryResponseFoundType> = [],
 	): ResolverQueryResponse {
 		return {
 			type: "FOUND",
-			types: types === undefined ? [] : types,
+			types,
 			ref: this.server.projectManager.getFileReference(path),
 			path,
 		};

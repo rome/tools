@@ -23,7 +23,7 @@ import {
 	readFileText,
 } from "@internal/fs";
 
-const dirname = testOptions.dirname === undefined ? "" : testOptions.dirname;
+const dirname = testOptions.dirname ?? "";
 
 async function isFile(path: AbsoluteFilePath): Promise<boolean> {
 	return (await lstat(path)).isFile();

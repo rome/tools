@@ -190,15 +190,15 @@ export class TarWriter {
 			name: partial.name,
 			size,
 			mode,
-			mtime: partial.mtime === undefined ? new Date() : partial.mtime,
-			type: partial.type === undefined ? "file" : partial.type,
+			mtime: partial.mtime ?? new Date(),
+			type: partial.type ?? "file",
 			linkname: partial.linkname,
-			uid: partial.uid === undefined ? 0 : partial.uid,
-			gid: partial.gid === undefined ? 0 : partial.gid,
+			uid: partial.uid ?? 0,
+			gid: partial.gid ?? 0,
 			uname: partial.uname,
 			gname: partial.gname,
-			devmajor: partial.devmajor === undefined ? 0 : partial.devmajor,
-			devminor: partial.devminor === undefined ? 0 : partial.devminor,
+			devmajor: partial.devmajor ?? 0,
+			devminor: partial.devminor ?? 0,
 		};
 	}
 

@@ -43,7 +43,7 @@ export const bindingInjector = createHook<
 		state: VariableInjectorState,
 		opts: VariableInjectorArgs = {},
 	) {
-		const name = opts.name === undefined ? path.scope.generateUid() : opts.name;
+		const name = opts.name ?? path.scope.generateUid();
 
 		const ref = jsReferenceIdentifier.quick(name);
 

@@ -157,10 +157,8 @@ function addErrorFrames(
 
 			return {
 				...frame,
-				functionName: frame.functionName === undefined
-					? name
-					: frame.functionName,
-				methodName: frame.methodName === undefined ? name : frame.methodName,
+				functionName: frame.functionName ?? name,
+				methodName: frame.methodName ?? name,
 				resolvedLocation: found,
 				lineNumber: line,
 				columnNumber: column,
