@@ -20,6 +20,36 @@
 		}
 	}
 
+	section.rules{
+
+		padding: 0;
+
+		h1, h2{
+			margin: $unit $unit * 2;
+			border: 0;
+		}
+
+		.rule:first-child{
+			border-top: 1px solid var(--soft-border-color);
+		}
+
+		.rule{
+			padding: $unit $unit * 2;
+			border-top: 1px solid var(--soft-border-color);
+			h3{
+				font-size: 1.25em;
+				margin-top: 0;
+				border: 0;
+			}
+
+		}
+
+		.rule:nth-child(even) {
+			background-color: var(--toc-background-active);
+		}
+
+	}
+
 	section {
 		padding: 0 $unit * 2 $unit * 2 $unit * 2;
 		background-color: var(--container-color);
@@ -36,8 +66,6 @@
 			border-bottom: 1px solid var(--soft-border-color);
 			border-top: 1px solid var(--soft-border-color);
 		}
-
-
 
 	}
 

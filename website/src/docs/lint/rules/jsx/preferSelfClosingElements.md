@@ -1,6 +1,6 @@
 ---
 title: Lint Rule jsx/preferSelfClosingElements
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 showHero: false
 description: MISSING DOCUMENTATION
 eleventyNavigation:

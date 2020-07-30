@@ -1,6 +1,6 @@
 ---
 title: Lint Rule js/emptyBlocks
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/js/emptyBlocks

@@ -1,6 +1,6 @@
 ---
 title: Lint Rule react/jsxFragments
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/react/jsxFragments

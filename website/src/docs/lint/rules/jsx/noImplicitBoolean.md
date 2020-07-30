@@ -1,6 +1,6 @@
 ---
 title: Lint Rule jsx/noImplicitBoolean
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/jsx/noImplicitBoolean

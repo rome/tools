@@ -1,6 +1,6 @@
 ---
 title: Lint Rule jsx-a11y/headingHasContent
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/headingHasContent

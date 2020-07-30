@@ -1,6 +1,6 @@
 ---
 title: Lint Rule ts/preferInterfaces
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/ts/preferInterfaces
