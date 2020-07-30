@@ -49,8 +49,11 @@ export type PartialExtensionHandler = {
 	canHaveScale?: boolean;
 	language: DiagnosticLanguage;
 	hasTabs: boolean;
-	canLint: boolean;
-	canFormat: boolean;
+
+	capabilities: {
+		lint: boolean;
+		format: boolean;
+	};
 
 	customFormat?: (
 		info: ExtensionHandlerMethodInfo,

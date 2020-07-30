@@ -10,10 +10,12 @@ import {parseJS} from "@internal/js-parser";
 
 export const textHandler: PartialExtensionHandler = {
 	sourceTypeJS: "module",
-	canLint: false,
-	canFormat: false,
 	language: "unknown",
 	hasTabs: false,
+	capabilities: {
+		lint: false,
+		format: false,
+	},
 
 	async parse({path, mtime, file, worker}) {
 		const src = await worker.readFile(file.real);

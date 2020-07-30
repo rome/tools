@@ -21,10 +21,12 @@ export const JS_EXTENSIONS: Array<string> = [];
 
 export const htmlHandler: ExtensionHandler = {
 	ext: "html",
-	canLint: true,
-	canFormat: true,
 	language: "html",
 	hasTabs: true,
+	capabilities: {
+		lint: true,
+		format: true,
+	},
 
 	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);

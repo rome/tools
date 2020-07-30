@@ -30,10 +30,12 @@ function buildJSHandler(
 	return {
 		ext,
 		sourceTypeJS,
-		canLint: true,
-		canFormat: true,
 		language: "js",
 		hasTabs: true,
+		capabilities: {
+			lint: true,
+			format: true,
+		},
 
 		async parse({mtime, sourceTypeJS, manifestPath, path, file, worker}) {
 			const sourceText = await worker.readFile(file.real);

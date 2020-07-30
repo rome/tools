@@ -3,10 +3,12 @@ import {parseMarkdown} from "@internal/markdown-parser";
 
 export const markdownHandler: ExtensionHandler = {
 	ext: "md",
-	canLint: true,
-	canFormat: true,
 	language: "md",
 	hasTabs: true,
+	capabilities: {
+		lint: true,
+		format: true,
+	},
 
 	async parse({mtime, path, file, worker}) {
 		const sourceText = await worker.readFile(file.real);

@@ -360,7 +360,7 @@ export default class WorkerAPI {
 
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.canFormat) {
+		if (!handler.capabilities.format) {
 			return;
 		}
 
@@ -405,7 +405,7 @@ export default class WorkerAPI {
 		// Get the extension handler
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.canLint && !handler.canFormat) {
+		if (!handler.capabilities.lint && !handler.capabilities.format) {
 			return {
 				save: undefined,
 				diagnostics: [],
@@ -416,7 +416,7 @@ export default class WorkerAPI {
 		// Catch any diagnostics, in the case of syntax errors etc
 		const res = await catchDiagnostics(
 			() => {
-				if (handler.canLint) {
+				if (handler.capabilities.lint) {
 					return this.compilerLint(ref, options, parseOptions);
 				} else {
 					return this._format(ref, {}, parseOptions);

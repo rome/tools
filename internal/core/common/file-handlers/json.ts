@@ -21,10 +21,12 @@ import {parseJS} from "@internal/js-parser";
 
 export const jsonHandler: ExtensionHandler = {
 	ext: "json",
-	canLint: false,
-	canFormat: true,
 	language: "json",
 	hasTabs: true,
+	capabilities: {
+		lint: false,
+		format: true,
+	},
 
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,

@@ -131,11 +131,11 @@ export const FORMATTABLE_EXTENSIONS: Array<string> = [];
 function setHandler(handler: ExtensionHandler) {
 	const {ext} = handler;
 
-	if (handler.canLint || handler.canFormat) {
+	if (handler.capabilities.lint || handler.capabilities.format) {
 		LINTABLE_EXTENSIONS.push(ext);
 	}
 
-	if (handler.canFormat) {
+	if (handler.capabilities.format) {
 		FORMATTABLE_EXTENSIONS.push(ext);
 	}
 
