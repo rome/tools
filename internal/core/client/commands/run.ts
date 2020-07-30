@@ -35,7 +35,6 @@ export default createLocalCommand({
 			"unhandledRejection",
 			(error) => {
 				error;
-				//console.log('unhandledRejection', error.stack);
 			},
 		);
 

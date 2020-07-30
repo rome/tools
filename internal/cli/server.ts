@@ -57,7 +57,6 @@ export default async function server() {
 				(err) => {
 					// Socket error occured, cli could have died before it caught us
 					err;
-					console.log(err);
 					process.exit();
 				},
 			);

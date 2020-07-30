@@ -143,14 +143,10 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		pushScope(type: ScopeType, value?: unknown) {
-			//console.log('+' + type);
-			//console.group();
 			this.getScope(type).push(value);
 		}
 
 		popScope(type: ScopeType) {
-			//console.groupEnd();
-			//console.log('-' + type);
 			this.getScope(type).pop();
 		}
 
