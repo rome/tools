@@ -193,6 +193,8 @@ class LintRunner {
 		const progress = this.events.createProgress({title: markup`Linting`});
 		progress.setTotal(evictedPaths.size);
 
+		await queue.prepare(evictedPaths);
+
 		queue.addCallback(async (path) => {
 			const filename = path.join();
 			const progressId = progress.pushText(
