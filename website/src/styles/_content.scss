@@ -29,6 +29,9 @@
 		h1, h2{
 			margin: $unit $unit * 2;
 			border: 0;
+			@include mobile-only() {
+				margin: $unit $unit;
+			}
 		}
 
 		.rule:first-child{
@@ -37,6 +40,11 @@
 
 		.rule{
 			padding: $unit $unit * 2;
+
+			@include mobile-only() {
+				padding: $unit $unit;
+			}
+
 			border-top: 1px solid var(--soft-border-color);
 			h3{
 				font-size: 1.25em;
