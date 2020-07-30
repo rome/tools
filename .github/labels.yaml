@@ -1,27 +1,27 @@
 # Internal
 core:
-- packages/core/**/*
+- internal/core/**/*
 compiler:
-- packages/compiler/**/*
+- internal/compiler/**/*
 - "**/compile.ts"
 formatter:
-- packages/formatter/**/*
+- internal/formatter/**/*
 - "**/format.ts"
 linter:
-- packages/compiler/lint/**/*
-- packages/core/server/linter/**/*
+- internal/compiler/lint/**/*
+- internal/core/server/linter/**/*
 - "**/lint.ts"
 parser:
-- packages/*-parser/**/*
+- internal/*-parser/**/*
 - "**/parse.ts"
 diagnostics:
-- packages/diagnostics/**/*
-- packages/cli-diagnostics/**/*
+- internal/diagnostics/**/*
+- internal/cli-diagnostics/**/*
 cli:
-- packages/cli-*/**/*
-- packages/cli/**/*
-- packages/rome/**/*
-- packages/core/client/commands/**/*
+- internal/cli-*/**/*
+- internal/cli/**/*
+- internal/rome/**/*
+- internal/core/client/commands/**/*
 
 # Meta
 tooling:
@@ -48,25 +48,25 @@ website:
 vscode:
 - packages-integration/vscode/**/*
 lsp:
-- packages/core/server/lsp/**/*
+- internal/core/server/lsp/**/*
 - "**/lsp.ts"
 
 # Languages
 html:
-- packages/html-parser/**/*
+- internal/html-parser/**/*
 - "**/html/**/*"
 - "**/html.ts"
 css:
-- packages/css-parser/**/*
+- internal/css-parser/**/*
 - "**/css/**/*"
 - "**/css.ts"
 markdown:
-- packages/markdown-*/**/*
+- internal/markdown-*/**/*
 - "**/markdown/**/*"
 - "**/markdown.ts"
 - "**/md.ts"
 javascript:
-- packages/js-*/**/*
+- internal/js-*/**/*
 - "**/js/**/*"
 - "**/js.ts"
 - "**/javascript.ts"

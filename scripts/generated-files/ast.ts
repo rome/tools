@@ -1,8 +1,8 @@
-import {PACKAGES, modifyGeneratedFile} from "../_utils";
+import {INTERNAL, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory} from "@romefrontend/fs";
 import {AbsoluteFilePath} from "@romefrontend/path";
 
-const astFolder = PACKAGES.append("ast");
+const astFolder = INTERNAL.append("ast");
 
 type ASTDefinition = {
 	category: string;
@@ -100,7 +100,7 @@ export async function main() {
 
 	// Add to builders
 	await readIndexFile(
-		PACKAGES.append("formatter", "builders", "index.ts"),
+		INTERNAL.append("formatter", "builders", "index.ts"),
 		[
 			{
 				iterator({language, category, nodeType}) {
@@ -112,7 +112,7 @@ export async function main() {
 
 	// Add to analysis
 	await readIndexFile(
-		PACKAGES.append("js-analysis", "evaluators", "index.ts"),
+		INTERNAL.append("js-analysis", "evaluators", "index.ts"),
 		[
 			{
 				iterator({language, category, nodeType}) {

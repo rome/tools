@@ -1,4 +1,4 @@
-import {PACKAGES, reporter, writeFile} from "./_utils";
+import {INTERNAL, reporter, writeFile} from "./_utils";
 import {exists} from "@romefrontend/fs";
 import {dedent, toCamelCase} from "@romefrontend/string-utils";
 import {markup} from "@romefrontend/markup";
@@ -27,7 +27,7 @@ export async function main(
 	const builderName = toCamelCase(nodeType);
 
 	// Write AST def
-	const astDefPath = PACKAGES.append("ast", `${joined}.ts`);
+	const astDefPath = INTERNAL.append("ast", `${joined}.ts`);
 	if (await exists(astDefPath)) {
 		reporter.error(markup`AST node ${joined} already exists`);
 		return 1;
@@ -51,7 +51,7 @@ export async function main(
 
 	// Write builder
 	await writeFile(
-		PACKAGES.append("formatter", "builders", `${joined}.ts`),
+		INTERNAL.append("formatter", "builders", `${joined}.ts`),
 		dedent`
 			import {${nodeType}} from "@romefrontend/ast";
 			import {Builder, Token} from "@romefrontend/formatter";
@@ -65,7 +65,7 @@ export async function main(
 	// Write analysis
 	if (language === "js") {
 		await writeFile(
-			PACKAGES.append("js-analysis", "evaluators", category, `${nodeType}.ts`),
+			INTERNAL.append("js-analysis", "evaluators", category, `${nodeType}.ts`),
 			dedent`
 				import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
 

@@ -1,8 +1,8 @@
-import {PACKAGES, ROOT, modifyGeneratedFile} from "../_utils";
+import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@romefrontend/fs";
 import {AbsoluteFilePath} from "@romefrontend/path";
 
-const lintRulesFolder = PACKAGES.append("compiler", "lint", "rules");
+const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
 
 const lintRulesDocFolder = ROOT.append(
 	"website",
@@ -72,7 +72,7 @@ export async function main() {
 
 	// Generate diagnostic categories
 	await modifyGeneratedFile(
-		PACKAGES.append("diagnostics", "categories.ts"),
+		INTERNAL.append("diagnostics", "categories.ts"),
 		async () => {
 			const lines = ["type LintDiagnosticCategory ="];
 			for (const {ruleName} of defs) {
