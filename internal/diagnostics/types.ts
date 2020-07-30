@@ -74,11 +74,13 @@ export type DiagnosticsMeta = {
 	identifierName?: string;
 };
 
+export type DiagnosticTag = "fixable" | "internal" | "unique";
+
+export type DiagnosticTags = {[key in DiagnosticTag]?: boolean};
+
 export type Diagnostic = {
 	description: DiagnosticDescription;
 	location: DiagnosticLocation;
-	unique?: boolean;
-	fixable?: boolean;
 	label?: Markup;
 	origins?: Array<DiagnosticOrigin>;
 	dependencies?: Array<{
@@ -86,6 +88,7 @@ export type Diagnostic = {
 		mtime: number;
 	}>;
 	meta?: DiagnosticsMeta;
+	tags?: DiagnosticTags;
 };
 
 export type Diagnostics = Array<Diagnostic>;

@@ -11,8 +11,8 @@ import {
 	DiagnosticAdvice,
 	DiagnosticLocation,
 	DiagnosticLogCategory,
-	INTERNAL_ERROR_LOG_ADVICE,
 	catchDiagnostics,
+	createInternalDiagnostic,
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
@@ -283,18 +283,19 @@ export default class TestWorkerRunner {
 					res.syntaxError.description.message,
 				)}`;
 
-				throw createSingleDiagnosticError({
-					...res.syntaxError,
-					description: {
-						...res.syntaxError.description,
-						message,
-						advice: [INTERNAL_ERROR_LOG_ADVICE],
-					},
-					location: {
-						...res.syntaxError.location,
-						filename: this.file.uid,
-					},
-				});
+				throw createSingleDiagnosticError(
+					createInternalDiagnostic({
+						...res.syntaxError,
+						description: {
+							...res.syntaxError.description,
+							message,
+						},
+						location: {
+							...res.syntaxError.location,
+							filename: this.file.uid,
+						},
+					}),
+				);
 			}
 		} catch (err) {
 			await this.emitError({
@@ -382,7 +383,10 @@ export default class TestWorkerRunner {
 		diag = {
 			...diag,
 			label,
-			unique: true,
+			tags: {
+				...diag.tags,
+				unique: true,
+			},
 		};
 
 		this.hasDiagnostics = true;
@@ -433,11 +437,6 @@ export default class TestWorkerRunner {
 		let test: undefined | FoundTest;
 
 		switch (origin.type) {
-			case "INTERNAL": {
-				advice.push(INTERNAL_ERROR_LOG_ADVICE);
-				break;
-			}
-
 			case "EXECUTING": {
 				advice.push({
 					type: "log",
@@ -485,12 +484,19 @@ export default class TestWorkerRunner {
 		diagnostic = {
 			...diagnostic,
 			location,
-			unique: true,
+			tags: {
+				...diagnostic.tags,
+				unique: true,
+			},
 			description: {
 				...diagnostic.description,
 				advice,
 			},
 		};
+
+		if (origin.type === "INTERNAL") {
+			diagnostic = createInternalDiagnostic(diagnostic);
+		}
 
 		await this.emitDiagnostic(diagnostic, test);
 	}

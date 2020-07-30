@@ -500,7 +500,10 @@ export default class Path {
 			},
 			{
 				...diag,
-				fixable: true,
+				tags: {
+					...diag.tags,
+					fixable: true,
+				},
 			},
 		);
 

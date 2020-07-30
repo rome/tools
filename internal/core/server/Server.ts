@@ -14,7 +14,7 @@ import {
 	DiagnosticOrigin,
 	Diagnostics,
 	DiagnosticsProcessor,
-	INTERNAL_ERROR_LOG_ADVICE,
+	createInternalDiagnostic,
 	deriveDiagnosticFromError,
 	descriptions,
 	getDiagnosticsFromError,
@@ -1020,13 +1020,7 @@ export default class Server {
 				},
 			},
 		);
-		printer.processor.addDiagnostic({
-			...errorDiag,
-			description: {
-				...errorDiag.description,
-				advice: [...errorDiag.description.advice, INTERNAL_ERROR_LOG_ADVICE],
-			},
-		});
+		printer.processor.addDiagnostic(createInternalDiagnostic(errorDiag));
 		await printer.print();
 
 		// We could probably return printer.getDiagnostics() but we just want to print to the console

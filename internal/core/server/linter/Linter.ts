@@ -91,8 +91,8 @@ function createDiagnosticsPrinter(
 		if (isError) {
 			let hasPendingFixes = false;
 
-			for (const {fixable} of processor.getDiagnostics()) {
-				if (fixable) {
+			for (const {tags} of processor.getDiagnostics()) {
+				if (tags !== undefined && tags.fixable) {
 					hasPendingFixes = true;
 				}
 			}

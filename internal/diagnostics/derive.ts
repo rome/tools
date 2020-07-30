@@ -81,7 +81,7 @@ export function deriveRootAdviceFromDiagnostic(
 	header: Markup;
 } {
 	const advice: DiagnosticAdvice = [];
-	const {description, fixable, location} = diag;
+	const {description, tags = {}, location} = diag;
 
 	let header = diagnosticLocationToMarkupFilelink(location);
 
@@ -97,11 +97,15 @@ export function deriveRootAdviceFromDiagnostic(
 		}
 	}
 
-	if (fixable === true) {
+	if (tags.internal) {
+		header = markup`${header} <inverse> INTERNAL </inverse>`;
+	}
+
+	if (tags.fixable) {
 		header = markup`${header} <inverse> FIXABLE </inverse>`;
 	}
 
-	if (opts.outdated === true) {
+	if (opts.outdated) {
 		header = markup`${header} <inverse> OUTDATED </inverse>`;
 	}
 
@@ -341,5 +345,26 @@ export function addOriginsToDiagnostic(
 	return {
 		...diag,
 		origins: newOrigins,
+	};
+}
+
+export function createInternalDiagnostic(diag: Diagnostic): Diagnostic {
+	return {
+		...diag,
+		description: {
+			...diag.description,
+			advice: [
+				...diag.description.advice,
+				{
+					type: "log",
+					category: "warn",
+					text: markup`This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.`,
+				},
+			],
+		},
+		tags: {
+			...diag.tags,
+			internal: true,
+		},
 	};
 }

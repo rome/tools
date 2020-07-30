@@ -37,7 +37,7 @@ export default createVisitor({
 						const {suppressed} = path.context.addNodeDiagnostic(
 							bodyNode,
 							descriptions.LINT.JS_DUPLICATE_IMPORT_SOURCE(seenLoc),
-							{fixable: true},
+							{tags: {fixable: true}},
 						);
 
 						if (suppressed) {

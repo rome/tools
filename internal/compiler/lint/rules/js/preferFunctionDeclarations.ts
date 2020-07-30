@@ -92,7 +92,7 @@ const hook = createHook<State, Arg, JSThisExpression>({
 			path.context.addNodeDiagnostic(
 				init,
 				descriptions.LINT.JS_PREFER_FUNCTION_DECLARATIONS,
-				{fixable: true},
+				{tags: {fixable: true}},
 			);
 
 			// Convert arrow function body if necessary

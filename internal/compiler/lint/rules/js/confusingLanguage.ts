@@ -156,7 +156,7 @@ export default createVisitor({
 							suggestion,
 							advice,
 						),
-						{fixable: true},
+						{tags: {fixable: true}},
 					));
 
 					if (suppressed) {

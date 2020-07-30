@@ -45,7 +45,7 @@ export default createVisitor({
 					const {suppressed} = context.addNodeDiagnostic(
 						binding.node,
 						descriptions.LINT.JS_VARIABLE_CAMEL_CASE(name, camelName),
-						{fixable: true},
+						{tags: {fixable: true}},
 					);
 					if (!suppressed) {
 						renames.set(binding, camelName);
