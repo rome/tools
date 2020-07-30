@@ -9,12 +9,36 @@ import {AnyMarkup, MarkupLinesAndWidth, readMarkup} from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
 import {ob1Get1} from "@internal/ob1";
+import {splitChars, splitLines} from "@internal/string-utils";
 
 export function renderGrid(
 	safe: AnyMarkup,
 	opts: UserGridOptions = {},
 	format: GridOutputFormat,
 ): MarkupLinesAndWidth {
+	// Optimization for rendering a single escaped string with no columns
+	if (
+		opts.columns === undefined &&
+		safe.type === "MARKUP" &&
+		safe.parts.length === 1 &&
+		typeof safe.parts[0] === "string"
+	) {
+		let line = safe.parts[0];
+
+		if (opts.convertTabs) {
+			// TODO make the tab width customizable in userConfig
+			line = line.replace(/\t/g, " ".repeat(2));
+		}
+
+		const lines = splitLines(line);
+		const width = Math.max(...lines.map(line => splitChars(line).length));
+
+		return {
+			width,
+			lines,
+		};
+	}
+
 	const input = readMarkup(safe);
 	const grid = new Grid({
 		...opts,
