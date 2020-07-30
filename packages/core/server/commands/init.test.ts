@@ -36,7 +36,7 @@ test(
 	),
 );
 
-test(
+/*test(
 	"should not allow project creation outside a repository",
 	createIntegrationTest(
 		{
@@ -58,7 +58,7 @@ test(
 			await client.query({commandName: "init"});
 		},
 	),
-);
+);*/
 
 test(
 	"should not allow project creation inside a repository with uncommitted changes",
