@@ -11,6 +11,7 @@ const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
 const purify = require("purify-css");
+const romePackage = require("../package.json");
 
 /**
  * @type {any}
@@ -211,6 +212,13 @@ module.exports = function(eleventyConfig) {
 		"kebabCase",
 		function(string) {
 			return string.toLowerCase().replace(/\s/g, "-");
+		},
+	);
+
+	eleventyConfig.addShortcode(
+		"romeVersion",
+		function() {
+			return romePackage.version;
 		},
 	);
 

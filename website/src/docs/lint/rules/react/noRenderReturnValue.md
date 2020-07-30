@@ -1,6 +1,6 @@
 ---
 title: Lint Rule react/noRenderReturnValue
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/react/noRenderReturnValue

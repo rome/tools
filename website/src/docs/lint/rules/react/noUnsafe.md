@@ -1,6 +1,6 @@
 ---
 title: Lint Rule react/noUnsafe
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/react/noUnsafe

@@ -1,10 +1,9 @@
 .content {
 	max-width: 100%;
 	margin: 0 auto;
-	padding: 0 $unit * 2 $unit * 2 $unit * 2;
 
 	.header-anchor {
-		display: none;
+		@extend .sr-only;
 		text-decoration: none;
 		color: $color-4;
 
@@ -12,9 +11,76 @@
 			text-decoration: underline;
 		}
 
+		&:focus{
+			@extend .not-sr-only;
+		}
+
 		&::before {
 			content: "#";
 		}
+	}
+
+
+
+	section.rules{
+
+		padding: 0;
+
+		h1, h2{
+			margin: $unit $unit * 2;
+			border: 0;
+			@include mobile-only() {
+				margin: $unit $unit;
+			}
+		}
+
+		.rule:first-child{
+			border-top: 1px solid var(--soft-border-color);
+		}
+
+		.rule{
+			padding: $unit $unit * 2;
+
+			@include mobile-only() {
+				padding: $unit $unit;
+			}
+
+			border-top: 1px solid var(--soft-border-color);
+			h3{
+				font-size: 1.25em;
+				margin-top: 0;
+				border: 0;
+			}
+
+		}
+
+		.rule:nth-child(even) {
+			background-color: var(--table-even-row-color);
+		}
+
+	}
+
+	section {
+		padding: 0 $unit * 2 $unit * 2 $unit * 2;
+		background-color: var(--container-color);
+		margin-top: $unit;
+		margin-left: $unit;
+
+		> *:last-child {
+			margin-bottom: 0;
+		}
+
+		@include desktop-only() {
+			border: 1px solid var(--soft-border-color);
+		}
+
+		@include mobile-only() {
+			padding: 0 $unit $unit * 2 $unit;
+			margin-left: 0;
+			border-bottom: 1px solid var(--soft-border-color);
+			border-top: 1px solid var(--soft-border-color);
+		}
+
 	}
 
 	p, ul, ol, pre, h4, h5 {
@@ -40,8 +106,8 @@
 	}
 
 	h1, h2, h3, h4, h5 {
-		&:hover .header-anchor {
-			display: inline-block;
+		&:hover .header-anchor{
+			@extend .not-sr-only;
 		}
 	}
 
@@ -61,22 +127,22 @@
 
 	h2 {
 		margin: 0.83em 0;
-
-		&::before {
-			content: '';
-			display: block;
-			height: 10px;
-			background: rgba(0, 0, 0, 0.05);
-			margin: 0 -32px;
-			margin-bottom: 32px;
-			border: 1px solid var(--soft-border-color);
-			border-left: none;
-			border-right: none;
-		}
+		font-size: 1.75em;
 	}
 
 	h3 {
 		margin: 1em 0;
+		font-size: 1.5em;
+	}
+
+	h4 {
+		font-size: 1.25em;
+		margin-bottom: 0;
+	}
+
+	h5 {
+		font-size: 1.1em;
+		margin-bottom: 0;
 	}
 
 	h2,
@@ -103,7 +169,7 @@
 	}
 
 	tbody tr:nth-child(even) {
-		background-color: var(--toc-background-active);
+		background-color: var(--table-even-row-color);
 	}
 
 	blockquote {

@@ -28,14 +28,15 @@
 	height: 100%;
 	border-right: 1px solid var(--soft-border-color);
 	border-left: 1px solid var(--soft-border-color);
+	border-bottom: 1px solid var(--soft-border-color);
 	background-color: var(--container-color);
 
 	@include desktop-only() {
 		border-top-width: 0;
 		transition-duration: 150ms;
-
+		height: calc(100% - 5px);
 		margin-top: 0;
-		min-width: 256px;
+		min-width: 280px;
 	}
 
 	@include mobile-only() {
@@ -93,17 +94,22 @@
 
 .toc {
 	font-size: .95rem;
-	padding-left: 16px;
+	padding-left: $unit;
 
 	> ol > li {
-		margin-bottom: 8px;
+		margin-bottom: $unit / 2;
+	}
+
+	ol li ol{
+		font-size: .88rem;
 	}
 
 	li {
-		padding-left: 16px;
+		padding-left: $unit;
 
 		a {
 			display: block;
+			padding: 1.5px 0;
 		}
 
 		&.active > a {
@@ -114,6 +120,7 @@
 
 .site-navigation-container {
 	overflow: hidden;
+	border-top: 1px solid var(--soft-border-color);
 	flex-shrink: 0;
 	border-bottom: 1px solid var(--soft-border-color);
 }
@@ -184,7 +191,6 @@
 
 .docsearch-container {
 	position: relative;
-	border-bottom: 1px solid var(--soft-border-color);
 
 	.search.icon {
 		z-index: 99999;
@@ -201,7 +207,8 @@
 		padding-left: 42px;
 		border: 0;
 		height: $unit * 2;
-		background: rgba(0, 0, 0, 0.05);
+		background: var(--search-input-background-color);
+		box-shadow: inset 0px 1px 2px 0px var(--search-input-background-color);
 		font-size: 1.1em;
 		color: inherit;
 		width: 100%;

@@ -21,9 +21,9 @@
 	--background-color: rgba(0, 0, 0, 0.05);
 	--container-color: #fff;
 	--font-color: #{$gray-4};
-	--sub-text-color: #{$gray-6};
+	--sub-text-color: #{$gray-5};
 	--top-border-color: #{$gray-4};
-	--soft-border-color: rgba(39, 39, 42, 0.2);
+	--soft-border-color: rgba(39, 39, 42, 0.15);
 	--pattern-color: #{rgba($gray-7, 0.6)};
 	--pattern-color-2: #{rgba(255, 255, 255, 0)};
 	--pattern-img-path: url(#{inline-url("img/pattern-white.png")});
@@ -37,15 +37,18 @@
 	--breadcrumbs-background-hover: #{$gray-7};
 	--breadcrumbs-submenu-shadow-color: #{$gray-6};
 	--color-scheme-switcher-color: #{$gray-4};
+	--search-input-background-color: rgba(0, 0, 0, 0.07);
+	--table-even-row-color: rgba(0, 0, 0, 0.05);
 }
 
 @mixin dark-root {
-	--logo-font-color: #{$gray-8};
-	--background-color: #{$gray-4};
+	--logo-font-color: #{lighten(#27272A, 72%)};
+	--background-color: #{lighten(#27272A, 2%)};
 	--container-color: #{$gray-4};
 	--font-color: #{lighten(#27272A, 65%)};
+	--sub-text-color: #{lighten(#27272A, 55%)};
 	--top-border-color: #{$color-4};
-	--soft-border-color: rgba(0, 0, 0, 0.2);
+	--soft-border-color: rgba(0, 0, 0, 0.15);
 	--pattern-color: #{$gray-3};
 	--pattern-color-2: #{rgba(0, 0, 0, 0)};
 	--pattern-img-path: var(--pattern-dark-img-path);
@@ -58,6 +61,8 @@
 	--breadcrumbs-background-hover: #{darken(#27272A, 4%)};
 	--breadcrumbs-submenu-shadow-color: #{$gray-2};
 	--color-scheme-switcher-color: #000;
+	--search-input-background-color: rgba(0, 0, 0, 0.09);
+	--table-even-row-color: rgba(0, 0, 0, 0.09);
 }
 
 html[data-theme="dark"] {

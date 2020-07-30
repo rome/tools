@@ -1,6 +1,6 @@
 ---
 title: Lint Rule js/noShadowRestrictedNames
-layout: layouts/page.liquid
+layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
 	key: lint-rules/js/noShadowRestrictedNames

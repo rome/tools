@@ -9,6 +9,12 @@
 	ol {
 		margin: 0;
 		padding: 0;
+		background: #000;
+
+		> li{
+			margin-bottom: $unit;
+
+		}
 
 		ol {
 			margin-left: $unit;
@@ -18,7 +24,7 @@
 	a {
 		text-decoration: none;
 		height: auto;
-		padding: $unit / 5 0;
+		padding: 3.2px 8px;
 		margin-left: $unit / 2;
 		border-radius: 2px;
 		display: inline-block;

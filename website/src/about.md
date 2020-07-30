@@ -3,9 +3,14 @@ title: About
 layout: layouts/page.liquid
 ---
 
+<section>
+
 # About
 
 Rome was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
+</section>
+
+<section>
 
 ## Team
 
@@ -54,6 +59,9 @@ Rome has a loose governance model that values core contributor autonomy. See [Go
 	</li>
 </ul>
 
+</section>
+
+<section>
 
 ## Philosophy
 
@@ -76,3 +84,5 @@ This list includes general ethos the project should abide by. This list is not c
 - **Build for generic clients.** Don't assume that output will only be consumed by a terminal and using ANSI codes. Use abstractions that could be generalized for viewing in an IDE, browser, or other environments.
 - **Use strong types.** Don't use loose types such as `any`. Where possible, refine and validate input. Aim for sound types.
 - **Terminal output should be unambiguous.** When designing terminal output, don't purely rely on formatting cues such as color. Always use a combination of formatting, symbols, and spacing. If all ANSI codes are stripped, all the output should still be understood.
+
+</section>

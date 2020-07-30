@@ -142,6 +142,8 @@ export async function main() {
 			const lines = [];
 
 			for (const rootCategory of categoryDocsOrder) {
+				lines.push(`<section class="rules">`);
+				lines.push("");
 				lines.push(`## ${categoryDocsAliases[rootCategory]}`);
 
 				for (const {basename, ruleName, category, docs} of defs) {
@@ -151,10 +153,16 @@ export async function main() {
 
 					const content = await readFileText(docs);
 					const description = getDocRuleDescription(docs, content);
-					lines.push(
-						`- [${basename}](/docs/lint/rules/${ruleName}): ${description}`,
-					);
+					lines.push(`<div class="rule">`);
+					lines.push(`<h3 data-toc-exclude id="${basename}">`);
+					lines.push(`<a href="/docs/lint/rules/${ruleName}">${basename}</a>`);
+					lines.push(`<a class="header-anchor" href="#${basename}"></a>`);
+					lines.push("</h3>");
+
+					lines.push(description);
+					lines.push("</div>");
 				}
+				lines.push("</section>");
 			}
 
 			lines.push("");

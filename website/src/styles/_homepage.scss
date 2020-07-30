@@ -1,12 +1,24 @@
 .hero {
-	position: relative;
 	padding: $unit * 2;
-	border-bottom: 1px solid var(--soft-border-color);
+	border-right: 1px solid var(--soft-border-color);
+	border-left: 1px solid var(--soft-border-color);
+	display: flex;
+	margin-left: $unit;
+  flex-direction: column;
+  justify-content: center;
+	color: black;
+	text-align: center;
+
 	@include pattern;
 
+	@media only screen and (min-width: 970px) {
+		height: 127px + 48px;
+	}
+
 	@include mobile-only() {
-		text-align: center;
 		padding: $unit * 2 $unit;
+		border: 0;
+		margin: 0;
 	}
 
 	h1, h2 {
@@ -14,16 +26,22 @@
 	}
 
 	h1 {
-		margin: 0.67em 0;
+		margin-bottom: 0.3em;
+		font-size: 2.3em;
 	}
 
 	h2 {
-
+		font-family: $body-font;
+		color: var(--sub-text-color);
 	}
 
 	> :last-child {
 		margin-bottom: 0;
 	}
+}
+
+.hero + #main-content section:first-of-type{
+	margin-top: 0;
 }
 
 .homepage h1 {
@@ -130,10 +148,15 @@ pre.homepage-example {
 
 article.latest-post {
 	border-bottom: 1px solid var(--soft-border-color);
-	padding: $unit $unit * 2;
+	padding: $unit $unit;
+	margin-left: $unit;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+
+	@include mobile-only() {
+		margin-left: 0;
+	}
 
 	h2 {
 		margin-bottom: 0.83em;
