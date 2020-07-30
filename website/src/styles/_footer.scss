@@ -19,6 +19,13 @@ footer {
 		flex-grow: 1;
 	}
 
+	.scroll-to-top{
+		a{
+			display: block;
+			margin: 14px 0;
+		}
+	}
+
 	> .container{
 		padding: $unit $unit * 2;
 	}
