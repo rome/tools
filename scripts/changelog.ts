@@ -10,23 +10,7 @@ import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
 import https = require("https");
 import http = require("http");
 
-const ROOT = (() => {
-	let pickNext = false;
-
-	for (const path of createAbsoluteFilePath(__dirname).getChain()) {
-		if (pickNext) {
-			return path;
-		}
-
-		if (path.getBasename() === "scripts") {
-			pickNext = true;
-		}
-	}
-
-	throw new Error("Could not find the root");
-})();
-
-const PACKAGES = ROOT.append("packages");
+import {PACKAGES, ROOT} from "./_util";
 const REPORTER = Reporter.fromProcess();
 const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
 const LINE_DELIM = "<--ROME-LINE-->";
@@ -119,27 +103,27 @@ function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
 				).join("\n")}\n`
 			: "";
 	}
-	return `
-# Changelog
+	return dedent`
+		# Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-${Object.keys(tagMap).map((tag) => {
-		const commits = tagMap[tag];
-		const features = commits.filter(({meta}) => meta?.commitType === "feat");
-		const fixes = commits.filter(({meta}) => meta?.commitType === "fix");
-		const breaking = commits.filter(({meta}) => meta?.breaking);
-		const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
-		return `
-## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
+		All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+		${Object.keys(tagMap).map((tag) => {
+				const commits = tagMap[tag];
+				const features = commits.filter(({meta}) => meta?.commitType === "feat");
+				const fixes = commits.filter(({meta}) => meta?.commitType === "fix");
+				const breaking = commits.filter(({meta}) => meta?.breaking);
+				const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
+				return `
+		## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
 
-${renderItems(features, "Features")}
-${renderItems(fixes, "Bug fixes")}
-${renderItems(breaking, "BREAKING CHANGES")}
-${renderItems(misc, "Miscellaneous")}`;
-	}).join("\n")}
-\n\n\n\n\n
-<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
-`;
+		${renderItems(features, "Features")}
+		${renderItems(fixes, "Bug fixes")}
+		${renderItems(breaking, "BREAKING CHANGES")}
+		${renderItems(misc, "Miscellaneous")}`;
+			}).join("\n")}
+		\n\n\n\n\n
+		<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
+	`;
 }
 
 /**
@@ -148,9 +132,8 @@ ${renderItems(misc, "Miscellaneous")}`;
  * @returns - Promise resolving to the current version
  */
 async function getCurrentVersion(): Promise<string> {
-	return String(
-		JSON.parse(await readFileText(ROOT.append("package.json"))).version,
-	);
+	const path = ROOT.append("package.json");
+	return consumeJSON({input: await readFileText(path), path}).get("version").asString();
 }
 
 /**

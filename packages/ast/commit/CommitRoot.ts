@@ -1,15 +1,14 @@
 import {createBuilder} from "@romefrontend/ast/utils";
 import {NodeBaseWithComments, RootBase} from "..";
 
-export type CommitRoot = NodeBaseWithComments &
-	RootBase & {
-		type: "CommitRoot";
-		breaking: boolean;
-		commitType: string;
-		custom: boolean;
-		rawBody: string;
-		scope: string;
-	};
+export interface CommitRoot extends NodeBaseWithComments, RootBase {
+	readonly type: "CommitRoot";
+	readonly breaking: boolean;
+	readonly commitType: string;
+	readonly custom: boolean;
+	readonly rawBody: string;
+	readonly scope: string;
+}
 
 export const commitRoot = createBuilder<CommitRoot>(
 	"CommitRoot",

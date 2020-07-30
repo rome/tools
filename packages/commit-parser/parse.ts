@@ -13,40 +13,37 @@ export const createCommitParser = createParser((ParserCore) =>
 	class CommitParser extends ParserCore<Tokens> {
 		constructor(opts: ParserOptions) {
 			super(opts, "parse/commit", {});
-			this.ignoreWhitespaceTokens = false;
 		}
 
 		tokenize(index: Number0): undefined | TokenValues<Tokens> {
-			if (
-				this.getInputCharOnly(index) === Symbols.Space ||
-				this.getInputCharOnly(index) === Symbols.Tab
-			) {
-				while (
-					this.getInputCharOnly(index) === Symbols.Space ||
-					this.getInputCharOnly(index) === Symbols.Tab
-				) {
-					index = ob1Add(index, 1);
+			consr char = this.getInputCharOnly(index);
+			switch (char) {
+				case Symbols.Space:
+				case Symbols.Tab: {
+					while (
+						char === Symbols.Space ||
+						char === Symbols.Tab
+					) {
+						index = ob1Add(index, 1);
+					}
+					return this.finishToken("Whitespace", index);
 				}
-				return this.finishToken("Whitespace", index);
-			}
 
-			if (this.getInputCharOnly(index) === "(") {
-				return this.finishToken("LeftParen");
-			}
+				case "(":
+					return this.finishToken("LeftParen");
 
-			if (this.getInputCharOnly(index) === ")") {
-				return this.finishToken("RightParen");
-			}
+				case ")":
+					return this.finishToken("RightParen");
 
-			if (this.getInputCharOnly(index) === "!") {
-				return this.finishToken("Exclamation");
-			}
+				case "!":
+					return this.finishToken("Exclamation");
 
-			if (this.getInputCharOnly(index) === ":") {
-				return this.finishToken("Colon");
-			}
+				case ":":
+					return this.finishToken("Colon");
 
-			return this.finishValueToken("Word", this.getInputCharOnly(index));
+				default:
+					return this.finishValueToken("Word", char);	
+			}
 		}
 
 		parse(): CommitRoot {
