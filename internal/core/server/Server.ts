@@ -119,7 +119,7 @@ export function partialServerQueryRequestToFull(
 
 	return {
 		commandName: partialQuery.commandName,
-		args: partialQuery.args === undefined ? [] : partialQuery.args,
+		args: partialQuery.args ?? [],
 		noData: partialQuery.noData === true,
 		noFileWrites: partialQuery.noFileWrites === true,
 		requestFlags,

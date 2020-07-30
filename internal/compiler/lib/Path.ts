@@ -125,7 +125,7 @@ export default class Path {
 		this.isMock = opts.isMock === true;
 		this.opts = opts;
 
-		this.hooks = opts.hooks === undefined ? [] : opts.hooks;
+		this.hooks = opts.hooks ?? [];
 	}
 
 	context: CompilerContext;
@@ -350,7 +350,7 @@ export default class Path {
 		const old = this.node;
 		const {context} = this;
 		const {fixed: defaultFixed, suggestions} = nodes;
-		const target = nodes.target === undefined ? old : nodes.target;
+		const target = nodes.target ?? old;
 
 		const {category} = description;
 		const advice = [...description.advice];

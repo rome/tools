@@ -26,7 +26,7 @@ const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
 export default async function transform(
 	req: TransformRequest,
 ): Promise<TransformResult> {
-	const stage = req.stage === undefined ? "compile" : req.stage;
+	const stage = req.stage ?? "compile";
 
 	const {options, project} = req;
 	let ast: AnyRoot = req.ast;

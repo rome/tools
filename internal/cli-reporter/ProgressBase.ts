@@ -132,7 +132,7 @@ export default class ProgressBase implements ReporterProgress {
 
 		// Set last
 		const last: undefined | Markup = textStack[textStack.length - 1];
-		this.setText(last === undefined ? markup`` : last);
+		this.setText(last ?? markup``);
 	}
 
 	tick() {

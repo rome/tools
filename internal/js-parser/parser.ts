@@ -498,8 +498,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 					expectedToken,
 					possibleShiftMistake,
 				),
-				start: pos === undefined ? this.state.startPos : pos,
-				end: pos === undefined ? this.state.endPos : pos,
+				start: pos ?? this.state.startPos,
+				end: pos ?? this.state.endPos,
 			});
 		}
 

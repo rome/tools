@@ -677,7 +677,7 @@ export default class ServerRequest {
 		this.checkCancelled();
 
 		const projects: Set<ProjectDefinition> = new Set();
-		const rawArgs = overrideArgs === undefined ? this.query.args : overrideArgs;
+		const rawArgs = overrideArgs ?? this.query.args;
 		const resolvedArgs: ResolvedArgs = [];
 		const {cwd} = this.client.flags;
 

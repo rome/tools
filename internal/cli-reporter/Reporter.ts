@@ -101,7 +101,7 @@ type QuestionOptions = {
 
 export default class Reporter implements ReporterNamespace {
 	constructor(opts: ReporterOptions = {}) {
-		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
+		this.startTime = opts.startTime ?? Date.now();
 		this.activeElements = new Set();
 		this.indentLevel = 0;
 		this.markupOptions =

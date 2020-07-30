@@ -24,8 +24,8 @@ export default class ObjT extends T {
 		},
 	) {
 		super(scope, originNode);
-		this.calls = opts.calls === undefined ? [] : opts.calls;
-		this.props = opts.props === undefined ? [] : opts.props;
+		this.calls = opts.calls ?? [];
+		this.props = opts.props ?? [];
 		this.proto = opts.proto;
 	}
 

@@ -364,7 +364,7 @@ export class RootScope extends Scope {
 	}
 
 	generateUid(name?: string): string {
-		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name === undefined ? "" : name}`;
+		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name ?? ""}`;
 
 		// Check for invalid names
 		if (name !== undefined && !isValidIdentifierName(name)) {

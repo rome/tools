@@ -65,8 +65,8 @@ export default class DiagnosticsNormalizer {
 					// using some default positions and then we'll toss whatever positions they return
 					const resolved = sourceMaps.approxOriginalPositionFor(
 						filename,
-						line === undefined ? ob1Number1 : line,
-						column === undefined ? ob1Number0 : column,
+						line ?? ob1Number1,
+						column ?? ob1Number0,
 					);
 					if (resolved !== undefined) {
 						return {
@@ -129,8 +129,8 @@ export default class DiagnosticsNormalizer {
 		return {
 			filename: resolved.filename,
 			position: {
-				line: resolved.line === undefined ? ob1Number1 : resolved.line,
-				column: resolved.column === undefined ? ob1Number0 : resolved.column,
+				line: resolved.line ?? ob1Number1,
+				column: resolved.column ?? ob1Number0,
 				index: ob1Number0Neg1,
 			},
 		};

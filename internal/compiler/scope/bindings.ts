@@ -33,7 +33,7 @@ export class Binding {
 		this.scope = opts.scope;
 		this.name = opts.name;
 		this.node = opts.node;
-		this.kind = opts.kind === undefined ? defaultKind : opts.kind;
+		this.kind = opts.kind ?? defaultKind;
 	}
 
 	name: string;

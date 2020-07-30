@@ -224,7 +224,7 @@ function ClientItem(
 		setFocused: () => void;
 	},
 ) {
-	const endTime = client.endTime === undefined ? Date.now() : client.endTime;
+	const endTime = client.endTime ?? Date.now();
 	const elapsed = endTime - client.startTime;
 	const data = React.useContext(DataContext);
 

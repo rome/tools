@@ -31,7 +31,7 @@ export function renderGrid(
 		}
 
 		const lines = splitLines(line);
-		const width = Math.max(...lines.map(line => splitChars(line).length));
+		const width = Math.max(...lines.map((line) => splitChars(line).length));
 
 		return {
 			width,

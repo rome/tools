@@ -144,7 +144,7 @@ export default class DiagnosticsPrinter extends Error {
 			opts.fileReaders === undefined
 				? [DEFAULT_FILE_READERS]
 				: [opts.fileReaders, DEFAULT_FILE_READERS];
-		this.cwd = cwd === undefined ? CWD_PATH : cwd;
+		this.cwd = cwd ?? CWD_PATH;
 		this.processor = opts.processor;
 
 		this.displayedCount = 0;

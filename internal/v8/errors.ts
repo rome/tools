@@ -90,12 +90,12 @@ export function getSourceLocationFromErrorFrame(
 ): SourceLocation {
 	const pos: Position = {
 		index: ob1Number0Neg1,
-		line: frame.lineNumber === undefined ? ob1Number1 : frame.lineNumber,
-		column: frame.columnNumber === undefined ? ob1Number0 : frame.columnNumber,
+		line: frame.lineNumber ?? ob1Number1,
+		column: frame.columnNumber ?? ob1Number0,
 	};
 
 	return {
-		filename: frame.filename === undefined ? "unknown" : frame.filename,
+		filename: frame.filename ?? "unknown",
 		start: pos,
 		end: pos,
 	};
