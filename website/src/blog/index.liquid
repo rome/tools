@@ -4,22 +4,24 @@ layout: layouts/blog/base.liquid
 ---
 
 {% for post in collections.post %}
-	<article>
-		<h1><a href="{{ post.url }}">{{ post.data.title }}</a></h1>
-		<div class="info">
-			<div>by {{ post.data.author }}</div>
-			<time datetime="{{ post.date }}"> {{ post.date | dateFormat }} </time>
-		</div>
-		<p>{{ post.data.description }}</p>
+	<section>
+		<article>
+			<h1><a href="{{ post.url }}">{{ post.data.title }}</a></h1>
+			<div class="info">
+				<div>by {{ post.data.author }}</div>
+				<time datetime="{{ post.date }}"> {{ post.date | dateFormat }} </time>
+			</div>
+			<p>{{ post.data.description }}</p>
 
-		<div class="tags">
-			tags:
-			{% for tag in post.data.tags %}
-				{% if collections.tagList contains tag %}
-					{% capture tagUrl %}/blog/tags/{{ tag }}/{% endcapture %}
-					<a href="{{ tagUrl }}" class="tag">{{ tag }}</a>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</article>
+			<div class="tags">
+				tags:
+				{% for tag in post.data.tags %}
+					{% if collections.tagList contains tag %}
+						{% capture tagUrl %}/blog/tags/{{ tag }}/{% endcapture %}
+						<a href="{{ tagUrl }}" class="tag">{{ tag }}</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</article>
+	</section>
 {% endfor %}

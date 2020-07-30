@@ -39,6 +39,10 @@
 	}
 }
 
+.hero + #main-content section:first-of-type{
+	margin-top: 0;
+}
+
 .homepage h1 {
 	display: none;
 }

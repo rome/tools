@@ -23,7 +23,7 @@
 	section {
 		padding: 0 $unit * 2 $unit * 2 $unit * 2;
 		background-color: var(--container-color);
-		margin-bottom: $unit;
+		margin-top: $unit;
 		margin-left: $unit;
 
 		@include desktop-only() {
@@ -37,9 +37,7 @@
 			border-top: 1px solid var(--soft-border-color);
 		}
 
-		&:last-child{
-			margin-bottom: 0;
-		}
+
 
 	}
 
