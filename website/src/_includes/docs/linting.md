@@ -53,7 +53,8 @@ rome check --watch
 
 ### Rules
 
-A full list of rules can be found [here](/docs/lint/rules).
+Check the full [list of rules](/docs/lint/rules).
+
 
 ### Formatting
 
