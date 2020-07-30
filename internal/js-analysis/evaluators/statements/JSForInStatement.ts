@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSForInStatement, jsForInStatement} from "@romefrontend/ast";
+import {AnyNode, JSForInStatement, jsForInStatement} from "@internal/ast";
 
 export default function JSForInStatement(node: AnyNode, scope: Scope) {
 	node = jsForInStatement.assert(node);

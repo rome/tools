@@ -1,11 +1,11 @@
-import {Path, Scope, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
+import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {AnyNode} from "@internal/ast";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isFunctionNode,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 function getKeyValue(path: Path): string | undefined {

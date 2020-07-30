@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeAlias, tsTypeAlias} from "@romefrontend/ast";
+import {AnyNode, TSTypeAlias, tsTypeAlias} from "@internal/ast";
 
 export default function TSTypeAlias(node: AnyNode, scope: Scope) {
 	node = tsTypeAlias.assert(node);

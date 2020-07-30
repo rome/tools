@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-spdx-license",
+	"name": "@internal/codec-spdx-license",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

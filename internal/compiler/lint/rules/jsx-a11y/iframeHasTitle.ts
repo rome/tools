@@ -1,12 +1,12 @@
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isEmptyTemplateLiteral,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
-import {JSXElement} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
+} from "@internal/js-ast-utils";
+import {JSXElement} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
 
 function validTitle(node: JSXElement) {
 	if (hasJSXAttribute(node, "title")) {

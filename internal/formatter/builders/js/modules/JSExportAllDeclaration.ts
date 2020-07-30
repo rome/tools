@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSExportAllDeclaration} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {JSExportAllDeclaration} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function JSExportAllDeclaration(
 	builder: Builder,

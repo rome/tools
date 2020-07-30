@@ -6,9 +6,9 @@
  */
 
 import Parser, {ParserInterface, ParserOptions} from "./Parser";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {OptionalProps} from "@romefrontend/typescript-helpers";
-import {CWD_PATH} from "@romefrontend/path";
+import {Reporter} from "@internal/cli-reporter";
+import {OptionalProps} from "@internal/typescript-helpers";
+import {CWD_PATH} from "@internal/path";
 
 export {FlagValue} from "./Parser";
 export {ParserInterface as FlagParser};

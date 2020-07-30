@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSCallSignatureDeclaration} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {TSCallSignatureDeclaration} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function TSCallSignatureDeclaration(
 	builder: Builder,

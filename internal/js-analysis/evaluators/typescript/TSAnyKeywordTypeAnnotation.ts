@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSAnyKeywordTypeAnnotation,
 	tsAnyKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import AnyT from "../../types/AnyT";
 
 export default function TSAnyKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

@@ -11,9 +11,9 @@ import {
 	JSRegExpQuantified,
 	JSRegExpSubExpression,
 	jsRegExpQuantified,
-} from "@romefrontend/ast";
-import {ExitSignal, Path, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {ExitSignal, Path, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 
 function isSpaceChar(
 	node: undefined | AnyJSRegExpBodyItem,

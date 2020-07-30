@@ -11,8 +11,8 @@ import {
 } from "../common/bridges/ServerBridge";
 import {LocalCommand, localCommands} from "./commands";
 import Client from "./Client";
-import {consumeUnknown} from "@romefrontend/consume";
-import {BridgeError} from "@romefrontend/events";
+import {consumeUnknown} from "@internal/consume";
+import {BridgeError} from "@internal/events";
 import review from "./review";
 
 export type ClientRequestType = "local" | "server";

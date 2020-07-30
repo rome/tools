@@ -1,5 +1,5 @@
 import {ExtensionHandler} from "./types";
-import {parseMarkdown} from "@romefrontend/markdown-parser";
+import {parseMarkdown} from "@internal/markdown-parser";
 
 export const markdownHandler: ExtensionHandler = {
 	ext: "md",

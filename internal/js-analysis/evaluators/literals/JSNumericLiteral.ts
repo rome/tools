@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSNumericLiteral, jsNumericLiteral} from "@romefrontend/ast";
+import {AnyNode, JSNumericLiteral, jsNumericLiteral} from "@internal/ast";
 import NumericLiteralT from "../../types/NumericLiteralT";
 
 export default function JSNumericLiteral(node: AnyNode, scope: Scope) {

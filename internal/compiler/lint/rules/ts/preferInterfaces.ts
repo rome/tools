@@ -1,11 +1,11 @@
-import {Scope, createVisitor, signals} from "@romefrontend/compiler";
+import {Scope, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyTSTypeElement,
 	TSExpressionWithTypeArguments,
 	TSTypeAlias,
-} from "@romefrontend/ast";
-import {getTSQualifiedBaseFromEntityName} from "@romefrontend/js-ast-utils";
-import {TypeBinding} from "@romefrontend/compiler/scope/bindings";
+} from "@internal/ast";
+import {getTSQualifiedBaseFromEntityName} from "@internal/js-ast-utils";
+import {TypeBinding} from "@internal/compiler/scope/bindings";
 
 function extractObjects(
 	typeAlias: TSTypeAlias,

@@ -13,7 +13,7 @@ import {
 	JSInterpreterDirective,
 	NodeBaseWithComments,
 	RootBase,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRoot extends NodeBaseWithComments,

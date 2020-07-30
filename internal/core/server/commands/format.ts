@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
-import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/markup";
+import {Consumer} from "@internal/consume";
+import {markup} from "@internal/markup";
 
 type Flags = {
 	allowDiagnostics: boolean;

@@ -1,8 +1,8 @@
 import {test} from "rome";
 import {tests} from "./tests";
 import {testLint} from "../utils/testing";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
-import {dedent} from "@romefrontend/string-utils";
+import {DiagnosticCategory} from "@internal/diagnostics";
+import {dedent} from "@internal/string-utils";
 
 for (const name in tests) {
 	test(

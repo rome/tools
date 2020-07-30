@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, hardline} from "@romefrontend/formatter";
-import {JSRoot} from "@romefrontend/ast";
+import {Builder, Token, concat, hardline} from "@internal/formatter";
+import {JSRoot} from "@internal/ast";
 
 export default function JSRoot(builder: Builder, node: JSRoot): Token {
 	const tokens: Array<Token> = [

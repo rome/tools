@@ -7,8 +7,8 @@
 
 import {ConsumerOptions} from "./types";
 import Consumer from "./Consumer";
-import {RequiredProps, mergeObjects} from "@romefrontend/typescript-helpers";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
+import {RequiredProps, mergeObjects} from "@internal/typescript-helpers";
+import {DiagnosticCategory} from "@internal/diagnostics";
 
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,

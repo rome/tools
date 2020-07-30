@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {FunctionBinding} from "@romefrontend/compiler/scope/bindings";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {FunctionBinding} from "@internal/compiler/scope/bindings";
+import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
 	name: "js/noFunctionAssign",

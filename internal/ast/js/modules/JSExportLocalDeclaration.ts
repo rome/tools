@@ -17,7 +17,7 @@ import {
 	TSInterfaceDeclaration,
 	TSModuleDeclaration,
 	TSTypeAlias,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSExportLocalDeclaration extends NodeBaseWithComments {

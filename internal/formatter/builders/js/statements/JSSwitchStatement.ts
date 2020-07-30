@@ -14,9 +14,9 @@ import {
 	indent,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
-import {JSSwitchStatement} from "@romefrontend/ast";
+import {JSSwitchStatement} from "@internal/ast";
 
 export default function JSSwitchStatement(
 	builder: Builder,

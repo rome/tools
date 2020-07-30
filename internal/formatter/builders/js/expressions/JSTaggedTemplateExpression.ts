@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSTaggedTemplateExpression} from "@romefrontend/ast";
+import {JSTaggedTemplateExpression} from "@internal/ast";
 
 export default function JSTaggedTemplateExpression(
 	builder: Builder,

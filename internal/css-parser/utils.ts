@@ -1,4 +1,4 @@
-import {isAlpha, isDigit} from "@romefrontend/parser-core";
+import {isAlpha, isDigit} from "@internal/parser-core";
 
 export const Symbols = {
 	CarriageReturn: "\r",

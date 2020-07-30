@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSUndefinedKeywordTypeAnnotation,
 	tsUndefinedKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSUndefinedKeywordTypeAnnotation(node: AnyNode) {
 	node = tsUndefinedKeywordTypeAnnotation.assert(node);

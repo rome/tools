@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server} from "@romefrontend/core";
+import {Server} from "@internal/core";
 import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
-import {markup} from "@romefrontend/markup";
-import {ReporterNamespace} from "@romefrontend/cli-reporter";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {markup} from "@internal/markup";
+import {ReporterNamespace} from "@internal/cli-reporter";
 
 export default class FileAllocator {
 	constructor(server: Server) {

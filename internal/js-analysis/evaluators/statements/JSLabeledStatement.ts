@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSLabeledStatement,
-	jsLabeledStatement,
-} from "@romefrontend/ast";
+import {AnyNode, JSLabeledStatement, jsLabeledStatement} from "@internal/ast";
 
 export default function JSLabeledStatement(node: AnyNode, scope: Scope) {
 	node = jsLabeledStatement.assert(node);

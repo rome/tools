@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import Bundler from "../bundler/Bundler";
-import {createDirectory, writeFile} from "@romefrontend/fs";
-import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/markup";
+import {createDirectory, writeFile} from "@internal/fs";
+import {Consumer} from "@internal/consume";
+import {markup} from "@internal/markup";
 
 type Flags = {
 	quiet: boolean;

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSBooleanLiteral, jsBooleanLiteral} from "@romefrontend/ast";
+import {AnyNode, JSBooleanLiteral, jsBooleanLiteral} from "@internal/ast";
 import BooleanLiteralT from "../../types/BooleanLiteralT";
 
 export default function JSBooleanLiteral(node: AnyNode, scope: Scope) {

@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 export default createVisitor({

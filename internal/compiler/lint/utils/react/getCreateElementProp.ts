@@ -1,6 +1,6 @@
-import {AnyNode, JSObjectProperty} from "@romefrontend/ast";
+import {AnyNode, JSObjectProperty} from "@internal/ast";
 import {isCreateElement} from ".";
-import {Scope} from "@romefrontend/compiler";
+import {Scope} from "@internal/compiler";
 
 export default function getCreateElementProp(
 	node: AnyNode,

@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyJSClassMember, AnyNode} from "@romefrontend/ast";
-import {getCompletionRecords} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {AnyJSClassMember, AnyNode} from "@internal/ast";
+import {getCompletionRecords} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 function isRenderProperty(node: AnyNode) {

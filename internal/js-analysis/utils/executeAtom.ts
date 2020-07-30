@@ -7,7 +7,7 @@
 
 import {Scope} from "../scopes";
 import T from "../types/T";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import NumericLiteralT from "../types/NumericLiteralT";
 import StringLiteralT from "../types/StringLiteralT";
 import GetPropT from "../types/GetPropT";

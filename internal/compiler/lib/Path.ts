@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyNodes, MOCK_PARENT} from "@romefrontend/ast";
+import {AnyNode, AnyNodes, MOCK_PARENT} from "@internal/ast";
 import {
 	CompilerContext,
 	ExitSignal,
@@ -13,19 +13,19 @@ import {
 	TransformVisitor,
 	TransformVisitors,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	AnyHookDescriptor,
 	HookDescriptor,
 	HookInstance,
 } from "../api/createHook";
 import {reduceNode, reduceSignal} from "../methods/reduce";
-import {isRoot} from "@romefrontend/ast-utils";
+import {isRoot} from "@internal/ast-utils";
 import {RetainSignal} from "../signals";
-import stringDiff from "@romefrontend/string-diff";
-import {formatAST} from "@romefrontend/formatter";
-import {Markup, markup} from "@romefrontend/markup";
-import {DiagnosticDescription} from "@romefrontend/diagnostics";
+import stringDiff from "@internal/string-diff";
+import {formatAST} from "@internal/formatter";
+import {Markup, markup} from "@internal/markup";
+import {DiagnosticDescription} from "@internal/diagnostics";
 import {ContextDiagnostic} from "./CompilerContext";
 import {
 	buildLintDecisionAdviceAction,

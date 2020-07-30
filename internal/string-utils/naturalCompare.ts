@@ -31,7 +31,7 @@
  * SOFTWARE.
  */
 
-import {isDigit} from "@romefrontend/string-charcodes";
+import {isDigit} from "@internal/string-charcodes";
 
 export function naturalCompare(
 	a: string,

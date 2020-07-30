@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSFunction} from "@romefrontend/ast";
+import {AnyJSFunction} from "@internal/ast";
 import {FunctionScope, Scope} from "../scopes";
 import T from "../types/T";
 import executeAtom from "./executeAtom";

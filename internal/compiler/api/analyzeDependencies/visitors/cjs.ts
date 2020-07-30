@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	doesNodeMatchPattern,
 	getNodeReferenceParts,
 	getRequireSource,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {
 	CJSExportRecord,
 	CJSVarRefRecord,

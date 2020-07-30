@@ -1,9 +1,9 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {SourceLocation} from "@internal/parser-core";
 
-// @romefrontend/js-analysis
+// @internal/js-analysis
 export const typeCheck = createDiagnosticsCategory({
 	NOT_CALLABLE: {
 		category: "typeCheck/uncallable",

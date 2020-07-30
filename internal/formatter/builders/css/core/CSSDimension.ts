@@ -1,5 +1,5 @@
-import {CSSDimension} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {CSSDimension} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function CSSDimension(
 	builder: Builder,

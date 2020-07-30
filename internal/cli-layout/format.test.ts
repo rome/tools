@@ -1,8 +1,8 @@
 import {test} from "rome";
-import {catchDiagnosticsSync} from "@romefrontend/diagnostics";
+import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {markupToPlainText} from "./format";
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import {ob1Coerce1} from "@romefrontend/ob1";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
+import {ob1Coerce1} from "@internal/ob1";
 import {markup} from "../markup/escape";
 
 const SYNTAX_ERROR_TESTS = [

@@ -1,4 +1,4 @@
-import {BaseTokens, SimpleToken, ValueToken} from "@romefrontend/parser-core";
+import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
 
 export const Symbols = {
 	Space: " ",

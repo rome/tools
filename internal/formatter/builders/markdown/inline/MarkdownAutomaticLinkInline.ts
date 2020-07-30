@@ -1,5 +1,5 @@
-import {MarkdownAutomaticLinkInline} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {MarkdownAutomaticLinkInline} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function MarkdownAutomaticLinkInline(
 	builder: Builder,

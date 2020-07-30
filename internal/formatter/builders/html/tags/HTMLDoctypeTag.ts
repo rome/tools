@@ -1,5 +1,5 @@
-import {HTMLDoctypeTag} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {HTMLDoctypeTag} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function HTMLDoctypeTag(
 	builder: Builder,

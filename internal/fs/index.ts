@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romefrontend/path";
-import {convertPossibleNodeErrorToDiagnostic} from "@romefrontend/node";
-import {getEnvVar} from "@romefrontend/cli-environment";
-import {getErrorStructure, setErrorFrames} from "@romefrontend/v8";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
+import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
+import {getEnvVar} from "@internal/cli-environment";
+import {getErrorStructure, setErrorFrames} from "@internal/v8";
 import fs = require("fs");
 
 // Most fs errors don't have a stack trace. This is due to the way that node queues file operations.

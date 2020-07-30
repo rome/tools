@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebSocketInterface} from "@romefrontend/codec-websocket";
+import {WebSocketInterface} from "@internal/codec-websocket";
 import {BridgeCreatorOptions, BridgeMessage} from "./types";
 import {ChildProcess} from "child_process";
-import prettyFormat from "@romefrontend/pretty-format";
+import prettyFormat from "@internal/pretty-format";
 import Bridge from "./Bridge";
 import {Socket} from "net";
-import {Class} from "@romefrontend/typescript-helpers";
+import {Class} from "@internal/typescript-helpers";
 
 const SOCKET_LENGTH = /^(\d+):/;
 

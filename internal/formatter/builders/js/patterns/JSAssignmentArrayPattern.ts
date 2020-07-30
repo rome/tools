@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSAssignmentArrayPattern} from "@romefrontend/ast";
+import {JSAssignmentArrayPattern} from "@internal/ast";
 import JSArrayExpression from "../expressions/JSArrayExpression";
 
 export default function JSAssignmentArrayPattern(

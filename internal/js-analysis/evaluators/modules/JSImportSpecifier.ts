@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSImportSpecifier, jsImportSpecifier} from "@romefrontend/ast";
+import {AnyNode, JSImportSpecifier, jsImportSpecifier} from "@internal/ast";
 
 export default function JSImportSpecifier(node: AnyNode, scope: Scope) {
 	node = jsImportSpecifier.assert(node);

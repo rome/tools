@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/string-diff",
+	"name": "@internal/string-diff",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

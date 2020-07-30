@@ -10,7 +10,7 @@ import {
 	JSBindingIdentifier,
 	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTypeAlias extends NodeBaseWithComments {

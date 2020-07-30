@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/events",
+	"name": "@internal/events",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

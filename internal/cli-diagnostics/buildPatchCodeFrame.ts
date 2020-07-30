@@ -12,19 +12,15 @@ import {
 	MAX_PATCH_LINES,
 } from "./constants";
 import {showInvisibles} from "./utils";
-import {
-	Diffs,
-	diffConstants,
-	stringDiffUnified,
-} from "@romefrontend/string-diff";
+import {Diffs, diffConstants, stringDiffUnified} from "@internal/string-diff";
 import {
 	Markup,
 	concatMarkup,
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/markup";
-import {DiagnosticAdviceDiff} from "@romefrontend/diagnostics";
+} from "@internal/markup";
+import {DiagnosticAdviceDiff} from "@internal/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
 	let atLineStart = true;

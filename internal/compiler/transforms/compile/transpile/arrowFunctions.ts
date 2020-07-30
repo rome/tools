@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@internal/compiler";
 import {
 	JSFunctionExpression,
 	JSIdentifier,
@@ -18,8 +18,8 @@ import {
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
-} from "@romefrontend/ast";
-import {inheritLoc} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {inheritLoc} from "@internal/js-ast-utils";
 
 function isInsideArrow(path: Path): boolean {
 	for (const ancestor of path.ancestryPaths) {

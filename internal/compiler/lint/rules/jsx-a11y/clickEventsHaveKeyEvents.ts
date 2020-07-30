@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {hasJSXAttribute} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {hasJSXAttribute} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "jsx-a11y/clickEventsHaveKeyEvents",

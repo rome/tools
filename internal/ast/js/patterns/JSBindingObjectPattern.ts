@@ -10,7 +10,7 @@ import {
 	JSBindingObjectPatternProperty,
 	JSPatternMeta,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSBindingObjectPattern extends NodeBaseWithComments {

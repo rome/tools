@@ -11,7 +11,7 @@ import {
 	JSPrivateName,
 	JSStringLiteral,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSStaticPropertyKey extends NodeBaseWithComments {

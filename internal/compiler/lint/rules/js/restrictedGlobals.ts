@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {isInTypeAnnotation} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {isInTypeAnnotation} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 const RESTRICTED_GLOBALS = ["event", "error"];
 

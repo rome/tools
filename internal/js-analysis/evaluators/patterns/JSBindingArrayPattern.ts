@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSBindingArrayPattern,
 	jsBindingArrayPattern,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSBindingArrayPattern(node: AnyNode, scope: Scope) {
 	node = jsBindingArrayPattern.assert(node);

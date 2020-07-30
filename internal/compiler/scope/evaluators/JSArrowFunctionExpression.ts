@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsArrowFunctionExpression} from "@romefrontend/ast";
+import {AnyNode, jsArrowFunctionExpression} from "@internal/ast";
 import {buildFunctionScope} from "../utils";
 import {createScopeEvaluator} from "./index";
 

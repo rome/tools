@@ -1,5 +1,5 @@
 import {Scope} from "../../scopes";
-import {AnyNode, TSConstKeyword, tsConstKeyword} from "@romefrontend/ast";
+import {AnyNode, TSConstKeyword, tsConstKeyword} from "@internal/ast";
 
 export default function TSConstKeyword(node: AnyNode, scope: Scope) {
 	node = tsConstKeyword.assert(node);

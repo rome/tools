@@ -1,5 +1,5 @@
-import {TEMP_PATH} from "@romefrontend/path";
-import {copyFile, removeDirectory} from "@romefrontend/fs";
+import {TEMP_PATH} from "@internal/path";
+import {copyFile, removeDirectory} from "@internal/fs";
 import {ROOT} from "./_utils";
 import {main as buildRelease} from "./build-release";
 

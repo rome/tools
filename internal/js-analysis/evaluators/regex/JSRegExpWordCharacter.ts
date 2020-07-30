@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpWordCharacter,
 	jsRegExpWordCharacter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpWordCharacter(node: AnyNode) {
 	node = jsRegExpWordCharacter.assert(node);

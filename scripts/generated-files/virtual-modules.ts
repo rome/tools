@@ -1,5 +1,5 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
-import {lstat, readDirectory, readFileText} from "@romefrontend/fs";
+import {lstat, readDirectory, readFileText} from "@internal/fs";
 
 const runtimeModules = ROOT.append("internal", "@romefrontend-runtime");
 const runtimeIndex = INTERNAL.append("core", "common", "virtual-modules.ts");

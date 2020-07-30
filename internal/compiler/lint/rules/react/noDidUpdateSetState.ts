@@ -5,9 +5,9 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {doesNodeMatchPattern, isConditional} from "@romefrontend/js-ast-utils";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {doesNodeMatchPattern, isConditional} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 function inComponentDidUpdate(path: Path): boolean {

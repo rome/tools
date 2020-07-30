@@ -5,14 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {DiagnosticsDuplicateHelper} from "@romefrontend/compiler/lib/DiagnosticsDuplicateHelper";
-import {
-	resolveIndirection,
-	tryStaticEvaluation,
-} from "@romefrontend/js-ast-utils";
-import {prettyFormatToString} from "@romefrontend/pretty-format";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {DiagnosticsDuplicateHelper} from "@internal/compiler/lib/DiagnosticsDuplicateHelper";
+import {resolveIndirection, tryStaticEvaluation} from "@internal/js-ast-utils";
+import {prettyFormatToString} from "@internal/pretty-format";
 
 export default createVisitor({
 	name: "js/noDuplicateCase",

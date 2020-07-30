@@ -1,17 +1,14 @@
-import {createMockWorker} from "@romefrontend/test-helpers";
-import {tests} from "@romefrontend/compiler/lint/rules/tests";
-import {
-	DiagnosticCategory,
-	DiagnosticsProcessor,
-} from "@romefrontend/diagnostics";
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import {highlightCode} from "@romefrontend/markup-syntax-highlight";
-import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
-import {concatMarkup, joinMarkupLines, markup} from "@romefrontend/markup";
-import {markupToHtml} from "@romefrontend/cli-layout";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {dedent} from "@romefrontend/string-utils";
-import {ob1Coerce1} from "@romefrontend/ob1";
+import {createMockWorker} from "@internal/test-helpers";
+import {tests} from "@internal/compiler/lint/rules/tests";
+import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
+import {highlightCode} from "@internal/markup-syntax-highlight";
+import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
+import {markupToHtml} from "@internal/cli-layout";
+import {createUnknownFilePath} from "@internal/path";
+import {dedent} from "@internal/string-utils";
+import {ob1Coerce1} from "@internal/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 
 const {worker, performFileOperation} = createMockWorker();

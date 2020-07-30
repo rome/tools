@@ -5,8 +5,8 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {descriptions} from "@romefrontend/diagnostics";
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
 import {doesNodeMatchReactPattern} from "../../utils/react";
 
 const reactDOMConfig = {

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, JSVariableDeclarator} from "@romefrontend/ast";
-import {ConstBinding, createVisitor, signals} from "@romefrontend/compiler";
-import {getRequireSource, isInTypeAnnotation} from "@romefrontend/js-ast-utils";
+import {AnyJSStatement, JSVariableDeclarator} from "@internal/ast";
+import {ConstBinding, createVisitor, signals} from "@internal/compiler";
+import {getRequireSource, isInTypeAnnotation} from "@internal/js-ast-utils";
 
 const NON_INLINED_REQUIRES: Array<string> = [];
 

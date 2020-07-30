@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSUnionTypeAnnotation,
 	tsUnionTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import UnionT from "../../types/UnionT";
 
 export default function TSUnionTypeAnnotation(node: AnyNode, scope: Scope) {

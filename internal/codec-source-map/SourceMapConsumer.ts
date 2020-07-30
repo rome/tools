@@ -21,8 +21,8 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from "@romefrontend/ob1";
-import {Dict} from "@romefrontend/typescript-helpers";
+} from "@internal/ob1";
+import {Dict} from "@internal/typescript-helpers";
 
 export function getParsedMappingKey(line: Number1, column: Number0): string {
 	return `${String(line)}:${String(column)}`;

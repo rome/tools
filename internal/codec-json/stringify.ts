@@ -6,13 +6,13 @@
  */
 
 import {Comments, PathComments, PathToComments} from "./types";
-import {naturalCompare} from "@romefrontend/string-utils";
+import {naturalCompare} from "@internal/string-utils";
 import {isValidWord} from "./parse";
-import {Consumer} from "@romefrontend/consume";
-import {PRIORITIZE_KEYS, formatNumber} from "@romefrontend/pretty-format";
-import {escapeJSString} from "@romefrontend/string-escape";
-import {joinMarkupLines} from "@romefrontend/markup";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+import {Consumer} from "@internal/consume";
+import {PRIORITIZE_KEYS, formatNumber} from "@internal/pretty-format";
+import {escapeJSString} from "@internal/string-escape";
+import {joinMarkupLines} from "@internal/markup";
+import {markupToPlainText} from "@internal/cli-layout";
 
 function joinList(
 	open: string,

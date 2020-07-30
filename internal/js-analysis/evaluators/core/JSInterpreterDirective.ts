@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSInterpreterDirective,
 	jsInterpreterDirective,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSInterpreterDirective(node: AnyNode, scope: Scope) {
 	node = jsInterpreterDirective.assert(node);

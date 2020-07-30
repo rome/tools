@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBigIntLiteral} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {JSBigIntLiteral} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function JSBigIntLiteral(
 	builder: Builder,

@@ -1,6 +1,6 @@
-import {markupToPlainText} from "@romefrontend/cli-layout";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {Consumer} from "@romefrontend/consume";
+import {markupToPlainText} from "@internal/cli-layout";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {Consumer} from "@internal/consume";
 import {
 	LSPDiagnostic,
 	LSPDiagnosticRelatedInformation,
@@ -8,13 +8,13 @@ import {
 	LSPRange,
 	LSPTextEdit,
 } from "./types";
-import stringDiff, {Diffs, diffConstants} from "@romefrontend/string-diff";
-import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@romefrontend/ob1";
-import {Position} from "@romefrontend/parser-core";
-import {DiagnosticLocation, Diagnostics} from "@romefrontend/diagnostics";
-import {Server} from "@romefrontend/core";
-import {WorkerBufferPatch} from "@romefrontend/core/common/bridges/WorkerBridge";
-import {joinMarkupLines} from "@romefrontend/markup";
+import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
+import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@internal/ob1";
+import {Position} from "@internal/parser-core";
+import {DiagnosticLocation, Diagnostics} from "@internal/diagnostics";
+import {Server} from "@internal/core";
+import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
+import {joinMarkupLines} from "@internal/markup";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSWhileStatement} from "@romefrontend/ast";
+import {JSWhileStatement} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -14,7 +14,7 @@ import {
 	indent,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {printClause} from "../utils";
 

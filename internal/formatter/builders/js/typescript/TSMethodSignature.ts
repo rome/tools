@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMethodSignature} from "@romefrontend/ast";
-import {Builder, Token, concat, group, space} from "@romefrontend/formatter";
+import {TSMethodSignature} from "@internal/ast";
+import {Builder, Token, concat, group, space} from "@internal/formatter";
 
 export default function TSMethodSignature(
 	builder: Builder,

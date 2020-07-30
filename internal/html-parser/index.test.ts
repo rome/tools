@@ -1,4 +1,4 @@
-import {declareParserTests} from "@romefrontend/test-helpers";
+import {declareParserTests} from "@internal/test-helpers";
 
 const promise = declareParserTests();
 

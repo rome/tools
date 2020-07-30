@@ -1,5 +1,5 @@
-import {TSBigIntLiteralTypeAnnotation} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {TSBigIntLiteralTypeAnnotation} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function TSBigIntLiteralTypeAnnotation(
 	builder: Builder,

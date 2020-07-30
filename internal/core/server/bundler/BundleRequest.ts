@@ -7,7 +7,7 @@
 
 import Bundler from "./Bundler";
 import DependencyNode from "../dependencies/DependencyNode";
-import {Mappings, SourceMapGenerator} from "@romefrontend/codec-source-map";
+import {Mappings, SourceMapGenerator} from "@internal/codec-source-map";
 import {BundleRequestResult, BundlerMode} from "../../common/types/bundler";
 import {
 	WorkerBundleCompileOptions,
@@ -18,19 +18,19 @@ import {
 	BundleCompileResolvedImports,
 	CompileResult,
 	getPrefixedBundleNamespace,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 
-import {DiagnosticsProcessor, descriptions} from "@romefrontend/diagnostics";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {ob1Add} from "@romefrontend/ob1";
-import {readFile} from "@romefrontend/fs";
+import {DiagnosticsProcessor, descriptions} from "@internal/diagnostics";
+import {AbsoluteFilePath} from "@internal/path";
+import {ob1Add} from "@internal/ob1";
+import {readFile} from "@internal/fs";
 import crypto = require("crypto");
 
-import {Dict} from "@romefrontend/typescript-helpers";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Dict} from "@internal/typescript-helpers";
+import {Reporter} from "@internal/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
-import {dedent} from "@romefrontend/string-utils";
-import {markup} from "@romefrontend/markup";
+import {dedent} from "@internal/string-utils";
+import {markup} from "@internal/markup";
 
 export type BundleOptions = {
 	prefix?: string;

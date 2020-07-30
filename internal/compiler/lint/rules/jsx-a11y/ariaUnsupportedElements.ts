@@ -1,11 +1,8 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {JSXElement} from "@romefrontend/ast";
-import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
-import {
-	ARIAProperty,
-	ariaPropsMap,
-} from "@romefrontend/compiler/lint/utils/aria";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {JSXElement} from "@internal/ast";
+import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
+import {ARIAProperty, ariaPropsMap} from "@internal/compiler/lint/utils/aria";
 
 function hasAriaAttributes(node: JSXElement): boolean {
 	const hasRole = hasJSXAttribute(node, "role");

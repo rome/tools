@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/markdown-parser
+// @internal/markdown-parser
 export const markdownParser = createDiagnosticsCategory({
 	INVALID_SEQUENCE: {message: markup`Invalid sequence`},
 });

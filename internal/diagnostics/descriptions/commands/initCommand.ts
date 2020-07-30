@@ -1,6 +1,6 @@
-import {DiagnosticAdvice} from "@romefrontend/diagnostics";
+import {DiagnosticAdvice} from "@internal/diagnostics";
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 const IGNORE_ADVICE: DiagnosticAdvice = [
 	{
@@ -14,7 +14,7 @@ const IGNORE_ADVICE: DiagnosticAdvice = [
 	},
 ];
 
-// @romefrontend/core/server/commands/init.ts
+// @internal/core/server/commands/init.ts
 export const initCommand = createDiagnosticsCategory({
 	UNCOMMITTED_CHANGES: {
 		category: "commands/init/uncommittedChanges",

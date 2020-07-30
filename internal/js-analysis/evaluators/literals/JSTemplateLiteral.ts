@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSTemplateLiteral, jsTemplateLiteral} from "@romefrontend/ast";
+import {AnyNode, JSTemplateLiteral, jsTemplateLiteral} from "@internal/ast";
 import ExhaustiveT from "../../types/ExhaustiveT";
 import StringT from "../../types/StringT";
 

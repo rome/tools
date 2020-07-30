@@ -5,32 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ModuleSignature} from "@romefrontend/js-analysis";
-import {Manifest} from "@romefrontend/codec-js-manifest";
-import {AnyRoot, ConstJSSourceType} from "@romefrontend/ast";
+import {ModuleSignature} from "@internal/js-analysis";
+import {Manifest} from "@internal/codec-js-manifest";
+import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
 	LintCompilerOptions,
 	TransformStageName,
-} from "@romefrontend/compiler";
-import {Profile} from "@romefrontend/v8";
+} from "@internal/compiler";
+import {Profile} from "@internal/v8";
 import {ProfilingStartData} from "./ServerBridge";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsError,
-} from "@romefrontend/diagnostics";
-import {ProjectConfigJSON} from "@romefrontend/project";
-import {Bridge} from "@romefrontend/events";
+} from "@internal/diagnostics";
+import {ProjectConfigJSON} from "@internal/project";
+import {Bridge} from "@internal/events";
 import {JSONFileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
-import {InlineSnapshotUpdates} from "@romefrontend/core/test-worker/SnapshotManager";
-import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
-import {createAbsoluteFilePath} from "@romefrontend/path";
-import {Number0} from "@romefrontend/ob1";
-import {FormatterOptions} from "@romefrontend/formatter";
-import {RecoverySaveFile} from "@romefrontend/core/server/fs/RecoveryStore";
+import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {createAbsoluteFilePath} from "@internal/path";
+import {Number0} from "@internal/ob1";
+import {FormatterOptions} from "@internal/formatter";
+import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 
 export type WorkerProjects = Array<{
 	id: number;

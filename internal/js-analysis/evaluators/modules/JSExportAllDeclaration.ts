@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSExportAllDeclaration,
 	jsExportAllDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import Hub from "../../Hub";
 
 export default function JSExportAllDeclaration(

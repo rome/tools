@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSQualifiedName} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSQualifiedName} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSQualifiedName(
 	builder: Builder,

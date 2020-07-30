@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSExpressionStatement,
 	jsExpressionStatement,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSExpressionStatement(node: AnyNode, scope: Scope) {
 	node = jsExpressionStatement.assert(node);

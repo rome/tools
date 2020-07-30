@@ -3,8 +3,8 @@ import {
 	CSSDeclaration,
 	CSSRule,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
-import {createBuilder} from "@romefrontend/ast/utils";
+} from "@internal/ast";
+import {createBuilder} from "@internal/ast/utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSBlock extends NodeBaseWithComments {

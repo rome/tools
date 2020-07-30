@@ -10,7 +10,7 @@ import {
 	DiagnosticDescription,
 	DiagnosticLocation,
 	buildDuplicateLocationAdvice,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import CompilerContext from "./CompilerContext";
 
 type DescriptionFactory = (key: string) => DiagnosticDescription;

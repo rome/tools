@@ -1,4 +1,4 @@
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 
 export type SkipSignal = {
 	type: "SKIP";

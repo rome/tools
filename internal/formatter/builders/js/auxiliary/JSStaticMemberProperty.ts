@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
-import {JSStaticMemberProperty} from "@romefrontend/ast";
+import {Builder, Token, concat} from "@internal/formatter";
+import {JSStaticMemberProperty} from "@internal/ast";
 
 export default function JSStaticMemberProperty(
 	builder: Builder,

@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/js-ast-utils",
+	"name": "@internal/js-ast-utils",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

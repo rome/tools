@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstTSAccessibility, NodeBaseWithComments} from "@romefrontend/ast";
+import {ConstTSAccessibility, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSClassPropertyMeta extends NodeBaseWithComments {

@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/parser-core
+// @internal/parser-core
 export const parserCore = createDiagnosticsCategory({
 	EXPECTED_SPACE: {message: markup`Expected no space between`},
 	EXPECTED_EOF: {message: markup`Expected end of file`},

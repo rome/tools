@@ -6,7 +6,7 @@
  */
 
 import SourceMapConsumer from "./SourceMapConsumer";
-import {Number0, Number1} from "@romefrontend/ob1";
+import {Number0, Number1} from "@internal/ob1";
 import {ResolvedLocation} from "./types";
 
 export default class SourceMapConsumerCollection {

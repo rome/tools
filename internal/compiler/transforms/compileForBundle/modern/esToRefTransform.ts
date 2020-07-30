@@ -11,7 +11,7 @@ import {
 	TypeBinding,
 	createVisitor,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	getModuleId,
 	getOptions,
@@ -24,7 +24,7 @@ import {
 	getImportSpecifiers,
 	renameBindings,
 	template,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {
 	AnyNode,
 	JSObjectProperties,
@@ -42,8 +42,8 @@ import {
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
-} from "@romefrontend/ast";
-import {pretty} from "@romefrontend/pretty-format";
+} from "@internal/ast";
+import {pretty} from "@internal/pretty-format";
 
 export default createVisitor({
 	name: "esToRefTransform",

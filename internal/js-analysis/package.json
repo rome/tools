@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/js-analysis",
+	"name": "@internal/js-analysis",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

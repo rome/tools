@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSTaggedTemplateExpression,
 	jsTaggedTemplateExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSTaggedTemplateExpression(node: AnyNode, scope: Scope) {
 	node = jsTaggedTemplateExpression.assert(node);

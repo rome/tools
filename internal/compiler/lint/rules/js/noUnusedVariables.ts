@@ -1,19 +1,16 @@
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {
 	Path,
 	Scope,
 	createHook,
 	createVisitor,
 	signals,
-} from "@romefrontend/compiler";
-import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {
-	ArgumentsBinding,
-	TypeBinding,
-} from "@romefrontend/compiler/scope/bindings";
-import {descriptions} from "@romefrontend/diagnostics";
-import {HookCallReturn} from "@romefrontend/compiler/api/createHook";
+} from "@internal/compiler";
+import {getBindingIdentifiers} from "@internal/js-ast-utils";
+import {Dict} from "@internal/typescript-helpers";
+import {ArgumentsBinding, TypeBinding} from "@internal/compiler/scope/bindings";
+import {descriptions} from "@internal/diagnostics";
+import {HookCallReturn} from "@internal/compiler/api/createHook";
 
 type State = {
 	usedBindings: Dict<boolean>;

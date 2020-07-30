@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {JSObjectMethod, JSObjectProperty} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {JSObjectMethod, JSObjectProperty} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
 function extractPropertyKey(

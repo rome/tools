@@ -1,10 +1,10 @@
-import {Path, Scope, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {hasJSXAttribute, isFunctionNode} from "@romefrontend/js-ast-utils";
-import {JSXElement, JSXFragment} from "@romefrontend/ast";
+import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {hasJSXAttribute, isFunctionNode} from "@internal/js-ast-utils";
+import {JSXElement, JSXFragment} from "@internal/ast";
 
 import {doesNodeMatchReactPattern} from "../../utils/react";
-import {ExitSignal} from "@romefrontend/compiler/signals";
+import {ExitSignal} from "@internal/compiler/signals";
 
 function isChildOfHtmlElement(path: Path): boolean {
 	const parentNode = path.parent;

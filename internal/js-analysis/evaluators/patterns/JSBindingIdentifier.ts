@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSBindingIdentifier,
-	jsBindingIdentifier,
-} from "@romefrontend/ast";
+import {AnyNode, JSBindingIdentifier, jsBindingIdentifier} from "@internal/ast";
 
 export default function JSBindingIdentifier(node: AnyNode, scope: Scope) {
 	node = jsBindingIdentifier.assert(node);

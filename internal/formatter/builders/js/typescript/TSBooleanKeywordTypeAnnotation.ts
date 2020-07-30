@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from "@romefrontend/formatter";
+import {Token} from "@internal/formatter";
 
 export default function TSBooleanKeywordTypeAnnotation(): Token {
 	return "boolean";

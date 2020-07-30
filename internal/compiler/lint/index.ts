@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
+import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
 import {LintRequest} from "../types";
-import {Cache, CompilerContext} from "@romefrontend/compiler";
-import {formatAST} from "@romefrontend/formatter";
+import {Cache, CompilerContext} from "@internal/compiler";
+import {formatAST} from "@internal/formatter";
 import {addSuppressions} from "./suppressions";
 import {lintTransforms} from "./rules/index";
 

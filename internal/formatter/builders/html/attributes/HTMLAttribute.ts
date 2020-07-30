@@ -1,5 +1,5 @@
-import {HTMLAttribute} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {HTMLAttribute} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function HTMLAttribute(
 	builder: Builder,

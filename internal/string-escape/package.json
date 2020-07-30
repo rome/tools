@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/string-escape",
+	"name": "@internal/string-escape",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

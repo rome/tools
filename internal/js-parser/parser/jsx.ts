@@ -6,7 +6,7 @@
  */
 
 import {types as tt} from "../tokenizer/types";
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {JSParser} from "../parser";
 import {
 	JSStringLiteral,
@@ -20,15 +20,15 @@ import {
 	JSXSpreadAttribute,
 	JSXSpreadChild,
 	JSXText,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	parseExpression,
 	parseMaybeAssign,
 	parseStringLiteral,
 	parseTSTypeArguments,
 } from "./index";
-import {descriptions} from "@romefrontend/diagnostics";
-import {isValidIdentifierName} from "@romefrontend/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
+import {isValidIdentifierName} from "@internal/js-ast-utils";
 
 // Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
 function isHTMLElementName(tagName: string): boolean {

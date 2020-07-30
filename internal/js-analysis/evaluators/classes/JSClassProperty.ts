@@ -6,7 +6,7 @@
  */
 
 import {ClassScope, Scope, ThisScope} from "../../scopes";
-import {AnyNode, JSClassProperty, jsClassProperty} from "@romefrontend/ast";
+import {AnyNode, JSClassProperty, jsClassProperty} from "@internal/ast";
 import AnyT from "../../types/AnyT";
 import ObjPropT from "../../types/ObjPropT";
 

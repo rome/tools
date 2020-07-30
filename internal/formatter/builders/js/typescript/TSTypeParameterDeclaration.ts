@@ -8,7 +8,7 @@
 import {
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -16,7 +16,7 @@ import {
 	group,
 	indent,
 	softline,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {printCommaList} from "../utils";
 

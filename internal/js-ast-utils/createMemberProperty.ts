@@ -12,7 +12,7 @@ import {
 	jsIdentifier,
 	jsStaticMemberProperty,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {isValidIdentifierName} from "./isValidIdentifierName";
 
 export function createMemberProperty(

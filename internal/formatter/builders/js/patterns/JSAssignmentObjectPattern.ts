@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSAssignmentObjectPattern} from "@romefrontend/ast";
+import {JSAssignmentObjectPattern} from "@internal/ast";
 import JSObjectExpression from "../objects/JSObjectExpression";
 
 export default function JSAssignmentObjectPattern(

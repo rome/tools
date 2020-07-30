@@ -12,7 +12,7 @@ import {
 	JSContinueStatement,
 	JSReturnStatement,
 	JSThrowStatement,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 type CompletionRecord = {
 	type: "COMPLETION";

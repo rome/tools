@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {assertHardMeta, normalizeProjectConfig} from "@romefrontend/project";
+import {assertHardMeta, normalizeProjectConfig} from "@internal/project";
 import {
 	AbsoluteFilePath,
 	HOME_PATH,
 	createUnknownFilePath,
-} from "@romefrontend/path";
-import {markup} from "@romefrontend/markup";
-import {descriptions, interceptDiagnostics} from "@romefrontend/diagnostics";
-import {Consumer} from "@romefrontend/consume";
+} from "@internal/path";
+import {markup} from "@internal/markup";
+import {descriptions, interceptDiagnostics} from "@internal/diagnostics";
+import {Consumer} from "@internal/consume";
 import {
 	ConsumeJSONResult,
 	consumeJSONExtra,
 	stringifyJSONExtra,
-} from "@romefrontend/codec-json";
-import {readFileText, writeFile} from "@romefrontend/fs";
+} from "@internal/codec-json";
+import {readFileText, writeFile} from "@internal/fs";
 import {
 	loadUserConfig,
 	normalizeUserConfig,
-} from "@romefrontend/core/common/userConfig";
-import {USER_CONFIG_DIRECTORY} from "@romefrontend/core/common/constants";
+} from "@internal/core/common/userConfig";
+import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
 
 type Flags = {
 	user: boolean;

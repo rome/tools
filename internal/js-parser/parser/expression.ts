@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {JSParser, OpeningContext} from "../parser";
 import {
 	NumberTokenValue,
@@ -13,7 +13,7 @@ import {
 	finishToken,
 	readRegexp,
 } from "../tokenizer/index";
-import * as charCodes from "@romefrontend/string-charcodes";
+import * as charCodes from "@internal/string-charcodes";
 import {types as tt} from "../tokenizer/types";
 import {
 	IndexTracker,
@@ -22,7 +22,7 @@ import {
 	isReservedWord,
 	isStrictBindReservedWord,
 	isStrictReservedWord,
-} from "@romefrontend/js-parser-utils";
+} from "@internal/js-parser-utils";
 import {
 	AnyJSBindingPattern,
 	AnyJSExpression,
@@ -89,7 +89,7 @@ import {
 	TSTypeParameterInstantiation,
 	UnaryOperator,
 	UpdateOperator,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {types as tc} from "../tokenizer/context";
 import {
 	ToReferencedItem,
@@ -125,10 +125,10 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number0Neg1,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 import {splitFunctionParams} from "./statement";
-import {createRegExpParser} from "@romefrontend/codec-js-regexp";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createRegExpParser} from "@internal/codec-js-regexp";
+import {descriptions} from "@internal/diagnostics";
 
 export function checkPropClash(
 	parser: JSParser,

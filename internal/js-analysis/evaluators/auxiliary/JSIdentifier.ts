@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSIdentifier, jsIdentifier} from "@romefrontend/ast";
+import {AnyNode, JSIdentifier, jsIdentifier} from "@internal/ast";
 import UndeclaredVarE from "../../types/errors/UndeclaredVarE";
 import OpenT from "../../types/OpenT";
 import AnyT from "../../types/AnyT";

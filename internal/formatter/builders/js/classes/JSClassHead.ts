@@ -13,9 +13,9 @@ import {
 	indent,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
-import {JSClassHead} from "@romefrontend/ast";
+import {JSClassHead} from "@internal/ast";
 import {printCommaList} from "../utils";
 
 export default function JSClassHead(builder: Builder, node: JSClassHead): Token {

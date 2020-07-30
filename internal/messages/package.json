@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/messages",
+	"name": "@internal/messages",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

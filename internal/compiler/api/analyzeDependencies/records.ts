@@ -9,14 +9,14 @@ import {
 	AnyNode,
 	ConstJSExportModuleKind,
 	JSReferenceIdentifier,
-} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
 import {
 	AnalyzeDependency,
 	AnalyzeDependencyImportUsageItem,
 	AnyAnalyzeExport,
-} from "@romefrontend/core";
-import {Record} from "@romefrontend/compiler";
+} from "@internal/core";
+import {Record} from "@internal/compiler";
 
 export class ImportRecord extends Record {
 	constructor(data: AnalyzeDependency) {

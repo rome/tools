@@ -25,14 +25,14 @@ import {
 	JSYieldExpression,
 	TSInferType,
 	TSUnionTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	getPrecedence,
 	isBinary,
 	isConditional,
 	isFor,
 	isUnaryLike,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 
 function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
 	return (

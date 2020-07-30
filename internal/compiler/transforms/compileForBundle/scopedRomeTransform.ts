@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {renameBindings} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {renameBindings} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "scopedRome",

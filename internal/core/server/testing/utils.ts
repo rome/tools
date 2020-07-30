@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {naturalCompare} from "@romefrontend/string-utils";
+import {naturalCompare} from "@internal/string-utils";
 import {CoverageDirectory} from "./types";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);

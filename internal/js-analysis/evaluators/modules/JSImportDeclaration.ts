@@ -5,14 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyNode,
-	JSImportDeclaration,
-	jsImportDeclaration,
-} from "@romefrontend/ast";
+import {AnyNode, JSImportDeclaration, jsImportDeclaration} from "@internal/ast";
 import {Scope} from "../../scopes";
 import ImportT from "../../types/ImportT";
-import {getImportSpecifiers} from "@romefrontend/js-ast-utils";
+import {getImportSpecifiers} from "@internal/js-ast-utils";
 
 export default function JSImportDeclaration(node: AnyNode, scope: Scope) {
 	node = jsImportDeclaration.assert(node);

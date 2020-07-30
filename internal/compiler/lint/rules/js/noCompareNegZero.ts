@@ -4,10 +4,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {AnyNode} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {template} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+import {AnyNode} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {template} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 const OPERATORS_TO_CHECK = [">", ">=", "<", "<=", "==", "===", "!=", "!=="];
 

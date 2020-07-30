@@ -1,10 +1,10 @@
-import {Event} from "@romefrontend/events";
-import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
-import {Consumer, consumeUnknown} from "@romefrontend/consume";
+import {Event} from "@internal/events";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {Consumer, consumeUnknown} from "@internal/consume";
 import {LSPResponseMessage} from "./types";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {AnyMarkup, markup} from "@romefrontend/markup";
-import prettyFormat from "@romefrontend/pretty-format";
+import {Reporter} from "@internal/cli-reporter";
+import {AnyMarkup, markup} from "@internal/markup";
+import prettyFormat from "@internal/pretty-format";
 
 type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 

@@ -1,11 +1,8 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {findClosestStringMatch, toKebabCase} from "@romefrontend/string-utils";
-import {descriptions} from "@romefrontend/diagnostics";
-import {
-	ARIAProperty,
-	ariaPropsMap,
-} from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/markup";
+import {createVisitor, signals} from "@internal/compiler";
+import {findClosestStringMatch, toKebabCase} from "@internal/string-utils";
+import {descriptions} from "@internal/diagnostics";
+import {ARIAProperty, ariaPropsMap} from "@internal/compiler/lint/utils/aria";
+import {markup} from "@internal/markup";
 
 export default createVisitor({
 	name: "jsx-a11y/ariaProps",

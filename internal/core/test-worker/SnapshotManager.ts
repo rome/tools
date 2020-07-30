@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
-import {exists, readFileText, removeFile, writeFile} from "@romefrontend/fs";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {exists, readFileText, removeFile, writeFile} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
-import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
+import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 import {createSnapshotParser} from "./SnapshotParser";
-import {ErrorFrame} from "@romefrontend/v8";
-import {Number0, Number1} from "@romefrontend/ob1";
-import {prettyFormatToString} from "@romefrontend/pretty-format";
-import {naturalCompare} from "@romefrontend/string-utils";
+import {ErrorFrame} from "@internal/v8";
+import {Number0, Number1} from "@internal/ob1";
+import {prettyFormatToString} from "@internal/pretty-format";
+import {naturalCompare} from "@internal/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 
 function cleanHeading(key: string): string {

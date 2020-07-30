@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {TSTemplateLiteralTypeAnnotation} from "@romefrontend/ast";
-import {escapeJSString} from "@romefrontend/string-escape";
+import {TSTemplateLiteralTypeAnnotation} from "@internal/ast";
+import {escapeJSString} from "@internal/string-escape";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	builder: Builder,

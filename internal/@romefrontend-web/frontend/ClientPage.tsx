@@ -6,10 +6,10 @@
  */
 
 import React = require('react');
-import {WebServerRequest, WebServerClient} from '@romefrontend/core';
+import {WebServerRequest, WebServerClient} from '@internal/core';
 import Spinner from './Spinner';
 import Button from './Button';
-import {ServerMarker} from '@romefrontend/core/server/Server';
+import {ServerMarker} from '@internal/core/server/Server';
 
 const {css} = require('emotion');
 const xterm = require('xterm');

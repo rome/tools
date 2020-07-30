@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ManifestDefinition} from "@romefrontend/codec-js-manifest";
-import {PathPatterns} from "@romefrontend/path-match";
-import {BundlerMode} from "@romefrontend/core";
+import {ManifestDefinition} from "@internal/codec-js-manifest";
+import {PathPatterns} from "@internal/path-match";
+import {BundlerMode} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	TEMP_PATH,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
-import {Consumer} from "@romefrontend/consume";
-import {Dict, RequiredProps} from "@romefrontend/typescript-helpers";
-import {SemverRangeNode} from "@romefrontend/codec-semver";
+} from "@internal/path";
+import {Consumer} from "@internal/consume";
+import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {SemverRangeNode} from "@internal/codec-semver";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {

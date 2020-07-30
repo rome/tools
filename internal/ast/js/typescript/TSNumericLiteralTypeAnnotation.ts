@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNumericLiteral, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSNumericLiteral, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSNumericLiteralTypeAnnotation extends NodeBaseWithComments {

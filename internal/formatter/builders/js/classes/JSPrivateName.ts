@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
-import {JSPrivateName} from "@romefrontend/ast";
+import {Builder, Token, concat} from "@internal/formatter";
+import {JSPrivateName} from "@internal/ast";
 
 export default function JSPrivateName(
 	builder: Builder,

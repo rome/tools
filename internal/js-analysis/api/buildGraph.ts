@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, JSRoot} from "@romefrontend/ast";
+import {AnyJSStatement, JSRoot} from "@internal/ast";
 import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
-import {TransformProjectDefinition} from "@romefrontend/compiler";
+import {TransformProjectDefinition} from "@internal/compiler";
 
 export default async function buildGraph(
 	opts: {

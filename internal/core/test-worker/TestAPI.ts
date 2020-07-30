@@ -13,15 +13,15 @@ import {
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
 	getErrorStackAdvice,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import SnapshotManager from "./SnapshotManager";
 import {TestServerRunnerOptions} from "../server/testing/types";
-import {Event} from "@romefrontend/events";
-import stringDiff from "@romefrontend/string-diff";
-import {getErrorStructure} from "@romefrontend/v8";
-import {prettyFormatToString} from "@romefrontend/pretty-format";
+import {Event} from "@internal/events";
+import stringDiff from "@internal/string-diff";
+import {getErrorStructure} from "@internal/v8";
+import {prettyFormatToString} from "@internal/pretty-format";
 import {FileReference} from "../common/types/files";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {
 	AsyncFunc,
 	ExpectedError,

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isPlainObject} from "@romefrontend/typescript-helpers";
+import {isPlainObject} from "@internal/typescript-helpers";
 
 export function isNodeLike(node: unknown): boolean {
 	if (node == null) {

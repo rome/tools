@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyJSRegExpEscapedCharacter,
-	NodeBaseWithComments,
-} from "@romefrontend/ast";
+import {AnyJSRegExpEscapedCharacter, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSRegExpCharSetRange extends NodeBaseWithComments {

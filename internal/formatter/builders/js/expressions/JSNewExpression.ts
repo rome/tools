@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {JSNewExpression} from "@romefrontend/ast";
+import {JSNewExpression} from "@internal/ast";
 import JSCallExpression from "./JSCallExpression";
 
 export default function JSNewExpression(

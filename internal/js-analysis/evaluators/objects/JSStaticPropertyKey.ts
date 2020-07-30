@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSStaticPropertyKey,
-	jsStaticPropertyKey,
-} from "@romefrontend/ast";
+import {AnyNode, JSStaticPropertyKey, jsStaticPropertyKey} from "@internal/ast";
 
 export default function JSStaticPropertyKey(node: AnyNode, scope: Scope) {
 	node = jsStaticPropertyKey.assert(node);

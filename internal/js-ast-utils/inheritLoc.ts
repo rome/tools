@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {AnyNode} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
 
 export function inheritLoc(
 	node: AnyNode,

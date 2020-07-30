@@ -1,5 +1,5 @@
-import {HTMLString} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {HTMLString} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function HTMLString(builder: Builder, node: HTMLString): Token {
 	return JSON.stringify(node.value);

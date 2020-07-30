@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1} from "@romefrontend/ob1";
+import {Number0, Number1} from "@internal/ob1";
 
 export type Mappings = Array<Mapping>;
 

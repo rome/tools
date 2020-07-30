@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Dict} from '@romefrontend/typescript-helpers';
+import {Dict} from '@internal/typescript-helpers';
 
 type UnknownObject = Dict<unknown>;
 

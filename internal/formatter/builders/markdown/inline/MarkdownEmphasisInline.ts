@@ -1,5 +1,5 @@
-import {MarkdownEmphasisInline} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {MarkdownEmphasisInline} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function MarkdownEmphasisInline(
 	builder: Builder,

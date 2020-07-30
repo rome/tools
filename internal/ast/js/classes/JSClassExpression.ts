@@ -9,7 +9,7 @@ import {
 	JSBindingIdentifier,
 	JSClassHead,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSClassExpression extends NodeBaseWithComments {

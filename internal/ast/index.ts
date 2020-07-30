@@ -1,4 +1,4 @@
-import * as n from "@romefrontend/ast";
+import * as n from "@internal/ast";
 
 export * from "./base";
 export * from "./js/constants";

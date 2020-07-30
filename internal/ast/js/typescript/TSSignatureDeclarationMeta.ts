@@ -12,7 +12,7 @@ import {
 	JSBindingObjectPattern,
 	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSSignatureDeclarationMeta extends NodeBaseWithComments {

@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyNode,
-	JSRegExpAlternation,
-	jsRegExpAlternation,
-} from "@romefrontend/ast";
+import {AnyNode, JSRegExpAlternation, jsRegExpAlternation} from "@internal/ast";
 
 export default function JSRegExpAlternation(node: AnyNode) {
 	node = jsRegExpAlternation.assert(node);

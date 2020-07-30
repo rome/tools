@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstJSProgramSyntax, ConstJSSourceType} from "@romefrontend/ast";
-import {ParserOptionsWithRequiredPath} from "@romefrontend/parser-core";
+import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
+import {ParserOptionsWithRequiredPath} from "@internal/parser-core";
 
 type UserOptionsBase = {
 	syntax?: Array<ConstJSProgramSyntax>;

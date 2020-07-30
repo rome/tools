@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeParameter, tsTypeParameter} from "@romefrontend/ast";
+import {AnyNode, TSTypeParameter, tsTypeParameter} from "@internal/ast";
 
 export default function TSTypeParameter(node: AnyNode, scope: Scope) {
 	node = tsTypeParameter.assert(node);

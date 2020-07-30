@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {TypeBinding} from "@romefrontend/compiler";
-import {AnyNode, tsTypeParameter} from "@romefrontend/ast";
+import {TypeBinding} from "@internal/compiler";
+import {AnyNode, tsTypeParameter} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

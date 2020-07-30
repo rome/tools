@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSClassPrivateMethod,
 	jsClassPrivateMethod,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSClassPrivateMethod(node: AnyNode, scope: Scope) {
 	node = jsClassPrivateMethod.assert(node);

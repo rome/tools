@@ -11,7 +11,7 @@ import {
 	JSStringLiteral,
 	jsIdentifier,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export function createPropertyKey(name: string): JSIdentifier | JSStringLiteral {
 	if (isValidIdentifierName(name)) {

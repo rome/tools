@@ -1,12 +1,12 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {DiagnosticCategory} from "../categories";
-import {ResolverQueryResponseNotFound} from "@romefrontend/core/server/fs/Resolver";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {ResolverQueryResponseNotFound} from "@internal/core/server/fs/Resolver";
+import {SourceLocation} from "@internal/parser-core";
 
-// @romefrontend/path-match
+// @internal/path-match
 export const resolver = createDiagnosticsCategory({
 	NOT_FOUND: (
 		responseType: ResolverQueryResponseNotFound["type"],

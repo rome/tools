@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSVariableDeclaration,
 	jsVariableDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import OpenT from "../../types/OpenT";
 import VoidT from "../../types/VoidT";
 import executeAtom from "../../utils/executeAtom";

@@ -9,7 +9,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	Comments,
 	JSONObject,
@@ -24,17 +24,17 @@ import {
 	ConsumeContext,
 	ConsumePath,
 	ConsumeSourceLocationRequestTarget,
-} from "@romefrontend/consume";
-import {unescapeJSONString} from "@romefrontend/string-escape";
+} from "@internal/consume";
+import {unescapeJSONString} from "@internal/string-escape";
 import {
 	Position,
 	SourceLocation,
 	createParser,
 	isAlpha,
 	isDigit,
-} from "@romefrontend/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@romefrontend/ob1";
-import {isEscaped} from "@romefrontend/string-utils";
+} from "@internal/parser-core";
+import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@internal/ob1";
+import {isEscaped} from "@internal/string-utils";
 
 // Words can't start with a digit
 function isWordStartChar(char: string): boolean {

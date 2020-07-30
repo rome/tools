@@ -1,4 +1,4 @@
-import {MarkdownListBlock} from "@romefrontend/ast";
+import {MarkdownListBlock} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -6,7 +6,7 @@ import {
 	concat,
 	hardline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function MarkdownListBlock(
 	builder: Builder,

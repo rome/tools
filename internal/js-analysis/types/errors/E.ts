@@ -6,11 +6,11 @@
  */
 
 import {Scope} from "../../scopes";
-import {DiagnosticDescription} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
+import {DiagnosticDescription} from "@internal/diagnostics";
+import {AnyNode} from "@internal/ast";
 import AnyT from "../AnyT";
 import T from "../T";
-import {Markup} from "@romefrontend/markup";
+import {Markup} from "@internal/markup";
 
 export type ErrorDefinition = {
 	description: DiagnosticDescription;

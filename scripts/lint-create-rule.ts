@@ -1,8 +1,8 @@
 import {INTERNAL, ROOT, reporter, writeFile} from "./_utils";
-import {dedent, toCamelCase} from "@romefrontend/string-utils";
-import {readFileText} from "@romefrontend/fs";
+import {dedent, toCamelCase} from "@internal/string-utils";
+import {readFileText} from "@internal/fs";
 import {main as generateLintRules} from "./generated-files/lint-rules";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 const rulesPath = INTERNAL.append("compiler", "lint", "rules");
 
@@ -24,8 +24,8 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	await writeFile(
 		rulesPath.append(`${ruleName}.ts`),
 		dedent`
-			import {createVisitor, signals} from "@romefrontend/compiler";
-			import {descriptions} from "@romefrontend/diagnostics";
+			import {createVisitor, signals} from "@internal/compiler";
+			import {descriptions} from "@internal/diagnostics";
 
 			export default createVisitor({
 				name: "${ruleName}",

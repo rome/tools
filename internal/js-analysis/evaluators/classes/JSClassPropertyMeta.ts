@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSClassPropertyMeta,
-	jsClassPropertyMeta,
-} from "@romefrontend/ast";
+import {AnyNode, JSClassPropertyMeta, jsClassPropertyMeta} from "@internal/ast";
 
 export default function JSClassPropertyMeta(node: AnyNode, scope: Scope) {
 	node = jsClassPropertyMeta.assert(node);

@@ -1,8 +1,8 @@
 import {createDiagnosticsCategory} from "../index";
 import {DiagnosticAdvice, DiagnosticLocation} from "../../types";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {SourceLocation} from "@internal/parser-core";
 import {buildDuplicateLocationAdvice} from "../../helpers";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 function buildJSXOpeningAdvice(
 	name: string,
@@ -23,7 +23,7 @@ function buildJSXOpeningAdvice(
 	];
 }
 
-// @romefrontend/js-parser
+// @internal/js-parser
 export const jsParser = createDiagnosticsCategory({
 	UNTERMINATED_BLOCK_COMMENT: {message: markup`Unterminated comment`},
 	UNTERMINATED_JSX_STRING: {message: markup`Unterminated string constant`},

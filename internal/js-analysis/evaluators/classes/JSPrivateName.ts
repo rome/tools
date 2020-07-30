@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSPrivateName, jsPrivateName} from "@romefrontend/ast";
+import {AnyNode, JSPrivateName, jsPrivateName} from "@internal/ast";
 
 export default function JSPrivateName(node: AnyNode, scope: Scope) {
 	node = jsPrivateName.assert(node);

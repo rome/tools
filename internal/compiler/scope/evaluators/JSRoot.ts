@@ -7,7 +7,7 @@
 
 import Scope from "../Scope";
 import {addVarBindings} from "../utils";
-import {AnyNode, jsRoot} from "@romefrontend/ast";
+import {AnyNode, jsRoot} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

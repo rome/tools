@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyNode,
-	JSBinaryExpression,
-	JSLogicalExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSBinaryExpression, JSLogicalExpression} from "@internal/ast";
 
 export function isBinary(
 	node: undefined | AnyNode,

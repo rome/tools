@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSAssignmentAssignmentPattern} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {JSAssignmentAssignmentPattern} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 import JSBindingAssignmentPattern from "./JSBindingAssignmentPattern";
 

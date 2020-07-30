@@ -1,6 +1,6 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownListChildren} from "@romefrontend/ast/markdown/unions";
+import {MarkdownListChildren} from "@internal/ast/markdown/unions";
 
 export interface MarkdownListItem extends NodeBaseWithComments {
 	type: "MarkdownListItem";

@@ -6,8 +6,8 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSBlockStatement, jsBlockStatement} from "@romefrontend/ast";
-import {getBindingIdentifiers, isTypeNode} from "@romefrontend/js-ast-utils";
+import {AnyNode, JSBlockStatement, jsBlockStatement} from "@internal/ast";
+import {getBindingIdentifiers, isTypeNode} from "@internal/js-ast-utils";
 import BlockT from "../../types/BlockT";
 
 function shouldHoistExecute(node: undefined | AnyNode): boolean {

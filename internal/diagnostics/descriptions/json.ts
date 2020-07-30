@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/codec-json
+// @internal/codec-json
 export const json = createDiagnosticsCategory({
 	SINGLE_QUOTE_USAGE: {message: markup`You can only use double quoted strings`},
 	TRAILING_COMMA_VALUE: {

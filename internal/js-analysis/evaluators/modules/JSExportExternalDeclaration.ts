@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSExportExternalDeclaration,
 	jsExportExternalDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSExportExternalDeclaration(node: AnyNode) {
 	node = jsExportExternalDeclaration.assert(node);

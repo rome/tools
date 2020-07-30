@@ -17,11 +17,11 @@ import {
 	buildSuggestionAdvice,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {orderBySimilarity} from "@romefrontend/string-utils";
-import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
+} from "@internal/diagnostics";
+import {orderBySimilarity} from "@internal/string-utils";
+import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {PLATFORMS} from "../../common/types/platform";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default function resolverSuggest(
 	resolver: Resolver,

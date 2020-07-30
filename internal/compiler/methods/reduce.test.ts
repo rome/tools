@@ -1,9 +1,9 @@
 import {TestHelper, test} from "rome";
-import {parseJS} from "@romefrontend/js-parser";
-import {removeLoc} from "@romefrontend/ast-utils";
+import {parseJS} from "@internal/js-parser";
+import {removeLoc} from "@internal/ast-utils";
 import {TransformVisitor} from "../types";
-import {CompilerContext, signals} from "@romefrontend/compiler";
-import {formatAST} from "@romefrontend/formatter";
+import {CompilerContext, signals} from "@internal/compiler";
+import {formatAST} from "@internal/formatter";
 
 function createReduceTest(
 	input: string,

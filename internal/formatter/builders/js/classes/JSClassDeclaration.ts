@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSClassDeclaration, JSClassExpression} from "@romefrontend/ast";
+import {JSClassDeclaration, JSClassExpression} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -13,7 +13,7 @@ import {
 	hardline,
 	indent,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {hasInnerComments} from "../../comments";
 

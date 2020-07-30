@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSBindingArrayPattern} from "@romefrontend/ast";
+import {JSBindingArrayPattern} from "@internal/ast";
 import JSArrayExpression from "../expressions/JSArrayExpression";
 import {printPatternMeta} from "../utils";
 

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSImportType, tsImportType} from "@romefrontend/ast";
+import {AnyNode, TSImportType, tsImportType} from "@internal/ast";
 
 export default function TSImportType(node: AnyNode, scope: Scope) {
 	node = tsImportType.assert(node);

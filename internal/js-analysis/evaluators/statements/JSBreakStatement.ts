@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSBreakStatement, jsBreakStatement} from "@romefrontend/ast";
+import {AnyNode, JSBreakStatement, jsBreakStatement} from "@internal/ast";
 
 export default function JSBreakStatement(node: AnyNode, scope: Scope) {
 	node = jsBreakStatement.assert(node);

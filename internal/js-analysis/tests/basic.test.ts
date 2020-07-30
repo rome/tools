@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@romefrontend/diagnostics";
-import {createDefaultProjectConfig} from "@romefrontend/project";
+import {Diagnostics} from "@internal/diagnostics";
+import {createDefaultProjectConfig} from "@internal/project";
 import {test} from "rome";
-import {check} from "@romefrontend/js-analysis";
-import {parseJS} from "@romefrontend/js-parser";
-import {createUnknownFilePath} from "@romefrontend/path";
+import {check} from "@internal/js-analysis";
+import {parseJS} from "@internal/js-parser";
+import {createUnknownFilePath} from "@internal/path";
 
 async function testCheck(code: string): Promise<Diagnostics> {
 	const ast = parseJS({

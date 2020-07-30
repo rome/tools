@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {jsBlockStatement} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {jsBlockStatement} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 import {commentInjector} from "../../../transforms/defaultHooks";
 
 export default createVisitor({

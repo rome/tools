@@ -3,8 +3,8 @@ import {
 	JSBinaryExpression,
 	JSTemplateLiteral,
 	JSUnaryExpression,
-} from "@romefrontend/ast";
-import {Scope} from "@romefrontend/compiler";
+} from "@internal/ast";
+import {Scope} from "@internal/compiler";
 import {resolveIndirection} from "./resolveIndirection";
 
 export type EvalResult = {

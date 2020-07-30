@@ -7,7 +7,7 @@
 
 import {WorkerContainer} from "./WorkerManager";
 import Server from "./Server";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 
 type Queue<M> = Array<[AbsoluteFilePath, M]>;
 

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSImportCall} from "@romefrontend/ast";
+import {JSImportCall} from "@internal/ast";
 
 export default function JSImportCall(
 	builder: Builder,

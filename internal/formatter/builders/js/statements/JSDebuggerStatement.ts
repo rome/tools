@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token, concat} from "@romefrontend/formatter";
+import {Token, concat} from "@internal/formatter";
 
 export default function JSDebuggerStatement(): Token {
 	return concat(["debugger", ";"]);

@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {JSXElement} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {JSXElement} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 
 function hasImgAltText(node: JSXElement): boolean {
 	const attr = getJSXAttribute(node, "alt", true);

@@ -18,11 +18,11 @@ import {
 	StructuredError,
 	getErrorStructure,
 	getSourceLocationFromErrorFrame,
-} from "@romefrontend/v8";
+} from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {diagnosticLocationToMarkupFilelink} from "./helpers";
-import {RequiredProps} from "@romefrontend/typescript-helpers";
-import {Markup, isEmptyMarkup, markup} from "@romefrontend/markup";
+import {RequiredProps} from "@internal/typescript-helpers";
+import {Markup, isEmptyMarkup, markup} from "@internal/markup";
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 	if (Array.isArray(val)) {

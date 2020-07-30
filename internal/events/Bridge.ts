@@ -15,7 +15,7 @@ import {
 	BridgeType,
 	EventSubscription,
 } from "./types";
-import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
 import BridgeError from "./BridgeError";
 import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
 import Event from "./Event";
@@ -24,7 +24,7 @@ import {
 	StructuredError,
 	getErrorStructure,
 	setErrorFrames,
-} from "@romefrontend/v8";
+} from "@internal/v8";
 
 type ErrorJSON = {
 	serialize: (err: Error) => JSONObject;

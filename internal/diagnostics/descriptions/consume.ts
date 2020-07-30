@@ -1,9 +1,9 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
-import {UnknownNumber, ob1Get} from "@romefrontend/ob1";
+import {UnknownNumber, ob1Get} from "@internal/ob1";
 
-// @romefrontend/consume
+// @internal/consume
 export const consume = createDiagnosticsCategory({
 	SET_PROPERTY_NON_OBJECT: {
 		message: markup`Attempted to set a property on a non-object`,

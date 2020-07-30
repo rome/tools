@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {ob1Get0, ob1Get1} from "@romefrontend/ob1";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {AnyNode} from "@internal/ast";
+import {ob1Get0, ob1Get1} from "@internal/ob1";
+import {SourceLocation} from "@internal/parser-core";
 import parentheses from "./parentheses";
 
 function isOrHasCallExpression(node: AnyNode): boolean {

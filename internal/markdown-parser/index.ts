@@ -1,5 +1,5 @@
-import {ParserOptionsWithRequiredPath} from "@romefrontend/parser-core";
-import {createMarkdownParser} from "@romefrontend/markdown-parser/parse";
+import {ParserOptionsWithRequiredPath} from "@internal/parser-core";
+import {createMarkdownParser} from "@internal/markdown-parser/parse";
 
 export function parseMarkdown(opts: ParserOptionsWithRequiredPath) {
 	return createMarkdownParser(opts).parse();

@@ -8,7 +8,7 @@
 // In this file, all methods are synchronous. This is pretty gross since the rest of Rome is async everything.
 // This is required so we can integrate the project config code in third-party integrations with sync architectures.
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
-import {Consumer} from "@romefrontend/consume";
+import {Consumer} from "@internal/consume";
 import {
 	PartialProjectConfig,
 	ProjectConfig,
@@ -18,7 +18,7 @@ import {
 	ProjectConfigTarget,
 	createDefaultProjectConfig,
 } from "./types";
-import {parsePathPatternsFile} from "@romefrontend/path-match";
+import {parsePathPatternsFile} from "@internal/path-match";
 import {
 	arrayOfPatterns,
 	arrayOfStrings,
@@ -26,18 +26,18 @@ import {
 	mergeAbsoluteFilePathSets,
 	mergeArrays,
 } from "./utils";
-import {ConsumeJSONResult, consumeJSONExtra} from "@romefrontend/codec-json";
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romefrontend/path";
+import {ConsumeJSONResult, consumeJSONExtra} from "@internal/codec-json";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {
 	existsSync,
 	lstatSync,
 	readDirectorySync,
 	readFileText,
 	readFileTextSync,
-} from "@romefrontend/fs";
+} from "@internal/fs";
 import crypto = require("crypto");
-import {parseSemverRange} from "@romefrontend/codec-semver";
-import {descriptions} from "@romefrontend/diagnostics";
+import {parseSemverRange} from "@internal/codec-semver";
+import {descriptions} from "@internal/diagnostics";
 import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];

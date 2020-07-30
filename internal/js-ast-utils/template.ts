@@ -11,13 +11,13 @@ import {
 	AnyJSStatement,
 	AnyNode,
 	jsRoot,
-} from "@romefrontend/ast";
-import {CompilerContext, Path, signals} from "@romefrontend/compiler";
-import {removeLoc} from "@romefrontend/ast-utils";
-import {parseJS} from "@romefrontend/js-parser";
-import {createUnknownFilePath} from "@romefrontend/path";
+} from "@internal/ast";
+import {CompilerContext, Path, signals} from "@internal/compiler";
+import {removeLoc} from "@internal/ast-utils";
+import {parseJS} from "@internal/js-parser";
+import {createUnknownFilePath} from "@internal/path";
 import {isIdentifierish} from "./isIdentifierish";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 type Placeholder = {
 	type: AnyJSIdentifier["type"];

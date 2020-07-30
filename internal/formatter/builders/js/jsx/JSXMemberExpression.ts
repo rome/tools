@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSXMemberExpression} from "@romefrontend/ast";
+import {JSXMemberExpression} from "@internal/ast";
 
 export default function JSXMemberExpression(
 	builder: Builder,

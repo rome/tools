@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest, WebBridge} from "@romefrontend/core";
+import {Server, ServerRequest, WebBridge} from "@internal/core";
 import {
 	deriveDiagnosticFromError,
 	getDiagnosticsFromError,
-} from "@romefrontend/diagnostics";
-import {dedent, removePrefix, removeSuffix} from "@romefrontend/string-utils";
+} from "@internal/diagnostics";
+import {dedent, removePrefix, removeSuffix} from "@internal/string-utils";
 import Bundler from "../bundler/Bundler";
-import {WebSocketInterface, createKey} from "@romefrontend/codec-websocket";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {createBridgeFromWebSocketInterface} from "@romefrontend/events";
-import {createUnknownFilePath} from "@romefrontend/path";
+import {WebSocketInterface, createKey} from "@internal/codec-websocket";
+import {Reporter} from "@internal/cli-reporter";
+import {createBridgeFromWebSocketInterface} from "@internal/events";
+import {createUnknownFilePath} from "@internal/path";
 import {WebServer} from "./index";
-import {ProjectDefinition} from "@romefrontend/project";
+import {ProjectDefinition} from "@internal/project";
 import {HmrClientMessage} from "./hmr";
-import {ConsumableUrl, consumeUrl} from "@romefrontend/codec-url";
+import {ConsumableUrl, consumeUrl} from "@internal/codec-url";
 import http = require("http");
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 const waitForever = new Promise(() => {});
 

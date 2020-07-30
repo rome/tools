@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyNodes} from "@romefrontend/ast";
+import {AnyNode, AnyNodes} from "@internal/ast";
 
 export function assertSingleOrMultipleNodes(
 	result: AnyNodes,

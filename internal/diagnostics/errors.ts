@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticsProcessor} from "@romefrontend/diagnostics";
-import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
+import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {readMarkup} from "@romefrontend/markup";
+import {Reporter} from "@internal/cli-reporter";
+import {readMarkup} from "@internal/markup";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics

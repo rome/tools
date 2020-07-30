@@ -1,4 +1,4 @@
-import {createBuilder} from "@romefrontend/ast/utils";
+import {createBuilder} from "@internal/ast/utils";
 import {NodeBaseWithComments, RootBase} from "..";
 
 export interface CommitRoot extends NodeBaseWithComments,

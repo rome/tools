@@ -2,7 +2,7 @@ import {
 	AbsoluteFilePathSet,
 	HOME_PATH,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
 export const PROJECT_CONFIG_DIRECTORY = ".config";

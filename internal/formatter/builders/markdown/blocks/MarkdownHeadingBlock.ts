@@ -1,5 +1,5 @@
-import {MarkdownHeadingBlock} from "@romefrontend/ast";
-import {Builder, Token, concat, hardline, space} from "@romefrontend/formatter";
+import {MarkdownHeadingBlock} from "@internal/ast";
+import {Builder, Token, concat, hardline, space} from "@internal/formatter";
 
 export default function MarkdownHeadingBlock(
 	builder: Builder,

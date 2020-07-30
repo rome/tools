@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {JSYieldExpression} from "@romefrontend/ast";
+import {JSYieldExpression} from "@internal/ast";
 
 export default function JSYieldExpression(
 	builder: Builder,

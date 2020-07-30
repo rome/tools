@@ -1,8 +1,8 @@
 import {test} from "rome";
 import {applyWorkerBufferPatch} from "./applyWorkerBufferPatch";
-import {WorkerBufferPatch} from "@romefrontend/core/common/bridges/WorkerBridge";
-import {ob1Coerce0} from "@romefrontend/ob1";
-import {dedent} from "@romefrontend/string-utils";
+import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
+import {ob1Coerce0} from "@internal/ob1";
+import {dedent} from "@internal/string-utils";
 
 function makeRange(
 	startLine: number,

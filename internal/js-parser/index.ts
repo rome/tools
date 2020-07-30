@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSRoot} from "@romefrontend/ast";
+import {JSRoot} from "@internal/ast";
 import {
 	JSParserOptions,
 	JSParserUserOptions,

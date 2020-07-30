@@ -6,7 +6,7 @@
  */
 
 import {RefineScope, Scope} from "../../scopes";
-import {AnyNode, JSIfStatement, jsIfStatement} from "@romefrontend/ast";
+import {AnyNode, JSIfStatement, jsIfStatement} from "@internal/ast";
 import BooleanT from "../../types/BooleanT";
 import ExhaustiveT from "../../types/ExhaustiveT";
 import UnionT from "../../types/UnionT";

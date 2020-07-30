@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {jsBindingIdentifier} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {jsBindingIdentifier} from "@internal/ast";
 
 export default createVisitor({
 	name: "paramlessCatch",

@@ -1,8 +1,8 @@
-import {Scope} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
-import {EvalResult} from "@romefrontend/js-ast-utils/tryStaticEvaluation";
+import {Scope} from "@internal/compiler";
+import {AnyNode} from "@internal/ast";
+import {EvalResult} from "@internal/js-ast-utils/tryStaticEvaluation";
 import {getCreateElementProp} from ".";
-import {tryStaticEvaluation} from "@romefrontend/js-ast-utils";
+import {tryStaticEvaluation} from "@internal/js-ast-utils";
 
 export default function analyzeCreateElementProp(
 	node: AnyNode,

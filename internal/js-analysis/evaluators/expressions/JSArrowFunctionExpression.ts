@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSArrowFunctionExpression,
 	jsArrowFunctionExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import executeFunction from "../../utils/executeFunction";
 
 export default function JSArrowFunctionExpression(node: AnyNode, scope: Scope) {

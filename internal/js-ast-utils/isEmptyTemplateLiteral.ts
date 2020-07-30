@@ -1,4 +1,4 @@
-import {JSTemplateLiteral} from "@romefrontend/ast";
+import {JSTemplateLiteral} from "@internal/ast";
 
 export function isEmptyTemplateLiteral(node: JSTemplateLiteral) {
 	if (!node.quasis || node.quasis.length === 0) {

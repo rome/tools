@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {AnyNode, JSRegExpCharacter} from "@romefrontend/ast";
-import {escapeJSString} from "@romefrontend/string-escape";
+import {AnyNode, JSRegExpCharacter} from "@internal/ast";
+import {escapeJSString} from "@internal/string-escape";
 
 export default function JSRegExpCharacter(
 	builder: Builder,

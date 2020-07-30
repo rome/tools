@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue} from "@romefrontend/codec-json";
+import {JSONPropertyValue} from "@internal/codec-json";
 import {
 	BridgeErrorResponseMessage,
 	BridgeSuccessResponseMessage,

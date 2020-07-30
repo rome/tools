@@ -6,7 +6,7 @@
  */
 
 import {Scope, ThisScope} from "../../scopes";
-import {AnyNode, jsThisExpression} from "@romefrontend/ast";
+import {AnyNode, jsThisExpression} from "@internal/ast";
 import OpenT from "../../types/OpenT";
 
 export default function JSThisExpression(node: AnyNode, scope: Scope) {

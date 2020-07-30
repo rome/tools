@@ -7,8 +7,8 @@
 
 import {getCompletionRecords} from "./getCompletionRecords";
 import {test} from "rome";
-import {parseJS} from "@romefrontend/js-parser";
-import {jsFunctionDeclaration} from "@romefrontend/ast";
+import {parseJS} from "@internal/js-parser";
+import {jsFunctionDeclaration} from "@internal/ast";
 
 function helper(input: string) {
 	return getCompletionRecords(

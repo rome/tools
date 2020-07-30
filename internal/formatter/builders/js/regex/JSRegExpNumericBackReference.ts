@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSRegExpNumericBackReference} from "@romefrontend/ast";
+import {JSRegExpNumericBackReference} from "@internal/ast";
 
 export default function JSRegExpNumericBackReference(
 	builder: Builder,

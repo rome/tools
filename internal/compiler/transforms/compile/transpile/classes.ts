@@ -10,7 +10,7 @@ import {
 	Path,
 	createVisitor,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	AnyJSStatement,
 	AnyNode,
@@ -33,9 +33,9 @@ import {
 	jsReturnStatement,
 	jsStaticMemberProperty,
 	jsThisExpression,
-} from "@romefrontend/ast";
-import {template} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {template} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 function transformClass(
 	node: JSClassDeclaration | JSClassExpression,

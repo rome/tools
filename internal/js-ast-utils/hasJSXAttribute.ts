@@ -1,4 +1,4 @@
-import {JSXElement} from "@romefrontend/ast";
+import {JSXElement} from "@internal/ast";
 import {getJSXAttribute} from "./getJSXAttribute";
 
 export function hasJSXAttribute(

@@ -14,7 +14,7 @@ import status from "./commands/status";
 import lsp from "./commands/lsp";
 
 //
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 import ClientRequest from "./ClientRequest";
 import {SharedCommand} from "../common/commands";
 import {ServerQueryResponse} from "../common/bridges/ServerBridge";

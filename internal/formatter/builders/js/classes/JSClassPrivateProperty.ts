@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, group, space} from "@romefrontend/formatter";
-import {JSClassPrivateProperty} from "@romefrontend/ast";
+import {Builder, Token, concat, group, space} from "@internal/formatter";
+import {JSClassPrivateProperty} from "@internal/ast";
 
 export default function JSClassPrivateProperty(
 	builder: Builder,

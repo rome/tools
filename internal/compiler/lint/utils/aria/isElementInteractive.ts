@@ -2,7 +2,7 @@ import {
 	ARIARoleDefinition,
 	ariaRolesMap,
 	isRoleInteractive,
-} from "@romefrontend/compiler/lint/utils/aria";
+} from "@internal/compiler/lint/utils/aria";
 
 export default function isElementInteractive(elementName: string) {
 	let role: ARIARoleDefinition | undefined;

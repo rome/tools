@@ -5,36 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest} from "@romefrontend/core";
-import {LINTABLE_EXTENSIONS} from "@romefrontend/core/common/file-handlers/index";
+import {Server, ServerRequest} from "@internal/core";
+import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers/index";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsProcessor,
-} from "@romefrontend/diagnostics";
-import {EventSubscription} from "@romefrontend/events";
+} from "@internal/diagnostics";
+import {EventSubscription} from "@internal/events";
 import {ServerRequestGetFilesOptions} from "../ServerRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-} from "@romefrontend/path";
-import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
+} from "@internal/path";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import {
 	ReporterProgress,
 	ReporterProgressOptions,
-} from "@romefrontend/cli-reporter";
+} from "@internal/cli-reporter";
 import DependencyNode from "../dependencies/DependencyNode";
 import {
 	LintCompilerOptions,
 	LintCompilerOptionsDecisions,
 	areAnalyzeDependencyResultsEqual,
-} from "@romefrontend/compiler";
-import {markup} from "@romefrontend/markup";
+} from "@internal/compiler";
+import {markup} from "@internal/markup";
 import WorkerQueue from "../WorkerQueue";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
+import {Dict} from "@internal/typescript-helpers";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
 
 type LintWatchChanges = Array<{
 	type: "absolute" | "unknown";

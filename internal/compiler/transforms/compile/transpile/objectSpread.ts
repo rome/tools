@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyJSObjectMember,
 	AnyJSStatement,
@@ -25,8 +25,8 @@ import {
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
-} from "@romefrontend/ast";
-import {template} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {template} from "@internal/js-ast-utils";
 
 function hasSpreadProperty(props: Array<AnyNode>): boolean {
 	for (const prop of props) {

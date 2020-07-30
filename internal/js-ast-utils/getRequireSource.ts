@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {Scope} from "@internal/compiler";
+import {AnyNode} from "@internal/ast";
 import {doesNodeMatchPattern} from "./doesNodeMatchPattern";
 
 export function getRequireSource(

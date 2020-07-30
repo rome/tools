@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticAdvice} from "../types";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export const tests = createDiagnosticsCategory({
 	CANCELLED: {

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli-layout";
+import "@internal/cli-layout";
 import {
 	PathPattern,
 	matchPath,
 	matchPathPatterns,
 	parsePathPattern,
-} from "@romefrontend/path-match";
+} from "@internal/path-match";
 import {test} from "rome";
-import {createAbsoluteFilePath} from "@romefrontend/path";
+import {createAbsoluteFilePath} from "@internal/path";
 
 const DOCUMENTS = "/Users/sebmck/Documents";
 

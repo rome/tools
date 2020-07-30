@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
+import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 
 const VALID_REGEX_FLAGS: Array<string> = "gmsiyu".split("");
 

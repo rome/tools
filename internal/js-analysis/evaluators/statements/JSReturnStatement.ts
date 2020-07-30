@@ -6,7 +6,7 @@
  */
 
 import {FunctionScope, Scope} from "../../scopes";
-import {AnyNode, JSReturnStatement, jsReturnStatement} from "@romefrontend/ast";
+import {AnyNode, JSReturnStatement, jsReturnStatement} from "@internal/ast";
 
 export default function JSReturnStatement(node: AnyNode, scope: Scope) {
 	node = jsReturnStatement.assert(node);

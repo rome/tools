@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli-layout";
+import "@internal/cli-layout";
 import {
 	PathPattern,
 	parsePathPattern,
 	parsePathPatternsFile,
-} from "@romefrontend/path-match";
+} from "@internal/path-match";
 import {test} from "rome";
-import {dedent} from "@romefrontend/string-utils";
+import {dedent} from "@internal/string-utils";
 
 function _parsePathPattern(input: string): PathPattern {
 	return parsePathPattern({input});

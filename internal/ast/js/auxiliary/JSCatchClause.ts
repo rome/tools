@@ -9,7 +9,7 @@ import {
 	AnyJSBindingPattern,
 	JSBlockStatement,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSCatchClause extends NodeBaseWithComments {

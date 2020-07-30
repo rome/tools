@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSQualifiedName, tsQualifiedName} from "@romefrontend/ast";
+import {AnyNode, TSQualifiedName, tsQualifiedName} from "@internal/ast";
 
 export default function TSQualifiedName(node: AnyNode, scope: Scope) {
 	node = tsQualifiedName.assert(node);

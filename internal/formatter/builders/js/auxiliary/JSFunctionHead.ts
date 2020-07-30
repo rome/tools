@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSFunctionHead} from "@romefrontend/ast";
-import {Builder, Token, concat, group, space} from "@romefrontend/formatter";
+import {JSFunctionHead} from "@internal/ast";
+import {Builder, Token, concat, group, space} from "@internal/formatter";
 import {printBindingPatternParams} from "../utils";
 
 export default function JSFunctionHead(

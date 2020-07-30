@@ -1,7 +1,7 @@
-import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
+import {CompilerContext, createVisitor, signals} from "@internal/compiler";
 
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
+import {descriptions} from "@internal/diagnostics";
+import {AnyNode} from "@internal/ast";
 
 const JSX_FILE_EXTENSIONS = [".jsx", ".tsx"];
 

@@ -7,7 +7,7 @@
 
 import {BuildFrameOpts, Frame, GUID, OPCODES} from "./types";
 import {buildFrame, isCompleteFrame, parseFrame, unmaskPayload} from "./frame";
-import {Event} from "@romefrontend/events";
+import {Event} from "@internal/events";
 import crypto = require("crypto");
 
 import url = require("url");
@@ -16,9 +16,9 @@ import http = require("http");
 
 import net = require("net");
 
-import {Reporter} from "@romefrontend/cli-reporter";
-import {markup} from "@romefrontend/markup";
-import prettyFormat from "@romefrontend/pretty-format";
+import {Reporter} from "@internal/cli-reporter";
+import {markup} from "@internal/markup";
+import prettyFormat from "@internal/pretty-format";
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");

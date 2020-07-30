@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {exists} from "@romefrontend/fs";
+import {AbsoluteFilePath} from "@internal/path";
+import {exists} from "@internal/fs";
 import childProcess = require("child_process");
 
 const TIMEOUT = 10_000;

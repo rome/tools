@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, jsUnaryExpression} from "@romefrontend/ast";
+import {AnyNode, jsUnaryExpression} from "@internal/ast";
 import BooleanT from "../../types/BooleanT";
 import NumericT from "../../types/NumericT";
 import VoidT from "../../types/VoidT";

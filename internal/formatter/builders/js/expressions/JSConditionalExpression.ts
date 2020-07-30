@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSConditionalExpression} from "@romefrontend/ast";
+import {AnyNode, JSConditionalExpression} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -14,7 +14,7 @@ import {
 	indent,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function JSConditionalExpression(
 	builder: Builder,

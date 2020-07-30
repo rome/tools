@@ -1,15 +1,15 @@
-import {markup} from "@romefrontend/markup";
-import {parseCommit} from "@romefrontend/commit-parser";
-import {readFileText} from "@romefrontend/fs";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {markup} from "@internal/markup";
+import {parseCommit} from "@internal/commit-parser";
+import {readFileText} from "@internal/fs";
+import {AbsoluteFilePath} from "@internal/path";
 import {INTERNAL, ROOT, reporter} from "./_utils";
 
 import child = require("child_process");
 import fs = require("fs");
 import https = require("https");
 import http = require("http");
-import {dedent} from "@romefrontend/string-utils";
-import {consumeJSON} from "@romefrontend/codec-json";
+import {dedent} from "@internal/string-utils";
+import {consumeJSON} from "@internal/codec-json";
 
 const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
 const LINE_DELIM = "<--ROME-LINE-->";

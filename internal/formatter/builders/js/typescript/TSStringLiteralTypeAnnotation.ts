@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {AnyNode, TSStringLiteralTypeAnnotation} from "@romefrontend/ast";
+import {AnyNode, TSStringLiteralTypeAnnotation} from "@internal/ast";
 import JSStringLiteral from "../literals/JSStringLiteral";
 
 export default function TSStringLiteralTypeAnnotation(

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSBindingIdentifier, bindingKeys} from "@romefrontend/ast";
+import {AnyNode, JSBindingIdentifier, bindingKeys} from "@internal/ast";
 
 export function getBindingIdentifiers(
 	node: AnyNode | Array<AnyNode>,

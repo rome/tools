@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/markup-syntax-highlight",
+	"name": "@internal/markup-syntax-highlight",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {getJSXAttribute} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {getJSXAttribute} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 
 function getJSXChildrenProp(node: AnyNode) {
 	return node.type === "JSXElement" && getJSXAttribute(node, "children");

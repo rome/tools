@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
-import {JSArrayHole} from "@romefrontend/ast";
+import {Builder, Token} from "@internal/formatter";
+import {JSArrayHole} from "@internal/ast";
 
 export default function JSArrayHole(builder: Builder, node: JSArrayHole): Token {
 	return builder.tokenizeInnerComments(node, false);

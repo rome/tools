@@ -11,7 +11,7 @@ import {
 	JSFunctionDeclaration,
 	NodeBaseWithComments,
 	TSInterfaceDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 

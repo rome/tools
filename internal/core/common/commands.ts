@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@romefrontend/consume";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup} from "@romefrontend/markup";
-import {Examples} from "@romefrontend/cli-flags/Parser";
+import {Consumer} from "@internal/consume";
+import {Dict} from "@internal/typescript-helpers";
+import {Markup} from "@internal/markup";
+import {Examples} from "@internal/cli-flags/Parser";
 
 export type SharedCommand<Flags extends Dict<unknown>> = {
 	category: string;

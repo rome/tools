@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/core";
+import "@internal/core";
 import {
 	consumeJSONExtra,
 	stringifyRJSONFromConsumer,
-} from "@romefrontend/codec-json";
+} from "@internal/codec-json";
 import {test} from "rome";
-import {ParserOptions} from "@romefrontend/parser-core";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {ParserOptions} from "@internal/parser-core";
+import {createUnknownFilePath} from "@internal/path";
+import {Dict} from "@internal/typescript-helpers";
 
 function consumeExtJSON(opts: ParserOptions) {
 	return consumeJSONExtra({

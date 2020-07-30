@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ansiEscapes} from "@romefrontend/cli-layout";
-import {AnyMarkup, concatMarkup, markup} from "@romefrontend/markup";
+import {ansiEscapes} from "@internal/cli-layout";
+import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import Reporter from "./Reporter";
 import {
 	SelectArguments,

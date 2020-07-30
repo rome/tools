@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from "@romefrontend/cli-reporter";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {DiagnosticsProcessor} from "@romefrontend/diagnostics";
+import {Reporter} from "@internal/cli-reporter";
+import {AbsoluteFilePath} from "@internal/path";
+import {DiagnosticsProcessor} from "@internal/diagnostics";
 
 export type DiagnosticPrinterAuxiliaryFormat = undefined | "github-actions";
 

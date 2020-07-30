@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/typescript-helpers",
+	"name": "@internal/typescript-helpers",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

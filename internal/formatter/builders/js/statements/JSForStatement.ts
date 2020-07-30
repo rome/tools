@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSForStatement} from "@romefrontend/ast";
+import {JSForStatement} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -15,7 +15,7 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {printClause} from "../utils";
 

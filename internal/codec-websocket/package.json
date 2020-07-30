@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-websocket",
+	"name": "@internal/codec-websocket",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -10,15 +10,15 @@ import {
 	AnyNodes,
 	MOCK_PROGRAM,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
-import {createDefaultProjectConfig} from "@romefrontend/project";
+} from "@internal/ast";
+import {createDefaultProjectConfig} from "@internal/project";
 import {
 	CompilerContext,
 	Path,
 	TransformVisitors,
 	signals,
-} from "@romefrontend/compiler";
-import {SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/compiler";
+import {SourceLocation} from "@internal/parser-core";
 
 function removeProp<T extends {
 	loc?: SourceLocation;

@@ -1,5 +1,5 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
-import {createBuilder} from "@romefrontend/ast/utils";
+import {NodeBaseWithComments} from "@internal/ast";
+import {createBuilder} from "@internal/ast/utils";
 
 export interface CSSPercentage extends NodeBaseWithComments {
 	readonly type: "CSSPercentage";

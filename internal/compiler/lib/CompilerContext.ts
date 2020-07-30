@@ -11,17 +11,17 @@ import {
 	AnyNodes,
 	AnyRoot,
 	ConstJSSourceType,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {
 	CompilerOptions,
 	PathOptions,
 	TransformVisitors,
 	Transforms,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	Diagnostic,
 	DiagnosticCategory,
@@ -31,11 +31,11 @@ import {
 	DiagnosticOrigin,
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
+import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
 import {
 	LintCompilerOptionsDecision,
 	TransformProjectDefinition,
@@ -45,21 +45,21 @@ import {
 	extractSuppressionsFromProgram,
 	matchesSuppression,
 } from "../suppressions";
-import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
+import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
 import {hookVisitors} from "../transforms";
-import {FileReference} from "@romefrontend/core";
-import {createDefaultProjectConfig} from "@romefrontend/project";
+import {FileReference} from "@internal/core";
+import {createDefaultProjectConfig} from "@internal/project";
 import {
 	buildLintDecisionAdviceAction,
 	buildLintDecisionGlobalString,
 	buildLintDecisionString,
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
-import {isRoot} from "@romefrontend/ast-utils";
-import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics/utils";
-import {Markup, markup} from "@romefrontend/markup";
+import {isRoot} from "@internal/ast-utils";
+import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics/utils";
+import {Markup, markup} from "@internal/markup";
 import cleanTransform from "../transforms/cleanTransform";
-import {assertSingleNode} from "@romefrontend/js-ast-utils";
+import {assertSingleNode} from "@internal/js-ast-utils";
 
 export type ContextArg = {
 	ast: AnyRoot;

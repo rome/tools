@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSModuleDeclaration,
-	tsModuleDeclaration,
-} from "@romefrontend/ast";
+import {AnyNode, TSModuleDeclaration, tsModuleDeclaration} from "@internal/ast";
 
 export default function TSModuleDeclaration(node: AnyNode, scope: Scope) {
 	node = tsModuleDeclaration.assert(node);

@@ -1,5 +1,5 @@
-import {MarkdownBoldInline} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {MarkdownBoldInline} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function MarkdownBoldInline(
 	builder: Builder,

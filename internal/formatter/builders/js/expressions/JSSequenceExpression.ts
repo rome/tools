@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSSequenceExpression} from "@romefrontend/ast";
+import {AnyNode, JSSequenceExpression} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -14,7 +14,7 @@ import {
 	indent,
 	join,
 	lineOrSpace,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function JSSequenceExpression(
 	builder: Builder,

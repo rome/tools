@@ -10,9 +10,9 @@ import {
 	ParserOptions,
 	SimpleToken,
 	ValueToken,
-} from "@romefrontend/parser-core";
-import {ConsumeContext} from "@romefrontend/consume";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
+} from "@internal/parser-core";
+import {ConsumeContext} from "@internal/consume";
+import {DiagnosticCategory} from "@internal/diagnostics";
 
 export type JSONParserOptions = Omit<ParserOptions, "retainCarriageReturn"> & {
 	consumeDiagnosticCategory?: DiagnosticCategory;

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest, WebBridge} from "@romefrontend/core";
+import {Server, ServerRequest, WebBridge} from "@internal/core";
 import Bundler from "../bundler/Bundler";
-import {WebSocketInterface} from "@romefrontend/codec-websocket";
-import prettyFormat from "@romefrontend/pretty-format";
+import {WebSocketInterface} from "@internal/codec-websocket";
+import prettyFormat from "@internal/pretty-format";
 import http = require("http");
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter} from "@internal/cli-reporter";
 import {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -19,12 +19,12 @@ import {ServerMarker} from "../Server";
 import {ClientFlagsJSON} from "../../common/types/client";
 import WebRequest, {stripBundleSuffix} from "./WebRequest";
 import {BundlerConfig} from "../../common/types/bundler";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 import {PLATFORMS} from "../../common/types/platform";
 import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
-import {ConsumableUrl} from "@romefrontend/codec-url";
-import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
-import {concatMarkup, markup} from "@romefrontend/markup";
+import {ConsumableUrl} from "@internal/codec-url";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
+import {concatMarkup, markup} from "@internal/markup";
 
 export type WebServerTime = {
 	startTime: number;

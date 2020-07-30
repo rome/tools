@@ -6,12 +6,12 @@
  */
 
 import {ClassScope, Scope} from "../../scopes";
-import {AnyNode, JSClassExpression, jsClassExpression} from "@romefrontend/ast";
+import {AnyNode, JSClassExpression, jsClassExpression} from "@internal/ast";
 import InstanceT from "../../types/InstanceT";
 import ClassT from "../../types/ClassT";
 import T from "../../types/T";
 import OpenT from "../../types/OpenT";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export default function JSClassExpression(node: AnyNode, scope: Scope) {
 	node =

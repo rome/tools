@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	JSExportExternalDeclaration,
-	JSImportDeclaration,
-} from "@romefrontend/ast";
+import {JSExportExternalDeclaration, JSImportDeclaration} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -20,7 +17,7 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function JSImportDeclaration(
 	builder: Builder,

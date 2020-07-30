@@ -6,7 +6,7 @@
  */
 
 import {JSParser} from "../parser";
-import {Position} from "@romefrontend/parser-core";
+import {Position} from "@internal/parser-core";
 import {types as tt} from "../tokenizer/types";
 import {
 	AnyExportExternalSpecifier,
@@ -32,8 +32,8 @@ import {
 	TSExportAssignment,
 	TSImportEqualsDeclaration,
 	TSNamespaceExportDeclaration,
-} from "@romefrontend/ast";
-import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {
 	checkLVal,
 	checkReservedWord,
@@ -58,7 +58,7 @@ import {
 	toBindingIdentifier,
 	toIdentifier,
 } from "./index";
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {State} from "../tokenizer/state";
 
 export type ParseExportResult =

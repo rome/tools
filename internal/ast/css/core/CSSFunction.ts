@@ -1,5 +1,5 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
-import {createBuilder} from "@romefrontend/ast/utils";
+import {NodeBaseWithComments} from "@internal/ast";
+import {createBuilder} from "@internal/ast/utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSFunction extends NodeBaseWithComments {

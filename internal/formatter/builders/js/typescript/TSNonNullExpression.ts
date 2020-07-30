@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSNonNullExpression} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSNonNullExpression} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSNonNullExpression(
 	builder: Builder,

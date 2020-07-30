@@ -5,18 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticLocation} from "@romefrontend/diagnostics";
-import {toKebabCase} from "@romefrontend/string-utils";
-import {ConsumeSourceLocationRequestTarget} from "@romefrontend/consume";
-import {
-	Number0,
-	ob1Coerce0,
-	ob1Number0Neg1,
-	ob1Number1,
-} from "@romefrontend/ob1";
-import {Dict, RequiredProps} from "@romefrontend/typescript-helpers";
+import {DiagnosticLocation} from "@internal/diagnostics";
+import {toKebabCase} from "@internal/string-utils";
+import {ConsumeSourceLocationRequestTarget} from "@internal/consume";
+import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {FlagValue} from "./Parser";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 
 export type SerializeCLIOptions = {
 	programName: string;

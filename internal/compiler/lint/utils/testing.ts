@@ -6,12 +6,9 @@
  */
 
 import {TestHelper} from "rome";
-import {
-	DiagnosticCategory,
-	DiagnosticsProcessor,
-} from "@romefrontend/diagnostics";
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
-import {IntegrationWorker, createMockWorker} from "@romefrontend/test-helpers";
+import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
+import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;

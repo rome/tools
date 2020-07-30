@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/diagnostics",
+	"name": "@internal/diagnostics",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

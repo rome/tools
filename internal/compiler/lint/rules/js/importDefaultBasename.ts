@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {createUnknownFilePath} from "@romefrontend/path";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {createUnknownFilePath} from "@internal/path";
 import {filenameToId} from "./defaultExportSameBasename";
 
 export default createVisitor({

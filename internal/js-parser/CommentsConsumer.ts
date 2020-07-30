@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyCommentOptionalId} from "@romefrontend/ast";
+import {AnyComment, AnyCommentOptionalId} from "@internal/ast";
 
 export default class CommentsConsumer {
 	constructor(seedComments: Array<AnyComment> = []) {

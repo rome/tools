@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@romefrontend/diagnostics";
-import {SourceMapGenerator} from "@romefrontend/codec-source-map";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {Diagnostics} from "@internal/diagnostics";
+import {SourceMapGenerator} from "@internal/codec-source-map";
+import {AbsoluteFilePath} from "@internal/path";
 import {ResolverOptions} from "../../server/fs/Resolver";
 
 export type BundlerConfig = {

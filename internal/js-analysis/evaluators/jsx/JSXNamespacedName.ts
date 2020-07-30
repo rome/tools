@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXNamespacedName, jsxNamespacedName} from "@romefrontend/ast";
+import {AnyNode, JSXNamespacedName, jsxNamespacedName} from "@internal/ast";
 
 export default function JSXNamespacedName(node: AnyNode, scope: Scope) {
 	node = jsxNamespacedName.assert(node);

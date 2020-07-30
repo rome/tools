@@ -1,4 +1,4 @@
-import {HTMLElement} from "@romefrontend/ast";
+import {HTMLElement} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -8,7 +8,7 @@ import {
 	join,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 import {hasInnerComments} from "../../comments";
 
 export default function HTMLElement(builder: Builder, node: HTMLElement): Token {

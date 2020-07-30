@@ -10,7 +10,7 @@ import {
 	JSClassPropertyMeta,
 	JSFunctionHead,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 import {AnyJSObjectPropertyKey} from "../unions";
 

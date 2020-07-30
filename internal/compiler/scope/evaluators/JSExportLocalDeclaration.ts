@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsExportLocalDeclaration} from "@romefrontend/ast";
-import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
+import {AnyNode, jsExportLocalDeclaration} from "@internal/ast";
+import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

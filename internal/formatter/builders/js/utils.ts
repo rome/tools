@@ -17,8 +17,8 @@ import {
 	JSReturnStatement,
 	JSThrowStatement,
 	TSDeclareMethod,
-} from "@romefrontend/ast";
-import {isBinary} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {isBinary} from "@internal/js-ast-utils";
 import {
 	Builder,
 	BuilderMethod,
@@ -32,7 +32,7 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 import {hasInnerComments} from "../comments";
 
 export function buildLabelStatementBuilder(

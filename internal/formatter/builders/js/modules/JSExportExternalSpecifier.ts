@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSExportExternalSpecifier} from "@romefrontend/ast";
+import {JSExportExternalSpecifier} from "@internal/ast";
 import JSExportLocalSpecifier from "./JSExportLocalSpecifier";
 
 export default function JSExportExternalSpecifier(

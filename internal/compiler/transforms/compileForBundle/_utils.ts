@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SCOPE_PRIVATE_PREFIX} from "@romefrontend/compiler";
+import {SCOPE_PRIVATE_PREFIX} from "@internal/compiler";
 import {BundleCompileOptions} from "../../types";
 import CompilerContext from "../../lib/CompilerContext";
 

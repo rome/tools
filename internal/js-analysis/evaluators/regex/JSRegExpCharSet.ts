@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSRegExpCharSet, jsRegExpCharSet} from "@romefrontend/ast";
+import {AnyNode, JSRegExpCharSet, jsRegExpCharSet} from "@internal/ast";
 
 export default function JSRegExpCharSet(node: AnyNode) {
 	node = jsRegExpCharSet.assert(node);

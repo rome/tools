@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSFunction, AnyNode} from "@romefrontend/ast";
+import {AnyJSFunction, AnyNode} from "@internal/ast";
 
 export function isFunctionNode(node: AnyNode): node is AnyJSFunction {
 	return (

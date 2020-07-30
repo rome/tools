@@ -1,11 +1,11 @@
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {readFileText, writeFile as writeFileReal} from "@romefrontend/fs";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {createMockWorker} from "@romefrontend/test-helpers";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {readFileText, writeFile as writeFileReal} from "@internal/fs";
+import {Reporter} from "@internal/cli-reporter";
+import {createMockWorker} from "@internal/test-helpers";
 
 import crypto = require("crypto");
 import child = require("child_process");
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();

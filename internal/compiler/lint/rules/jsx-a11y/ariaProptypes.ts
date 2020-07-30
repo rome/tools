@@ -1,11 +1,11 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {isEmptyTemplateLiteral} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {isEmptyTemplateLiteral} from "@internal/js-ast-utils";
 import {
 	ARIAProperty,
 	ARIAPropertyDefinition,
 	ariaPropsMap,
-} from "@romefrontend/compiler/lint/utils/aria";
+} from "@internal/compiler/lint/utils/aria";
 
 function isCorrectValue(
 	attribute: ARIAPropertyDefinition,

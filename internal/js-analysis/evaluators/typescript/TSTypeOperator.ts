@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeOperator, tsTypeOperator} from "@romefrontend/ast";
+import {AnyNode, TSTypeOperator, tsTypeOperator} from "@internal/ast";
 
 export default function TSTypeOperator(node: AnyNode, scope: Scope) {
 	node = tsTypeOperator.assert(node);

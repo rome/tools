@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {Scope} from "@romefrontend/compiler";
+import {AnyNode} from "@internal/ast";
+import {Scope} from "@internal/compiler";
 
 export function hasPotentialSideEffects(
 	node: undefined | AnyNode,

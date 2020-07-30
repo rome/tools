@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/compiler
+// @internal/compiler
 export const compiler = createDiagnosticsCategory({
 	CLASSES_UNSUPPORTED: {
 		category: "compile/classes",

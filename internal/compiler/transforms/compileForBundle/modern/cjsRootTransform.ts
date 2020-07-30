@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {getOptions, getPrefixedNamespace, getPrivateName} from "../_utils";
-import {renameBindings} from "@romefrontend/js-ast-utils";
+import {renameBindings} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "cjsRootTransform",

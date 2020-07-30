@@ -10,7 +10,7 @@ import {
 	TSAsExpression,
 	TSNonNullExpression,
 	TSTypeAssertion,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export function isTypeExpressionWrapperNode(
 	node: AnyNode,

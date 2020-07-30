@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSAsExpression, tsAsExpression} from "@romefrontend/ast";
+import {AnyNode, TSAsExpression, tsAsExpression} from "@internal/ast";
 
 export default function TSAsExpression(node: AnyNode, scope: Scope) {
 	node = tsAsExpression.assert(node);

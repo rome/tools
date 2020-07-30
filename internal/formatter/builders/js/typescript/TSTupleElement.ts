@@ -1,5 +1,5 @@
-import {TSTupleElement} from "@romefrontend/ast";
-import {Builder, Token, Tokens, concat, space} from "@romefrontend/formatter";
+import {TSTupleElement} from "@internal/ast";
+import {Builder, Token, Tokens, concat, space} from "@internal/formatter";
 
 export default function TSTupleElement(
 	builder: Builder,

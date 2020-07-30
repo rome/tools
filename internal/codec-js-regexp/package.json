@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-js-regexp",
+	"name": "@internal/codec-js-regexp",
 	"private": true,
 	"type": "module"
 }

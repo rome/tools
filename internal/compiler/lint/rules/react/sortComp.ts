@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode, JSClassHead} from "@romefrontend/ast";
-import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {AnyNode, JSClassHead} from "@internal/ast";
+import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 
 // The classnode type
 type ClassNode = {

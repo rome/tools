@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSUpdateExpression,
-	jsUpdateExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSUpdateExpression, jsUpdateExpression} from "@internal/ast";
 import NumericT from "../../types/NumericT";
 import ExhaustiveT from "../../types/ExhaustiveT";
 

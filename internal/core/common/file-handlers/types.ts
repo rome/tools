@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FileReference} from "@romefrontend/core";
+import {FileReference} from "@internal/core";
 import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticLanguage,
 	DiagnosticSuppressions,
 	Diagnostics,
-} from "@romefrontend/diagnostics";
-import * as compiler from "@romefrontend/compiler";
-import {AnyRoot, ConstJSSourceType} from "@romefrontend/ast";
-import {UnknownFilePath} from "@romefrontend/path";
+} from "@internal/diagnostics";
+import * as compiler from "@internal/compiler";
+import {AnyRoot, ConstJSSourceType} from "@internal/ast";
+import {UnknownFilePath} from "@internal/path";
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
 	options: WorkerLintOptions;

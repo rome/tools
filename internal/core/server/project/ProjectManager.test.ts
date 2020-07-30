@@ -1,6 +1,6 @@
 import {test} from "rome";
-import {createIntegrationTest} from "@romefrontend/test-helpers";
-import {ProjectDefinition} from "@romefrontend/project";
+import {createIntegrationTest} from "@internal/test-helpers";
+import {ProjectDefinition} from "@internal/project";
 
 test(
 	"nested projects",

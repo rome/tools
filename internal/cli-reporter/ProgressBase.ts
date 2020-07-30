@@ -7,8 +7,8 @@
 
 import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
-import {mergeObjects} from "@romefrontend/typescript-helpers";
-import {Markup, isEmptyMarkup, markup} from "@romefrontend/markup";
+import {mergeObjects} from "@internal/typescript-helpers";
+import {Markup, isEmptyMarkup, markup} from "@internal/markup";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,

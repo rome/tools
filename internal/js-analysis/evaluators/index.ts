@@ -7,7 +7,7 @@
 
 import Hub from "../Hub";
 import {Scope} from "../scopes";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import T from "../types/T";
 
 const evaluators: Map<

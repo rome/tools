@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/string-charcodes",
+	"name": "@internal/string-charcodes",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

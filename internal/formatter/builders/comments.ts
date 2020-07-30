@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from "@romefrontend/ast";
+import {AnyComment, AnyNode} from "@internal/ast";
 import {getLinesBetween} from "../node";
 import {
 	Token,
@@ -16,8 +16,8 @@ import {
 	join,
 	lineSuffix,
 	space,
-} from "@romefrontend/formatter";
-import {DiagnosticLanguage} from "@romefrontend/diagnostics";
+} from "@internal/formatter";
+import {DiagnosticLanguage} from "@internal/diagnostics";
 
 export function hasInnerComments(node: AnyNode): boolean {
 	return node.innerComments !== undefined && node.innerComments.length > 0;

@@ -2,9 +2,9 @@ import {
 	MarkupFormatOptions,
 	MarkupLineWrapMode,
 	MarkupParsedChildren,
-} from "@romefrontend/markup";
-import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {Number1} from "@romefrontend/ob1";
+} from "@internal/markup";
+import {TerminalFeatures} from "@internal/cli-environment";
+import {Number1} from "@internal/ob1";
 
 export type GridPointer = {
 	char: MarkupParsedChildren;

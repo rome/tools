@@ -9,13 +9,13 @@ import Intrinsics from "./Intrinsics";
 import Evaluator from "./Evaluator";
 import T from "./types/T";
 import Hub from "./Hub";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import StringLiteralT from "./types/StringLiteralT";
 import UnknownT from "./types/UnknownT";
 import GetPropT from "./types/GetPropT";
 import UnionT from "./types/UnionT";
 import OpenT from "./types/OpenT";
-import {Class} from "@romefrontend/typescript-helpers";
+import {Class} from "@internal/typescript-helpers";
 
 type BindingStatus = "declared" | "initialized";
 

@@ -20,7 +20,7 @@ import {
 	parseSemverVersion,
 } from "./parse";
 import {normalizeUserRange, normalizeUserVersion} from "./utils";
-import {DiagnosticsError} from "@romefrontend/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 
 // export some simple types that don't expose too much internal terminology
 export type SemverRangeNode = RangeNode;

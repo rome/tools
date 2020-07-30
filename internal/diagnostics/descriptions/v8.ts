@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export const v8 = createDiagnosticsCategory({
 	SYNTAX_ERROR: (message: string) => ({

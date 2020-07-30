@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSImportNamespaceSpecifier,
 	jsImportNamespaceSpecifier,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSImportNamespaceSpecifier(node: AnyNode, scope: Scope) {
 	node = jsImportNamespaceSpecifier.assert(node);

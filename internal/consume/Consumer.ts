@@ -15,14 +15,14 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {UnknownObject, isPlainObject} from "@romefrontend/typescript-helpers";
+} from "@internal/diagnostics";
+import {UnknownObject, isPlainObject} from "@internal/typescript-helpers";
 import {
 	JSONArray,
 	JSONObject,
 	JSONPropertyValue,
 	JSONValue,
-} from "@romefrontend/codec-json";
+} from "@internal/codec-json";
 import {
 	ConsumeContext,
 	ConsumeKey,
@@ -37,7 +37,7 @@ import {
 	ConsumerOnDefinition,
 	ConsumerOptions,
 } from "./types";
-import {SourceLocation, UNKNOWN_POSITION} from "@romefrontend/parser-core";
+import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
 	Number0,
 	Number1,
@@ -46,9 +46,9 @@ import {
 	ob1Coerce0,
 	ob1Coerce1,
 	ob1Get,
-} from "@romefrontend/ob1";
-import {isValidIdentifierName} from "@romefrontend/js-ast-utils";
-import {escapeJSString} from "@romefrontend/string-escape";
+} from "@internal/ob1";
+import {isValidIdentifierName} from "@internal/js-ast-utils";
+import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
@@ -57,8 +57,8 @@ import {
 	createAbsoluteFilePath,
 	createURLFilePath,
 	createUnknownFilePath,
-} from "@romefrontend/path";
-import {Markup, markup, readMarkup} from "@romefrontend/markup";
+} from "@internal/path";
+import {Markup, markup, readMarkup} from "@internal/markup";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;

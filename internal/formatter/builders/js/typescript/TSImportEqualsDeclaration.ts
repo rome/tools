@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSImportEqualsDeclaration} from "@romefrontend/ast";
-import {Builder, Token, concat, group, space} from "@romefrontend/formatter";
+import {TSImportEqualsDeclaration} from "@internal/ast";
+import {Builder, Token, concat, group, space} from "@internal/formatter";
 
 export default function TSImportEqualsDeclaration(
 	builder: Builder,

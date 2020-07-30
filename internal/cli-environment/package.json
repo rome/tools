@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/cli-environment",
+	"name": "@internal/cli-environment",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

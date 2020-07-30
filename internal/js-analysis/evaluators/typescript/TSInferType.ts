@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSInferType, tsInferType} from "@romefrontend/ast";
+import {AnyNode, TSInferType, tsInferType} from "@internal/ast";
 
 export default function TSInferType(node: AnyNode, scope: Scope) {
 	node = tsInferType.assert(node);

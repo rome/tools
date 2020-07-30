@@ -5,15 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@romefrontend/consume";
-import {
-	SemverVersionNode,
-	parseSemverVersion,
-} from "@romefrontend/codec-semver";
+import {Consumer} from "@internal/consume";
+import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
 	SPDXExpressionNode,
 	parseSPDXLicense,
-} from "@romefrontend/codec-spdx-license";
+} from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
 	MBoolean,
@@ -26,16 +23,16 @@ import {
 	ManifestPerson,
 	ManifestRepository,
 } from "./types";
-import {tryParseWithOptionalOffsetPosition} from "@romefrontend/parser-core";
+import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {normalizeName} from "./name";
-import {Diagnostics, descriptions} from "@romefrontend/diagnostics";
+import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	RelativeFilePathMap,
 	createRelativeFilePath,
-} from "@romefrontend/path";
-import {toCamelCase} from "@romefrontend/string-utils";
-import {PathPatterns, parsePathPattern} from "@romefrontend/path-match";
+} from "@internal/path";
+import {toCamelCase} from "@internal/string-utils";
+import {PathPatterns, parsePathPattern} from "@internal/path-match";
 
 export * from "./types";
 

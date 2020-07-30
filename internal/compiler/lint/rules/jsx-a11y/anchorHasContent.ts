@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {JSXElement} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
-import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {JSXElement} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
+import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
 
 function hasAnchorContent(node: JSXElement): boolean {
 	return (

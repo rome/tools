@@ -6,15 +6,15 @@
  */
 
 import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from "./types";
-import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
+import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {
 	Markup,
 	MarkupFormatNormalizeOptions,
 	normalizeMarkup,
-} from "@romefrontend/markup";
-import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
-import {RequiredProps} from "@romefrontend/typescript-helpers";
-import {Position} from "@romefrontend/parser-core";
+} from "@internal/markup";
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {RequiredProps} from "@internal/typescript-helpers";
+import {Position} from "@internal/parser-core";
 
 type NormalizeOptionsRequiredPosition = RequiredProps<
 	MarkupFormatNormalizeOptions,

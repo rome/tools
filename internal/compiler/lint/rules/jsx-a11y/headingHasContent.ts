@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
-import {JSXElement} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
+import {JSXElement} from "@internal/ast";
 
 const HEADINGS = ["h1", "h2", "h3", "h4", "h5", "h6"];
 

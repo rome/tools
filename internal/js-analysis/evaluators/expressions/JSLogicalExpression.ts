@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSLogicalExpression,
-	jsLogicalExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSLogicalExpression, jsLogicalExpression} from "@internal/ast";
 import T from "../../types/T";
 import UnionT from "../../types/UnionT";
 

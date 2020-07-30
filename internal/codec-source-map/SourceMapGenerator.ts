@@ -24,7 +24,7 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 
 type MaterializeCallback = () => void;

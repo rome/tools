@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, NodeBaseWithComments} from "@romefrontend/ast";
+import {AnyTSPrimary, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTypeOperator extends NodeBaseWithComments {

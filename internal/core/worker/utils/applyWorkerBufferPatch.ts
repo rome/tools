@@ -1,5 +1,5 @@
-import {Number0, ob1Get0, ob1Inc, ob1Number0} from "@romefrontend/ob1";
-import {WorkerBufferPatch} from "@romefrontend/core/common/bridges/WorkerBridge";
+import {Number0, ob1Get0, ob1Inc, ob1Number0} from "@internal/ob1";
+import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
 
 export function applyWorkerBufferPatch(
 	original: string,

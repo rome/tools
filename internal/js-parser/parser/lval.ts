@@ -9,8 +9,8 @@ import {
 	IndexTracker,
 	createIndexTracker,
 	isStrictBindReservedWord,
-} from "@romefrontend/js-parser-utils";
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/js-parser-utils";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {types as tt} from "../tokenizer/types";
 import {
 	AnyJSAssignmentPattern,
@@ -34,7 +34,7 @@ import {
 	JSReferenceIdentifier,
 	JSSpreadElement,
 	JSSpreadProperty,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {JSParser, OpeningContext} from "../parser";
 import {
 	ambiguousTypeCastToParameter,
@@ -49,8 +49,8 @@ import {
 	toBindingIdentifier,
 	toReferenceIdentifier,
 } from "./index";
-import {descriptions} from "@romefrontend/diagnostics";
-import {ob1Get0} from "@romefrontend/ob1";
+import {descriptions} from "@internal/diagnostics";
+import {ob1Get0} from "@internal/ob1";
 
 const VALID_REST_ARGUMENT_TYPES = ["JSIdentifier", "JSMemberExpression"];
 

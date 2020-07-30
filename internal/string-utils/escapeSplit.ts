@@ -6,7 +6,7 @@
  */
 
 import {isEscaped} from "./isEscaped";
-import {ob1Coerce0} from "@romefrontend/ob1";
+import {ob1Coerce0} from "@internal/ob1";
 
 export function escapeSplit(input: string, splitChar: string): Array<string> {
 	const parts: Array<string> = [];

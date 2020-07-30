@@ -5,8 +5,8 @@ import {
 	ParserOptions,
 	SimpleToken,
 	ValueToken,
-} from "@romefrontend/parser-core";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
+} from "@internal/parser-core";
+import {DiagnosticCategory} from "@internal/diagnostics";
 
 export interface MarkdownParserOptions extends Omit<
 	ParserOptions,

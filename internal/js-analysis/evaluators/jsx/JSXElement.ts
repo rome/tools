@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXElement, jsxElement} from "@romefrontend/ast";
+import {AnyNode, JSXElement, jsxElement} from "@internal/ast";
 
 export default function JSXElement(node: AnyNode, scope: Scope) {
 	node = jsxElement.assert(node);

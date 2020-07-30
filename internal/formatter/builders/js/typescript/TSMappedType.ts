@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMappedType} from "@romefrontend/ast";
+import {TSMappedType} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -14,7 +14,7 @@ import {
 	indent,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function TSMappedType(
 	builder: Builder,

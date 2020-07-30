@@ -1,6 +1,6 @@
-import {AnyNode, JSCallExpression} from "@romefrontend/ast";
-import {isIdentifierish, resolveIndirection} from "@romefrontend/js-ast-utils";
-import {ImportBinding, Scope} from "@romefrontend/compiler";
+import {AnyNode, JSCallExpression} from "@internal/ast";
+import {isIdentifierish, resolveIndirection} from "@internal/js-ast-utils";
+import {ImportBinding, Scope} from "@internal/compiler";
 
 export default function isCreateElement(
 	node: AnyNode,

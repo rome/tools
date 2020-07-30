@@ -1,7 +1,7 @@
 import {formatAnsi, formatAnsiRGB} from "./ansi";
 import OneDarkPro from "./syntax-theme/OneDarkPro.json";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {Consumer, consumeUnknown} from "@romefrontend/consume";
+import {Dict} from "@internal/typescript-helpers";
+import {Consumer, consumeUnknown} from "@internal/consume";
 import {
 	MarkupColor,
 	MarkupParsedTag,
@@ -9,7 +9,7 @@ import {
 	buildFileLink,
 	validateColor,
 	validateTokenType,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 import Grid from "./Grid";
 
 export function ansiFormatText(

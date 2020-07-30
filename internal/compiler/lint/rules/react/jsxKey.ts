@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {JSCallExpression, JSXElement} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
-import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {JSCallExpression, JSXElement} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
+import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 
 function containsKeyAttr(node: JSXElement): boolean {
 	const ATTR_NAME = "key";

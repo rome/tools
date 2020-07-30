@@ -5,14 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSModuleBlock} from "@romefrontend/ast";
-import {
-	Builder,
-	Token,
-	concat,
-	hardline,
-	indent,
-} from "@romefrontend/formatter";
+import {TSModuleBlock} from "@internal/ast";
+import {Builder, Token, concat, hardline, indent} from "@internal/formatter";
 
 export default function TSModuleBlock(
 	builder: Builder,

@@ -1,6 +1,6 @@
-import {parseCSS} from "@romefrontend/css-parser";
-import {createFixtureTests} from "@romefrontend/test-helpers";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {parseCSS} from "@internal/css-parser";
+import {createFixtureTests} from "@internal/test-helpers";
+import {removeCarriageReturn} from "@internal/string-utils";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;

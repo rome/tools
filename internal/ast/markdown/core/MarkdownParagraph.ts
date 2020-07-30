@@ -1,6 +1,6 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyMarkdownInlineNode} from "@romefrontend/ast/markdown/unions";
+import {AnyMarkdownInlineNode} from "@internal/ast/markdown/unions";
 
 export interface MarkdownParagraph extends NodeBaseWithComments {
 	type: "MarkdownParagraph";

@@ -12,24 +12,24 @@ import {
 	JSIdentifier,
 	JSRoot,
 	JSStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	ParserCoreState,
 	ParserOptionsWithRequiredPath,
 	ParserUnexpectedOptions,
 	Position,
 	createParser,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {JSParserOptions} from "./options";
-import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
+import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 import ParserBranchFinder from "./ParserBranchFinder";
 import {Token, nextToken} from "./tokenizer/index";
 import {TokenType, types as tt} from "./tokenizer/types";
-import {lineBreak} from "@romefrontend/js-parser-utils";
+import {lineBreak} from "@internal/js-parser-utils";
 import {parseTopLevel} from "./parser/index";
 import {State, createInitialState} from "./tokenizer/state";
-import {Number0, ob1Number0, ob1Sub} from "@romefrontend/ob1";
-import {Dict, OptionalProps} from "@romefrontend/typescript-helpers";
+import {Number0, ob1Number0, ob1Sub} from "@internal/ob1";
+import {Dict, OptionalProps} from "@internal/typescript-helpers";
 
 const TOKEN_MISTAKES: Dict<string> = {
 	";": ":",

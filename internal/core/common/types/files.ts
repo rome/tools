@@ -10,7 +10,7 @@ import {
 	RelativeFilePath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 
 export type FileReference = {
 	project: number;

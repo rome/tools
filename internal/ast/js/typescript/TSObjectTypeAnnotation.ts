@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSTypeElement, NodeBaseWithComments} from "@romefrontend/ast";
+import {AnyTSTypeElement, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSObjectTypeAnnotation extends NodeBaseWithComments {

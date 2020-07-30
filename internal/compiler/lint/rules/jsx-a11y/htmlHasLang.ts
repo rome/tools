@@ -1,12 +1,12 @@
-import {descriptions} from "@romefrontend/diagnostics";
-import {JSXElement} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {JSXElement} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isEmptyTemplateLiteral,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 
 function validLang(node: JSXElement) {
 	if (hasJSXAttribute(node, "lang")) {

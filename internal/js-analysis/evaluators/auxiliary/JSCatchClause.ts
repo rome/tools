@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSCatchClause, jsCatchClause} from "@romefrontend/ast";
+import {AnyNode, JSCatchClause, jsCatchClause} from "@internal/ast";
 
 export default function JSCatchClause(node: AnyNode, scope: Scope) {
 	node = jsCatchClause.assert(node);

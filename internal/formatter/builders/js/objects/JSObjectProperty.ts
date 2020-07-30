@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 import {
 	AnyJSObjectPropertyKey,
@@ -13,7 +13,7 @@ import {
 	JSAssignmentObjectPatternProperty,
 	JSBindingObjectPatternProperty,
 	JSObjectProperty,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 function isShorthand(key: AnyJSObjectPropertyKey, value: AnyNode): boolean {
 	return (

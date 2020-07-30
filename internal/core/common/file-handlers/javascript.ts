@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstJSProgramSyntax, ConstJSSourceType} from "@romefrontend/ast";
+import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
 import {ExtensionHandler} from "./types";
-import {parseJS} from "@romefrontend/js-parser";
+import {parseJS} from "@internal/js-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not

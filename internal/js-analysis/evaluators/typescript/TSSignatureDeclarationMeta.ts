@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSSignatureDeclarationMeta,
 	tsSignatureDeclarationMeta,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {
 	node = tsSignatureDeclarationMeta.assert(node);

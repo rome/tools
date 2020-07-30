@@ -5,4 +5,4 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli/bin/rome";
+import "@internal/cli/bin/rome";

@@ -9,13 +9,13 @@ import {
 	jsAssignmentExpression,
 	jsAssignmentIdentifier,
 	jsIdentifier,
-} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
+} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	doesNodeMatchPattern,
 	inheritLoc,
 	template,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {getOptions, getPrefixedNamespace} from "../_utils";
 
 export default createVisitor({

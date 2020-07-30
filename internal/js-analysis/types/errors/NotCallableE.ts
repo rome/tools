@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
 import T from "../T";
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 
 export default class NotCallableE extends E {
 	constructor(scope: Scope, originNode: undefined | AnyNode, callee: T) {

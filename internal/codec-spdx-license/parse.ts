@@ -14,10 +14,10 @@ import {
 	createParser,
 	isAlpha,
 	isDigit,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
-import {descriptions} from "@romefrontend/diagnostics";
-import {Number0} from "@romefrontend/ob1";
+import {descriptions} from "@internal/diagnostics";
+import {Number0} from "@internal/ob1";
 
 //# Tokens
 type Tokens = BaseTokens & {

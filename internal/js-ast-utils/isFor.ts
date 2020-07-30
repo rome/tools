@@ -10,7 +10,7 @@ import {
 	JSForInStatement,
 	JSForOfStatement,
 	JSForStatement,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export function isFor(
 	node: undefined | AnyNode,

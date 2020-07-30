@@ -12,7 +12,7 @@ import {
 	JSBindingIdentifier,
 	NodeBaseWithComments,
 	TSTypeParameterDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSFunctionHead extends NodeBaseWithComments {

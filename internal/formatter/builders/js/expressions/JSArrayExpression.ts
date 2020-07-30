@@ -10,7 +10,7 @@ import {
 	JSArrayExpression,
 	JSAssignmentArrayPattern,
 	JSBindingArrayPattern,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -21,7 +21,7 @@ import {
 	join,
 	lineOrSpace,
 	softline,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {hasInnerComments} from "../../comments";
 

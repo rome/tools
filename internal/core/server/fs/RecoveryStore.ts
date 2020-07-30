@@ -1,9 +1,9 @@
-import {Server, ServerRequest} from "@romefrontend/core";
+import {Server, ServerRequest} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {
 	FileHandle,
 	createDirectory,
@@ -14,19 +14,19 @@ import {
 	readFileText,
 	removeDirectory,
 	writeFile,
-} from "@romefrontend/fs";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {consumeJSON, stringifyJSON} from "@romefrontend/codec-json";
+} from "@internal/fs";
+import {Dict} from "@internal/typescript-helpers";
+import {consumeJSON, stringifyJSON} from "@internal/codec-json";
 import {
 	DiagnosticLocation,
 	Diagnostics,
 	catchDiagnostics,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {markup} from "@romefrontend/markup";
-import prettyFormat from "@romefrontend/pretty-format";
-import {ReporterNamespace} from "@romefrontend/cli-reporter";
+} from "@internal/diagnostics";
+import {markup} from "@internal/markup";
+import prettyFormat from "@internal/pretty-format";
+import {ReporterNamespace} from "@internal/cli-reporter";
 
 export type RecoverySaveFile = {
 	mtime: undefined | number;

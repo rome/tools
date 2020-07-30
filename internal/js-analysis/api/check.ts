@@ -10,14 +10,14 @@ import {
 	DiagnosticAdvice,
 	Diagnostics,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {JSRoot} from "@romefrontend/ast";
+} from "@internal/diagnostics";
+import {JSRoot} from "@internal/ast";
 import Hub from "../Hub";
 import E from "../types/errors/E";
 import T from "../types/T";
 import OpenT from "../types/OpenT";
 import buildGraph from "./buildGraph";
-import {TransformProjectDefinition} from "@romefrontend/compiler";
+import {TransformProjectDefinition} from "@internal/compiler";
 
 export default async function check(
 	opts: {

@@ -1,5 +1,5 @@
-import {escapeXHTMLEntities} from "@romefrontend/html-parser";
-import {MarkupParsedTag, validateColor} from "@romefrontend/markup";
+import {escapeXHTMLEntities} from "@internal/html-parser";
+import {MarkupParsedTag, validateColor} from "@internal/markup";
 
 export function htmlFormatText(
 	{name: tagName, attributes}: MarkupParsedTag,

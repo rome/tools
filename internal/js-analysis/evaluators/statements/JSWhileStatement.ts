@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSWhileStatement, jsWhileStatement} from "@romefrontend/ast";
+import {AnyNode, JSWhileStatement, jsWhileStatement} from "@internal/ast";
 
 export default function JSWhileStatement(node: AnyNode, scope: Scope) {
 	node = jsWhileStatement.assert(node);

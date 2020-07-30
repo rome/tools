@@ -6,12 +6,12 @@
  */
 
 import analyzeDependencies from "./analyzeDependencies";
-import {createDefaultProjectConfig} from "@romefrontend/project";
+import {createDefaultProjectConfig} from "@internal/project";
 import {test} from "rome";
-import {parseJS} from "@romefrontend/js-parser";
-import {ConstJSSourceType} from "@romefrontend/ast";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {dedent} from "@romefrontend/string-utils";
+import {parseJS} from "@internal/js-parser";
+import {ConstJSSourceType} from "@internal/ast";
+import {createUnknownFilePath} from "@internal/path";
+import {dedent} from "@internal/string-utils";
 
 async function testAnalyzeDeps(input: string, sourceType: ConstJSSourceType) {
 	return await analyzeDependencies({

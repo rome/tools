@@ -1,4 +1,4 @@
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 type Test = {
 	invalid?: Array<string>;

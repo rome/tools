@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSBindingObjectPattern,
 	jsBindingObjectPattern,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSBindingObjectPattern(node: AnyNode, scope: Scope) {
 	node = jsBindingObjectPattern.assert(node);

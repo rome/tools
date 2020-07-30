@@ -5,15 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	Builder,
-	Token,
-	concat,
-	hardline,
-	indent,
-} from "@romefrontend/formatter";
+import {Builder, Token, concat, hardline, indent} from "@internal/formatter";
 
-import {AnyNode, JSBlockStatement} from "@romefrontend/ast";
+import {AnyNode, JSBlockStatement} from "@internal/ast";
 
 export default function JSBlockStatement(
 	builder: Builder,

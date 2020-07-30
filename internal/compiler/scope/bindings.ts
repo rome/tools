@@ -6,7 +6,7 @@
  */
 
 import Scope from "./Scope";
-import {AnyNode, ConstJSImportModuleKind} from "@romefrontend/ast";
+import {AnyNode, ConstJSImportModuleKind} from "@internal/ast";
 
 type BindingOpts = {
 	scope: Scope;

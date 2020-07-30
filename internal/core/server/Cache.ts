@@ -10,20 +10,20 @@ import {
 	WorkerCompileResult,
 	WorkerLintResult,
 } from "../common/bridges/WorkerBridge";
-import {ModuleSignature} from "@romefrontend/js-analysis";
+import {ModuleSignature} from "@internal/js-analysis";
 import Server from "./Server";
-import {ProjectDefinition} from "@romefrontend/project";
+import {ProjectDefinition} from "@internal/project";
 import {VERSION} from "../common/constants";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {
 	createDirectory,
 	readFileText,
 	removeFile,
 	writeFile,
-} from "@romefrontend/fs";
-import {stringifyJSON} from "@romefrontend/codec-json";
-import {getEnvVar} from "@romefrontend/cli-environment";
-import {Markup, markup} from "@romefrontend/markup";
+} from "@internal/fs";
+import {stringifyJSON} from "@internal/codec-json";
+import {getEnvVar} from "@internal/cli-environment";
+import {Markup, markup} from "@internal/markup";
 
 export type CacheEntry = {
 	version: string;

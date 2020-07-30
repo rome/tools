@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSReferenceIdentifier,
 	jsReferenceIdentifier,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSReferenceIdentifier(node: AnyNode, scope: Scope) {
 	node = jsReferenceIdentifier.assert(node);

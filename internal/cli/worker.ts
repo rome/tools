@@ -6,8 +6,8 @@
  */
 
 import setProcessTitle from "./utils/setProcessTitle";
-import {createBridgeFromParentProcess} from "@romefrontend/events";
-import {Worker, WorkerBridge} from "@romefrontend/core";
+import {createBridgeFromParentProcess} from "@internal/events";
+import {Worker, WorkerBridge} from "@internal/core";
 
 export default async function worker() {
 	setProcessTitle("worker");

@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSNonNullExpression,
-	tsNonNullExpression,
-} from "@romefrontend/ast";
+import {AnyNode, TSNonNullExpression, tsNonNullExpression} from "@internal/ast";
 
 export default function TSNonNullExpression(node: AnyNode, scope: Scope) {
 	node = tsNonNullExpression.assert(node);

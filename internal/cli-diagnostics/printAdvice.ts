@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter} from "@internal/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -21,8 +21,8 @@ import {
 	DiagnosticAdviceLog,
 	DiagnosticAdviceStacktrace,
 	diagnosticLocationToMarkupFilelink,
-} from "@romefrontend/diagnostics";
-import {Position} from "@romefrontend/parser-core";
+} from "@internal/diagnostics";
+import {Position} from "@internal/parser-core";
 import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
@@ -34,16 +34,16 @@ import {
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
-import {ob1Number0Neg1} from "@romefrontend/ob1";
+import {ob1Number0Neg1} from "@internal/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {UnknownFilePathSet, createUnknownFilePath} from "@romefrontend/path";
+import {UnknownFilePathSet, createUnknownFilePath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
-import {Diffs, diffConstants} from "@romefrontend/string-diff";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
-import {serializeCLIFlags} from "@romefrontend/cli-flags";
-import {inferDiagnosticLanguageFromFilename} from "@romefrontend/core/common/file-handlers";
+import {Diffs, diffConstants} from "@internal/string-diff";
+import {removeCarriageReturn} from "@internal/string-utils";
+import {serializeCLIFlags} from "@internal/cli-flags";
+import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;

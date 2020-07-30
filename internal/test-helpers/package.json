@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/test-helpers",
+	"name": "@internal/test-helpers",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BIN, CHILD_ARGS, VERSION} from "@romefrontend/core";
+import {BIN, CHILD_ARGS, VERSION} from "@internal/core";
 import child = require("child_process");
 
 export default function fork(

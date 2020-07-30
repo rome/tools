@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSAssignmentAsExpression,
 	tsAssignmentAsExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSAssignmentAsExpression(node: AnyNode) {
 	node = tsAssignmentAsExpression.assert(node);

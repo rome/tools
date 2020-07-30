@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInterfaceBody} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {TSInterfaceBody} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 import {printTSBraced} from "../utils";
 

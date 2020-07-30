@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 
 function isEmpty(arr: undefined | Array<unknown>): boolean {
 	return arr === undefined || arr.length === 0;

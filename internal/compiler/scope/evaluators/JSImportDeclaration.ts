@@ -6,13 +6,13 @@
  */
 
 import Scope from "../Scope";
-import {ImportBinding, ImportBindingMeta} from "@romefrontend/compiler";
+import {ImportBinding, ImportBindingMeta} from "@internal/compiler";
 import {
 	AnyNode,
 	ConstJSImportModuleKind,
 	jsImportDeclaration,
-} from "@romefrontend/ast";
-import {getImportSpecifiers} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {getImportSpecifiers} from "@internal/js-ast-utils";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

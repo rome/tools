@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXSpreadChild, jsxSpreadChild} from "@romefrontend/ast";
+import {AnyNode, JSXSpreadChild, jsxSpreadChild} from "@internal/ast";
 
 export default function JSXSpreadChild(node: AnyNode, scope: Scope) {
 	node = jsxSpreadChild.assert(node);

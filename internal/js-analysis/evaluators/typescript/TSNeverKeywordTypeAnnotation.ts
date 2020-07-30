@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSNeverKeywordTypeAnnotation,
 	tsNeverKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSNeverKeywordTypeAnnotation(node: AnyNode) {
 	node = tsNeverKeywordTypeAnnotation.assert(node);

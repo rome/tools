@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, tsImportEqualsDeclaration} from "@romefrontend/ast";
-import {ImportBinding} from "@romefrontend/compiler";
+import {AnyNode, tsImportEqualsDeclaration} from "@internal/ast";
+import {ImportBinding} from "@internal/compiler";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

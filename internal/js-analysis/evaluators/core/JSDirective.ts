@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSDirective, jsDirective} from "@romefrontend/ast";
+import {AnyNode, JSDirective, jsDirective} from "@internal/ast";
 
 export default function JSDirective(node: AnyNode, scope: Scope) {
 	node = jsDirective.assert(node);

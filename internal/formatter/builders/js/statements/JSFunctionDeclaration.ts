@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSFunctionDeclaration} from "@romefrontend/ast";
+import {JSFunctionDeclaration} from "@internal/ast";
 import JSFunctionExpression from "../expressions/JSFunctionExpression";
 
 export default function JSFunctionDeclaration(

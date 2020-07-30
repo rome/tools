@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
-import {Consumer} from "@romefrontend/consume";
+import {ServerRequest} from "@internal/core";
+import {Consumer} from "@internal/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {ConstJSSourceType} from "@romefrontend/ast";
-import {assertRoot, removeLoc} from "@romefrontend/ast-utils";
-import {markup} from "@romefrontend/markup";
-import {assertSingleNode} from "@romefrontend/js-ast-utils";
+import {ConstJSSourceType} from "@internal/ast";
+import {assertRoot, removeLoc} from "@internal/ast-utils";
+import {markup} from "@internal/markup";
+import {assertSingleNode} from "@internal/js-ast-utils";
 
 type Flags = {
 	allowDiagnostics: boolean;

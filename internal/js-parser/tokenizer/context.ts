@@ -10,9 +10,9 @@
 // See https://github.com/mozilla/sweet.js/wiki/design
 import {JSParser} from "../parser";
 import {getCurContext, isBraceBlock, readTemplateToken} from "./index";
-import {lineBreak} from "@romefrontend/js-parser-utils";
+import {lineBreak} from "@internal/js-parser-utils";
 import {types as tt} from "./types";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 type TokContextOverride = (p: JSParser) => void;
 

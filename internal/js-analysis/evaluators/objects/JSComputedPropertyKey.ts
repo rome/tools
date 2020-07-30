@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSComputedPropertyKey,
 	jsComputedPropertyKey,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSComputedPropertyKey(node: AnyNode, scope: Scope) {
 	node = jsComputedPropertyKey.assert(node);

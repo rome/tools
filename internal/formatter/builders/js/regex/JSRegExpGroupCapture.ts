@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSRegExpGroupCapture} from "@romefrontend/ast";
+import {JSRegExpGroupCapture} from "@internal/ast";
 
 export default function JSRegExpGroupCapture(
 	builder: Builder,

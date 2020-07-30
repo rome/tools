@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from "@romefrontend/parser-core";
+import {Position} from "@internal/parser-core";
 import {JSParser} from "../parser";
 import {TokenType, types as tt} from "../tokenizer/types";
 import {
@@ -94,11 +94,11 @@ import {
 	TSTypePredicate,
 	TSTypeQuery,
 	TSTypeReference,
-} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type ParsingContext =
 	| "EnumMembers"

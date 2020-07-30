@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSStringLiteral, jsStringLiteral} from "@romefrontend/ast";
+import {AnyNode, JSStringLiteral, jsStringLiteral} from "@internal/ast";
 import StringLiteralT from "../../types/StringLiteralT";
 
 export default function JSStringLiteral(node: AnyNode, scope: Scope) {

@@ -1,4 +1,4 @@
-import {AnyJSExpression, JSXAttribute, JSXElement} from "@romefrontend/ast";
+import {AnyJSExpression, JSXAttribute, JSXElement} from "@internal/ast";
 
 function isEmptyAttributeValue(
 	node: NonNullable<JSXAttribute["value"]> | AnyJSExpression,

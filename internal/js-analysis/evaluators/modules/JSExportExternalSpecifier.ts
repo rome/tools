@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSExportExternalSpecifier,
 	jsExportExternalSpecifier,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSExportExternalSpecifier(node: AnyNode) {
 	node = jsExportExternalSpecifier.assert(node);

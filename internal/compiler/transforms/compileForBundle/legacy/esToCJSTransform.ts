@@ -10,14 +10,14 @@ import {
 	JSClassExpression,
 	JSFunctionExpression,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
 	template,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {getModuleId, getOptions} from "../_utils";
-import {FunctionBinding, createVisitor, signals} from "@romefrontend/compiler";
+import {FunctionBinding, createVisitor, signals} from "@internal/compiler";
 
 export default createVisitor({
 	name: "esToCJSTransform",

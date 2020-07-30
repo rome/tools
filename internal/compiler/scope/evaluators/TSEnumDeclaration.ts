@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, tsEnumDeclaration} from "@romefrontend/ast";
-import {TypeBinding} from "@romefrontend/compiler";
+import {AnyNode, tsEnumDeclaration} from "@internal/ast";
+import {TypeBinding} from "@internal/compiler";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

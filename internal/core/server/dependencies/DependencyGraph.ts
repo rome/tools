@@ -6,29 +6,26 @@
  */
 
 import Server from "../Server";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {SourceLocation} from "@internal/parser-core";
 import {BundleBuddyStats} from "../../common/types/bundler";
-import {
-	DiagnosticsProcessor,
-	catchDiagnostics,
-} from "@romefrontend/diagnostics";
+import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {ResolverOptions} from "../fs/Resolver";
 import WorkerQueue from "../WorkerQueue";
 import DependencyNode from "./DependencyNode";
-import {ReporterProgress} from "@romefrontend/cli-reporter";
+import {ReporterProgress} from "@internal/cli-reporter";
 import {Locker} from "../../common/utils/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
-import {Event} from "@romefrontend/events";
+import {Event} from "@internal/events";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createUnknownFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
-import {markup} from "@romefrontend/markup";
-import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
+import {markup} from "@internal/markup";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;

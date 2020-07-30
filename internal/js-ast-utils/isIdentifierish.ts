@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSIdentifier, AnyNode} from "@romefrontend/ast";
+import {AnyJSIdentifier, AnyNode} from "@internal/ast";
 
 export function isIdentifierish(node: AnyNode): node is AnyJSIdentifier {
 	return (

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";
@@ -13,7 +13,7 @@ import {HumanBuilder} from "../Utils";
 import StringLiteralT from "./StringLiteralT";
 import GetPropT from "./GetPropT";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class InstanceT extends ObjT {
 	constructor(

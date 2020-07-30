@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSBigIntLiteral, jsBigIntLiteral} from "@romefrontend/ast";
+import {AnyNode, JSBigIntLiteral, jsBigIntLiteral} from "@internal/ast";
 
 export default function JSBigIntLiteral(node: AnyNode, scope: Scope) {
 	node = jsBigIntLiteral.assert(node);

@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, AnyRoot} from "@romefrontend/ast";
+import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {
 	DiagnosticLocation,
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
 	Diagnostics,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import CompilerContext from "./lib/CompilerContext";
 import {signals} from ".";
 

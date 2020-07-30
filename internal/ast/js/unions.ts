@@ -6,7 +6,7 @@
  */
 
 import * as n from "../index";
-import {OptionalProps} from "@romefrontend/typescript-helpers";
+import {OptionalProps} from "@internal/typescript-helpers";
 
 export type AnyTSEntityName = n.JSReferenceIdentifier | n.TSQualifiedName;
 

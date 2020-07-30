@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/compiler",
+	"name": "@internal/compiler",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -9,10 +9,10 @@ import {
 	AnyComment,
 	JSInterpreterDirective,
 	JSNumericLiteral,
-} from "@romefrontend/ast";
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/ast";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {JSParser} from "../parser";
-import {xhtmlEntityNameToChar} from "@romefrontend/html-parser";
+import {xhtmlEntityNameToChar} from "@internal/html-parser";
 import {
 	getFullCharCodeAt,
 	isIdentifierChar,
@@ -22,7 +22,7 @@ import {
 	lineBreakG,
 	nonASCIIwhitespace,
 	validateRegexFlags,
-} from "@romefrontend/js-parser-utils";
+} from "@internal/js-parser-utils";
 import {
 	TokenType,
 	TokenTypes,
@@ -31,8 +31,8 @@ import {
 } from "./types";
 import {TokContext, types as ct} from "./context";
 import {ASCII_NAMES, UNICODE_MISTAKES} from "./unicodeMistakes";
-import * as charCodes from "@romefrontend/string-charcodes";
-import {descriptions} from "@romefrontend/diagnostics";
+import * as charCodes from "@internal/string-charcodes";
+import {descriptions} from "@internal/diagnostics";
 import {
 	Number0,
 	ob1Add,
@@ -43,8 +43,8 @@ import {
 	ob1Number0,
 	ob1Number0Neg1,
 	ob1Sub,
-} from "@romefrontend/ob1";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+} from "@internal/ob1";
+import {removeCarriageReturn} from "@internal/string-utils";
 
 const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;

@@ -1,4 +1,4 @@
-import {createIntegrationTest} from "@romefrontend/test-helpers";
+import {createIntegrationTest} from "@internal/test-helpers";
 import {test} from "rome";
 
 test(

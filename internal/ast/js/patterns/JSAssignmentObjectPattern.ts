@@ -10,7 +10,7 @@ import {
 	JSAssignmentObjectPatternProperty,
 	JSPatternMeta,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSAssignmentObjectPattern extends NodeBaseWithComments {

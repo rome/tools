@@ -6,7 +6,7 @@
  */
 
 import {PartialExtensionHandler} from "./types";
-import {parseJS} from "@romefrontend/js-parser";
+import {parseJS} from "@internal/js-parser";
 
 export const textHandler: PartialExtensionHandler = {
 	sourceTypeJS: "module",

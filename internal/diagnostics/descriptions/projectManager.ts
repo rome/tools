@@ -1,8 +1,8 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
-import {filePathToMarkup, markup} from "@romefrontend/markup";
+import {filePathToMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 
 export const projectManager = createDiagnosticsCategory({
 	NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) => ({

@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSClassDeclaration,
-	jsClassDeclaration,
-} from "@romefrontend/ast";
+import {AnyNode, JSClassDeclaration, jsClassDeclaration} from "@internal/ast";
 import JSClassExpression from "./JSClassExpression";
 
 export default function JSClassDeclaration(node: AnyNode, scope: Scope) {

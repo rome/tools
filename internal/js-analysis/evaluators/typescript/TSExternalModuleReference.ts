@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSExternalModuleReference,
 	tsExternalModuleReference,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSExternalModuleReference(node: AnyNode) {
 	node = tsExternalModuleReference.assert(node);

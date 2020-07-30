@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSAssignmentIdentifier} from "@romefrontend/ast";
+import {JSAssignmentIdentifier} from "@internal/ast";
 import JSIdentifier from "../auxiliary/JSIdentifier";
 
 export default function JSAssignmentIdentifier(

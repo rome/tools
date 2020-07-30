@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {Consumer} from "@romefrontend/consume";
-import {SourceLocation} from "@romefrontend/parser-core";
-import {markup} from "@romefrontend/markup";
+import {Consumer} from "@internal/consume";
+import {SourceLocation} from "@internal/parser-core";
+import {markup} from "@internal/markup";
 
 type Flags = {
 	focusSource: undefined | string;

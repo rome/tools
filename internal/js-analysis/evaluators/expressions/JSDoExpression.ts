@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSDoExpression, jsDoExpression} from "@romefrontend/ast";
+import {AnyNode, JSDoExpression, jsDoExpression} from "@internal/ast";
 
 export default function JSDoExpression(node: AnyNode, scope: Scope) {
 	node = jsDoExpression.assert(node);

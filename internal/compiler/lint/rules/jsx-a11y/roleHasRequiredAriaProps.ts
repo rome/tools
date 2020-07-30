@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
-import {ariaRolesMap} from "@romefrontend/compiler/lint/utils/aria";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
+import {ariaRolesMap} from "@internal/compiler/lint/utils/aria";
 
 export default createVisitor({
 	name: "jsx-a11y/roleHasRequiredAriaProps",

@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import NullT from "./NullT";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class MaybeT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {

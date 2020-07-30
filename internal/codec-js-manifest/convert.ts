@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stringifySPDXLicense} from "@romefrontend/codec-spdx-license";
+import {stringifySPDXLicense} from "@internal/codec-spdx-license";
 import {ManifestDependencies, stringifyDependencyPattern} from "./dependencies";
 import {
 	JSONManifest,
@@ -13,9 +13,9 @@ import {
 	Manifest,
 	ManifestExports,
 } from "./types";
-import {stringifySemver} from "@romefrontend/codec-semver";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {stringifyPathPattern} from "@romefrontend/path-match";
+import {stringifySemver} from "@internal/codec-semver";
+import {Dict} from "@internal/typescript-helpers";
+import {stringifyPathPattern} from "@internal/path-match";
 import {manifestNameToString} from "./name";
 
 export function convertManifestToJSON(manifest: Manifest): JSONManifest {

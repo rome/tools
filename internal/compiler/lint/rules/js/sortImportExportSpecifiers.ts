@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	JSExportExternalSpecifier,
 	JSExportLocalSpecifier,
 	JSImportSpecifier,
-} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
-import {naturalCompare} from "@romefrontend/string-utils";
+} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
+import {naturalCompare} from "@internal/string-utils";
 
 function compareImportSpecifiers(
 	a: JSImportSpecifier,

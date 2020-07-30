@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownFilePath} from "@romefrontend/path";
+import {UnknownFilePath} from "@internal/path";
 
 type LockResolve<RawKey, MapKey> = (lock: Lock<RawKey, MapKey>) => void;
 

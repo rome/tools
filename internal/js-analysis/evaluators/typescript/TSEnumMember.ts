@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSEnumMember, tsEnumMember} from "@romefrontend/ast";
+import {AnyNode, TSEnumMember, tsEnumMember} from "@internal/ast";
 
 export default function TSEnumMember(node: AnyNode, scope: Scope) {
 	node = tsEnumMember.assert(node);

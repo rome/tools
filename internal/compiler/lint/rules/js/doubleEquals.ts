@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {markup} from "@romefrontend/markup";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {markup} from "@internal/markup";
 
 const SUGGESTION_DESCRIPTION = markup`This may be unsafe if you are relying on type coercion`;
 

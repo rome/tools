@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSXIdentifier} from "@romefrontend/ast";
+import {JSXIdentifier} from "@internal/ast";
 
 export default function JSXIdentifier(
 	builder: Builder,

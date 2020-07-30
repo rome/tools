@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSArrayType} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSArrayType} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSArrayType(builder: Builder, node: TSArrayType): Token {
 	return concat([builder.tokenize(node.elementType, node), "[]"]);

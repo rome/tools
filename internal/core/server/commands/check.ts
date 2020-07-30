@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import Linter, {
 	LinterCompilerOptionsPerFile,
 	LinterOptions,
 } from "../linter/Linter";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {createServerCommand} from "../commands";
 import {
 	LintCompilerOptionsDecisions,
 	parseDecisionStrings,
-} from "@romefrontend/compiler";
-import {Consumer} from "@romefrontend/consume";
-import {commandCategories} from "@romefrontend/core/common/commands";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {LINTABLE_EXTENSIONS} from "@romefrontend/core/common/file-handlers";
+} from "@internal/compiler";
+import {Consumer} from "@internal/consume";
+import {commandCategories} from "@internal/core/common/commands";
+import {createUnknownFilePath} from "@internal/path";
+import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 
 type Flags = {
 	decisions: Array<string>;

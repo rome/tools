@@ -36,15 +36,15 @@ import {
 	jsThisExpression,
 	jsxExpressionContainer,
 	jsxIdentifier,
-} from "@romefrontend/ast";
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
+} from "@internal/ast";
+import {Path, createVisitor, signals} from "@internal/compiler";
 import {
 	cleanJSXText,
 	inheritLoc,
 	isValidIdentifierName,
 	template,
-} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 function convertJSXIdentifier(
 	path: Path,

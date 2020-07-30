@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterProgress} from "@romefrontend/cli-reporter";
+import {Reporter, ReporterProgress} from "@internal/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -14,28 +14,28 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getDiagnosticsFromError,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {TestRef} from "../../common/bridges/TestWorkerBridge";
-import {Server, ServerRequest, TestWorkerBridge} from "@romefrontend/core";
-import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
-import {createClient} from "@romefrontend/codec-websocket";
-import {humanizeNumber} from "@romefrontend/string-utils";
+import {Server, ServerRequest, TestWorkerBridge} from "@internal/core";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
+import {createClient} from "@internal/codec-websocket";
+import {humanizeNumber} from "@internal/string-utils";
 import {
 	Bridge,
 	BridgeError,
 	createBridgeFromChildProcess,
-} from "@romefrontend/events";
+} from "@internal/events";
 import {
 	CoverageCollector,
 	ErrorFrame,
 	InspectorClient,
 	InspectorClientCloseError,
 	urlToFilename,
-} from "@romefrontend/v8";
+} from "@internal/v8";
 import fork from "../../common/utils/fork";
-import {ManifestDefinition} from "@romefrontend/codec-js-manifest";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {ob1Coerce0To1} from "@romefrontend/ob1";
+import {ManifestDefinition} from "@internal/codec-js-manifest";
+import {AbsoluteFilePath} from "@internal/path";
+import {ob1Coerce0To1} from "@internal/ob1";
 import {
 	CoverageDirectory,
 	TestServerRunnerConstructorOptions,
@@ -50,16 +50,16 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {Markup, concatMarkup, markup, readMarkup} from "@romefrontend/markup";
-import {MAX_WORKER_COUNT} from "@romefrontend/core/common/constants";
-import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
+import {Markup, concatMarkup, markup, readMarkup} from "@internal/markup";
+import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
+import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import net = require("net");
 import {
 	FocusedTest,
 	TestWorkerFileResult,
-} from "@romefrontend/core/test-worker/TestWorkerRunner";
-import {FileReference} from "@romefrontend/core/common/types/files";
-import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
+} from "@internal/core/test-worker/TestWorkerRunner";
+import {FileReference} from "@internal/core/common/types/files";
+import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {

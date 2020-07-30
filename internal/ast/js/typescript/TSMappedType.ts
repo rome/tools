@@ -9,7 +9,7 @@ import {
 	AnyTSPrimary,
 	NodeBaseWithComments,
 	TSTypeParameter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export type TSMappedTypeBoolean = undefined | boolean | "+" | "-";

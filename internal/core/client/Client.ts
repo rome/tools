@@ -18,7 +18,7 @@ import {
 	SOCKET_PATH,
 	ServerBridge,
 	ServerQueryResponse,
-} from "@romefrontend/core";
+} from "@internal/core";
 import fork from "../common/utils/fork";
 import {
 	BridgeError,
@@ -26,36 +26,36 @@ import {
 	EventSubscription,
 	createBridgeFromLocal,
 	createBridgeFromSocket,
-} from "@romefrontend/events";
-import {Reporter, ReporterDerivedStreams} from "@romefrontend/cli-reporter";
-import prettyFormat from "@romefrontend/pretty-format";
+} from "@internal/events";
+import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
+import prettyFormat from "@internal/pretty-format";
 import {VERSION} from "../common/constants";
-import {TarWriter} from "@romefrontend/codec-tar";
-import {Profile, Profiler, Trace, TraceEvent} from "@romefrontend/v8";
+import {TarWriter} from "@internal/codec-tar";
+import {Profile, Profiler, Trace, TraceEvent} from "@internal/v8";
 import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
 import {
 	UserConfig,
 	getUserConfigFile,
 	loadUserConfig,
 } from "../common/userConfig";
-import {createWriteStream, removeFile} from "@romefrontend/fs";
-import {stringifyJSON} from "@romefrontend/codec-json";
+import {createWriteStream, removeFile} from "@internal/fs";
+import {stringifyJSON} from "@internal/codec-json";
 import stream = require("stream");
 import net = require("net");
 import zlib = require("zlib");
 import os = require("os");
 import child = require("child_process");
-import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
+import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import {
 	AnyMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	joinMarkupLines,
 	markup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 
-import {markupToHtml, markupToPlainText} from "@romefrontend/cli-layout";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {markupToHtml, markupToPlainText} from "@internal/cli-layout";
+import {AbsoluteFilePath} from "@internal/path";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");

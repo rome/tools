@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpCharSetRange,
 	jsRegExpCharSetRange,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpCharSetRange(node: AnyNode) {
 	node = jsRegExpCharSetRange.assert(node);

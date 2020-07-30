@@ -13,7 +13,7 @@ import {
 	HALF_MAX_CODE_FRAME_LINES,
 	MAX_CODE_FRAME_LINES,
 } from "./constants";
-import {Position} from "@romefrontend/parser-core";
+import {Position} from "@internal/parser-core";
 import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
 import {
 	Number0,
@@ -24,7 +24,7 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1Neg1,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 import {
 	Markup,
 	concatMarkup,
@@ -32,8 +32,8 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/markup";
-import {Dict} from "@romefrontend/typescript-helpers";
+} from "@internal/markup";
+import {Dict} from "@internal/typescript-helpers";
 
 function formatLineView(
 	{marker, line, gutter}: FormattedLine,

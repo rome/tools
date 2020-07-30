@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {JSDoExpression} from "@romefrontend/ast";
+import {JSDoExpression} from "@internal/ast";
 
 export default function JSDoExpression(
 	builder: Builder,

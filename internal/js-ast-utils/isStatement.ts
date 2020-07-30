@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, AnyNode} from "@romefrontend/ast";
+import {AnyJSStatement, AnyNode} from "@internal/ast";
 import {isDeclaration} from "./isDeclaration";
 
 export function isStatement(node: undefined | AnyNode): node is AnyJSStatement {

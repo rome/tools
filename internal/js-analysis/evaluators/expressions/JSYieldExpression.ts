@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSYieldExpression, jsYieldExpression} from "@romefrontend/ast";
+import {AnyNode, JSYieldExpression, jsYieldExpression} from "@internal/ast";
 
 export default function JSYieldExpression(node: AnyNode, scope: Scope) {
 	node = jsYieldExpression.assert(node);

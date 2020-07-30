@@ -10,17 +10,14 @@ import {
 	parseJSON,
 	stringifyJSON,
 	stringifyRJSONFromConsumer,
-} from "@romefrontend/codec-json";
-import {
-	createAbsoluteFilePath,
-	createUnknownFilePath,
-} from "@romefrontend/path";
+} from "@internal/codec-json";
+import {createAbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,
 	ExtensionLintResult,
 } from "./types";
-import {parseJS} from "@romefrontend/js-parser";
+import {parseJS} from "@internal/js-parser";
 
 export const jsonHandler: ExtensionHandler = {
 	ext: "json",

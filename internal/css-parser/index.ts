@@ -1,7 +1,7 @@
-import {TokenValues} from "@romefrontend/parser-core";
+import {TokenValues} from "@internal/parser-core";
 import {CSSParserOptions, Tokens} from "./types";
 import {createCSSParser} from "./parse";
-import {CSSRoot} from "@romefrontend/ast";
+import {CSSRoot} from "@internal/ast";
 
 export function parseCSS(opts: CSSParserOptions): CSSRoot {
 	return createCSSParser(opts).parse();

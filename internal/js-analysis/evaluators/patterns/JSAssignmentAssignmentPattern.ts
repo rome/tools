@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSAssignmentAssignmentPattern,
 	jsAssignmentAssignmentPattern,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSAssignmentAssignmentPattern(node: AnyNode) {
 	node = jsAssignmentAssignmentPattern.assert(node);

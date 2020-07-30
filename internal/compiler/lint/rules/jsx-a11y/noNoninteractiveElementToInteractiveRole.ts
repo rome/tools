@@ -1,15 +1,15 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	getJSXElementName,
 	hasJSXAttribute,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {
 	ariaRolesMap,
 	isElementInteractive,
 	isRoleInteractive,
-} from "@romefrontend/compiler/lint/utils/aria";
+} from "@internal/compiler/lint/utils/aria";
 
 export default createVisitor({
 	name: "jsx-a11y/noNoninteractiveElementToInteractiveRole",

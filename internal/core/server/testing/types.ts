@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@romefrontend/diagnostics";
-import {SourceMapGenerator} from "@romefrontend/codec-source-map";
-import {ServerRequest, TestWorkerBridge} from "@romefrontend/core";
-import {CoverageFile, InspectorClient} from "@romefrontend/v8";
+import {Diagnostics} from "@internal/diagnostics";
+import {SourceMapGenerator} from "@internal/codec-source-map";
+import {ServerRequest, TestWorkerBridge} from "@internal/core";
+import {CoverageFile, InspectorClient} from "@internal/v8";
 import child = require("child_process");
-import {FileReference} from "@romefrontend/core/common/types/files";
-import {DiagnosticsPrinterFlags} from "@romefrontend/cli-diagnostics";
+import {FileReference} from "@internal/core/common/types/files";
+import {DiagnosticsPrinterFlags} from "@internal/cli-diagnostics";
 
 export type TestSource = {
 	code: string;

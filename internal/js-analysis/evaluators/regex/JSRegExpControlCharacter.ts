@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpControlCharacter,
 	jsRegExpControlCharacter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpControlCharacter(node: AnyNode) {
 	node = jsRegExpControlCharacter.assert(node);

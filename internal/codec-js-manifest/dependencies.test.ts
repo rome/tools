@@ -7,7 +7,7 @@
 
 import {test} from "rome";
 import {parseDependencyPattern} from "./dependencies";
-import {consumeUnknown} from "@romefrontend/consume";
+import {consumeUnknown} from "@internal/consume";
 
 test(
 	"can parse npm dependency patterns",

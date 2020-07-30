@@ -12,7 +12,7 @@ import {
 	TSExpressionWithTypeArguments,
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSClassHead extends NodeBaseWithComments {

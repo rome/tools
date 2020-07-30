@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from "@romefrontend/parser-core";
+import {SourceLocation} from "@internal/parser-core";
 import DependencyGraph from "./DependencyGraph";
 import DependencyNode from "./DependencyNode";
-import {AnalyzeDependencyImportUsageItem} from "@romefrontend/core";
-import {Diagnostics, descriptions} from "@romefrontend/diagnostics";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AnalyzeDependencyImportUsageItem} from "@internal/core";
+import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {AbsoluteFilePath} from "@internal/path";
 
 type FirstTopAwaitLocations = Array<{
 	mtime: number;

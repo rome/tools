@@ -8,7 +8,7 @@ import {
 	createParser,
 	isAlpha,
 	isDigit,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {
 	AnyHTMLChildNode,
 	HTMLAttribute,
@@ -17,11 +17,11 @@ import {
 	HTMLRoot,
 	HTMLString,
 	HTMLText,
-} from "@romefrontend/ast";
-import {Number0, ob1Add, ob1Get0, ob1Inc} from "@romefrontend/ob1";
-import {isEscaped} from "@romefrontend/string-utils";
+} from "@internal/ast";
+import {Number0, ob1Add, ob1Get0, ob1Inc} from "@internal/ob1";
+import {isEscaped} from "@internal/string-utils";
 import {isSelfClosingTagName} from "./tags";
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 
 type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;

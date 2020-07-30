@@ -9,7 +9,7 @@ import {
 	JSBindingIdentifier,
 	NodeBaseWithComments,
 	TSEnumMember,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSEnumDeclaration extends NodeBaseWithComments {

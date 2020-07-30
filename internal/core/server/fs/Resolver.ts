@@ -5,13 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Manifest, ManifestDefinition} from "@romefrontend/codec-js-manifest";
+import {Manifest, ManifestDefinition} from "@internal/codec-js-manifest";
 import Server from "../Server";
 import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
-import {
-	ProjectDefinition,
-	createDefaultProjectConfig,
-} from "@romefrontend/project";
+import {ProjectDefinition, createDefaultProjectConfig} from "@internal/project";
 import {FileReference} from "../../common/types/files";
 import resolverSuggest from "./resolverSuggest";
 import {
@@ -21,15 +18,15 @@ import {
 	UnknownFilePath,
 	createFilePathFromSegments,
 	createRelativeFilePath,
-} from "@romefrontend/path";
-import {DiagnosticAdvice, DiagnosticLocation} from "@romefrontend/diagnostics";
+} from "@internal/path";
+import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {writeFile} from "@romefrontend/fs";
+import {writeFile} from "@internal/fs";
 import https = require("https");
 
-import {MOCKS_DIRECTORY_NAME} from "@romefrontend/core/common/constants";
-import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/markup";
+import {MOCKS_DIRECTORY_NAME} from "@internal/core/common/constants";
+import {Consumer} from "@internal/consume";
+import {markup} from "@internal/markup";
 
 function request(
 	url: string,
@@ -785,7 +782,7 @@ export default class Resolver {
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();
 
-		// For scoped modules in the form of `@romefrontend/bar`, make sure we keep the `/bar` on the module name
+		// For scoped modules in the form of `@internal/bar`, make sure we keep the `/bar` on the module name
 		if (moduleName[0] === "@" && moduleNameParts.length > 0) {
 			return [`${moduleName}/${moduleNameParts.shift()}`, moduleNameParts];
 		}

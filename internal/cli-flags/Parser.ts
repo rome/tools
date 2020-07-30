@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter} from "@internal/cli-reporter";
 import {SerializeCLIOptions, serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
@@ -13,27 +13,27 @@ import {
 	ConsumeSourceLocationRequestTarget,
 	Consumer,
 	consume,
-} from "@romefrontend/consume";
+} from "@internal/consume";
 import {
 	dedent,
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
-} from "@romefrontend/string-utils";
+} from "@internal/string-utils";
 import {
 	AbsoluteFilePath,
 	HOME_PATH,
 	createUnknownFilePath,
-} from "@romefrontend/path";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup, markup} from "@romefrontend/markup";
+} from "@internal/path";
+import {Dict} from "@internal/typescript-helpers";
+import {Markup, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {JSONObject} from "@romefrontend/codec-json";
-import {exists, readFileText, writeFile} from "@romefrontend/fs";
+} from "@internal/diagnostics";
+import {JSONObject} from "@internal/codec-json";
+import {exists, readFileText, writeFile} from "@internal/fs";
 
 export type Examples = Array<{
 	description: Markup;

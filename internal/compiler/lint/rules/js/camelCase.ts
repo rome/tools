@@ -5,14 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {toCamelCase} from "@romefrontend/string-utils";
-import {Binding} from "@romefrontend/compiler/scope/bindings";
-import {descriptions} from "@romefrontend/diagnostics";
-import {
-	isValidIdentifierName,
-	renameBindings,
-} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {toCamelCase} from "@internal/string-utils";
+import {Binding} from "@internal/compiler/scope/bindings";
+import {descriptions} from "@internal/diagnostics";
+import {isValidIdentifierName, renameBindings} from "@internal/js-ast-utils";
 
 export function normalizeCamelCase(name: string): undefined | string {
 	if (!isValidIdentifierName(name)) {

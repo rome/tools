@@ -1,8 +1,8 @@
-import {TEMP_PATH} from "@romefrontend/path";
-import {readFileText, removeDirectory, writeFile} from "@romefrontend/fs";
+import {TEMP_PATH} from "@internal/path";
+import {readFileText, removeDirectory, writeFile} from "@internal/fs";
 import {exec, reporter} from "./_utils";
 import {main as buildRelease} from "./build-release";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 const releaseFolder = TEMP_PATH.append("rome-publish-release");
 const releaseManifest = releaseFolder.append("package.json");
@@ -34,7 +34,7 @@ export async function main() {
 		await publishRegistry("https://registry.npmjs.org/");
 
 		reporter.heading(markup`Publishing to npm.pkg.github.com`);
-		await setName("@romefrontend/rome");
+		await setName("@internal/rome");
 		await publishRegistry("https://npm.pkg.github.com/");
 	} finally {
 		await removeDirectory(releaseFolder);

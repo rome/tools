@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSContinueStatement,
-	jsContinueStatement,
-} from "@romefrontend/ast";
+import {AnyNode, JSContinueStatement, jsContinueStatement} from "@internal/ast";
 
 export default function JSContinueStatement(node: AnyNode, scope: Scope) {
 	node = jsContinueStatement.assert(node);

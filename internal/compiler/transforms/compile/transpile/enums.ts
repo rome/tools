@@ -7,7 +7,7 @@ import {
 	jsFunctionExpression,
 	jsNumericLiteral,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {
 	CompilerContext,
 	LetBinding,
@@ -15,11 +15,11 @@ import {
 	VarBinding,
 	createVisitor,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 
-import {descriptions} from "@romefrontend/diagnostics";
-import {template, tryStaticEvaluation} from "@romefrontend/js-ast-utils";
-import {EvalResult} from "@romefrontend/js-ast-utils/tryStaticEvaluation";
+import {descriptions} from "@internal/diagnostics";
+import {template, tryStaticEvaluation} from "@internal/js-ast-utils";
+import {EvalResult} from "@internal/js-ast-utils/tryStaticEvaluation";
 
 type PreviousEnumMembers = Map<string, EvalResult["value"]>;
 

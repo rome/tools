@@ -10,13 +10,13 @@ import {
 	JSClassDeclaration,
 	JSExportDefaultDeclaration,
 	JSFunctionDeclaration,
-} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {UnknownFilePath} from "@romefrontend/path";
-import {renameBindings} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {UnknownFilePath} from "@internal/path";
+import {renameBindings} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 import {normalizeCamelCase} from "./camelCase";
-import {toCamelCase} from "@romefrontend/string-utils";
+import {toCamelCase} from "@internal/string-utils";
 
 function isValidDeclaration(
 	node: AnyNode,

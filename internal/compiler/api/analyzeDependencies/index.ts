@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConstJSImportModuleKind} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {AnyNode, ConstJSImportModuleKind} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
 import {TransformRequest} from "../../types";
 import {
 	CJSExportRecord,
@@ -18,7 +18,7 @@ import {
 	ImportUsageRecord,
 	TopLevelAwaitRecord,
 } from "./records";
-import {Cache, CompilerContext} from "@romefrontend/compiler";
+import {Cache, CompilerContext} from "@internal/compiler";
 import transform from "../../methods/transform";
 import visitors from "./visitors/index";
 import {
@@ -29,8 +29,8 @@ import {
 	AnalyzeDependencyTopLevelLocalBindings,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
-} from "@romefrontend/core";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/core";
+import {descriptions} from "@internal/diagnostics";
 
 const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {getJSXAttribute} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+import {AnyNode} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {getJSXAttribute} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 import {getCreateElementProp} from "../../utils/react";
 
 function getJSXDangerProp(node: AnyNode) {

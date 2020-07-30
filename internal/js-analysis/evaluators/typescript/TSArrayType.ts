@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSArrayType, tsArrayType} from "@romefrontend/ast";
+import {AnyNode, TSArrayType, tsArrayType} from "@internal/ast";
 
 export default function TSArrayType(node: AnyNode, scope: Scope) {
 	node = tsArrayType.assert(node);

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExitSignal, Path} from "@romefrontend/compiler";
+import {ExitSignal, Path} from "@internal/compiler";
 
 export type HookCallReturn<CallReturn, State> = {
 	bubble?: boolean;
