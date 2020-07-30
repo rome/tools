@@ -1,8 +1,8 @@
-import {Consumer, consumeUnknown} from "@romefrontend/consume";
+import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
-import {humanizeNumber} from "@romefrontend/string-utils";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@romefrontend/ob1";
+import {humanizeNumber} from "@internal/string-utils";
+import {createUnknownFilePath} from "@internal/path";
+import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 
 export function createEmptyAttributes(): Consumer {
 	return consumeUnknown({}, "parse/stringMarkup");

@@ -6,17 +6,14 @@
  */
 
 import Scope from "./Scope";
-import {ArgumentsBinding, LetBinding, signals} from "@romefrontend/compiler";
-import {
-	getBindingIdentifiers,
-	isFunctionNode,
-} from "@romefrontend/js-ast-utils";
+import {ArgumentsBinding, LetBinding, signals} from "@internal/compiler";
+import {getBindingIdentifiers, isFunctionNode} from "@internal/js-ast-utils";
 import {
 	AnyJSFunction,
 	JSRoot,
 	TSDeclareFunction,
 	TSDeclareMethod,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {VarBinding} from "./bindings";
 
 export function buildFunctionScope(

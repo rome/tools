@@ -1,5 +1,5 @@
-import {AnyNode} from "@romefrontend/ast";
-import {ConstBinding, Scope} from "@romefrontend/compiler";
+import {AnyNode} from "@internal/ast";
+import {ConstBinding, Scope} from "@internal/compiler";
 
 export function resolveIndirection(
 	node: AnyNode,

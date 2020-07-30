@@ -1,24 +1,21 @@
-import {createServerCommand} from "@romefrontend/core/server/commands";
-import {commandCategories} from "@romefrontend/core/common/commands";
-import {Markup, markup} from "@romefrontend/markup";
-import {ServerRequest} from "@romefrontend/core";
-import {ExtensionHandler} from "@romefrontend/core/common/file-handlers/types";
-import {dedent} from "@romefrontend/string-utils";
-import {createDirectory, exists, writeFile} from "@romefrontend/fs";
-import {JSONObject, stringifyRJSON} from "@romefrontend/codec-json";
-import {getFileHandlerFromPath} from "@romefrontend/core/common/file-handlers";
+import {createServerCommand} from "@internal/core/server/commands";
+import {commandCategories} from "@internal/core/common/commands";
+import {Markup, markup} from "@internal/markup";
+import {ServerRequest} from "@internal/core";
+import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
+import {dedent} from "@internal/string-utils";
+import {createDirectory, exists, writeFile} from "@internal/fs";
+import {JSONObject, stringifyRJSON} from "@internal/codec-json";
+import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import Linter from "../linter/Linter";
-import {
-	PROJECT_CONFIG_DIRECTORY,
-	ProjectDefinition,
-} from "@romefrontend/project";
-import {AbsoluteFilePathMap} from "@romefrontend/path";
-import {getVCSClient} from "@romefrontend/vcs";
+import {PROJECT_CONFIG_DIRECTORY, ProjectDefinition} from "@internal/project";
+import {AbsoluteFilePathMap} from "@internal/path";
+import {getVCSClient} from "@internal/vcs";
 import {
 	Diagnostic,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 
 type Flags = {
 	allowDirty: boolean;

@@ -6,11 +6,11 @@
  */
 
 import {HydrateData} from "../Evaluator";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import ObjT from "./ObjT";
 import T from "./T";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class StringLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: string) {

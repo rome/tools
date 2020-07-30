@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-semver",
+	"name": "@internal/codec-semver",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

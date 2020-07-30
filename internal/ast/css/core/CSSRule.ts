@@ -1,5 +1,5 @@
-import {CSSBlock, NodeBaseWithComments} from "@romefrontend/ast";
-import {createBuilder} from "@romefrontend/ast/utils";
+import {CSSBlock, NodeBaseWithComments} from "@internal/ast";
+import {createBuilder} from "@internal/ast/utils";
 import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSRule extends NodeBaseWithComments {

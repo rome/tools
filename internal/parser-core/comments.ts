@@ -29,9 +29,9 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {AnyParserCore, SourceLocation} from "@romefrontend/parser-core";
-import {AnyComment, AnyNode} from "@romefrontend/ast";
-import {Number0} from "@romefrontend/ob1";
+import {AnyParserCore, SourceLocation} from "@internal/parser-core";
+import {AnyComment, AnyNode} from "@internal/ast";
+import {Number0} from "@internal/ob1";
 
 function last<T>(stack: Array<T>): T {
 	return stack[stack.length - 1];

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {assertSingleNode, inheritLoc} from "@romefrontend/js-ast-utils";
-import {NodeBase} from "@romefrontend/parser-core";
+import {assertSingleNode, inheritLoc} from "@internal/js-ast-utils";
+import {NodeBase} from "@internal/parser-core";
 import {AnyNode, AnyNodes} from "./index";
 import {NodeBaseWithComments} from "./base";
 

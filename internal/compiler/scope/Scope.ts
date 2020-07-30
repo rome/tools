@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyRoot, MOCK_PARENT} from "@romefrontend/ast";
-import {CompilerContext} from "@romefrontend/compiler";
+import {AnyNode, AnyRoot, MOCK_PARENT} from "@internal/ast";
+import {CompilerContext} from "@internal/compiler";
 import {SCOPE_PRIVATE_PREFIX} from "../constants";
 import evaluators from "./evaluators/index";
 import * as GLOBALS from "./globals";
@@ -14,7 +14,7 @@ import {Binding} from "./bindings";
 import {
 	isValidIdentifierName,
 	isVariableIdentifier,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import Path from "../lib/Path";
 
 Error.stackTraceLimit = Infinity;

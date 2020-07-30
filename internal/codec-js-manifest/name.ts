@@ -5,17 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	Number0,
-	ob1Add,
-	ob1Coerce0,
-	ob1Inc,
-	ob1Number0,
-} from "@romefrontend/ob1";
+import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from "@internal/ob1";
 import {
 	DiagnosticDescriptionOptionalCategory,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
 type NormalizeNameUnexpected = (

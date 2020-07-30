@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {jsBooleanLiteral, jsxExpressionContainer} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {jsBooleanLiteral, jsxExpressionContainer} from "@internal/ast";
 
 export default createVisitor({
 	name: "jsx/noImplicitBoolean",

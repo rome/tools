@@ -16,9 +16,9 @@ import {
 	join,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
-import {AnyNode, TSUnionTypeAnnotation} from "@romefrontend/ast";
+import {AnyNode, TSUnionTypeAnnotation} from "@internal/ast";
 
 export default function TSUnionTypeAnnotation(
 	builder: Builder,

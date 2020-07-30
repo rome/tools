@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from "@romefrontend/typescript-helpers";
+import {UnknownObject} from "@internal/typescript-helpers";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -18,7 +18,7 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getErrorStackAdvice,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	GlobalTestOptions,
 	TestCallback,
@@ -42,21 +42,21 @@ import {
 	FileReference,
 	convertTransportFileReference,
 } from "../common/types/files";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {
 	concatMarkup,
 	isEmptyMarkup,
 	markup,
 	readMarkup,
 	serializeLazyMarkup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 import {
 	ErrorFrames,
 	StructuredError,
 	getErrorStructure,
 	getSourceLocationFromErrorFrame,
-} from "@romefrontend/v8";
-import prettyFormat from "@romefrontend/pretty-format";
+} from "@internal/v8";
+import prettyFormat from "@internal/pretty-format";
 
 const MAX_RUNNING_TESTS = 20;
 

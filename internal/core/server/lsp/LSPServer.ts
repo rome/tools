@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@romefrontend/consume";
+import {Consumer} from "@internal/consume";
 import Server, {ServerClient} from "../Server";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
-import {Diagnostics, catchDiagnostics} from "@romefrontend/diagnostics";
+} from "@internal/path";
+import {Diagnostics, catchDiagnostics} from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
 	ServerQueryResponse,
-} from "@romefrontend/core/common/bridges/ServerBridge";
+} from "@internal/core/common/bridges/ServerBridge";
 import Linter from "../linter/Linter";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
-import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@romefrontend/core/common/types/client";
-import {JSONPropertyValue} from "@romefrontend/codec-json";
+import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@internal/core/common/types/client";
+import {JSONPropertyValue} from "@internal/codec-json";
 import {
 	ReporterProgress,
 	ReporterProgressOptions,
-} from "@romefrontend/cli-reporter";
+} from "@internal/cli-reporter";
 import {LSPTransport} from "./protocol";
 import LSPProgress from "./LSPProgress";
 import {
@@ -34,7 +34,7 @@ import {
 	getPathFromTextDocument,
 	getWorkerBufferPatches,
 } from "./utils";
-import {markup, readMarkup} from "@romefrontend/markup";
+import {markup, readMarkup} from "@internal/markup";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {

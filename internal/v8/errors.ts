@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
-import {isPlainObject} from "@romefrontend/typescript-helpers";
-import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romefrontend/ob1";
-import {convertPossibleNodeErrorToDiagnostic} from "@romefrontend/node";
+import {isPlainObject} from "@internal/typescript-helpers";
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
 
 export * from "./types";
 

@@ -1,13 +1,13 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {
 	doesNodeMatchPattern,
 	getJSXAttribute,
 	hasJSXAttribute,
-} from "@romefrontend/js-ast-utils";
-import {JSXAttribute} from "@romefrontend/ast";
+} from "@internal/js-ast-utils";
+import {JSXAttribute} from "@internal/ast";
 import {insideClassComponent} from "../../utils/react";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 function containsStringLiteral(attribute: JSXAttribute): boolean {
 	return attribute.value?.type === "JSStringLiteral";

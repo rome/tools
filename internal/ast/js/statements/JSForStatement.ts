@@ -10,7 +10,7 @@ import {
 	AnyJSStatement,
 	JSVariableDeclaration,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSForStatement extends NodeBaseWithComments {

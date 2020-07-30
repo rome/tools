@@ -10,7 +10,7 @@ import {
 	JSStringLiteral,
 	NodeBaseWithComments,
 	TSModuleBlock,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSModuleDeclaration extends NodeBaseWithComments {

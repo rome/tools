@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSBigIntKeywordTypeAnnotation,
 	tsBigIntKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSBigIntKeywordTypeAnnotation(
 	node: AnyNode,

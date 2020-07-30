@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebSocketInterface} from "@romefrontend/codec-websocket";
-import {JSONValue, consumeJSON} from "@romefrontend/codec-json";
-import {Consumer} from "@romefrontend/consume";
+import {WebSocketInterface} from "@internal/codec-websocket";
+import {JSONValue, consumeJSON} from "@internal/codec-json";
+import {Consumer} from "@internal/consume";
 
 type InspectorSubscription = {
 	once: boolean;

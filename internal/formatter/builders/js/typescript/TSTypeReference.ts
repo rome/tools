@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeReference} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSTypeReference} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSTypeReference(
 	builder: Builder,

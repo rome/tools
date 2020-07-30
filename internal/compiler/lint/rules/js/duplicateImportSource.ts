@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {AnyJSStatement, JSImportDeclaration} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {AnyJSStatement, JSImportDeclaration} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
+import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
 	name: "js/duplicateImport",

@@ -1,4 +1,4 @@
-import {unescapeJSONString} from "@romefrontend/string-escape";
+import {unescapeJSONString} from "@internal/string-escape";
 import {test} from "rome";
 
 test(

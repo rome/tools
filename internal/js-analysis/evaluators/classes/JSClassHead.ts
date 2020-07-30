@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSClassHead, jsClassHead} from "@romefrontend/ast";
+import {AnyNode, JSClassHead, jsClassHead} from "@internal/ast";
 
 export default function JSClassHead(node: AnyNode, scope: Scope) {
 	node = jsClassHead.assert(node);

@@ -1,5 +1,5 @@
 import {reduceParserCore} from "./utils";
-import {tokenizeJSON} from "@romefrontend/codec-json";
+import {tokenizeJSON} from "@internal/codec-json";
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
 
 export default function highlightJSON(

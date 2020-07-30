@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSBindingObjectPatternProperty} from "@romefrontend/ast";
+import {JSBindingObjectPatternProperty} from "@internal/ast";
 import JSObjectProperty from "../objects/JSObjectProperty";
 
 export default function JSBindingObjectPatternProperty(

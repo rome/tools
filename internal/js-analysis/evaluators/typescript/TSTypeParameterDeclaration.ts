@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSTypeParameterDeclaration,
 	tsTypeParameterDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSTypeParameterDeclaration(node: AnyNode) {
 	node = tsTypeParameterDeclaration.assert(node);

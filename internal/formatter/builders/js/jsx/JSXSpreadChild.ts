@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSXSpreadChild} from "@romefrontend/ast";
+import {JSXSpreadChild} from "@internal/ast";
 
 export default function JSXSpreadChild(
 	builder: Builder,

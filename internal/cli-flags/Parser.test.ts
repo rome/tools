@@ -7,15 +7,12 @@
 
 import {TestHelper, test} from "rome";
 import Parser, {ParserOptions} from "./Parser";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {Consumer} from "@romefrontend/consume";
-import {
-	DiagnosticsProcessor,
-	catchDiagnostics,
-} from "@romefrontend/diagnostics";
-import {printDiagnostics} from "@romefrontend/cli-diagnostics";
-import {markup} from "@romefrontend/markup";
-import {createAbsoluteFilePath} from "@romefrontend/path";
+import {Reporter} from "@internal/cli-reporter";
+import {Consumer} from "@internal/consume";
+import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
+import {printDiagnostics} from "@internal/cli-diagnostics";
+import {markup} from "@internal/markup";
+import {createAbsoluteFilePath} from "@internal/path";
 
 async function testParser<T>(
 	t: TestHelper,

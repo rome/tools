@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from "@romefrontend/formatter";
-import {JSRegExpEndCharacter} from "@romefrontend/ast";
+import {Token} from "@internal/formatter";
+import {JSRegExpEndCharacter} from "@internal/ast";
 
 export default function JSRegExpEndCharacter(): Token {
 	return "$";

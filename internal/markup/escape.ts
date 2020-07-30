@@ -5,13 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {
-	AbsoluteFilePath,
-	RelativeFilePath,
-	URLFilePath,
-} from "@romefrontend/path";
+import {AbsoluteFilePath, RelativeFilePath, URLFilePath} from "@internal/path";
 
 type MarkupPart = Markup | RawMarkup | string;
 type LazyMarkupPart = MarkupPart | LazyMarkupFactory | LazyMarkup;

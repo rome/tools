@@ -36,7 +36,7 @@ import TSDeclareMethod from "./TSDeclareMethod";
 import JSForInStatement from "./JSForInStatement";
 import TSMappedType from "./TSMappedType";
 import TSFunctionType from "./TSFunctionType";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 
 export type ScopeEvaluator = {
 	enter?: (node: AnyNode, parent: AnyNode, scope: Scope) => Scope;

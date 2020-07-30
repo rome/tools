@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {StructuredError} from "@romefrontend/v8";
-import {JSONObject} from "@romefrontend/codec-json";
+import {StructuredError} from "@internal/v8";
+import {JSONObject} from "@internal/codec-json";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;

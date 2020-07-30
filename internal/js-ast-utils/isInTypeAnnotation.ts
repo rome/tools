@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {Path} from "@romefrontend/compiler";
+import {AnyNode} from "@internal/ast";
+import {Path} from "@internal/compiler";
 import {isTypeNode} from "./isTypeNode";
 import {isTypeExpressionWrapperNode} from "./isTypeExpressionWrapperNode";
 

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSComputedPropertyKey} from "@romefrontend/ast";
+import {JSComputedPropertyKey} from "@internal/ast";
 
 export default function JSComputedPropertyKey(
 	builder: Builder,

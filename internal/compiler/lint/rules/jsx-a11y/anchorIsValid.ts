@@ -1,12 +1,12 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
-import {JSXAttribute} from "@romefrontend/ast";
-import {markup} from "@romefrontend/markup";
+} from "@internal/js-ast-utils";
+import {JSXAttribute} from "@internal/ast";
+import {markup} from "@internal/markup";
 
 function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 	if (attr === undefined) {

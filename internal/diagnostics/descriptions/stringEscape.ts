@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/string-escape
+// @internal/string-escape
 export const stringEscape = createDiagnosticsCategory({
 	NOT_ENOUGH_CODE_POINTS: {message: markup`Not enough code point digits`},
 	INVALID_STRING_CHARACTER: {

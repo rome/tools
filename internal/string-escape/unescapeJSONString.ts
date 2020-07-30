@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isHexDigit} from "@romefrontend/parser-core";
-import {DiagnosticDescription, descriptions} from "@romefrontend/diagnostics";
-import {isEscaped} from "@romefrontend/string-utils";
-import {ob1Coerce0} from "@romefrontend/ob1";
-import {readMarkup} from "@romefrontend/markup";
+import {isHexDigit} from "@internal/parser-core";
+import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
+import {isEscaped} from "@internal/string-utils";
+import {ob1Coerce0} from "@internal/ob1";
+import {readMarkup} from "@internal/markup";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {

@@ -1,5 +1,5 @@
-import {CSSDeclaration} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {CSSDeclaration} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function CSSDeclaration(
 	builder: Builder,

@@ -7,7 +7,7 @@
 
 import {Label, LabelKind} from "../tokenizer/state";
 import {types as tt} from "../tokenizer/types";
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {
 	IndexTracker,
 	isIdentifierChar,
@@ -15,7 +15,7 @@ import {
 	keywordRelationalOperator,
 	lineBreak,
 	skipWhiteSpace,
-} from "@romefrontend/js-parser-utils";
+} from "@internal/js-parser-utils";
 import {JSParser, OpeningContext} from "../parser";
 import {
 	AnyJSBindingPattern,
@@ -60,8 +60,8 @@ import {
 	JSWithStatement,
 	TSDeclareFunction,
 	TSTypeParameterDeclaration,
-} from "@romefrontend/ast";
-import * as charCodes from "@romefrontend/string-charcodes";
+} from "@internal/ast";
+import * as charCodes from "@internal/string-charcodes";
 import {
 	nextToken,
 	setStrict,
@@ -89,8 +89,8 @@ import {
 	parseTargetBindingPattern,
 	toTargetAssignmentPattern,
 } from "./index";
-import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 
 const loopLabel: Label = {kind: "loop"};
 const switchLabel: Label = {kind: "switch"};

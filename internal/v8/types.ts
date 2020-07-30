@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from "@romefrontend/parser-core";
-import {Number0, Number1} from "@romefrontend/ob1";
-import {JSONPropertyValue} from "@romefrontend/codec-json";
+import {Position} from "@internal/parser-core";
+import {Number0, Number1} from "@internal/ob1";
+import {JSONPropertyValue} from "@internal/codec-json";
 import inspector = require("inspector");
 
-import {InterfaceToObject} from "@romefrontend/typescript-helpers";
+import {InterfaceToObject} from "@internal/typescript-helpers";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 

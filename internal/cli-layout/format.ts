@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyMarkup, MarkupLinesAndWidth, readMarkup} from "@romefrontend/markup";
+import {AnyMarkup, MarkupLinesAndWidth, readMarkup} from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
-import {ob1Get1} from "@romefrontend/ob1";
+import {ob1Get1} from "@internal/ob1";
 
 export function renderGrid(
 	safe: AnyMarkup,

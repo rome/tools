@@ -39,9 +39,9 @@
  *   * Ecma International Standards hereafter means Ecma International Standards as well as Ecma Technical Reports
  */
 
-import "@romefrontend/cli-layout";
-import {DiagnosticsError} from "@romefrontend/diagnostics";
-import {parseJSON} from "@romefrontend/codec-json";
+import "@internal/cli-layout";
+import {DiagnosticsError} from "@internal/diagnostics";
+import {parseJSON} from "@internal/codec-json";
 import {test} from "rome";
 
 function parse(input: string) {

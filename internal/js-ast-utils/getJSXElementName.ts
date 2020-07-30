@@ -1,4 +1,4 @@
-import {JSXElement} from "@romefrontend/ast";
+import {JSXElement} from "@internal/ast";
 
 export function getJSXElementName(node: JSXElement): string {
 	if (node.name.type === "JSXIdentifier") {

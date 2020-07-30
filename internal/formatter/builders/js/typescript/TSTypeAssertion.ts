@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeAssertion} from "@romefrontend/ast";
+import {TSTypeAssertion} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -13,7 +13,7 @@ import {
 	group,
 	indent,
 	softline,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function TSTypeAssertion(
 	builder: Builder,

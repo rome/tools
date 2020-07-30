@@ -1,5 +1,5 @@
-import {MarkdownParagraph} from "@romefrontend/ast";
-import {Builder, Token, Tokens, concat} from "@romefrontend/formatter";
+import {MarkdownParagraph} from "@internal/ast";
+import {Builder, Token, Tokens, concat} from "@internal/formatter";
 
 export default function MarkdownParagraph(
 	builder: Builder,

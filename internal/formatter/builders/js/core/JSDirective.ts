@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {AnyNode, JSDirective} from "@romefrontend/ast";
+import {AnyNode, JSDirective} from "@internal/ast";
 import JSStringLiteral from "../literals/JSStringLiteral";
 
 export default function JSDirective(

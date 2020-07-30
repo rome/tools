@@ -1,17 +1,17 @@
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	getJSXElementName,
 	hasJSXAttribute,
-} from "@romefrontend/js-ast-utils";
-import {AnyNode, JSXAttribute, JSXElement} from "@romefrontend/ast";
+} from "@internal/js-ast-utils";
+import {AnyNode, JSXAttribute, JSXElement} from "@internal/ast";
 import {
 	ARIAProperty,
 	ARIARoleDefinition,
 	ariaRolesMap,
-} from "@romefrontend/compiler/lint/utils/aria";
-import {markup} from "@romefrontend/markup";
+} from "@internal/compiler/lint/utils/aria";
+import {markup} from "@internal/markup";
 
 type CreateFixableDiagnostic = {
 	path: Path;

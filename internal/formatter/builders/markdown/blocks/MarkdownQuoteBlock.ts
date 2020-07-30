@@ -1,5 +1,5 @@
-import {MarkdownQuoteBlock} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {MarkdownQuoteBlock} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function MarkdownQuoteBlock(
 	builder: Builder,

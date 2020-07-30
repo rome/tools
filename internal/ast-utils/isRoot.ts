@@ -1,4 +1,4 @@
-import {AnyNode, AnyRoot} from "@romefrontend/ast";
+import {AnyNode, AnyRoot} from "@internal/ast";
 
 export function isRoot(node: AnyNode): node is AnyRoot {
 	return (

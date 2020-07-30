@@ -11,7 +11,7 @@ import {
 	PatternSegmentNode,
 	PatternSegments,
 } from "./types";
-import {PathSegments} from "@romefrontend/path";
+import {PathSegments} from "@internal/path";
 
 function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 	if (patternSeg.type !== "Segment") {

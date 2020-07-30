@@ -1,5 +1,5 @@
-import {CSSPercentage} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {CSSPercentage} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function CSSPercentage(
 	builder: Builder,

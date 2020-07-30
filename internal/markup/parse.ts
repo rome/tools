@@ -12,7 +12,7 @@ import {
 	TokenValues,
 	createParser,
 	isAlpha,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {
 	MarkupParsedAttributes,
 	MarkupParsedChild,
@@ -21,9 +21,9 @@ import {
 	MarkupTagName,
 	Tokens,
 } from "./types";
-import {isEscaped} from "@romefrontend/string-utils";
-import {Number0, ob1Add, ob1Dec, ob1Get0, ob1Inc} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+import {isEscaped} from "@internal/string-utils";
+import {Number0, ob1Add, ob1Dec, ob1Get0, ob1Inc} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 import {unescapeTextValue} from "./escape";
 import {createEmptyAttributes} from "./util";
 import {

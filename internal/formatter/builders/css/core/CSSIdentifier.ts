@@ -1,5 +1,5 @@
-import {CSSIdentifier} from "@romefrontend/ast";
-import {Builder, Token} from "@romefrontend/formatter";
+import {CSSIdentifier} from "@internal/ast";
+import {Builder, Token} from "@internal/formatter";
 
 export default function CSSIdentifier(
 	builder: Builder,

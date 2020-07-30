@@ -1,4 +1,4 @@
-import {Path} from "@romefrontend/compiler";
+import {Path} from "@internal/compiler";
 import {doesNodeMatchReactPattern} from ".";
 
 function checkClassComponentAncestry({node, scope}: Path): boolean {

@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSOptionalCallExpression,
 	jsOptionalCallExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSOptionalCallExpression(node: AnyNode, scope: Scope) {
 	node = jsOptionalCallExpression.assert(node);

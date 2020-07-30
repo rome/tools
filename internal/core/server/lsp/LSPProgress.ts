@@ -2,7 +2,7 @@ import {
 	Reporter,
 	ReporterProgressBase,
 	ReporterProgressOptions,
-} from "@romefrontend/cli-reporter";
+} from "@internal/cli-reporter";
 import {LSPTransport} from "./protocol";
 
 let progressTokenCounter = 0;

@@ -10,12 +10,12 @@ import {
 	SOCKET_PATH,
 	Server,
 	ServerBridge,
-} from "@romefrontend/core";
-import {createBridgeFromSocket} from "@romefrontend/events";
+} from "@internal/core";
+import {createBridgeFromSocket} from "@internal/events";
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 
-import {exists, removeFile} from "@romefrontend/fs";
+import {exists, removeFile} from "@internal/fs";
 
 export default async function server() {
 	setProcessTitle("server");

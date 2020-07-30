@@ -4,8 +4,8 @@ import {
 	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	ValueToken,
-} from "@romefrontend/parser-core";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
+} from "@internal/parser-core";
+import {DiagnosticCategory} from "@internal/diagnostics";
 import {
 	CSSBlock,
 	CSSDimension,
@@ -14,7 +14,7 @@ import {
 	CSSNumber,
 	CSSPercentage,
 	CSSRaw,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export interface CSSParserOptions extends Omit<
 	ParserOptionsWithRequiredPath,

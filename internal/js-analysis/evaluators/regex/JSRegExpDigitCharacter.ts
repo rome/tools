@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpDigitCharacter,
 	jsRegExpDigitCharacter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpDigitCharacter(node: AnyNode) {
 	node = jsRegExpDigitCharacter.assert(node);

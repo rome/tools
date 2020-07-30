@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {escapeJSString} from "@romefrontend/string-escape";
+import {escapeJSString} from "@internal/string-escape";
 import {
 	AnyNode,
 	JSDirective,
 	JSStringLiteral,
 	TSStringLiteralTypeAnnotation,
-} from "@romefrontend/ast";
-import {escapeXHTMLEntities} from "@romefrontend/html-parser";
+} from "@internal/ast";
+import {escapeXHTMLEntities} from "@internal/html-parser";
 
 export default function JSStringLiteral(
 	builder: Builder,

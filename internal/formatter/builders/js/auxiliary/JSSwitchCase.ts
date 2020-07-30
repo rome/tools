@@ -12,8 +12,8 @@ import {
 	hardline,
 	indent,
 	space,
-} from "@romefrontend/formatter";
-import {JSSwitchCase} from "@romefrontend/ast";
+} from "@internal/formatter";
+import {JSSwitchCase} from "@internal/ast";
 
 export default function JSSwitchCase(
 	builder: Builder,

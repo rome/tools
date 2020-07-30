@@ -1,6 +1,6 @@
-import {descriptions} from "@romefrontend/diagnostics";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "jsx-a11y/noAccessKey",

@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSObjectExpression,
-	jsObjectExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSObjectExpression, jsObjectExpression} from "@internal/ast";
 import ObjPropT from "../../types/ObjPropT";
 import ObjT from "../../types/ObjT";
 

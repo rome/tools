@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/core";
-import {descriptions} from "@romefrontend/diagnostics";
-import {parseJSON} from "@romefrontend/codec-json";
+import "@internal/core";
+import {descriptions} from "@internal/diagnostics";
+import {parseJSON} from "@internal/codec-json";
 import {test} from "rome";
-import {ParserOptions} from "@romefrontend/parser-core";
-import {createUnknownFilePath} from "@romefrontend/path";
-import {readMarkup} from "@romefrontend/markup";
+import {ParserOptions} from "@internal/parser-core";
+import {createUnknownFilePath} from "@internal/path";
+import {readMarkup} from "@internal/markup";
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
 function parseExtJSON(opts: ParserOptions) {

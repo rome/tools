@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSTryStatement, jsTryStatement} from "@romefrontend/ast";
+import {AnyNode, JSTryStatement, jsTryStatement} from "@internal/ast";
 
 export default function JSTryStatement(node: AnyNode, scope: Scope) {
 	node = jsTryStatement.assert(node);

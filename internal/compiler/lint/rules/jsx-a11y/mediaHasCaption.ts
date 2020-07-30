@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {JSXElement} from "@romefrontend/ast";
-import {hasJSXAttribute, isJSXElement} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {JSXElement} from "@internal/ast";
+import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
 
 function hasMuted(node: JSXElement): boolean {
 	return hasJSXAttribute(node, "muted");

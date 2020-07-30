@@ -5,30 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectDefinition} from "@romefrontend/project";
+import {ProjectDefinition} from "@internal/project";
 import {Stats} from "./fs/MemoryFileSystem";
 import fork from "../common/utils/fork";
 import {
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
-import {
-	MAX_WORKER_COUNT,
-	Server,
-	Worker,
-	WorkerBridge,
-} from "@romefrontend/core";
+import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
 import {Locker} from "../common/utils/lockers";
 import {
 	Event,
 	createBridgeFromChildProcess,
 	createBridgeFromLocal,
-} from "@romefrontend/events";
+} from "@internal/events";
 import child = require("child_process");
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@romefrontend/path";
-import {markup} from "@romefrontend/markup";
-import prettyFormat from "@romefrontend/pretty-format";
-import {ReporterNamespace} from "@romefrontend/cli-reporter";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {markup} from "@internal/markup";
+import prettyFormat from "@internal/pretty-format";
+import {ReporterNamespace} from "@internal/cli-reporter";
 
 export type WorkerContainer = {
 	id: number;

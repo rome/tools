@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli-layout";
-import {parseSemverRange, stringifySemver} from "@romefrontend/codec-semver";
+import "@internal/cli-layout";
+import {parseSemverRange, stringifySemver} from "@internal/codec-semver";
 import {test} from "rome";
 
 test(

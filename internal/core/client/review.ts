@@ -6,22 +6,19 @@
  */
 
 import ClientRequest from "./ClientRequest";
-import {
-	DiagnosticsPrinter,
-	printDiagnostics,
-} from "@romefrontend/cli-diagnostics";
-import {SelectOption} from "@romefrontend/cli-reporter";
+import {DiagnosticsPrinter, printDiagnostics} from "@internal/cli-diagnostics";
+import {SelectOption} from "@internal/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticAdviceAction,
 	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 import {ClientRequestFlags} from "../common/types/client";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type State = {
 	initial: boolean;

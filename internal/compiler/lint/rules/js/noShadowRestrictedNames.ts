@@ -5,14 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {
-	builtin,
-	es5,
-	es2015,
-	es2017,
-} from "@romefrontend/compiler/scope/globals";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {builtin, es5, es2015, es2017} from "@internal/compiler/scope/globals";
+import {descriptions} from "@internal/diagnostics";
 
 const restrictedNames = new Set([...builtin, ...es5, ...es2015, ...es2017]);
 

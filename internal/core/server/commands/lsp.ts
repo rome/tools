@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import LSPServer from "../lsp/LSPServer";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export default createServerCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,

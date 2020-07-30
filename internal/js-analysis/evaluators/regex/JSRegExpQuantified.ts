@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyNode,
-	JSRegExpQuantified,
-	jsRegExpQuantified,
-} from "@romefrontend/ast";
+import {AnyNode, JSRegExpQuantified, jsRegExpQuantified} from "@internal/ast";
 
 export default function JSRegExpQuantified(node: AnyNode) {
 	node = jsRegExpQuantified.assert(node);

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSVariableDeclarationStatement,
 	jsVariableDeclarationStatement,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSVariableDeclarationStatement(node: AnyNode) {
 	node = jsVariableDeclarationStatement.assert(node);

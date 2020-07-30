@@ -1,6 +1,6 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {MarkdownQuoteChildren} from "@romefrontend/ast/markdown/unions";
+import {MarkdownQuoteChildren} from "@internal/ast/markdown/unions";
 
 // > this quote
 export interface MarkdownQuoteBlock extends NodeBaseWithComments {

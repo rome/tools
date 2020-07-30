@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Event} from "@romefrontend/events";
-import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {AnyMarkup, Markup} from "@romefrontend/markup";
-import {Number0} from "@romefrontend/ob1";
+import {Event} from "@internal/events";
+import {TerminalFeatures} from "@internal/cli-environment";
+import {AnyMarkup, Markup} from "@internal/markup";
+import {Number0} from "@internal/ob1";
 
 export type SelectOption = {
 	label: Markup;

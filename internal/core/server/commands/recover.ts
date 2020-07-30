@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {markup} from "@romefrontend/markup";
-import {Diagnostics, descriptions} from "@romefrontend/diagnostics";
-import {exists, readFileText} from "@romefrontend/fs";
+import {markup} from "@internal/markup";
+import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {exists, readFileText} from "@internal/fs";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
 
 type Flags = {

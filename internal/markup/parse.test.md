@@ -11,7 +11,7 @@ Array [
 	Tag {
 		name: "filelink"
 		children: Array []
-		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {target: "C:\\Users\\sebmck\\file.ts"}
 			declared: false
 			filename: undefined
@@ -19,7 +19,7 @@ Array [
 			forkCache: Map [
 				Array [
 					"target"
-					___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+					___R$project$rome$$internal$consume$Consumer_ts$default {
 						value: "C:\\Users\\sebmck\\file.ts"
 						declared: false
 						filename: undefined
@@ -32,7 +32,7 @@ Array [
 						usedNames: Set ["target"]
 						context: Object {category: "parse/stringMarkup"}
 						keyPath: Array ["target"]
-						parent: Circular ___R$project$rome$$romefrontend$consume$Consumer_ts$default 2
+						parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
 						propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
 					}
 				]
@@ -63,7 +63,7 @@ Array [
 				source: true
 			}
 		]
-		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {}
 			declared: false
 			filename: undefined
@@ -93,7 +93,7 @@ Array [
 	}
 	Tag {
 		name: "error"
-		attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {}
 			declared: false
 			filename: undefined
@@ -118,7 +118,7 @@ Array [
 						source: true
 					}
 				]
-				attributes: ___R$project$rome$$romefrontend$consume$Consumer_ts$default {
+				attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: Object {}
 					declared: false
 					filename: undefined

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
+import {Path, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyNode,
 	JSConditionalExpression,
@@ -13,8 +13,8 @@ import {
 	JSForStatement,
 	JSIfStatement,
 	JSWhileStatement,
-} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 
 function isBooleanConstructorCall(node: AnyNode) {
 	return (

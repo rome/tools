@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from "@romefrontend/formatter";
+import {Token} from "@internal/formatter";
 
 // Printing of comments is handled in internal/formatter/builders/comments.ts
 export default function CommentLine(): Token {

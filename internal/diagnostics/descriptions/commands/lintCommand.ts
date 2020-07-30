@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/core/server/commands/lint.ts
+// @internal/core/server/commands/lint.ts
 export const lintCommand = createDiagnosticsCategory({
 	INVALID_DECISION_ACTION: (action: string) => ({
 		message: markup`<emphasis>${action}</emphasis> is not a valid decision action`,

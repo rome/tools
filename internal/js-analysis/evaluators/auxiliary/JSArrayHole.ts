@@ -5,7 +5,7 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {AnyNode, JSArrayHole, jsArrayHole} from "@romefrontend/ast";
+import {AnyNode, JSArrayHole, jsArrayHole} from "@internal/ast";
 
 export default function JSArrayHole(node: AnyNode) {
 	node = jsArrayHole.assert(node);

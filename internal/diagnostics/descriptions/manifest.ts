@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/codec-js-manifest
+// @internal/codec-js-manifest
 export const manifest = createDiagnosticsCategory({
 	TOO_MANY_HASH_PARTS: {message: markup`Too many hashes`},
 	MISSING_HOSTED_GIT_USER: {message: markup`Missing user`},

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpNonWordBoundaryCharacter,
 	jsRegExpNonWordBoundaryCharacter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpNonWordBoundaryCharacter(node: AnyNode) {
 	node = jsRegExpNonWordBoundaryCharacter.assert(node);

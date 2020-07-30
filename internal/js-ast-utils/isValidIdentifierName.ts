@@ -13,7 +13,7 @@ import {
 	isKeyword,
 	isStrictBindReservedWord,
 	isStrictReservedWord,
-} from "@romefrontend/js-parser-utils";
+} from "@internal/js-parser-utils";
 
 /**
  * This performs a basic check to see if a string is a valid identifier name.

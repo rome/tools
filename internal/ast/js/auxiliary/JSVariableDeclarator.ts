@@ -9,7 +9,7 @@ import {
 	AnyJSExpression,
 	AnyJSTargetBindingPattern,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSVariableDeclarator extends NodeBaseWithComments {

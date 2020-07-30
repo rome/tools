@@ -3,8 +3,8 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */ import {AnyNode, TSConditionalType} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+ */ import {AnyNode, TSConditionalType} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 import {printConditionalExpression} from "../expressions/JSConditionalExpression";
 

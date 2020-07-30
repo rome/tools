@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSStringLiteralTypeAnnotation,
 	tsStringLiteralTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSStringLiteralTypeAnnotation(
 	node: AnyNode,

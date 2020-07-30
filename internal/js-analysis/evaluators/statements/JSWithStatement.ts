@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSWithStatement, jsWithStatement} from "@romefrontend/ast";
+import {AnyNode, JSWithStatement, jsWithStatement} from "@internal/ast";
 
 export default function JSWithStatement(node: AnyNode, scope: Scope) {
 	node = jsWithStatement.assert(node);

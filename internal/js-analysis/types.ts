@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from "@romefrontend/parser-core";
-import {JSRoot} from "@romefrontend/ast";
+import {SourceLocation} from "@internal/parser-core";
+import {JSRoot} from "@internal/ast";
 import {HydrateData} from "./Evaluator";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {Markup} from "@romefrontend/markup";
+import {Dict} from "@internal/typescript-helpers";
+import {Markup} from "@internal/markup";
 
 export type CheckProvider = {
 	libs?: Array<JSRoot>;

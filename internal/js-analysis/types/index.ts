@@ -46,7 +46,7 @@ import UndeclaredVarE from "./errors/UndeclaredVarE";
 import UnknownPropE from "./errors/UnknownPropE";
 import UnknownImportE from "./errors/UnknownImportE";
 import MissingUnionE from "./errors/MissingUnionE";
-import {Class} from "@romefrontend/typescript-helpers";
+import {Class} from "@internal/typescript-helpers";
 
 const types: Map<string, Class<T>> = new Map();
 export default types;

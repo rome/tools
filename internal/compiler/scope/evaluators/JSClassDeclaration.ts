@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {ClassBinding} from "@romefrontend/compiler";
-import {AnyNode, jsClassDeclaration} from "@romefrontend/ast";
+import {ClassBinding} from "@internal/compiler";
+import {AnyNode, jsClassDeclaration} from "@internal/ast";
 import JSClassExpression from "./JSClassExpression";
 import {createScopeEvaluator} from "./index";
 

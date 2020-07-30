@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSDeclareFunction} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {TSDeclareFunction} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function TSDeclareFunction(
 	builder: Builder,

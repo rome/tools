@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/markdown-parser",
+	"name": "@internal/markdown-parser",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

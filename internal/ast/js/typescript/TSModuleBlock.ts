@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSStatement, NodeBaseWithComments} from "@romefrontend/ast";
+import {AnyJSStatement, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSModuleBlock extends NodeBaseWithComments {

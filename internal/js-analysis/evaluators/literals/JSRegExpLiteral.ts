@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSRegExpLiteral, jsRegExpLiteral} from "@romefrontend/ast";
+import {AnyNode, JSRegExpLiteral, jsRegExpLiteral} from "@internal/ast";
 
 export default function JSRegExpLiteral(node: AnyNode, scope: Scope) {
 	node = jsRegExpLiteral.assert(node);

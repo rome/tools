@@ -11,7 +11,7 @@ import {
 	SimpleNode,
 	SimpleToken,
 	ValueToken,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 
 // PARSER
 export type VersionPrereleaseParts = Array<number | string>;

@@ -7,9 +7,9 @@
 
 import {JSONParserOptions, JSONValue, PathToComments, Tokens} from "./types";
 import {createJSONParser} from "./parse";
-import {Consumer, consume, consumeUnknown} from "@romefrontend/consume";
+import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {stringifyRootConsumer} from "./stringify";
-import {TokenValues} from "@romefrontend/parser-core";
+import {TokenValues} from "@internal/parser-core";
 
 export {
 	JSONArray,

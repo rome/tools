@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
-import {Consumer} from "@romefrontend/consume";
+import {ServerRequest} from "@internal/core";
+import {Consumer} from "@internal/consume";
 import {WebServer} from "../web/index";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type Flags = {
 	port: number;

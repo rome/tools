@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {JSRegExpGroupCapture} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {JSRegExpGroupCapture} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 
 function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined {
 	const regexLiteral = path.findAncestry((path) =>

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpSubExpression,
 	jsRegExpSubExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpSubExpression(node: AnyNode) {
 	node = jsRegExpSubExpression.assert(node);

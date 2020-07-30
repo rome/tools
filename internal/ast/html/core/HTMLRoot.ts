@@ -1,6 +1,6 @@
 import {NodeBaseWithComments, RootBase} from "../../index";
 import {createBuilder} from "../../utils";
-import {AnyHTMLChildNode} from "@romefrontend/ast/html/unions";
+import {AnyHTMLChildNode} from "@internal/ast/html/unions";
 
 export interface HTMLRoot extends NodeBaseWithComments,
 RootBase {

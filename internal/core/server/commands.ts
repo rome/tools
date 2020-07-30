@@ -31,13 +31,13 @@ import _moduleSignature from "./commands/_moduleSignature";
 import _projectDump from "./commands/_projectDump";
 
 //
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {JSONPropertyValue} from "@romefrontend/codec-json";
+import {JSONPropertyValue} from "@internal/codec-json";
 import {SharedCommand} from "../common/commands";
-import {DiagnosticsPrinter} from "@romefrontend/cli-diagnostics";
-import {Markup} from "@romefrontend/markup";
-import init from "@romefrontend/core/server/commands/init";
+import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
+import {Markup} from "@internal/markup";
+import init from "@internal/core/server/commands/init";
 
 export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
 	callback: (

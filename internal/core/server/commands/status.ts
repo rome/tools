@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {WorkerStatus} from "../../common/bridges/WorkerBridge";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type StatusResult = {
 	server: {

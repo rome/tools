@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, hardline} from "@romefrontend/formatter";
+import {Builder, Token, concat, hardline} from "@internal/formatter";
 
-import {JSInterpreterDirective} from "@romefrontend/ast";
+import {JSInterpreterDirective} from "@internal/ast";
 
 export default function JSInterpreterDirective(
 	builder: Builder,

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli-layout";
-import {prettyFormatToString} from "@romefrontend/pretty-format";
+import "@internal/cli-layout";
+import {prettyFormatToString} from "@internal/pretty-format";
 import {test} from "rome";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 test(
 	"strings",

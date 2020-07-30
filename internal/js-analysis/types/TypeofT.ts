@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import StringLiteralT from "./StringLiteralT";
 import NumericLiteralT from "./NumericLiteralT";

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSThrowStatement, jsThrowStatement} from "@romefrontend/ast";
+import {AnyNode, JSThrowStatement, jsThrowStatement} from "@internal/ast";
 
 export default function JSThrowStatement(node: AnyNode, scope: Scope) {
 	node = jsThrowStatement.assert(node);

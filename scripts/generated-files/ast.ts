@@ -1,6 +1,6 @@
 import {INTERNAL, modifyGeneratedFile} from "../_utils";
-import {lstat, readDirectory} from "@romefrontend/fs";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {lstat, readDirectory} from "@internal/fs";
+import {AbsoluteFilePath} from "@internal/path";
 
 const astFolder = INTERNAL.append("ast");
 

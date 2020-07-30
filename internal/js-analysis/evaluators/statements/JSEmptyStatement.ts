@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSEmptyStatement, jsEmptyStatement} from "@romefrontend/ast";
+import {AnyNode, JSEmptyStatement, jsEmptyStatement} from "@internal/ast";
 
 export default function JSEmptyStatement(node: AnyNode, scope: Scope) {
 	node = jsEmptyStatement.assert(node);

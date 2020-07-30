@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSObjectKeywordTypeAnnotation,
 	tsObjectKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSObjectKeywordTypeAnnotation(
 	node: AnyNode,

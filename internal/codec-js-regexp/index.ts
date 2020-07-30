@@ -17,7 +17,7 @@ import {
 	isDigit,
 	isESIdentifierChar,
 	isESIdentifierStart,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {
 	AnyJSRegExpBodyItem,
 	AnyJSRegExpEscapedCharacter,
@@ -29,9 +29,9 @@ import {
 	JSRegExpGroupNonCapture,
 	JSRegExpQuantified,
 	JSRegExpSubExpression,
-} from "@romefrontend/ast";
-import {Diagnostics, descriptions} from "@romefrontend/diagnostics";
-import {Number0, ob1Add, ob1Get0} from "@romefrontend/ob1";
+} from "@internal/ast";
+import {Diagnostics, descriptions} from "@internal/diagnostics";
+import {Number0, ob1Add, ob1Get0} from "@internal/ob1";
 
 type Operator =
 	| "^"

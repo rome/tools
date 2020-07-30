@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSIdentifier, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSContinueStatement extends NodeBaseWithComments {

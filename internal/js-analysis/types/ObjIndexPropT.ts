@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import T, {SerialTypeFactory} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class ObjIndexPropT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {

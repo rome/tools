@@ -1,11 +1,11 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {JSXElement} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {JSXElement} from "@internal/ast";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 
 const ISO = {
 	countries: [

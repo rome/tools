@@ -1,5 +1,5 @@
-import {Number0} from "@romefrontend/ob1";
-import {JSONPropertyValue} from "@romefrontend/codec-json";
+import {Number0} from "@internal/ob1";
+import {JSONPropertyValue} from "@internal/codec-json";
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.

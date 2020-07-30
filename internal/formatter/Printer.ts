@@ -5,14 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mapping} from "@romefrontend/codec-source-map";
-import {
-	Number0,
-	Number1,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@romefrontend/ob1";
+import {Mapping} from "@internal/codec-source-map";
+import {Number0, Number1, ob1Inc, ob1Number0, ob1Number1} from "@internal/ob1";
 import {Token} from "./tokens";
 
 export type PrinterOptions = {

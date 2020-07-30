@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/formatter",
+	"name": "@internal/formatter",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

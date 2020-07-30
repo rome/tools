@@ -12,7 +12,7 @@ import {
 	SimpleToken,
 	ValueNode,
 	ValueToken,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 
 //# Tokens
 export type Tokens = BaseTokens & {

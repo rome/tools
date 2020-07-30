@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, tsTypeParameterDeclaration} from "@romefrontend/ast";
+import {AnyNode, tsTypeParameterDeclaration} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypePredicate, tsTypePredicate} from "@romefrontend/ast";
+import {AnyNode, TSTypePredicate, tsTypePredicate} from "@internal/ast";
 
 export default function TSTypePredicate(node: AnyNode, scope: Scope) {
 	node = tsTypePredicate.assert(node);

@@ -20,7 +20,7 @@ import {
 	createDefaultProjectConfigMeta,
 	loadCompleteProjectConfig,
 	serializeJSONProjectConfig,
-} from "@romefrontend/project";
+} from "@internal/project";
 import {
 	WorkerPartialManifests,
 	WorkerProjects,
@@ -31,11 +31,11 @@ import {
 	DiagnosticsProcessor,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	ManifestDefinition,
 	manifestNameToString,
-} from "@romefrontend/codec-js-manifest";
+} from "@internal/codec-js-manifest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -44,19 +44,19 @@ import {
 	UnknownFilePath,
 	UnknownFilePathMap,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {FileReference, JSONFileReference} from "../../common/types/files";
 import {
 	GetFileHandlerResult,
 	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {createDirectory, readFileText} from "@romefrontend/fs";
-import {Consumer} from "@romefrontend/consume";
-import {consumeJSON} from "@romefrontend/codec-json";
-import {VCSClient, getVCSClient} from "@romefrontend/vcs";
-import {FilePathLocker} from "@romefrontend/core/common/utils/lockers";
-import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
+import {createDirectory, readFileText} from "@internal/fs";
+import {Consumer} from "@internal/consume";
+import {consumeJSON} from "@internal/codec-json";
+import {VCSClient, getVCSClient} from "@internal/vcs";
+import {FilePathLocker} from "@internal/core/common/utils/lockers";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";

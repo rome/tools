@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/path",
+	"name": "@internal/path",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

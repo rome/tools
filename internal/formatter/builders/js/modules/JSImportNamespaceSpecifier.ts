@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {JSImportNamespaceSpecifier} from "@romefrontend/ast";
+import {JSImportNamespaceSpecifier} from "@internal/ast";
 
 export default function JSImportNamespaceSpecifier(
 	builder: Builder,

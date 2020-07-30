@@ -13,9 +13,9 @@ import {
 	PatternSegments,
 	Tokens,
 } from "./types";
-import {ParserOptions, createParser} from "@romefrontend/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Number0} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+import {ParserOptions, createParser} from "@internal/parser-core";
+import {Number0, ob1Add, ob1Get0, ob1Number0} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 
 export type PathMatchParserOptions = ParserOptions;
 

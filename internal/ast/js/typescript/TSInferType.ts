@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments, TSTypeParameter} from "@romefrontend/ast";
+import {NodeBaseWithComments, TSTypeParameter} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSInferType extends NodeBaseWithComments {

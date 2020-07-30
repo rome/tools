@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {getBindingIdentifiers} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
 	name: "js/noDupeArgs",

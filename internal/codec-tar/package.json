@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-tar",
+	"name": "@internal/codec-tar",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

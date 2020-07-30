@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTupleType} from "@romefrontend/ast";
+import {TSTupleType} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -17,7 +17,7 @@ import {
 	join,
 	lineOrSpace,
 	softline,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {hasInnerComments} from "../../comments";
 

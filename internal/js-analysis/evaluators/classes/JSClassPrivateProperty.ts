@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSClassPrivateProperty,
 	jsClassPrivateProperty,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSClassPrivateProperty(node: AnyNode, scope: Scope) {
 	node = jsClassPrivateProperty.assert(node);

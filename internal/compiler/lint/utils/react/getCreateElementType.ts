@@ -1,7 +1,7 @@
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {isCreateElement} from ".";
-import {tryStaticEvaluation} from "@romefrontend/js-ast-utils";
-import {Scope} from "@romefrontend/compiler";
+import {tryStaticEvaluation} from "@internal/js-ast-utils";
+import {Scope} from "@internal/compiler";
 
 export default function getCreateElementType(
 	node: AnyNode,

@@ -1,5 +1,5 @@
 import {isEscaped} from "./isEscaped";
-import {ob1Coerce0} from "@romefrontend/ob1";
+import {ob1Coerce0} from "@internal/ob1";
 import {test} from "rome";
 
 test(

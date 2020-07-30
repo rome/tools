@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FileReference, Worker} from "@romefrontend/core";
-import {AnyNode, AnyRoot} from "@romefrontend/ast";
+import {FileReference, Worker} from "@internal/core";
+import {AnyNode, AnyRoot} from "@internal/ast";
 import {
 	Diagnostics,
 	catchDiagnostics,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	CompileResult,
 	CompilerContext,
@@ -22,7 +22,7 @@ import {
 	compile,
 	lint,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	WorkerCompilerOptions,
 	WorkerFormatResult,
@@ -32,7 +32,7 @@ import {
 	WorkerUpdateInlineSnapshotResult,
 } from "../common/bridges/WorkerBridge";
 import Logger from "../common/utils/Logger";
-import * as jsAnalysis from "@romefrontend/js-analysis";
+import * as jsAnalysis from "@internal/js-analysis";
 import {ExtensionLintResult} from "../common/file-handlers/types";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {
@@ -43,9 +43,9 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {FormatterOptions, formatAST} from "@romefrontend/formatter";
-import {getNodeReferenceParts, valueToNode} from "@romefrontend/js-ast-utils";
-import {markup} from "@romefrontend/markup";
+import {FormatterOptions, formatAST} from "@internal/formatter";
+import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
+import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows

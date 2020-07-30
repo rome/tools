@@ -1,7 +1,7 @@
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {getJSXAttribute, hasJSXAttribute} from "@romefrontend/js-ast-utils";
-import {JSXAttribute, JSXElement} from "@romefrontend/ast";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
+import {JSXAttribute, JSXElement} from "@internal/ast";
 
 function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute) {
 	return path.addFixableDiagnostic(

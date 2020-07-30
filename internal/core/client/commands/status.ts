@@ -8,7 +8,7 @@
 import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export default createLocalCommand({
 	description: markup`get the current daemon status`,

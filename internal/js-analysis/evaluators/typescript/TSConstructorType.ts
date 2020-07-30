@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSConstructorType, tsConstructorType} from "@romefrontend/ast";
+import {AnyNode, TSConstructorType, tsConstructorType} from "@internal/ast";
 
 export default function TSConstructorType(node: AnyNode, scope: Scope) {
 	node = tsConstructorType.assert(node);

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSAssignmentTypeAssertion,
 	tsAssignmentTypeAssertion,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSAssignmentTypeAssertion(node: AnyNode) {
 	node = tsAssignmentTypeAssertion.assert(node);

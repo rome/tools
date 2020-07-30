@@ -10,9 +10,9 @@ import {
 	TestWorkerPrepareTestResult,
 	TestWorkerRunTestOptions,
 } from "../common/bridges/TestWorkerBridge";
-import {deriveDiagnosticFromError} from "@romefrontend/diagnostics";
-import {TestWorkerBridge} from "@romefrontend/core";
-import {createBridgeFromParentProcess} from "@romefrontend/events";
+import {deriveDiagnosticFromError} from "@internal/diagnostics";
+import {TestWorkerBridge} from "@internal/core";
+import {createBridgeFromParentProcess} from "@internal/events";
 import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
 import inspector = require("inspector");
 

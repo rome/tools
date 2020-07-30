@@ -1,6 +1,6 @@
 import {TestHelper, test} from "rome";
 import {LSPTransport} from "./protocol";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter} from "@internal/cli-reporter";
 
 function createTransportTest(
 	callback: (transport: LSPTransport) => void,

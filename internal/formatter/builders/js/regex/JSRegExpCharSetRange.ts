@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {JSRegExpCharSetRange} from "@romefrontend/ast";
+import {JSRegExpCharSetRange} from "@internal/ast";
 
 export default function JSRegExpCharSetRange(
 	builder: Builder,

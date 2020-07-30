@@ -1,4 +1,4 @@
-import {Path} from "@romefrontend/compiler";
+import {Path} from "@internal/compiler";
 import {
 	EvalOptions,
 	EvalResult,

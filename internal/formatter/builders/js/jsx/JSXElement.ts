@@ -14,10 +14,10 @@ import {
 	join,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
-import {JSXElement} from "@romefrontend/ast";
-import {hardline} from "@romefrontend/formatter/tokens";
+import {JSXElement} from "@internal/ast";
+import {hardline} from "@internal/formatter/tokens";
 
 export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	const tokens: Array<Token> = [

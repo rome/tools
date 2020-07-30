@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {isFunctionNode} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {isFunctionNode} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "react/noThisInSFC",

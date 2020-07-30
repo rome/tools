@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyImportSpecifier, JSImportDeclaration} from "@romefrontend/ast";
+import {AnyImportSpecifier, JSImportDeclaration} from "@internal/ast";
 
 export function getImportSpecifiers(
 	node: JSImportDeclaration,

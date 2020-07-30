@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSSpreadProperty, jsSpreadProperty} from "@romefrontend/ast";
+import {AnyNode, JSSpreadProperty, jsSpreadProperty} from "@internal/ast";
 
 export default function JSSpreadProperty(node: AnyNode, scope: Scope) {
 	node = jsSpreadProperty.assert(node);

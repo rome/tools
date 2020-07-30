@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSExportAssignment,
-	tsExportAssignment,
-} from "@romefrontend/ast";
+import {AnyNode, TSExportAssignment, tsExportAssignment} from "@internal/ast";
 
 export default function TSExportAssignment(node: AnyNode, scope: Scope) {
 	node = tsExportAssignment.assert(node);

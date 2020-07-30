@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
-import {TSSignatureDeclarationMeta} from "@romefrontend/ast";
+import {TSSignatureDeclarationMeta} from "@internal/ast";
 import {printBindingPatternParams} from "../utils";
 
 export default function TSSignatureDeclarationMeta(

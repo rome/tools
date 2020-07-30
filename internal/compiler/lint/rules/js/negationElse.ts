@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {AnyJSExpression, JSUnaryExpression} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {AnyJSExpression, JSUnaryExpression} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 
 function isNegation(node: AnyJSExpression): node is JSUnaryExpression {
 	return (

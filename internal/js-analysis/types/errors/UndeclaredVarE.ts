@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+import {AnyNode} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
 

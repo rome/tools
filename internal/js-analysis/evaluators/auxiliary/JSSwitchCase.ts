@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSSwitchCase, jsSwitchCase} from "@romefrontend/ast";
+import {AnyNode, JSSwitchCase, jsSwitchCase} from "@internal/ast";
 
 export default function JSSwitchCase(node: AnyNode, scope: Scope) {
 	node = jsSwitchCase.assert(node);

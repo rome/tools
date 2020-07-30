@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsBlockStatement} from "@romefrontend/ast";
-import {isFunctionNode} from "@romefrontend/js-ast-utils";
+import {AnyNode, jsBlockStatement} from "@internal/ast";
+import {isFunctionNode} from "@internal/js-ast-utils";
 import {addVarBindings} from "../utils";
 import {createScopeEvaluator} from "./index";
 

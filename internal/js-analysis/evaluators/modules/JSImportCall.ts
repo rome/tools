@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSImportCall, jsImportCall} from "@romefrontend/ast";
+import {AnyNode, JSImportCall, jsImportCall} from "@internal/ast";
 
 export default function JSImportCall(node: AnyNode, scope: Scope) {
 	node = jsImportCall.assert(node);

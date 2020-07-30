@@ -8,8 +8,8 @@
 import {
 	JSAssignmentAssignmentPattern,
 	JSBindingAssignmentPattern,
-} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function JSBindingAssignmentPattern(
 	builder: Builder,

@@ -11,7 +11,7 @@ import {
 	JSStaticMemberProperty,
 	JSSuper,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSMemberExpression extends NodeBaseWithComments {

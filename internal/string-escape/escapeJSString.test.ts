@@ -1,4 +1,4 @@
-import {escapeJSString} from "@romefrontend/string-escape";
+import {escapeJSString} from "@internal/string-escape";
 import {test} from "rome";
 
 test(

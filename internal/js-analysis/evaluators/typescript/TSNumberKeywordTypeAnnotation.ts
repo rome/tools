@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSNumberKeywordTypeAnnotation,
 	tsNumberKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import NumericT from "../../types/NumericT";
 
 export default function TSNumberKeywordTypeAnnotation(

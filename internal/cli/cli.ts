@@ -17,25 +17,25 @@ import {
 	VERSION,
 	localCommands,
 	serverCommands,
-} from "@romefrontend/core";
+} from "@internal/core";
 import setProcessTitle from "./utils/setProcessTitle";
-import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";
-import {CWD_PATH, UnknownFilePath} from "@romefrontend/path";
-import {Consumer} from "@romefrontend/consume";
+import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
+import {CWD_PATH, UnknownFilePath} from "@internal/path";
+import {Consumer} from "@internal/consume";
 import {
 	ClientProfileOptions,
 	getFilenameTimestamp,
-} from "@romefrontend/core/client/Client";
-import {commandCategories} from "@romefrontend/core/common/commands";
-import {WriteStream, createWriteStream, writeFile} from "@romefrontend/fs";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+} from "@internal/core/client/Client";
+import {commandCategories} from "@internal/core/common/commands";
+import {WriteStream, createWriteStream, writeFile} from "@internal/fs";
+import {markupToPlainText} from "@internal/cli-layout";
 import {
 	convertToMarkupFromRandomString,
 	joinMarkupLines,
 	markup,
-} from "@romefrontend/markup";
-import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
-import {getEnvVar} from "@romefrontend/cli-environment";
+} from "@internal/markup";
+import {JSONObject, stringifyJSON} from "@internal/codec-json";
+import {getEnvVar} from "@internal/cli-environment";
 
 type CLIFlags = {
 	logs: boolean;

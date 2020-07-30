@@ -26,8 +26,8 @@ import {
 	TSExpressionWithTypeArguments,
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
-import {Position, SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/ast";
+import {Position, SourceLocation} from "@internal/parser-core";
 import {JSParser} from "../parser";
 import {types as tt} from "../tokenizer/types";
 import {
@@ -46,9 +46,9 @@ import {
 	parseTSTypeAnnotation,
 	tryTSParseIndexSignature,
 } from "./index";
-import {ob1Dec, ob1Inc} from "@romefrontend/ob1";
+import {ob1Dec, ob1Inc} from "@internal/ob1";
 import {parseBindingIdentifier, toBindingIdentifier} from "./expression";
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 
 export function parseClassExpression(
 	parser: JSParser,

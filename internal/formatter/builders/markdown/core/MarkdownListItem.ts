@@ -1,5 +1,5 @@
-import {MarkdownListItem} from "@romefrontend/ast";
-import {Builder, Token, Tokens, concat} from "@romefrontend/formatter";
+import {MarkdownListItem} from "@internal/ast";
+import {Builder, Token, Tokens, concat} from "@internal/formatter";
 
 export default function MarkdownListItem(
 	builder: Builder,

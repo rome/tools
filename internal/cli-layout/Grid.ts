@@ -20,7 +20,7 @@ import {
 	formatNumber,
 	lineWrapValidator,
 	parseMarkup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 import {GridOptions, GridOutputFormat, GridPointer} from "./types";
 import {
 	Number1,
@@ -32,23 +32,23 @@ import {
 	ob1Inc,
 	ob1Number1,
 	ob1Sub,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 import {
 	humanizeFileSize,
 	humanizeNumber,
 	humanizeTime,
 	splitChars,
-} from "@romefrontend/string-utils";
-import {escapeXHTMLEntities} from "@romefrontend/html-parser";
+} from "@internal/string-utils";
+import {escapeXHTMLEntities} from "@internal/html-parser";
 import {ansiFormatText} from "./formatANSI";
 import {htmlFormatText} from "./formatHTML";
 import {
 	DEFAULT_TERMINAL_FEATURES,
 	TerminalFeatures,
-} from "@romefrontend/cli-environment";
-import {Position} from "@romefrontend/parser-core";
+} from "@internal/cli-environment";
+import {Position} from "@internal/parser-core";
 import {formatAnsi} from "./ansi";
-import {pretty} from "@romefrontend/pretty-format";
+import {pretty} from "@internal/pretty-format";
 
 type Cursor = {
 	line: Number1;

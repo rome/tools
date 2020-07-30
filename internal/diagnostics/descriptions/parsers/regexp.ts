@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/codec-js-regexp
+// @internal/codec-js-regexp
 export const regexp = createDiagnosticsCategory({
 	INVALID_CAPTURE_GROUP_MODIFIER: {
 		message: markup`Invalid capture group modifier`,

@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSFunctionDeclaration,
 	jsFunctionDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import executeFunction from "../../utils/executeFunction";
 
 export default function JSFunctionDeclaration(node: AnyNode, scope: Scope) {

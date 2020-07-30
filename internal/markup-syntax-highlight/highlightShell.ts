@@ -1,11 +1,7 @@
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
-import {
-	concatMarkup,
-	filePathToMarkup,
-	markup,
-} from "@romefrontend/markup/escape";
+import {concatMarkup, filePathToMarkup, markup} from "@internal/markup/escape";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
-import {createUnknownFilePath} from "@romefrontend/path";
+import {createUnknownFilePath} from "@internal/path";
 
 // Very crude. Should be updated to support hash bangs and other fancy syntax
 // Right now we just need it to highlight the CLI snippets we output

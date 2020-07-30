@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions} from "@romefrontend/diagnostics";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {jsBooleanLiteral, jsWhileStatement} from "@romefrontend/ast";
+import {descriptions} from "@internal/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {jsBooleanLiteral, jsWhileStatement} from "@internal/ast";
 
 export default createVisitor({
 	name: "js/preferWhile",

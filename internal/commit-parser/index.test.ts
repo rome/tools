@@ -1,5 +1,5 @@
-import {createFixtureTests} from "@romefrontend/test-helpers";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {createFixtureTests} from "@internal/test-helpers";
+import {removeCarriageReturn} from "@internal/string-utils";
 import {parseCommit} from ".";
 
 const promise = createFixtureTests(async (fixture, t) => {

@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/codec-semver
+// @internal/codec-semver
 export const semver = createDiagnosticsCategory({
 	MISSING_MINOR_VERSION: {
 		message: markup`A minor number is required for a version`,

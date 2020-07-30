@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSCallExpression, jsCallExpression} from "@romefrontend/ast";
+import {AnyNode, JSCallExpression, jsCallExpression} from "@internal/ast";
 import CallT from "../../types/CallT";
 
 export default function JSCallExpression(node: AnyNode, scope: Scope) {

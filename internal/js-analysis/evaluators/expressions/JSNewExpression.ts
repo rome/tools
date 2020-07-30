@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSNewExpression, jsNewExpression} from "@romefrontend/ast";
+import {AnyNode, JSNewExpression, jsNewExpression} from "@internal/ast";
 import InstanceT from "../../types/InstanceT";
 
 export default function JSNewExpression(node: AnyNode, scope: Scope) {

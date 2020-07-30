@@ -6,8 +6,8 @@
  */
 
 import packageJson from "../../../package.json";
-import {HOME_PATH, TEMP_PATH, createAbsoluteFilePath} from "@romefrontend/path";
-import {getEnvVar} from "@romefrontend/cli-environment";
+import {HOME_PATH, TEMP_PATH, createAbsoluteFilePath} from "@internal/path";
+import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
 
 // Node flags to pass to all forked processes

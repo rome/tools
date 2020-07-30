@@ -8,8 +8,8 @@
 import {
 	JSExportDefaultDeclaration,
 	JSExportLocalDeclaration,
-} from "@romefrontend/ast";
-import {isDeclaration} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {isDeclaration} from "@internal/js-ast-utils";
 import {
 	Builder,
 	Token,
@@ -20,7 +20,7 @@ import {
 	indent,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {hasInnerComments} from "../../comments";
 import {printCommaList} from "../utils";

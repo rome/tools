@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
-import {Markup, concatMarkup, markup} from "@romefrontend/markup";
+import {Markup, concatMarkup, markup} from "@internal/markup";
 
 export default class UnionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {

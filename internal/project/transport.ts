@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig, ProjectConfigJSON} from "./types";
-import {AbsoluteFilePathSet, createAbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePathSet, createAbsoluteFilePath} from "@internal/path";
 
 export function serializeJSONProjectConfig(
 	config: ProjectConfig,

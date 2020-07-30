@@ -11,7 +11,7 @@ import {
 	TSExpressionWithTypeArguments,
 	TSInterfaceBody,
 	TSTypeParameterDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSInterfaceDeclaration extends NodeBaseWithComments {

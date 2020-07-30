@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {PositionTracker, SourceLocation} from "@romefrontend/parser-core";
-import {ob1Coerce0} from "@romefrontend/ob1";
-import {isIdentifierish} from "@romefrontend/js-ast-utils";
-import {DiagnosticAdvice, descriptions} from "@romefrontend/diagnostics";
-import {preserveCasing} from "@romefrontend/string-utils";
-import {Markup, markup} from "@romefrontend/markup";
+import {createVisitor, signals} from "@internal/compiler";
+import {PositionTracker, SourceLocation} from "@internal/parser-core";
+import {ob1Coerce0} from "@internal/ob1";
+import {isIdentifierish} from "@internal/js-ast-utils";
+import {DiagnosticAdvice, descriptions} from "@internal/diagnostics";
+import {preserveCasing} from "@internal/string-utils";
+import {Markup, markup} from "@internal/markup";
 
 type ConfusingLanguage = Array<{
 	description: Markup;

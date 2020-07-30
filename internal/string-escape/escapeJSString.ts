@@ -35,7 +35,7 @@
  */
 
 import {DOUBLE_QUOTE, SINGLE_QUOTE, TICK_QUOTE} from "./constants";
-import {isDigit} from "@romefrontend/parser-core";
+import {isDigit} from "@internal/parser-core";
 
 // This regex represents printable ASCII characters, except the characters: '"\`
 const PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;

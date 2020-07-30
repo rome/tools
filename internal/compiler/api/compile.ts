@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mappings, SourceMapConsumer} from "@romefrontend/codec-source-map";
-import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
-import {Cache} from "@romefrontend/compiler";
-import {formatAST} from "@romefrontend/formatter";
+import {Mappings, SourceMapConsumer} from "@internal/codec-source-map";
+import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
+import {Cache} from "@internal/compiler";
+import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
 

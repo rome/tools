@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	AnyJSExpression,
 	AnyNode,
@@ -16,8 +16,8 @@ import {
 	jsStringLiteral,
 	jsTemplateElement,
 	jsTemplateLiteral,
-} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
 
 type TemplatePart = AnyJSExpression | JSTemplateElement;
 type StaticString = JSStringLiteral | JSTemplateElement;

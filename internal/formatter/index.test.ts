@@ -2,10 +2,10 @@ import {
 	createFixtureTests,
 	createMockWorker,
 	findFixtureInput,
-} from "@romefrontend/test-helpers";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+} from "@internal/test-helpers";
+import {removeCarriageReturn} from "@internal/string-utils";
 
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options} = fixture;

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
 import NumericT from "./NumericT";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class NumericLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: number) {

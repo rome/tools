@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSDebuggerStatement,
-	jsDebuggerStatement,
-} from "@romefrontend/ast";
+import {AnyNode, JSDebuggerStatement, jsDebuggerStatement} from "@internal/ast";
 
 export default function JSDebuggerStatement(node: AnyNode, scope: Scope) {
 	node = jsDebuggerStatement.assert(node);

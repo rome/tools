@@ -30,7 +30,7 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	Number0,
 	Number1,
@@ -41,17 +41,17 @@ import {
 	ob1Number0,
 	ob1Number1,
 	ob1Sub,
-} from "@romefrontend/ob1";
-import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
+} from "@internal/ob1";
+import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
 import {
 	Class,
 	OptionalProps,
 	RequiredProps,
-} from "@romefrontend/typescript-helpers";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
-import {AnyComment, AnyNode, RootBase} from "@romefrontend/ast";
+} from "@internal/typescript-helpers";
+import {removeCarriageReturn} from "@internal/string-utils";
+import {AnyComment, AnyNode, RootBase} from "@internal/ast";
 import {attachComments} from "./comments";
-import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
+import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
 
 export * from "./types";
 

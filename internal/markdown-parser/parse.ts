@@ -3,12 +3,8 @@ import {
 	createParser,
 	isDigit,
 	readUntilLineBreak,
-} from "@romefrontend/parser-core";
-import {
-	ListProperties,
-	State,
-	Tokens,
-} from "@romefrontend/markdown-parser/types";
+} from "@internal/parser-core";
+import {ListProperties, State, Tokens} from "@internal/markdown-parser/types";
 import {
 	MarkdownDividerBlock,
 	MarkdownHeadingBlock,
@@ -17,16 +13,16 @@ import {
 	MarkdownParagraph,
 	MarkdownRoot,
 	MarkdownText,
-} from "@romefrontend/ast";
-import {Number0, ob1Add} from "@romefrontend/ob1";
-import {isEscaped} from "@romefrontend/string-utils";
+} from "@internal/ast";
+import {Number0, ob1Add} from "@internal/ob1";
+import {isEscaped} from "@internal/string-utils";
 import {
 	AnyMarkdownInlineNode,
 	AnyMarkdownNode,
 	MarkdownListChildren,
-} from "@romefrontend/ast/markdown/unions";
-import {hasThematicBreak} from "@romefrontend/markdown-parser/utils";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast/markdown/unions";
+import {hasThematicBreak} from "@internal/markdown-parser/utils";
+import {descriptions} from "@internal/diagnostics";
 
 export const createMarkdownParser = createParser((
 	ParserCore,

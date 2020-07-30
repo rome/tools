@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpNonWhiteSpaceCharacter,
 	jsRegExpNonWhiteSpaceCharacter,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpNonWhiteSpaceCharacter(node: AnyNode) {
 	node = jsRegExpNonWhiteSpaceCharacter.assert(node);

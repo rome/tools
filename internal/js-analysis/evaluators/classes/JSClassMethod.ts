@@ -6,7 +6,7 @@
  */
 
 import {ClassScope, Scope} from "../../scopes";
-import {AnyNode, JSClassMethod, jsClassMethod} from "@romefrontend/ast";
+import {AnyNode, JSClassMethod, jsClassMethod} from "@internal/ast";
 import ObjPropT from "../../types/ObjPropT";
 import executeFunction from "../../utils/executeFunction";
 

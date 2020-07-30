@@ -10,7 +10,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {Stats} from "../server/fs/MemoryFileSystem";
 
 export type VirtualModulesMap = Map<

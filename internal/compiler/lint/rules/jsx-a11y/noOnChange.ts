@@ -1,10 +1,10 @@
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
 	isJSXElement,
-} from "@romefrontend/js-ast-utils";
-import {createVisitor, signals} from "@romefrontend/compiler";
+} from "@internal/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
 
 export default createVisitor({
 	name: "jsx-a11y/noOnChange",

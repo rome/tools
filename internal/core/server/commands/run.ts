@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
-import {ProjectDefinition} from "@romefrontend/project";
-import {SourceMap} from "@romefrontend/codec-source-map";
+import {ServerRequest} from "@internal/core";
+import {ProjectDefinition} from "@internal/project";
+import {SourceMap} from "@internal/codec-source-map";
 import Bundler from "../bundler/Bundler";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {AbsoluteFilePath, createRelativeFilePath} from "@romefrontend/path";
-import {markup} from "@romefrontend/markup";
+import {AbsoluteFilePath, createRelativeFilePath} from "@internal/path";
+import {markup} from "@internal/markup";
 
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpGroupCapture,
 	jsRegExpGroupCapture,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpGroupCapture(node: AnyNode) {
 	node = jsRegExpGroupCapture.assert(node);

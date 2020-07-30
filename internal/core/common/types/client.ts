@@ -8,11 +8,11 @@
 import {
 	DEFAULT_PRINTER_FLAGS,
 	DiagnosticsPrinterFlags,
-} from "@romefrontend/cli-diagnostics";
+} from "@internal/cli-diagnostics";
 import {Platform} from "./platform";
-import {AbsoluteFilePath, CWD_PATH} from "@romefrontend/path";
-import {ReporterStream} from "@romefrontend/cli-reporter";
-import {TerminalFeatures} from "@romefrontend/cli-environment";
+import {AbsoluteFilePath, CWD_PATH} from "@internal/path";
+import {ReporterStream} from "@internal/cli-reporter";
+import {TerminalFeatures} from "@internal/cli-environment";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
 	clientName: "unknown",

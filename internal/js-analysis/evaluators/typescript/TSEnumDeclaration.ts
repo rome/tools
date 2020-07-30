@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSEnumDeclaration, tsEnumDeclaration} from "@romefrontend/ast";
+import {AnyNode, TSEnumDeclaration, tsEnumDeclaration} from "@internal/ast";
 
 export default function TSEnumDeclaration(node: AnyNode, scope: Scope) {
 	node = tsEnumDeclaration.assert(node);

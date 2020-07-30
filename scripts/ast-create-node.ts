@@ -1,7 +1,7 @@
 import {INTERNAL, reporter, writeFile} from "./_utils";
-import {exists} from "@romefrontend/fs";
-import {dedent, toCamelCase} from "@romefrontend/string-utils";
-import {markup} from "@romefrontend/markup";
+import {exists} from "@internal/fs";
+import {dedent, toCamelCase} from "@internal/string-utils";
+import {markup} from "@internal/markup";
 import {main as generateAST} from "./generated-files/ast";
 
 export async function main(
@@ -35,7 +35,7 @@ export async function main(
 	await writeFile(
 		astDefPath,
 		dedent`
-			import {NodeBaseWithComments} from "@romefrontend/ast";
+			import {NodeBaseWithComments} from "@internal/ast";
 			import {createBuilder} from "../../utils";
 
 			interface ${nodeType} extends NodeBaseWithComments {
@@ -53,8 +53,8 @@ export async function main(
 	await writeFile(
 		INTERNAL.append("formatter", "builders", `${joined}.ts`),
 		dedent`
-			import {${nodeType}} from "@romefrontend/ast";
-			import {Builder, Token} from "@romefrontend/formatter";
+			import {${nodeType}} from "@internal/ast";
+			import {Builder, Token} from "@internal/formatter";
 
 			export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
 				throw new Error("unimplemented");
@@ -67,7 +67,7 @@ export async function main(
 		await writeFile(
 			INTERNAL.append("js-analysis", "evaluators", category, `${nodeType}.ts`),
 			dedent`
-				import {AnyNode, ${nodeType}, ${builderName}} from "@romefrontend/ast";
+				import {AnyNode, ${nodeType}, ${builderName}} from "@internal/ast";
 
 				export default function ${nodeType}(node: AnyNode) {
 					node = ${builderName}.assert(node);

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest} from "@romefrontend/core";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Server, ServerRequest} from "@internal/core";
+import {Reporter} from "@internal/cli-reporter";
 import {
 	BundleResult,
 	BundleResultBundle,
@@ -16,18 +16,18 @@ import {
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import BundleRequest, {BundleOptions} from "./BundleRequest";
-import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
-} from "@romefrontend/codec-js-manifest";
+} from "@internal/codec-js-manifest";
 import {WorkerCompileResult} from "../../common/bridges/WorkerBridge";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {readFile} from "@romefrontend/fs";
-import {flipPathPatterns} from "@romefrontend/path-match";
-import {stringifyJSON} from "@romefrontend/codec-json";
-import {markup} from "@romefrontend/markup";
+import {Dict} from "@internal/typescript-helpers";
+import {readFile} from "@internal/fs";
+import {flipPathPatterns} from "@internal/path-match";
+import {stringifyJSON} from "@internal/codec-json";
+import {markup} from "@internal/markup";
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;

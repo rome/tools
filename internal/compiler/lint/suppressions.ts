@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, AnyRoot} from "@romefrontend/ast";
-import {CompilerContext, signals} from "@romefrontend/compiler";
-import {Number1, ob1Get1} from "@romefrontend/ob1";
+import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
+import {CompilerContext, signals} from "@internal/compiler";
+import {Number1, ob1Get1} from "@internal/ob1";
 import Path from "../lib/Path";
 import {SUPPRESSION_START} from "../suppressions";
 import {commentInjector} from "../transforms/defaultHooks/index";

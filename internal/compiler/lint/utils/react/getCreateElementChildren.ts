@@ -1,5 +1,5 @@
-import {Scope} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
+import {Scope} from "@internal/compiler";
+import {AnyNode} from "@internal/ast";
 import {getCreateElementProp, isCreateElement} from ".";
 
 export default function getCreateElementChildren(

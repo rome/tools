@@ -11,10 +11,10 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/markup/escape";
-import {splitLines} from "@romefrontend/string-utils";
-import {ob1Get0} from "@romefrontend/ob1";
-import {MarkupTokenType} from "@romefrontend/markup/types";
+} from "@internal/markup/escape";
+import {splitLines} from "@internal/string-utils";
+import {ob1Get0} from "@internal/ob1";
+import {MarkupTokenType} from "@internal/markup/types";
 
 export function reduce<Token extends TokenShape>(
 	input: string,

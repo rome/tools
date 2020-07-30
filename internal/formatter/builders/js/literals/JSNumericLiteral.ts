@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {JSNumericLiteral} from "@romefrontend/ast";
-import {humanizeNumber} from "@romefrontend/string-utils";
+import {JSNumericLiteral} from "@internal/ast";
+import {humanizeNumber} from "@internal/string-utils";
 
 export default function JSNumericLiteral(
 	builder: Builder,

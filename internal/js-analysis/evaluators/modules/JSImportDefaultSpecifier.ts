@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSImportDefaultSpecifier,
 	jsImportDefaultSpecifier,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSImportDefaultSpecifier(node: AnyNode, scope: Scope) {
 	node = jsImportDefaultSpecifier.assert(node);

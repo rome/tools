@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	createAbsoluteFilePath,
-	createUnknownFilePath,
-} from "@romefrontend/path";
+import {createAbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {test} from "rome";
 
 const relativeTests: Array<[string, string, string]> = [

@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {normalizeCamelCase} from "../js/camelCase";
-import {toCamelCase} from "@romefrontend/string-utils";
+import {toCamelCase} from "@internal/string-utils";
 
 export default createVisitor({
 	name: "jsx/pascalCase",

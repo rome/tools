@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {template} from "@romefrontend/js-ast-utils";
-import {jsStringLiteral} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {template} from "@internal/js-ast-utils";
+import {jsStringLiteral} from "@internal/ast";
 import {getModuleId, getOptions} from "../_utils";
 
 export default createVisitor({

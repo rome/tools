@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeJSON} from "@romefrontend/codec-json";
+import {consumeJSON} from "@internal/codec-json";
 import {
 	USER_CONFIG_DIRECTORY,
 	USER_CONFIG_FILENAMES,
 	VERSION,
 } from "./constants";
-import {AbsoluteFilePath, TEMP_PATH} from "@romefrontend/path";
-import {existsSync, readFileTextSync} from "@romefrontend/fs";
-import {Consumer} from "@romefrontend/consume";
-import {descriptions} from "@romefrontend/diagnostics";
+import {AbsoluteFilePath, TEMP_PATH} from "@internal/path";
+import {existsSync, readFileTextSync} from "@internal/fs";
+import {Consumer} from "@internal/consume";
+import {descriptions} from "@internal/diagnostics";
 
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;

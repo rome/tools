@@ -6,9 +6,9 @@
  */
 
 import setProcessTitle from "./utils/setProcessTitle";
-import {TestWorker} from "@romefrontend/core";
-import {parseCLIFlagsFromProcess} from "@romefrontend/cli-flags";
-import {TestWorkerFlags} from "@romefrontend/core/test-worker/TestWorker";
+import {TestWorker} from "@internal/core";
+import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
+import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 
 export default async function testWorker() {
 	setProcessTitle("test-worker");

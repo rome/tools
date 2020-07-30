@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSStaticMemberProperty,
 	jsStaticMemberProperty,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSStaticMemberProperty(node: AnyNode, scope: Scope) {
 	node = jsStaticMemberProperty.assert(node);

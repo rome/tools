@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments, TSTupleElement} from "@romefrontend/ast";
+import {NodeBaseWithComments, TSTupleElement} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTupleType extends NodeBaseWithComments {

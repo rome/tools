@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSExpressionWithTypeArguments,
 	tsExpressionWithTypeArguments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSExpressionWithTypeArguments(node: AnyNode) {
 	node = tsExpressionWithTypeArguments.assert(node);

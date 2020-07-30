@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ModuleSignature, TypeCheckProvider} from "@romefrontend/js-analysis";
+import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerBufferPatch,
@@ -14,32 +14,32 @@ import WorkerBridge, {
 	WorkerPartialManifests,
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
-import {AnyRoot, ConstJSSourceType, JSRoot} from "@romefrontend/ast";
+import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
-import {Profiler} from "@romefrontend/v8";
+import {Profiler} from "@internal/v8";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
-import {hydrateJSONProjectConfig} from "@romefrontend/project";
-import {Diagnostics, DiagnosticsError} from "@romefrontend/diagnostics";
+import {hydrateJSONProjectConfig} from "@internal/project";
+import {Diagnostics, DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	UnknownFilePathMap,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from "@romefrontend/path";
-import {lstat, readFileText} from "@romefrontend/fs";
+} from "@internal/path";
+import {lstat, readFileText} from "@internal/fs";
 import {
 	FileReference,
 	convertTransportFileReference,
 } from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
-import {TransformProjectDefinition} from "@romefrontend/compiler";
+import {TransformProjectDefinition} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export type ParseResult = {
 	ast: AnyRoot;

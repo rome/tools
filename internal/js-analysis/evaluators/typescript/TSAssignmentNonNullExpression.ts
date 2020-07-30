@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSAssignmentNonNullExpression,
 	tsAssignmentNonNullExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSAssignmentNonNullExpression(node: AnyNode) {
 	node = tsAssignmentNonNullExpression.assert(node);

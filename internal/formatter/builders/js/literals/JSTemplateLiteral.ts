@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@romefrontend/formatter";
-import {JSTemplateLiteral} from "@romefrontend/ast";
+import {Builder, Token, concat} from "@internal/formatter";
+import {JSTemplateLiteral} from "@internal/ast";
 
 export default function JSTemplateLiteral(
 	builder: Builder,

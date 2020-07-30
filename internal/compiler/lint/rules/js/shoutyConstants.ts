@@ -1,5 +1,5 @@
-import {ConstBinding, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {ConstBinding, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
 	name: "js/shoutyConstants",

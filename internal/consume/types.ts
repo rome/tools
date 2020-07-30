@@ -9,10 +9,10 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticLocation,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import Consumer from "./Consumer";
-import {UnknownFilePath} from "@romefrontend/path";
-import {Markup} from "@romefrontend/markup";
+import {UnknownFilePath} from "@internal/path";
+import {Markup} from "@internal/markup";
 
 export type ConsumeComments = Array<string>;
 

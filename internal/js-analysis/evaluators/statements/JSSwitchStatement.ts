@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSSwitchStatement, jsSwitchStatement} from "@romefrontend/ast";
+import {AnyNode, JSSwitchStatement, jsSwitchStatement} from "@internal/ast";
 
 export default function JSSwitchStatement(node: AnyNode, scope: Scope) {
 	node = jsSwitchStatement.assert(node);

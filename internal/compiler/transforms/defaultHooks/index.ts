@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyComment,
 	AnyCommentOptionalId,
@@ -18,7 +18,7 @@ import {
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 type VariableInjectorState = {
 	bindings: Array<[string, undefined | AnyJSExpression]>;

@@ -6,11 +6,11 @@
  */
 
 import {DiagnosticAdvice, DiagnosticLocation} from "./types";
-import {orderBySimilarity, splitLines} from "@romefrontend/string-utils";
-import stringDiff from "@romefrontend/string-diff";
-import {Position} from "@romefrontend/parser-core";
-import {ob1Get1} from "@romefrontend/ob1";
-import {Markup, markup} from "@romefrontend/markup";
+import {orderBySimilarity, splitLines} from "@internal/string-utils";
+import stringDiff from "@internal/string-diff";
+import {Position} from "@internal/parser-core";
+import {ob1Get1} from "@internal/ob1";
+import {Markup, markup} from "@internal/markup";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;

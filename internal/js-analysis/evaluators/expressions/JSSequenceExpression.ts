@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSSequenceExpression,
 	jsSequenceExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSSequenceExpression(node: AnyNode, scope: Scope) {
 	node = jsSequenceExpression.assert(node);

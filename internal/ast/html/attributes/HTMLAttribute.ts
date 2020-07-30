@@ -1,8 +1,4 @@
-import {
-	HTMLIdentifier,
-	HTMLString,
-	NodeBaseWithComments,
-} from "@romefrontend/ast";
+import {HTMLIdentifier, HTMLString, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 // class="something"

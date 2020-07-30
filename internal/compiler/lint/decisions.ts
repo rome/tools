@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from "@romefrontend/parser-core";
+import {Position} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
 	DiagnosticCategory,
 	DiagnosticDescriptionOptionalCategory,
 	DiagnosticLocation,
 	descriptions,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
 } from "../types";
-import {ob1Get0, ob1Get1} from "@romefrontend/ob1";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {LinterCompilerOptionsPerFile} from "@romefrontend/core/server/linter/Linter";
-import {escapeSplit} from "@romefrontend/string-utils";
-import {Markup} from "@romefrontend/markup";
+import {ob1Get0, ob1Get1} from "@internal/ob1";
+import {AbsoluteFilePath} from "@internal/path";
+import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter";
+import {escapeSplit} from "@internal/string-utils";
+import {Markup} from "@internal/markup";
 
 type UnexpectedDecision = (
 	description: DiagnosticDescriptionOptionalCategory,

@@ -1,17 +1,13 @@
-import {
-	ErrorWithFrames,
-	getErrorStructure,
-	setErrorFrames,
-} from "@romefrontend/v8";
-import {Markup, joinMarkupLines, markup} from "@romefrontend/markup";
+import {ErrorWithFrames, getErrorStructure, setErrorFrames} from "@internal/v8";
+import {Markup, joinMarkupLines, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
 	INTERNAL_ERROR_LOG_ADVICE,
 	createSingleDiagnosticError,
 	getErrorStackAdvice,
-} from "@romefrontend/diagnostics";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+} from "@internal/diagnostics";
+import {markupToPlainText} from "@internal/cli-layout";
 
 function changeMessage(
 	old: ErrorWithFrames,
@@ -25,7 +21,7 @@ function changeMessage(
 		let advice: DiagnosticAdvice = [];
 
 		if (old.path !== undefined && struct.frames.length === 0) {
-			// If we are an fs error with no frames then recommend adding the envvar so the @romefrontend/fs module will
+			// If we are an fs error with no frames then recommend adding the envvar so the @internal/fs module will
 			// manually capture and set stacktraces
 			advice.push({
 				type: "log",

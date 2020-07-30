@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions} from "@romefrontend/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 
 export default class UnknownImportE extends E {
 	constructor(

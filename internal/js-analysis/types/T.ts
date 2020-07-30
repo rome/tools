@@ -6,13 +6,13 @@
  */
 
 import Evaluator, {HydrateData, HydrateTypeFactory} from "../Evaluator";
-import {SourceLocation} from "@romefrontend/parser-core";
-import {AnyNode} from "@romefrontend/ast";
+import {SourceLocation} from "@internal/parser-core";
+import {AnyNode} from "@internal/ast";
 import Graph from "../Graph";
 import {Scope} from "../scopes";
 import Hub from "../Hub";
 import Utils, {HumanBuilder} from "../Utils";
-import {Markup} from "@romefrontend/markup";
+import {Markup} from "@internal/markup";
 
 let counter = 0;
 

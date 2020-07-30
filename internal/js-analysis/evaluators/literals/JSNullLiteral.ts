@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSNullLiteral, jsNullLiteral} from "@romefrontend/ast";
+import {AnyNode, JSNullLiteral, jsNullLiteral} from "@internal/ast";
 import NullT from "../../types/NullT";
 
 export default function JSNullLiteral(node: AnyNode, scope: Scope) {

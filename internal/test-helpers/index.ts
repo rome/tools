@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consumeUnknown} from "@romefrontend/consume";
-import {consumeJSON} from "@romefrontend/codec-json";
+import {Consumer, consumeUnknown} from "@internal/consume";
+import {consumeJSON} from "@internal/codec-json";
 import {TestHelper, test, testOptions} from "rome";
 
 import {
@@ -14,14 +14,14 @@ import {
 	AbsoluteFilePathSet,
 	UnknownFilePath,
 	createAbsoluteFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {
 	exists,
 	lstat,
 	readDirectory,
 	readFile,
 	readFileText,
-} from "@romefrontend/fs";
+} from "@internal/fs";
 
 const dirname = testOptions.dirname === undefined ? "" : testOptions.dirname;
 

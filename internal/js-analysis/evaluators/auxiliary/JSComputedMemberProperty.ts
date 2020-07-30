@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSComputedMemberProperty,
 	jsComputedMemberProperty,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSComputedMemberProperty(node: AnyNode, scope: Scope) {
 	node = jsComputedMemberProperty.assert(node);

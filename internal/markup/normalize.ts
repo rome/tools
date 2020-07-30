@@ -14,7 +14,7 @@ import {
 	markup,
 	readMarkup,
 } from "./escape";
-import {sliceEscaped} from "@romefrontend/string-utils";
+import {sliceEscaped} from "@internal/string-utils";
 import {buildFileLink, formatGrammarNumber} from "./util";
 
 function buildTag(

@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/pretty-format",
+	"name": "@internal/pretty-format",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -6,7 +6,7 @@
  */
 
 import {DiagnosticAdviceItem} from "./types";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 export const INTERNAL_ERROR_LOG_ADVICE: DiagnosticAdviceItem = {
 	type: "log",

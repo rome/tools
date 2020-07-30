@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSMemberExpression,
-	jsMemberExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSMemberExpression, jsMemberExpression} from "@internal/ast";
 import StringLiteralT from "../../types/StringLiteralT";
 import GetPropT from "../../types/GetPropT";
 

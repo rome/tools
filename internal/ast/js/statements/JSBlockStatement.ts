@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyJSStatement,
-	JSDirective,
-	NodeBaseWithComments,
-} from "@romefrontend/ast";
+import {AnyJSStatement, JSDirective, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSBlockStatement extends NodeBaseWithComments {

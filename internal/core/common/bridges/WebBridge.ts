@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Bridge} from "@romefrontend/events";
+import {Bridge} from "@internal/events";
 import {WebServerClient, WebServerRequest} from "../../server/web";
 
 export default class WebBridge extends Bridge {

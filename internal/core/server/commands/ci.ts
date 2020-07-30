@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {chainCommands, createServerCommand} from "../commands";
 import check from "./check";
 import test from "./test";
-import {Consumer} from "@romefrontend/consume";
-import {markup} from "@romefrontend/markup";
+import {Consumer} from "@internal/consume";
+import {markup} from "@internal/markup";
 
 type Flags = {
 	fix: boolean;

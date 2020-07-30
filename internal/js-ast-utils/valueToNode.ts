@@ -23,9 +23,9 @@ import {
 	jsReferenceIdentifier,
 	jsStaticPropertyKey,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createPropertyKey} from "./createPropertyKey";
-import {UnknownObject} from "@romefrontend/typescript-helpers";
+import {UnknownObject} from "@internal/typescript-helpers";
 
 export function valueToNode(
 	value: unknown,

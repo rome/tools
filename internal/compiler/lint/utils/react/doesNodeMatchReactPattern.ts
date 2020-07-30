@@ -1,6 +1,6 @@
-import {ImportBinding, Scope} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
-import {isIdentifierish, resolveIndirection} from "@romefrontend/js-ast-utils";
+import {ImportBinding, Scope} from "@internal/compiler";
+import {AnyNode} from "@internal/ast";
+import {isIdentifierish, resolveIndirection} from "@internal/js-ast-utils";
 
 export interface MatchConfig {
 	packageName: string;

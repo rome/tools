@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticOrigin} from "@romefrontend/diagnostics";
+import {Diagnostic, DiagnosticOrigin} from "@internal/diagnostics";
 import {TestServerRunnerOptions} from "../../server/testing/types";
-import {Bridge} from "@romefrontend/events";
+import {Bridge} from "@internal/events";
 import {JSONFileReference} from "../types/files";
 import {
 	FocusedTest,
 	TestWorkerFileResult,
-} from "@romefrontend/core/test-worker/TestWorkerRunner";
+} from "@internal/core/test-worker/TestWorkerRunner";
 
 export type TestRef = {
 	filename: string;

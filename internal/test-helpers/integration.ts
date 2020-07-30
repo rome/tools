@@ -5,7 +5,7 @@ import {
 	ServerBridge,
 	Worker,
 	WorkerBridge,
-} from "@romefrontend/core";
+} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -14,9 +14,9 @@ import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUnknownFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {ClientFlags} from "../core/common/types/client";
-import {JSONObject, stringifyJSON} from "@romefrontend/codec-json";
+import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {
 	createDirectory,
 	exists,
@@ -25,9 +25,9 @@ import {
 	readFileText,
 	removeDirectory,
 	writeFile,
-} from "@romefrontend/fs";
-import {DEFAULT_TERMINAL_FEATURES, Stdout} from "@romefrontend/cli-environment";
-import {Dict} from "@romefrontend/typescript-helpers";
+} from "@internal/fs";
+import {DEFAULT_TERMINAL_FEATURES, Stdout} from "@internal/cli-environment";
+import {Dict} from "@internal/typescript-helpers";
 import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
 import ServerRequest from "../core/server/ServerRequest";
 import {partialServerQueryRequestToFull} from "../core/server/Server";
@@ -36,36 +36,32 @@ import {
 	ProjectConfig,
 	createDefaultProjectConfig,
 	serializeJSONProjectConfig,
-} from "@romefrontend/project";
-import {createBridgeFromLocal} from "@romefrontend/events";
+} from "@internal/project";
+import {createBridgeFromLocal} from "@internal/events";
 import {FileReference} from "../core/common/types/files";
-import {
-	Fixture,
-	FixtureFile,
-	createFixtureTests,
-} from "@romefrontend/test-helpers";
-import {removeCarriageReturn} from "@romefrontend/string-utils";
+import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
+import {removeCarriageReturn} from "@internal/string-utils";
 import {
 	getFileHandlerExtensions,
 	getFileHandlerFromPathAssert,
 } from "../core/common/file-handlers";
-import {printDiagnosticsToString} from "@romefrontend/cli-diagnostics";
+import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import crypto = require("crypto");
 import stream = require("stream");
 import {ExtensionHandler} from "../core/common/file-handlers/types";
 import {
 	DiagnosticsProcessor,
 	interceptDiagnostics,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	convertToMarkupFromRandomString,
 	joinMarkupLines,
 	normalizeMarkup,
-} from "@romefrontend/markup";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+} from "@internal/markup";
+import {markupToPlainText} from "@internal/cli-layout";
 import child = require("child_process");
 import util = require("util");
-import {Reporter} from "@romefrontend/cli-reporter";
+import {Reporter} from "@internal/cli-reporter";
 
 const exec = util.promisify(child.exec);
 

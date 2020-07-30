@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSVoidKeywordTypeAnnotation,
 	tsVoidKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import VoidT from "../../types/VoidT";
 
 export default function TSVoidKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

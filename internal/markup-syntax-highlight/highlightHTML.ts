@@ -1,5 +1,5 @@
 import {reduceParserCore} from "./utils";
-import {tokenizeHTML} from "@romefrontend/html-parser";
+import {tokenizeHTML} from "@internal/html-parser";
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
 
 export default function highlightHTML(

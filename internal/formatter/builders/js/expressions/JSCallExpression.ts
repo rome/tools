@@ -9,8 +9,8 @@ import {
 	JSCallExpression,
 	JSNewExpression,
 	JSOptionalCallExpression,
-} from "@romefrontend/ast";
-import {isFunctionNode} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {isFunctionNode} from "@internal/js-ast-utils";
 import {
 	Builder,
 	Token,
@@ -20,7 +20,7 @@ import {
 	ifBreak,
 	indent,
 	softline,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 import {printCommaList} from "../utils";
 import {hasInnerComments} from "../../comments";

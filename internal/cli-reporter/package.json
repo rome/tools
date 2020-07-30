@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/cli-reporter",
+	"name": "@internal/cli-reporter",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

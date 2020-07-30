@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSRegExpNamedBackReference,
 	jsRegExpNamedBackReference,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSRegExpNamedBackReference(node: AnyNode) {
 	node = jsRegExpNamedBackReference.assert(node);

@@ -12,15 +12,11 @@ import {
 	PathOptions,
 	TransformVisitors,
 	signals,
-} from "@romefrontend/compiler";
-import {
-	AnyNode,
-	AnyNodes,
-	visitorKeys as allVisitorKeys,
-} from "@romefrontend/ast";
-import {isNodeLike} from "@romefrontend/js-ast-utils";
+} from "@internal/compiler";
+import {AnyNode, AnyNodes, visitorKeys as allVisitorKeys} from "@internal/ast";
+import {isNodeLike} from "@internal/js-ast-utils";
 import {TransformVisitor} from "../types";
-import {pretty} from "@romefrontend/pretty-format";
+import {pretty} from "@internal/pretty-format";
 import {
 	EnterSignal,
 	ParentSignal,

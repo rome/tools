@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSPatternMeta, jsPatternMeta} from "@romefrontend/ast";
+import {AnyNode, JSPatternMeta, jsPatternMeta} from "@internal/ast";
 
 export default function JSPatternMeta(node: AnyNode, scope: Scope) {
 	node = jsPatternMeta.assert(node);

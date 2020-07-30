@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BaseTokens, SimpleToken, ValueToken} from "@romefrontend/parser-core";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {UserConfig} from "@romefrontend/core/common/userConfig";
-import {Number0, Number1} from "@romefrontend/ob1";
-import {Consumer} from "@romefrontend/consume";
+import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
+import {AbsoluteFilePath} from "@internal/path";
+import {UserConfig} from "@internal/core/common/userConfig";
+import {Number0, Number1} from "@internal/ob1";
+import {Consumer} from "@internal/consume";
 
 export type Tokens = BaseTokens & {
 	Text: ValueToken<"Text", string>;

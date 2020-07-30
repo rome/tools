@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/codec-js-manifest",
+	"name": "@internal/codec-js-manifest",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

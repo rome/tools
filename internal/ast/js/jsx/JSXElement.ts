@@ -18,7 +18,7 @@ import {
 	JSXText,
 	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXElement extends NodeBaseWithComments {

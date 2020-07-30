@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSBooleanKeywordTypeAnnotation,
 	tsBooleanKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import BooleanT from "../../types/BooleanT";
 
 export default function TSBooleanKeywordTypeAnnotation(

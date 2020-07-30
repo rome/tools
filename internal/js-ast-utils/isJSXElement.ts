@@ -1,4 +1,4 @@
-import {AnyNode, JSXElement} from "@romefrontend/ast";
+import {AnyNode, JSXElement} from "@internal/ast";
 import {doesNodeMatchPattern} from "./doesNodeMatchPattern";
 
 export function isJSXElement(node: AnyNode, name: string): node is JSXElement {

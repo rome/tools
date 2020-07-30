@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeOperator} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {TSTypeOperator} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function TSTypeOperator(
 	builder: Builder,

@@ -9,21 +9,18 @@ import {
 	getErrorStructure,
 	initErrorHooks,
 	sourceMapManager,
-} from "@romefrontend/v8";
-import {BIN, MAP, VERSION} from "@romefrontend/core";
+} from "@internal/v8";
+import {BIN, MAP, VERSION} from "@internal/core";
 import cli from "../cli";
 import server from "../server";
 import testWorker from "../testWorker";
 import worker from "../worker";
-import {readFileTextSync} from "@romefrontend/fs";
-import {SourceMapConsumer} from "@romefrontend/codec-source-map";
-import {
-	DiagnosticsProcessor,
-	catchDiagnostics,
-} from "@romefrontend/diagnostics";
-import {printDiagnostics} from "@romefrontend/cli-diagnostics";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {markup} from "@romefrontend/markup";
+import {readFileTextSync} from "@internal/fs";
+import {SourceMapConsumer} from "@internal/codec-source-map";
+import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
+import {printDiagnostics} from "@internal/cli-diagnostics";
+import {Reporter} from "@internal/cli-reporter";
+import {markup} from "@internal/markup";
 
 async function main(): Promise<void> {
 	switch (

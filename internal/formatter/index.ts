@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PARENT} from "@romefrontend/ast";
+import {AnyNode, MOCK_PARENT} from "@internal/ast";
 import Builder from "./Builder";
 import {PrinterOutput, printTokenToString} from "./Printer";
-import {isRoot} from "@romefrontend/ast-utils";
+import {isRoot} from "@internal/ast-utils";
 
 export {Builder};
 export {BuilderMethod} from "./Builder";

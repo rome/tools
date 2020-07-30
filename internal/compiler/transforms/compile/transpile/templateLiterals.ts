@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	AnyJSExpression,
 	jsBinaryExpression,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default createVisitor({
 	name: "jsTemplateLiterals",

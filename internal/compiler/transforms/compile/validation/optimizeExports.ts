@@ -5,12 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	ImportBinding,
-	Path,
-	createVisitor,
-	signals,
-} from "@romefrontend/compiler";
+import {ImportBinding, Path, createVisitor, signals} from "@internal/compiler";
 import {
 	JSExportExternalDeclaration,
 	JSExportLocalDeclaration,
@@ -19,7 +14,7 @@ import {
 	jsExportLocalDeclaration,
 	jsIdentifier,
 	jsStringLiteral,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default createVisitor({
 	name: "optimizeExports",

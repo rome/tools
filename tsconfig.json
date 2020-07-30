@@ -22,7 +22,7 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"@romefrontend/*": [
+			"@internal/*": [
 				"internal/*"
 			],
 			"@romefrontend-runtime/*": [

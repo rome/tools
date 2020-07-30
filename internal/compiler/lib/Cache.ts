@@ -6,8 +6,8 @@
  */
 
 import {TransformProjectDefinition, TransformRequest} from "../types";
-import {AnyRoot} from "@romefrontend/ast";
-import {JSONObject} from "@romefrontend/codec-json";
+import {AnyRoot} from "@internal/ast";
+import {JSONObject} from "@internal/codec-json";
 
 type CacheQuery = {
 	key: string;

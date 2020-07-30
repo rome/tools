@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSSuper, jsSuper} from "@romefrontend/ast";
+import {AnyNode, JSSuper, jsSuper} from "@internal/ast";
 
 export default function JSSuper(node: AnyNode, scope: Scope) {
 	node = jsSuper.assert(node);

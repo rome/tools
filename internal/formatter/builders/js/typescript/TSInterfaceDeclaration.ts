@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInterfaceDeclaration} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {TSInterfaceDeclaration} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 import {printCommaList} from "../utils";
 

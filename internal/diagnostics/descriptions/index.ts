@@ -38,7 +38,7 @@ import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
-import {Markup, concatMarkup, markup} from "@romefrontend/markup";
+import {Markup, concatMarkup, markup} from "@internal/markup";
 
 export function join(conjunction: string, items: Array<Markup>): Markup {
 	if (items.length === 0) {

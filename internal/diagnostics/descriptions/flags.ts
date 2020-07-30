@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@romefrontend/markup";
-import {toKebabCase} from "@romefrontend/string-utils";
+import {Markup, markup} from "@internal/markup";
+import {toKebabCase} from "@internal/string-utils";
 import {buildSuggestionAdvice} from "../helpers";
 
 export const flags = createDiagnosticsCategory({

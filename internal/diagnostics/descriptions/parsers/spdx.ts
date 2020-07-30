@@ -1,8 +1,8 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../../helpers";
 
-// @romefrontend/codec-spdx-license
+// @internal/codec-spdx-license
 export const spdx = createDiagnosticsCategory({
 	UNKNOWN_LICENSE: (id: string, knownLicenses: Array<string>) => ({
 		message: markup`Unknown SPDX license <emphasis>${id}</emphasis>`,

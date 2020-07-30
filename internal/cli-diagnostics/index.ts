@@ -9,11 +9,11 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsProcessor,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {DiagnosticsPrinterOptions} from "./types";
-import {Reporter, ReporterStream} from "@romefrontend/cli-reporter";
+import {Reporter, ReporterStream} from "@internal/cli-reporter";
 import DiagnosticsPrinter from "./DiagnosticsPrinter";
-import {TerminalFeatures} from "@romefrontend/cli-environment";
+import {TerminalFeatures} from "@internal/cli-environment";
 
 export {toLines} from "./utils";
 export {DEFAULT_PRINTER_FLAGS} from "./DiagnosticsPrinter";

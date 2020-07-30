@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSXSpreadAttribute,
-	jsxSpreadAttribute,
-} from "@romefrontend/ast";
+import {AnyNode, JSXSpreadAttribute, jsxSpreadAttribute} from "@internal/ast";
 
 export default function JSXSpreadAttribute(node: AnyNode, scope: Scope) {
 	node = jsxSpreadAttribute.assert(node);

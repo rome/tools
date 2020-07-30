@@ -5,9 +5,9 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode} from "@romefrontend/ast";
-import {Scope, createVisitor, signals} from "@romefrontend/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {AnyNode} from "@internal/ast";
+import {Scope, createVisitor, signals} from "@internal/compiler";
 import {
 	getCreateElementChildren,
 	getCreateElementProp,

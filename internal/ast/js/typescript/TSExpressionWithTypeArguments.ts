@@ -9,7 +9,7 @@ import {
 	AnyTSEntityName,
 	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSExpressionWithTypeArguments extends NodeBaseWithComments {

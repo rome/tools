@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@romefrontend/formatter";
+import {Builder, Token} from "@internal/formatter";
 
 import {printMethod} from "../utils";
-import {JSObjectMethod} from "@romefrontend/ast";
+import {JSObjectMethod} from "@internal/ast";
 
 export default function JSObjectMethod(
 	builder: Builder,

@@ -9,7 +9,7 @@ import {
 	JSIdentifier,
 	JSImportSpecifierLocal,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSImportSpecifier extends NodeBaseWithComments {

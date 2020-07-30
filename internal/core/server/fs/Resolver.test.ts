@@ -1,6 +1,6 @@
 import {test} from "rome";
-import {createIntegrationTest} from "@romefrontend/test-helpers";
-import {AbsoluteFilePath, createUnknownFilePath} from "@romefrontend/path";
+import {createIntegrationTest} from "@internal/test-helpers";
+import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {ResolverQueryResponseFound} from "./Resolver";
 
 function foundToRelativePath(

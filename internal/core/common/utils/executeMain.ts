@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from "@romefrontend/typescript-helpers";
-import {SourceMapConsumer} from "@romefrontend/codec-source-map";
-import {sourceMapManager} from "@romefrontend/v8";
+import {UnknownObject} from "@internal/typescript-helpers";
+import {SourceMapConsumer} from "@internal/codec-source-map";
+import {sourceMapManager} from "@internal/v8";
 import internalModule = require("module");
 
 import vm = require("vm");
@@ -17,10 +17,10 @@ import {
 	INTERNAL_ERROR_LOG_ADVICE,
 	descriptions,
 	truncateSourceText,
-} from "@romefrontend/diagnostics";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {Position} from "@romefrontend/parser-core";
-import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from "@romefrontend/ob1";
+} from "@internal/diagnostics";
+import {AbsoluteFilePath} from "@internal/path";
+import {Position} from "@internal/parser-core";
+import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from "@internal/ob1";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;

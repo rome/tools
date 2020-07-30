@@ -1,11 +1,11 @@
 import {INTERNAL, ROOT, exec, reporter} from "./_utils";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 import https = require("https");
 import http = require("http");
 
 import child = require("child_process");
-import {readFileText} from "@romefrontend/fs";
-import {markup} from "@romefrontend/markup";
+import {readFileText} from "@internal/fs";
+import {markup} from "@internal/markup";
 
 async function runNPMVersion(
 	args: Array<string>,

@@ -10,9 +10,9 @@ import {
 	AnyNode,
 	JSMetaProperty,
 	jsStringLiteral,
-} from "@romefrontend/ast";
-import {template} from "@romefrontend/js-ast-utils";
-import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
+} from "@internal/ast";
+import {template} from "@internal/js-ast-utils";
+import {CompilerContext, createVisitor, signals} from "@internal/compiler";
 
 function isImportMeta(node: AnyNode): node is JSMetaProperty {
 	return (

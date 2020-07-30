@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSObjectProperty, jsObjectProperty} from "@romefrontend/ast";
+import {AnyNode, JSObjectProperty, jsObjectProperty} from "@internal/ast";
 
 export default function JSObjectProperty(node: AnyNode, scope: Scope) {
 	node = jsObjectProperty.assert(node);

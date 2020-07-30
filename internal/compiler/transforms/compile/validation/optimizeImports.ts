@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, createVisitor, signals} from "@romefrontend/compiler";
+import {Binding, createVisitor, signals} from "@internal/compiler";
 import {
 	AnyNode,
 	JSImportDeclaration,
@@ -17,8 +17,8 @@ import {
 	jsImportSpecifierLocal,
 	jsReferenceIdentifier,
 	jsxIdentifier,
-} from "@romefrontend/ast";
-import {isIdentifierish} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {isIdentifierish} from "@internal/js-ast-utils";
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';

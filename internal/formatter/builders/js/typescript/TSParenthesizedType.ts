@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSParenthesizedType} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSParenthesizedType} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSParenthesizedType(
 	builder: Builder,

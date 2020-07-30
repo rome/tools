@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../scopes";
-import {
-	AnyNode,
-	JSReferenceIdentifier,
-	JSUnaryExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSReferenceIdentifier, JSUnaryExpression} from "@internal/ast";
 import T from "../types/T";
 import Evaluator from "../Evaluator";
 import RefinedT from "../types/RefinedT";

@@ -1,7 +1,7 @@
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {AnyNode} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
-import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {AnyNode} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
+import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 import {insideClassComponent} from "../../utils/react";
 
 // Check if this.state mutation was in the constructor

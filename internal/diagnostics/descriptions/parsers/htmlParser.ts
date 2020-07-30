@@ -1,8 +1,8 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {DiagnosticLocation} from "../../types";
 
-// @romefrontend/html-parser
+// @internal/html-parser
 export const htmlParser = createDiagnosticsCategory({
 	UNCLOSED_STRING: {message: markup`Unclosed string`},
 	EXPECTED_CLOSING_TAG_NAME: {message: markup`Expected closing tag name`},

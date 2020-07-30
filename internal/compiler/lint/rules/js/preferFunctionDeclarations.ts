@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {Path, createHook, createVisitor, signals} from "@romefrontend/compiler";
+import {Path, createHook, createVisitor, signals} from "@internal/compiler";
 import {
 	JSFunctionDeclaration,
 	JSThisExpression,
@@ -16,9 +16,9 @@ import {
 	jsReturnStatement,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
-} from "@romefrontend/ast";
-import {isFunctionNode} from "@romefrontend/js-ast-utils";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/ast";
+import {isFunctionNode} from "@internal/js-ast-utils";
+import {descriptions} from "@internal/diagnostics";
 
 type State = {
 	declarators: Array<JSVariableDeclarator>;

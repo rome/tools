@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSExpressionWithTypeArguments} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSExpressionWithTypeArguments} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSExpressionWithTypeArguments(
 	builder: Builder,

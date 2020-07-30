@@ -5,13 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@romefrontend/diagnostics";
-import {
-	ConstJSExportModuleKind,
-	ConstJSImportModuleKind,
-} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {Diagnostics} from "@internal/diagnostics";
+import {ConstJSExportModuleKind, ConstJSImportModuleKind} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
+import {Dict} from "@internal/typescript-helpers";
 
 export type AnalyzeModuleType = "es" | "cjs" | "unknown";
 

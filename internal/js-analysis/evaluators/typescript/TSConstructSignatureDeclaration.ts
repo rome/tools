@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSConstructSignatureDeclaration,
 	tsConstructSignatureDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSConstructSignatureDeclaration(node: AnyNode) {
 	node = tsConstructSignatureDeclaration.assert(node);

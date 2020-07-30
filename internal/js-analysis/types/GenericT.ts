@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import T, {SerialTypeFactory} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";
 import ClassT from "./ClassT";
 import InstanceT from "./InstanceT";
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export default class GenericT extends T {
 	constructor(

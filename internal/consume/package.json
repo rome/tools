@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/consume",
+	"name": "@internal/consume",
 	"type": "module",
 	"private": true,
 	"main": "index.ts"

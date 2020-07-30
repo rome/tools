@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectConfig} from "@romefrontend/project";
-import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
+import {ProjectConfig} from "@internal/project";
+import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
 import {ExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -19,9 +19,9 @@ import {
 import {textHandler} from "./text";
 import {jsonHandler, rjsonHandler} from "./json";
 import {htmHandler, htmlHandler} from "./html";
-import {parseJS} from "@romefrontend/js-parser";
-import {DiagnosticLanguage} from "@romefrontend/diagnostics";
-// import {markdownHandler} from "@romefrontend/core/common/file-handlers/markdown";
+import {parseJS} from "@internal/js-parser";
+import {DiagnosticLanguage} from "@internal/diagnostics";
+// import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 

@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	JSIdentifier,
-	JSPrivateName,
-	NodeBaseWithComments,
-} from "@romefrontend/ast";
+import {JSIdentifier, JSPrivateName, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSStaticMemberProperty extends NodeBaseWithComments {

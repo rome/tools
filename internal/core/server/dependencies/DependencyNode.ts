@@ -6,19 +6,19 @@
  */
 
 import DependencyGraph from "./DependencyGraph";
-import {BundleCompileResolvedImports} from "@romefrontend/compiler";
-import {ConstJSImportModuleKind} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
+import {BundleCompileResolvedImports} from "@internal/compiler";
+import {ConstJSImportModuleKind} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
 import {
 	Diagnostic,
 	DiagnosticLocation,
 	Diagnostics,
 	descriptions,
-} from "@romefrontend/diagnostics";
-import {ProjectDefinition} from "@romefrontend/project";
+} from "@internal/diagnostics";
+import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romefrontend/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
@@ -26,8 +26,8 @@ import {
 	AnalyzeExportLocal,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
-} from "@romefrontend/core";
-import {FileReference} from "@romefrontend/core/common/types/files";
+} from "@internal/core";
+import {FileReference} from "@internal/core/common/types/files";
 
 type ResolvedImportFound = {
 	type: "FOUND";

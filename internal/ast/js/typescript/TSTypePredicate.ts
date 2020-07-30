@@ -10,7 +10,7 @@ import {
 	JSIdentifier,
 	NodeBaseWithComments,
 	TSThisType,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTypePredicate extends NodeBaseWithComments {

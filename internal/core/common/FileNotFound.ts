@@ -1,4 +1,4 @@
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {AbsoluteFilePath} from "@internal/path";
 
 type MissingReturn<T> =
 	| {

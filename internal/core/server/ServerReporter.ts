@@ -10,7 +10,7 @@ import {
 	ReporterProgress,
 	ReporterProgressOptions,
 	mergeProgresses,
-} from "@romefrontend/cli-reporter";
+} from "@internal/cli-reporter";
 import Server from "./Server";
 
 export default class ServerReporter extends Reporter {

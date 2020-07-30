@@ -6,8 +6,8 @@
  */
 
 import Scope from "../Scope";
-import {FunctionBinding} from "@romefrontend/compiler";
-import {AnyNode, tsDeclareFunction} from "@romefrontend/ast";
+import {FunctionBinding} from "@internal/compiler";
+import {AnyNode, tsDeclareFunction} from "@internal/ast";
 import {buildFunctionScope} from "../utils";
 import {createScopeEvaluator} from "./index";
 

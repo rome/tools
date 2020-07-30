@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path, signals} from "@romefrontend/compiler";
+import {Binding, Path, signals} from "@internal/compiler";
 import {inheritLoc} from "./inheritLoc";
 import {
 	AnyJSVariableIdentifier,
@@ -14,7 +14,7 @@ import {
 	jsExportLocalSpecifier,
 	jsIdentifier,
 	jsReferenceIdentifier,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {getBindingIdentifiers} from "./getBindingIdentifiers";
 import {isVariableIdentifier} from "./isVariableIdentifier";
 import {assertSingleOrMultipleNodes} from "./assertSingleOrMultipleNodes";

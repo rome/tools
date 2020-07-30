@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from "@romefrontend/parser-core";
+import {SourceLocation} from "@internal/parser-core";
 
 export type SpaceToken = {
 	type: "Space";

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {doesNodeMatchPattern} from "@romefrontend/js-ast-utils";
-import {jsStringLiteral} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {doesNodeMatchPattern} from "@internal/js-ast-utils";
+import {jsStringLiteral} from "@internal/ast";
 
 export default createVisitor({
 	name: "inlineEnv",

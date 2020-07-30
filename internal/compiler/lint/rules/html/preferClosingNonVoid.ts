@@ -1,5 +1,5 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 import {VOID_DOM_ELEMENTS} from "../../utils/constants";
 
 export default createVisitor({

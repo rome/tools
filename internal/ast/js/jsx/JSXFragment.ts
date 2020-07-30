@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSXElement, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSXElement, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSXFragment extends NodeBaseWithComments {

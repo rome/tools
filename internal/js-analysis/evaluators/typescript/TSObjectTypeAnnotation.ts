@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSObjectTypeAnnotation,
 	tsObjectTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSObjectTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = tsObjectTypeAnnotation.assert(node);

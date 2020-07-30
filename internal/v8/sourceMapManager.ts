@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
-import {ErrorFrame} from "@romefrontend/v8";
-import {ob1Coerce1, ob1Coerce1To0} from "@romefrontend/ob1";
+import {SourceMapConsumerCollection} from "@internal/codec-source-map";
+import {ErrorFrame} from "@internal/v8";
+import {ob1Coerce1, ob1Coerce1To0} from "@internal/ob1";
 import {
 	ERROR_FRAMES_PROP,
 	ErrorWithFrames,

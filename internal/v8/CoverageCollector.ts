@@ -11,9 +11,9 @@ import {
 	CoverageLocationRange,
 	CoverageRangeWithMetadata,
 	LocationRangeKind,
-} from "@romefrontend/v8";
-import {SourceMapConsumer} from "@romefrontend/codec-source-map";
-import {Position} from "@romefrontend/parser-core";
+} from "@internal/v8";
+import {SourceMapConsumer} from "@internal/codec-source-map";
+import {Position} from "@internal/parser-core";
 import {urlToFilename} from "./utils";
 import {
 	Number0,
@@ -23,7 +23,7 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 import inspector = require("inspector");
 
 function createCoverageFileStats(

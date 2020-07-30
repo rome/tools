@@ -1,8 +1,8 @@
 import {test} from "rome";
-import {parseJS} from "@romefrontend/js-parser";
+import {parseJS} from "@internal/js-parser";
 import CompilerContext from "../lib/CompilerContext";
 import Scope from "./Scope";
-import {dedent} from "@romefrontend/string-utils";
+import {dedent} from "@internal/string-utils";
 import {signals} from "..";
 
 type ChildScopeMap = Map<Scope, Set<Scope>>;

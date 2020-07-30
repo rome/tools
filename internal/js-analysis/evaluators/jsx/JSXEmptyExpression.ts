@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSXEmptyExpression,
-	jsxEmptyExpression,
-} from "@romefrontend/ast";
+import {AnyNode, JSXEmptyExpression, jsxEmptyExpression} from "@internal/ast";
 
 export default function JSXEmptyExpression(node: AnyNode, scope: Scope) {
 	node = jsxEmptyExpression.assert(node);

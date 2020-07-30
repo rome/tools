@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 
 export function isUnaryLike(node: undefined | AnyNode): boolean {
 	if (node === undefined) {

@@ -9,10 +9,10 @@ import {
 	UnknownObject,
 	isIterable,
 	mergeObjects,
-} from "@romefrontend/typescript-helpers";
-import {escapeJSString} from "@romefrontend/string-escape";
-import {naturalCompare} from "@romefrontend/string-utils";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+} from "@internal/typescript-helpers";
+import {escapeJSString} from "@internal/string-escape";
+import {naturalCompare} from "@internal/string-utils";
+import {markupToPlainText} from "@internal/cli-layout";
 import {
 	AnyMarkup,
 	LazyMarkupFactory,
@@ -22,7 +22,7 @@ import {
 	markup,
 	markupTag,
 	readMarkup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 
 type RecursiveStack = Array<unknown>;
 

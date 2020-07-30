@@ -62,7 +62,7 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	absoluteType: ParsedPathAbsoluteType;
 	absoluteTarget: undefined | string;
 
-	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@romefrontend/pretty-format" but it causes a module cycle
+	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@internal/pretty-format" but it causes a module cycle
 	[Symbol.for("custom-pretty-format")](): string {
 		return `Path<${this.type}> ${this.join()}`;
 	}

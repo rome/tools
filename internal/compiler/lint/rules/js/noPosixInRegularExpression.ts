@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSRegExpCharSet} from "@romefrontend/ast";
-import {CompilerContext, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {JSRegExpCharSet} from "@internal/ast";
+import {CompilerContext, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 
 function checkRegEx(
 	node: JSRegExpCharSet,

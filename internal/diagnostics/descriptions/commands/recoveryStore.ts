@@ -1,6 +1,6 @@
 import {createDiagnosticsCategory} from "../index";
-import {markup} from "@romefrontend/markup";
-import stringDiff from "@romefrontend/string-diff";
+import {markup} from "@internal/markup";
+import stringDiff from "@internal/string-diff";
 
 export const recoveryStore = createDiagnosticsCategory({
 	NOT_FOUND: (storeId: string) => ({

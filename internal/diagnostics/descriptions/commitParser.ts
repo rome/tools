@@ -1,7 +1,7 @@
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 import {createDiagnosticsCategory} from "./index";
 
-// @romefrontend/commit-parser
+// @internal/commit-parser
 export const commitParser = createDiagnosticsCategory({
 	UNEXPECTED_TOKEN: {message: markup`Unexpected commit token`},
 	EMPTY_SCOPE: {message: markup`Empty commit scope`},

@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsClassDeclaration} from "@romefrontend/ast";
+import {AnyNode, jsClassDeclaration} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

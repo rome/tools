@@ -5,12 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from "@romefrontend/ast";
-import {
-	isTypeExpressionWrapperNode,
-	isTypeNode,
-} from "@romefrontend/js-ast-utils";
-import CommentsConsumer from "@romefrontend/js-parser/CommentsConsumer";
+import {AnyComment, AnyNode} from "@internal/ast";
+import {isTypeExpressionWrapperNode, isTypeNode} from "@internal/js-ast-utils";
+import CommentsConsumer from "@internal/js-parser/CommentsConsumer";
 import {
 	tokenizeComment,
 	tokenizeLeadingComment,
@@ -19,10 +16,10 @@ import {
 import builders from "./builders/index";
 import * as n from "./node/index";
 import {Token, Tokens, concat, hardline, indent, join, mark} from "./tokens";
-import {ob1Get1} from "@romefrontend/ob1";
-import {isRoot} from "@romefrontend/ast-utils";
-import {DiagnosticLanguage} from "@romefrontend/diagnostics";
-import {inferDiagnosticLanguageFromRootAST} from "@romefrontend/cli-diagnostics";
+import {ob1Get1} from "@internal/ob1";
+import {isRoot} from "@internal/ast-utils";
+import {DiagnosticLanguage} from "@internal/diagnostics";
+import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,

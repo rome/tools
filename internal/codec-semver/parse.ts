@@ -24,10 +24,10 @@ import {
 	createParser,
 	isAlpha,
 	isDigit,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 
-import {Number0, ob1Add} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+import {Number0, ob1Add} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 
 type ParseMode = "version" | "range";
 

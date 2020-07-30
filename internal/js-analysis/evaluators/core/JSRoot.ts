@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSRoot, jsRoot} from "@romefrontend/ast";
+import {AnyNode, JSRoot, jsRoot} from "@internal/ast";
 import JSBlockStatement from "../statements/JSBlockStatement";
 
 export default function JSRoot(node: AnyNode, scope: Scope) {

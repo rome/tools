@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONObject} from "@romefrontend/codec-json";
+import {JSONObject} from "@internal/codec-json";
 import T from "./types/T";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {ModuleSignature} from "./index";
 import ImportT from "./types/ImportT";
 import Intrinsics from "./Intrinsics";

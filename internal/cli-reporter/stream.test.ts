@@ -1,8 +1,8 @@
 import {ReporterStreamAttached} from "./types";
-import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import {TestHelper, test} from "rome";
 import Reporter from "./Reporter";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type StreamTestHelper = {
 	reporter: Reporter;

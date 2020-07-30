@@ -9,9 +9,9 @@ import {
 	Reporter,
 	ReporterConditionalStream,
 	ReporterOptions,
-} from "@romefrontend/cli-reporter";
-import {DEFAULT_TERMINAL_FEATURES} from "@romefrontend/cli-environment";
-import {AnyMarkup, markup} from "@romefrontend/markup";
+} from "@internal/cli-reporter";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
+import {AnyMarkup, markup} from "@internal/markup";
 
 export default class Logger extends Reporter {
 	constructor(

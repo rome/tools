@@ -11,10 +11,10 @@ import {
 	ParserOptions,
 	ValueToken,
 	createParser,
-} from "@romefrontend/parser-core";
-import {isEscaped} from "@romefrontend/string-utils";
-import {Number0, ob1Add, ob1Get0} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+} from "@internal/parser-core";
+import {isEscaped} from "@internal/string-utils";
+import {Number0, ob1Add, ob1Get0} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 
 type Tokens = BaseTokens & {
 	Hashes: ValueToken<"Hashes", number>;

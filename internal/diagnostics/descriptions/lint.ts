@@ -11,8 +11,8 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
-import {Markup, markup} from "@romefrontend/markup";
-import stringDiff from "@romefrontend/string-diff";
+import {Markup, markup} from "@internal/markup";
+import stringDiff from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 

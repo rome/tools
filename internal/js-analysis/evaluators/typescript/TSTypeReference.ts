@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeReference, tsTypeReference} from "@romefrontend/ast";
+import {AnyNode, TSTypeReference, tsTypeReference} from "@internal/ast";
 
 export default function TSTypeReference(node: AnyNode, scope: Scope) {
 	node = tsTypeReference.assert(node);

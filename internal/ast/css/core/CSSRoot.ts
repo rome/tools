@@ -3,8 +3,8 @@ import {
 	CSSRule,
 	NodeBaseWithComments,
 	RootBase,
-} from "@romefrontend/ast";
-import {createBuilder} from "@romefrontend/ast/utils";
+} from "@internal/ast";
+import {createBuilder} from "@internal/ast/utils";
 
 export type CSSRoot = NodeBaseWithComments &
 	RootBase & {

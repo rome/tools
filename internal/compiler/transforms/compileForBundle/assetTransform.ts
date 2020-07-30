@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {getOptions} from "./_utils";
-import {ASSET_EXPORT_TEMPORARY_VALUE} from "@romefrontend/core/common/file-handlers/index";
+import {ASSET_EXPORT_TEMPORARY_VALUE} from "@internal/core/common/file-handlers/index";
 
 export default createVisitor({
 	name: "asset",

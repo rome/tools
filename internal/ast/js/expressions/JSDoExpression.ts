@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBlockStatement, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSBlockStatement, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSDoExpression extends NodeBaseWithComments {

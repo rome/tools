@@ -10,7 +10,7 @@ import {
 	Scope,
 	createVisitor,
 	signals,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	AnyJSExpression,
 	AnyJSStatement,
@@ -33,8 +33,8 @@ import {
 	jsReturnStatement,
 	jsSequenceExpression,
 	jsStaticPropertyKey,
-} from "@romefrontend/ast";
-import {template} from "@romefrontend/js-ast-utils";
+} from "@internal/ast";
+import {template} from "@internal/js-ast-utils";
 
 function hasClassProps(node: JSClassDeclaration | JSClassExpression): boolean {
 	for (const bodyNode of node.meta.body) {

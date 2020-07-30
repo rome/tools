@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	JSAmbiguousFlowTypeCastExpression,
 	jsAmbiguousFlowTypeCastExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function JSAmbiguousFlowTypeCastExpression(node: AnyNode) {
 	node = jsAmbiguousFlowTypeCastExpression.assert(node);

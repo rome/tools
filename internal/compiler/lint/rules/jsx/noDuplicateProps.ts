@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {DiagnosticsDuplicateHelper} from "@romefrontend/compiler/lib/DiagnosticsDuplicateHelper";
-import {JSXAttribute} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {DiagnosticsDuplicateHelper} from "@internal/compiler/lib/DiagnosticsDuplicateHelper";
+import {JSXAttribute} from "@internal/ast";
 
 function getAttributeKey(node: JSXAttribute): string {
 	const name = node.name.name;

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSVariableIdentifier, AnyNode} from "@romefrontend/ast";
+import {AnyJSVariableIdentifier, AnyNode} from "@internal/ast";
 
 export function isVariableIdentifier(
 	node: AnyNode,

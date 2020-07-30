@@ -1,4 +1,4 @@
-import {AnyTSEntityName, JSReferenceIdentifier} from "@romefrontend/ast";
+import {AnyTSEntityName, JSReferenceIdentifier} from "@internal/ast";
 
 export function getTSQualifiedBaseFromEntityName(
 	entity: AnyTSEntityName,

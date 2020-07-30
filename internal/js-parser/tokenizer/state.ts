@@ -11,7 +11,7 @@ import {
 	ParserCoreState,
 	Position,
 	SourceLocation,
-} from "@romefrontend/parser-core";
+} from "@internal/parser-core";
 import {TokContext, types as ct} from "./context";
 import {TokenTypes, types as tt} from "./types";
 import {Token} from "..";
@@ -21,7 +21,7 @@ import {
 	ob1Number0,
 	ob1Number0Neg1,
 	ob1Number1,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 
 type Scopes = {[K in ScopeType]?: Array<unknown>};
 

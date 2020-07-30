@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSPatternMeta, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSPatternMeta, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSReferenceIdentifier extends NodeBaseWithComments {

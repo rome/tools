@@ -5,7 +5,7 @@ import {
 	ReporterStreamState,
 } from "./types";
 import {LogOptions} from "./Reporter";
-import {ansiEscapes} from "@romefrontend/cli-layout";
+import {ansiEscapes} from "@internal/cli-layout";
 import {
 	Number0,
 	ob1Add,
@@ -14,7 +14,7 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Sub,
-} from "@romefrontend/ob1";
+} from "@internal/ob1";
 
 export function getLeadingNewlineCount({state}: ReporterStreamAttached): number {
 	if (!state.leadingNewline) {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSBindingIdentifier, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSBindingIdentifier, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSImportSpecifierLocal extends NodeBaseWithComments {

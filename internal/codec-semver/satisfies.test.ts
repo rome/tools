@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import "@romefrontend/cli-layout";
-import {satisfiesSemver} from "@romefrontend/codec-semver";
+import "@internal/cli-layout";
+import {satisfiesSemver} from "@internal/codec-semver";
 import {test} from "rome";
 
 const looseOnly: Array<[string, string]> = [

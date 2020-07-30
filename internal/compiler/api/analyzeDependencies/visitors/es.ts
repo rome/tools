@@ -5,18 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	ConstJSExportModuleKind,
-	ConstJSImportModuleKind,
-} from "@romefrontend/ast";
-import {ImportBinding, createVisitor, signals} from "@romefrontend/compiler";
-import {AnalyzeDependencyName} from "@romefrontend/core";
+import {ConstJSExportModuleKind, ConstJSImportModuleKind} from "@internal/ast";
+import {ImportBinding, createVisitor, signals} from "@internal/compiler";
+import {AnalyzeDependencyName} from "@internal/core";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
 	isFunctionNode,
 	isInTypeAnnotation,
-} from "@romefrontend/js-ast-utils";
+} from "@internal/js-ast-utils";
 import {
 	ESExportRecord,
 	ExportRecord,

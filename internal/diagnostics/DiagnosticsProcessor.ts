@@ -14,15 +14,15 @@ import {
 	Diagnostics,
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
-import {naturalCompare} from "@romefrontend/string-utils";
+import {naturalCompare} from "@internal/string-utils";
 import {DiagnosticsError} from "./errors";
-import {ob1Get0} from "@romefrontend/ob1";
+import {ob1Get0} from "@internal/ob1";
 import {DiagnosticCategoryPrefix} from "./categories";
 import {descriptions} from "./descriptions";
-import {matchesSuppression} from "@romefrontend/compiler";
-import {SourceMapConsumerCollection} from "@romefrontend/codec-source-map";
+import {matchesSuppression} from "@internal/compiler";
+import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {MarkupFormatNormalizeOptions, readMarkup} from "@romefrontend/markup";
+import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
 
 type UniquePart =
 	| "filename"

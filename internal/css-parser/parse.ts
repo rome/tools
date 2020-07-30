@@ -5,9 +5,9 @@ import {
 	createParser,
 	isDigit,
 	isHexDigit,
-} from "@romefrontend/parser-core";
-import {DiagnosticCategory, descriptions} from "@romefrontend/diagnostics";
-import {Number0, ob1Add, ob1Inc} from "@romefrontend/ob1";
+} from "@internal/parser-core";
+import {DiagnosticCategory, descriptions} from "@internal/diagnostics";
+import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {
 	Symbols,
 	hexToUtf8,
@@ -26,7 +26,7 @@ import {
 	CSSFunction,
 	CSSRoot,
 	CSSRule,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 	class CSSParser extends ParserWithRequiredPath<Tokens> {

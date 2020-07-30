@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {MarkupRGB} from "@romefrontend/markup";
+import {TerminalFeatures} from "@internal/cli-environment";
+import {MarkupRGB} from "@internal/markup";
 
 const ESC = "\x1b";
 

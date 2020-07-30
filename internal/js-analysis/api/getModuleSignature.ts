@@ -11,12 +11,12 @@ import {
 	ModuleSignatureExport,
 	ModuleSignatureType,
 } from "../types";
-import {JSRoot} from "@romefrontend/ast";
+import {JSRoot} from "@internal/ast";
 import buildGraph from "./buildGraph";
 import T from "../types/T";
 import E from "../types/errors/E";
-import {TransformProjectDefinition} from "@romefrontend/compiler";
-import {Dict} from "@romefrontend/typescript-helpers";
+import {TransformProjectDefinition} from "@internal/compiler";
+import {Dict} from "@internal/typescript-helpers";
 
 const exportsCache: WeakMap<JSRoot, ModuleSignature> = new WeakMap();
 

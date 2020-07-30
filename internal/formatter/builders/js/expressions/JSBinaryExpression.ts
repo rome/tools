@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyNode,
-	JSBinaryExpression,
-	JSLogicalExpression,
-} from "@romefrontend/ast";
-import {getPrecedence, isBinary} from "@romefrontend/js-ast-utils";
+import {AnyNode, JSBinaryExpression, JSLogicalExpression} from "@internal/ast";
+import {getPrecedence, isBinary} from "@internal/js-ast-utils";
 import {
 	Builder,
 	Token,
@@ -18,7 +14,7 @@ import {
 	group,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function JSBinaryExpression(
 	builder: Builder,

@@ -1,11 +1,7 @@
-import {CommitRoot} from "@romefrontend/ast";
-import {descriptions} from "@romefrontend/diagnostics";
-import {Number0, ob1Add} from "@romefrontend/ob1";
-import {
-	ParserOptions,
-	TokenValues,
-	createParser,
-} from "@romefrontend/parser-core";
+import {CommitRoot} from "@internal/ast";
+import {descriptions} from "@internal/diagnostics";
+import {Number0, ob1Add} from "@internal/ob1";
+import {ParserOptions, TokenValues, createParser} from "@internal/parser-core";
 
 import {Symbols, Tokens} from "./types";
 

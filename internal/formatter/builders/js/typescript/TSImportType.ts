@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSImportType} from "@romefrontend/ast";
-import {Builder, Token, concat} from "@romefrontend/formatter";
+import {TSImportType} from "@internal/ast";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function TSImportType(
 	builder: Builder,

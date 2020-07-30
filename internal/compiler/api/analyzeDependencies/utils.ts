@@ -11,22 +11,22 @@ import {
 	ConstJSImportModuleKind,
 	JSBindingIdentifier,
 	JSReferenceIdentifier,
-} from "@romefrontend/ast";
-import {SourceLocation} from "@romefrontend/parser-core";
+} from "@internal/ast";
+import {SourceLocation} from "@internal/parser-core";
 import {
 	ClassBinding,
 	FunctionBinding,
 	Path,
 	Scope,
 	TypeBinding,
-} from "@romefrontend/compiler";
+} from "@internal/compiler";
 import {
 	AnalyzeDependency,
 	AnalyzeDependencyName,
 	AnalyzeDependencyResult,
 	AnalyzeExportValueType,
 	AnyAnalyzeExport,
-} from "@romefrontend/core";
+} from "@internal/core";
 
 export function isOptional(path: Path): boolean {
 	for (const {node} of path.ancestryPaths) {

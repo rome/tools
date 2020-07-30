@@ -14,10 +14,10 @@ import {
 	indent,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
-import {AnyNode, JSIfStatement} from "@romefrontend/ast";
-import {isStatement} from "@romefrontend/js-ast-utils";
+import {AnyNode, JSIfStatement} from "@internal/ast";
+import {isStatement} from "@internal/js-ast-utils";
 
 export default function JSIfStatement(
 	builder: Builder,

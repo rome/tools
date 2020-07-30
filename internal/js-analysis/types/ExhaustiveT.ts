@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import T, {SerialTypeFactory} from "./T";
 import {HumanBuilder} from "../Utils";
 import E, {ErrorDefinition} from "./errors/E";
 import AnyT from "./AnyT";
-import {descriptions} from "@romefrontend/diagnostics";
-import {Markup, markup} from "@romefrontend/markup";
+import {descriptions} from "@internal/diagnostics";
+import {Markup, markup} from "@internal/markup";
 
 class ENotExhaustive extends E {
 	constructor(

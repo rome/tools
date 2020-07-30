@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@romefrontend/consume";
-import {PathPatterns, parsePathPattern} from "@romefrontend/path-match";
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romefrontend/path";
+import {Consumer} from "@internal/consume";
+import {PathPatterns, parsePathPattern} from "@internal/path-match";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
 import {PROJECT_CONFIG_FILENAMES} from "./constants";
 

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSMetaProperty, jsMetaProperty} from "@romefrontend/ast";
+import {AnyNode, JSMetaProperty, jsMetaProperty} from "@internal/ast";
 
 export default function JSMetaProperty(node: AnyNode, scope: Scope) {
 	node = jsMetaProperty.assert(node);

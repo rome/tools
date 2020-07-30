@@ -8,7 +8,7 @@
 import {PathPattern, PathPatterns} from "./types";
 import {parsePattern, parsePatternsFile} from "./parse";
 import match from "./match";
-import {AbsoluteFilePath, PathSegments} from "@romefrontend/path";
+import {AbsoluteFilePath, PathSegments} from "@internal/path";
 
 export {PathPattern, PathPatterns};
 

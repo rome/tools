@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsSwitchCase} from "@romefrontend/ast";
+import {AnyNode, jsSwitchCase} from "@internal/ast";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

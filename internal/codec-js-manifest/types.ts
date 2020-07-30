@@ -6,17 +6,17 @@
  */
 
 import {ManifestDependencies} from "./dependencies";
-import {SPDXExpressionNode} from "@romefrontend/codec-spdx-license";
-import {SemverVersionNode} from "@romefrontend/codec-semver";
-import {Consumer} from "@romefrontend/consume";
+import {SPDXExpressionNode} from "@internal/codec-spdx-license";
+import {SemverVersionNode} from "@internal/codec-semver";
+import {Consumer} from "@internal/consume";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
 	RelativeFilePathMap,
-} from "@romefrontend/path";
-import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {PathPatterns} from "@romefrontend/path-match";
+} from "@internal/path";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {Dict} from "@internal/typescript-helpers";
+import {PathPatterns} from "@internal/path-match";
 
 export type StringObject = Dict<string>;
 

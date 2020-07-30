@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSObjectProperties, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSObjectProperties, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSObjectExpression extends NodeBaseWithComments {

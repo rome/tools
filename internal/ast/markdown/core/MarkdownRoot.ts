@@ -1,6 +1,6 @@
-import {NodeBaseWithComments, RootBase} from "@romefrontend/ast";
+import {NodeBaseWithComments, RootBase} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyMarkdownNode} from "@romefrontend/ast/markdown/unions";
+import {AnyMarkdownNode} from "@internal/ast/markdown/unions";
 
 export interface MarkdownRoot extends NodeBaseWithComments,
 RootBase {

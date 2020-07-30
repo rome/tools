@@ -10,7 +10,7 @@ import {
 	JSTemplateLiteral,
 	NodeBaseWithComments,
 	TSTypeParameterInstantiation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSTaggedTemplateExpression extends NodeBaseWithComments {

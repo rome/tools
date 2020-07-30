@@ -13,8 +13,8 @@ import {
 	indent,
 	lineOrSpace,
 	space,
-} from "@romefrontend/formatter";
-import {JSVariableDeclaration} from "@romefrontend/ast";
+} from "@internal/formatter";
+import {JSVariableDeclaration} from "@internal/ast";
 
 export default function JSVariableDeclaration(
 	builder: Builder,

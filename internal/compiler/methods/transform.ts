@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRoot} from "@romefrontend/ast";
-import {DiagnosticSuppressions, Diagnostics} from "@romefrontend/diagnostics";
+import {AnyRoot} from "@internal/ast";
+import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
 import {TransformRequest, TransformVisitors} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
-import {Cache} from "@romefrontend/compiler";
+import {Cache} from "@internal/compiler";
 import CompilerContext from "../lib/CompilerContext";
 
 type TransformResult = {

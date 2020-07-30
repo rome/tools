@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSStringKeywordTypeAnnotation,
 	tsStringKeywordTypeAnnotation,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import StringT from "../../types/StringT";
 
 export default function TSStringKeywordTypeAnnotation(

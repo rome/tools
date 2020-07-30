@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {markup} from "@romefrontend/markup";
-import {splitLines} from "@romefrontend/string-utils";
+import {markup} from "@internal/markup";
+import {splitLines} from "@internal/string-utils";
 import highlightShell from "./highlightShell";
 import highlightJS from "./highlightJS";
 import highlightHTML from "./highlightHTML";

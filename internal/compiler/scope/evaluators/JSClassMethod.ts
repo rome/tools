@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, jsClassMethod} from "@romefrontend/ast";
+import {AnyNode, jsClassMethod} from "@internal/ast";
 import {buildFunctionScope} from "../utils";
 import {createScopeEvaluator} from "./index";
 

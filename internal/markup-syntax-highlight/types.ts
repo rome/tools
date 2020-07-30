@@ -1,10 +1,7 @@
-import {Number0} from "@romefrontend/ob1";
-import {
-	DiagnosticLanguage,
-	DiagnosticSourceType,
-} from "@romefrontend/diagnostics";
-import {UnknownFilePath} from "@romefrontend/path";
-import {Markup, MarkupTokenType} from "@romefrontend/markup";
+import {Number0} from "@internal/ob1";
+import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
+import {UnknownFilePath} from "@internal/path";
+import {Markup, MarkupTokenType} from "@internal/markup";
 
 export type AnsiHighlightOptions = {
 	path: UnknownFilePath;

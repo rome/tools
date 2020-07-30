@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSArrayExpression, jsArrayExpression} from "@romefrontend/ast";
+import {AnyNode, JSArrayExpression, jsArrayExpression} from "@internal/ast";
 import InstanceT from "../../types/InstanceT";
 import OpenT from "../../types/OpenT";
 

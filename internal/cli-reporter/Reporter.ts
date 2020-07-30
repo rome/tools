@@ -11,7 +11,7 @@ import {
 	markupToAnsi,
 	markupToHtml,
 	markupToPlainText,
-} from "@romefrontend/cli-layout";
+} from "@internal/cli-layout";
 import {
 	AnyMarkup,
 	Markup,
@@ -25,7 +25,7 @@ import {
 	markupTag,
 	normalizeMarkup,
 	readMarkup,
-} from "@romefrontend/markup";
+} from "@internal/markup";
 import {
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
@@ -42,9 +42,9 @@ import {
 	SelectOptionsKeys,
 } from "./types";
 import Progress from "./Progress";
-import prettyFormat from "@romefrontend/pretty-format";
+import prettyFormat from "@internal/pretty-format";
 import stream = require("stream");
-import {CWD_PATH} from "@romefrontend/path";
+import {CWD_PATH} from "@internal/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
@@ -54,9 +54,9 @@ import {
 	Stdout,
 	TerminalFeatures,
 	inferTerminalFeatures,
-} from "@romefrontend/cli-environment";
+} from "@internal/cli-environment";
 import * as streamUtils from "./stream";
-import {mergeObjects} from "@romefrontend/typescript-helpers";
+import {mergeObjects} from "@internal/typescript-helpers";
 
 type ListOptions = {
 	reverse?: boolean;

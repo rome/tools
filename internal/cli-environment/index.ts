@@ -1,8 +1,8 @@
 import stream = require("stream");
 import tty = require("tty");
-import {Event} from "@romefrontend/events";
-import {mergeObjects} from "@romefrontend/typescript-helpers";
-import {Number1, ob1Coerce1} from "@romefrontend/ob1";
+import {Event} from "@internal/events";
+import {mergeObjects} from "@internal/typescript-helpers";
+import {Number1, ob1Coerce1} from "@internal/ob1";
 
 export type Stdout = stream.Writable | tty.WriteStream;
 

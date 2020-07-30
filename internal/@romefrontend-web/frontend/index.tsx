@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Bridge, createBridgeFromBrowserWebSocket} from '@romefrontend/events';
+import {Bridge, createBridgeFromBrowserWebSocket} from '@internal/events';
 import ClientPage from './ClientPage';
 import Button from './Button';
 import Spinner from './Spinner';
 import React = require('react');
 import ReactDOM = require('react-dom');
-import {WebServerRequest, WebServerClient} from '@romefrontend/core';
-import {humanizeTime} from '@romefrontend/string-utils';
+import {WebServerRequest, WebServerClient} from '@internal/core';
+import {humanizeTime} from '@internal/string-utils';
 
 const {css, injectGlobal} = require('emotion');
 

@@ -1,6 +1,6 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
-import {lstat, readDirectory, readFileText} from "@romefrontend/fs";
-import {AbsoluteFilePath} from "@romefrontend/path";
+import {lstat, readDirectory, readFileText} from "@internal/fs";
+import {AbsoluteFilePath} from "@internal/path";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
 

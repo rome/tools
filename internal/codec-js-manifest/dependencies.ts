@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from "@romefrontend/consume";
+import {Consumer} from "@internal/consume";
 import {
 	SemverRangeNode,
 	parseSemverRange,
 	stringifySemver,
-} from "@romefrontend/codec-semver";
-import {tryParseWithOptionalOffsetPosition} from "@romefrontend/parser-core";
-import {UnknownFilePath, createUnknownFilePath} from "@romefrontend/path";
+} from "@internal/codec-semver";
+import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
+import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
 import {normalizeName} from "./name";
-import {ob1Add} from "@romefrontend/ob1";
-import {descriptions} from "@romefrontend/diagnostics";
+import {ob1Add} from "@internal/ob1";
+import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
 export type DependencyPattern =

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {TSAssignmentTypeAssertion} from "@romefrontend/ast";
+import {TSAssignmentTypeAssertion} from "@internal/ast";
 
 export default function TSAssignmentTypeAssertion(
 	builder: Builder,

@@ -9,16 +9,16 @@ import {
 	AnalyzeDependencyResult,
 	BundlerMode,
 	FileReference,
-} from "@romefrontend/core";
-import {Path} from "@romefrontend/compiler";
-import {AnyRoot} from "@romefrontend/ast";
-import {ProjectConfig} from "@romefrontend/project";
+} from "@internal/core";
+import {Path} from "@internal/compiler";
+import {AnyRoot} from "@internal/ast";
+import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
-import {AbsoluteFilePath} from "@romefrontend/path";
-import {SourceMap} from "@romefrontend/codec-source-map";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {DiagnosticCategory} from "@romefrontend/diagnostics";
+import {AbsoluteFilePath} from "@internal/path";
+import {SourceMap} from "@internal/codec-source-map";
+import {Dict} from "@internal/typescript-helpers";
+import {DiagnosticCategory} from "@internal/diagnostics";
 
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";

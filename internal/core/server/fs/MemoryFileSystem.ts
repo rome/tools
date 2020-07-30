@@ -10,31 +10,28 @@ import {
 	Manifest,
 	ManifestDefinition,
 	normalizeManifest,
-} from "@romefrontend/codec-js-manifest";
+} from "@internal/codec-js-manifest";
 import {
 	PathPatterns,
 	matchPathPatterns,
 	parsePathPattern,
-} from "@romefrontend/path-match";
+} from "@internal/path-match";
 import {
 	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
-} from "@romefrontend/project";
-import {
-	DiagnosticsProcessor,
-	catchDiagnostics,
-} from "@romefrontend/diagnostics";
-import {Event} from "@romefrontend/events";
-import {consumeJSON} from "@romefrontend/codec-json";
+} from "@internal/project";
+import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
+import {Event} from "@internal/events";
+import {consumeJSON} from "@internal/codec-json";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-} from "@romefrontend/path";
+} from "@internal/path";
 import {
 	FSWatcher,
 	exists,
@@ -42,12 +39,12 @@ import {
 	readDirectory,
 	readFileText,
 	watch,
-} from "@romefrontend/fs";
+} from "@internal/fs";
 import {getFileHandlerFromPath} from "../../common/file-handlers/index";
 import crypto = require("crypto");
-import {FileNotFound} from "@romefrontend/core/common/FileNotFound";
-import {markup} from "@romefrontend/markup";
-import {ReporterNamespace} from "@romefrontend/cli-reporter";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {markup} from "@internal/markup";
+import {ReporterNamespace} from "@internal/cli-reporter";
 
 const DEFAULT_DENYLIST = [".hg", ".git"];
 

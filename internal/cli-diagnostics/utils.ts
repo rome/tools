@@ -8,19 +8,19 @@
 import {
 	AnsiHighlightOptions,
 	highlightCode,
-} from "@romefrontend/markup-syntax-highlight";
-import {nonASCIIwhitespace} from "@romefrontend/js-parser-utils";
-import {removeCarriageReturn, splitLines} from "@romefrontend/string-utils";
+} from "@internal/markup-syntax-highlight";
+import {nonASCIIwhitespace} from "@internal/js-parser-utils";
+import {removeCarriageReturn, splitLines} from "@internal/string-utils";
 import {
 	Markup,
 	convertToMarkupFromRandomString,
 	joinMarkupLines,
 	markup,
 	readMarkup,
-} from "@romefrontend/markup";
-import {AnyRoot} from "@romefrontend/ast";
-import {DiagnosticLanguage} from "@romefrontend/diagnostics";
-import {markupToPlainText} from "@romefrontend/cli-layout";
+} from "@internal/markup";
+import {AnyRoot} from "@internal/ast";
+import {DiagnosticLanguage} from "@internal/diagnostics";
+import {markupToPlainText} from "@internal/cli-layout";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 

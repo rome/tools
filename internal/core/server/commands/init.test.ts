@@ -1,6 +1,6 @@
 import {test} from "rome";
-import {createIntegrationTest} from "@romefrontend/test-helpers";
-import {dedent} from "@romefrontend/string-utils";
+import {createIntegrationTest} from "@internal/test-helpers";
+import {dedent} from "@internal/string-utils";
 
 test(
 	"should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",

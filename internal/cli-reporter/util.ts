@@ -8,7 +8,7 @@
 import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
-import {Markup, markup} from "@romefrontend/markup";
+import {Markup, markup} from "@internal/markup";
 
 export function mergeProgresses(
 	progresses: Array<ReporterProgress>,

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
-import {JSAssignmentExpression} from "@romefrontend/ast";
+import {JSAssignmentExpression} from "@internal/ast";
 import {printAssignment} from "../utils";
 
 export default function JSAssignmentExpression(

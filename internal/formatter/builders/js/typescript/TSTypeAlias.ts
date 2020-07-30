@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, group, space} from "@romefrontend/formatter";
-import {TSTypeAlias} from "@romefrontend/ast";
+import {Builder, Token, concat, group, space} from "@internal/formatter";
+import {TSTypeAlias} from "@internal/ast";
 
 export default function TSTypeAlias(builder: Builder, node: TSTypeAlias): Token {
 	return group(

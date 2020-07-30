@@ -8,8 +8,8 @@
 import {test} from "rome";
 import {extractSuppressionsFromProgram} from "./suppressions";
 import CompilerContext from "./lib/CompilerContext";
-import {parseJS} from "@romefrontend/js-parser";
-import {dedent} from "@romefrontend/string-utils";
+import {parseJS} from "@internal/js-parser";
+import {dedent} from "@internal/string-utils";
 
 function extractSuppressionsFromSource(sourceText: string) {
 	const ast = parseJS({
@@ -231,7 +231,7 @@ test(
 			boo()
 
 			// romefrontend-disable foo
-			boo()	
+			boo()
   `,
 		);
 

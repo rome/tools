@@ -11,7 +11,7 @@ import {
 	JSFunctionHead,
 	JSStaticPropertyKey,
 	NodeBaseWithComments,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export type JSObjectMethodKind = "get" | "set" | "method";

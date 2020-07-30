@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
-// @romefrontend/project
+// @internal/project
 export const projectConfig = createDiagnosticsCategory({
 	BOOLEAN_CATEGORY: (enabled: boolean) => ({
 		message: markup`Expected an object here but got a boolean`,

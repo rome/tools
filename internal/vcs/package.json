@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/vcs",
+	"name": "@internal/vcs",
 	"private": true,
 	"type": "module",
 	"main": "index.ts"

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSImportSpecifierLocal, NodeBaseWithComments} from "@romefrontend/ast";
+import {JSImportSpecifierLocal, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface JSImportDefaultSpecifier extends NodeBaseWithComments {

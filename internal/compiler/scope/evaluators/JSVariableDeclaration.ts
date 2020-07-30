@@ -6,9 +6,9 @@
  */
 
 import Scope from "../Scope";
-import {ConstBinding, LetBinding} from "@romefrontend/compiler";
-import {AnyNode, jsVariableDeclaration} from "@romefrontend/ast";
-import {getBindingIdentifiers} from "@romefrontend/js-ast-utils";
+import {ConstBinding, LetBinding} from "@internal/compiler";
+import {AnyNode, jsVariableDeclaration} from "@internal/ast";
+import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({

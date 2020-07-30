@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {JSTemplateElement, jsStringLiteral} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {JSTemplateElement, jsStringLiteral} from "@internal/ast";
 
 function containsSpecialCharacters(node: JSTemplateElement): boolean {
 	return /['"\n]/.test(node.raw);

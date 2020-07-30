@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSArrowFunctionExpression} from "@romefrontend/ast";
+import {JSArrowFunctionExpression} from "@internal/ast";
 import {
 	Builder,
 	Token,
@@ -15,7 +15,7 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from "@romefrontend/formatter";
+} from "@internal/formatter";
 
 export default function JSArrowFunctionExpression(
 	builder: Builder,

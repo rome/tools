@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSImportEqualsDeclaration,
 	tsImportEqualsDeclaration,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default function TSImportEqualsDeclaration(node: AnyNode) {
 	node = tsImportEqualsDeclaration.assert(node);

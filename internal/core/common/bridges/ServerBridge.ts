@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Profile} from "@romefrontend/v8";
-import {Diagnostics} from "@romefrontend/diagnostics";
+import {Profile} from "@internal/v8";
+import {Diagnostics} from "@internal/diagnostics";
 import {ClientFlagsJSON, ClientRequestFlags} from "../types/client";
-import {Bridge} from "@romefrontend/events";
-import {JSONObject, JSONPropertyValue} from "@romefrontend/codec-json";
-import {ReporterStream, ReporterStreamState} from "@romefrontend/cli-reporter";
+import {Bridge} from "@internal/events";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
-import {TerminalFeatures} from "@romefrontend/cli-environment";
-import {Dict} from "@romefrontend/typescript-helpers";
-import {RecoverySaveFile} from "@romefrontend/core/server/fs/RecoveryStore";
+import {TerminalFeatures} from "@internal/cli-environment";
+import {Dict} from "@internal/typescript-helpers";
+import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;

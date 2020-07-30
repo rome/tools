@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSExpression, NodeBaseWithComments} from "@romefrontend/ast";
+import {AnyJSExpression, NodeBaseWithComments} from "@internal/ast";
 import {createQuickBuilder} from "../../utils";
 
 export interface JSReturnStatement extends NodeBaseWithComments {

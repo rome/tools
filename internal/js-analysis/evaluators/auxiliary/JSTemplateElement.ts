@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSTemplateElement, jsTemplateElement} from "@romefrontend/ast";
+import {AnyNode, JSTemplateElement, jsTemplateElement} from "@internal/ast";
 
 export default function JSTemplateElement(node: AnyNode, scope: Scope) {
 	node = jsTemplateElement.assert(node);

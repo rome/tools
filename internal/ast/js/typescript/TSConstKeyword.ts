@@ -1,4 +1,4 @@
-import {NodeBaseWithComments} from "@romefrontend/ast";
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSConstKeyword extends NodeBaseWithComments {

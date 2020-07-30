@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
-import {Diagnostics} from "@romefrontend/diagnostics";
-import {Consumer} from "@romefrontend/consume";
+import {ServerRequest} from "@internal/core";
+import {Diagnostics} from "@internal/diagnostics";
+import {Consumer} from "@internal/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import TestServerRunner from "../testing/TestServerRunner";
 import Bundler from "../bundler/Bundler";
 import {JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {TestServerRunnerOptions, TestSources} from "../testing/types";
-import {markup} from "@romefrontend/markup";
+import {markup} from "@internal/markup";
 
 type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
 

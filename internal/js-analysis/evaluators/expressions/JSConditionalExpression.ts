@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode} from "@romefrontend/ast";
+import {AnyNode} from "@internal/ast";
 import JSIfStatement from "../statements/JSIfStatement";
 
 export default function JSConditionalExpression(node: AnyNode, scope: Scope) {

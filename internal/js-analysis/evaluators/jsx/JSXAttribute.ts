@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXAttribute, jsxAttribute} from "@romefrontend/ast";
+import {AnyNode, JSXAttribute, jsxAttribute} from "@internal/ast";
 
 export default function JSXAttribute(node: AnyNode, scope: Scope) {
 	node = jsxAttribute.assert(node);

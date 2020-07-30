@@ -9,7 +9,7 @@ import {
 	ServerBridge,
 	ServerQueryRequest,
 	ServerQueryResponse,
-} from "@romefrontend/core";
+} from "@internal/core";
 import {
 	DiagnosticOrigin,
 	Diagnostics,
@@ -18,15 +18,15 @@ import {
 	deriveDiagnosticFromError,
 	descriptions,
 	getDiagnosticsFromError,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
 	DiagnosticsFileReaders,
 	DiagnosticsPrinter,
 	printDiagnostics,
-} from "@romefrontend/cli-diagnostics";
-import {ConsumePath, consume} from "@romefrontend/consume";
-import {Event, EventSubscription} from "@romefrontend/events";
+} from "@internal/cli-diagnostics";
+import {ConsumePath, consume} from "@internal/consume";
+import {Event, EventSubscription} from "@internal/events";
 import ServerRequest, {
 	EMPTY_SUCCESS_RESPONSE,
 	ServerRequestCancelled,
@@ -39,8 +39,8 @@ import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
-import {Reporter} from "@romefrontend/cli-reporter";
-import {Profiler} from "@romefrontend/v8";
+import {Reporter} from "@internal/cli-reporter";
+import {Profiler} from "@internal/v8";
 import {
 	PartialServerQueryRequest,
 	ProfilingStartData,
@@ -57,18 +57,18 @@ import {
 	AbsoluteFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from "@romefrontend/path";
-import {Dict, mergeObjects} from "@romefrontend/typescript-helpers";
+} from "@internal/path";
+import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
-import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
-import {toKebabCase} from "@romefrontend/string-utils";
+import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
+import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
-import {getEnvVar} from "@romefrontend/cli-environment";
-import {markup} from "@romefrontend/markup";
-import prettyFormat from "@romefrontend/pretty-format";
-import {convertPossibleNodeErrorToDiagnostic} from "@romefrontend/node";
+import {getEnvVar} from "@internal/cli-environment";
+import {markup} from "@internal/markup";
+import prettyFormat from "@internal/pretty-format";
+import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
 import RecoveryStore from "./fs/RecoveryStore";
 
 export type ServerClient = {

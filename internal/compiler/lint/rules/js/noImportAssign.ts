@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {Path, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 
 function isAssignment(path: Path): boolean {
 	switch (path.parentPath.node.type) {

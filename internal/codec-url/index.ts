@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consume, consumeUnknown} from "@romefrontend/consume";
+import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import url = require("url");
 
-import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
+import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 
 export type ConsumableUrl = {
 	path: Consumer;

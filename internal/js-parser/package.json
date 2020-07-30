@@ -1,5 +1,5 @@
 {
-	"name": "@romefrontend/js-parser",
+	"name": "@internal/js-parser",
 	"private": true,
 	"type": "module",
 	"main": "index.ts",

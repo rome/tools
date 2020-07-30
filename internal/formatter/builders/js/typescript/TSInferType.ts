@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInferType} from "@romefrontend/ast";
-import {Builder, Token, concat, space} from "@romefrontend/formatter";
+import {TSInferType} from "@internal/ast";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function TSInferType(builder: Builder, node: TSInferType): Token {
 	return concat(["infer", space, builder.tokenize(node.typeParameter, node)]);

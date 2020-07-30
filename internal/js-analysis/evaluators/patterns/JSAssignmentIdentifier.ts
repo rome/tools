@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, jsAssignmentIdentifier} from "@romefrontend/ast";
+import {AnyNode, jsAssignmentIdentifier} from "@internal/ast";
 
 export default function JSAssignmentIdentifier(node: AnyNode, scope: Scope) {
 	node = jsAssignmentIdentifier.assert(node);

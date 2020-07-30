@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSRegExpBodyItem, AnyJSRegExpExpression} from "@romefrontend/ast";
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
+import {AnyJSRegExpBodyItem, AnyJSRegExpExpression} from "@internal/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
 
 function isQuantifiedMinZero(el: AnyJSRegExpBodyItem): boolean {
 	return el.type === "JSRegExpQuantified" && el.min === 0;

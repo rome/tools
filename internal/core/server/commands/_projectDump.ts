@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@romefrontend/core";
+import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {ProjectDefinition} from "@romefrontend/project";
-import {markup} from "@romefrontend/markup";
+import {ProjectDefinition} from "@internal/project";
+import {markup} from "@internal/markup";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,

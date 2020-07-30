@@ -25,14 +25,14 @@ import {
 	deriveDiagnosticFromError,
 	descriptions,
 	getDiagnosticsFromError,
-} from "@romefrontend/diagnostics";
+} from "@internal/diagnostics";
 import {
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 	printDiagnostics,
-} from "@romefrontend/cli-diagnostics";
-import {ProjectDefinition} from "@romefrontend/project";
+} from "@internal/cli-diagnostics";
+import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions, ResolverQueryResponseFound} from "./fs/Resolver";
 import {BundlerConfig} from "../common/types/bundler";
 import ServerBridge, {
@@ -45,19 +45,19 @@ import Server, {
 	ServerMarker,
 	ServerUnfinishedMarker,
 } from "./Server";
-import {Reporter, ReporterNamespace} from "@romefrontend/cli-reporter";
+import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {
 	Event,
 	EventSubscription,
 	mergeEventSubscriptions,
-} from "@romefrontend/events";
+} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLITarget,
 	serializeCLIFlags,
-} from "@romefrontend/cli-flags";
-import {AnyRoot} from "@romefrontend/ast";
-import {TransformStageName} from "@romefrontend/compiler";
+} from "@internal/cli-flags";
+import {AnyRoot} from "@internal/ast";
+import {TransformStageName} from "@internal/compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,
@@ -70,7 +70,7 @@ import WorkerBridge, {
 	WorkerParseOptions,
 	WorkerUpdateInlineSnapshotResult,
 } from "../common/bridges/WorkerBridge";
-import {ModuleSignature} from "@romefrontend/js-analysis";
+import {ModuleSignature} from "@internal/js-analysis";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -78,22 +78,18 @@ import {
 	UnknownFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from "@romefrontend/path";
+} from "@internal/path";
 import crypto = require("crypto");
-import {
-	Dict,
-	RequiredProps,
-	mergeObjects,
-} from "@romefrontend/typescript-helpers";
-import {ob1Coerce0, ob1Number0, ob1Number1} from "@romefrontend/ob1";
+import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
+import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
-import {markup, readMarkup} from "@romefrontend/markup";
-import {DiagnosticsProcessorOptions} from "@romefrontend/diagnostics/DiagnosticsProcessor";
-import {JSONObject} from "@romefrontend/codec-json";
-import {VCSClient} from "@romefrontend/vcs";
+import {markup, readMarkup} from "@internal/markup";
+import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
+import {JSONObject} from "@internal/codec-json";
+import {VCSClient} from "@internal/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {CacheEntry} from "./Cache";
-import {FormatterOptions} from "@romefrontend/formatter";
+import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 
 type ServerRequestOptions = {

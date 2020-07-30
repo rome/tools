@@ -1,6 +1,6 @@
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {descriptions} from "@romefrontend/diagnostics";
-import {AnyNode, JSIdentifier} from "@romefrontend/ast";
+import {createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+import {AnyNode, JSIdentifier} from "@internal/ast";
 
 const UNSAFE_METHODS = [
 	{

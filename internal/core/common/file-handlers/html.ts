@@ -6,7 +6,7 @@
  */
 
 import {ExtensionHandler} from "./types";
-import {parseHTML} from "@romefrontend/html-parser";
+import {parseHTML} from "@internal/html-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not

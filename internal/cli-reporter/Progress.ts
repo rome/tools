@@ -5,21 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	humanizeNumber,
-	humanizeTime,
-	splitChars,
-} from "@romefrontend/string-utils";
-import {Reporter} from "@romefrontend/cli-reporter";
+import {humanizeNumber, humanizeTime, splitChars} from "@internal/string-utils";
+import {Reporter} from "@internal/cli-reporter";
 import {
 	ReporterProgressOptions,
 	ReporterStream,
 	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {Markup} from "@romefrontend/markup";
-import {formatAnsi} from "@romefrontend/cli-layout";
-import {Number1, ob1Get1} from "@romefrontend/ob1";
+import {Markup} from "@internal/markup";
+import {formatAnsi} from "@internal/cli-layout";
+import {Number1, ob1Get1} from "@internal/ob1";
 import * as streamUtils from "./stream";
 
 type BoldRanges = Array<[number, number]>;

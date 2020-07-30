@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createVisitor, signals} from "@romefrontend/compiler";
-import {template} from "@romefrontend/js-ast-utils";
+import {createVisitor, signals} from "@internal/compiler";
+import {template} from "@internal/js-ast-utils";
 import {bindingInjector} from "../../defaultHooks/index";
 import {
 	JSCallExpression,
@@ -17,7 +17,7 @@ import {
 	jsMemberExpression,
 	jsNullLiteral,
 	jsSequenceExpression,
-} from "@romefrontend/ast";
+} from "@internal/ast";
 
 export default createVisitor({
 	name: "callSpread",
