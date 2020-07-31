@@ -29,7 +29,7 @@ https.get(options , resp => {
         if(forkList && forkList.length > 0) {
             forkList.forEach(function(fork)  {
                 // fork.owner -> contains user information of a single person
-                // console.log(fork.owner.login)
+                console.log(fork.owner.login)
             })
         } else {
             forkList = [];
