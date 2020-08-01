@@ -1,9 +1,9 @@
 ---
-title: This is my first post
+title: Initial release
 description: This is a post on My Blog about agile frameworks.
 author_name: Sebastian McKenzie
 author_url: https://twitter.com/sebmck
-date: 2018-05-03
+date: 2020-08-03
 tags:
 	- post
 	- another
