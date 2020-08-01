@@ -724,14 +724,6 @@ export default class Server {
 			throw new Error("Expected bridgeEndEvent to have been initialized");
 		}
 
-		// Support a silent option on requests so they don't write output
-		let reporter = client.reporter;
-		if (query.silent) {
-			reporter = reporter.fork({
-				streams: [],
-			});
-		}
-
 		const req = new ServerRequest({
 			client,
 			query,
@@ -792,7 +784,7 @@ export default class Server {
 		const warmupTook = Date.now() - warmupStart;
 
 		// Benchmark
-		const progress = client.reporter.progress({title: markup`Running benchmark`});
+		const progress = req.reporter.progress({title: markup`Running benchmark`});
 		progress.setTotal(benchmarkIterations);
 		const benchmarkStart = Date.now();
 		for (let i = 0; i < benchmarkIterations; i++) {
