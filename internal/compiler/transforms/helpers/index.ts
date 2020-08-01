@@ -39,6 +39,8 @@ export function injectBinding(
 		return {
 			bindings: [...state.bindings, [name, init]],
 		};
+	}, {
+		required: true,
 	});
 
 	return [ref, ass];
@@ -118,6 +120,8 @@ export function injectComment(path: Path, comment: AnyCommentOptionalId): string
 		return {
 			comments: [...state.comments, commentWithId],
 		};
+	}, {
+		required: true,
 	});
 
 	return commentWithId.id;

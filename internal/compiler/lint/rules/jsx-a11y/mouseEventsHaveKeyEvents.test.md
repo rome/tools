@@ -119,3 +119,63 @@
 </div>;
 
 ```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+<div onMouseOver={() => void 0} onFocus={() => void 0} />;
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+<div onMouseOut={() => void 0} onBlur={() => void 0} />;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+<div onMouseOver={() => void 0} onFocus={() => void 0}>
+	{props}
+</div>;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+<div onMouseOut={() => void 0} onBlur={() => void 0}>
+	{props}
+</div>;
+
+```
