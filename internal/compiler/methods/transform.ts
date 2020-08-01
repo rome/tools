@@ -7,7 +7,7 @@
 
 import {AnyRoot} from "@internal/ast";
 import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
-import {TransformRequest, TransformVisitors} from "../types";
+import {AnyVisitors, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";
 import CompilerContext from "../lib/CompilerContext";
@@ -69,9 +69,7 @@ export default async function transform(
 	const transformFactory = stageTransforms[stage];
 	const transforms = transformFactory(project.config, options);
 
-	let visitors: TransformVisitors = await context.normalizeTransforms(
-		transforms,
-	);
+	let visitors: AnyVisitors = await context.normalizeTransforms(transforms);
 
 	const compiledAst = context.reduceRoot(visitors);
 

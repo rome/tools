@@ -1,91 +1,20 @@
-import {AnyNode} from "@internal/ast";
-import {
-	Path,
-	Scope,
-	createHook,
-	createVisitor,
-	signals,
-} from "@internal/compiler";
+import {Scope, createVisitor, signals} from "@internal/compiler";
 import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {Dict} from "@internal/typescript-helpers";
 import {ArgumentsBinding, TypeBinding} from "@internal/compiler/scope/bindings";
 import {descriptions} from "@internal/diagnostics";
-import {HookCallReturn} from "@internal/compiler/api/createHook";
 
 type State = {
 	usedBindings: Dict<boolean>;
 	scope: undefined | Scope;
 };
 
-const initialState: State = {
-	usedBindings: {},
-	scope: undefined,
-};
-
 // Common variables that are sometimes impossible to avoid
 const ignoreVariables = ["React"];
 
-const provider = createHook<State, undefined, AnyNode>({
-	name: "js/noUnusedVariablesProvider",
-	initialState,
-	call(path: Path, state: State): HookCallReturn<AnyNode, State> {
-		const {node} = path;
-		if (
-			node.type !== "JSReferenceIdentifier" &&
-			node.type !== "JSXReferenceIdentifier"
-		) {
-			throw new Error("Expected only JSIdentifier to be dispatched");
-		}
-
-		const binding = path.scope.getBindingFromPath(path);
-
-		// Check if this binding belongs to the scope we're tracking
-		if (binding === undefined || binding.scope !== state.scope) {
-			return {
-				bubble: true,
-				value: node,
-				state,
-			};
-		}
-
-		// Mark this binding as used
-		return {
-			value: node,
-			state: {
-				...state,
-				// @ts-ignore https://github.com/microsoft/TypeScript/issues/39278
-				usedBindings: {
-					...state.usedBindings,
-					[node.name]: true,
-				},
-			},
-		};
-	},
-
-	exit(path, state) {
-		for (const name in state.usedBindings) {
-			const used = state.usedBindings[name];
-			const binding = path.scope.getBinding(name);
-
-			if (
-				used === false &&
-				binding !== undefined &&
-				!ignoreVariables.includes(name)
-			) {
-				path.context.addNodeDiagnostic(
-					binding.node,
-					descriptions.LINT.JS_NO_UNUSED_VARIABLES(binding.kind, name),
-				);
-			}
-		}
-
-		return signals.retain;
-	},
-});
-
-export default createVisitor({
+export default createVisitor<State>({
 	name: "js/unusedVariables",
-	enter(path) {
+	enter(path, state) {
 		const {node, scope} = path;
 
 		if (scope.node === node) {
@@ -179,20 +108,60 @@ export default createVisitor({
 				usedBindings[node.id.name] = true;
 			}
 
-			return path.provideHook(
-				provider,
-				{
-					usedBindings,
-					scope,
-				},
-			);
+			state.reset({
+				usedBindings,
+				scope,
+			});
 		}
 
 		if (
 			node.type === "JSXReferenceIdentifier" ||
 			node.type === "JSReferenceIdentifier"
 		) {
-			return signals.replace(path.callHook(provider, undefined, node));
+			const binding = path.scope.getBindingFromPath(path);
+
+			if (binding !== undefined) {
+				state.set(
+					(state): State => {
+						return {
+							...state,
+							usedBindings: {
+								// @ts-ignore
+								...state.usedBindings,
+								[node.name]: true,
+							},
+						};
+					},
+					{
+						find: (state) => {
+							return binding.scope === state.scope;
+						},
+					},
+				);
+			}
+		}
+
+		return signals.retain;
+	},
+
+	exit(path, state) {
+		if (state.owns()) {
+			const {usedBindings} = state.get();
+			for (const name in usedBindings) {
+				const used = usedBindings[name];
+				const binding = path.scope.getBinding(name);
+
+				if (
+					used === false &&
+					binding !== undefined &&
+					!ignoreVariables.includes(name)
+				) {
+					path.context.addNodeDiagnostic(
+						binding.node,
+						descriptions.LINT.JS_NO_UNUSED_VARIABLES(binding.kind, name),
+					);
+				}
+			}
 		}
 
 		return signals.retain;

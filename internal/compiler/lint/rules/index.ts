@@ -116,8 +116,9 @@ import stylePropObject from "./react/stylePropObject";
 import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
 import noExplicitAny from "./ts/noExplicitAny";
 import preferInterfaces from "./ts/preferInterfaces";
+import {AnyVisitors} from "@internal/compiler/types";
 
-export const lintTransforms = [
+export const lintTransforms: AnyVisitors = [
 	preferClosingNonVoid,
 	camelCase,
 	caseSingleStatement,

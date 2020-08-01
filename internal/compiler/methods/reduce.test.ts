@@ -1,27 +1,25 @@
 import {TestHelper, test} from "rome";
 import {parseJS} from "@internal/js-parser";
 import {removeLoc} from "@internal/ast-utils";
-import {TransformVisitor} from "../types";
+import {AnyVisitor} from "../types";
 import {CompilerContext, signals} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 
 function createReduceTest(
 	input: string,
-	visitor: Omit<TransformVisitor, "name">,
+	visitor: Omit<AnyVisitor, "name">,
 ): (t: TestHelper) => void {
 	return (t) => {
 		const oldAst = parseJS({input, path: "unknown"});
 		const context = new CompilerContext({
 			ast: oldAst,
 		});
-		const newAst = context.reduceRoot(
-			[
-				{
-					...visitor,
-					name: "testVisitor",
-				},
-			],
-		);
+		const newAst = context.reduceRoot([
+			{
+				...visitor,
+				name: "testVisitor",
+			},
+		]);
 		t.namedSnapshot("ast", removeLoc(newAst));
 		t.namedSnapshot("formatted", formatAST(newAst));
 	};

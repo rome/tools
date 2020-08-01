@@ -17,9 +17,9 @@ import {
 	extractSourceLocationRangeFromNodes,
 } from "@internal/parser-core";
 import {
+	AnyVisitors,
 	CompilerOptions,
 	PathOptions,
-	TransformVisitors,
 	Transforms,
 } from "@internal/compiler";
 import {
@@ -38,15 +38,14 @@ import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
 import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
 import {
+	AnyVisitor,
 	LintCompilerOptionsDecision,
 	TransformProjectDefinition,
-	TransformVisitor,
+	Visitor,
 } from "../types";
-import {
-	matchesSuppression, createSuppressionsVisitor,
-} from "../suppressions";
+import {createSuppressionsVisitor, matchesSuppression} from "../suppressions";
 import {CommentsConsumer} from "@internal/js-parser";
-import {hookVisitors} from "../transforms";
+import {helperVisitors} from "../transforms";
 import {FileReference} from "@internal/core";
 import {createDefaultProjectConfig} from "@internal/project";
 import {
@@ -58,9 +57,10 @@ import {
 import {isRoot} from "@internal/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics/utils";
 import {Markup, markup} from "@internal/markup";
-import suppressionVisitor from "../transforms/suppressionVisitor";
 import cleanTransform from "../transforms/cleanTransform";
 import {assertSingleNode} from "@internal/js-ast-utils";
+import VisitorState, {AnyVisitorState} from "./VisitorState";
+import {UnknownObject} from "@internal/typescript-helpers";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -130,8 +130,11 @@ export default class CompilerContext {
 		this.reducedRoot = false;
 		this.suppressions = suppressions;
 		this.visitSuppressions = arg.suppressions === undefined;
+
+		this.visitorStates = new Map();
 	}
 
+	visitorStates: Map<AnyVisitor, AnyVisitorState>;
 	displayFilename: string;
 	filename: string;
 	mtime: undefined | number;
@@ -155,7 +158,18 @@ export default class CompilerContext {
 	origin: undefined | DiagnosticOrigin;
 	options: CompilerOptions;
 
-	async normalizeTransforms(transforms: Transforms): Promise<TransformVisitors> {
+	getVisitorState<State extends UnknownObject>(
+		visitor: Visitor<State>,
+	): VisitorState<State> {
+		let state = this.visitorStates.get(visitor);
+		if (state === undefined) {
+			state = new VisitorState();
+			this.visitorStates.set(visitor, state);
+		}
+		return (state as VisitorState<State>);
+	}
+
+	async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
 				if (typeof visitor === "function") {
@@ -227,7 +241,7 @@ export default class CompilerContext {
 	}
 
 	reduceRoot(
-		visitors: TransformVisitor | TransformVisitors,
+		visitors: AnyVisitor | AnyVisitors,
 		pathOpts?: PathOptions,
 	): AnyRoot {
 		if (this.reducedRoot) {
@@ -239,8 +253,7 @@ export default class CompilerContext {
 				this.ast,
 				[
 					createSuppressionsVisitor(),
-					suppressionVisitor,
-					...hookVisitors,
+					...helperVisitors,
 					cleanTransform,
 					...(Array.isArray(visitors) ? visitors : [visitors]),
 				],
@@ -261,7 +274,7 @@ export default class CompilerContext {
 
 	reduce(
 		ast: AnyNode,
-		visitors: TransformVisitor | TransformVisitors,
+		visitors: AnyVisitor | AnyVisitors,
 		pathOpts?: PathOptions,
 	): AnyNodes {
 		return reduceNode(ast, visitors, this, pathOpts);

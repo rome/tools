@@ -10,8 +10,8 @@ import {CompilerContext, signals} from "@internal/compiler";
 import {Number1, ob1Get1} from "@internal/ob1";
 import Path from "../lib/Path";
 import {SUPPRESSION_START} from "../suppressions";
-import {commentInjector} from "../transforms/defaultHooks/index";
 import {LintCompilerOptionsDecision} from "../types";
+import {injectComment} from "../transforms/helpers";
 
 function getStartLine(node: AnyNode): undefined | Number1 {
 	const {loc} = node;
@@ -63,8 +63,8 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 
 		// Insert new comment if there's none to update
 		if (updateComment === undefined) {
-			const id = path.callHook(
-				commentInjector,
+			const id = injectComment(
+				path,
 				{
 					type: "CommentLine",
 					value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
@@ -86,8 +86,8 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 
 		// We may have eliminated them all
 		if (suppressionCategories.size > 0) {
-			path.callHook(
-				commentInjector,
+			injectComment(
+				path,
 				{
 					...updateComment,
 					value: updateComment.value.replace(
@@ -102,35 +102,32 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 	}
 
 	// Find the best node to attach comments to. This is generally the node with the largest range per line.
-	return context.reduceRoot(
-		ast,
-		{
-			name: "suppressionVisitor",
-			enter(path) {
-				const {node} = path;
+	return context.reduceRoot({
+		name: "suppressionVisitor",
+		enter(path) {
+			const {node} = path;
 
-				// Don't allow attaching suppression comments to a comment or program...
-				if (
-					node.type === "CommentBlock" ||
-					node.type === "CommentLine" ||
-					node.type === "JSRoot"
-				) {
-					return signals.retain;
-				}
+			// Don't allow attaching suppression comments to a comment or program...
+			if (
+				node.type === "CommentBlock" ||
+				node.type === "CommentLine" ||
+				node.type === "JSRoot"
+			) {
+				return signals.retain;
+			}
 
-				const line = getStartLine(node);
-				if (line === undefined || visitedLines.has(line)) {
-					return signals.retain;
-				}
+			const line = getStartLine(node);
+			if (line === undefined || visitedLines.has(line)) {
+				return signals.retain;
+			}
 
-				const decisions = context.getLintDecisions(String(ob1Get1(line)));
-				if (decisions.length === 0) {
-					return signals.retain;
-				}
+			const decisions = context.getLintDecisions(String(ob1Get1(line)));
+			if (decisions.length === 0) {
+				return signals.retain;
+			}
 
-				visitedLines.add(line);
-				return signals.replace(addComment(path, node, decisions));
-			},
+			visitedLines.add(line);
+			return signals.replace(addComment(path, node, decisions));
 		},
-	);
+	});
 }

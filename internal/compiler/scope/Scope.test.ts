@@ -40,27 +40,25 @@ function dumpScopeTree(input: string): string {
 
 	// Collect a map of scope to child scopes
 	const scopeToChildScopes: ChildScopeMap = new Map();
-	context.reduceRoot(
-		{
-			name: "test",
-			enter({node, scope}) {
-				// Enter a new scope
-				if (scope.node === node) {
-					const {parentScope} = scope;
-					if (parentScope !== undefined) {
-						let childScopeNodes = scopeToChildScopes.get(parentScope);
-						if (childScopeNodes === undefined) {
-							childScopeNodes = new Set();
-							scopeToChildScopes.set(parentScope, childScopeNodes);
-						}
-						childScopeNodes.add(scope);
+	context.reduceRoot({
+		name: "test",
+		enter({node, scope}) {
+			// Enter a new scope
+			if (scope.node === node) {
+				const {parentScope} = scope;
+				if (parentScope !== undefined) {
+					let childScopeNodes = scopeToChildScopes.get(parentScope);
+					if (childScopeNodes === undefined) {
+						childScopeNodes = new Set();
+						scopeToChildScopes.set(parentScope, childScopeNodes);
 					}
+					childScopeNodes.add(scope);
 				}
+			}
 
-				return signals.retain;
-			},
+			return signals.retain;
 		},
-	);
+	});
 
 	return dumpScope(context.rootScope, scopeToChildScopes, input);
 }

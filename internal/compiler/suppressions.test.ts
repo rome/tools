@@ -9,10 +9,12 @@ import {test} from "rome";
 import CompilerContext from "./lib/CompilerContext";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
-import { signals } from ".";
-import { DiagnosticSuppressions, Diagnostics } from "@internal/diagnostics";
+import {signals} from ".";
+import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
 
-function extractSuppressionsFromSource(sourceText: string): {
+function extractSuppressionsFromSource(
+	sourceText: string,
+): {
 	suppressions: DiagnosticSuppressions;
 	diagnostics: Diagnostics;
 } {

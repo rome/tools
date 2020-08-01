@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
+import {AnyComment, AnyNode} from "@internal/ast";
 import {
 	DiagnosticLocation,
 	DiagnosticSuppression,
@@ -15,8 +15,8 @@ import {
 } from "@internal/diagnostics";
 import CompilerContext from "./lib/CompilerContext";
 import {signals} from ".";
-import { TransformVisitor } from "./types";
-import { createVisitor } from "./utils";
+import {AnyVisitor} from "./types";
+import {createVisitor} from "./utils";
 
 export const SUPPRESSION_START = "rome-ignore";
 export const INCORRECT_SUPPRESSION_START = [
@@ -134,7 +134,7 @@ function extractSuppressionsFromComment(
 	}
 }
 
-export function createSuppressionsVisitor(): TransformVisitor {
+export function createSuppressionsVisitor(): AnyVisitor {
 	const visitedComments: Set<AnyComment> = new Set();
 
 	// TODO verify all comments
@@ -154,20 +154,18 @@ export function createSuppressionsVisitor(): TransformVisitor {
 					}
 
 					visitedComments.add(comment);
-					const result = extractSuppressionsFromComment(
-						context,
-						comment,
-						node,
-					);
+					const result = extractSuppressionsFromComment(context, comment, node);
 					if (result !== undefined) {
 						context.diagnostics.addDiagnostics(result.diagnostics);
-						context.suppressions = context.suppressions.concat(result.suppressions);
+						context.suppressions = context.suppressions.concat(
+							result.suppressions,
+						);
 					}
 				}
 			}
 
 			return signals.retain;
-		}
+		},
 	});
 }
 
