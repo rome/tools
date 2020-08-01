@@ -72,7 +72,7 @@ export default class ClientRequest {
 	}
 
 	async initFromLocal(
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		localCommand: LocalCommand<any>,
 	): Promise<ServerQueryResponse> {
 		const {query} = this;

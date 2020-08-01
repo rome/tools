@@ -12,7 +12,7 @@ export type AsyncVoidCallback = () =>
 	| undefined
 	| Promise<void | undefined>;
 
-// rome-ignore lint/js/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
 	new (
 		...args: Args

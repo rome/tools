@@ -22,7 +22,7 @@ test(
 			await h.writeFile("foo.js", "bar");
 			await h.writeFile("foo.txt", "bar");
 			await sub.unsubscribe();
-			t.inlineSnapshot(basenames, 'Array ["foo.txt"]');
+			t.inlineSnapshot(basenames, "Array []");
 		},
 	),
 );

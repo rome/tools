@@ -246,7 +246,7 @@ function _reduceSignal(
 
 			// Reduce the children
 			for (const key of visitorKeys) {
-				// rome-ignore lint/js/noExplicitAny
+				// rome-ignore lint/ts/noExplicitAny
 				const oldVal = (node as any)[key];
 
 				if (Array.isArray(oldVal)) {

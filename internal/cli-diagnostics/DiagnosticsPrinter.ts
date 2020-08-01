@@ -15,7 +15,7 @@ import {
 	DiagnosticsProcessor,
 	deriveRootAdviceFromDiagnostic,
 } from "@internal/diagnostics";
-import {MarkupRGB, joinMarkupLines, markup} from "@internal/markup";
+import {Markup, MarkupRGB, joinMarkupLines, markup} from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	DiagnosticsFileReaders,
@@ -723,20 +723,34 @@ export default class DiagnosticsPrinter extends Error {
 		return filteredDiagnostics;
 	}
 
-	inject(printer: DiagnosticsPrinter) {
+	inject(title: Markup, printer: DiagnosticsPrinter) {
 		this.processor.addDiagnostics(printer.processor.getDiagnostics());
-		for (const fn of printer.onFooterPrintCallbacks) {
-			this.onFooterPrint(async (reporter) => {
-				return fn(reporter, printer.problemCount > 0);
-			});
-		}
-	}
 
-	concat(other: DiagnosticsPrinter): DiagnosticsPrinter {
-		const printer = new DiagnosticsPrinter(this.options);
-		printer.inject(this);
-		printer.inject(other);
-		return printer;
+		const {onFooterPrintCallbacks} = printer;
+		if (onFooterPrintCallbacks.length === 0) {
+			return;
+		}
+
+		this.onFooterPrint(async (reporter) => {
+			let skipDefault: boolean = false;
+
+			reporter.br();
+			reporter.log(markup`<emphasis>${title}</emphasis>`);
+			reporter.br();
+
+			await reporter.indent(async () => {
+				for (const fn of onFooterPrintCallbacks) {
+					const res = await fn(reporter, printer.problemCount > 0);
+					if (res) {
+						skipDefault = true;
+					}
+				}
+			});
+
+			reporter.br();
+
+			return skipDefault;
+		});
 	}
 
 	onFooterPrint(fn: FooterPrintCallback) {
@@ -776,17 +790,20 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
+				let showDefault = true;
 				for (const handler of this.onFooterPrintCallbacks) {
 					const stop = await handler(reporter, isError);
 					if (stop) {
-						return;
+						showDefault = false;
 					}
 				}
 
-				if (isError) {
-					this.footerError();
-				} else {
-					reporter.success(markup`No known problems!`);
+				if (showDefault) {
+					if (isError) {
+						this.footerError();
+					} else {
+						reporter.success(markup`No known problems!`);
+					}
 				}
 			},
 		);

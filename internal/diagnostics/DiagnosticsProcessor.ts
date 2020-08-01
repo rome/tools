@@ -155,7 +155,13 @@ export default class DiagnosticsProcessor {
 
 	doesMatchFilter(diag: Diagnostic): boolean {
 		for (const suppression of this.suppressions) {
-			if (matchesSuppression(diag.location, suppression)) {
+			if (
+				matchesSuppression(
+					diag.description.category,
+					diag.location,
+					suppression,
+				)
+			) {
 				this.usedSuppressions.add(suppression);
 				return true;
 			}

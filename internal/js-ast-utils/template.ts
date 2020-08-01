@@ -146,7 +146,7 @@ export function template(
 		const {type, path} = placeholderPaths[i];
 
 		const substitute: AnyNode = createIdentifier(substitutions[i], type);
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		let target: any = newAst;
 
 		for (let i = 0; i < path.length; i++) {

@@ -140,7 +140,7 @@ export default class Path {
 	}
 
 	getChildPath(key: string): Path {
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		const node = (this.node as any)[key];
 		if (node === undefined) {
 			throw new Error(
@@ -160,7 +160,7 @@ export default class Path {
 	}
 
 	getChildPaths(key: string): Array<Path> {
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		const nodes = (this.node as any)[key];
 
 		if (nodes === undefined) {

@@ -7,6 +7,7 @@
 
 import {AnyComment, AnyNode} from "@internal/ast";
 import {
+	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
@@ -170,10 +171,12 @@ export function createSuppressionsVisitor(): AnyVisitor {
 }
 
 export function matchesSuppression(
+	category: DiagnosticCategory,
 	{filename, start, end}: DiagnosticLocation,
 	suppression: DiagnosticSuppression,
 ): boolean {
 	return (
+		category === suppression.category &&
 		filename === suppression.filename &&
 		start !== undefined &&
 		end !== undefined &&

@@ -33,14 +33,6 @@ import {
 	parsePathPattern,
 } from "@internal/path-match";
 
-type ResolvedArg = {
-	path: AbsoluteFilePath;
-	location: DiagnosticLocation;
-	project: ProjectDefinition;
-};
-
-type ResolvedArgs = Array<ResolvedArg>;
-
 type GetFilesTryAlternateArg = (
 	path: UnknownFilePath,
 ) => undefined | UnknownFilePath;
@@ -66,6 +58,26 @@ export interface GetFilesOptions extends Omit<GlobOptions, "getProjectIgnore"> {
 // One off resolve
 interface ResolveFilesOptions extends GetFilesOptions {
 	onResolvedDirectories?: (path: AbsoluteFilePath) => void;
+}
+
+type ResolvedArg = {
+	path: AbsoluteFilePath;
+	location: DiagnosticLocation;
+	project: ProjectDefinition;
+};
+
+type ResolvedArgs = Array<ResolvedArg>;
+
+function relativeToResolvedArgs(
+	args: Iterable<AbsoluteFilePath>,
+	path: AbsoluteFilePath,
+): boolean {
+	for (const arg of args) {
+		if (arg.equal(path) || path.isRelativeTo(arg)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 async function resolveFilesFromArgs(
@@ -207,25 +219,15 @@ export const getFilesFromArgs = wrapSubscriptionConsumer(async function(
 
 		helper.add(
 			server.memoryFs.newFileEvent.subscribe((path) => {
-				// Check if the new file is relative to one of the resolved directories
-				let isRelative = false;
-				for (const directory of directories) {
-					if (path.isRelativeTo(directory)) {
-						isRelative = true;
-						break;
+				if (relativeToResolvedArgs(directories, path)) {
+					const matches = globber.glob(path);
+					if (matches.size > 0) {
+						// Queue flush
+						for (const path of matches) {
+							pendingFlush.add(path);
+						}
+						queueFlush();
 					}
-				}
-				if (!isRelative) {
-					return;
-				}
-
-				const matches = globber.glob(path);
-				if (matches.size > 0) {
-					// Queue flush
-					for (const path of matches) {
-						pendingFlush.add(path);
-					}
-					queueFlush();
 				}
 			}),
 		);
@@ -361,11 +363,15 @@ export type WatchFilesEvent = {
 	chunk: boolean;
 };
 
+export interface WatchFilesOptions extends GetFilesOptions {
+	parallel?: boolean;
+}
+
 export type WatchFilesCallback = (opts: WatchFilesEvent) => Promise<void>;
 
 export async function watchFilesFromArgs(
 	req: ServerRequest,
-	opts: GetFilesOptions,
+	opts: WatchFilesOptions,
 	callback: WatchFilesCallback,
 ): Promise<EventSubscription> {
 	req.checkCancelled();
@@ -374,17 +380,30 @@ export async function watchFilesFromArgs(
 	const globber = new Globber(opts, req.server);
 
 	let timeout: undefined | NodeJS.Timeout;
-	let runningCallback = false;
 	let pendingPaths = new AbsoluteFilePathSet();
-	let resolvedArgs: undefined | ResolvedArgs;
 
-	async function flush(initial: boolean, chunk: boolean) {
+	const resolvedArgPaths = new AbsoluteFilePathSet();
+	let initial = true;
+	let chunk = true;
+
+	let runningCallback = false;
+	let flushing: undefined | Promise<void>;
+
+	async function flush() {
+		await flushing;
+
 		timeout = undefined;
 
 		if (!initial && pendingPaths.size === 0) {
 			return;
 		}
 
+		flushing = _flush();
+		await flushing;
+		flushing = undefined;
+	}
+
+	async function _flush() {
 		const paths = pendingPaths;
 		pendingPaths = new AbsoluteFilePathSet();
 
@@ -394,37 +413,35 @@ export async function watchFilesFromArgs(
 
 		// Flush again if there were paths emitting while running
 		if (pendingPaths.size > 0) {
-			await flush(false, false);
+			await flush();
 		}
 	}
 
-	const refreshFileEvent = req.server.refreshFileEvent.subscribe((
-		path: AbsoluteFilePath,
-	) => {
-		if (resolvedArgs === undefined) {
-			// Maybe we should queue this up instead?
-			return;
-		}
-
-		let matches = false;
-		for (const arg of resolvedArgs) {
-			if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
-				matches = true;
-				break;
-			}
-		}
-		if (!matches) {
-			return;
-		}
-
-		const paths = globber.glob(path);
+	function debounce(paths: AbsoluteFilePathSet) {
 		for (const path of paths) {
 			pendingPaths.add(path);
 		}
 
-		// Buffer up evicted paths
 		if (!runningCallback && timeout === undefined) {
-			timeout = setTimeout(() => flush(false, false), 100);
+			timeout = setTimeout(() => flush(), 100);
+		}
+	}
+
+	function maybeDebounce(path: AbsoluteFilePath) {
+		if (relativeToResolvedArgs(resolvedArgPaths, path)) {
+			debounce(globber.glob(path));
+		}
+	}
+
+	const pendingRefreshPaths = new AbsoluteFilePathSet();
+
+	const refreshFileEvent = req.server.refreshFileEvent.subscribe((
+		path: AbsoluteFilePath,
+	) => {
+		if (initial) {
+			pendingRefreshPaths.add(path);
+		} else {
+			maybeDebounce(path);
 		}
 	});
 
@@ -439,33 +456,42 @@ export async function watchFilesFromArgs(
 				if (timeout !== undefined) {
 					clearTimeout(timeout);
 
-					// Run the timeout right now
-					await flush(false, false);
+					// Finish flushing if necessary
+					await flushing;
 				}
 			},
 		},
 	]);
 
-	// Flush initial
+	// Get initial paths
 	const initialPaths = await getFilesFromArgs(
 		req,
 		{
 			...opts,
 			globber,
 		},
-		async (paths) => {
-			for (const path of paths) {
-				pendingPaths.add(path);
-			}
-			await flush(true, true);
-		},
+		//debounce,
 	);
 	for (const path of initialPaths) {
 		pendingPaths.add(path);
 	}
-	await flush(true, false);
+	chunk = false;
+	await flush();
+	initial = false;
 
-	resolvedArgs = await resolveFilesFromArgs(req, opts);
+	// Resolve initial arguments so we can check watched files
+	const resolvedArgs = await resolveFilesFromArgs(req, opts);
+	for (const {path} of resolvedArgs) {
+		resolvedArgPaths.add(path);
+	}
+
+	// Flush any files that were changed while we were waiting on the initial paths
+	if (pendingRefreshPaths.size > 0) {
+		for (const path of pendingRefreshPaths) {
+			maybeDebounce(path);
+		}
+		await flush();
+	}
 
 	return mergeEventSubscriptions([endSubscription, sub]);
 }

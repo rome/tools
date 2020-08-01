@@ -941,7 +941,7 @@ export default class Consumer {
 			this.unexpected(
 				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 					value,
-					// rome-ignore lint/js/noExplicitAny
+					// rome-ignore lint/ts/noExplicitAny
 					((validValues as any) as Array<string>),
 				),
 				{
@@ -1245,7 +1245,7 @@ export default class Consumer {
 			this.unexpected(
 				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
 					value,
-					// rome-ignore lint/js/noExplicitAny
+					// rome-ignore lint/ts/noExplicitAny
 					((validValues as any) as Array<number>),
 				),
 				{
@@ -1277,7 +1277,7 @@ export default class Consumer {
 		return this.value;
 	}
 
-	// rome-ignore lint/js/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny
 	asAny(): any {
 		return this.value;
 	}

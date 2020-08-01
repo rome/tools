@@ -1012,7 +1012,7 @@ export default class TestServerRunner {
 		const parts: Array<Markup> = [
 			// Inline snapshots will always be the last element, so if it's inline here then there's no others
 			markup`<number emphasis>${String(first.count)}</number> ${first.inline
-				? " inline"
+				? "inline "
 				: ""}<grammarNumber plural="snapshots" singular="snapshot">${String(
 				first.count,
 			)}</grammarNumber> ${first.noun}`,

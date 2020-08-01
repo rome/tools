@@ -35,13 +35,16 @@ export function injectBinding(
 	// lol
 	const ass = jsAssignmentIdentifier.quick(name);
 
-	path.context.getVisitorState(variableInjectorVisitor).set((state) => {
-		return {
-			bindings: [...state.bindings, [name, init]],
-		};
-	}, {
-		required: true,
-	});
+	path.context.getVisitorState(variableInjectorVisitor).set(
+		(state) => {
+			return {
+				bindings: [...state.bindings, [name, init]],
+			};
+		},
+		{
+			required: true,
+		},
+	);
 
 	return [ref, ass];
 }
@@ -109,20 +112,23 @@ export function injectComment(path: Path, comment: AnyCommentOptionalId): string
 		path.context.comments.updateComment(commentWithId);
 	}
 
-	path.context.getVisitorState(commentInjectorVisitor).set((state) => {
-		let comments = state.comments;
+	path.context.getVisitorState(commentInjectorVisitor).set(
+		(state) => {
+			let comments = state.comments;
 
-		if (id !== undefined) {
-			// Remove from existing comments
-			comments = comments.filter((comment) => comment.id !== id);
-		}
+			if (id !== undefined) {
+				// Remove from existing comments
+				comments = comments.filter((comment) => comment.id !== id);
+			}
 
-		return {
-			comments: [...state.comments, commentWithId],
-		};
-	}, {
-		required: true,
-	});
+			return {
+				comments: [...state.comments, commentWithId],
+			};
+		},
+		{
+			required: true,
+		},
+	);
 
 	return commentWithId.id;
 }

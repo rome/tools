@@ -46,7 +46,7 @@ export interface Visitor<State extends UnknownObject> {
 	exit?: (path: Path, state: VisitorStateExit<State>) => ExitSignal;
 }
 
-// rome-ignore lint/js/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny
 export type AnyVisitor = Visitor<any>;
 
 export type AnyVisitors = Array<AnyVisitor>;

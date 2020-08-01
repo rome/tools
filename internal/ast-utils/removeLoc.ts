@@ -35,7 +35,7 @@ const removeLocTransform: AnyVisitors = [
 				const newNode: NodeBaseWithComments = removeProp(node);
 
 				// Also remove any `undefined` properties
-				// rome-ignore lint/js/noExplicitAny
+				// rome-ignore lint/ts/noExplicitAny
 				const escaped: any = newNode;
 				for (const key in newNode) {
 					if (escaped[key] === undefined) {

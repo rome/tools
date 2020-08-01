@@ -221,10 +221,7 @@ export default class CompilerContext {
 		}
 
 		for (const suppression of this.suppressions) {
-			if (
-				suppression.category === category &&
-				matchesSuppression(loc, suppression)
-			) {
+			if (matchesSuppression(category, loc, suppression)) {
 				return true;
 			}
 		}
