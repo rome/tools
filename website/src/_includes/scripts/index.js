@@ -308,6 +308,25 @@ class TableOfContents {
 				const hash = event.target.getAttribute("href");
 				window.location.hash = hash;
 				this.scrollToHeading(hash);
+				navigator.clipboard.writeText(window.location.href);
+
+				// Only another copied text can appear here so delete it if it exists
+				if (event.target.nextElementSibling != null) {
+					event.target.nextElementSibling.remove();
+				}
+
+				const copied = document.createElement("span");
+				copied.classList.add("header-copied");
+				copied.textContent = "Copied to clipboard";
+				event.target.parentElement.appendChild(copied);
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						copied.style.opacity = "0";
+					});
+				});
+				copied.addEventListener("transitionend", () => {
+					copied.remove();
+				});
 			},
 			false,
 		);

@@ -11,7 +11,7 @@
 			text-decoration: underline;
 		}
 
-		&:focus{
+		&:focus {
 			@extend .not-sr-only;
 		}
 
@@ -20,10 +20,14 @@
 		}
 	}
 
-
+	.header-copied {
+		font-size: 16px;
+		opacity: 1;
+		transition: 1s ease-out;
+		margin-left: 5px;
+	}
 
 	section.rules{
-
 		padding: 0;
 
 		h1, h2{
@@ -98,11 +102,18 @@
 
 	ul, ol {
 		margin-left: 16px;
+
+		li {
+			margin: 4px 0;
+		}
+	}
+
+	ol li {
+		list-style: decimal;
 	}
 
 	ul li {
 		list-style: disc;
-		margin: 4px 0;
 	}
 
 	h1, h2, h3, h4, h5 {
