@@ -334,7 +334,7 @@ export default class Server {
 		process.exit();
 	}
 
-	// rome-ignore lint/js/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny
 	wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
 		return (((...args: Array<any>): any => {
 			try {

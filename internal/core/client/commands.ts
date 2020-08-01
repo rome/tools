@@ -32,7 +32,7 @@ export function createLocalCommand<Flags extends Dict<unknown>>(
 	return cmd;
 }
 
-// rome-ignore lint/js/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
 localCommands.set("start", start);
 localCommands.set("develop", develop);

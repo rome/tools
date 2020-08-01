@@ -23,7 +23,7 @@ export function ansiFormatText(
 		case "hyperlink": {
 			if (features.hyperlinks) {
 				return formatAnsi.hyperlink(
-					attributes.get("target").asString(""),
+					attributes.get("target").asString(value),
 					value,
 				);
 			} else {

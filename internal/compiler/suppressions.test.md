@@ -8,6 +8,7 @@
 Object {
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
@@ -34,6 +35,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
@@ -129,6 +131,7 @@ Object {
 	suppressions: Array []
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -149,6 +152,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -169,6 +173,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -189,6 +194,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -209,6 +215,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -229,6 +236,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -249,6 +257,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/incorrectSuppressionStart"
@@ -440,6 +449,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -466,6 +476,7 @@ Object {
 			}
 		}
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -579,6 +590,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -673,6 +685,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -748,6 +761,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			origins: Array []
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"

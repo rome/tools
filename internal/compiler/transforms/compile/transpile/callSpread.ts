@@ -7,7 +7,6 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 import {template} from "@internal/js-ast-utils";
-import {bindingInjector} from "../../defaultHooks/index";
 import {
 	JSCallExpression,
 	JSNullLiteral,
@@ -18,6 +17,7 @@ import {
 	jsNullLiteral,
 	jsSequenceExpression,
 } from "@internal/ast";
+import {injectBinding} from "../../helpers";
 
 export default createVisitor({
 	name: "callSpread",
@@ -44,7 +44,7 @@ export default createVisitor({
 
 				let object: JSReferenceIdentifier | JSNullLiteral;
 				if (func.type === "JSMemberExpression") {
-					const injection = path.callHook(bindingInjector, {});
+					const injection = injectBinding(path);
 					object = injection[0];
 
 					prepend = jsAssignmentExpression.create({

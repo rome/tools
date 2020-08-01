@@ -60,8 +60,9 @@ export async function main() {
 			for (const {basename, ruleName} of defs) {
 				lines.push(`import ${basename} from "./${ruleName}";`);
 			}
+			lines.push(`import {AnyVisitors} from "@internal/compiler";`);
 			lines.push("");
-			lines.push("export const lintTransforms = [");
+			lines.push("export const lintTransforms: AnyVisitors = [");
 			for (const {basename} of defs) {
 				lines.push(`	${basename},`);
 			}

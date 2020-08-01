@@ -7,21 +7,14 @@
 
 import {AnyNode, AnyNodes, MOCK_PARENT} from "@internal/ast";
 import {
+	AnyVisitors,
 	CompilerContext,
 	ExitSignal,
 	Scope,
-	TransformVisitor,
-	TransformVisitors,
 	signals,
 } from "@internal/compiler";
-import {
-	AnyHookDescriptor,
-	HookDescriptor,
-	HookInstance,
-} from "../api/createHook";
 import {reduceNode, reduceSignal} from "../methods/reduce";
 import {isRoot} from "@internal/ast-utils";
-import {RetainSignal} from "../signals";
 import stringDiff from "@internal/string-diff";
 import {formatAST} from "@internal/formatter";
 import {Markup, markup} from "@internal/markup";
@@ -33,6 +26,7 @@ import {
 	buildLintDecisionString,
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
+import {AnyVisitor} from "../types";
 
 export type PathOptions = {
 	ancestryPaths?: Array<Path>;
@@ -42,11 +36,8 @@ export type PathOptions = {
 	scope?: Scope;
 	noArrays?: boolean;
 	noScopeCreation?: boolean;
-	hooks?: Handlers;
 	isMock?: boolean;
 };
-
-type Handlers = Array<HookInstance>;
 
 // Given a signal, calculate what the formatted code would be
 function getFormattedCodeFromSignal(signal: ExitSignal, path: Path): string {
@@ -124,15 +115,12 @@ export default class Path {
 
 		this.isMock = opts.isMock === true;
 		this.opts = opts;
-
-		this.hooks = opts.hooks ?? [];
 	}
 
 	context: CompilerContext;
 	node: AnyNode;
 	parent: AnyNode;
 	scope: Scope;
-	hooks: Handlers;
 	opts: PathOptions;
 	isMock: boolean;
 
@@ -141,76 +129,6 @@ export default class Path {
 
 	nodeKey: undefined | string;
 	listKey: undefined | number;
-
-	callHook<CallArg, CallReturn>(
-		// rome-ignore lint/js/noExplicitAny
-		descriptor: HookDescriptor<any, CallArg, CallReturn>,
-		arg: CallArg,
-		optionalRet?: CallReturn,
-		requiredDepth?: number,
-	): CallReturn {
-		const hook = this.findHook(descriptor, requiredDepth);
-		if (hook === undefined) {
-			if (optionalRet === undefined) {
-				throw new Error(`No ${descriptor.name} hook found`);
-			} else {
-				return optionalRet;
-			}
-		}
-		if (descriptor.call === undefined) {
-			throw new Error("Hook doesn't have a call method");
-		}
-
-		const {depth, ref} = hook;
-		const {state, value, bubble} = descriptor.call(this, ref.state, arg);
-		ref.state = state;
-
-		if (bubble === true) {
-			return this.callHook(descriptor, arg, value, depth + 1);
-		} else {
-			return value;
-		}
-	}
-
-	provideHook<State>(
-		// rome-ignore lint/js/noExplicitAny
-		descriptor: HookDescriptor<State, any, any>,
-		state?: State,
-	): RetainSignal {
-		this.hooks.push({
-			state: {
-				...descriptor.initialState,
-				...state,
-			},
-			descriptor,
-		});
-
-		return signals.retain;
-	}
-
-	findHook(
-		descriptor: AnyHookDescriptor,
-		requiredDepth: number = 0,
-	):
-		| undefined
-		| {
-				ref: HookInstance;
-				depth: number;
-			} {
-		let depth = 0;
-		for (const {hooks} of this.ancestryPaths) {
-			for (const hook of hooks) {
-				if (hook.descriptor === descriptor) {
-					if (depth === requiredDepth) {
-						return {ref: hook, depth};
-					} else {
-						depth++;
-					}
-				}
-			}
-		}
-		return undefined;
-	}
 
 	findAncestry(callback: (path: Path) => boolean): undefined | Path {
 		for (const path of this.ancestryPaths) {
@@ -222,7 +140,7 @@ export default class Path {
 	}
 
 	getChildPath(key: string): Path {
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		const node = (this.node as any)[key];
 		if (node === undefined) {
 			throw new Error(
@@ -242,7 +160,7 @@ export default class Path {
 	}
 
 	getChildPaths(key: string): Array<Path> {
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		const nodes = (this.node as any)[key];
 
 		if (nodes === undefined) {
@@ -295,7 +213,6 @@ export default class Path {
 	getPathOptions(): PathOptions {
 		return {
 			...this.opts,
-			hooks: this.hooks,
 			parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
 		};
 	}
@@ -311,7 +228,7 @@ export default class Path {
 	}
 
 	reduceNode(
-		visitors: TransformVisitor | TransformVisitors,
+		visitors: AnyVisitor | AnyVisitors,
 		opts?: Partial<PathOptions>,
 	): AnyNodes {
 		return reduceNode(
@@ -323,7 +240,7 @@ export default class Path {
 	}
 
 	reduceSignal(
-		visitors: TransformVisitor | TransformVisitors,
+		visitors: AnyVisitor | AnyVisitors,
 		opts?: Partial<PathOptions>,
 	): ExitSignal {
 		return reduceSignal(

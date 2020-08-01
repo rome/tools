@@ -29,8 +29,8 @@ export default createVisitor({
 		const {node} = path;
 
 		if (
-			insideClassComponent(path) &&
 			doesNodeMatchPattern(node, "this.setState") &&
+			insideClassComponent(path) &&
 			inComponentDidUpdate(path)
 		) {
 			path.context.addNodeDiagnostic(

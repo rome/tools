@@ -41,7 +41,8 @@ export default createServerCommand({
 			req,
 			[
 				{
-					title: markup`Running lint`,
+					title: markup`<code>rome check</code>`,
+					progress: markup`Running check`,
 					callback: async () => {
 						await check.callback(
 							req,
@@ -55,7 +56,8 @@ export default createServerCommand({
 					},
 				},
 				{
-					title: markup`Running tests`,
+					title: markup`<code>rome test</code>`,
+					progress: markup`Running tests`,
 					callback: async () => {
 						await test.callback(
 							req,

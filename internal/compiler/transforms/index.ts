@@ -7,10 +7,10 @@
 
 import {ProjectConfig} from "@internal/project";
 import {
+	AnyVisitors,
 	CompilerOptions,
 	TransformStageFactories,
 	TransformStageName,
-	TransformVisitors,
 	Transforms,
 } from "../types";
 import classProperties from "./compile/transpile/classProperties";
@@ -35,10 +35,7 @@ import metaPropertyTransform from "./compileForBundle/metaPropertyTransform";
 import scopedRomeTransform from "./compileForBundle/scopedRomeTransform";
 import asyncImportTransform from "./compileForBundle/asyncImportTransform";
 import inlineEnv from "./compileForBundle/inlineEnv";
-import {
-	commentInjectorVisitor,
-	variableInjectorVisitor,
-} from "./defaultHooks/index";
+import {commentInjectorVisitor, variableInjectorVisitor} from "./helpers";
 
 export const stageOrder: Array<TransformStageName> = [
 	"pre",
@@ -46,7 +43,7 @@ export const stageOrder: Array<TransformStageName> = [
 	"compileForBundle",
 ];
 
-export const hookVisitors: TransformVisitors = [
+export const helperVisitors: AnyVisitors = [
 	variableInjectorVisitor,
 	commentInjectorVisitor,
 ];

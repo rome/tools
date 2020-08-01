@@ -12,12 +12,7 @@ import {
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {createDefaultProjectConfig} from "@internal/project";
-import {
-	CompilerContext,
-	Path,
-	TransformVisitors,
-	signals,
-} from "@internal/compiler";
+import {AnyVisitors, CompilerContext, Path, signals} from "@internal/compiler";
 import {SourceLocation} from "@internal/parser-core";
 
 function removeProp<T extends {
@@ -28,7 +23,7 @@ function removeProp<T extends {
 	return locless;
 }
 
-const removeLocTransform: TransformVisitors = [
+const removeLocTransform: AnyVisitors = [
 	{
 		name: "removeLocTransform",
 		enter(path: Path) {
@@ -40,7 +35,7 @@ const removeLocTransform: TransformVisitors = [
 				const newNode: NodeBaseWithComments = removeProp(node);
 
 				// Also remove any `undefined` properties
-				// rome-ignore lint/js/noExplicitAny
+				// rome-ignore lint/ts/noExplicitAny
 				const escaped: any = newNode;
 				for (const key in newNode) {
 					if (escaped[key] === undefined) {

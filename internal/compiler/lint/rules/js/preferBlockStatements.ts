@@ -8,7 +8,7 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {jsBlockStatement} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
-import {commentInjector} from "../../../transforms/defaultHooks";
+import {injectComment} from "@internal/compiler/transforms/helpers";
 
 export default createVisitor({
 	name: "js/preferBlockStatements",
@@ -55,8 +55,8 @@ export default createVisitor({
 			node.type === "JSWithStatement"
 		) {
 			if (node.body.type === "JSEmptyStatement") {
-				const id = path.callHook(
-					commentInjector,
+				const id = injectComment(
+					path,
 					{
 						type: "CommentLine",
 						value: " empty",

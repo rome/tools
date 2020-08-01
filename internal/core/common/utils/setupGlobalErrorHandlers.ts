@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {VoidCallback} from "@internal/typescript-helpers";
+
 export default function setupGlobalErrorHandlers(
 	callback: (err: Error) => void,
-): () => void {
+): VoidCallback {
 	const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
 		callback(err);
 	};
@@ -20,7 +22,6 @@ export default function setupGlobalErrorHandlers(
 		promise.then(() => {
 			throw new Error("Promise is rejected so should never hit this condition");
 		}).catch((err) => {
-			console.error(err);
 			callback(err);
 		});
 	};

@@ -17,8 +17,9 @@ import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
 import {AbsoluteFilePath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
+import {VisitorStateEnter, VisitorStateExit} from "./lib/VisitorState";
 
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";
@@ -34,17 +35,21 @@ export type TransformStageFactories = {
 
 //
 export type Transform =
-	| TransformVisitor
-	| ((context: CompilerContext) => TransformVisitor);
+	| AnyVisitor
+	| ((context: CompilerContext) => Visitor<UnknownObject>);
 
 export type Transforms = Array<Transform>;
 
-export interface TransformVisitor {
+export interface Visitor<State extends UnknownObject> {
 	name: string;
-	enter?: (path: Path) => EnterSignal;
-	exit?: (path: Path) => ExitSignal;
+	enter?: (path: Path, state: VisitorStateEnter<State>) => EnterSignal;
+	exit?: (path: Path, state: VisitorStateExit<State>) => ExitSignal;
 }
-export type TransformVisitors = Array<TransformVisitor>;
+
+// rome-ignore lint/ts/noExplicitAny
+export type AnyVisitor = Visitor<any>;
+
+export type AnyVisitors = Array<AnyVisitor>;
 
 export type CompileRequest = TransformRequest & {
 	inputSourceMap?: SourceMap;

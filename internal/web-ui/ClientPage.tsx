@@ -10,6 +10,7 @@ import {WebServerClient, WebServerRequest} from "@internal/core";
 import Spinner from "./Spinner";
 import Button from "./Button";
 import {ServerMarker} from "@internal/core/server/Server";
+import { VoidCallback } from "@internal/typescript-helpers";
 
 const {css} = require("emotion");
 const xterm = require("xterm");
@@ -369,7 +370,7 @@ export default function ClientPage(
 	}: {
 		client: WebServerClient;
 		requests: Array<WebServerRequest>;
-		goBack: () => void;
+		goBack: VoidCallback;
 	},
 ) {
 	return <>

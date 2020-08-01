@@ -23,14 +23,13 @@ import {prettyFormatToString} from "@internal/pretty-format";
 import {FileReference} from "../common/types/files";
 import {markup} from "@internal/markup";
 import {
-	AsyncFunc,
 	ExpectedError,
-	SyncThrower,
 	TestDiagnosticAdviceItem,
 	TestHelper,
 	TestSnapshotOptions,
 } from "@internal/virtual-rome/test";
 import {cleanFrames} from "./TestWorkerRunner";
+import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -265,7 +264,7 @@ export default class TestAPI implements TestHelper {
 		this.advice = [];
 	}
 
-	onTeardown(callback: AsyncFunc): void {
+	onTeardown(callback: AsyncVoidCallback): void {
 		this.teardownEvent.subscribe(callback);
 	}
 
@@ -484,7 +483,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	throws(
-		thrower: SyncThrower,
+		thrower: VoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throws() failed, callback did not throw an error",
 	): void {
@@ -511,7 +510,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	async throwsAsync(
-		thrower: AsyncFunc,
+		thrower: AsyncVoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throwsAsync() failed, callback did not throw an error",
 	): Promise<void> {
@@ -537,7 +536,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	notThrows(
-		nonThrower: SyncThrower,
+		nonThrower: VoidCallback,
 		message: string = "t.notThrows() failed, callback threw an error",
 	): void {
 		try {
@@ -554,7 +553,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	async notThrowsAsync(
-		nonThrower: AsyncFunc,
+		nonThrower: AsyncVoidCallback,
 		message: string = "t.notThrowsAsync() failed, callback threw an error",
 	): Promise<void> {
 		try {

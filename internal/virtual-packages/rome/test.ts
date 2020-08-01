@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue} from "./types";
-
-export type AsyncFunc = () => void | undefined | Promise<void>;
-
-export type SyncThrower = () => void;
+import {AsyncVoidCallback, JSONPropertyValue, VoidCallback} from "./types";
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
@@ -55,7 +51,7 @@ export interface TestHelper {
 		item: TestDiagnosticAdviceItem | (() => TestDiagnosticAdviceItem),
 	): void;
 	clearAdvice(): void;
-	onTeardown(callback: AsyncFunc): void;
+	onTeardown(callback: AsyncVoidCallback): void;
 	clearTimeout(): void;
 	extendTimeout(time: number): void;
 	setTimeout(time: number): void;
@@ -69,17 +65,20 @@ export interface TestHelper {
 	looksLike(received: unknown, expected: unknown, message?: string): void;
 	notLooksLike(received: unknown, expected: unknown, message?: string): void;
 	throws(
-		thrower: SyncThrower,
+		thrower: VoidCallback,
 		expected?: ExpectedError,
 		message?: string,
 	): void;
 	throwsAsync(
-		thrower: AsyncFunc,
+		thrower: AsyncVoidCallback,
 		expected?: ExpectedError,
 		message?: string,
 	): Promise<void>;
-	notThrows(nonThrower: SyncThrower, message?: string): void;
-	notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
+	notThrows(nonThrower: VoidCallback, message?: string): void;
+	notThrowsAsync(
+		nonThrower: AsyncVoidCallback,
+		message?: string,
+	): Promise<void>;
 	regex(contents: string, regex: RegExp, message?: string): void;
 	notRegex(contents: string, regex: RegExp, message?: string): void;
 	snapshot(

@@ -13,6 +13,7 @@ import React = require("react");
 import ReactDOM = require("react-dom");
 import {WebServerClient, WebServerRequest} from "@internal/core";
 import {humanizeTime} from "@internal/string-utils";
+import { VoidCallback } from "@internal/typescript-helpers";
 
 const {css, injectGlobal} = require("emotion");
 
@@ -221,7 +222,7 @@ function ClientItem(
 		setFocused,
 	}: {
 		client: WebServerClient;
-		setFocused: () => void;
+		setFocused: VoidCallback;
 	},
 ) {
 	const endTime = client.endTime ?? Date.now();

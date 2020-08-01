@@ -320,7 +320,7 @@ export default class WorkerBridge extends Bridge {
 					};
 				},
 				hydrate(err, data) {
-					// rome-ignore lint/js/noExplicitAny
+					// rome-ignore lint/ts/noExplicitAny
 					return new FileNotFound(
 						createAbsoluteFilePath((data.path as any)),
 						err.message,
@@ -344,7 +344,7 @@ export default class WorkerBridge extends Bridge {
 				hydrate(err, data) {
 					return new DiagnosticsError(
 						String(err.message),
-						// rome-ignore lint/js/noExplicitAny
+						// rome-ignore lint/ts/noExplicitAny
 						(data.diagnostics as any),
 					);
 				},

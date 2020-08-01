@@ -21,3 +21,10 @@ export type JSONObject = {
 };
 
 export type JSONArray = Array<JSONValue>;
+
+export type VoidCallback = () => void | undefined;
+
+export type AsyncVoidCallback = () =>
+	| void
+	| undefined
+	| Promise<void | undefined>;

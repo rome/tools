@@ -7,7 +7,7 @@
 
 import {WorkerContainer} from "./WorkerManager";
 import Server from "./Server";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 
 type Queue<M> = Array<[AbsoluteFilePath, M]>;
 
@@ -37,6 +37,18 @@ export default class WorkerQueue<M> {
 	callbacks: Array<Callback<M>>;
 	workers: Map<WorkerContainer, WorkerQueueItem<M>>;
 	open: boolean;
+
+	// Prematurely fetch the owners so we don't waterfall worker creation
+	async prepare(paths: AbsoluteFilePathSet) {
+		await Promise.all(
+			Array.from(
+				paths,
+				async (path) => {
+					await this.server.fileAllocator.getOrAssignOwner(path);
+				},
+			),
+		);
+	}
 
 	async pushQueue(path: AbsoluteFilePath, metadata: M) {
 		if (!this.open) {

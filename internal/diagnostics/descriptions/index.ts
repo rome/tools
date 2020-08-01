@@ -66,7 +66,7 @@ export function addEmphasis(items: Array<Markup>): Array<Markup> {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
-// rome-ignore lint/js/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny
 type InputMessagesFactory = (
 	...params: Array<any>
 ) => Partial<DiagnosticDescription>;
@@ -105,14 +105,14 @@ type OutputMessagesCategory<Input extends InputMessagesCategory> = {
 export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 	input: Input,
 ): OutputMessagesCategory<Input> {
-	// rome-ignore lint/js/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny
 	const category: OutputMessagesCategory<any> = {};
 
 	for (const key in input) {
 		const value = input[key];
 
 		if (typeof value === "function") {
-			// rome-ignore lint/js/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny
 			const callback: InputMessagesFactory = (value as any);
 
 			// @ts-ignore trust me lol
@@ -125,7 +125,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 				};
 			};
 		} else {
-			// rome-ignore lint/js/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny
 			const {message, advice = [], ...obj} = (value as any);
 			category[key] = {
 				...obj,

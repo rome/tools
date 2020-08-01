@@ -32,7 +32,7 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
 		main: manifest.main,
 		// TODO we now support fallbacks which means manifest.exports is lossy
 		//exports: exportsToObject(manifest.exports),
-		// rome-ignore lint/js/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny
 		exports: (manifest.raw.exports as any),
 		author: manifest.author,
 		contributors: manifest.contributors,

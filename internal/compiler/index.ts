@@ -42,13 +42,8 @@ export {
 
 export {areAnalyzeDependencyResultsEqual} from "./api/analyzeDependencies/utils";
 export {getPrefixedNamespace as getPrefixedBundleNamespace} from "./transforms/compileForBundle/_utils";
-export {default as createHook} from "./api/createHook";
-export {
-	extractSuppressionsFromProgram,
-	matchesSuppression,
-} from "./suppressions";
+export {matchesSuppression} from "./suppressions";
 
 export {LintResult} from "./lint/index";
 export {CompileResult} from "./api/compile";
-export {HookDescriptor} from "./api/createHook";
 export * from "./types";

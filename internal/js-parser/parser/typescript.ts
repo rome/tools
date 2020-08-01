@@ -99,6 +99,7 @@ import {descriptions} from "@internal/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
 import {markup} from "@internal/markup";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 type ParsingContext =
 	| "EnumMembers"
@@ -1925,7 +1926,7 @@ export function tsNextThenParseType(parser: JSParser): AnyTSPrimary {
 	return tsDoThenParseType(parser, () => parser.next());
 }
 
-function tsDoThenParseType(parser: JSParser, cb: () => void): AnyTSPrimary {
+function tsDoThenParseType(parser: JSParser, cb: VoidCallback): AnyTSPrimary {
 	cb();
 	return parseTSType(parser);
 }

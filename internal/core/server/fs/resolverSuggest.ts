@@ -202,7 +202,7 @@ export default function resolverSuggest(
 		// Hint if this was an entry resolve and the cwd wasn't a project
 		if (
 			query.entry === true &&
-			resolver.server.projectManager.findProjectExisting(localQuery.origin) ===
+			resolver.server.projectManager.findLoadedProject(localQuery.origin) ===
 			undefined
 		) {
 			advice.push({
@@ -324,7 +324,7 @@ function getPackageSuggestions(
 ): Suggestions {
 	const possibleGlobalPackages: Map<string, string> = new Map();
 
-	const mainProject = resolver.server.projectManager.findProjectExisting(
+	const mainProject = resolver.server.projectManager.findLoadedProject(
 		query.origin,
 	);
 	if (mainProject !== undefined) {

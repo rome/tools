@@ -137,71 +137,68 @@ export default class WorkerAPI {
 			ast,
 			ref,
 		});
-		ast = context.reduceRoot(
-			ast,
-			{
-				name: "updateInlineSnapshots",
-				enter(path: Path) {
-					const {node} = path;
-					if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
-						return signals.retain;
+		ast = context.reduceRoot({
+			name: "updateInlineSnapshots",
+			enter(path: Path) {
+				const {node} = path;
+				if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
+					return signals.retain;
+				}
+
+				let matchedUpdate: undefined | InlineSnapshotUpdate;
+
+				const {callee} = node;
+				for (const {node} of getNodeReferenceParts(callee).parts) {
+					const {loc} = node;
+					if (loc === undefined) {
+						continue;
 					}
 
-					let matchedUpdate: undefined | InlineSnapshotUpdate;
-
-					const {callee} = node;
-					for (const {node} of getNodeReferenceParts(callee).parts) {
-						const {loc} = node;
-						if (loc === undefined) {
-							continue;
-						}
-
-						for (const update of pendingUpdates) {
-							if (
-								loc.start.column === update.column &&
-								loc.start.line === update.line
-							) {
-								matchedUpdate = update;
-								break;
-							}
-						}
-
-						if (matchedUpdate !== undefined) {
+					for (const update of pendingUpdates) {
+						if (
+							loc.start.column === update.column &&
+							loc.start.line === update.line
+						) {
+							matchedUpdate = update;
 							break;
 						}
 					}
 
 					if (matchedUpdate !== undefined) {
-						if (appliedUpdatesToCallees.has(callee)) {
-							context.addNodeDiagnostic(
-								node,
-								descriptions.SNAPSHOTS.INLINE_COLLISION,
-							);
-							return signals.retain;
-						}
+						break;
+					}
+				}
 
-						pendingUpdates.delete(matchedUpdate);
-						appliedUpdatesToCallees.add(callee);
-
-						const args = node.arguments;
-						if (args.length < 1) {
-							context.addNodeDiagnostic(
-								node,
-								descriptions.SNAPSHOTS.INLINE_MISSING_RECEIVED,
-							);
-							return signals.retain;
-						}
-
-						return signals.replace({
-							...node,
-							arguments: [args[0], valueToNode(matchedUpdate.snapshot)],
-						});
+				if (matchedUpdate !== undefined) {
+					if (appliedUpdatesToCallees.has(callee)) {
+						context.addNodeDiagnostic(
+							node,
+							descriptions.SNAPSHOTS.INLINE_COLLISION,
+						);
+						return signals.retain;
 					}
 
-					return signals.retain;
-				},
+					pendingUpdates.delete(matchedUpdate);
+					appliedUpdatesToCallees.add(callee);
+
+					const args = node.arguments;
+					if (args.length < 1) {
+						context.addNodeDiagnostic(
+							node,
+							descriptions.SNAPSHOTS.INLINE_MISSING_RECEIVED,
+						);
+						return signals.retain;
+					}
+
+					return signals.replace({
+						...node,
+						arguments: [args[0], valueToNode(matchedUpdate.snapshot)],
+					});
+				}
+
+				return signals.retain;
 			},
-		);
+		});
 
 		const diags = context.diagnostics.getDiagnostics();
 

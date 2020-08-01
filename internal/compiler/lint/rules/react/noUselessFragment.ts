@@ -36,9 +36,11 @@ function getChildrenNode(node: JSXFragment | JSXElement): ExitSignal {
 	if (node.children.length === 0) {
 		return signals.remove;
 	}
+
 	if (node.children.length === 1) {
 		return signals.replace(node.children[0]);
 	}
+
 	return signals.replace(node.children);
 }
 

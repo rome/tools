@@ -12,16 +12,9 @@ import {
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
-	PathPatterns,
-	matchPathPatterns,
-	parsePathPattern,
-} from "@internal/path-match";
-import {
 	PROJECT_CONFIG_DIRECTORY,
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
-	ProjectConfigCategoriesWithIgnore,
-	ProjectDefinition,
 } from "@internal/project";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {Event} from "@internal/events";
@@ -45,25 +38,16 @@ import crypto = require("crypto");
 import {FileNotFound} from "@internal/core/common/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import {GlobOptions, Globber} from "./glob";
+import {VoidCallback} from "@internal/typescript-helpers";
 
-const DEFAULT_DENYLIST = [".hg", ".git"];
-
-const GLOB_IGNORE: PathPatterns = [
-	parsePathPattern({input: "node_modules"}),
-	parsePathPattern({input: ".git"}),
-	parsePathPattern({input: ".hg"}),
+// Paths that we will under no circumstance want to include
+const DEFAULT_DENYLIST = [
+	".hg",
+	".git",
+	"node_modules/.staging",
+	"node_modules/.cache",
 ];
-
-function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
-	// If there are any negate patterns then it'll never include GLOB_IGNORE
-	for (const pattern of patterns) {
-		if (pattern.type === "PathPattern" && pattern.negate) {
-			return patterns;
-		}
-	}
-
-	return [...GLOB_IGNORE, ...patterns];
-}
 
 function isValidManifest(path: AbsoluteFilePath): boolean {
 	if (path.getBasename() !== "package.json") {
@@ -129,14 +113,7 @@ export type Stats = {
 	type: StatsType;
 };
 
-export type WatcherClose = () => void;
-
-export type MemoryFSGlobOptions = {
-	extensions?: Array<string>;
-	overrideIgnore?: PathPatterns;
-	configCategory?: ProjectConfigCategoriesWithIgnore;
-	test?: (path: AbsoluteFilePath) => boolean;
-};
+export type WatcherClose = VoidCallback;
 
 async function createWatcher(
 	memoryFs: MemoryFileSystem,
@@ -199,6 +176,7 @@ async function createWatcher(
 		// No need to call watch() on the projectDirectory since it will call us
 
 		// Perform an initial crawl
+		const start = Date.now();
 		const stats = await memoryFs.hardStat(projectDirectory);
 		await memoryFs.addDirectory(
 			projectDirectory,
@@ -209,10 +187,11 @@ async function createWatcher(
 				reason: "initial",
 			},
 		);
+		const took = Date.now() - start;
 		logger.info(
-			markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis> - added <number>${String(
+			markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
 				memoryFs.countFiles(projectDirectory),
-			)}</number> files`,
+			)}</number> files. Took <duration>${took}</duration>`,
 		);
 	} finally {
 		activity.end();
@@ -247,6 +226,10 @@ export default class MemoryFileSystem {
 			name: "MemoryFileSystem.deletedFile",
 			onError: server.onFatalErrorBound,
 		});
+		this.newFileEvent = new Event({
+			name: "MemoryFileSystem.newFileEvent",
+			onError: server.onFatalErrorBound,
+		});
 	}
 
 	manifestCounter: number;
@@ -272,6 +255,7 @@ export default class MemoryFileSystem {
 		void
 	>;
 	deletedFileEvent: Event<AbsoluteFilePath, void>;
+	newFileEvent: Event<AbsoluteFilePath, void>;
 
 	// Used to maintain fake mtimes for file buffers
 	buffers: AbsoluteFilePathMap<Stats>;
@@ -601,7 +585,7 @@ export default class MemoryFileSystem {
 	}
 
 	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
-		const project = this.server.projectManager.findProjectExisting(path);
+		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return false;
 		}
@@ -690,7 +674,7 @@ export default class MemoryFileSystem {
 			});
 		}
 
-		const project = projectManager.findProjectExisting(path);
+		const project = projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			// Project failed to load. We'll display the errors but failing hard here with assertProjectExisting will hide them.
 			return;
@@ -704,85 +688,6 @@ export default class MemoryFileSystem {
 				manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
 			});
 		}
-	}
-
-	glob(
-		cwd: AbsoluteFilePath,
-		opts: MemoryFSGlobOptions = {},
-	): AbsoluteFilePathSet {
-		const {extensions, configCategory, test, overrideIgnore = []} = opts;
-
-		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-
-		let crawl: Array<AbsoluteFilePath> = [cwd];
-
-		const ignoresByProject: Map<ProjectDefinition, PathPatterns> = new Map();
-
-		while (crawl.length > 0) {
-			const path = crawl.pop()!;
-
-			// `cache: false` to allow calling us with deleted paths
-			const project = this.server.projectManager.findProjectExisting(path);
-
-			let ignore: PathPatterns = overrideIgnore;
-
-			// Get ignore patterns
-			if (configCategory !== undefined && project !== undefined) {
-				const projectIgnore = ignoresByProject.get(project);
-				if (projectIgnore === undefined) {
-					ignore = concatGlobIgnore([
-						...ignore,
-						...project.config[configCategory].ignore,
-					]);
-					ignoresByProject.set(project, ignore);
-				} else {
-					ignore = projectIgnore;
-				}
-			}
-
-			const ignoreMatched = matchPathPatterns(path, ignore, cwd);
-
-			// Don't even recurse into explicit matches
-			if (ignoreMatched === "EXPLICIT_MATCH") {
-				continue;
-			}
-
-			// Add if a matching file
-			if (this.files.has(path) && ignoreMatched === "NO_MATCH") {
-				if (test !== undefined && !test(path)) {
-					continue;
-				}
-
-				// Check extensions
-				if (extensions !== undefined) {
-					let matchedExt = false;
-					for (const ext of extensions) {
-						matchedExt = path.hasEndExtension(ext);
-						if (matchedExt) {
-							break;
-						}
-					}
-					if (!matchedExt) {
-						continue;
-					}
-				}
-
-				paths.add(path);
-				continue;
-			}
-
-			// Crawl if we're a directory
-			// NOTE: We still continue crawling on implicit matches
-			const listing = this.directoryListings.get(path);
-			if (listing !== undefined) {
-				crawl = crawl.concat(Array.from(listing.values()));
-				continue;
-			}
-
-			// TODO maybe throw? not a file or directory, doesn't exist!
-		}
-
-		return paths;
 	}
 
 	getAllFilesInDirectory(directory: AbsoluteFilePath): Array<AbsoluteFilePath> {
@@ -847,7 +752,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Crawl the directory
-		const files = await readDirectory(directoryPath);
+		const paths = await readDirectory(directoryPath);
 
 		// Declare the file
 		const declareItem = async (path: AbsoluteFilePath) => {
@@ -861,16 +766,22 @@ export default class MemoryFileSystem {
 
 		// Give priority to package.json in case we want to derive something from the project config
 		for (const priorityBasename of PRIORITY_FILES) {
-			for (const file of files) {
+			for (const file of paths) {
 				if (priorityBasename === file.getBasename()) {
-					files.delete(file);
+					paths.delete(file);
 					await declareItem(file);
 				}
 			}
 		}
 
 		// Add the rest of the items
-		await Promise.all(Array.from(files, declareItem));
+		await Promise.all(Array.from(paths, declareItem));
+
+		// If this directory is a project then mark it as initialized as we've crawled all their descendents
+		const project = this.server.projectManager.getProjectFromPath(directoryPath);
+		if (project !== undefined) {
+			project.initialized = true;
+		}
 
 		return true;
 	}
@@ -967,6 +878,7 @@ export default class MemoryFileSystem {
 			opts.tick(path);
 		}
 
+		const isNew = !this.files.has(path);
 		this.files.set(path, stats);
 		this.addFileToDirectoryListing(path);
 
@@ -1006,6 +918,14 @@ export default class MemoryFileSystem {
 			this.changedFileEvent.send({path, oldStats, newStats: stats});
 		}
 
+		if (isNew) {
+			this.newFileEvent.send(path);
+		}
+
 		return true;
+	}
+
+	glob(cwd: AbsoluteFilePath, opts: GlobOptions = {}): AbsoluteFilePathSet {
+		return new Globber(opts, this.server).glob(cwd);
 	}
 }

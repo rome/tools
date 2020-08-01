@@ -17,6 +17,7 @@ import {Markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
 import {Number1, ob1Get1} from "@internal/ob1";
 import * as streamUtils from "./stream";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 type BoldRanges = Array<[number, number]>;
 
@@ -30,7 +31,7 @@ export default class Progress extends ProgressBase {
 	constructor(
 		reporter: Reporter,
 		opts: ReporterProgressOptions = {},
-		onEnd?: () => void,
+		onEnd?: VoidCallback,
 	) {
 		super(reporter, opts);
 
@@ -60,7 +61,7 @@ export default class Progress extends ProgressBase {
 	streamToBouncerStart: Map<ReporterStream, number>;
 	bouncerTimer: undefined | NodeJS.Timeout;
 
-	onEnd: undefined | (() => void);
+	onEnd: undefined | (VoidCallback);
 	renderEvery: number;
 	startTime: number;
 	lastRenderCurrent: number;

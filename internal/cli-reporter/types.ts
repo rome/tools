@@ -9,6 +9,7 @@ import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {AnyMarkup, Markup} from "@internal/markup";
 import {Number0} from "@internal/ob1";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 export type SelectOption = {
 	label: Markup;
@@ -32,7 +33,7 @@ export type SelectArguments<Options extends SelectOptions> = {
 };
 
 export type ReporterStreamLineSnapshot = {
-	close: () => void;
+	close: VoidCallback;
 };
 
 export type ReporterStreamState = {
@@ -55,12 +56,18 @@ export type ReporterConditionalStream = {
 	update: () => boolean;
 };
 
+export type ReporterCaptureStream = {
+	read: () => string;
+	readAsMarkup: () => Markup;
+	remove: VoidCallback;
+};
+
 export interface ReporterStream {
 	features: TerminalFeatures;
 	format: "markup" | "ansi" | "html" | "none";
 	write: (chunk: string, error: boolean) => void;
-	init?: () => void;
-	teardown?: () => void;
+	init?: VoidCallback;
+	teardown?: VoidCallback;
 }
 
 export interface ReporterStreamAttached extends ReporterStream {
@@ -71,7 +78,7 @@ export interface ReporterStreamAttached extends ReporterStream {
 
 export interface ReporterStreamHandle {
 	stream: ReporterStreamAttached;
-	remove: () => void;
+	remove: VoidCallback;
 }
 
 export type ReporterDerivedStreams = {
@@ -91,15 +98,15 @@ export type ReporterProgressOptions = {
 };
 
 export type ReporterProgress = {
-	render: () => void;
+	render: VoidCallback;
 	setCurrent: (current: number) => void;
 	setTotal: (total: number, approximate?: boolean) => void;
 	setText: (text: Markup) => void;
 	pushText: (text: Markup, id?: string) => string;
 	popText: (id: string) => void;
 	setApproximateETA: (duration: number) => void;
-	tick: () => void;
-	end: () => void;
-	pause: () => void;
-	resume: () => void;
+	tick: VoidCallback;
+	end: VoidCallback;
+	pause: VoidCallback;
+	resume: VoidCallback;
 };

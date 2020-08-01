@@ -32,6 +32,7 @@ export function parseCLIFlagsFromProcess<T>(
 		args = process.argv.slice(2);
 	} else {
 		programName = process.argv.join(" ");
+		args = opts.args;
 	}
 
 	return parseCLIFlags({

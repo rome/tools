@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook, createVisitor, signals} from "@internal/compiler";
+import {Path, createVisitor, signals} from "@internal/compiler";
 import {
+	AnyNode,
+	JSFunctionDeclaration,
 	JSFunctionExpression,
-	JSIdentifier,
-	JSThisExpression,
+	JSRoot,
 	jsBindingIdentifier,
 	jsBlockStatement,
-	jsIdentifier,
+	jsReferenceIdentifier,
 	jsReturnStatement,
 	jsThisExpression,
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
 	jsVariableDeclarator,
 } from "@internal/ast";
-import {inheritLoc} from "@internal/js-ast-utils";
 
 function isInsideArrow(path: Path): boolean {
 	for (const ancestor of path.ancestryPaths) {
@@ -44,91 +44,41 @@ type State = {
 	id: undefined | string;
 };
 
-const arrowProvider = createHook<State, JSThisExpression, JSIdentifier>({
-	name: "arrowProvider",
-	initialState: {
-		id: undefined,
-	},
-	call(
-		path: Path,
-		state: State,
-		node: JSThisExpression,
-	): {
-		value: JSIdentifier;
-		state: State;
-	} {
-		const id = state.id ?? path.scope.generateUid();
-		return {
-			value: jsIdentifier.create({
-				name: id,
-				loc: inheritLoc(node, "this"),
-			}),
-			state: {
-				id,
-			},
-		};
-	},
-	exit(path: Path, state: State) {
-		const {node} = path;
+function isArrowTarget(
+	node: AnyNode,
+): node is JSFunctionDeclaration | JSFunctionExpression | JSRoot {
+	return (
+		node.type === "JSFunctionDeclaration" ||
+		node.type === "JSFunctionExpression" ||
+		node.type === "JSRoot"
+	);
+}
 
-		if (
-			node.type !== "JSFunctionDeclaration" &&
-			node.type !== "JSFunctionExpression"
-		) {
-			throw new Error("Only ever expected function nodes");
-		}
-
-		// This is called after the subtree has been transformed
-		if (state.id === undefined) {
-			// No `ThisExpression`s were rewritten
-			return signals.retain;
-		} else {
-			return signals.replace({
-				// Inject the binding into the function block
-				...node,
-				body: {
-					...node.body,
-					body: [
-						jsVariableDeclarationStatement.quick(
-							jsVariableDeclaration.create({
-								kind: "const",
-								declarations: [
-									jsVariableDeclarator.create({
-										id: jsBindingIdentifier.quick(state.id),
-										init: jsThisExpression.create({}),
-									}),
-								],
-							}),
-						),
-						...node.body.body,
-					],
-				},
-			});
-		}
-	},
-});
-
-export default createVisitor({
+export default createVisitor<State>({
 	name: "arrowFunctions",
-	enter(path) {
+
+	enter(path, state) {
 		const {node} = path;
 
-		if (
-			node.type === "JSFunctionDeclaration" ||
-			node.type === "JSFunctionExpression"
-		) {
-			// Add a provider to consume `this` inside of arrow functions
-			return path.provideHook(arrowProvider);
+		if (isArrowTarget(node)) {
+			state.reset({
+				id: undefined,
+			});
 		}
 
 		if (node.type === "JSThisExpression" && isInsideArrow(path)) {
-			// If we're a this expression and we're inside of an arrow then consume us by a descendent provider
-			return signals.replace(path.callHook(arrowProvider, node));
+			let id = state.get().id;
+			if (id === undefined) {
+				id = path.scope.generateUid();
+				state.set({id});
+			}
+			return signals.replace(jsReferenceIdentifier.quick(id));
 		}
 
 		return signals.retain;
 	},
-	exit(path) {
+
+	exit(path, state) {
 		const {node} = path;
 
 		if (node.type === "JSArrowFunctionExpression") {
@@ -142,6 +92,40 @@ export default createVisitor({
 					: jsBlockStatement.quick([jsReturnStatement.create(node.body)]),
 			};
 			return signals.replace(newNode);
+		}
+
+		if (isArrowTarget(node) && state.owns()) {
+			const id = state.get().id;
+
+			if (id !== undefined) {
+				const decl = jsVariableDeclarationStatement.quick(
+					jsVariableDeclaration.create({
+						kind: "const",
+						declarations: [
+							jsVariableDeclarator.create({
+								id: jsBindingIdentifier.quick(id),
+								init: jsThisExpression.create({}),
+							}),
+						],
+					}),
+				);
+
+				if (node.type === "JSRoot") {
+					return signals.replace({
+						...node,
+						body: [decl, ...node.body],
+					});
+				} else {
+					// Inject the binding into the function block
+					return signals.replace({
+						...node,
+						body: {
+							...node.body,
+							body: [decl, ...node.body.body],
+						},
+					});
+				}
+			}
 		}
 
 		return signals.retain;

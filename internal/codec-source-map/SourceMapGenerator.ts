@@ -26,8 +26,9 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
+import {VoidCallback} from "@internal/typescript-helpers";
 
-type MaterializeCallback = () => void;
+type MaterializeCallback = VoidCallback;
 
 export default class SourceMapGenerator {
 	constructor(

@@ -13,7 +13,7 @@ test(
 					extensions: ["txt"],
 					ignoreArgumentMisses: true,
 				},
-				async (paths) => {
+				async ({paths}) => {
 					for (const path of paths) {
 						basenames.push(path.getBasename());
 					}
@@ -22,7 +22,7 @@ test(
 			await h.writeFile("foo.js", "bar");
 			await h.writeFile("foo.txt", "bar");
 			await sub.unsubscribe();
-			t.inlineSnapshot(basenames, 'Array ["foo.txt"]');
+			t.inlineSnapshot(basenames, "Array []");
 		},
 	),
 );

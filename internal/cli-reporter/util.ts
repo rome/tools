@@ -9,6 +9,7 @@ import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
 import {Markup, markup} from "@internal/markup";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 export function mergeProgresses(
 	progresses: Array<ReporterProgress>,
@@ -87,7 +88,7 @@ export function onKeypress(
 	reporter: Reporter,
 	callback: (key: Key) => void,
 ): {
-	finish: () => void;
+	finish: VoidCallback;
 } {
 	const stdin = reporter.getStdin();
 

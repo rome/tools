@@ -56,26 +56,26 @@ export async function chainCommands(
 	req: ServerRequest,
 	fns: Array<{
 		title: Markup;
+		progress: Markup;
 		callback: () => Promise<void>;
 	}>,
 ): Promise<void> {
 	let printer: undefined | DiagnosticsPrinter;
 
 	await req.reporter.steps(
-		fns.map(({callback, title}) => {
+		fns.map(({callback, progress, title}) => {
 			return {
 				clear: true,
-				message: title,
+				message: progress,
 				async callback() {
 					try {
 						await callback();
 					} catch (err) {
 						if (err instanceof DiagnosticsPrinter) {
 							if (printer === undefined) {
-								printer = err;
-							} else {
-								printer = printer.concat(err);
+								printer = req.createDiagnosticsPrinter();
 							}
+							printer.inject(title, err);
 						} else {
 							throw err;
 						}
@@ -90,7 +90,7 @@ export async function chainCommands(
 	}
 }
 
-// rome-ignore lint/js/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny
 export const serverCommands: Map<string, ServerCommand<any>> = new Map();
 serverCommands.set("test", test);
 serverCommands.set("check", check);

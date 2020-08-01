@@ -141,7 +141,6 @@ if (x) {
 
 ```
 while (true) {
-	// empty
 }
 
 ```
@@ -173,7 +172,6 @@ while (true) {
 
 ```
 for (p in obj) {
-	// empty
 }
 
 ```
@@ -205,7 +203,6 @@ for (p in obj) {
 
 ```
 for (x of xs) {
-	// empty
 }
 
 ```
@@ -238,7 +235,6 @@ for (x of xs) {
 
 ```
 do {
-	// empty
 } while (x);
 
 ```
@@ -270,7 +266,6 @@ do {
 
 ```
 while (x) {
-	// empty
 }
 
 ```
