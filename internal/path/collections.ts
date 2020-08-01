@@ -101,6 +101,10 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 		return this.map.keys()[Symbol.iterator]();
 	}
 
+	toJoined(): Array<string> {
+		return Array.from(this.map.joinedToPath.keys());
+	}
+
 	has(path: FilePath) {
 		return this.map.has(path);
 	}

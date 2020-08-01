@@ -8,7 +8,7 @@ export function htmlFormatText(
 	switch (tagName) {
 		case "hyperlink": {
 			return `<a href="${escapeXHTMLEntities(
-				attributes.get("target").asString(""),
+				attributes.get("target").asString(value),
 			)}">${value}</a>`;
 		}
 

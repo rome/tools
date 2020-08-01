@@ -8,7 +8,6 @@
 import {Server, ServerRequest, WebBridge} from "@internal/core";
 import Bundler from "../bundler/Bundler";
 import {WebSocketInterface} from "@internal/codec-websocket";
-import prettyFormat from "@internal/pretty-format";
 import http = require("http");
 import {Reporter} from "@internal/cli-reporter";
 import {
@@ -21,10 +20,10 @@ import WebRequest, {stripBundleSuffix} from "./WebRequest";
 import {BundlerConfig} from "../../common/types/bundler";
 import {AbsoluteFilePath} from "@internal/path";
 import {PLATFORMS} from "../../common/types/platform";
-import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
+import {HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@internal/codec-url";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import {concatMarkup, markup} from "@internal/markup";
+import {markup} from "@internal/markup";
 
 export type WebServerTime = {
 	startTime: number;
@@ -186,7 +185,7 @@ export class WebServer {
 	listen(port: number) {
 		this.httpServer.listen(port);
 
-		//this.reporter.clear();
+		this.reporter.clearScreen();
 		const url = `http://localhost:${String(port)}`;
 		this.reporter.success(
 			markup`Listening on <hyperlink emphasis>${url}</hyperlink>`,
@@ -194,40 +193,6 @@ export class WebServer {
 		this.reporter.info(
 			markup`Web console available at <hyperlink emphasis>${url}/__rome__</hyperlink>`,
 		);
-	}
-
-	printConsoleLog(msg: HmrClientLogMessage) {
-		const {reporter} = this.serverRequest;
-
-		let buf = concatMarkup(
-			msg.data.map((arg) => {
-				return markup`${typeof arg === "string" ? arg : prettyFormat(arg)}`;
-			}),
-			markup` `,
-		);
-
-		switch (msg.level) {
-			case "info": {
-				reporter.info(buf);
-				break;
-			}
-
-			case "warn": {
-				reporter.warn(buf);
-				break;
-			}
-
-			case "log":
-			case "trace": {
-				//reporter.verboseForce(buf);
-				break;
-			}
-
-			case "group":
-			case "groupCollapsed":
-			case "groupEnd":
-				reporter.log(markup`TODO`);
-		}
 	}
 
 	async pathnameToAbsolutePath(

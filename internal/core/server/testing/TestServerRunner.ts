@@ -60,6 +60,7 @@ import {
 } from "@internal/core/test-worker/TestWorkerRunner";
 import {FileReference} from "@internal/core/common/types/files";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -101,7 +102,7 @@ function findAvailablePort(): Promise<number> {
 }
 
 type TestProgress = {
-	teardown: () => void;
+	teardown: VoidCallback;
 };
 
 export default class TestServerRunner {

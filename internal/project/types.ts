@@ -28,6 +28,7 @@ export type ProjectDefinition = {
 	manifests: Map<number, ManifestDefinition>;
 	children: Set<ProjectDefinition>;
 	parent: undefined | ProjectDefinition;
+	initialized: boolean;
 };
 
 // Project config objects to categorize settings

@@ -16,7 +16,11 @@ import {
 	createSingleDiagnosticError,
 	descriptions,
 } from "@internal/diagnostics";
-import {UnknownObject, isPlainObject} from "@internal/typescript-helpers";
+import {
+	UnknownObject,
+	VoidCallback,
+	isPlainObject,
+} from "@internal/typescript-helpers";
 import {
 	JSONArray,
 	JSONObject,
@@ -146,7 +150,7 @@ export default class Consumer {
 		return this.value;
 	}
 
-	handleThrownDiagnostics(callback: () => void) {
+	handleThrownDiagnostics(callback: VoidCallback) {
 		if (this.handleUnexpected === undefined) {
 			callback();
 		} else {

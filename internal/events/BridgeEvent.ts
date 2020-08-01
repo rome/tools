@@ -15,6 +15,7 @@ import {
 import Bridge from "./Bridge";
 import BridgeError from "./BridgeError";
 import Event from "./Event";
+import {VoidCallback} from "@internal/typescript-helpers";
 
 type CallOptions = {
 	timeout?: number;
@@ -64,7 +65,7 @@ export default class BridgeEvent<
 	requestCallbacks: Map<
 		number,
 		{
-			completed: undefined | (() => void);
+			completed: undefined | VoidCallback;
 			resolve: (data: Ret) => void;
 			reject: (err: Error) => void;
 		}

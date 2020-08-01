@@ -30,6 +30,8 @@ export type EventSubscription = {
 	unsubscribe: () => Promise<void>;
 };
 
+export type EventSubscriptions = Array<EventSubscription>;
+
 export type BridgeHandshakeMessage = {
 	type: "handshake";
 	first: boolean;

@@ -11,15 +11,6 @@
 		"xterm": "^3.14.5"
 	},
 	"rome": {
-		"extends": "../../package.json",
-		"bundler": {
-			"externals": [
-				"react",
-				"react-dom",
-				"emotion",
-				"xterm",
-				"xterm/lib/addons/fit/fit"
-			]
-		}
+		"extends": "../../package.json"
 	}
 }

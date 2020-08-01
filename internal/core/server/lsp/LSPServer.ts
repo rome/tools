@@ -274,7 +274,7 @@ export default class LSPServer {
 			case "textDocument/formatting": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
 
-				const project = this.server.projectManager.findProjectExisting(path);
+				const project = this.server.projectManager.findLoadedProject(path);
 				if (project === undefined) {
 					// Not in a Rome project
 					return null;
@@ -317,7 +317,7 @@ export default class LSPServer {
 
 			case "textDocument/didOpen": {
 				const path = getPathFromTextDocument(params.get("textDocument"));
-				const project = this.server.projectManager.findProjectExisting(path);
+				const project = this.server.projectManager.findLoadedProject(path);
 				if (project === undefined) {
 					return;
 				}

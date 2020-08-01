@@ -27,6 +27,7 @@ import {
 	readMarkup,
 } from "@internal/markup";
 import {
+	ReporterCaptureStream,
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
 	ReporterNamespace,
@@ -56,7 +57,11 @@ import {
 	inferTerminalFeatures,
 } from "@internal/cli-environment";
 import * as streamUtils from "./stream";
-import {mergeObjects} from "@internal/typescript-helpers";
+import {
+	AsyncVoidCallback,
+	VoidCallback,
+	mergeObjects,
+} from "@internal/typescript-helpers";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -128,8 +133,8 @@ export default class Reporter implements ReporterNamespace {
 
 	//Store active progress indicators so we can easily bail out and destroy them
 	activeElements: Set<{
-		render: () => void;
-		end: () => void;
+		render: VoidCallback;
+		end: VoidCallback;
 	}>;
 
 	getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
@@ -229,10 +234,7 @@ export default class Reporter implements ReporterNamespace {
 	attachCaptureStream(
 		format: ReporterStream["format"] = "none",
 		features: Partial<TerminalFeatures> = {},
-	): {
-		read: () => string;
-		remove: () => void;
-	} {
+	): ReporterCaptureStream {
 		let buff = "";
 
 		const stream = this.addStream({
@@ -249,6 +251,11 @@ export default class Reporter implements ReporterNamespace {
 		return {
 			read() {
 				return buff;
+			},
+			readAsMarkup() {
+				return format === "markup"
+					? convertToMarkupFromRandomString(buff)
+					: markup`${buff}`;
 			},
 			remove: stream.remove,
 		};
@@ -570,7 +577,7 @@ export default class Reporter implements ReporterNamespace {
 		this.br();
 	}
 
-	async indent(callback: () => void | Promise<void>) {
+	async indent(callback: AsyncVoidCallback) {
 		this.indentLevel++;
 
 		try {
@@ -580,7 +587,7 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	indentSync(callback: () => void) {
+	indentSync(callback: VoidCallback) {
 		this.indentLevel++;
 
 		try {
@@ -592,7 +599,7 @@ export default class Reporter implements ReporterNamespace {
 
 	async section(
 		title: undefined | Markup,
-		callback: () => void | Promise<void>,
+		callback: AsyncVoidCallback,
 	): Promise<void> {
 		this.hr(
 			title === undefined ? undefined : markup`<emphasis>${title}</emphasis>`,
@@ -904,7 +911,10 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	progress(opts?: ReporterProgressOptions, onEnd?: () => void): ReporterProgress {
+	progress(
+		opts?: ReporterProgressOptions,
+		onEnd?: VoidCallback,
+	): ReporterProgress {
 		const bar = new Progress(
 			this,
 			opts,

@@ -6,6 +6,7 @@
  */
 
 import React = require("react");
+import { VoidCallback } from "@internal/typescript-helpers";
 
 const {css, cx} = require("emotion");
 
@@ -13,7 +14,7 @@ export default function Button(
 	props: {
 		className?: string;
 		children: React.ReactNode;
-		onClick: () => void;
+		onClick: VoidCallback;
 	},
 ) {
 	return <div onClick={props.onClick}

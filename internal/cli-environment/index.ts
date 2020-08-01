@@ -1,7 +1,7 @@
 import stream = require("stream");
 import tty = require("tty");
 import {Event} from "@internal/events";
-import {mergeObjects} from "@internal/typescript-helpers";
+import {VoidCallback, mergeObjects} from "@internal/typescript-helpers";
 import {Number1, ob1Coerce1} from "@internal/ob1";
 
 export type Stdout = stream.Writable | tty.WriteStream;
@@ -9,8 +9,8 @@ export type Stdout = stream.Writable | tty.WriteStream;
 export type InferredTerminalFeatures = {
 	features: TerminalFeatures;
 	updateEvent: Event<TerminalFeatures, void>;
-	setupUpdateEvent: () => void;
-	closeUpdateEvent: () => void;
+	setupUpdateEvent: VoidCallback;
+	closeUpdateEvent: VoidCallback;
 };
 
 export type TerminalFeatures = {

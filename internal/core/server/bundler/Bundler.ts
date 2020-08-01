@@ -280,7 +280,7 @@ export default class Bundler {
 		};
 
 		// TODO inherit some manifest properties from project configs
-		const project = this.server.projectManager.findProjectExisting(
+		const project = this.server.projectManager.findLoadedProject(
 			manifestDef.directory,
 		);
 		if (project !== undefined) {

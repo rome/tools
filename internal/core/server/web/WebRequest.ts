@@ -13,12 +13,11 @@ import {
 import {dedent, removePrefix, removeSuffix} from "@internal/string-utils";
 import Bundler from "../bundler/Bundler";
 import {WebSocketInterface, createKey} from "@internal/codec-websocket";
-import {Reporter} from "@internal/cli-reporter";
+import {Reporter, ReporterCaptureStream} from "@internal/cli-reporter";
 import {createBridgeFromWebSocketInterface} from "@internal/events";
 import {createUnknownFilePath} from "@internal/path";
 import {WebServer} from "./index";
 import {ProjectDefinition} from "@internal/project";
-import {HmrClientMessage} from "./hmr";
 import {ConsumableUrl, consumeUrl} from "@internal/codec-url";
 import http = require("http");
 import {markup} from "@internal/markup";
@@ -38,7 +37,8 @@ export default class WebRequest {
 		this.req = req;
 		this.res = res;
 		this.webServer = webServer;
-		this.reporter = webServer.reporter;
+		this.reporter = new Reporter();
+		this.reporterStream = this.reporter.attachCaptureStream("markup");
 		this.server = webServer.server;
 		this.serverRequest = webServer.serverRequest;
 
@@ -50,6 +50,7 @@ export default class WebRequest {
 	}
 
 	reporter: Reporter;
+	reporterStream: ReporterCaptureStream;
 	webServer: WebServer;
 	server: Server;
 	serverRequest: ServerRequest;
@@ -83,7 +84,7 @@ export default class WebRequest {
 	}
 
 	async dispatch(): Promise<void> {
-		const {res} = this;
+		const {req, res} = this;
 
 		try {
 			const rawBody = await this.loadRawBody();
@@ -106,7 +107,6 @@ export default class WebRequest {
 				];
 			}
 
-			//this.request.reporter.clear();
 			try {
 				const printer = this.serverRequest.createDiagnosticsPrinter(
 					this.server.createDiagnosticsProcessor({
@@ -125,6 +125,34 @@ export default class WebRequest {
 			}
 
 			res.end("Diagnostics available, see console");
+		} finally {
+			// Format status code
+			// https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+			const statusCode = res.statusCode;
+			let status = markup`${statusCode}`;
+			if (statusCode >= 100 && statusCode <= 199) {
+				// 1xx informational response – the request was received, continuing process
+				status = markup`<info>${status}</info>`;
+			} else if (statusCode >= 200 && statusCode <= 299) {
+				// 2xx successful – the request was successfully received, understood, and accepted
+				status = markup`<success>${status}</success>`;
+			} else if (statusCode >= 300 && statusCode <= 399) {
+				// 3xx redirection – further action needs to be taken in order to complete the request
+				status = markup`<info>${status}</info>`;
+			} else if (statusCode >= 400 && statusCode <= 499) {
+				// 4xx client error – the request contains bad syntax or cannot be fulfilled
+				status = markup`<error>${status}</error>`;
+			} else if (statusCode >= 500 && statusCode <= 599) {
+				// 5xx server error – the server failed to fulfil an apparently valid request
+				status = markup`<error>${status}</error>`;
+			}
+
+			// Log <METHOD> <URL> <STATUS>
+			this.webServer.reporter.log(
+				this.reporterStream.readAsMarkup(),
+				{noNewline: true},
+			);
+			this.reporter.log(markup`<dim>${req.method}</dim> ${req.url} ${status}`);
 		}
 	}
 
@@ -165,9 +193,6 @@ export default class WebRequest {
 				);
 				break;
 			}
-
-			case "/hot":
-				return this.handleDeviceWebsocket();
 
 			default:
 				return this.handleWildcard(pathname);
@@ -239,7 +264,7 @@ export default class WebRequest {
 			source: createUnknownFilePath("@internal/web-ui"),
 		});
 		const bundle = await bundler.bundle(resolved);
-		res.end(bundle.entry.js);
+		res.end(bundle.entry.js.content);
 	}
 
 	negotiateWebsocket() {
@@ -258,70 +283,6 @@ export default class WebRequest {
 		];
 
 		req.socket.write(headers.join("\r\n"));
-	}
-
-	async handleDeviceWebsocketMessage(
-		socket: WebSocketInterface,
-		data: HmrClientMessage,
-	) {
-		switch (data.type) {
-			case "log":
-				return this.webServer.printConsoleLog(data);
-
-			case "log-opt-in":
-				// ???
-				return;
-
-			case "register-entrypoints":
-				/// ???
-				return;
-
-			default:
-				console.log("UNKNOWN MESSAGE", data);
-		}
-	}
-
-	async handleDeviceWebsocket() {
-		const {req} = this;
-		this.negotiateWebsocket();
-
-		const socket = new WebSocketInterface("server", req.socket);
-		this.webServer.deviceWebsockets.add(socket);
-
-		req.socket.on(
-			"error",
-			(err) => {
-				console.log(err.stack);
-			},
-		);
-
-		this.reporter.success(markup`Device websocket client connected`);
-
-		socket.completeFrameEvent.subscribe((frame) => {
-			const text = frame.payload.toString();
-			try {
-				const json = JSON.parse(text);
-				this.handleDeviceWebsocketMessage(socket, json);
-			} catch (err) {
-				if (err instanceof SyntaxError) {
-					console.log("UNKNOWN FRAME", text);
-					return;
-				} else {
-					throw err;
-				}
-			}
-		});
-
-		socket.errorEvent.subscribe((err) => {
-			console.log(err);
-		});
-
-		socket.endEvent.subscribe(() => {
-			console.log("END");
-			this.webServer.deviceWebsockets.delete(socket);
-		});
-
-		await waitForever;
 	}
 
 	async handleFrontendWebsocket() {
@@ -347,7 +308,7 @@ export default class WebRequest {
 
 		await bridge.handshake();
 
-		this.reporter.success(markup`Frontend websocket client connected`);
+		this.reporter.success(markup`websocket client connected`);
 
 		this.webServer.sendRequests(bridge);
 
