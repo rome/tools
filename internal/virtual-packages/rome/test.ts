@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue, VoidCallback} from "./types";
-import {AsyncVoidCallback} from "@internal/typescript-helpers";
+import {JSONPropertyValue, VoidCallback, AsyncVoidCallback} from "./types";
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
