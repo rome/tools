@@ -304,8 +304,8 @@ export default createVisitor({
 				}
 				return signals.replace(declaration);
 			} else {
-				// check if any of the specifiers reference a global or import
-				// if so, we need to insert declarations for them
+				// Check if any of the specifiers reference a global or import
+				// If so, we need to insert declarations for them
 				const nodes: Array<AnyNode> = [];
 
 				for (const specifier of specifiers) {
@@ -315,21 +315,23 @@ export default createVisitor({
 						// TODO we only really need this declaration for global bindings, `analyze()` could detect the exported import and resolvedImports would just work
 						if (binding === undefined || binding instanceof ImportBinding) {
 							nodes.push(
-								jsVariableDeclaration.create({
-									kind: "const",
-									declarations: [
-										jsVariableDeclarator.create({
-											id: jsBindingIdentifier.create({
-												name: getPrefixedName(
-													specifier.exported.name,
-													opts.moduleId,
-													opts,
-												),
+								jsVariableDeclarationStatement.quick(
+									jsVariableDeclaration.create({
+										kind: "const",
+										declarations: [
+											jsVariableDeclarator.create({
+												id: jsBindingIdentifier.create({
+													name: getPrefixedName(
+														specifier.exported.name,
+														opts.moduleId,
+														opts,
+													),
+												}),
+												init: jsReferenceIdentifier.quick(specifier.local.name),
 											}),
-											init: jsReferenceIdentifier.quick(specifier.local.name),
-										}),
-									],
-								}),
+										],
+									}),
+								),
 							);
 						}
 					} else {

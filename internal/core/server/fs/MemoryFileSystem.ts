@@ -191,7 +191,7 @@ async function createWatcher(
 		logger.info(
 			markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
 				memoryFs.countFiles(projectDirectory),
-			)}</number> files. Took <duration>${took}</duration>`,
+			)}</number> files. Took <duration>${String(took)}</duration>`,
 		);
 	} finally {
 		activity.end();

@@ -1,5 +1,5 @@
 import {UnknownObject} from "@internal/typescript-helpers";
-import Path from "./Path";
+import Path, {PathToken} from "./Path";
 
 type SetStateCallback<State> =
 	| Partial<State>
@@ -25,7 +25,7 @@ export interface VisitorStateEnter<State extends UnknownObject> extends VisitorS
 
 export type AnyVisitorState = VisitorState<UnknownObject>;
 
-type StackItem<State> = [State, Path];
+type StackItem<State> = [State, PathToken];
 
 export default class VisitorState<State extends UnknownObject>
 	implements VisitorStateEnter<State> {
@@ -33,20 +33,22 @@ export default class VisitorState<State extends UnknownObject>
 		this.stack = [];
 		this.currentIndex = -1;
 		this.pushQueue = undefined;
-		this.currentPath = undefined;
+		this.currentPathToken = undefined;
 	}
 
 	stack: Array<StackItem<State>>;
 	currentIndex: number;
 	pushQueue: undefined | State;
-	currentPath: undefined | Path;
+	currentPathToken: undefined | PathToken;
 
 	setCurrentPath(path: Path) {
-		this.currentPath = path;
+		this.currentPathToken = path.token;
 	}
 
 	owns(): boolean {
-		return this.has() && this.stack[this.currentIndex][1] === this.currentPath;
+		return (
+			this.has() && this.stack[this.currentIndex][1] === this.currentPathToken
+		);
 	}
 
 	has() {
@@ -105,11 +107,11 @@ export default class VisitorState<State extends UnknownObject>
 		if (queueState === undefined) {
 			return false;
 		} else {
-			const {currentPath} = this;
-			if (currentPath === undefined) {
+			const {currentPathToken} = this;
+			if (currentPathToken === undefined) {
 				throw new Error("VisitorState.checkPushed: No current path found");
 			}
-			this.stack.push([queueState, currentPath]);
+			this.stack.push([queueState, currentPathToken]);
 			this.currentIndex++;
 			this.pushQueue = undefined;
 			return true;

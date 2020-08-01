@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterProgress} from "@internal/cli-reporter";
+import {
+	Reporter,
+	ReporterNamespace,
+	ReporterProgress,
+} from "@internal/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -110,6 +114,7 @@ export default class TestServerRunner {
 		this.sources = opts.sources;
 		this.reporter = opts.request.reporter;
 		this.server = opts.request.server;
+		this.logger = this.server.logger.namespace(markup`[TestServerRunner]`);
 		this.cwd = opts.request.client.flags.cwd;
 		this.request = opts.request;
 		this.options = opts.options;
@@ -163,6 +168,7 @@ export default class TestServerRunner {
 	options: TestServerRunnerOptions;
 	request: ServerRequest;
 	reporter: Reporter;
+	logger: ReporterNamespace;
 	sources: TestSources;
 	workers: undefined | TestWorkerContainers;
 	server: Server;
@@ -661,8 +667,10 @@ export default class TestServerRunner {
 			);
 		}
 
+		const key = this.refToKey(ref);
+		this.logger.info(markup`Running test ${key}`);
 		this.runningTests.set(
-			this.refToKey(ref),
+			key,
 			{
 				ref,
 				timeout,
@@ -682,6 +690,7 @@ export default class TestServerRunner {
 			throw new Error("Expected there to be a running test");
 		}
 
+		this.logger.info(markup`Finished test ${key}`);
 		if (running.timeout !== undefined) {
 			clearTimeout(running.timeout);
 		}

@@ -28,6 +28,12 @@ import {
 } from "../lint/decisions";
 import {AnyVisitor} from "../types";
 
+// Can be used with referencial equality to determine if paths are derivatives of each other
+// Import for state retention which requires tracking ownership
+export type PathToken = {
+	type: "PATH_TOKEN";
+};
+
 export type PathOptions = {
 	ancestryPaths?: Array<Path>;
 	nodeKey?: string;
@@ -73,7 +79,12 @@ function getFormattedCodeFromSignal(signal: ExitSignal, path: Path): string {
 }
 
 export default class Path {
-	constructor(node: AnyNode, context: CompilerContext, opts: PathOptions) {
+	constructor(
+		node: AnyNode,
+		context: CompilerContext,
+		opts: PathOptions,
+		token?: PathToken,
+	) {
 		const ancestryPaths = opts.ancestryPaths || [];
 		this.ancestryPaths = ancestryPaths;
 
@@ -115,6 +126,7 @@ export default class Path {
 
 		this.isMock = opts.isMock === true;
 		this.opts = opts;
+		this.token = token ?? {type: "PATH_TOKEN"};
 	}
 
 	context: CompilerContext;
@@ -124,6 +136,7 @@ export default class Path {
 	opts: PathOptions;
 	isMock: boolean;
 
+	token: PathToken;
 	ancestryPaths: Array<Path>;
 	parentPath: Path;
 
@@ -207,7 +220,7 @@ export default class Path {
 	}
 
 	fork(newNode: AnyNode): Path {
-		return new Path(newNode, this.context, this.getPathOptions());
+		return new Path(newNode, this.context, this.getPathOptions(), this.token);
 	}
 
 	getPathOptions(): PathOptions {

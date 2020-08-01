@@ -143,6 +143,11 @@ export default createVisitor<State>({
 				);
 			}
 
+			// We may have invalidated all declarations
+			if (replaceDeclarators.size === 0) {
+				return signals.retain;
+			}
+
 			const newNode: JSVariableDeclarationStatement = {
 				...node,
 				declaration: {
