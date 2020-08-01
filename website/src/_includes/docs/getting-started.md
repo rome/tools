@@ -27,3 +27,7 @@ This will create a `rome.rjson` that contains your project config. This will als
 Refer to [Project Configuration](#project-config) for configuration options.
 
 > Note: The `.rjson` extension. [RJSON](#rome-json) is a superset of JSON that supports more-concise syntax and features such as comments.
+
+### Start Linting
+
+TODO

@@ -1,5 +1,7 @@
 **Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
+**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and others.
+
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
 **Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](/about#philosophy).
@@ -33,7 +35,7 @@
 
 **Rome is currently only supported as a [linter](#linting) for JavaScript and TypeScript.** We are actively working on support for other languages.
 
-Once our usage as a linter has matured we will work on releasing the other parts of Rome and expand beyond linting.
+Once our usage as a linter has matured we will work on releasing the other parts of Rome and expand beyond linting. Significant implementation has already been completed for other functionality such as bundling and testing.
 
 ### Language Support
 

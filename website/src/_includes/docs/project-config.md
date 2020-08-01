@@ -1,17 +1,15 @@
 ## Project Configuration
 
-Rome needs to know how to find your project and what files it includes. To do this we require a project configuration file.
+**Rome** needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your config can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and allows you to omit syntax.
+Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and has a simpler syntax.
 
 All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
-
-We are deliberately lean with our configuration. Any additional options increases the potential for bugs, makes it harder to maintain, and .
-
 
 ```json
 name: "project-name"
 version: "^0.0.0"
+root: true
 
 lint: {
 	ignore: []
@@ -30,6 +28,10 @@ The Rome cache is portable, meaning it contains no references to absolute paths.
 ```bash
 rome config set name "project-name"
 ```
+
+### `root`
+
+TODO
 
 #### `version`
 

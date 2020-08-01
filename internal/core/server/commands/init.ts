@@ -97,6 +97,7 @@ export default createServerCommand<Flags>({
 		// We are only using JSONObject here because we don't have an accurate type definition for what
 		// the config actually looks like on disk
 		let config: JSONObject = {
+			root: true,
 			name: cwd.getBasename(),
 		};
 

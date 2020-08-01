@@ -31,3 +31,9 @@ Tags are not color-specific. ie. rather than `<green>` we have `<success>`. This
 When rendering we perform layout calculation according to a provided column width, in most cases reported to us by the shell. This layout calculation includes line wrapping, padding, horizontal rules, and text alignment.
 
 We avoid the common pitfalls of in-band ANSI formatting by doing the formatting as the final step when all the text has been split into non-overlapping ranges for ANSI code insertion.
+
+### Type Safety
+
+TODO
+
+### Self Hosted

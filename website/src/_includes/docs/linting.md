@@ -1,8 +1,10 @@
 ## Linting
 
-We've built Rome to be fantastic at displaying [diagnostics](#diagnostics) and providing as much information as possible for you to understand and fix them. We don't believe that existing JavaScript linters do enough. More often they get in the way. Sometimes conventions, while making code more consistent, make it difficult to remember and work on. We have tried to address this in Rome with the following ways:
+We've built Rome to be fantastic at displaying [diagnostics](#diagnostics) and providing as much information as possible for you to understand and fix them. We don't believe that existing JavaScript linters do enough, and get in the way more than they should.
 
- - Providing as much context as possible on why a diagnostic was produced.
+We aim for Rome to have more opinions, do more for you, while being easy to use. We try to achieve this the following ways:
+
+ - Provide as much context as possible on why a diagnostic was produced.
  - Make it obvious and tell you how to fix it (if possible).
  - Offer powerful autofixes so you don't even need to make most changes yourself (via [fixes]()).
  - Offer autofix suggestions for scenarios for potentially unsafe fixes (via [suggestions]()).
