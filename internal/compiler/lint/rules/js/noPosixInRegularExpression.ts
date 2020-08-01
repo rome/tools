@@ -5,37 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSRegExpCharSet} from "@internal/ast";
-import {CompilerContext, createVisitor, signals} from "@internal/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-
-function checkRegEx(
-	node: JSRegExpCharSet,
-	context: CompilerContext,
-): JSRegExpCharSet {
-	for (let i = 0; i < node.body.length; i++) {
-		const nextNode = node.body[i + 1];
-		const currNode = node.body[i];
-		const lastNode = node.body[node.body.length - 1];
-		if (
-			currNode.type === "JSRegExpCharacter" &&
-			currNode.value === "[" &&
-			nextNode &&
-			nextNode.type === "JSRegExpCharacter" &&
-			(nextNode.value === ":" || nextNode.value === ".") &&
-			lastNode.type === "JSRegExpCharacter" &&
-			lastNode.value === nextNode.value
-		) {
-			context.addNodeDiagnostic(
-				currNode,
-				descriptions.LINT.JS_NO_POSIX_IN_REGULAR_EXPRESSION,
-				{tags: {fixable: true}},
-			);
-		}
-	}
-
-	return node;
-}
 
 export default createVisitor({
 	name: "js/noPosixInRegularExpression",
@@ -43,7 +14,25 @@ export default createVisitor({
 		const {context, node} = path;
 
 		if (node.type === "JSRegExpCharSet" && node.body.length > 2) {
-			return signals.replace(checkRegEx(node, context));
+			for (let i = 0; i < node.body.length; i++) {
+				const nextNode = node.body[i + 1];
+				const currNode = node.body[i];
+				const lastNode = node.body[node.body.length - 1];
+				if (
+					currNode.type === "JSRegExpCharacter" &&
+					currNode.value === "[" &&
+					nextNode &&
+					nextNode.type === "JSRegExpCharacter" &&
+					(nextNode.value === ":" || nextNode.value === ".") &&
+					lastNode.type === "JSRegExpCharacter" &&
+					lastNode.value === nextNode.value
+				) {
+					context.addNodeDiagnostic(
+						currNode,
+						descriptions.LINT.JS_NO_POSIX_IN_REGULAR_EXPRESSION,
+					);
+				}
+			}
 		}
 
 		return signals.retain;

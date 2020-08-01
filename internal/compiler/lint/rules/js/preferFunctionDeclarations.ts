@@ -96,24 +96,10 @@ export default createVisitor<State>({
 			}
 
 			const nodes: Array<JSVariableDeclarationStatement | JSFunctionDeclaration> = [];
-
-			const newNode: JSVariableDeclarationStatement = {
-				...node,
-				declaration: {
-					...node.declaration,
-					declarations: node.declaration.declarations.filter((decl) =>
-						!state.declarators.includes(decl)
-					),
-				},
-			};
-
-			// We may have removed all the declarators
-			if (newNode.declaration.declarations.length > 0) {
-				nodes.push(newNode);
-			}
+			const replaceDeclarators = new Set(state.declarators);
 
 			// Convert functions
-			for (const decl of state.declarators) {
+			for (const decl of replaceDeclarators) {
 				// Could have been changed under us. Ignore it, we'll get it in another pass
 				if (!node.declaration.declarations.includes(decl)) {
 					continue;
@@ -130,12 +116,15 @@ export default createVisitor<State>({
 					throw new Error("Invalid declarator put into state");
 				}
 
-				// TODO if this is suppressed then don't transform
-				path.context.addNodeDiagnostic(
+				const {suppressed} = path.context.addNodeDiagnostic(
 					init,
 					descriptions.LINT.JS_PREFER_FUNCTION_DECLARATIONS,
 					{tags: {fixable: true}},
 				);
+				if (suppressed) {
+					replaceDeclarators.delete(decl);
+					continue;
+				}
 
 				// Convert arrow function body if necessary
 				const body =
@@ -152,6 +141,21 @@ export default createVisitor<State>({
 						body,
 					}),
 				);
+			}
+
+			const newNode: JSVariableDeclarationStatement = {
+				...node,
+				declaration: {
+					...node.declaration,
+					declarations: node.declaration.declarations.filter((decl) =>
+						!replaceDeclarators.has(decl)
+					),
+				},
+			};
+
+			// We may have removed all the declarators
+			if (newNode.declaration.declarations.length > 0) {
+				nodes.push(newNode);
 			}
 
 			if (nodes.length === 1) {
