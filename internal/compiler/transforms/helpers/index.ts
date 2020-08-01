@@ -122,7 +122,7 @@ export function injectComment(path: Path, comment: AnyCommentOptionalId): string
 			}
 
 			return {
-				comments: [...state.comments, commentWithId],
+				comments: [...comments, commentWithId],
 			};
 		},
 		{
@@ -155,10 +155,13 @@ export const commentInjectorVisitor = createVisitor<CommentState>({
 		const {node} = path;
 
 		if (isRoot(node) && state.owns()) {
-			return signals.replace({
-				...node,
-				comments: [...node.comments, ...state.get().comments],
-			});
+			const {comments} = state.get();
+			if (comments.length > 0) {
+				return signals.replace({
+					...node,
+					comments: [...node.comments, ...comments],
+				});
+			}
 		}
 
 		return signals.retain;

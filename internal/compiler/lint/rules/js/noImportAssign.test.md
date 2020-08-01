@@ -197,6 +197,7 @@ import x from "y";
 ```
 import x from "y";
 for (x in y) {
+	// empty
 }
 
 ```

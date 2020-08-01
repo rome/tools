@@ -325,7 +325,8 @@ export default class CompilerContext {
 			);
 		}
 
-		const {category, advice = []} = description;
+		const {category} = description;
+		const advice = [...description.advice];
 		if (loc !== undefined && loc.start !== undefined) {
 			advice.push(
 				buildLintDecisionAdviceAction({
