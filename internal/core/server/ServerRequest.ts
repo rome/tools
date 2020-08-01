@@ -140,13 +140,28 @@ export class ServerRequestCancelled extends Error {
 }
 
 export default class ServerRequest {
-	constructor(opts: ServerRequestOptions) {
-		this.query = opts.query;
-		this.server = opts.server;
-		this.bridge = opts.client.bridge;
-		this.reporter = opts.client.reporter;
+	constructor({query, server, client}: ServerRequestOptions) {
+		this.query = query;
+		this.server = server;
+		this.bridge = client.bridge;
+		this.reporter = query.silent ? new Reporter() : client.reporter;
+		this.client = client;
+
+		this.start = Date.now();
+		this.id = requestIdCounter++;
 		this.cancelled = false;
 		this.toredown = false;
+		this.markers = [];
+		this.normalizedCommandFlags = {
+			flags: {},
+			defaultFlags: {},
+		};
+		this.files = new AbsoluteFilePathMap();
+
+		this.logger = server.logger.namespace(
+			markup`[ServerRequest] Request #${this.id}:`,
+		);
+
 		this.markerEvent = new Event({
 			name: "ServerRequest.marker",
 			onError: this.server.onFatalErrorBound,
@@ -156,21 +171,8 @@ export default class ServerRequest {
 			onError: this.server.onFatalErrorBound,
 			serial: true,
 		});
-		this.client = opts.client;
-		this.id = requestIdCounter++;
-		this.markers = [];
-		this.start = Date.now();
-		this.normalizedCommandFlags = {
-			flags: {},
-			defaultFlags: {},
-		};
+
 		this.client.requestsInFlight.add(this);
-
-		this.files = new AbsoluteFilePathMap();
-
-		this.logger = opts.server.logger.namespace(
-			markup`[ServerRequest] Request #${this.id}:`,
-		);
 	}
 
 	id: number;
