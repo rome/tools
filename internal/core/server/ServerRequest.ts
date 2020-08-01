@@ -13,8 +13,6 @@ import {
 import {JSONFileReference} from "../common/types/files";
 import {
 	Diagnostic,
-	DiagnosticAdvice,
-	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppressions,
@@ -33,7 +31,7 @@ import {
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
-import {ResolverOptions, ResolverQueryResponseFound} from "./fs/Resolver";
+import {ResolverOptions} from "./fs/Resolver";
 import {BundlerConfig} from "../common/types/bundler";
 import ServerBridge, {
 	ServerQueryRequest,
@@ -46,11 +44,7 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {
-	Event,
-	EventSubscription,
-	mergeEventSubscriptions,
-} from "@internal/events";
+import {Event, EventSubscription} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLITarget,
@@ -75,14 +69,11 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	UnknownFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
-import crypto = require("crypto");
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
-import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {JSONObject} from "@internal/codec-json";
@@ -91,6 +82,14 @@ import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
+import crypto = require("crypto");
+import {
+	GetFilesFlushCallback,
+	GetFilesOptions,
+	WatchFilesCallback,
+	getFilesFromArgs,
+	watchFilesFromArgs,
+} from "./fs/glob";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -105,14 +104,6 @@ type NormalizedCommandFlags = {
 	defaultFlags: Dict<unknown>;
 };
 
-type ResolvedArg = {
-	path: AbsoluteFilePath;
-	location: DiagnosticLocation;
-	project: ProjectDefinition;
-};
-
-type ResolvedArgs = Array<ResolvedArg>;
-
 export const EMPTY_SUCCESS_RESPONSE: ServerQueryResponseSuccess = {
 	type: "SUCCESS",
 	hasData: false,
@@ -121,31 +112,8 @@ export const EMPTY_SUCCESS_RESPONSE: ServerQueryResponseSuccess = {
 	files: {},
 };
 
-type GetFilesTryAlternateArg = (
-	path: UnknownFilePath,
-) => undefined | UnknownFilePath;
-
 type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
-};
-
-export type ServerRequestGetFilesOptions = Omit<
-	MemoryFSGlobOptions,
-	"getProjectIgnore"
-> & {
-	tryAlternateArg?: GetFilesTryAlternateArg;
-	ignoreArgumentMisses?: boolean;
-	ignoreProjectIgnore?: boolean;
-	disabledDiagnosticCategory?: DiagnosticCategory;
-	advice?: DiagnosticAdvice;
-	verb?: string;
-	noun?: string;
-	args?: Array<string>;
-};
-
-export type ServerRequestGetFilesResult = {
-	projects: Set<ProjectDefinition>;
-	paths: AbsoluteFilePathSet;
 };
 
 export class ServerRequestInvalid extends DiagnosticsError {
@@ -667,289 +635,6 @@ export default class ServerRequest {
 		};
 	}
 
-	async resolveFilesFromArgs(
-		overrideArgs?: Array<string>,
-		tryAlternateArg?: GetFilesTryAlternateArg,
-	): Promise<{
-		projects: Set<ProjectDefinition>;
-		resolvedArgs: ResolvedArgs;
-	}> {
-		this.checkCancelled();
-
-		const projects: Set<ProjectDefinition> = new Set();
-		const rawArgs = overrideArgs ?? this.query.args;
-		const resolvedArgs: ResolvedArgs = [];
-		const {cwd} = this.client.flags;
-
-		// If args was explicitly provided then don't assume empty args is the project root
-		if (rawArgs.length === 0 && overrideArgs === undefined) {
-			const location = this.getDiagnosticLocationForClientCwd();
-			const project = await this.assertClientCwdProject();
-			resolvedArgs.push({
-				path: project.directory,
-				location,
-				project,
-			});
-			projects.add(project);
-		} else {
-			for (let i = 0; i < rawArgs.length; i++) {
-				const arg = rawArgs[i];
-
-				const location = this.getDiagnosticLocationFromFlags({
-					type: "arg",
-					key: i,
-				});
-
-				let source = createUnknownFilePath(arg);
-				let resolved: undefined | ResolverQueryResponseFound;
-
-				if (tryAlternateArg !== undefined) {
-					const alternateSource = tryAlternateArg(source);
-					if (alternateSource !== undefined) {
-						const resolvedAlternate = await this.server.resolver.resolveEntry({
-							origin: cwd,
-							source: alternateSource,
-							requestedType: "directory",
-						});
-						if (resolvedAlternate.type === "FOUND") {
-							resolved = resolvedAlternate;
-						}
-					}
-				}
-
-				if (resolved === undefined) {
-					resolved = await this.server.resolver.resolveEntryAssert(
-						{
-							origin: cwd,
-							source,
-							requestedType: "directory",
-						},
-						{
-							location,
-						},
-					);
-				}
-
-				const project = this.server.projectManager.assertProjectExisting(
-					resolved.path,
-				);
-				projects.add(project);
-
-				resolvedArgs.push({
-					project,
-					path: resolved.path,
-					location,
-				});
-			}
-		}
-
-		return {
-			resolvedArgs,
-			projects,
-		};
-	}
-
-	async watchFilesFromArgs(
-		opts: ServerRequestGetFilesOptions,
-		callback: (paths: AbsoluteFilePathSet, initial: boolean) => Promise<void>,
-	): Promise<EventSubscription> {
-		this.checkCancelled();
-
-		// Everything needs to be relative to this
-		const {resolvedArgs} = await this.resolveFilesFromArgs(
-			opts.args,
-			opts.tryAlternateArg,
-		);
-
-		let timeout: undefined | NodeJS.Timeout;
-		let runningCallback = false;
-		let pendingPaths = new AbsoluteFilePathSet();
-
-		async function flush(initial: boolean) {
-			timeout = undefined;
-
-			if (!initial && pendingPaths.size === 0) {
-				return;
-			}
-
-			const paths = pendingPaths;
-			pendingPaths = new AbsoluteFilePathSet();
-
-			runningCallback = true;
-			await callback(paths, initial);
-			runningCallback = false;
-
-			if (pendingPaths.size > 0) {
-				await flush(false);
-			}
-		}
-
-		const refreshFileEvent = this.server.refreshFileEvent.subscribe((
-			path: AbsoluteFilePath,
-		) => {
-			let matches = false;
-			for (const arg of resolvedArgs) {
-				if (arg.path.equal(path) || path.isRelativeTo(arg.path)) {
-					matches = true;
-					break;
-				}
-			}
-			if (!matches) {
-				return;
-			}
-
-			const paths = this.server.memoryFs.glob(path, opts);
-			for (const path of paths) {
-				pendingPaths.add(path);
-			}
-
-			// Buffer up evicted paths
-			if (!runningCallback && timeout === undefined) {
-				timeout = setTimeout(() => flush(false), 100);
-			}
-		});
-
-		const endSubscription = this.endEvent.subscribe(() => {
-			sub.unsubscribe();
-		});
-
-		const sub = mergeEventSubscriptions([
-			refreshFileEvent,
-			{
-				async unsubscribe() {
-					if (timeout !== undefined) {
-						clearTimeout(timeout);
-
-						// Run the timeout right now
-						await flush(false);
-					}
-				},
-			},
-		]);
-
-		// Flush initial
-		const pendingResult = await this.getFilesFromArgs(opts);
-		for (const path of pendingResult.paths) {
-			pendingPaths.add(path);
-		}
-		await flush(true);
-
-		return mergeEventSubscriptions([endSubscription, sub]);
-	}
-
-	async getFilesFromArgs(
-		opts: ServerRequestGetFilesOptions = {},
-	): Promise<ServerRequestGetFilesResult> {
-		this.checkCancelled();
-
-		const {server} = this;
-		const {configCategory, ignoreProjectIgnore} = opts;
-		const {projects, resolvedArgs} = await this.resolveFilesFromArgs(
-			opts.args,
-			opts.tryAlternateArg,
-		);
-
-		// Resolved arguments that resulted in no files
-		const noArgMatches: Set<ResolvedArg> = new Set();
-
-		// Match files
-		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-		for (const arg of resolvedArgs) {
-			const matches = server.memoryFs.glob(arg.path, opts);
-
-			if (matches.size === 0) {
-				if (!opts.ignoreArgumentMisses) {
-					noArgMatches.add(arg);
-				}
-			} else {
-				for (const path of matches) {
-					paths.add(path);
-				}
-			}
-		}
-
-		if (noArgMatches.size > 0) {
-			const diagnostics: Diagnostics = [];
-
-			for (const {path, project, location} of noArgMatches) {
-				let category: DiagnosticCategory = "args/fileNotFound";
-
-				let advice: DiagnosticAdvice = [...(opts.advice || [])];
-
-				// Hint if all files were ignored
-				if (configCategory !== undefined && !ignoreProjectIgnore) {
-					const {paths: withoutIgnore} = await this.getFilesFromArgs({
-						...opts,
-						ignoreProjectIgnore: true,
-					});
-
-					// Remove paths that we already successfully found
-					for (const path of paths) {
-						withoutIgnore.delete(path);
-					}
-
-					if (withoutIgnore.size > 0) {
-						advice.push({
-							type: "log",
-							category: "info",
-							text: markup`The following files were ignored`,
-						});
-
-						advice.push({
-							type: "list",
-							list: Array.from(withoutIgnore, (path) => markup`${path}`),
-							truncate: true,
-						});
-
-						const ignoreSource = server.projectManager.findProjectConfigConsumer(
-							project,
-							(consumer) =>
-								consumer.has(configCategory) &&
-								consumer.get(configCategory).get("ignore")
-							,
-						);
-
-						if (ignoreSource.value !== undefined) {
-							const ignorePointer = ignoreSource.value.getDiagnosticLocation(
-								"value",
-							);
-
-							advice.push({
-								type: "log",
-								category: "info",
-								text: markup`Ignore patterns were defined here`,
-							});
-
-							advice.push({
-								type: "frame",
-								location: ignorePointer,
-							});
-						}
-					}
-				}
-
-				diagnostics.push({
-					location: {
-						...location,
-						marker: markup`${path}`,
-					},
-					description: {
-						...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
-						category,
-						advice,
-					},
-				});
-			}
-
-			throw new DiagnosticsError(
-				"ServerRequest.getFilesFromArgs: Some arguments did not resolve to any files",
-				diagnostics,
-			);
-		}
-
-		return {paths, projects};
-	}
-
 	normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
 		const {projectManager} = this.server;
 
@@ -1386,5 +1071,19 @@ export default class ServerRequest {
       };
     }*/
 		return prefetchedModuleSignatures;
+	}
+
+	watchFilesFromArgs(
+		opts: GetFilesOptions,
+		callback: WatchFilesCallback,
+	): Promise<EventSubscription> {
+		return watchFilesFromArgs(this, opts, callback);
+	}
+
+	getFilesFromArgs(
+		opts?: GetFilesOptions,
+		flushCallback?: GetFilesFlushCallback,
+	): Promise<AbsoluteFilePathSet> {
+		return getFilesFromArgs(this, opts, flushCallback);
 	}
 }

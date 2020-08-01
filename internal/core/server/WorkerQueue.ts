@@ -40,11 +40,14 @@ export default class WorkerQueue<M> {
 
 	// Prematurely fetch the owners so we don't waterfall worker creation
 	async prepare(paths: AbsoluteFilePathSet) {
-		await Promise.all(Array.from(paths, async (path) => {
-			await this.server.fileAllocator.getOrAssignOwner(
-				path,
-			);
-		}));
+		await Promise.all(
+			Array.from(
+				paths,
+				async (path) => {
+					await this.server.fileAllocator.getOrAssignOwner(path);
+				},
+			),
+		);
 	}
 
 	async pushQueue(path: AbsoluteFilePath, metadata: M) {

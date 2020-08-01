@@ -36,7 +36,7 @@ export default createServerCommand({
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
-		const {paths} = await req.getFilesFromArgs({
+		const paths = await req.getFilesFromArgs({
 			tryAlternateArg: (path) => {
 				if (path.hasExtension("test")) {
 					return undefined;

@@ -547,6 +547,7 @@ export default class ProjectManager {
 			projectDirectory,
 			async () => {
 				if (this.hasLoadedProjectDirectory(projectDirectory)) {
+					// Already defined
 					return;
 				}
 
@@ -585,7 +586,7 @@ export default class ProjectManager {
 		}
 
 		// Declare the project
-		const parentProject = this.findProjectExisting(projectDirectory.getParent());
+		const parentProject = this.findLoadedProject(projectDirectory.getParent());
 		const project: ProjectDefinition = {
 			config,
 			meta,
@@ -595,6 +596,7 @@ export default class ProjectManager {
 			manifests: new Map(),
 			parent: parentProject,
 			children: new Set(),
+			initialized: false,
 		};
 
 		this.projects.set(project.id, project);
@@ -706,7 +708,7 @@ export default class ProjectManager {
 		location?: DiagnosticLocation,
 	): Promise<ProjectDefinition> {
 		const project =
-			this.findProjectExisting(path) || (await this.findProject(path));
+			this.findLoadedProject(path) || (await this.findProject(path));
 		if (project) {
 			return project;
 		}
@@ -731,7 +733,7 @@ export default class ProjectManager {
 
 	// Convenience method to get the project config and pass it to the file handler class
 	getHandlerWithProject(path: AbsoluteFilePath): GetFileHandlerResult {
-		const project = this.findProjectExisting(path);
+		const project = this.findLoadedProject(path);
 		if (project === undefined) {
 			return {ext: "", handler: undefined};
 		} else {
@@ -740,7 +742,7 @@ export default class ProjectManager {
 	}
 
 	getHierarchyFromFilename(path: AbsoluteFilePath): Array<ProjectDefinition> {
-		const project = this.findProjectExisting(path);
+		const project = this.findLoadedProject(path);
 		if (project === undefined) {
 			return [];
 		} else {
@@ -767,7 +769,7 @@ export default class ProjectManager {
 	}
 
 	assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
-		const project = this.findProjectExisting(path);
+		const project = this.findLoadedProject(path);
 		if (project === undefined) {
 			throw new Error(
 				`Expected existing project for ${path.join()} only have ${Array.from(
@@ -779,7 +781,11 @@ export default class ProjectManager {
 		return project;
 	}
 
-	findProjectExisting(path: AbsoluteFilePath): undefined | ProjectDefinition {
+	getProjectFromPath(path: AbsoluteFilePath): undefined | ProjectDefinition {
+		return this.projectDirectoryToProject.get(path);
+	}
+
+	findLoadedProject(path: AbsoluteFilePath): undefined | ProjectDefinition {
 		for (const dir of path.getChain()) {
 			const project = this.projectDirectoryToProject.get(dir);
 			if (project !== undefined) {
@@ -795,7 +801,7 @@ export default class ProjectManager {
 		cwd: AbsoluteFilePath,
 	): Promise<undefined | ProjectDefinition> {
 		// Check if we have an existing project
-		const syncProject = this.findProjectExisting(cwd);
+		const syncProject = this.findLoadedProject(cwd);
 		if (syncProject !== undefined) {
 			return syncProject;
 		}

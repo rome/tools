@@ -13,7 +13,7 @@ test(
 					extensions: ["txt"],
 					ignoreArgumentMisses: true,
 				},
-				async (paths) => {
+				async ({paths}) => {
 					for (const path of paths) {
 						basenames.push(path.getBasename());
 					}

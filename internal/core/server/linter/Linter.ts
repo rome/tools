@@ -13,7 +13,6 @@ import {
 	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {EventSubscription} from "@internal/events";
-import {ServerRequestGetFilesOptions} from "../ServerRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -33,8 +32,9 @@ import {
 } from "@internal/compiler";
 import {markup} from "@internal/markup";
 import WorkerQueue from "../WorkerQueue";
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {GetFilesOptions, WatchFilesEvent} from "../fs/glob";
 
 type LintWatchChanges = Array<{
 	type: "absolute" | "unknown";
@@ -56,13 +56,9 @@ export type LinterOptions = {
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
 
 type WatchEvents = {
-	onRunStart: () => void;
+	onRunStart: VoidCallback;
 	createProgress: ProgressFactory;
-	onChanges: (
-		result: WatchResults,
-		initial: boolean,
-		runner: LintRunner,
-	) => Promise<void> | void;
+	onChanges: (result: WatchResults) => Promise<void> | void;
 };
 
 type WatchResults = {
@@ -71,12 +67,6 @@ type WatchResults = {
 	changes: LintWatchChanges;
 	savedCount: number;
 	totalCount: number;
-};
-
-type LintRunOptions = {
-	firstRun: boolean;
-	evictedPaths: AbsoluteFilePathSet;
-	processor: DiagnosticsProcessor;
 };
 
 function createDiagnosticsPrinter(
@@ -172,10 +162,8 @@ class LintRunner {
 	}
 
 	async runLint(
-		{
-			evictedPaths,
-			processor,
-		}: LintRunOptions,
+		{paths}: WatchFilesEvent,
+		processor: DiagnosticsProcessor,
 	): Promise<{
 		savedCount: number;
 	}> {
@@ -191,9 +179,9 @@ class LintRunner {
 		const queue: WorkerQueue<void> = new WorkerQueue(server);
 
 		const progress = this.events.createProgress({title: markup`Linting`});
-		progress.setTotal(evictedPaths.size);
+		progress.setTotal(paths.size);
 
-		await queue.prepare(evictedPaths);
+		await queue.prepare(paths);
 
 		queue.addCallback(async (path) => {
 			const filename = path.join();
@@ -257,7 +245,7 @@ class LintRunner {
 			progress.tick();
 		});
 
-		for (const path of evictedPaths) {
+		for (const path of paths) {
 			await FileNotFound.allowMissing(path, () => queue.pushQueue(path));
 		}
 
@@ -270,13 +258,16 @@ class LintRunner {
 	}
 
 	async runGraph(
-		{
-			evictedPaths,
-			processor,
-			firstRun,
-		}: LintRunOptions,
+		event: WatchFilesEvent,
+		processor: DiagnosticsProcessor,
 	): Promise<AbsoluteFilePathSet> {
+		if (event.chunk) {
+			// TODO ignore chunks
+			return new AbsoluteFilePathSet();
+		}
+
 		const {graph} = this;
+		const evictedPaths = event.paths;
 
 		// Get all the current dependency nodes for the evicted files, and invalidate their nodes
 		const oldEvictedNodes: AbsoluteFilePathMap<DependencyNode> = new AbsoluteFilePathMap();
@@ -290,7 +281,7 @@ class LintRunner {
 
 		// Refresh only the evicted paths
 		const progress = this.events.createProgress({
-			title: firstRun
+			title: event.initial
 				? markup`Analyzing files`
 				: markup`Analyzing changed files`,
 		});
@@ -364,7 +355,8 @@ class LintRunner {
 	}
 
 	computeChanges(
-		{evictedPaths, processor}: LintRunOptions,
+		{paths: evictedPaths}: WatchFilesEvent,
+		processor: DiagnosticsProcessor,
 		validatedDependencyPaths: AbsoluteFilePathSet,
 	): LintWatchChanges {
 		const {server} = this;
@@ -434,16 +426,23 @@ class LintRunner {
 		return changes;
 	}
 
-	async run(opts: LintRunOptions): Promise<WatchResults> {
+	async run(
+		event: WatchFilesEvent,
+		processor: DiagnosticsProcessor,
+	): Promise<WatchResults> {
 		this.events.onRunStart();
-		const {savedCount} = await this.runLint(opts);
-		const validatedDependencyPaths = await this.runGraph(opts);
-		const changes = await this.computeChanges(opts, validatedDependencyPaths);
+		const {savedCount} = await this.runLint(event, processor);
+		const validatedDependencyPaths = await this.runGraph(event, processor);
+		const changes = await this.computeChanges(
+			event,
+			processor,
+			validatedDependencyPaths,
+		);
 		return {
-			evictedPaths: opts.evictedPaths,
+			evictedPaths: event.paths,
 			changes,
 			savedCount,
-			totalCount: opts.evictedPaths.size,
+			totalCount: event.paths.size,
 			runner: this,
 		};
 	}
@@ -469,7 +468,7 @@ export default class Linter {
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	getFileArgOptions(): ServerRequestGetFilesOptions {
+	getFileArgOptions(): GetFilesOptions {
 		return {
 			args: this.options.args,
 			noun: "lint",
@@ -519,24 +518,14 @@ export default class Linter {
 			this.request.getResolverOptionsFromFlags(),
 		);
 
-		const runner = new LintRunner(
-			this,
-			{
-				events,
-				graph,
-			},
-		);
-
-		let firstRun = true;
+		const runner = new LintRunner(this, {events, graph});
 
 		return this.request.watchFilesFromArgs(
 			this.getFileArgOptions(),
-			async (evictedPaths, initial) => {
-				const processor = this.createDiagnosticsProcessor(evictedPaths, runner);
-
-				const result = await runner.run({firstRun, evictedPaths, processor});
-				await events.onChanges(result, initial, runner);
-				firstRun = false;
+			async (event) => {
+				const processor = this.createDiagnosticsProcessor(event.paths, runner);
+				const result = await runner.run(event, processor);
+				await events.onChanges(result);
 			},
 		);
 	}
