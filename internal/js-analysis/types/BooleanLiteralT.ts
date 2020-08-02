@@ -9,7 +9,7 @@ import {AnyNode} from "@internal/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class BooleanLiteralT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: boolean) {
@@ -33,7 +33,7 @@ export default class BooleanLiteralT extends T {
 		return new BooleanLiteralT(scope, originNode, Boolean(data.value));
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		if (this.value === true) {
 			return markup`true`;
 		} else {

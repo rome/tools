@@ -5,17 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position, SourceLocation} from "@internal/parser-core";
+import {Position} from "@internal/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
 import {isPlainObject} from "@internal/typescript-helpers";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
-import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
+import {
+	NodeSystemError,
+	convertPossibleNodeErrorToDiagnostic,
+} from "@internal/node";
+import {DiagnosticLocation} from "@internal/diagnostics";
 
 export * from "./types";
 
 export const ERROR_FRAMES_PROP = "ERROR_FRAMES";
 
-export type ErrorWithFrames = NodeJS.ErrnoException & {
+export type ErrorWithFrames = NodeSystemError & {
 	[ERROR_FRAMES_PROP]?: unknown;
 };
 
@@ -85,9 +89,9 @@ export function getErrorStructure(
 	};
 }
 
-export function getSourceLocationFromErrorFrame(
+export function getDiagnosticLocationFromErrorFrame(
 	frame: ErrorFrame,
-): SourceLocation {
+): DiagnosticLocation {
 	const pos: Position = {
 		index: ob1Number0Neg1,
 		line: frame.lineNumber ?? ob1Number1,

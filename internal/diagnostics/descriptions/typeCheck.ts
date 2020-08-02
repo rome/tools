@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@internal/markup";
+import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
 
@@ -9,7 +9,7 @@ export const typeCheck = createDiagnosticsCategory({
 		category: "typeCheck/uncallable",
 		message: markup`This type isn't callable`,
 	},
-	INCOMPATIBILITY: (upper: Markup, originLoc: undefined | SourceLocation) => ({
+	INCOMPATIBILITY: (upper: StaticMarkup, originLoc: undefined | SourceLocation) => ({
 		category: "typeCheck/incompatible",
 		message: markup`Type incompatibility found`,
 		advice: [
@@ -52,12 +52,12 @@ export const typeCheck = createDiagnosticsCategory({
 		message: markup`Undeclared variable ${name}`,
 		advice: buildSuggestionAdvice(name, possibleNames),
 	}),
-	NOT_EXHAUSTIVE: (only: Markup, target: Markup) => ({
+	NOT_EXHAUSTIVE: (only: StaticMarkup, target: StaticMarkup) => ({
 		category: "typeCheck/notExhaustive",
 		//message += `but allows ${this.extraenous.map(type => this.utils.humanize(type)).join(' | ')}`;
 		message: markup`Expected only a ${only} but got ${target}`,
 	}),
-	MISSING_CONDITION: (missing: Array<Markup>) => ({
+	MISSING_CONDITION: (missing: AnyMarkups) => ({
 		category: "typeCheck/missingCondition",
 		message: markup`Missing the conditions ${missing.join(", ")}`,
 	}),

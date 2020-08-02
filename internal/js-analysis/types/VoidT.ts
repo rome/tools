@@ -9,7 +9,7 @@ import {AnyNode} from "@internal/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class VoidT extends T {
 	static type = "VoidT";
@@ -22,7 +22,7 @@ export default class VoidT extends T {
 		return new VoidT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`void`;
 	}
 }

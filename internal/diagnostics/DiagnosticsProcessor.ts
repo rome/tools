@@ -21,7 +21,7 @@ import {DiagnosticCategoryPrefix} from "./categories";
 import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
-import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
+import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
 
 type UniquePart =
@@ -43,6 +43,7 @@ export type DiagnosticsProcessorOptions = {
 	onDiagnostics?: (diags: Diagnostics) => void;
 	origins?: Array<DiagnosticOrigin>;
 	markupOptions?: MarkupFormatNormalizeOptions;
+	normalizeOptions?: DiagnosticsNormalizerOptions;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
@@ -65,6 +66,7 @@ export default class DiagnosticsProcessor {
 		this.suppressions = new Set();
 		this.sourceMaps = new SourceMapConsumerCollection();
 		this.normalizer = new DiagnosticsNormalizer(
+			options.normalizeOptions,
 			options.markupOptions,
 			this.sourceMaps,
 		);

@@ -1,6 +1,6 @@
 import {createServerCommand} from "@internal/core/server/commands";
 import {commandCategories} from "@internal/core/common/commands";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {ServerRequest} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
@@ -88,7 +88,7 @@ export default createServerCommand<Flags>({
 		// Track some information about our project generation
 		let savedCheckFiles = 0;
 		let remainingCheckErrors = 0;
-		const files: AbsoluteFilePathMap<Markup> = new AbsoluteFilePathMap();
+		const files: AbsoluteFilePathMap<StaticMarkup> = new AbsoluteFilePathMap();
 		files.set(
 			configPath,
 			markup`Your project configuration. Documentation: <hyperlink target="https://romefrontend.dev/docs/project-config/" />`,

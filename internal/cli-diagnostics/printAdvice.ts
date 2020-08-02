@@ -27,7 +27,7 @@ import {ToLines, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildCodeFrame from "./buildCodeFrame";
 import {
-	Markup,
+	AnyMarkups,
 	concatMarkup,
 	isEmptyMarkup,
 	markup,
@@ -439,7 +439,7 @@ function printStacktrace(
 				sourceText: code,
 			} = frame;
 
-			const logParts: Array<Markup> = [];
+			const logParts: AnyMarkups = [];
 
 			// Add prefix
 			if (prefix !== undefined) {
@@ -447,7 +447,7 @@ function printStacktrace(
 			}
 
 			// Build path
-			const objParts: Array<Markup> = [];
+			const objParts: AnyMarkups = [];
 			if (object !== undefined) {
 				objParts.push(markupTag("highlight", markup`${object}`, {i: 0}));
 			}

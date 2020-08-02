@@ -54,7 +54,13 @@ import {
 	percentInsideCoverageDirectory,
 	sortMapKeys,
 } from "./utils";
-import {Markup, concatMarkup, markup, readMarkup} from "@internal/markup";
+import {
+	AnyMarkups,
+	StaticMarkup,
+	concatMarkup,
+	markup,
+	readMarkup,
+} from "@internal/markup";
 import {MAX_WORKER_COUNT} from "@internal/core/common/constants";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import net = require("net");
@@ -75,7 +81,7 @@ class BridgeDiagnosticsError extends DiagnosticsError {
 	bridge: Bridge;
 }
 
-function grammarNumberTests(num: number): Markup {
+function grammarNumberTests(num: number): StaticMarkup {
 	return markup`<grammarNumber plural="tests" singular="test">${String(num)}</grammarNumber>`;
 }
 
@@ -885,7 +891,7 @@ export default class TestServerRunner {
 			};
 		}
 
-		const rows: Array<Array<Markup>> = [];
+		const rows: Array<AnyMarkups> = [];
 
 		// If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
 		// then truncate the output
@@ -1018,7 +1024,7 @@ export default class TestServerRunner {
 		}
 
 		const first = snapshotCounts.shift()!;
-		const parts: Array<Markup> = [
+		const parts: AnyMarkups = [
 			// Inline snapshots will always be the last element, so if it's inline here then there's no others
 			markup`<number emphasis>${String(first.count)}</number> ${first.inline
 				? "inline "

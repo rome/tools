@@ -6,7 +6,7 @@
  */
 
 import {ansiEscapes} from "@internal/cli-layout";
-import {AnyMarkup, Markup, concatMarkup, markup} from "@internal/markup";
+import {AnyMarkup, StaticMarkup, concatMarkup, markup} from "@internal/markup";
 import Reporter from "./Reporter";
 import {
 	SelectArguments,
@@ -16,7 +16,7 @@ import {
 } from "./types";
 import {onKeypress, setRawMode} from "./util";
 
-function formatShortcut({shortcut}: SelectOption): Markup {
+function formatShortcut({shortcut}: SelectOption): StaticMarkup {
 	if (shortcut === undefined) {
 		return markup``;
 	} else {

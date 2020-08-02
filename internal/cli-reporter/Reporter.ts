@@ -14,9 +14,10 @@ import {
 } from "@internal/cli-layout";
 import {
 	AnyMarkup,
-	Markup,
+	AnyMarkups,
 	MarkupFormatOptions,
 	MarkupTagName,
+	StaticMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
@@ -30,6 +31,7 @@ import {
 	ReporterCaptureStream,
 	ReporterConditionalStream,
 	ReporterDerivedStreams,
+	ReporterListOptions,
 	ReporterNamespace,
 	ReporterProgress,
 	ReporterProgressOptions,
@@ -63,14 +65,6 @@ import {
 	mergeObjects,
 } from "@internal/typescript-helpers";
 
-type ListOptions = {
-	reverse?: boolean;
-	truncate?: number;
-	ordered?: boolean;
-	pad?: boolean;
-	start?: number;
-};
-
 // rome-ignore lint/ts/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
@@ -95,7 +89,7 @@ export type LogCategoryOptions = LogOptions & {
 	markupTag: MarkupTagName;
 };
 
-type QuestionValidateResult<T> = [false, Markup] | [true, T];
+type QuestionValidateResult<T> = [false, StaticMarkup] | [true, T];
 
 type QuestionOptions = {
 	hint?: string;
@@ -131,11 +125,36 @@ export default class Reporter implements ReporterNamespace {
 	streamHandles: Set<ReporterStreamHandle>;
 	stdin: undefined | NodeJS.ReadStream;
 
-	//Store active progress indicators so we can easily bail out and destroy them
+	// Store active progress indicators so we can easily bail out and destroy them
 	activeElements: Set<{
 		render: VoidCallback;
 		end: VoidCallback;
 	}>;
+
+	static fromProcess(opts: ReporterOptions = {}): Reporter {
+		const reporter = new Reporter({
+			...opts,
+			markupOptions: {
+				cwd: CWD_PATH,
+				...opts.markupOptions,
+			},
+		});
+
+		reporter.attachStdoutStreams(process.stdout, process.stderr);
+
+		return reporter;
+	}
+
+	// Produce a new Reporter with all the streams of the input reporters. Streams will NOT be in sync.
+	static concat(reporters: Array<Reporter>): Reporter {
+		const reporter = new Reporter();
+		for (const otherReporter of reporters) {
+			for (const {stream} of otherReporter.getStreamHandles()) {
+				reporter.addAttachedStream(stream);
+			}
+		}
+		return reporter;
+	}
 
 	getLineSnapshot(populate: boolean = true): ReporterStreamLineSnapshot {
 		const snapshot: ReporterStreamLineSnapshot = {
@@ -259,20 +278,6 @@ export default class Reporter implements ReporterNamespace {
 			},
 			remove: stream.remove,
 		};
-	}
-
-	static fromProcess(opts: ReporterOptions = {}): Reporter {
-		const reporter = new Reporter({
-			...opts,
-			markupOptions: {
-				cwd: CWD_PATH,
-				...opts.markupOptions,
-			},
-		});
-
-		reporter.attachStdoutStreams(process.stdout, process.stderr);
-
-		return reporter;
 	}
 
 	getMessagePrefix(): AnyMarkup {
@@ -519,8 +524,8 @@ export default class Reporter implements ReporterNamespace {
 		});
 	}
 
-	table(head: Array<Markup>, rawBody: Array<Array<Markup>>) {
-		let body: Array<Markup> = [];
+	table(head: AnyMarkups, rawBody: Array<AnyMarkups>) {
+		let body: AnyMarkups = [];
 
 		if (head.length > 0) {
 			body.push(markup`<tr>`);
@@ -598,7 +603,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	async section(
-		title: undefined | Markup,
+		title: undefined | StaticMarkup,
 		callback: AsyncVoidCallback,
 	): Promise<void> {
 		this.hr(
@@ -802,12 +807,6 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	errorObj(err: Error) {
-		this.error(
-			markup`${err.stack || err.message || err.name || "Unknown Error"}`,
-		);
-	}
-
 	info(msg: AnyMarkup) {
 		this.logCategory(
 			msg,
@@ -842,13 +841,23 @@ export default class Reporter implements ReporterNamespace {
 			error: (suffix) => this.error(markup`${prefix} ${suffix}`),
 			warn: (suffix) => this.warn(markup`${prefix} ${suffix}`),
 			log: (suffix) => this.log(markup`${prefix} ${suffix}`),
+			list: (items, opts = {}) => {
+				const suffix = opts.prefix ?? markup``;
+				this.list(
+					items,
+					{
+						...opts,
+						prefix: markup`${prefix} ${suffix}`,
+					},
+				);
+			},
 		};
 	}
 
 	processedList<T>(
 		items: Array<T>,
-		callback: (reporter: Reporter, item: T) => void | Markup,
-		opts: ListOptions = {},
+		callback: (reporter: Reporter, item: T) => void | AnyMarkup,
+		opts: ReporterListOptions = {},
 	): {
 		truncated: boolean;
 	} {
@@ -866,7 +875,7 @@ export default class Reporter implements ReporterNamespace {
 			start += truncatedCount;
 		}
 
-		let buff = markup``;
+		let buff: AnyMarkup = markup``;
 
 		for (let i = 0; i < items.length; i++) {
 			const item = items[i];
@@ -888,20 +897,25 @@ export default class Reporter implements ReporterNamespace {
 		}
 
 		if (opts.ordered) {
-			this.log(markupTag("ol", buff, {start, reversed: opts.reverse}));
+			buff = markupTag("ol", buff, {start, reversed: opts.reverse});
 		} else {
-			this.log(markup`<ul>${buff}</ul>`);
+			buff = markup`<ul>${buff}</ul>`;
 		}
 
 		if (truncatedCount > 0) {
-			this.log(markup`<dim>and ${truncatedCount} others...</dim>`);
-			return {truncated: true};
-		} else {
-			return {truncated: false};
+			buff = markup`${buff}<dim>and ${truncatedCount} others...</dim>`;
 		}
+
+		if (opts.prefix !== undefined) {
+			buff = markup`${opts.prefix}${buff}`;
+		}
+
+		this.log(buff);
+
+		return {truncated: truncatedCount > 0};
 	}
 
-	list(items: Array<Markup>, opts: ListOptions = {}) {
+	list(items: AnyMarkups, opts: ReporterListOptions = {}) {
 		return this.processedList(
 			items,
 			(reporter, str) => {

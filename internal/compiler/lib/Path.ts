@@ -17,7 +17,7 @@ import {reduceNode, reduceSignal} from "../methods/reduce";
 import {isRoot} from "@internal/ast-utils";
 import stringDiff from "@internal/string-diff";
 import {formatAST} from "@internal/formatter";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {DiagnosticDescription} from "@internal/diagnostics";
 import {ContextDiagnostic} from "./CompilerContext";
 import {
@@ -269,8 +269,8 @@ export default class Path {
 			target?: AnyNode | Array<AnyNode>;
 			fixed?: ExitSignal;
 			suggestions?: Array<{
-				description: Markup;
-				title: Markup;
+				description: StaticMarkup;
+				title: StaticMarkup;
 				fixed: ExitSignal;
 			}>;
 		},

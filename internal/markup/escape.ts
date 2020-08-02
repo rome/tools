@@ -9,17 +9,21 @@ import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
 import {AbsoluteFilePath, RelativeFilePath, URLFilePath} from "@internal/path";
 
-type MarkupPart = Markup | RawMarkup | string;
+type MarkupPart = StaticMarkup | RawMarkup | string;
 type LazyMarkupPart = MarkupPart | LazyMarkupFactory | LazyMarkup;
 
 export type LazyMarkupFactory = () => AnyMarkup;
 
-export type Markup = {
+export type StaticMarkup = {
 	type: "MARKUP";
 	parts: Array<MarkupPart>;
 };
 
-export type AnyMarkup = Markup | LazyMarkup;
+export type StaticMarkups = Array<StaticMarkup>;
+
+export type AnyMarkup = StaticMarkup | LazyMarkup;
+
+export type AnyMarkups = Array<AnyMarkup>;
 
 type LazyMarkup = {
 	type: "LAZY_MARKUP";
@@ -31,7 +35,7 @@ type RawMarkup = {
 	value: string;
 };
 
-function isMarkup(part: LazyMarkupPart): part is Markup {
+function isMarkup(part: LazyMarkupPart): part is StaticMarkup {
 	return typeof part === "object" && part != null && part.type === "MARKUP";
 }
 
@@ -44,7 +48,7 @@ function isLazyMarkup(part: LazyMarkupPart): part is LazyMarkup {
 }
 
 // Awkward name since we should only be doing this very very sparingly
-export function convertToMarkupFromRandomString(unsafe: string): Markup {
+export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 	return {
 		type: "MARKUP",
 		parts: [toRawMarkup(unsafe)],
@@ -54,7 +58,7 @@ export function convertToMarkupFromRandomString(unsafe: string): Markup {
 export function filePathToMarkup(
 	path: URLFilePath | RelativeFilePath | AbsoluteFilePath,
 	explicit: boolean = false,
-): Markup {
+): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";
 	if (path instanceof URLFilePath) {
 		tagName = "hyperlink";
@@ -83,7 +87,7 @@ type InterpolatedValue =
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<MarkupPart | InterpolatedValue>
-): Markup;
+): StaticMarkup;
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<LazyMarkupPart | InterpolatedValue>
@@ -104,22 +108,27 @@ export function markup(
 			});
 		}
 
+		// Last string is not followed by an interpolated value
+		if (i === strs.length - 1) {
+			continue;
+		}
+
 		const value = values[i];
-		if (value !== undefined) {
-			if (typeof value === "number") {
-				parts.push(toRawMarkup(`<number>${String(value)}</number>`));
-			} else if (
-				value instanceof RelativeFilePath ||
-				value instanceof AbsoluteFilePath ||
-				value instanceof URLFilePath
-			) {
-				parts.push(filePathToMarkup(value));
-			} else {
-				if (typeof value === "function" || isLazyMarkup(value)) {
-					hasLazy = true;
-				}
-				parts.push(value);
+		if (typeof value === "undefined") {
+			parts.push(toRawMarkup("<dim>undefined</dim>"));
+		} else if (typeof value === "number") {
+			parts.push(toRawMarkup(`<number>${String(value)}</number>`));
+		} else if (
+			value instanceof RelativeFilePath ||
+			value instanceof AbsoluteFilePath ||
+			value instanceof URLFilePath
+		) {
+			parts.push(filePathToMarkup(value));
+		} else {
+			if (typeof value === "function" || isLazyMarkup(value)) {
+				hasLazy = true;
 			}
+			parts.push(value);
 		}
 	}
 
@@ -171,7 +180,7 @@ export function readMarkup(item: AnyMarkup | LazyMarkupFactory): string {
 
 export function serializeLazyMarkup(
 	markup: AnyMarkup | LazyMarkupFactory,
-): Markup {
+): StaticMarkup {
 	if (isLazyMarkup(markup) || typeof markup === "function") {
 		return {
 			type: "MARKUP",
@@ -208,7 +217,10 @@ export function isEmptyMarkup(safe: AnyMarkup): boolean {
 	return true;
 }
 
-export function concatMarkup(items: Array<Markup>, separator?: Markup): Markup;
+export function concatMarkup(
+	items: AnyMarkups,
+	separator?: StaticMarkup,
+): StaticMarkup;
 export function concatMarkup(
 	items: Array<AnyMarkup>,
 	separator?: AnyMarkup,
@@ -270,9 +282,9 @@ type MarkupAttributes = Dict<undefined | string | number | boolean>;
 
 export function markupTag(
 	tagName: MarkupTagName,
-	text: Markup,
+	text: StaticMarkup,
 	attrs?: MarkupAttributes,
-): Markup;
+): StaticMarkup;
 export function markupTag(
 	tagName: MarkupTagName,
 	text: AnyMarkup,

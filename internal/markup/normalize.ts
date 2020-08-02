@@ -7,7 +7,8 @@ import {
 import {parseMarkup} from "./parse";
 import {
 	AnyMarkup,
-	Markup,
+	AnyMarkups,
+	StaticMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
@@ -21,7 +22,7 @@ function buildTag(
 	tag: MarkupParsedTag,
 	inner: AnyMarkup,
 	opts: MarkupFormatNormalizeOptions,
-): Markup {
+): StaticMarkup {
 	let {attributes} = tag;
 
 	switch (tag.name) {
@@ -85,7 +86,7 @@ function normalizeMarkupChildren(
 	remainingChars: number,
 ): {
 	textLength: number;
-	text: Markup;
+	text: StaticMarkup;
 } {
 	// Sometimes we'll populate the inner text of a tag with no children
 	if (children.length === 0) {
@@ -94,7 +95,7 @@ function normalizeMarkupChildren(
 
 	let textLength = 0;
 
-	let parts: Array<Markup> = [];
+	let parts: AnyMarkups = [];
 
 	for (const child of children) {
 		if (child.type === "Text") {
@@ -145,7 +146,7 @@ export function normalizeMarkup(
 	visibleTextLength: number;
 	truncatedLength: number;
 	textLength: number;
-	text: Markup;
+	text: StaticMarkup;
 	truncated: boolean;
 } {
 	const {textLength, text} = normalizeMarkupChildren(

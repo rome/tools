@@ -23,7 +23,7 @@ import {
 } from "@internal/fs";
 import {stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
-import {Markup, markup} from "@internal/markup";
+import {AnyMarkups, markup} from "@internal/markup";
 
 export type CacheEntry = {
 	version: string;
@@ -124,7 +124,7 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 
 		// Write pending files
-		const filelinks: Array<Markup> = [];
+		const filelinks: AnyMarkups = [];
 		for (const [path, entry] of pendingWrites) {
 			filelinks.push(markup`${path}`);
 			await createDirectory(path.getParent());

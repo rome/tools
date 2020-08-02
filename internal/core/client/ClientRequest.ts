@@ -37,23 +37,11 @@ export default class ClientRequest {
 	}
 
 	async init(): Promise<ServerQueryResponse> {
-		try {
-			const {requestFlags} = this.query;
-			if (requestFlags !== undefined && requestFlags.review) {
-				return await this.initReview();
-			} else {
-				return await this.initCommand();
-			}
-		} catch (err) {
-			return {
-				type: "ERROR",
-				fatal: false,
-				handled: false,
-				name: err.name,
-				message: err.message,
-				stack: err.stack,
-				markers: [],
-			};
+		const {requestFlags} = this.query;
+		if (requestFlags !== undefined && requestFlags.review) {
+			return await this.initReview();
+		} else {
+			return await this.initCommand();
 		}
 	}
 

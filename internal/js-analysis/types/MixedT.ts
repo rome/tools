@@ -9,7 +9,7 @@ import {AnyNode} from "@internal/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class MixedT extends T {
 	static type = "MixedT";
@@ -26,7 +26,7 @@ export default class MixedT extends T {
 		return false;
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`mixed`;
 	}
 }

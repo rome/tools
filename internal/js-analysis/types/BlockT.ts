@@ -8,7 +8,7 @@
 import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class BlockT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, body: Array<T>) {
@@ -39,7 +39,7 @@ export default class BlockT extends T {
 		}
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`{}`;
 	}
 }

@@ -9,6 +9,7 @@ import {ProjectDefinition} from "@internal/project";
 import {Stats} from "./fs/MemoryFileSystem";
 import fork from "../common/utils/fork";
 import {
+	LAG_INTERVAL,
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
@@ -99,10 +100,17 @@ export default class WorkerManager {
 		return this.getWorkers().filter((worker) => worker.process !== undefined);
 	}
 
+	// Safe way to ensure all workers get properly killed if we need to kill the main process
+	killWorkers() {}
+
 	end() {
 		// Shutdown all workers, no need to clean up any internal data structures since they will never be used
-		for (const {bridge} of this.workers.values()) {
+		for (const {process, bridge} of this.workers.values()) {
 			bridge.end();
+
+			if (process !== undefined) {
+				process.kill();
+			}
 		}
 	}
 
@@ -242,6 +250,7 @@ export default class WorkerManager {
 		workerId: number,
 		isGhost: boolean,
 	): Promise<WorkerContainer> {
+		const fatalErrorSource = markup`worker ${workerId}`;
 		const start = Date.now();
 
 		const process = fork("worker");
@@ -258,6 +267,35 @@ export default class WorkerManager {
 						)}`,
 					);
 				},
+			},
+		);
+
+		bridge.fatalError.subscribe((details) => {
+			this.server.onFatalError(bridge.hydrateError(details), fatalErrorSource);
+		});
+
+		bridge.monitorHeartbeat(
+			LAG_INTERVAL,
+			({summary, totalTime, iterations}) => {
+				const reporter = this.server.getImportantReporter();
+				reporter.warn(
+					markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(
+						totalTime,
+					)}</duration> seconds</emphasis>. It is unlikely to become responsive. Currently processing:`,
+				);
+				reporter.list(summary);
+				reporter.info(
+					markup`Please open an issue with the details provided above if necessary`,
+				);
+
+				if (iterations > 5) {
+					this.server.onFatalError(
+						new Error(
+							`Did not respond for ${totalTime}ms and was checked ${iterations} times`,
+						),
+						fatalErrorSource,
+					);
+				}
 			},
 		);
 
@@ -278,7 +316,7 @@ export default class WorkerManager {
 				// The process could not be spawned, or
 				// The process could not be killed, or
 				// Sending a message to the child process failed.
-				this.server.onFatalError(err);
+				this.server.onFatalError(err, fatalErrorSource);
 				process.kill();
 			},
 		);
@@ -286,8 +324,10 @@ export default class WorkerManager {
 		process.once(
 			"exit",
 			() => {
-				//bridge.end(`Worker ${String(workerId)} died`);
-				this.server.onFatalError(new Error(`Worker ${String(workerId)} died`));
+				this.server.onFatalError(
+					new Error("Process unexpectedly exit"),
+					fatalErrorSource,
+				);
 			},
 		);
 

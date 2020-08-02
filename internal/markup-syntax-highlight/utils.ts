@@ -5,8 +5,8 @@ import {
 	TokenShape,
 } from "./types";
 import {
-	Markup,
 	MarkupTokenType,
+	StaticMarkup,
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	markup,
@@ -15,6 +15,7 @@ import {
 } from "@internal/markup";
 import {splitLines} from "@internal/string-utils";
 import {ob1Get0} from "@internal/ob1";
+import {AnyMarkups} from "@internal/markup/escape";
 
 export function reduce<Token extends TokenShape>(
 	input: string,
@@ -22,7 +23,7 @@ export function reduce<Token extends TokenShape>(
 	callback: ReduceCallback<Token>,
 ): HighlightCodeResult {
 	let prevEnd = 0;
-	let parts: Array<Markup> = [];
+	let parts: AnyMarkups = [];
 
 	for (let i = 0; i < tokens.length; i++) {
 		const token = tokens[i];
@@ -70,18 +71,18 @@ export function reduce<Token extends TokenShape>(
 
 export function markupToken(
 	type: MarkupTokenType,
-	value: Markup | string,
-): Markup {
+	value: StaticMarkup | string,
+): StaticMarkup {
 	return markupTag("token", markup`${value}`, {type});
 }
 
-export function concatSplitLinesMarkup(parts: Array<Markup>): Array<Markup> {
+export function concatSplitLinesMarkup(parts: AnyMarkups): AnyMarkups {
 	return splitLines(readMarkup(concatMarkup(parts))).map((line) =>
 		convertToMarkupFromRandomString(line)
 	);
 }
 
-export function invalidHighlight(line: Markup): ReduceCallbackResult {
+export function invalidHighlight(line: StaticMarkup): ReduceCallbackResult {
 	return {
 		value: markupTag("emphasis", markupTag("color", line, {bg: "red"})),
 	};

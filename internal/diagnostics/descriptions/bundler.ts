@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export const bundler = createDiagnosticsCategory({
 	TOP_LEVEL_AWAIT_IN_LEGACY: {
@@ -12,7 +12,7 @@ export const bundler = createDiagnosticsCategory({
 		culprit: string,
 		path: Array<string>,
 	) => {
-		function formatPart(part: string, index?: number): Markup {
+		function formatPart(part: string, index?: number): StaticMarkup {
 			const tagged = markup`<filelink target="${part}" />`;
 			if (part === culprit) {
 				return markup`<highlight i="0" legend>${tagged}</highlight>`;

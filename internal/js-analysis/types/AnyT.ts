@@ -9,7 +9,7 @@ import {HydrateData} from "../Evaluator";
 import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class AnyT extends T {
 	static type = "AnyT";
@@ -26,7 +26,7 @@ export default class AnyT extends T {
 		return true;
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`any`;
 	}
 }

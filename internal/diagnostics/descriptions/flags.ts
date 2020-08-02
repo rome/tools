@@ -1,5 +1,5 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {toKebabCase} from "@internal/string-utils";
 import {buildSuggestionAdvice} from "../helpers";
 
@@ -15,7 +15,7 @@ export const flags = createDiagnosticsCategory({
 			},
 		],
 	}),
-	INCORRECT_ARG_COUNT: (excessive: boolean, text: Markup) => ({
+	INCORRECT_ARG_COUNT: (excessive: boolean, text: StaticMarkup) => ({
 		message: excessive ? markup`Too many arguments` : markup`Missing arguments`,
 		advice: [
 			{
@@ -42,7 +42,7 @@ export const flags = createDiagnosticsCategory({
 	UNKNOWN_COMMAND_SUGGESTED: (
 		unknownCommandName: string,
 		commandName: string,
-		description: undefined | Markup,
+		description: undefined | StaticMarkup,
 		command: string,
 	) => ({
 		category: "flags/invalid",

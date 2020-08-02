@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export type VoidCallback = () => void | undefined;
+export type VoidCallback<Args extends Array<unknown> = []> = (
+	...args: Args
+) => void | undefined;
 
-export type AsyncVoidCallback = () =>
-	| void
-	| undefined
-	| Promise<void | undefined>;
+export type AsyncVoidCallback<Args extends Array<unknown> = []> = (
+	...args: Args
+) => void | undefined | Promise<void | undefined>;
 
 // rome-ignore lint/ts/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {

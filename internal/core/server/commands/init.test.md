@@ -20,14 +20,12 @@
 
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
   - project/.config/rome.rjson: Your project configuration. Documentation:
     https://romefrontend.dev/docs/project-config/
   - project/.editorconfig: Sets editor formatting and indentation options. Documentation:
     https://editorconfig.org/
 
  What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:
@@ -113,12 +111,10 @@ unknownVariable;
 
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
   - project/.config/rome.rjson: Your project configuration. Documentation:
     https://romefrontend.dev/docs/project-config/
 
  What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:

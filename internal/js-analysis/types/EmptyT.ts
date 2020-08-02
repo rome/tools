@@ -10,7 +10,7 @@ import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class EmptyT extends T {
 	static type = "EmptyT";
@@ -23,7 +23,7 @@ export default class EmptyT extends T {
 		return new EmptyT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`empty`;
 	}
 

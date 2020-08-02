@@ -7,12 +7,12 @@
 
 import {Consumer} from "@internal/consume";
 import {Dict} from "@internal/typescript-helpers";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
 
 export type SharedCommand<Flags extends Dict<unknown>> = {
 	category: string;
-	description: Markup;
+	description: StaticMarkup;
 	defineFlags: (c: Consumer) => Flags;
 	usage: string;
 	examples: Examples;

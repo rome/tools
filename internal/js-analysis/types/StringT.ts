@@ -11,7 +11,7 @@ import {AnyNode} from "@internal/ast";
 import StringLiteralT from "./StringLiteralT";
 import ObjT from "./ObjT";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class StringT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode) {
@@ -36,7 +36,7 @@ export default class StringT extends ObjT {
 		return new StringT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`string`;
 	}
 

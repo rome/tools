@@ -11,7 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {AnyNode} from "@internal/ast";
 
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 export default class ObjPropT extends T {
 	constructor(
 		scope: Scope,
@@ -57,7 +57,7 @@ export default class ObjPropT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`${this.key}: ${builder.humanize(this.value)}`;
 	}
 }

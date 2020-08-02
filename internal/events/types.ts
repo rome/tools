@@ -7,6 +7,7 @@
 
 import {StructuredError} from "@internal/v8";
 import {JSONObject} from "@internal/codec-json";
+import {AnyMarkups} from "@internal/markup";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;
@@ -31,6 +32,12 @@ export type EventSubscription = {
 };
 
 export type EventSubscriptions = Array<EventSubscription>;
+
+export type BridgeHeartbeatExceededOptions = {
+	summary: AnyMarkups;
+	iterations: number;
+	totalTime: number;
+};
 
 export type BridgeHandshakeMessage = {
 	type: "handshake";
@@ -59,13 +66,16 @@ export type BridgeSuccessResponseMessage = {
 	responseStatus: "success";
 };
 
-export type BridgeErrorResponseMessage = {
+export type BridgeErrorResponseDetails = {
+	value: StructuredError;
+	metadata: JSONObject;
+};
+
+export type BridgeErrorResponseMessage = BridgeErrorResponseDetails & {
 	id: number;
 	event: string;
 	type: "response";
 	responseStatus: "error";
-	value: StructuredError;
-	metadata: JSONObject;
 };
 
 export type BridgeResponseMessage =

@@ -15,7 +15,12 @@ import {
 	DiagnosticsProcessor,
 	deriveRootAdviceFromDiagnostic,
 } from "@internal/diagnostics";
-import {Markup, MarkupRGB, joinMarkupLines, markup} from "@internal/markup";
+import {
+	MarkupRGB,
+	StaticMarkup,
+	joinMarkupLines,
+	markup,
+} from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	DiagnosticsFileReaders,
@@ -162,7 +167,10 @@ export default class DiagnosticsPrinter extends Error {
 	options: DiagnosticsPrinterOptions;
 	reporter: Reporter;
 	processor: DiagnosticsProcessor;
-	onFooterPrintCallbacks: Array<FooterPrintCallback>;
+	onFooterPrintCallbacks: Array<{
+		callback: FooterPrintCallback;
+		after: boolean;
+	}>;
 	flags: DiagnosticsPrinterFlags;
 	cwd: AbsoluteFilePath;
 	fileReaders: Array<DiagnosticsFileReaders>;
@@ -662,6 +670,7 @@ export default class DiagnosticsPrinter extends Error {
 				...derived.advice,
 				...outdatedAdvice,
 				...advice,
+				...derived.lastAdvice,
 			];
 
 			const {truncated} = printAdvice(
@@ -723,7 +732,7 @@ export default class DiagnosticsPrinter extends Error {
 		return filteredDiagnostics;
 	}
 
-	inject(title: Markup, printer: DiagnosticsPrinter) {
+	inject(title: StaticMarkup, printer: DiagnosticsPrinter) {
 		this.processor.addDiagnostics(printer.processor.getDiagnostics());
 
 		const {onFooterPrintCallbacks} = printer;
@@ -731,30 +740,26 @@ export default class DiagnosticsPrinter extends Error {
 			return;
 		}
 
-		this.onFooterPrint(async (reporter) => {
-			let skipDefault: boolean = false;
+		this.onFooterPrint(
+			async (reporter) => {
+				reporter.br();
+				reporter.log(markup`<emphasis>${title}</emphasis>`);
+				reporter.br();
 
-			reporter.br();
-			reporter.log(markup`<emphasis>${title}</emphasis>`);
-			reporter.br();
-
-			await reporter.indent(async () => {
-				for (const fn of onFooterPrintCallbacks) {
-					const res = await fn(reporter, printer.problemCount > 0);
-					if (res) {
-						skipDefault = true;
+				await reporter.indent(async () => {
+					for (const {callback} of onFooterPrintCallbacks) {
+						await callback(reporter, printer.problemCount > 0);
 					}
-				}
-			});
+				});
 
-			reporter.br();
-
-			return skipDefault;
-		});
+				reporter.br();
+			},
+			true,
+		);
 	}
 
-	onFooterPrint(fn: FooterPrintCallback) {
-		this.onFooterPrintCallbacks.push(fn);
+	onFooterPrint(callback: FooterPrintCallback, after: boolean = false) {
+		this.onFooterPrintCallbacks.push({callback, after});
 	}
 
 	hasProblems(): boolean {
@@ -791,8 +796,12 @@ export default class DiagnosticsPrinter extends Error {
 				}
 
 				let showDefault = true;
-				for (const handler of this.onFooterPrintCallbacks) {
-					const stop = await handler(reporter, isError);
+				for (const {callback, after} of this.onFooterPrintCallbacks) {
+					if (after) {
+						continue;
+					}
+
+					const stop = await callback(reporter, isError);
 					if (stop) {
 						showDefault = false;
 					}
@@ -803,6 +812,12 @@ export default class DiagnosticsPrinter extends Error {
 						this.footerError();
 					} else {
 						reporter.success(markup`No known problems!`);
+					}
+				}
+
+				for (const {callback, after} of this.onFooterPrintCallbacks) {
+					if (after) {
+						await callback(reporter, isError);
 					}
 				}
 			},

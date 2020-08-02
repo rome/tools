@@ -22,7 +22,7 @@ import {
 	DiagnosticsError,
 } from "@internal/diagnostics";
 import {ProjectConfigJSON} from "@internal/project";
-import {Bridge} from "@internal/events";
+import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
 import {JSONFileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
@@ -144,6 +144,11 @@ export type WorkerUpdateInlineSnapshotResult = {
 export default class WorkerBridge extends Bridge {
 	log = this.createEvent<string, void>({
 		name: "log",
+		direction: "server<-client",
+	});
+
+	fatalError = this.createEvent<BridgeErrorResponseDetails, void>({
+		name: "fatalError",
 		direction: "server<-client",
 	});
 

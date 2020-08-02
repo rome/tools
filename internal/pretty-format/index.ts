@@ -16,12 +16,13 @@ import {markupToPlainText} from "@internal/cli-layout";
 import {
 	AnyMarkup,
 	LazyMarkupFactory,
-	Markup,
+	StaticMarkup,
 	concatMarkup,
 	joinMarkupLines,
 	markup,
 	markupTag,
 	readMarkup,
+	serializeLazyMarkup,
 } from "@internal/markup";
 
 type RecursiveStack = Array<unknown>;
@@ -75,6 +76,13 @@ export function pretty(
 	return out;
 }
 
+export function prettyFormatEager(
+	obj: unknown,
+	opts?: FormatPartialOptions,
+): StaticMarkup {
+	return serializeLazyMarkup(prettyFormat(obj, opts));
+}
+
 export default function prettyFormat(
 	obj: unknown,
 	rawOpts: FormatPartialOptions = {},
@@ -124,11 +132,11 @@ function isNativeFunction(val: Function): boolean {
 	return val.toString().endsWith("{ [native code] }");
 }
 
-function formatSymbol(val: Symbol): Markup {
+function formatSymbol(val: Symbol): StaticMarkup {
 	return markup`${String(val)}`;
 }
 
-function formatString(val: string): Markup {
+function formatString(val: string): StaticMarkup {
 	return markup`${escapeJSString(
 		val,
 		{
@@ -138,7 +146,7 @@ function formatString(val: string): Markup {
 }
 
 // This function is used by rome-json so make sure it can parse whatever you return here
-export function formatNumber(val: bigint | number): Markup {
+export function formatNumber(val: bigint | number): StaticMarkup {
 	if (typeof val === "bigint") {
 		return markup`<number>${String(val)}</number>n`;
 	} else if (isNaN(val)) {
@@ -156,15 +164,15 @@ export function formatNumber(val: bigint | number): Markup {
 	}
 }
 
-function formatUndefined(): Markup {
+function formatUndefined(): StaticMarkup {
 	return markup`undefined`;
 }
 
-function formatNull(): Markup {
+function formatNull(): StaticMarkup {
 	return markup`null`;
 }
 
-function formatBoolean(val: boolean): Markup {
+function formatBoolean(val: boolean): StaticMarkup {
 	return val === true ? markup`true` : markup`false`;
 }
 
@@ -211,7 +219,7 @@ function getExtraObjectProps(
 	return {ignoreKeys, props};
 }
 
-function formatKey(rawKey: string): Markup {
+function formatKey(rawKey: string): StaticMarkup {
 	// Format as a string if it contains any special characters
 	if (/[^A-Za-z0-9_$]/g.test(rawKey)) {
 		return formatString(rawKey);
@@ -272,12 +280,12 @@ function lineCountCompare(a: string, b: string): number {
 	return lineCount(a) - lineCount(b);
 }
 
-function formatObjectLabel(label: Markup): Markup {
+function formatObjectLabel(label: StaticMarkup): StaticMarkup {
 	return markupTag("color", label, {fg: "cyan"});
 }
 
 function formatObject(
-	label: Markup,
+	label: StaticMarkup,
 	obj: Objectish,
 	opts: FormatOptions,
 	labelKeys: Array<string>,
@@ -361,11 +369,11 @@ function formatObject(
 	return markup`${formatObjectLabel(label)} ${open}${inner}${close}`;
 }
 
-function formatRegExp(val: RegExp): Markup {
+function formatRegExp(val: RegExp): StaticMarkup {
 	return markup`${String(val)}`;
 }
 
-function formatDate(val: Date): Markup {
+function formatDate(val: Date): StaticMarkup {
 	return markup`${val.toISOString()}`;
 }
 

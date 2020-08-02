@@ -10,12 +10,20 @@ import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {Diagnostic, DiagnosticSuppressions} from "./types";
 import {Reporter} from "@internal/cli-reporter";
 import {readMarkup} from "@internal/markup";
+import {
+	DeriveErrorDiagnosticOptions,
+	deriveDiagnosticFromError,
+} from "./derive";
+import {
+	NodeSystemError,
+	convertPossibleNodeErrorToDiagnostic,
+} from "@internal/node";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
 let insideDiagnosticsErrorSerial = false;
 
-export class DiagnosticsError extends Error {
+export class DiagnosticsError extends Error implements NodeSystemError {
 	constructor(
 		message: string,
 		diagnostics: Diagnostics,
@@ -99,4 +107,17 @@ export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
 	}
 
 	return undefined;
+}
+
+export function getOrDeriveDiagnosticsFromError(
+	err: Error,
+	opts: DeriveErrorDiagnosticOptions,
+): Diagnostics {
+	err = convertPossibleNodeErrorToDiagnostic(err);
+	const diagnostics = getDiagnosticsFromError(err);
+	if (diagnostics === undefined) {
+		return [deriveDiagnosticFromError(err, opts)];
+	} else {
+		return diagnostics;
+	}
 }

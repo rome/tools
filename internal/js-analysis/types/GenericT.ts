@@ -11,7 +11,7 @@ import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";
 import ClassT from "./ClassT";
 import InstanceT from "./InstanceT";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class GenericT extends T {
 	constructor(
@@ -51,7 +51,7 @@ export default class GenericT extends T {
 		);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`${this.name}`;
 	}
 

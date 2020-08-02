@@ -13,11 +13,11 @@ import {JSONPropertyValue} from "@internal/codec-json";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags} from "@internal/core";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
-	message?: Markup;
+	message?: StaticMarkup;
 	filename?: string;
 	start?: Position;
 	line?: Number1;
@@ -42,7 +42,7 @@ export type DiagnosticFilterWithTest = DiagnosticFilter & {
 export type DiagnosticLocation = {
 	sourceText?: string;
 	mtime?: number;
-	marker?: Markup;
+	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
 	filename?: string;
@@ -74,14 +74,14 @@ export type DiagnosticsMeta = {
 	identifierName?: string;
 };
 
-export type DiagnosticTag = "fixable" | "internal" | "unique";
+export type DiagnosticTag = "fixable" | "internal" | "unique" | "fatal";
 
 export type DiagnosticTags = {[key in DiagnosticTag]?: boolean};
 
 export type Diagnostic = {
 	description: DiagnosticDescription;
 	location: DiagnosticLocation;
-	label?: Markup;
+	label?: StaticMarkup;
 	origins?: Array<DiagnosticOrigin>;
 	dependencies?: Array<{
 		filename: string;
@@ -95,13 +95,13 @@ export type Diagnostics = Array<Diagnostic>;
 
 export type DiagnosticDescription = {
 	category: DiagnosticCategory;
-	message: Markup;
+	message: StaticMarkup;
 	advice: DiagnosticAdvice;
 };
 
 export type DiagnosticDescriptionOptionalCategory = {
 	category?: DiagnosticCategory;
-	message: Markup;
+	message: StaticMarkup;
 	advice?: DiagnosticAdvice;
 };
 
@@ -119,7 +119,7 @@ export type DiagnosticAdviceItem =
 
 export type DiagnosticAdviceGroup = {
 	type: "group";
-	title: Markup;
+	title: StaticMarkup;
 	advice: DiagnosticAdvice;
 };
 
@@ -131,13 +131,13 @@ export type DiagnosticAdviceCommand = {
 export type DiagnosticAdviceLog = {
 	type: "log";
 	category: DiagnosticLogCategory;
-	text: Markup;
+	text: StaticMarkup;
 	compact?: boolean;
 };
 
 export type DiagnosticAdviceList = {
 	type: "list";
-	list: Array<Markup>;
+	list: Array<StaticMarkup>;
 	truncate?: boolean;
 	reverse?: boolean;
 	ordered?: boolean;
@@ -153,8 +153,8 @@ export type DiagnosticAdviceAction = {
 	hidden?: boolean;
 	extra?: boolean;
 	shortcut?: string;
-	instruction: Markup;
-	noun: Markup;
+	instruction: StaticMarkup;
+	noun: StaticMarkup;
 	command: string;
 	commandFlags?: Dict<boolean | string | Array<string>>;
 	requestFlags?: ClientRequestFlags;
@@ -186,7 +186,7 @@ export type DiagnosticAdviceDiff = {
 
 export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
-	title?: Markup;
+	title?: StaticMarkup;
 	truncate?: boolean;
 	frames: Array<DiagnosticAdviceStackFrame>;
 };
