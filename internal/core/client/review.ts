@@ -164,7 +164,10 @@ async function ask(
 		}
 	}
 
-	reporter.heading(markup`Reviewing diagnostics (<emphasis>${totalDiagnostics}</emphasis><dim>/</dim><emphasis>${totalDiagnostics + state.resolvedCount}</emphasis>)`);
+	reporter.heading(
+		markup`Reviewing diagnostics (<emphasis>${totalDiagnostics}</emphasis><dim>/</dim><emphasis>${totalDiagnostics +
+		state.resolvedCount}</emphasis>)`,
+	);
 
 	const printer = new DiagnosticsPrinter({
 		processor: new DiagnosticsProcessor(),

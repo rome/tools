@@ -40,8 +40,8 @@ import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import { LAG_INTERVAL } from "../common/constants";
-import { BridgeError } from "@internal/events";
+import {LAG_INTERVAL} from "../common/constants";
+import {BridgeError} from "@internal/events";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -96,7 +96,9 @@ export default class Worker {
 					opts.bridge.fatalError.send(opts.bridge.serializeError(err));
 				} catch (err) {
 					if (!(err instanceof BridgeError)) {
-						console.error("Worker encountered error while attempting to send a fatal to the server");
+						console.error(
+							"Worker encountered error while attempting to send a fatal to the server",
+						);
 						console.error(err.stack);
 					}
 					process.exit(1);
@@ -106,12 +108,15 @@ export default class Worker {
 
 		// Pretty sure we'll hit another error condition before this but for completeness
 		if (opts.dedicated) {
-			opts.bridge.monitorHeartbeat(LAG_INTERVAL, ({iterations, totalTime}) => {
-				if (iterations >= 5) {
-					console.error(`Server has not responded for ${totalTime}. Exiting.`)
-					process.exit(1);
-				}
-			});
+			opts.bridge.monitorHeartbeat(
+				LAG_INTERVAL,
+				({iterations, totalTime}) => {
+					if (iterations >= 5) {
+						//console.error(`Server has not responded for ${totalTime}ms. Exiting.`)
+						//process.exit(1);
+					}
+				},
+			);
 		}
 	}
 
