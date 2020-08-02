@@ -266,7 +266,11 @@ class TableOfContents {
 		heading.setAttribute("tabindex", "-1");
 		heading.focus();
 
-		window.scrollTo(0, this.getHeadingTop(heading));
+		window.scrollTo({
+			top: this.getHeadingTop(heading),
+			left: 0,
+			behavior: "smooth",
+		});
 		this.checkActive();
 	}
 
@@ -454,3 +458,23 @@ docsearchInput.addEventListener(
 	},
 	{once: true},
 );
+
+//# Header scrolls to top
+const logos = document.querySelectorAll(".logo");
+for (const logo of logos) {
+	logo.addEventListener(
+		"click",
+		(e) => {
+			if (window.scrollY > 0) {
+				e.preventDefault();
+				window.scrollTo({
+					top: 0,
+					left: 0,
+					behavior: "smooth",
+				});
+				// Remove the hash
+				history.pushState("", document.title, window.location.pathname + window.location.search);
+			}
+		},
+	);
+}

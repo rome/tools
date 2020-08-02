@@ -373,7 +373,7 @@ export default async function cli() {
 	p.command({
 		name: "rage",
 		category: commandCategories.INTERNAL,
-		description: markup`TODO`,
+		description: markup`create a rage archive for debugging`,
 		defineFlags(c) {
 			return {
 				summary: c.get("summary").asBoolean(false),
@@ -394,7 +394,7 @@ export default async function cli() {
 	p.command({
 		name: "logs",
 		category: commandCategories.INTERNAL,
-		description: markup`TODO`,
+		description: markup`view the logs stream`,
 		callback() {
 			overrideCLIFlags = {
 				logs: true,

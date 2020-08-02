@@ -19,6 +19,7 @@ import {
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
+	findClosestStringMatch,
 } from "@internal/string-utils";
 import {
 	AbsoluteFilePath,
@@ -26,7 +27,7 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
-import {Markup, markup} from "@internal/markup";
+import {Markup, markup, concatMarkup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -34,6 +35,7 @@ import {
 } from "@internal/diagnostics";
 import {JSONObject} from "@internal/codec-json";
 import {exists, readFileText, writeFile} from "@internal/fs";
+import {prettyFormatEager} from "@internal/pretty-format";
 
 export type Examples = Array<{
 	description: Markup;
@@ -642,7 +644,8 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					descCol = markup`${descCol} (values: ${displayAllowedValues.join("|")})`;
+					const printedValues = concatMarkup(displayAllowedValues.map(value => prettyFormatEager(value)), markup`|`);
+					descCol = markup`${descCol} (values: ${printedValues})`;
 				}
 			}
 
@@ -686,7 +689,7 @@ export default class Parser<T> {
 				commandParts.push(usage);
 
 				const command = commandParts.join(" ");
-				reporter.command(command);
+				reporter.command(command, false);
 			},
 		);
 	}
@@ -1010,11 +1013,15 @@ export default class Parser<T> {
 		const {programName, commandSuggestions} = this.opts;
 		let {args} = this;
 		let commandName = args.join(" ");
-		let description = descriptions.FLAGS.COMMAND_REQUIRED(
+		let displayArgs: Array<string> = [];
+
+		const opts: Parameters<typeof descriptions.FLAGS.UNKNOWN_COMMAND>[0] = {
 			programName,
 			commandName,
-			Array.from(this.commands.keys()),
-		);
+			suggestedName: undefined,
+			suggestedDescription: undefined,
+			suggestedCommand: undefined,
+		}
 
 		// If we were provided with a list of command suggestions, try and find one
 		if (commandSuggestions !== undefined) {
@@ -1023,34 +1030,41 @@ export default class Parser<T> {
 				const suggestion = commandSuggestions[possibleCommandName];
 				if (suggestion !== undefined) {
 					commandName = possibleCommandName;
-					args = args.slice(i + 1);
-					description = descriptions.FLAGS.UNKNOWN_COMMAND_SUGGESTED(
-						commandName,
-						suggestion.commandName,
-						suggestion.description,
-						serializeCLIFlags(
-							{
-								...this.getSerializeOptions(),
-								commandName: suggestion.commandName,
-								args,
-								defaultFlags,
-								flags: rawFlags,
-							},
-							"none",
-						).sourceText,
-					);
+					displayArgs = args.slice(i + 1);
+
+					opts.suggestedName = suggestion.commandName;
+					opts.suggestedDescription = suggestion.description;
 					break;
 				}
 			}
 		}
 
+		// If we don't have a suggestion then try to find another closest one
+		if (opts.suggestedName === undefined) {
+			opts.suggestedName = findClosestStringMatch(commandName, Array.from(this.commands.keys()));
+		}
+
+		// Set suggestedCommand
+		if (opts.suggestedName !== undefined) {
+			opts.suggestedCommand = serializeCLIFlags(
+				{
+					...this.getSerializeOptions(),
+					commandName: opts.suggestedName,
+					args: displayArgs,
+					defaultFlags,
+					flags: rawFlags,
+				},
+				"none",
+			).sourceText;
+		}
+
 		const diag: Diagnostic = {
-			description,
+			description: descriptions.FLAGS.UNKNOWN_COMMAND(opts),
 			location: serializeCLIFlags(
 				{
 					...this.getSerializeOptions(),
 					commandName,
-					args,
+					args: displayArgs,
 					defaultFlags,
 					flags: rawFlags,
 				},

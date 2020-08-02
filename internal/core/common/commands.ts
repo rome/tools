@@ -6,11 +6,11 @@
  */
 
 import {Consumer} from "@internal/consume";
-import {Dict} from "@internal/typescript-helpers";
+import {UnknownObject} from "@internal/typescript-helpers";
 import {Markup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
 
-export type SharedCommand<Flags extends Dict<unknown>> = {
+export interface SharedCommand<Req, Flags extends UnknownObject, Ret> {
 	category: string;
 	description: Markup;
 	defineFlags: (c: Consumer) => Flags;
@@ -19,7 +19,11 @@ export type SharedCommand<Flags extends Dict<unknown>> = {
 	hidden?: boolean;
 	ignoreFlags?: Array<string>;
 	allowRequestFlags?: Array<"review" | "watch">;
-};
+	callback: (
+		req: Req,
+		flags: Flags,
+	) => Ret;
+}
 
 export const commandCategories = {
 	PROCESS_MANAGEMENT: "Process Management",

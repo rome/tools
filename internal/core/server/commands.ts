@@ -10,7 +10,7 @@ import publish from "./commands/publish";
 import status from "./commands/status";
 import stop from "./commands/stop";
 import develop from "./commands/develop";
-import config from "./commands/config";
+import * as config from "./commands/config";
 import compile from "./commands/compile";
 import resolve from "./commands/resolve";
 import analyzeDependencies from "./commands/analyzeDependencies";
@@ -23,7 +23,8 @@ import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
 import json from "./commands/json";
-import recover from "./commands/recover";
+import * as recover from "./commands/recover";
+import * as cache from "./commands/cache";
 
 // Hidden commands, useful for internal debugging but not much else
 import _evict from "./commands/_evict";
@@ -31,7 +32,7 @@ import _moduleSignature from "./commands/_moduleSignature";
 import _projectDump from "./commands/_projectDump";
 
 //
-import {Dict} from "@internal/typescript-helpers";
+import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
 import {JSONPropertyValue} from "@internal/codec-json";
 import {SharedCommand} from "../common/commands";
@@ -39,14 +40,11 @@ import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {Markup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
 
-export type ServerCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
-	callback: (
-		req: ServerRequest,
-		commandFlags: Flags,
-	) => undefined | Promise<JSONPropertyValue>;
-};
+export type ServerCommandReturn = undefined | Promise<JSONPropertyValue>;
 
-export function createServerCommand<Flags extends Dict<unknown>>(
+export type ServerCommand<Flags extends UnknownObject> = SharedCommand<ServerRequest, Flags, ServerCommandReturn>;
+
+export function createServerCommand<Flags extends UnknownObject>(
 	cmd: ServerCommand<Flags>,
 ): ServerCommand<Flags> {
 	return cmd;
@@ -92,26 +90,38 @@ export async function chainCommands(
 
 // rome-ignore lint/ts/noExplicitAny
 export const serverCommands: Map<string, ServerCommand<any>> = new Map();
-serverCommands.set("test", test);
-serverCommands.set("check", check);
-serverCommands.set("config", config);
-serverCommands.set("bundle", bundle);
-serverCommands.set("parse", parse);
-serverCommands.set("analyzeDependencies", analyzeDependencies);
-serverCommands.set("resolve", resolve);
-serverCommands.set("compile", compile);
-serverCommands.set("stop", stop);
-serverCommands.set("status", status);
-serverCommands.set("run", run);
-serverCommands.set("publish", publish);
-serverCommands.set("ci", ci);
-serverCommands.set("develop", develop);
-serverCommands.set("format", format);
-serverCommands.set("lsp", lsp);
 serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);
-serverCommands.set("noop", noop);
 serverCommands.set("_projectDump", _projectDump);
-serverCommands.set("json", json);
+serverCommands.set("analyzeDependencies", analyzeDependencies);
+serverCommands.set("bundle", bundle);
+serverCommands.set("cache dir", cache.dir);
+serverCommands.set("cache clear", cache.clear);
+serverCommands.set("check", check);
+serverCommands.set("ci", ci);
+serverCommands.set("compile", compile);
+serverCommands.set("config location", config.location);
+serverCommands.set("config disable", config.disable);
+serverCommands.set("config enable", config.enable);
+serverCommands.set("config push", config.push);
+serverCommands.set("config set", config.set);
+serverCommands.set("config set-directory", config.setDirectory);
+serverCommands.set("develop", develop);
+serverCommands.set("format", format);
 serverCommands.set("init", init);
-serverCommands.set("recover", recover);
+serverCommands.set("lsp", lsp);
+serverCommands.set("json", json);
+serverCommands.set("noop", noop);
+serverCommands.set("parse", parse);
+serverCommands.set("publish", publish);
+serverCommands.set("resolve", resolve);
+serverCommands.set("run", run);
+serverCommands.set("stop", stop);
+serverCommands.set("status", status);
+serverCommands.set("test", test);
+serverCommands.set("recover apply", recover.apply);
+serverCommands.set("recover clear", recover.clear);
+serverCommands.set("recover diff", recover.diff);
+serverCommands.set("recover dir", recover.dir);
+serverCommands.set("recover list", recover.list);
+serverCommands.set("recover pop", recover.pop);

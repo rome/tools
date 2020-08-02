@@ -14,7 +14,7 @@ import {markup} from "@internal/markup";
 
 export default createServerCommand({
 	category: commandCategories.INTERNAL,
-	description: markup`TODO`,
+	description: markup`dump an RJSON file to regular JSON`,
 	usage: "",
 	examples: [],
 	defineFlags() {

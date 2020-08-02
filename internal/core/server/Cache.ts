@@ -20,6 +20,8 @@ import {
 	readFileText,
 	removeFile,
 	writeFile,
+	readDirectory,
+	removeDirectory,
 } from "@internal/fs";
 import {stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
@@ -111,6 +113,17 @@ export default class Cache {
 			// Write any remaining
 			await this.writePending("end");
 		});
+	}
+
+	async clear() {
+		// Remove contents but not the directory itself
+		for (const path of await readDirectory(this.cachePath)) {
+			await removeDirectory(path);
+		}
+
+		// Clear internal structures
+		this.loadedEntries.clear();
+		this.pendingWrites.clear();
 	}
 
 	async writePending(reason: "queue" | "end") {

@@ -45,7 +45,7 @@ import {
 import Progress from "./Progress";
 import prettyFormat from "@internal/pretty-format";
 import stream = require("stream");
-import {CWD_PATH} from "@internal/path";
+import {CWD_PATH, createUnknownFilePath} from "@internal/path";
 import readline = require("readline");
 import select from "./select";
 import {onKeypress} from "./util";
@@ -62,6 +62,7 @@ import {
 	VoidCallback,
 	mergeObjects,
 } from "@internal/typescript-helpers";
+import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -831,8 +832,16 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	command(command: string) {
-		this.log(markup`<dim>$ ${command}</dim>`);
+	command(command: string, prefix: boolean = true) {
+		const highlighted = concatMarkup(highlightShell({
+			path: createUnknownFilePath("unknown"),
+			sourceTypeJS: undefined,
+			language: "shell",
+			highlight: true,
+			input: prefix ? `$ ${command}` : command,
+		}));
+
+		this.log(markup`${highlighted}`);
 	}
 
 	namespace(prefix: AnyMarkup): ReporterNamespace {

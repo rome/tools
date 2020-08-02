@@ -24,7 +24,6 @@ export type SerializeCLIOptions = {
 	defaultFlags?: Dict<FlagValue>;
 	incorrectCaseFlags?: Set<string>;
 	shorthandFlags?: Set<string>;
-	prefix?: string;
 };
 
 type SerializeCLITargetObjects =
@@ -67,7 +66,6 @@ export function serializeCLIFlags(
 		defaultFlags = {},
 		shorthandFlags = new Set(),
 		incorrectCaseFlags = new Set(),
-		prefix = "$ ",
 	}: SerializeCLIOptions,
 	target: SerializeCLITarget,
 ): RequiredProps<DiagnosticLocation, "sourceText"> {
@@ -103,9 +101,8 @@ export function serializeCLIFlags(
 	// Only output cwd if it's the target
 	if (cwd !== undefined && target === "cwd") {
 		push(cwd.join(), true);
+		code += "$ ";
 	}
-
-	code += prefix;
 
 	push(`${programName} `, target === "program");
 

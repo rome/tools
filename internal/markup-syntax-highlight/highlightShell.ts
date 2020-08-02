@@ -19,10 +19,15 @@ export default function highlightShell(
 		if (i === 0) {
 			const lastChar = segment[segment.length - 1];
 			if (lastChar === "#" || lastChar === "$") {
-				return concatMarkup([
-					filePathToMarkup(createUnknownFilePath(segment.slice(0, -1)), true),
-					markupToken("punctuation", lastChar),
-				]);
+				const punc = markupToken("punctuation", lastChar);
+				if (segment.length === 1) {
+					return punc;
+				} else {
+					return concatMarkup([
+						filePathToMarkup(createUnknownFilePath(segment.slice(0, -1)), true),
+						punc,
+					]);
+				}
 			}
 		}
 

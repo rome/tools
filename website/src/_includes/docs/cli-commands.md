@@ -1,3 +1,11 @@
+#### `rome cache dir`
+
+TODO
+
+#### `rome cache clear`
+
+TODO
+
 #### `rome check`
 
 ##### Flags
@@ -36,6 +44,9 @@ Set the `key` to the string `value`. If `value` is an absolute path then it will
 
 Push the string `value` to an array at `key`. If `key` doesn't exist then it will be created.
 
+#### `rome config location`
+
+TODO
 
 #### `rome init`
 
@@ -160,6 +171,10 @@ Running this command will also produce a new store entry with the files that wer
 #### `rome recover diff <id>`
 
 Produce a diff of changes between existing files and those included in the `id` store.
+
+#### `rome recover dir`
+
+TODO
 
 #### `rome recover clear`
 

@@ -9,8 +9,9 @@ const IGNORE_ADVICE: DiagnosticAdvice = [
 		text: markup`If you still really want to do this, you can bypass the restriction and create a project in this directory with the flag <code>--allow-dirty</code>:`,
 	},
 	{
-		type: "command",
-		command: "rome init --allow-dirty",
+		type: "code",
+		language: "shell",
+		sourceText: "rome init --allow-dirty",
 	},
 ];
 
@@ -26,8 +27,9 @@ export const initCommand = createDiagnosticsCategory({
 				text: markup`This command is destructive and will format and autofix all files within. We recommend committing your changes so you can recover them if you don't like the changes.`,
 			},
 			{
-				type: "command",
-				command: `git add -A && git commit -m "Rome init backup"`,
+				type: "code",
+				language: "shell",
+				sourceText: `git add -A && git commit -m "Rome init backup"`,
 			},
 			...IGNORE_ADVICE,
 		],
