@@ -30,4 +30,10 @@ Refer to [Project Configuration](#project-config) for configuration options.
 
 ### Start Linting
 
-TODO
+You can now run Rome commands! Linting can be accessed via the command:
+
+```bash
+rome check
+```
+
+Continue to the next section to learn more about linting in Rome!

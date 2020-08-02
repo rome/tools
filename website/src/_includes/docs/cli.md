@@ -18,7 +18,7 @@ Set the maximum amount of diagnostics that can be displayed before truncation. D
 
 ##### `--review`
 
-Open an interactive review mode for any diagnostics output from a command. See [Reviewing Suggestions](#suggestions) for more information.
+Open an interactive review mode for any diagnostics output from a command.
 
 ##### `--show-all-diagnostics`
 

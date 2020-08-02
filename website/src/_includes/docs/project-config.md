@@ -6,6 +6,8 @@ Your configuration can be placed in a [few different locations](#supported-locat
 
 All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
 
+We are deliberately lean with the supported configuration. We do not include options just for the sake of personalization. We aim to offer everything out of the box and only introduce configuration if absolutely necessary.
+
 ```json
 name: "project-name"
 version: "^0.0.0"

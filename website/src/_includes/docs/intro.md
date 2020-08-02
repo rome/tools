@@ -1,7 +1,7 @@
 <!-- GENERATED:START(hash:899d8a542b9b8f85ae60eb2628ac28e1cd6f6687,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
 **Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
-**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and others.
+**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and others.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
@@ -14,7 +14,7 @@
 **Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
 <!-- GENERATED:END(id:main) -->
 
-{% include docs/intro-screenshot.md %}
+{% include docs/cli-screenshots/intro.md %}
 
 <ul class="home-actions">
 	<li>
