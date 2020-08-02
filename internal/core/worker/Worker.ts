@@ -108,15 +108,15 @@ export default class Worker {
 
 		// Pretty sure we'll hit another error condition before this but for completeness
 		if (opts.dedicated) {
-			opts.bridge.monitorHeartbeat(
+			/*opts.bridge.monitorHeartbeat(
 				LAG_INTERVAL,
 				({iterations, totalTime}) => {
 					if (iterations >= 5) {
-						//console.error(`Server has not responded for ${totalTime}ms. Exiting.`)
-						//process.exit(1);
+						console.error(`Server has not responded for ${totalTime}ms. Exiting.`)
+						process.exit(1);
 					}
 				},
-			);
+			);*/
 		}
 	}
 
