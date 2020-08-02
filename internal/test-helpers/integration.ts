@@ -155,6 +155,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 
 	const worker = new Worker({
 		globalErrorHandlers: false,
+		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 
 		// This wont actually be used, it's just for setting up subscriptions

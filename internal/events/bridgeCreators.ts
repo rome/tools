@@ -268,6 +268,14 @@ export function createBridgeFromParentProcess<B extends Bridge>(
 		},
 	});
 
+	bridge.endEvent.subscribe(() => {
+		process.exit();
+	});
+
+	process.on("disconnect", () => {
+		bridge.end("Parent process disconnected");
+	});
+
 	process.on(
 		"message",
 		(data) => {
