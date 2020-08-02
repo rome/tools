@@ -5,6 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {markupToAnsi, markupToHtml, markupToPlainText} from "./format";
+export {
+	markupToAnsi,
+	markupToHtml,
+	markupToJoinedPlainText,
+	markupToPlainText,
+} from "./format";
 export * from "./ansi";
 export * from "./types";

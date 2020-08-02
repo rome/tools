@@ -90,6 +90,7 @@ import {
 	getFilesFromArgs,
 	watchFilesFromArgs,
 } from "./fs/glob";
+import {LAG_INTERVAL} from "../common/constants";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -576,7 +577,9 @@ export default class ServerRequest {
 		};
 	}
 
-	getDiagnosticLocationFromFlags(target: SerializeCLITarget): RequiredProps<DiagnosticLocation, "sourceText"> {
+	getDiagnosticLocationFromFlags(
+		target: SerializeCLITarget,
+	): RequiredProps<DiagnosticLocation, "sourceText"> {
 		const {query} = this;
 		const clientFlags = this.client.flags;
 
@@ -674,8 +677,21 @@ export default class ServerRequest {
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtime(path);
+		const start = Date.now();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getTransportFileReference(path);
+
+		const interval = setInterval(
+			() => {
+				const took = Date.now() - start;
+				this.reporter.warn(
+					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis><duration>${String(
+						took,
+					)}</duration></emphasis>.`,
+				);
+			},
+			LAG_INTERVAL,
+		);
 
 		const marker = this.startMarker({
 			label: `${method}: ${ref.relative}`,
@@ -720,6 +736,7 @@ export default class ServerRequest {
 			}
 		} finally {
 			lock.release();
+			clearInterval(interval);
 
 			const endMtime = this.server.memoryFs.maybeGetMtime(path);
 			if (endMtime !== startMtime && !opts.noRetry) {

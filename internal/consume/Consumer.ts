@@ -62,7 +62,7 @@ import {
 	createURLFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
-import {Markup, markup, readMarkup} from "@internal/markup";
+import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -337,9 +337,9 @@ export default class Consumer {
 	}
 
 	generateUnexpectedMessage(
-		msg: Markup,
+		msg: StaticMarkup,
 		opts: UnexpectedConsumerOptions,
-	): Markup {
+	): StaticMarkup {
 		const {at = "suffix", atParent = false} = opts;
 		const {parent} = this;
 

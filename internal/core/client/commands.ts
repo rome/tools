@@ -14,12 +14,16 @@ import status from "./commands/status";
 import lsp from "./commands/lsp";
 
 //
-import {Dict, UnknownObject} from "@internal/typescript-helpers";
+import {UnknownObject} from "@internal/typescript-helpers";
 import ClientRequest from "./ClientRequest";
 import {SharedCommand} from "../common/commands";
 import {ServerQueryResponse} from "../common/bridges/ServerBridge";
 
-export type LocalCommand<Flags extends UnknownObject> = SharedCommand<ClientRequest, Flags, Promise<boolean | ServerQueryResponse>>;
+export type LocalCommand<Flags extends UnknownObject> = SharedCommand<
+	ClientRequest,
+	Flags,
+	Promise<boolean | ServerQueryResponse>
+>;
 
 export function createLocalCommand<Flags extends UnknownObject>(
 	cmd: LocalCommand<Flags>,

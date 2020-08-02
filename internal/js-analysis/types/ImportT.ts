@@ -10,7 +10,7 @@ import {HumanBuilder} from "../Utils";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class ImportT extends T {
 	constructor(
@@ -78,7 +78,7 @@ export default class ImportT extends T {
 		);
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		let object;
 		if (this.resolvedType !== undefined) {
 			object = builder.humanize(this.resolvedType);

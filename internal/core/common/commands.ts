@@ -7,22 +7,19 @@
 
 import {Consumer} from "@internal/consume";
 import {UnknownObject} from "@internal/typescript-helpers";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
 
 export interface SharedCommand<Req, Flags extends UnknownObject, Ret> {
 	category: string;
-	description: Markup;
+	description: StaticMarkup;
 	defineFlags: (c: Consumer) => Flags;
 	usage: string;
 	examples: Examples;
 	hidden?: boolean;
 	ignoreFlags?: Array<string>;
 	allowRequestFlags?: Array<"review" | "watch">;
-	callback: (
-		req: Req,
-		flags: Flags,
-	) => Ret;
+	callback: (req: Req, flags: Flags) => Ret;
 }
 
 export const commandCategories = {

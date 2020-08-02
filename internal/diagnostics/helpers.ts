@@ -10,12 +10,12 @@ import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
 import {ob1Get1} from "@internal/ob1";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
 	ignoreCase?: boolean;
-	formatItem?: (item: string) => Markup;
+	formatItem?: (item: string) => StaticMarkup;
 };
 
 export function buildSuggestionAdvice(
@@ -152,7 +152,7 @@ export function buildDuplicateLocationAdvice(
 
 export function diagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
-): Markup {
+): StaticMarkup {
 	const {start, filename} = loc;
 
 	if (filename === undefined) {

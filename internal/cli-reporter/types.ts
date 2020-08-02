@@ -7,12 +7,12 @@
 
 import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
-import {AnyMarkup, Markup} from "@internal/markup";
+import {AnyMarkup, AnyMarkups, StaticMarkup} from "@internal/markup";
 import {Number0} from "@internal/ob1";
 import {VoidCallback} from "@internal/typescript-helpers";
 
 export type SelectOption = {
-	label: Markup;
+	label: StaticMarkup;
 	shortcut?: string;
 };
 
@@ -32,6 +32,15 @@ export type SelectArguments<Options extends SelectOptions> = {
 	yes?: boolean;
 };
 
+export interface ReporterListOptions {
+	prefix?: AnyMarkup;
+	reverse?: boolean;
+	truncate?: number;
+	ordered?: boolean;
+	pad?: boolean;
+	start?: number;
+}
+
 export type ReporterStreamLineSnapshot = {
 	close: VoidCallback;
 };
@@ -50,6 +59,7 @@ export interface ReporterNamespace {
 	error: (msg: AnyMarkup) => void;
 	warn: (msg: AnyMarkup) => void;
 	log: (msg: AnyMarkup) => void;
+	list: (items: AnyMarkups, opts?: ReporterListOptions) => void;
 }
 
 export type ReporterConditionalStream = {
@@ -58,7 +68,7 @@ export type ReporterConditionalStream = {
 
 export type ReporterCaptureStream = {
 	read: () => string;
-	readAsMarkup: () => Markup;
+	readAsMarkup: () => StaticMarkup;
 	remove: VoidCallback;
 };
 
@@ -90,7 +100,7 @@ export type ReporterDerivedStreams = {
 
 export type ReporterProgressOptions = {
 	name?: string;
-	title?: Markup;
+	title?: StaticMarkup;
 	initDelay?: number;
 	elapsed?: boolean;
 	eta?: boolean;
@@ -101,8 +111,8 @@ export type ReporterProgress = {
 	render: VoidCallback;
 	setCurrent: (current: number) => void;
 	setTotal: (total: number, approximate?: boolean) => void;
-	setText: (text: Markup) => void;
-	pushText: (text: Markup, id?: string) => string;
+	setText: (text: AnyMarkup) => void;
+	pushText: (text: AnyMarkup, id?: string) => string;
 	popText: (id: string) => void;
 	setApproximateETA: (duration: number) => void;
 	tick: VoidCallback;

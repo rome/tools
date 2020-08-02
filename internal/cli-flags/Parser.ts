@@ -16,10 +16,10 @@ import {
 } from "@internal/consume";
 import {
 	dedent,
+	findClosestStringMatch,
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
-	findClosestStringMatch,
 } from "@internal/string-utils";
 import {
 	AbsoluteFilePath,
@@ -27,7 +27,7 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
-import {Markup, markup, concatMarkup} from "@internal/markup";
+import {AnyMarkups, StaticMarkup, concatMarkup, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -36,9 +36,10 @@ import {
 import {JSONObject} from "@internal/codec-json";
 import {exists, readFileText, writeFile} from "@internal/fs";
 import {prettyFormatEager} from "@internal/pretty-format";
+import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 export type Examples = Array<{
-	description: Markup;
+	description: StaticMarkup;
 	command: string;
 }>;
 
@@ -51,7 +52,7 @@ type FlagsConsumer = {
 type CommandOptions<T extends JSONObject> = {
 	name: string;
 	category?: string;
-	description?: Markup;
+	description?: StaticMarkup;
 	usage?: string;
 	examples?: Examples;
 	ignoreFlags?: Array<string>;
@@ -82,14 +83,14 @@ export type ParserOptions<T> = {
 
 	examples?: Examples;
 	usage?: string;
-	description?: Markup;
+	description?: StaticMarkup;
 	version?: string;
 	ignoreFlags?: Array<string>;
 	noProcessExit?: boolean;
 	commandRequired?: boolean;
 	commandSuggestions?: Dict<{
 		commandName: string;
-		description: Markup;
+		description: StaticMarkup;
 	}>;
 	shellCompletionDirectory?: AbsoluteFilePath;
 };
@@ -584,11 +585,11 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	buildOptionsHelp(keys: Array<string>): Array<Array<Markup>> {
+	buildOptionsHelp(keys: Array<string>): Array<AnyMarkups> {
 		const optionOutput: Array<{
 			argName: string;
-			arg: Markup;
-			description: Markup;
+			arg: StaticMarkup;
+			description: StaticMarkup;
 		}> = [];
 		let argColumnLength: number = 0;
 
@@ -629,14 +630,14 @@ export default class Parser<T> {
 				argColumnLength = argCol.length;
 			}
 
-			let descCol: Markup =
+			let descCol: StaticMarkup =
 				metadata.description === undefined
 					? markup`no description found`
 					: metadata.description;
 
 			const {default: defaultValue} = def;
 			if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
-				descCol = markup`${descCol} (default: ${JSON.stringify(defaultValue)})`;
+				descCol = markup`${descCol} - default ${prettyFormatEager(defaultValue)}`;
 			}
 
 			if (def.type === "string" && def.allowedValues !== undefined) {
@@ -644,14 +645,17 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					const printedValues = concatMarkup(displayAllowedValues.map(value => prettyFormatEager(value)), markup`|`);
-					descCol = markup`${descCol} (values: ${printedValues})`;
+					const printedValues = concatMarkup(
+						displayAllowedValues.map((value) => prettyFormatEager(value)),
+						markup` `,
+					);
+					descCol = markup`${descCol} - values ${printedValues})`;
 				}
 			}
 
 			optionOutput.push({
 				argName,
-				arg: markup`<color fg="brightBlack">${argCol}</color>`,
+				arg: concatMarkup(highlightShell({input: argCol}), markup` `),
 				description: descCol,
 			});
 		}
@@ -667,7 +671,7 @@ export default class Parser<T> {
 	}
 
 	async showUsageHelp(
-		description?: Markup,
+		description?: StaticMarkup,
 		usage: string = "[flags]",
 		prefix?: string,
 	) {
@@ -1021,7 +1025,7 @@ export default class Parser<T> {
 			suggestedName: undefined,
 			suggestedDescription: undefined,
 			suggestedCommand: undefined,
-		}
+		};
 
 		// If we were provided with a list of command suggestions, try and find one
 		if (commandSuggestions !== undefined) {
@@ -1041,7 +1045,10 @@ export default class Parser<T> {
 
 		// If we don't have a suggestion then try to find another closest one
 		if (opts.suggestedName === undefined) {
-			opts.suggestedName = findClosestStringMatch(commandName, Array.from(this.commands.keys()));
+			opts.suggestedName = findClosestStringMatch(
+				commandName,
+				Array.from(this.commands.keys()),
+			);
 		}
 
 		// Set suggestedCommand

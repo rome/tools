@@ -7,7 +7,7 @@
 
 import {naturalCompare} from "@internal/string-utils";
 import {CoverageDirectory} from "./types";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);
@@ -22,7 +22,7 @@ export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	return newMap;
 }
 
-export function formatPercent(num: number): Markup {
+export function formatPercent(num: number): StaticMarkup {
 	const str = markup`${Math.floor(num)}`;
 	if (num > 80) {
 		return markup`<success>${str}</success>`;

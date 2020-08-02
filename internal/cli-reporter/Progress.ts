@@ -13,7 +13,7 @@ import {
 	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {Markup} from "@internal/markup";
+import {AnyMarkup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
 import {Number1, ob1Get1} from "@internal/ob1";
 import * as streamUtils from "./stream";
@@ -150,7 +150,7 @@ export default class Progress extends ProgressBase {
 		this.endBouncer();
 	}
 
-	setText(text: Markup) {
+	setText(text: AnyMarkup) {
 		if (this.closed) {
 			return;
 		}

@@ -12,7 +12,7 @@ import {
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
 import {UnknownFilePath} from "@internal/path";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 export type ConsumeComments = Array<string>;
 
@@ -37,7 +37,7 @@ export type ConsumeContext = {
 };
 
 export type ConsumePropertyMetadata = {
-	description?: Markup;
+	description?: StaticMarkup;
 	inputName?: string;
 	getDiagnosticLocation?: (
 		target: ConsumeSourceLocationRequestTarget,

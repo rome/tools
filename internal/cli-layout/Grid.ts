@@ -767,8 +767,6 @@ export default class Grid {
 			return;
 		}
 
-		this.newline();
-
 		const ordered = tag.name === "ol";
 
 		if (ordered) {

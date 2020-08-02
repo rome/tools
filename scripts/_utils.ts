@@ -6,7 +6,7 @@ import {createMockWorker} from "@internal/test-helpers";
 import crypto = require("crypto");
 import child = require("child_process");
 import {markup} from "@internal/markup";
-import { regex } from "@internal/string-escape";
+import {regex} from "@internal/string-escape";
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
@@ -51,13 +51,18 @@ export async function modifyGeneratedFile(
 	const {lines, hash: customHashContent} = await callback();
 
 	// Build expected inner generated
-	let generated = await formatFile(path, lines.map((line) => line.trimRight()).join("\n"));
+	let generated = await formatFile(
+		path,
+		lines.map((line) => line.trimRight()).join("\n"),
+	);
 	generated = generated.trim();
 
 	// Read file
 	let file = await readFileText(path);
 
-	const startRegex = regex`${COMMENT_START} GENERATED:START\(hash:(.*?),id:${id}\) ${createGeneratedCommentInstructions(scriptName)} ${COMMENT_END}\n`;
+	const startRegex = regex`${COMMENT_START} GENERATED:START\(hash:(.*?),id:${id}\) ${createGeneratedCommentInstructions(
+		scriptName,
+	)} ${COMMENT_END}\n`;
 	const startMatch = file.match(startRegex);
 	const startIndex = startMatch?.index ?? file.length;
 	const startInnerIndex = startIndex + (startMatch ? startMatch[0].length : 0);
@@ -108,7 +113,7 @@ export async function modifyGeneratedFile(
 	}
 	final += createGeneratedStartComment(commentOpts) + "\n";
 	final += generated + "\n";
-	final += createGeneratedEndComment(commentOpts)
+	final += createGeneratedEndComment(commentOpts);
 	final += "\n\n";
 	final += contentEnd.trimLeft();
 	final = final.trimRight() + "\n";
@@ -119,7 +124,12 @@ export function setForceGenerated(force: boolean) {
 	forceGenerated = force;
 }
 
-type CommentOptions = {scriptName: string, id: string, hash: string, isJS: boolean};
+type CommentOptions = {
+	scriptName: string;
+	id: string;
+	hash: string;
+	isJS: boolean;
+};
 
 function createGeneratedCommentInstructions(scriptName: string): string {
 	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/generated-files/${scriptName}\` to update.`;
@@ -127,7 +137,12 @@ function createGeneratedCommentInstructions(scriptName: string): string {
 
 function createGeneratedStartComment(opts: CommentOptions): string {
 	const {hash, id, isJS, scriptName} = opts;
-	return wrapComment(`GENERATED:START(hash:${hash},id:${id}) ${createGeneratedCommentInstructions(scriptName)}`, isJS);
+	return wrapComment(
+		`GENERATED:START(hash:${hash},id:${id}) ${createGeneratedCommentInstructions(
+			scriptName,
+		)}`,
+		isJS,
+	);
 }
 
 function createGeneratedEndComment({id, isJS}: CommentOptions): string {
@@ -154,7 +169,10 @@ function hash(content: string): string {
 	return crypto.createHash("sha1").update(content).digest("hex");
 }
 
-async function formatFile(path: AbsoluteFilePath, sourceText: string): Promise<string> {
+async function formatFile(
+	path: AbsoluteFilePath,
+	sourceText: string,
+): Promise<string> {
 	// Not currently supported
 	if (path.hasExtension("md")) {
 		return sourceText;

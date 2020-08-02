@@ -9,7 +9,7 @@ import {AnyNode} from "@internal/ast";
 import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class OpaqueT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -32,7 +32,7 @@ export default class OpaqueT extends T {
 		return new OpaqueT(scope, originNode, String(data.name));
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`opaque ${this.name}`;
 	}
 

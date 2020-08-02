@@ -12,7 +12,7 @@ import {markup} from "@internal/markup";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {exists, readFileText} from "@internal/fs";
 import {RecoveryDiskStore} from "../fs/RecoveryStore";
-import { Consumer } from "@internal/consume";
+import {Consumer} from "@internal/consume";
 
 async function applyStore(req: ServerRequest, storeId: string) {
 	const {server, reporter} = req;
@@ -199,7 +199,7 @@ export const apply = createServerCommand<ApplyFlags>({
 	},
 });
 
-export const pop  = createServerCommand({
+export const pop = createServerCommand({
 	category: commandCategories.SOURCE_CODE,
 	description: markup`apply the most recent patch in the recovery story`,
 	usage: "",
@@ -232,7 +232,9 @@ export const clear = createServerCommand({
 	async callback(req: ServerRequest) {
 		req.expectArgumentLength(0);
 		await req.server.recoveryStore.clear();
-		req.reporter.success(markup`Cleared recovery store at <emphasis>${req.server.recoveryStore.recoveryDirectoryPath}</emphasis>`);
+		req.reporter.success(
+			markup`Cleared recovery store at <emphasis>${req.server.recoveryStore.recoveryDirectoryPath}</emphasis>`,
+		);
 	},
 });
 

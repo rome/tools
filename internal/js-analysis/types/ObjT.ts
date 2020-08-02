@@ -11,7 +11,7 @@ import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
 import {Scope} from "../scopes";
 import {HumanBuilder} from "../Utils";
 import ObjPropT from "./ObjPropT";
-import {Markup, concatMarkup, markup} from "@internal/markup";
+import {StaticMarkup, concatMarkup, markup} from "@internal/markup";
 
 export default class ObjT extends T {
 	constructor(
@@ -108,7 +108,7 @@ export default class ObjT extends T {
 		return true;
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		if (this.props.length === 0) {
 			return markup`{}`;
 		} else {

@@ -9,7 +9,7 @@ import {SourceLocation} from "@internal/parser-core";
 import {JSRoot} from "@internal/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@internal/typescript-helpers";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 export type CheckProvider = {
 	libs?: Array<JSRoot>;
@@ -22,7 +22,7 @@ export type CheckProvider = {
 export type TypeCheckProvider = CheckProvider;
 
 export type ModuleSignatureType = {
-	human?: Markup;
+	human?: StaticMarkup;
 	origin: undefined | SourceLocation;
 	type: string;
 	data: HydrateData;

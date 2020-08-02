@@ -11,7 +11,7 @@ import {Scope} from "../scopes";
 import NumericLiteralT from "./NumericLiteralT";
 import ObjT from "./ObjT";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class NumericT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode) {
@@ -36,7 +36,7 @@ export default class NumericT extends ObjT {
 		return new NumericT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`number`;
 	}
 

@@ -38,9 +38,14 @@ import {htmlParser} from "./parsers/htmlParser";
 import {recoveryStore} from "./commands/recoveryStore";
 import {markdownParser} from "./parsers/markdownParser";
 import {initCommand} from "./commands/initCommand";
-import {Markup, concatMarkup, markup} from "@internal/markup";
+import {
+	StaticMarkup,
+	StaticMarkups,
+	concatMarkup,
+	markup,
+} from "@internal/markup";
 
-export function join(conjunction: string, items: Array<Markup>): Markup {
+export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
 	if (items.length === 0) {
 		return markup``;
 	} else if (items.length === 1) {
@@ -54,15 +59,15 @@ export function join(conjunction: string, items: Array<Markup>): Markup {
 	}
 }
 
-export function andJoin(items: Array<Markup>): Markup {
+export function andJoin(items: StaticMarkups): StaticMarkup {
 	return join("and", items);
 }
 
-export function orJoin(items: Array<Markup>): Markup {
+export function orJoin(items: StaticMarkups): StaticMarkup {
 	return join("or", items);
 }
 
-export function addEmphasis(items: Array<Markup>): Array<Markup> {
+export function addEmphasis(items: StaticMarkups): StaticMarkups {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
@@ -80,16 +85,16 @@ type OuputMessagesFactoryReturn<Ret extends Partial<DiagnosticDescription>> = Om
 	"message" | "advice"
 > & {
 	advice: DiagnosticAdvice;
-	message: Markup;
+	message: StaticMarkup;
 };
 
 type OutputMessagesFactory<Func extends InputMessagesFactory> = (
 	...params: Parameters<Func>
 ) => OuputMessagesFactoryReturn<ReturnType<Func>>;
 
-type OutputMessagesValue<Value> = Value extends Markup
+type OutputMessagesValue<Value> = Value extends StaticMarkup
 	? {
-			message: Markup;
+			message: StaticMarkup;
 			advice: DiagnosticAdvice;
 		}
 	: Value extends Partial<DiagnosticDescription>

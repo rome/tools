@@ -37,12 +37,16 @@ import ServerRequest from "./ServerRequest";
 import {JSONPropertyValue} from "@internal/codec-json";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
 
 export type ServerCommandReturn = undefined | Promise<JSONPropertyValue>;
 
-export type ServerCommand<Flags extends UnknownObject> = SharedCommand<ServerRequest, Flags, ServerCommandReturn>;
+export type ServerCommand<Flags extends UnknownObject> = SharedCommand<
+	ServerRequest,
+	Flags,
+	ServerCommandReturn
+>;
 
 export function createServerCommand<Flags extends UnknownObject>(
 	cmd: ServerCommand<Flags>,
@@ -53,8 +57,8 @@ export function createServerCommand<Flags extends UnknownObject>(
 export async function chainCommands(
 	req: ServerRequest,
 	fns: Array<{
-		title: Markup;
-		progress: Markup;
+		title: StaticMarkup;
+		progress: StaticMarkup;
 		callback: () => Promise<void>;
 	}>,
 ): Promise<void> {

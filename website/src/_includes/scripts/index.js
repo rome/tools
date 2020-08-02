@@ -328,9 +328,12 @@ class TableOfContents {
 						copied.style.opacity = "0";
 					});
 				});
-				copied.addEventListener("transitionend", () => {
-					copied.remove();
-				});
+				copied.addEventListener(
+					"transitionend",
+					() => {
+						copied.remove();
+					},
+				);
 			},
 			false,
 		);
@@ -473,7 +476,11 @@ for (const logo of logos) {
 					behavior: "smooth",
 				});
 				// Remove the hash
-				history.pushState("", document.title, window.location.pathname + window.location.search);
+				history.pushState(
+					"",
+					document.title,
+					window.location.pathname + window.location.search,
+				);
 			}
 		},
 	);

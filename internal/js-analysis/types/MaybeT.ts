@@ -12,7 +12,7 @@ import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
 import VoidT from "./VoidT";
 import NullT from "./NullT";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class MaybeT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {
@@ -38,7 +38,7 @@ export default class MaybeT extends T {
 		return new MaybeT(scope, originNode, getType(data.parent));
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`?${builder.humanize(this.parent)}`;
 	}
 

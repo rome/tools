@@ -15,7 +15,7 @@ export const dir = createServerCommand({
 	description: markup`show the location of the cache directory`,
 	usage: "",
 	examples: [],
-	defineFlags(c) {
+	defineFlags() {
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<void> {
@@ -28,11 +28,13 @@ export const clear = createServerCommand({
 	description: markup`clear the cache directory`,
 	usage: "",
 	examples: [],
-	defineFlags(c) {
+	defineFlags() {
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<void> {
 		await req.server.cache.clear();
-		req.reporter.success(markup`Cleared cache at <emphasis>${req.server.cache.cachePath}</emphasis>`);
+		req.reporter.success(
+			markup`Cleared cache at <emphasis>${req.server.cache.cachePath}</emphasis>`,
+		);
 	},
 });

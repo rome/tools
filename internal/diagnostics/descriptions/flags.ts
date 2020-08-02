@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {toKebabCase} from "@internal/string-utils";
-import { DiagnosticAdvice } from "../types";
+import {DiagnosticAdvice} from "../types";
 
 export const flags = createDiagnosticsCategory({
 	UNSUPPORTED_SHORTHANDS: {message: markup`Shorthand flags are not supported`},
@@ -15,7 +15,7 @@ export const flags = createDiagnosticsCategory({
 			},
 		],
 	}),
-	INCORRECT_ARG_COUNT: (excessive: boolean, text: Markup) => ({
+	INCORRECT_ARG_COUNT: (excessive: boolean, text: StaticMarkup) => ({
 		message: excessive ? markup`Too many arguments` : markup`Missing arguments`,
 		advice: [
 			{
@@ -39,17 +39,28 @@ export const flags = createDiagnosticsCategory({
 			? markup`No files found`
 			: markup`No files to ${noun} found`,
 	}),
-	UNKNOWN_COMMAND: ({programName, commandName, suggestedName, suggestedDescription, suggestedCommand}: {
-		programName: string,
-		commandName: string,
-		suggestedName: undefined | string,
-		suggestedDescription: undefined | Markup,
-		suggestedCommand: undefined | string,
-	}) => {
+	UNKNOWN_COMMAND: (
+		{
+			programName,
+			commandName,
+			suggestedName,
+			suggestedDescription,
+			suggestedCommand,
+		}: {
+			programName: string;
+			commandName: string;
+			suggestedName: undefined | string;
+			suggestedDescription: undefined | StaticMarkup;
+			suggestedCommand: undefined | string;
+		},
+	) => {
 		const advice: DiagnosticAdvice = [];
 
 		if (suggestedName !== undefined) {
-			const description = suggestedDescription === undefined ? "" : markup` ${suggestedDescription}`;
+			const description =
+				suggestedDescription === undefined
+					? ""
+					: markup` ${suggestedDescription}`;
 			advice.push({
 				type: "log",
 				category: "info",

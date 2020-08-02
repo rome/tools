@@ -53,8 +53,8 @@ import {
 import {
 	ErrorFrames,
 	StructuredError,
+	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-	getSourceLocationFromErrorFrame,
 } from "@internal/v8";
 import prettyFormat from "@internal/pretty-format";
 
@@ -338,7 +338,7 @@ export default class TestWorkerRunner {
 
 		// Get the frame where this test was declared. We pop 1 off as the error is created inside the test function.
 		const callsiteStruct = getErrorStructure(callsiteError, 1);
-		const callsiteLocation = getSourceLocationFromErrorFrame(
+		const callsiteLocation = getDiagnosticLocationFromErrorFrame(
 			callsiteStruct.frames[0],
 		);
 

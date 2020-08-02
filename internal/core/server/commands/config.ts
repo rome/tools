@@ -9,10 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {assertHardMeta, normalizeProjectConfig} from "@internal/project";
-import {
-	AbsoluteFilePath,
-	createUnknownFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {markup} from "@internal/markup";
 import {interceptDiagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
@@ -38,7 +35,12 @@ function defineFlags(c: Consumer): Flags {
 	};
 }
 
-async function runCommand(req: ServerRequest, flags: Flags, value: boolean | string | Array<string>, action: string) {
+async function runCommand(
+	req: ServerRequest,
+	flags: Flags,
+	value: boolean | string | Array<string>,
+	action: string,
+) {
 	const {reporter} = req;
 	const [keyParts] = req.query.args;
 
@@ -115,10 +117,7 @@ async function runCommand(req: ServerRequest, flags: Flags, value: boolean | str
 				validate(res, stringified);
 			},
 			(processor) => {
-				processor.normalizer.setInlineSourceText(
-					configPath.join(),
-					stringified,
-				);
+				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
 			},
 		);
 
@@ -188,7 +187,7 @@ export const location = createServerCommand<Flags>({
 
 export const enable = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config- set the <key> to true>`,
+	description: markup`modify a project config- set the ${"<key>"} to true`,
 	usage: "<key>",
 	examples: [],
 	defineFlags,
@@ -200,7 +199,7 @@ export const enable = createServerCommand<Flags>({
 
 export const disable = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config- set the <key> to false`,
+	description: markup`modify a project config- set the ${"<key>"} to false`,
 	usage: "<key>",
 	examples: [],
 	defineFlags,
@@ -212,7 +211,7 @@ export const disable = createServerCommand<Flags>({
 
 export const setDirectory = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - set the <key> to <value>`,
+	description: markup`modify a project config - set the ${"<key>"} to ${"<value>"}`,
 	usage: "<key> <value>",
 	examples: [],
 	defineFlags,
@@ -243,7 +242,7 @@ export const setDirectory = createServerCommand<Flags>({
 
 export const set = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - set the <key> to <value>`,
+	description: markup`modify a project config - set the ${"<key>"} to ${"<value>"}`,
 	usage: "<key> <value>",
 	examples: [],
 	defineFlags,
@@ -255,7 +254,7 @@ export const set = createServerCommand<Flags>({
 
 export const push = createServerCommand<Flags>({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: markup`modify a project config - push <values> to <key>`,
+	description: markup`modify a project config - push ${"<values>"} to ${"<key>"}`,
 	usage: "<key> <...values>",
 	examples: [],
 	defineFlags,

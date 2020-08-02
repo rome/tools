@@ -237,7 +237,7 @@ foo;
 ### `10: formatted`
 
 ```
-let foo = /[]]/;
+let foo = /[\]]/;
 foo;
 
 ```
@@ -297,7 +297,7 @@ foo;
 ### `14: formatted`
 
 ```
-let foo = /[\-[]\/{}()*+?.\\^$|]/g;
+let foo = /[\-[\]\/{}()*+?.\\^$|]/g;
 foo;
 
 ```
@@ -312,7 +312,7 @@ foo;
 ### `15: formatted`
 
 ```
-let foo = /[]]/yu;
+let foo = /[\]]/yu;
 foo;
 
 ```
@@ -327,7 +327,7 @@ foo;
 ### `16: formatted`
 
 ```
-let foo = /[]]/s;
+let foo = /[\]]/s;
 foo;
 
 ```

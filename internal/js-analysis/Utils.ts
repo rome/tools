@@ -10,7 +10,7 @@ import AnyT from "./types/AnyT";
 import E from "./types/errors/E";
 import Hub from "./Hub";
 import T, {TypeCompatibilityReturn} from "./types/T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 class ReduceRecursionError extends Error {}
 
@@ -26,7 +26,7 @@ export class HumanBuilder {
 	}
 
 	stack: Set<T>;
-	aliases: Map<T, Markup>;
+	aliases: Map<T, StaticMarkup>;
 	usedAliases: Set<string>;
 
 	isRecursive(t: T): boolean {
@@ -45,7 +45,7 @@ export class HumanBuilder {
 		return false;
 	}
 
-	humanize(type: T): Markup {
+	humanize(type: T): StaticMarkup {
 		// Check if we already have a human form for this type
 		if (type.human !== undefined) {
 			return type.human;
@@ -219,7 +219,7 @@ export default class Utils {
 		return res;
 	}
 
-	humanize(type: T): Markup {
+	humanize(type: T): StaticMarkup {
 		this.assertClosed();
 
 		return new HumanBuilder().humanize(type);

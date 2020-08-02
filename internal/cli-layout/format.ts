@@ -5,7 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyMarkup, MarkupLinesAndWidth, readMarkup} from "@internal/markup";
+import {
+	AnyMarkup,
+	MarkupLinesAndWidth,
+	joinMarkupLines,
+	readMarkup,
+} from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
 import {ob1Get1} from "@internal/ob1";
@@ -50,6 +55,13 @@ export function renderGrid(
 		width: ob1Get1(grid.getWidth()),
 		lines: grid.getLines(format),
 	};
+}
+
+export function markupToJoinedPlainText(
+	input: AnyMarkup,
+	opts: UserGridOptions = {},
+): string {
+	return joinMarkupLines(markupToPlainText(input, opts));
 }
 
 export function markupToPlainText(

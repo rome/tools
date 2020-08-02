@@ -21,7 +21,7 @@ import {ob1Get0, ob1Get1} from "@internal/ob1";
 import {AbsoluteFilePath} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter";
 import {escapeSplit} from "@internal/string-utils";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 type UnexpectedDecision = (
 	description: DiagnosticDescriptionOptionalCategory,
@@ -187,8 +187,8 @@ export function buildLintDecisionAdviceAction(
 	}: {
 		extra?: boolean;
 		shortcut?: string;
-		noun: Markup;
-		instruction: Markup;
+		noun: StaticMarkup;
+		instruction: StaticMarkup;
 		filename?: string;
 		decision: string;
 	},
