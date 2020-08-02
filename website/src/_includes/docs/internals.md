@@ -34,6 +34,10 @@ We avoid the common pitfalls of in-band ANSI formatting by doing the formatting 
 
 ### Type Safety
 
-TODO
+While we are in JavaScript land, we embrace TypeScript by using as many strong types as possible. We have sparing usages of wide types like `object` and `any` casts. With no dependencies we are able to extend this coverage and confidence everywhere. We never consume arbitrary data like JSON without first passing it through some validation and normalization process.
 
 ### Self Hosted
+
+Rome is bundled, compiled, linted, and tested by itself. Once Rome was built and had the capabilities necessary to build itself, we removed the other tools and instead used a build of Rome.
+
+Read more about self hosting at [Self-hosting (compilers) - Wikipedia](https://en.wikipedia.org/wiki/Self-hosting_(compilers))
