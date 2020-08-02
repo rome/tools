@@ -1,4 +1,4 @@
-import {markupToPlainText} from "@internal/cli-layout";
+import {markupToJoinedPlainText} from "@internal/cli-layout";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Consumer} from "@internal/consume";
 import {
@@ -14,7 +14,6 @@ import {Position} from "@internal/parser-core";
 import {DiagnosticLocation, Diagnostics} from "@internal/diagnostics";
 import {Server} from "@internal/core";
 import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
-import {joinMarkupLines} from "@internal/markup";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {
@@ -62,7 +61,7 @@ export function convertDiagnosticsToLSP(
 				);
 				if (abs !== undefined) {
 					relatedInformation.push({
-						message: joinMarkupLines(markupToPlainText(item.text)),
+						message: markupToJoinedPlainText(item.text),
 						location: {
 							uri: `file://${abs.join()}`,
 							range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -75,7 +74,7 @@ export function convertDiagnosticsToLSP(
 		lspDiagnostics.push({
 			severity: 1,
 			range: convertDiagnosticLocationToLSPRange(location),
-			message: joinMarkupLines(markupToPlainText(description.message)),
+			message: markupToJoinedPlainText(description.message),
 			code: description.category,
 			source: "rome",
 			relatedInformation,

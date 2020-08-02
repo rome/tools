@@ -15,13 +15,12 @@ import {
 	AnyMarkup,
 	StaticMarkup,
 	convertToMarkupFromRandomString,
-	joinMarkupLines,
 	markup,
 	readMarkup,
 } from "@internal/markup";
 import {AnyRoot} from "@internal/ast";
 import {DiagnosticLanguage} from "@internal/diagnostics";
-import {markupToPlainText} from "@internal/cli-layout";
+import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -139,8 +138,7 @@ function showInvisibleChar(char: string): undefined | string | StaticMarkup {
 }
 
 export function cleanEquivalentString(safe: string | StaticMarkup): string {
-	let str =
-		typeof safe === "string" ? safe : joinMarkupLines(markupToPlainText(safe));
+	let str = typeof safe === "string" ? safe : markupToJoinedPlainText(safe);
 
 	// Replace all whitespace with spaces
 	str = str.replace(/[\s\n]+/g, " ");

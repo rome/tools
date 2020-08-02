@@ -10,6 +10,7 @@ import {
 	ansiEscapes,
 	markupToAnsi,
 	markupToHtml,
+	markupToJoinedPlainText,
 	markupToPlainText,
 } from "@internal/cli-layout";
 import {
@@ -21,7 +22,6 @@ import {
 	concatMarkup,
 	convertToMarkupFromRandomString,
 	isEmptyMarkup,
-	joinMarkupLines,
 	markup,
 	markupTag,
 	normalizeMarkup,
@@ -676,7 +676,7 @@ export default class Reporter implements ReporterNamespace {
 	};
 
 	stripMarkup(str: AnyMarkup): string {
-		return joinMarkupLines(markupToPlainText(str, this.markupOptions));
+		return markupToJoinedPlainText(str, this.markupOptions);
 	}
 
 	format(stream: ReporterStreamAttached, str: AnyMarkup): Array<string> {

@@ -90,7 +90,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 		return err;
 	}
 
-	const {message, advice = []} = getMessageFromNodeError(err);
+	let {message, advice = []} = getMessageFromNodeError(err);
 	const struct = getErrorStructure(err, 0, false);
 	let location: DiagnosticLocation = {};
 

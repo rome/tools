@@ -54,7 +54,11 @@ import {
 	markup,
 } from "@internal/markup";
 
-import {markupToHtml, markupToPlainText} from "@internal/cli-layout";
+import {
+	markupToHtml,
+	markupToJoinedPlainText,
+	markupToPlainText,
+} from "@internal/cli-layout";
 import {AbsoluteFilePath} from "@internal/path";
 import {NodeSystemError} from "@internal/node";
 
@@ -470,7 +474,7 @@ export default class Client {
 
 			writer.append(
 				{name: "summary.txt"},
-				joinMarkupLines(markupToPlainText(await this.generateRageSummary())),
+				markupToJoinedPlainText(await this.generateRageSummary()),
 			);
 
 			await writer.finalize();

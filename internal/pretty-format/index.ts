@@ -12,18 +12,17 @@ import {
 } from "@internal/typescript-helpers";
 import {escapeJSString} from "@internal/string-escape";
 import {naturalCompare} from "@internal/string-utils";
-import {markupToPlainText} from "@internal/cli-layout";
 import {
 	AnyMarkup,
 	LazyMarkupFactory,
 	StaticMarkup,
 	concatMarkup,
-	joinMarkupLines,
 	markup,
 	markupTag,
 	readMarkup,
 	serializeLazyMarkup,
 } from "@internal/markup";
+import {markupToJoinedPlainText} from "@internal/cli-layout";
 
 type RecursiveStack = Array<unknown>;
 
@@ -53,7 +52,7 @@ const DEFAULT_OPTIONS: FormatOptions = {
 export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
 
 export function prettyFormatToString(value: unknown): string {
-	return joinMarkupLines(markupToPlainText(markup`${prettyFormat(value)}`));
+	return markupToJoinedPlainText(markup`${prettyFormat(value)}`);
 }
 
 export function pretty(

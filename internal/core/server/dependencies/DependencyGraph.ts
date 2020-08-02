@@ -25,7 +25,10 @@ import {
 } from "@internal/path";
 import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
 import {markup} from "@internal/markup";
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {
+	FileNotFound,
+	MissingFileReturn,
+} from "@internal/core/common/FileNotFound";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -178,7 +181,9 @@ export default class DependencyGraph {
 			validate?: boolean;
 		},
 	): Promise<void> {
+		// Initialize sub dependency queue
 		const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.server);
+		await workerQueue.prepare(paths);
 
 		workerQueue.addCallback(async (path, item) => {
 			await this.resolve(
@@ -194,29 +199,39 @@ export default class DependencyGraph {
 			);
 		});
 
-		// Add initial queue items
-		const roots = await Promise.all(
-			paths.map((path) =>
-				FileNotFound.maybeAllowMissing(
-					allowFileNotFound,
-					path,
-					() =>
-						this.resolve(
-							path,
-							{
-								workerQueue,
-								all: true,
-								async: false,
-								ancestry: [],
-							},
-							diagnosticsProcessor,
-							analyzeProgress,
-						)
-					,
-				)
-			),
-		);
+		// Initialize roots
+		const rootQueue: WorkerQueue<void> = new WorkerQueue(this.server);
+		const roots: Array<MissingFileReturn<DependencyNode>> = [];
 
+		rootQueue.addCallback(async (path) => {
+			const ret = await FileNotFound.maybeAllowMissing(
+				allowFileNotFound,
+				path,
+				() => {
+					return this.resolve(
+						path,
+						{
+							workerQueue,
+							all: true,
+							async: false,
+							ancestry: [],
+						},
+						diagnosticsProcessor,
+						analyzeProgress,
+					);
+				},
+			);
+			roots.push(ret);
+		});
+
+		for (const path of paths) {
+			await rootQueue.pushQueue(path, undefined);
+		}
+
+		// Spin root queue
+		await rootQueue.spin();
+
+		// Spin worker queue
 		await workerQueue.spin();
 
 		if (diagnosticsProcessor.hasDiagnostics()) {

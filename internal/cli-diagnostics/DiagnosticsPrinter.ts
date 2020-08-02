@@ -44,6 +44,7 @@ import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {exists, lstat, readFileText} from "@internal/fs";
 
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 
 type RawBanner = {
 	palettes: Array<MarkupRGB>;
@@ -231,7 +232,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Match against the supplied grep pattern
 		let ignored =
-			joinMarkupLines(markupToPlainText(diag.description.message)).toLowerCase().includes(
+			markupToJoinedPlainText(diag.description.message).toLowerCase().includes(
 				grep,
 			) === false;
 		if (inverseGrep) {
