@@ -9,7 +9,7 @@ import {VirtualModulesMap} from "./VirtualModules";
 
 export const modules: VirtualModulesMap = new Map();
 
-/* GENERATED:START(hash:5d20bc54b36105f96b3ca80f5befae6a982ecb45,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:4ed9eb85b02d1310ba393d994d859f8c03218041,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/virtual-modules` to update. */
 modules.set(
 	"rome",
 	new Map([

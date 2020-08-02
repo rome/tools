@@ -58,4 +58,4 @@ jobs:
         with:
           node-version: '13.x'
       - name: Check if generated files need to be updated
-        run: ./rome run scripts/generate-files
+        run: ./rome run scripts/generate-all-files

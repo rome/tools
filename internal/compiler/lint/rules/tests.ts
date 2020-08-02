@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:5d20bc54b36105f96b3ca80f5befae6a982ecb45,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:dd4177c86d28579c6c314e79881c4638ca445cf0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import preferClosingNonVoid from "./html/preferClosingNonVoid.test.rjson";
 // @ts-ignore

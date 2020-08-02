@@ -125,6 +125,7 @@ export async function main() {
 		if (description) {
 			return description[1].trim();
 		} else {
+			console.log({content});
 			throw new Error(`${path.join()} did not contain a description`);
 		}
 	}

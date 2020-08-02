@@ -1,4 +1,18 @@
+<!-- GENERATED:START(hash:899d8a542b9b8f85ae60eb2628ac28e1cd6f6687,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
+**Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
+**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and others.
+
+**Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
+
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](/about#philosophy).
+
+**Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
+
+**Rome** is maintained by a [team of volunteers](/about#eam). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
+
+**Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
+<!-- GENERATED:END(id:main) -->
 
 {% include docs/intro-screenshot.md %}
 

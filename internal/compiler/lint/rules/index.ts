@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/* GENERATED:START(hash:5d20bc54b36105f96b3ca80f5befae6a982ecb45,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:0849be850a4d3b94d875c9d26fb089677707fa1d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import preferClosingNonVoid from "./html/preferClosingNonVoid";
 import camelCase from "./js/camelCase";
 import caseSingleStatement from "./js/caseSingleStatement";

@@ -19,7 +19,7 @@ layout: layouts/homepage.liquid
 {% include docs/linting.md %}
 
 </section>
-<section>{
+<section>
 
 {% include docs/cli.md %}
 

@@ -105,7 +105,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:5d20bc54b36105f96b3ca80f5befae6a982ecb45,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:eba2de9f1c8ccbfc8ebb5a9462593b07ff9f7d85,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 type LintDiagnosticCategory =
 	| "lint/html/preferClosingNonVoid"
 	| "lint/js/camelCase"

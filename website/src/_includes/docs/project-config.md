@@ -29,7 +29,7 @@ The Rome cache is portable, meaning it contains no references to absolute paths.
 rome config set name "project-name"
 ```
 
-### `root`
+#### `root`
 
 TODO
 
@@ -110,20 +110,16 @@ scripts
 !scripts/navigation.js
 ```
 
-will cause everything inside the ``.
+This will ignore everything in the `scripts` directory besides the file `navigation.js`.
 
 ##### Base Directory
 
 Say that you have the following directory structure:
 
 ```text
-babies/
-	juniper
-
-cats/
-	babies/
-		orion
-		nev
+babies/juniper
+cats/babies/orion
+cats/babies/nev
 ```
 
 And you only wanted to ignore the folder `babies` that contained `juniper`. If you wrote just `babies` then it would match both directories. However, you can prefix it with `/babies` and it will only match the folder at the base.

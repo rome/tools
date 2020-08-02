@@ -89,7 +89,7 @@ export async function modifyGeneratedFile(
 	// The file is up to date if the comment hash and hash of the inner generated matches
 	if (isSame) {
 		reporter.warn(
-			markup`Generated <emphasis>${path}</emphasis>(hash:${expectedHash},id:${id}) is the same.`,
+			markup`Generated <emphasis>${path}</emphasis><dim>(hash:${expectedHash},id:${id})</dim> is the same.`,
 		);
 		return;
 	}
@@ -103,12 +103,14 @@ export async function modifyGeneratedFile(
 	};
 
 	let final = contentStart.trimRight();
-	final += "\n\n";
+	if (final !== "") {
+		final += "\n\n";
+	}
 	final += createGeneratedStartComment(commentOpts) + "\n";
 	final += generated + "\n";
 	final += createGeneratedEndComment(commentOpts)
 	final += "\n\n";
-	final += contentEnd;
+	final += contentEnd.trimLeft();
 	final = final.trimRight() + "\n";
 	await writeFile(path, final);
 }
@@ -153,6 +155,11 @@ function hash(content: string): string {
 }
 
 async function formatFile(path: AbsoluteFilePath, sourceText: string): Promise<string> {
+	// Not currently supported
+	if (path.hasExtension("md")) {
+		return sourceText;
+	}
+
 	return await integrationWorker.performFileOperation(
 		{
 			real: path,
