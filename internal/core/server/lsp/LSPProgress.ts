@@ -4,6 +4,7 @@ import {
 	ReporterProgressOptions,
 } from "@internal/cli-reporter";
 import {LSPTransport} from "./protocol";
+import {markupToJoinedPlainText} from "@internal/cli-layout";
 
 let progressTokenCounter = 0;
 
@@ -57,7 +58,9 @@ export default class LSPProgress extends ReporterProgressBase {
 				value: {
 					kind: "report",
 					cancellable: false,
-					message: this.text,
+					message: this.text === undefined
+						? ""
+						: markupToJoinedPlainText(this.text),
 					percentage,
 				},
 			},

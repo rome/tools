@@ -10,7 +10,7 @@ import T, {SerialTypeFactory} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {HumanBuilder} from "../Utils";
 import {Scope} from "../scopes";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class ObjIndexPropT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {
@@ -45,7 +45,7 @@ export default class ObjIndexPropT extends T {
 		);
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`[${builder.humanize(this.key)}]: ${builder.humanize(
 			this.value,
 		)}`;

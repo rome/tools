@@ -10,7 +10,7 @@ import {AnyNode} from "@internal/ast";
 import {Scope} from "../scopes";
 import ObjT from "./ObjT";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class StringLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: string) {
@@ -41,7 +41,7 @@ export default class StringLiteralT extends ObjT {
 		return new StringLiteralT(scope, originNode, String(data.value));
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		let str: string = JSON.stringify(this.value);
 		return markup`${str}`;
 	}

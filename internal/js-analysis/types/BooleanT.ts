@@ -10,7 +10,7 @@ import {HydrateData} from "../Evaluator";
 import BooleanLiteralT from "./BooleanLiteralT";
 import {Scope} from "../scopes";
 import T from "./T";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class BooleanT extends T {
 	static type = "BooleanT";
@@ -23,7 +23,7 @@ export default class BooleanT extends T {
 		return new BooleanT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`boolean`;
 	}
 

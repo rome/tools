@@ -11,10 +11,10 @@ import {ob1Coerce0} from "@internal/ob1";
 import {isIdentifierish} from "@internal/js-ast-utils";
 import {DiagnosticAdvice, descriptions} from "@internal/diagnostics";
 import {preserveCasing} from "@internal/string-utils";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 type ConfusingLanguage = Array<{
-	description: Markup;
+	description: StaticMarkup;
 	word: string;
 	suggestion: string;
 	advice: DiagnosticAdvice;
@@ -56,7 +56,7 @@ const regex = new RegExp(
 type CheckResult = {
 	loc: SourceLocation;
 	word: string;
-	description: Markup;
+	description: StaticMarkup;
 	suggestion: string;
 	startIndex: number;
 	endIndex: number;

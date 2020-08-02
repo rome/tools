@@ -44,3 +44,6 @@ export const CLI_SOCKET_PATH = TEMP_PATH.append(`rome-wait-${VERSION}.sock`);
 
 // Misc
 export const MOCKS_DIRECTORY_NAME = "__rmocks__";
+
+// Used as a timeout to indicate if a
+export const LAG_INTERVAL = 3_000;

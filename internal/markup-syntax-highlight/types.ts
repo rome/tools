@@ -1,7 +1,8 @@
 import {Number0} from "@internal/ob1";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
 import {UnknownFilePath} from "@internal/path";
-import {Markup, MarkupTokenType} from "@internal/markup";
+import {MarkupTokenType, StaticMarkup} from "@internal/markup";
+import {AnyMarkups} from "@internal/markup/escape";
 
 export type AnsiHighlightOptions = {
 	path: UnknownFilePath;
@@ -18,14 +19,14 @@ export type TokenShape = {
 
 export type ReduceCallbackResult = {
 	type?: MarkupTokenType;
-	value?: Markup;
+	value?: StaticMarkup;
 };
 
 export type ReduceCallback<Token extends TokenShape> = (
 	token: Token,
-	line: Markup,
+	line: StaticMarkup,
 	prev: undefined | Token,
 	next: undefined | Token,
 ) => undefined | ReduceCallbackResult;
 
-export type HighlightCodeResult = Array<Markup>;
+export type HighlightCodeResult = AnyMarkups;

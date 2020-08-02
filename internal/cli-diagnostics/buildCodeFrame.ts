@@ -26,7 +26,8 @@ import {
 	ob1Number1Neg1,
 } from "@internal/ob1";
 import {
-	Markup,
+	AnyMarkups,
+	StaticMarkup,
 	concatMarkup,
 	isEmptyMarkup,
 	markup,
@@ -38,13 +39,13 @@ import {Dict} from "@internal/typescript-helpers";
 function formatLineView(
 	{marker, line, gutter}: FormattedLine,
 	gutterLength: number,
-): Markup {
+): StaticMarkup {
 	const attributes: Dict<string | number> = {
 		extraSoftWrapIndent: 2,
 		// NB: The `word-break` default is probably better? lineWrap: "char-break",
 	};
 
-	const parts: Array<Markup> = [line];
+	const parts: AnyMarkups = [line];
 
 	if (gutterLength > 0) {
 		parts.push(
@@ -99,15 +100,15 @@ function formatLineView(
 }
 
 type Marker = {
-	message: Markup;
+	message: StaticMarkup;
 	start: Number0;
 	end: Number0;
 };
 
 type FormattedLine = {
 	marker: undefined | Marker;
-	gutter: Markup;
-	line: Markup;
+	gutter: StaticMarkup;
+	line: StaticMarkup;
 };
 
 export default function buildCodeFrame(
@@ -126,10 +127,10 @@ export default function buildCodeFrame(
 		truncateLines?: number;
 		start?: Position;
 		end?: Position;
-		markerMessage?: Markup;
+		markerMessage?: StaticMarkup;
 	},
 ): {
-	frame: Markup;
+	frame: StaticMarkup;
 	truncated: boolean;
 } {
 	// Bail if we have negative line references, we have no lines, or we expected positions and don't have one
@@ -328,7 +329,7 @@ export default function buildCodeFrame(
 	)}">...</pad></emphasis>${GUTTER}`;
 
 	// Build the frame
-	const result: Array<Markup> = [];
+	const result: AnyMarkups = [];
 	for (const selection of formattedLines) {
 		if (!selection) {
 			result.push(omittedLine);

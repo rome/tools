@@ -26,7 +26,7 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
-import {Markup, markup} from "@internal/markup";
+import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -36,7 +36,7 @@ import {JSONObject} from "@internal/codec-json";
 import {exists, readFileText, writeFile} from "@internal/fs";
 
 export type Examples = Array<{
-	description: Markup;
+	description: StaticMarkup;
 	command: string;
 }>;
 
@@ -49,7 +49,7 @@ type FlagsConsumer = {
 type CommandOptions<T extends JSONObject> = {
 	name: string;
 	category?: string;
-	description?: Markup;
+	description?: StaticMarkup;
 	usage?: string;
 	examples?: Examples;
 	ignoreFlags?: Array<string>;
@@ -80,14 +80,14 @@ export type ParserOptions<T> = {
 
 	examples?: Examples;
 	usage?: string;
-	description?: Markup;
+	description?: StaticMarkup;
 	version?: string;
 	ignoreFlags?: Array<string>;
 	noProcessExit?: boolean;
 	commandRequired?: boolean;
 	commandSuggestions?: Dict<{
 		commandName: string;
-		description: Markup;
+		description: StaticMarkup;
 	}>;
 	shellCompletionDirectory?: AbsoluteFilePath;
 };
@@ -582,11 +582,11 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	buildOptionsHelp(keys: Array<string>): Array<Array<Markup>> {
+	buildOptionsHelp(keys: Array<string>): Array<AnyMarkups> {
 		const optionOutput: Array<{
 			argName: string;
-			arg: Markup;
-			description: Markup;
+			arg: StaticMarkup;
+			description: StaticMarkup;
 		}> = [];
 		let argColumnLength: number = 0;
 
@@ -627,7 +627,7 @@ export default class Parser<T> {
 				argColumnLength = argCol.length;
 			}
 
-			let descCol: Markup =
+			let descCol: StaticMarkup =
 				metadata.description === undefined
 					? markup`no description found`
 					: metadata.description;
@@ -664,7 +664,7 @@ export default class Parser<T> {
 	}
 
 	async showUsageHelp(
-		description?: Markup,
+		description?: StaticMarkup,
 		usage: string = "[flags]",
 		prefix?: string,
 	) {

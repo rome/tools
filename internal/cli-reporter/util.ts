@@ -8,7 +8,7 @@
 import {ReporterProgress} from "./types";
 import Reporter from "./Reporter";
 import readline = require("readline");
-import {Markup, markup} from "@internal/markup";
+import {AnyMarkup, markup} from "@internal/markup";
 import {VoidCallback} from "@internal/typescript-helpers";
 
 export function mergeProgresses(
@@ -34,12 +34,12 @@ export function mergeProgresses(
 				progress.setTotal(total, approximate);
 			}
 		},
-		setText: (text: Markup) => {
+		setText: (text: AnyMarkup) => {
 			for (const progress of progresses) {
 				progress.setText(text);
 			}
 		},
-		pushText: (text: Markup) => {
+		pushText: (text: AnyMarkup) => {
 			let id = "";
 			for (const progress of progresses) {
 				progress.pushText(text, id);

@@ -66,10 +66,10 @@ import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProc
 import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../common/utils/lockers";
 import {getEnvVar} from "@internal/cli-environment";
-import {markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
-import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
 import RecoveryStore from "./fs/RecoveryStore";
+import handleFatalError from "../common/handleFatalError";
 
 export type ServerClient = {
 	id: number;
@@ -312,6 +312,13 @@ export default class Server {
 	connectedLSPServers: Set<LSPServer>;
 	connectedClientsListeningForLogs: Set<ServerClient>;
 
+	// Derive a concatenated reporter from the logger and all connected clients
+	// This should only be used synchronously as the streams will not stay in sync
+	// Used for very important log messages
+	getImportantReporter(): Reporter {
+		return Reporter.concat([this.logger, this.connectedReporters]);
+	}
+
 	emitServerLog(chunk: string) {
 		if (this.clientIdCounter === 0) {
 			this.logInitBuffer += chunk;
@@ -325,13 +332,11 @@ export default class Server {
 		}
 	}
 
-	onFatalError(err: Error) {
-		err = convertPossibleNodeErrorToDiagnostic(err);
-		const message = markup`<emphasis>Fatal error occurred</emphasis>: ${err.stack ||
-		err.message}`;
-		this.logger.error(message);
-		this.connectedReporters.error(message);
-		process.exit();
+	onFatalError(error: Error, source: StaticMarkup = markup`server`) {
+		// Ensure workers are properly ended as they could be hanging
+		this.workerManager.end();
+
+		handleFatalError({error, source, reporter: this.getImportantReporter()});
 	}
 
 	// rome-ignore lint/ts/noExplicitAny

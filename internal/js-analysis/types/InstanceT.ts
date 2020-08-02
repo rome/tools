@@ -13,7 +13,7 @@ import {HumanBuilder} from "../Utils";
 import StringLiteralT from "./StringLiteralT";
 import GetPropT from "./GetPropT";
 import ObjT from "./ObjT";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class InstanceT extends ObjT {
 	constructor(
@@ -68,7 +68,7 @@ export default class InstanceT extends ObjT {
 		);
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		const name = builder.humanize(this.target);
 		const typeParams = this.typeParameters;
 		if (typeParams.length === 0) {

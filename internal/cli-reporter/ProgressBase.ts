@@ -8,7 +8,7 @@
 import Reporter from "./Reporter";
 import {ReporterProgress, ReporterProgressOptions} from "./types";
 import {mergeObjects} from "@internal/typescript-helpers";
-import {Markup, isEmptyMarkup, markup} from "@internal/markup";
+import {AnyMarkup, AnyMarkups, isEmptyMarkup, markup} from "@internal/markup";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,
@@ -50,10 +50,10 @@ export default class ProgressBase implements ReporterProgress {
 	current: number;
 	total: undefined | number;
 
-	text: undefined | Markup;
+	text: undefined | AnyMarkup;
 	textIdCounter: number;
 	textIdStack: Array<string>;
-	textStack: Array<Markup>;
+	textStack: AnyMarkups;
 	textIds: Set<string>;
 
 	title: undefined | string;
@@ -88,7 +88,7 @@ export default class ProgressBase implements ReporterProgress {
 		}
 	}
 
-	setText(text: Markup) {
+	setText(text: AnyMarkup) {
 		this.text = text;
 		this.queueRender();
 	}
@@ -103,7 +103,7 @@ export default class ProgressBase implements ReporterProgress {
 		this.queueRender();
 	}
 
-	pushText(text: Markup, id?: string): string {
+	pushText(text: AnyMarkup, id?: string): string {
 		if (id === undefined) {
 			id = String(this.textIdCounter++);
 		}
@@ -131,7 +131,7 @@ export default class ProgressBase implements ReporterProgress {
 		this.textIds.delete(id);
 
 		// Set last
-		const last: undefined | Markup = textStack[textStack.length - 1];
+		const last: undefined | AnyMarkup = textStack[textStack.length - 1];
 		this.setText(last ?? markup``);
 	}
 

@@ -14,7 +14,8 @@ import {
 import {showInvisibles} from "./utils";
 import {Diffs, diffConstants, stringDiffUnified} from "@internal/string-diff";
 import {
-	Markup,
+	AnyMarkups,
+	StaticMarkup,
 	concatMarkup,
 	markup,
 	markupTag,
@@ -54,7 +55,7 @@ function formatDiffLine(diffs: Diffs) {
 const DELETE_MARKER = markupTag("error", markup`-`);
 const ADD_MARKER = markupTag("success", markup`+`);
 
-function formatSingleLineMarker(text: string): Markup {
+function formatSingleLineMarker(text: string): StaticMarkup {
 	return markup`<emphasis>${text}</emphasis>: `;
 }
 
@@ -63,7 +64,7 @@ export default function buildPatchCodeFrame(
 	truncate: boolean,
 ): {
 	truncated: boolean;
-	frame: Markup;
+	frame: StaticMarkup;
 } {
 	const {diffsByLine, beforeLineCount, afterLineCount} = stringDiffUnified(
 		item.diff,
@@ -92,7 +93,7 @@ export default function buildPatchCodeFrame(
 	const singleLine = beforeLineCount === 1 && afterLineCount === 1;
 
 	const {legend} = item;
-	const frame: Array<Markup> = [];
+	const frame: AnyMarkups = [];
 	let displayedLines = 0;
 	let truncated = false;
 	let lastDisplayedLine = -1;
@@ -105,8 +106,8 @@ export default function buildPatchCodeFrame(
 	function createLineNos(
 		beforeLine?: string | number,
 		afterLine?: string | number,
-	): Markup {
-		let parts: Array<Markup> = [];
+	): StaticMarkup {
+		let parts: AnyMarkups = [];
 		parts.push(
 			markup`<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${String(
 				beforeNoLength,

@@ -11,7 +11,7 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import stringDiff from "@internal/string-diff";
 import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
@@ -178,7 +178,7 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/jsx-a11y/noRedundantRoles",
 		message: markup`Using the role attribute <emphasis>${role}</emphasis> on the <emphasis>${element}</emphasis> element is redundant.`,
 	}),
-	JSX_A11Y_ANCHOR_IS_VALID: (message: Markup) => ({
+	JSX_A11Y_ANCHOR_IS_VALID: (message: StaticMarkup) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
 		advice: [
@@ -219,7 +219,7 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/jsx/noDuplicateProps",
 		message: markup`Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
 	}),
-	REACT_NO_STRING_REFS: (details: Markup) => ({
+	REACT_NO_STRING_REFS: (details: StaticMarkup) => ({
 		category: "lint/react/noStringRefs",
 		message: markup`Using ${details} is a deprecated pattern.`,
 		advice: [
@@ -710,7 +710,7 @@ export const lint = createDiagnosticsCategory({
 		message: markup`A switch case should only have a single statement. If you want more, then wrap it in a block.`,
 	},
 	JS_CONFUSING_LANGUAGE: (
-		message: Markup,
+		message: StaticMarkup,
 		suggestion: string,
 		advice: DiagnosticAdvice,
 	) => ({

@@ -10,7 +10,7 @@ import {HydrateData} from "../Evaluator";
 import T from "./T";
 import OpenT from "./OpenT";
 import {AnyNode} from "@internal/ast";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 export default class OpenIntrinsicT extends OpenT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -36,7 +36,7 @@ export default class OpenIntrinsicT extends OpenT {
 		return scope.intrinsics.get(String(data.name));
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return markup`open intrinsic`;
 	}
 }

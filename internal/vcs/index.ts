@@ -8,6 +8,7 @@
 import {AbsoluteFilePath} from "@internal/path";
 import {exists} from "@internal/fs";
 import childProcess = require("child_process");
+import {NodeSystemError} from "@internal/node";
 
 const TIMEOUT = 10_000;
 
@@ -69,7 +70,7 @@ export class VCSClient {
 
 			proc.on(
 				"error",
-				(err: NodeJS.ErrnoException) => {
+				(err: NodeSystemError) => {
 					if (err.code === "ETIMEDOUT") {
 						error(`Timed out after ${TIMEOUT}ms`);
 					} else {

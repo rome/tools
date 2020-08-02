@@ -56,7 +56,7 @@ import {
 } from "../lint/decisions";
 import {isRoot} from "@internal/ast-utils";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics/utils";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import cleanTransform from "../transforms/cleanTransform";
 import {assertSingleNode} from "@internal/js-ast-utils";
 import VisitorState, {AnyVisitorState} from "./VisitorState";
@@ -80,7 +80,7 @@ type AddDiagnosticResult = {
 
 // We only want a Context to create diagnostics that belong to itself
 export type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
-	marker?: Markup;
+	marker?: StaticMarkup;
 };
 
 type DiagnosticTarget =

@@ -16,13 +16,13 @@ import {
 import {
 	ErrorFrames,
 	StructuredError,
+	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-	getSourceLocationFromErrorFrame,
 } from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {diagnosticLocationToMarkupFilelink} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {Markup, isEmptyMarkup, markup} from "@internal/markup";
+import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 	if (Array.isArray(val)) {
@@ -41,10 +41,12 @@ export function mergeDiagnostics(
 	];
 
 	for (const diag of diags) {
+		const derived = deriveRootAdviceFromDiagnostic(diag);
 		mergedAdvice = [
 			...mergedAdvice,
-			...deriveRootAdviceFromDiagnostic(diag).advice,
+			...derived.advice,
 			...normalizeArray(diag.description.advice),
+			...derived.lastAdvice,
 		];
 	}
 
@@ -58,9 +60,12 @@ export function mergeDiagnostics(
 }
 
 export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
-	const normalizer = new DiagnosticsNormalizer({
-		stripPositions: true,
-	});
+	const normalizer = new DiagnosticsNormalizer(
+		{},
+		{
+			stripPositions: true,
+		},
+	);
 
 	return JSON.stringify(normalizer.normalizeDiagnostic(diag));
 }
@@ -78,7 +83,8 @@ export function deriveRootAdviceFromDiagnostic(
 	},
 ): {
 	advice: DiagnosticAdvice;
-	header: Markup;
+	lastAdvice: DiagnosticAdvice;
+	header: StaticMarkup;
 } {
 	const advice: DiagnosticAdvice = [];
 	const {description, tags = {}, location} = diag;
@@ -98,7 +104,7 @@ export function deriveRootAdviceFromDiagnostic(
 	}
 
 	if (tags.internal) {
-		header = markup`${header} <inverse> INTERNAL </inverse>`;
+		header = markup`${header} <inverse><error> INTERNAL </error></inverse>`;
 	}
 
 	if (tags.fixable) {
@@ -106,7 +112,11 @@ export function deriveRootAdviceFromDiagnostic(
 	}
 
 	if (opts.outdated) {
-		header = markup`${header} <inverse> OUTDATED </inverse>`;
+		header = markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
+	}
+
+	if (tags.fatal) {
+		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
 	}
 
 	if (opts.includeHeaderInAdvice === true) {
@@ -149,12 +159,28 @@ export function deriveRootAdviceFromDiagnostic(
 		}
 	}
 
-	return {header, advice};
+	const lastAdvice: DiagnosticAdvice = [];
+
+	if (tags.fatal) {
+		lastAdvice.push({
+			type: "log",
+			category: "info",
+			text: markup`Rome exited as this error could not be handled and resulted in a fatal error. Please report if necessary.`,
+		});
+	} else if (tags.internal) {
+		lastAdvice.push({
+			type: "log",
+			category: "info",
+			text: markup`This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.`,
+		});
+	}
+
+	return {header, advice, lastAdvice};
 }
 
-type DeriveErrorDiagnosticOptions = {
+export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
-	label?: Markup;
+	label?: StaticMarkup;
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
@@ -183,7 +209,7 @@ export function deriveDiagnosticFromErrorStructure(
 		}
 
 		targetFilename = frame.filename;
-		targetLoc = getSourceLocationFromErrorFrame(frame);
+		targetLoc = getDiagnosticLocationFromErrorFrame(frame);
 		break;
 	}
 
@@ -217,7 +243,7 @@ export function deriveDiagnosticFromError(
 
 export function getErrorStackAdvice(
 	error: StructuredError,
-	title?: Markup,
+	title?: StaticMarkup,
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames, stack} = error;
@@ -351,17 +377,6 @@ export function addOriginsToDiagnostic(
 export function createInternalDiagnostic(diag: Diagnostic): Diagnostic {
 	return {
 		...diag,
-		description: {
-			...diag.description,
-			advice: [
-				...diag.description.advice,
-				{
-					type: "log",
-					category: "warn",
-					text: markup`This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.`,
-				},
-			],
-		},
 		tags: {
 			...diag.tags,
 			internal: true,

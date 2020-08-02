@@ -12,15 +12,15 @@ import {
 import {nonASCIIwhitespace} from "@internal/js-parser-utils";
 import {removeCarriageReturn, splitLines} from "@internal/string-utils";
 import {
-	Markup,
+	AnyMarkup,
+	StaticMarkup,
 	convertToMarkupFromRandomString,
-	joinMarkupLines,
 	markup,
 	readMarkup,
 } from "@internal/markup";
 import {AnyRoot} from "@internal/ast";
 import {DiagnosticLanguage} from "@internal/diagnostics";
-import {markupToPlainText} from "@internal/cli-layout";
+import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -37,7 +37,7 @@ export function showInvisibles(
 		atLineEnd: boolean;
 	},
 ): {
-	value: Markup;
+	value: StaticMarkup;
 	hadNonWhitespace: boolean;
 } {
 	let hadNonWhitespace = false;
@@ -100,12 +100,12 @@ export function showInvisibles(
 	};
 }
 
-function showUnicodeChar(char: string): Markup {
+function showUnicodeChar(char: string): StaticMarkup {
 	// We use inverse to make it clear that it's not in the source
 	return markup`<inverse>U+${char.codePointAt(0)!.toString(16)}</inverse>`;
 }
 
-function showInvisibleChar(char: string): undefined | string | Markup {
+function showInvisibleChar(char: string): undefined | string | StaticMarkup {
 	switch (char) {
 		case " ":
 			return "\xb7"; // Middle Dot
@@ -137,9 +137,8 @@ function showInvisibleChar(char: string): undefined | string | Markup {
 	}
 }
 
-export function cleanEquivalentString(safe: string | Markup): string {
-	let str =
-		typeof safe === "string" ? safe : joinMarkupLines(markupToPlainText(safe));
+export function cleanEquivalentString(safe: string | StaticMarkup): string {
+	let str = typeof safe === "string" ? safe : markupToJoinedPlainText(safe);
 
 	// Replace all whitespace with spaces
 	str = str.replace(/[\s\n]+/g, " ");
@@ -153,7 +152,7 @@ export function cleanEquivalentString(safe: string | Markup): string {
 	return str;
 }
 
-export type ToLines = Array<[string, Markup]>;
+export type ToLines = Array<[string, AnyMarkup]>;
 
 export function toLines(opts: AnsiHighlightOptions): ToLines {
 	const input = removeCarriageReturn(opts.input);

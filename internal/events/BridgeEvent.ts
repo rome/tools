@@ -65,6 +65,7 @@ export default class BridgeEvent<
 	requestCallbacks: Map<
 		number,
 		{
+			param: Param;
 			completed: undefined | VoidCallback;
 			resolve: (data: Ret) => void;
 			reject: (err: Error) => void;
@@ -112,7 +113,7 @@ export default class BridgeEvent<
 			callbacks.resolve(data.value);
 		} else if (data.responseStatus === "error") {
 			try {
-				callbacks.reject(this.bridge.buildError(data.value, data.metadata));
+				callbacks.reject(this.bridge.hydrateError(data));
 			} catch (err) {
 				callbacks.reject(err);
 			}
@@ -192,6 +193,7 @@ export default class BridgeEvent<
 				this.requestCallbacks.set(
 					id,
 					{
+						param,
 						completed,
 						reject,
 						resolve,

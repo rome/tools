@@ -11,8 +11,7 @@ import {isValidWord} from "./parse";
 import {Consumer} from "@internal/consume";
 import {PRIORITIZE_KEYS, formatNumber} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
-import {joinMarkupLines} from "@internal/markup";
-import {markupToPlainText} from "@internal/cli-layout";
+import {markupToJoinedPlainText} from "@internal/cli-layout";
 
 function joinList(
 	open: string,
@@ -96,7 +95,7 @@ function stringifyPrimitives(value: unknown): undefined | string {
 			throw new Error("Do not know how to serialize a BigInt");
 
 		case "number":
-			return joinMarkupLines(markupToPlainText(formatNumber(value)));
+			return markupToJoinedPlainText(formatNumber(value));
 	}
 
 	return undefined;

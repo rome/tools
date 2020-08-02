@@ -1,6 +1,6 @@
 import {AbsoluteFilePath} from "@internal/path";
 
-type MissingReturn<T> =
+export type MissingFileReturn<T> =
 	| {
 			missing: false;
 			value: T;
@@ -23,7 +23,7 @@ export class FileNotFound extends Error {
 		allow: undefined | boolean,
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
-	): Promise<MissingReturn<T>> {
+	): Promise<MissingFileReturn<T>> {
 		if (allow) {
 			return FileNotFound.allowMissing(path, factory);
 		} else {
@@ -37,7 +37,7 @@ export class FileNotFound extends Error {
 	static async allowMissing<T>(
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
-	): Promise<MissingReturn<T>> {
+	): Promise<MissingFileReturn<T>> {
 		try {
 			return {
 				value: await factory(),

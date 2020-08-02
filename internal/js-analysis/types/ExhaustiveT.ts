@@ -13,7 +13,7 @@ import {HumanBuilder} from "../Utils";
 import E, {ErrorDefinition} from "./errors/E";
 import AnyT from "./AnyT";
 import {descriptions} from "@internal/diagnostics";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 
 class ENotExhaustive extends E {
 	constructor(
@@ -117,7 +117,7 @@ export default class ExhaustiveT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
 			this.target,
 		)}`;

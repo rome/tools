@@ -5,11 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from "./types";
+import {
+	Diagnostic,
+	DiagnosticAdviceItem,
+	DiagnosticLocation,
+	DiagnosticTags,
+} from "./types";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {
-	Markup,
 	MarkupFormatNormalizeOptions,
+	StaticMarkup,
+	markup,
 	normalizeMarkup,
 } from "@internal/markup";
 import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
@@ -21,8 +27,14 @@ type NormalizeOptionsRequiredPosition = RequiredProps<
 	"normalizePosition"
 >;
 
+export type DiagnosticsNormalizerOptions = {
+	tags?: DiagnosticTags;
+	label?: StaticMarkup;
+};
+
 export default class DiagnosticsNormalizer {
 	constructor(
+		normalizeOptions?: DiagnosticsNormalizerOptions,
 		markupOptions?: MarkupFormatNormalizeOptions,
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
@@ -30,14 +42,22 @@ export default class DiagnosticsNormalizer {
 		this.inlineSourceText = new Map();
 		this.hasMarkupOptions = markupOptions !== undefined;
 
+		this.hasOptions = normalizeOptions !== undefined;
+		this.options = normalizeOptions ?? {};
+
 		this.inlinedSourceTextFilenames = new Set();
 
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
 	sourceMaps: undefined | SourceMapConsumerCollection;
+
+	options: DiagnosticsNormalizerOptions;
+	hasOptions: boolean;
+
 	markupOptions: NormalizeOptionsRequiredPosition;
 	hasMarkupOptions: boolean;
+
 	inlineSourceText: Map<string, string>;
 	inlinedSourceTextFilenames: Set<string>;
 
@@ -220,11 +240,13 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	normalizeMarkup(markup: Markup): Markup {
+	normalizeMarkup(markup: StaticMarkup): StaticMarkup {
 		return normalizeMarkup(markup, this.markupOptions).text;
 	}
 
-	maybeNormalizeMarkup(markup: undefined | Markup): undefined | Markup {
+	maybeNormalizeMarkup(
+		markup: undefined | StaticMarkup,
+	): undefined | StaticMarkup {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
@@ -314,7 +336,8 @@ export default class DiagnosticsNormalizer {
 		if (
 			!this.hasMarkupOptions &&
 			(sourceMaps === undefined || !sourceMaps.hasAny()) &&
-			this.inlineSourceText.size === 0
+			this.inlineSourceText.size === 0 &&
+			!this.hasOptions
 		) {
 			return diag;
 		}
@@ -325,8 +348,7 @@ export default class DiagnosticsNormalizer {
 			return this.normalizeDiagnosticAdviceItem(item);
 		});
 
-		diag = {
-			...diag,
+		let merge: Partial<Diagnostic> = {
 			label: this.maybeNormalizeMarkup(diag.label),
 			location: this.normalizeLocation(diag.location),
 			description: {
@@ -334,6 +356,25 @@ export default class DiagnosticsNormalizer {
 				message: this.normalizeMarkup(description.message),
 				advice,
 			},
+		};
+
+		// Add on any specified tags
+		if (this.options.tags) {
+			merge.tags = {
+				...this.options.tags,
+				...diag.tags,
+			};
+		}
+
+		// Add on any specified tags
+		const {label} = this.options;
+		if (label) {
+			merge.label = diag.label ? markup`${label} (${diag.label})` : label;
+		}
+
+		diag = {
+			...diag,
+			...merge,
 		};
 
 		return diag;

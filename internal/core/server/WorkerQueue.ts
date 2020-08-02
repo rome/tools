@@ -7,9 +7,9 @@
 
 import {WorkerContainer} from "./WorkerManager";
 import Server from "./Server";
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 
-type Queue<M> = Array<[AbsoluteFilePath, M]>;
+type Queue<M> = Array<[AbsoluteFilePath, M, () => void]>;
 
 type WorkerQueueItem<M> = {
 	running: boolean;
@@ -39,7 +39,7 @@ export default class WorkerQueue<M> {
 	open: boolean;
 
 	// Prematurely fetch the owners so we don't waterfall worker creation
-	async prepare(paths: AbsoluteFilePathSet) {
+	async prepare(paths: Iterable<AbsoluteFilePath>) {
 		await Promise.all(
 			Array.from(
 				paths,
@@ -50,7 +50,7 @@ export default class WorkerQueue<M> {
 		);
 	}
 
-	async pushQueue(path: AbsoluteFilePath, metadata: M) {
+	async pushQueue(path: AbsoluteFilePath, metadata: M, wait: boolean = false) {
 		if (!this.open) {
 			throw new Error("WorkerQueue has already closed");
 		}
@@ -63,6 +63,14 @@ export default class WorkerQueue<M> {
 			path,
 		);
 
+		let resolve;
+		const promise = new Promise((_resolve) => {
+			resolve = _resolve;
+		});
+		if (resolve === undefined) {
+			throw new Error("Expected resolve to have been declared");
+		}
+
 		// Populate the worker queue for this item
 		let worker = this.workers.get(workerContainer);
 		if (worker === undefined) {
@@ -72,7 +80,7 @@ export default class WorkerQueue<M> {
 			};
 			this.workers.set(workerContainer, worker);
 		}
-		worker.queue.push([path, metadata]);
+		worker.queue.push([path, metadata, resolve]);
 
 		// Start this worker if it isn't already
 		if (worker.running === false) {
@@ -80,6 +88,11 @@ export default class WorkerQueue<M> {
 			// Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
 			promise.catch(() => {});
 			this.runningWorkers.push(promise);
+		}
+
+		// If requested, wait on this queue item to finish
+		if (wait) {
+			await promise;
 		}
 	}
 
@@ -99,10 +112,11 @@ export default class WorkerQueue<M> {
 				return;
 			}
 
-			const [filename, metadata] = item;
+			const [filename, metadata, resolve] = item;
 			for (const callback of this.callbacks) {
 				await callback(filename, metadata);
 			}
+			resolve();
 			await next();
 		};
 

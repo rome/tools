@@ -23,6 +23,7 @@ export type DiagnosticCategory =
 	| "compile/nonnumeric-enum-values"
 	| "flags/invalid"
 	| "format/disabled"
+	| "internalError/fatal"
 	| "internalError/fs"
 	| "internalError/httpServer"
 	| "internalError/request"

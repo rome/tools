@@ -19,6 +19,7 @@ import net = require("net");
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
+import {NodeSystemError} from "@internal/node";
 
 export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");
@@ -52,7 +53,7 @@ export class WebSocketInterface {
 
 		socket.on(
 			"error",
-			(err: NodeJS.ErrnoException) => {
+			(err: NodeSystemError) => {
 				if (err.code === "ECONNRESET") {
 					this.endEvent.send();
 				} else {

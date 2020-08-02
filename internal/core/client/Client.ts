@@ -54,8 +54,13 @@ import {
 	markup,
 } from "@internal/markup";
 
-import {markupToHtml, markupToPlainText} from "@internal/cli-layout";
+import {
+	markupToHtml,
+	markupToJoinedPlainText,
+	markupToPlainText,
+} from "@internal/cli-layout";
 import {AbsoluteFilePath} from "@internal/path";
+import {NodeSystemError} from "@internal/node";
 
 export function getFilenameTimestamp(): string {
 	return new Date().toISOString().replace(/[^0-9a-zA-Z]/g, "");
@@ -469,7 +474,7 @@ export default class Client {
 
 			writer.append(
 				{name: "summary.txt"},
-				joinMarkupLines(markupToPlainText(await this.generateRageSummary())),
+				markupToJoinedPlainText(await this.generateRageSummary()),
 			);
 
 			await writer.finalize();
@@ -660,7 +665,10 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon: undefined | ServerBridge = await new Promise((resolve) => {
+		const newDaemon: undefined | ServerBridge = await new Promise((
+			resolve,
+			reject,
+		) => {
 			const timeout = setTimeout(
 				() => {
 					reporter.error(markup`Daemon connection timed out`);
@@ -682,6 +690,8 @@ export default class Client {
 					}),
 				);
 			});
+
+			socketServer.on("error", reject);
 
 			function listen() {
 				socketServer.listen(CLI_SOCKET_PATH.join());
@@ -751,7 +761,7 @@ export default class Client {
 
 			socket.on(
 				"error",
-				(err: NodeJS.ErrnoException) => {
+				(err: NodeSystemError) => {
 					if (
 						err.code === "ENOENT" ||
 						err.code === "ECONNREFUSED" ||

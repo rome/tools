@@ -21,7 +21,7 @@ import {
 import {orderBySimilarity} from "@internal/string-utils";
 import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {PLATFORMS} from "../../common/types/platform";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkups, markup} from "@internal/markup";
 
 export default function resolverSuggest(
 	resolver: Resolver,
@@ -86,7 +86,7 @@ export default function resolverSuggest(
 		let skipSimilaritySuggestions = false;
 
 		// Try other platforms
-		const validPlatforms: Array<Markup> = [];
+		const validPlatforms: StaticMarkups = [];
 		for (const PLATFORM of PLATFORMS) {
 			if (PLATFORM === query.platform) {
 				continue;

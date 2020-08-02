@@ -12,7 +12,7 @@ import Graph from "../Graph";
 import {Scope} from "../scopes";
 import Hub from "../Hub";
 import Utils, {HumanBuilder} from "../Utils";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 let counter = 0;
 
@@ -59,7 +59,7 @@ export default class T {
 
 	compatibilityCache: Map<T, TypeCompatibilityReturn>;
 
-	human: undefined | Markup;
+	human: undefined | StaticMarkup;
 	id: string;
 
 	originNode: undefined | AnyNode;
@@ -71,7 +71,7 @@ export default class T {
 		return this.constructor;
 	}
 
-	setHuman(human: undefined | Markup) {
+	setHuman(human: undefined | StaticMarkup) {
 		this.human = human;
 	}
 
@@ -142,7 +142,7 @@ export default class T {
 		return this;
 	}
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		const reduced = this.utils.reduce(this);
 		if (reduced === this) {
 			throw new Error("unimplemented");

@@ -10,7 +10,7 @@ import {DiagnosticDescription} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 import AnyT from "../AnyT";
 import T from "../T";
-import {Markup} from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 
 export type ErrorDefinition = {
 	description: DiagnosticDescription;
@@ -25,7 +25,7 @@ export default class E extends T {
 		return new AnyT(scope, originNode);
 	}
 
-	humanize(): Markup {
+	humanize(): StaticMarkup {
 		return this.getError().description.message;
 	}
 

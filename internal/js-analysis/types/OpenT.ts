@@ -7,13 +7,13 @@
 
 import {HumanBuilder} from "../Utils";
 import UnknownT from "./UnknownT";
-import {Markup, markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import T from "./T";
 
 export default class OpenT extends T {
 	static type = "OpenT";
 
-	humanize(builder: HumanBuilder): Markup {
+	humanize(builder: HumanBuilder): StaticMarkup {
 		const type = this.utils.reduce(this);
 		if (type === this) {
 			return markup`open`;

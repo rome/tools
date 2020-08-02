@@ -89,8 +89,8 @@ export default class Worker {
 
 		if (opts.globalErrorHandlers) {
 			setupGlobalErrorHandlers((err) => {
-				// TODO
-				err;
+				// Dispatch error to the server and trigger a fatal
+				opts.bridge.fatalError.send(opts.bridge.serializeError(err));
 			});
 		}
 	}

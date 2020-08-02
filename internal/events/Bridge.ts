@@ -6,7 +6,9 @@
  */
 
 import {
+	BridgeErrorResponseDetails,
 	BridgeErrorResponseMessage,
+	BridgeHeartbeatExceededOptions,
 	BridgeMessage,
 	BridgeOptions,
 	BridgeRequestMessage,
@@ -25,6 +27,9 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "@internal/v8";
+import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
+import {AsyncVoidCallback} from "@internal/typescript-helpers";
+import prettyFormat from "@internal/pretty-format";
 
 type ErrorJSON = {
 	serialize: (err: Error) => JSONObject;
@@ -51,7 +56,6 @@ export default class Bridge {
 		});
 
 		// A Set of event names that are being listened to on the other end
-
 		// We track this to avoid sending over subscriptions that aren't needed
 		this.listeners = new Set();
 
@@ -96,6 +100,7 @@ export default class Bridge {
 	type: BridgeType;
 
 	messageIdCounter: number;
+
 	// rome-ignore lint/ts/noExplicitAny
 	events: Map<string, BridgeEvent<any, any>>;
 
@@ -111,25 +116,75 @@ export default class Bridge {
 		});
 	}
 
-	monitorHeartbeat(timeout: number, onExceeded: () => undefined | Promise<void>) {
+	getPendingRequestsSummary(): AnyMarkups {
+		const summaries: AnyMarkups = [];
+
+		for (const event of this.events.values()) {
+			const requestCount = event.requestCallbacks.size;
+			if (requestCount > 0) {
+				let list = Array.from(
+					event.requestCallbacks.values(),
+					({param}) => {
+						return markup`<li>${prettyFormat(param)}</li>`;
+					},
+				);
+
+				summaries.push(
+					markup`<emphasis>${event.name}</emphasis> x ${requestCount}\n<ul>${concatMarkup(
+						list,
+					)}</ul>`,
+				);
+			}
+		}
+
+		return summaries;
+	}
+
+	monitorHeartbeat(
+		timeout: number,
+		onExceeded: AsyncVoidCallback<[BridgeHeartbeatExceededOptions]>,
+		{
+			iterations,
+			initialTime,
+		}: {
+			iterations: number;
+			initialTime: number;
+		} = {iterations: 0, initialTime: 0},
+	) {
 		if (this.type === "server&client") {
 			// No point in monitoring this since we're the same process
 			return;
 		}
 
+		const start = Date.now();
+
 		this.heartbeatTimeout = setTimeout(
 			async () => {
 				try {
 					await this.heartbeatEvent.call(undefined, {timeout});
-					this.monitorHeartbeat(timeout, onExceeded);
 				} catch (err) {
 					if (err instanceof BridgeError) {
 						if (this.alive) {
-							onExceeded();
+							const took = Date.now() - start;
+							onExceeded({
+								summary: this.getPendingRequestsSummary(),
+								iterations,
+								totalTime: initialTime + took,
+							});
 						}
 					} else {
 						throw err;
 					}
+				} finally {
+					const took = Date.now() - start;
+					this.monitorHeartbeat(
+						timeout,
+						onExceeded,
+						{
+							initialTime: initialTime + took,
+							iterations: iterations + 1,
+						},
+					);
 				}
 			},
 			1_000,
@@ -287,7 +342,8 @@ export default class Bridge {
 	}
 
 	//# Error serialization
-	buildError(struct: StructuredError, data: JSONObject) {
+
+	hydrateError({value: struct, metadata}: BridgeErrorResponseDetails) {
 		const transport = this.errorTransports.get(struct.name);
 		if (transport === undefined) {
 			const err: ErrorWithFrames = new Error(struct.message);
@@ -296,15 +352,11 @@ export default class Bridge {
 			setErrorFrames(err, struct.frames);
 			return err;
 		} else {
-			return transport.hydrate(struct, data);
+			return transport.hydrate(struct, metadata);
 		}
 	}
 
-	buildErrorResponse(
-		id: number,
-		event: string,
-		errRaw: unknown,
-	): BridgeErrorResponseMessage {
+	serializeError(errRaw: unknown): BridgeErrorResponseDetails {
 		// Just in case something that wasn't an Error was thrown
 		const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
 
@@ -314,12 +366,22 @@ export default class Bridge {
 			tranport === undefined ? {} : tranport.serialize(err);
 
 		return {
+			value: getErrorStructure(err),
+			metadata,
+		};
+	}
+
+	buildErrorResponse(
+		id: number,
+		event: string,
+		errRaw: unknown,
+	): BridgeErrorResponseMessage {
+		return {
 			id,
 			event,
 			type: "response",
 			responseStatus: "error",
-			value: getErrorStructure(err),
-			metadata,
+			...this.serializeError(errRaw),
 		};
 	}
 
@@ -328,6 +390,7 @@ export default class Bridge {
 	}
 
 	//# Message transmission
+
 	sendMessage(msg: BridgeMessage) {
 		// There's no try-catch gated around sendMessage because the call stack here will include some other error handler
 		// We need to be specific for handleMessage because it could come from anywhere
