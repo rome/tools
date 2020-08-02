@@ -72,7 +72,7 @@ async function check(
 		return res;
 	}
 
-	return await ask(diag, req, state, false);
+	return await ask(diag, req, state, false, diagnostics.length);
 }
 
 async function ask(
@@ -80,6 +80,7 @@ async function ask(
 	req: ClientRequest,
 	state: State,
 	showMoreOptions: boolean,
+	totalDiagnostics: number,
 ): Promise<ServerQueryResponse> {
 	const {client} = req;
 	const {reporter} = client;
@@ -163,6 +164,8 @@ async function ask(
 		}
 	}
 
+	reporter.heading(markup`Reviewing diagnostics (<emphasis>${totalDiagnostics}</emphasis><dim>/</dim><emphasis>${totalDiagnostics + state.resolvedCount}</emphasis>)`);
+
 	const printer = new DiagnosticsPrinter({
 		processor: new DiagnosticsProcessor(),
 		reporter,
@@ -206,11 +209,11 @@ async function ask(
 	}
 
 	if (answer === "less") {
-		return await ask(diag, req, state, false);
+		return await ask(diag, req, state, false, totalDiagnostics);
 	}
 
 	if (answer === "more") {
-		return await ask(diag, req, state, true);
+		return await ask(diag, req, state, true, totalDiagnostics);
 	}
 
 	if (answer === "ignore") {
