@@ -75,7 +75,7 @@ module.exports = function(eleventyConfig) {
 
 					tags = tags.filter(function(item) {
 						switch (item) {
-							// this list should match the `filter` list in tags.liquid
+							// This list should match the `filter` list in tags.liquid
 							case "all":
 							case "nav":
 							case "post":
