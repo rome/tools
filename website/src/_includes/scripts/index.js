@@ -378,14 +378,14 @@ if (teamArr.length > 0) {
 	}
 }
 
-//# Homepage example expander
+//# Code expanders
 
-const homepageExample = document.querySelector(".homepage-example");
-if (homepageExample != null) {
-	homepageExample.addEventListener(
+const collapsed = document.querySelectorAll("pre.collapsed");
+for (const elem of collapsed) {
+	elem.addEventListener(
 		"click",
 		() => {
-			homepageExample.classList.remove("collapsed");
+			elem.classList.remove("collapsed");
 		},
 	);
 }
