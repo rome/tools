@@ -6,7 +6,10 @@ const virtualIndex = INTERNAL.append("core", "common", "virtual-modules.ts");
 
 export async function main() {
 	await modifyGeneratedFile(
-		virtualIndex,
+		{
+			path: virtualIndex,
+			scriptName: "virtual-modules",
+		},
 		async () => {
 			let lines = [];
 			let hash = "";

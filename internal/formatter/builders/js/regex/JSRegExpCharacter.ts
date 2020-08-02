@@ -27,7 +27,6 @@ export default function JSRegExpCharacter(
 			case "+":
 			case "*":
 			case "[":
-			case "]":
 			case "(":
 			case ")":
 			case "|":

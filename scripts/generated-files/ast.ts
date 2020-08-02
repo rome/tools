@@ -48,7 +48,10 @@ export async function main() {
 		}>,
 	) {
 		await modifyGeneratedFile(
-			path,
+			{
+				path,
+				scriptName: "ast",
+			},
 			async () => {
 				const lines = [];
 
@@ -97,6 +100,7 @@ export async function main() {
 			},
 		],
 	);
+	return;
 
 	// Add to builders
 	await readIndexFile(

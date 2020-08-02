@@ -54,7 +54,10 @@ export async function main() {
 
 	// Generate compiler rules index
 	await modifyGeneratedFile(
-		lintRulesFolder.append("index.ts"),
+		{
+			path: lintRulesFolder.append("index.ts"),
+			scriptName: "lint-rules",
+		},
 		async () => {
 			let lines = [];
 			for (const {basename, ruleName} of defs) {
@@ -73,7 +76,10 @@ export async function main() {
 
 	// Generate diagnostic categories
 	await modifyGeneratedFile(
-		INTERNAL.append("diagnostics", "categories.ts"),
+		{
+			path: INTERNAL.append("diagnostics", "categories.ts"),
+			scriptName: "lint-rules",
+		},
 		async () => {
 			const lines = ["type LintDiagnosticCategory ="];
 			for (const {ruleName} of defs) {
@@ -86,7 +92,10 @@ export async function main() {
 
 	// Generate tests index
 	await modifyGeneratedFile(
-		lintRulesFolder.append("tests.ts"),
+		{
+			path: lintRulesFolder.append("tests.ts"),
+			scriptName: "lint-rules",
+		},
 		async () => {
 			const lines = [];
 			for (const {basename, ruleName, hasRJSON} of defs) {
@@ -138,7 +147,10 @@ export async function main() {
 
 	// Generate lint docs index
 	await modifyGeneratedFile(
-		lintRulesDocFolder.append("index.md"),
+		{
+			path: lintRulesDocFolder.append("index.md"),
+			scriptName: "lint-rules",
+		},
 		async () => {
 			const lines = [];
 

@@ -8,3 +8,4 @@
 export {default as escapeJSString} from "./escapeJSString";
 export {default as unescapeJSONString} from "./unescapeJSONString";
 export * from "./constants";
+export {escapeRegex, regex} from "./escapeRegex";
