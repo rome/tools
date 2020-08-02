@@ -687,9 +687,9 @@ export default class ServerRequest {
 			() => {
 				const took = Date.now() - start;
 				this.reporter.warn(
-					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <duration>${String(
+					markup`Running <emphasis>${method}</emphasis> on <emphasis>${path}</emphasis> seems to be taking longer than expected. Have been waiting for <emphasis><duration>${String(
 						took,
-					)}</duration>.`,
+					)}</duration></emphasis>.`,
 				);
 			},
 			LAG_INTERVAL,
