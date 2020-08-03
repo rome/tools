@@ -103,7 +103,7 @@ export async function main() {
 		await modifyGeneratedFile(
 			{
 				path: ROOT.append(`website/src/docs/lint/rules/${ruleName}.md`),
-				scriptName: "lint-rules-docs",
+				scriptName: "generated-files/lint-rules-docs",
 			},
 			async () => {
 				const lines = [];

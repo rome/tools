@@ -50,7 +50,7 @@ export async function main() {
 		await modifyGeneratedFile(
 			{
 				path,
-				scriptName: "ast",
+				scriptName: "generated-files/ast",
 			},
 			async () => {
 				const lines = [];

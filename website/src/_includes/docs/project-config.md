@@ -12,6 +12,7 @@ We are deliberately lean with the supported configuration. We do not include opt
 name: "project-name"
 version: "^0.0.0"
 root: true
+extends: "../other-file"
 
 lint: {
 	ignore: []
@@ -31,9 +32,22 @@ The Rome cache is portable, meaning it contains no references to absolute paths.
 rome config set name "project-name"
 ```
 
-#### `root`
+#### `extends`
 
 TODO
+
+```bash
+rome config set-directory extends "some-other-file"
+```
+
+#### `root`
+
+By default, Rome will search parent directories for other projects to initialize. TODO
+
+```bash
+rome config enable root
+rome config disable root
+```
 
 #### `version`
 
@@ -86,6 +100,10 @@ Alternatively, your project config can be included in a `rome` field inside of `
 	}
 }
 ```
+
+### Nested Projects
+
+TODO
 
 ### Path Patterns
 

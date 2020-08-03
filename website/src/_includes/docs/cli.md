@@ -114,9 +114,17 @@ Change the path that `--rage` will write to.
 
 Defaults to `Rage-TIMESTAMP.tgz`.
 
+##### `--review`
+
+TODO
+
 ##### `--timing`
 
 Output basic timing information on command completion.
+
+##### `--watch`
+
+TODO
 
 ### Commands
 

@@ -8,7 +8,7 @@ tags:
 	- release
 	- post
 permalink: /blog/2020/08/03/first-release.html
-layout: layouts/blog/post.liquid
+layout: layouts/blog.liquid
 ---
 
 TODO

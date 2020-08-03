@@ -2,6 +2,7 @@
 const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
+const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
@@ -10,7 +11,6 @@ const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
-const purify = require("purify-css");
 const romePackage = require("../package.json");
 
 /**
@@ -45,24 +45,29 @@ module.exports = function(eleventyConfig) {
 		html: true,
 		linkify: true,
 		typographer: true,
-	}).use(
+	});
+
+	md.use(markdownItHeaderSections);
+
+	md.use(
 		markdownItAnchor,
 		{
 			permalink: true,
 			permalinkSymbol: "",
+			slugify: (raw) => {
+				const [title, ...customHash] = raw.split("#");
+				if (customHash.length > 0) {
+					return customHash.join("#");
+				}
+
+				return encodeURIComponent(
+					String(title).trim().toLowerCase().replace(/\s+/g, "-"),
+				);
+			},
 		},
 	);
 
 	eleventyConfig.setLibrary("md", md);
-
-	// Render a markdown from the root of the repo
-	eleventyConfig.addShortcode(
-		"rootmd",
-		function(file) {
-			const data = fs.readFileSync(path.join(__dirname, "..", file));
-			return md.render(data.toString());
-		},
-	);
 
 	// Taken from https://github.com/11ty/eleventy-base-blog/blob/master/_11ty/getTagList.js
 	eleventyConfig.addCollection(
@@ -169,20 +174,6 @@ module.exports = function(eleventyConfig) {
 		"htmlmin",
 		function(content, outputPath) {
 			if (isProduction && outputPath.endsWith(".html")) {
-				// Extract CSS
-				const styleMatch = content.match(/<style>(.*?)<\/style>/);
-				if (styleMatch != null) {
-					const css = styleMatch[1];
-					content = content.replace(/<style>(.*?)<\/style>/, "<style></style>");
-					// Remove unused styles, minify, and insert back
-					const usedCSS = purify(content, css);
-					const minifiedCSS = new CleanCSS({}).minify(usedCSS).styles;
-					content = content.replace(
-						"<style></style>",
-						`<style>${minifiedCSS}</style>`,
-					);
-				}
-
 				let minified = htmlmin.minify(
 					content,
 					{

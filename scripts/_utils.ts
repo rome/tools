@@ -132,7 +132,7 @@ type CommentOptions = {
 };
 
 function createGeneratedCommentInstructions(scriptName: string): string {
-	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/generated-files/${scriptName}\` to update.`;
+	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/${scriptName}\` to update.`;
 }
 
 function createGeneratedStartComment(opts: CommentOptions): string {

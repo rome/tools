@@ -8,27 +8,38 @@ Clear all artifacts from the cache directory.
 
 #### `rome check`
 
-##### Flags
+Used to find problems in your project. This includes:
 
-###### `--apply`
+ - Dependency verification
+ - Formatting
+ - Linting
+ - `package.json` validation
+
+See [Linting: Command Usage](#command-usage) for more usage information.
+
+**Flags**
+
+- `--apply`
 
 TODO
 
-###### `--changed <branch/commit>`
+- `--changed <branch/commit>`
 
 Only include files that were changed between the specified `branch/commit`. This can be useful for performance in large projects.
 
 If the `branch/commit` is omitted then we default to the default branch, either `main` or `master`. ie. `rome check --changed` is equivalent to `rome check --changed main`.
 
-###### `--format-only`
+- `--format-only`
 
 TODO
 
 #### `rome config`
 
-This command works with all Rome project config locations (see [supported locations](/docs/project-config#supported-locations) for more info). When formatting a project config written with [RJSON](/docs/rjson), comments will be retained.
+Used to modify project configuration. These commands work with all Rome project config locations (see [supported locations](/docs/project-config#supported-locations) for more info). When formatting a project config written with [RJSON](/docs/rjson), comments will be retained.
 
-Before your project config is saved, we will validate it for errors. It is not possible to produce an invalid config with `rome config`.
+Before your project config is saved, we will validate it for errors. It is not possible to save an invalid config with `rome config`.
+
+Refer to [Project Configuration: Properties](#properties) for example commands.
 
 #### `rome config enable <key>`
 
@@ -44,7 +55,7 @@ Set the `key` to a string `value`.
 
 #### `rome config set-directory <key> <value>`
 
-Set the `key` to the string `value`. If `value` is an absolute path then it will be made relative to the project base directory.
+Set the `key` to the string `value`. If `value` is an absolute path then it will be made relative to the config path.
 
 #### `rome config push <key> <value>`
 
@@ -83,11 +94,9 @@ Running this command will start a long-running server and communicate via the [L
 
 This command does nothing. Used in conjunction with other global flags such as [`--logs`](#--logs) and [`--rage`](#--rage).
 
-##### Flags
+**Flags**
 
-###### `--hang`
-
-Instead of immediately exiting, hang the command and never exit unless forced.
+- `--hang` Instead of immediately exiting, hang the command and never exit unless forced.
 
 #### `rome rage`
 

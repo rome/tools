@@ -6,7 +6,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: ROOT.append("website", "src", "_includes", "docs", "intro.md"),
-			scriptName: "website-intro",
+			scriptName: "generated-files/website-intro",
 		},
 		async () => {
 			const readme = await readFileText(ROOT.append("README.md"));

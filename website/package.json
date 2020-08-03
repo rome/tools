@@ -20,8 +20,7 @@
 		"clean-css": "^4.2.3",
 		"docsearch.js": "^2.6.3",
 		"html-minifier": "^4.0.0",
-		"node-sass": "^4.14.1",
-		"purify-css": "^1.2.5"
+		"node-sass": "^4.14.1"
 	},
 	"rome": {
 		"extends": "../package.json",
@@ -30,6 +29,7 @@
 				"@11ty/eleventy-plugin-syntaxhighlight",
 				"@11ty/eleventy-navigation",
 				"markdown-it",
+				"markdown-it-header-sections",
 				"markdown-it-anchor",
 				"eleventy-plugin-sass",
 				"eleventy-plugin-nesting-toc",
@@ -38,9 +38,11 @@
 				"terser",
 				"clean-css",
 				"html-minifier",
-				"node-sass",
-				"purify-css"
+				"node-sass"
 			]
 		}
+	},
+	"dependencies": {
+		"markdown-it-header-sections": "^1.0.0"
 	}
 }

@@ -40,7 +40,6 @@ import {FileNotFound} from "../common/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {LAG_INTERVAL} from "../common/constants";
 import {BridgeError} from "@internal/events";
 
 export type ParseResult = {

@@ -58,7 +58,7 @@ rome check --review
 
 ### Rules
 
-We have support for over 200 rules, including the most common rules needed working with TypeScript and React. Check the full [list of rules](/docs/lint/rules). All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
+We have support for over 100 rules, including the most common rules needed working with TypeScript and React. Check the full [list of rules](/docs/lint/rules). All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
 
 ### Formatting
 
@@ -176,4 +176,4 @@ Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io
 
 Once an editor extension has been installed, the version of Rome in your project will be automatically found and used. As we improve Rome and add new functionality any changes will automatically work with your editor!
 
-We welcome contributions adding official extensions for other mainstream editors. See [contributing](/contributing) for more information. LSP communication is done by the [`rome lsp` command](#rome-lsp).
+We welcome contributions adding official extensions for other mainstream editors. See [contributing](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md) for more information. LSP communication is done by the [`rome lsp` command](#rome-lsp).

@@ -1,17 +1,19 @@
-<!-- GENERATED:START(hash:dde653a1b7b0c278238b1570e5456548733b308d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
+<section>
+
+<!-- GENERATED:START(hash:8cb63cfa44c2c976570991319738898b0339908a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
 **Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
-**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Jest](https://jestjs.io/), and others.
+**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 **Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](/about#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](#philosophy).
 
 **Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
 
-**Rome** is maintained by a [team of volunteers](/about#team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
+**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
 
-**Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
+**Rome** is [MIT licensed](LICENSE) and moderated under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
 <!-- GENERATED:END(id:main) -->
 
 {% include docs/cli-screenshots/intro.md %}
@@ -28,11 +30,18 @@
 		</a>
 	</li>
 	<li>
+		<a href="https://discord.gg/rome">
+			{% include layouts/svg/discord.svg %} Discord
+		</a>
+	</li>
+	<li>
 		<a href="https://twitter.com/romefrontend">
 			{% include layouts/svg/twitter.svg %} Twitter
 		</a>
 	</li>
 </ul>
+
+</section>
 
 ## History
 
@@ -44,11 +53,9 @@
 >
 > I built Rome in private over the course of the last few years while working at Facebook, largely during my personal time. The project was open sourced at the beginning of 2020 and continues as a community project.
 
-— [Sebastian McKenzie](https://twitter.com/sebmck), creator of **Babel** and **Rome**. [Read more](https://twitter.com/sebmck/status/1063574500938117120).
+— [Sebastian McKenzie](https://twitter.com/sebmck), author of **Babel** and **Rome**. [Read more](https://twitter.com/sebmck/status/1063574500938117120).
 
-**Rome** derives its name from proverbs such as "All Roads Lead to Rome", "Rome wasn't built in a day" and "When in Rome, do as the Romans do". This refers to the expansive scope and the desire for conformity across the project. It started as a joke at the office.
-
-**Rome** has a logo of a Roman arch, one of the most influential patterns in architecture. It symbolizes a strong foundation, allowing you to build large projects without having to ponder the underlying architecture, and reinventing the wheel.
+**Rome** has a logo of a Roman arch, one of the most influential patterns in architecture. It symbolizes a strong foundation, allowing you to build large projects without worrying and struggling with tooling.
 
 ## Development Status
 

@@ -8,22 +8,43 @@ ul.team-list {
 	justify-content: center;
 	flex-wrap: wrap;
 
+	&.credits {
+		li {
+			width: 130px;
+			margin: 0;
+			margin: $unit / 4;
+
+			img {
+				width: 128px;
+				height: 128px;
+			}
+
+			span {
+				margin: $unit / 2 0;
+			}
+		}
+	}
+
 	li {
-		border: 1px solid var(--soft-border-color);
 		margin: 0 $unit;
 		margin-bottom: $unit;
-		padding-bottom: $unit;
 		width: 176px;
 		list-style: none;
+		border: 1px solid var(--soft-border-color);
+	}
+
+	a {
+		display: block;
 	}
 
 	img {
-		width: 176px;
-		height: 176px;
+		width: 174px;
+		height: 174px;
+		display: block;
 	}
 
-	p {
-		margin: 0;
-		padding-top: $unit - 10;
+	span {
+		display: block;
+		margin: $unit 0;
 	}
 }

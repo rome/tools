@@ -10,7 +10,7 @@ RJSON is a superset, meaning that it is backwards compatible and accepts all exi
 
 You can omit the curly braces for a top-level object and we will treat it as an object.
 
-```json
+```javascript
 foo: "bar"
 "bar": "foo"
 ```
@@ -19,7 +19,7 @@ foo: "bar"
 
 Standard JavaScript comments are supported. Both line and block comments.
 
-```json
+```javascript
 {
 	// Line comment
 	/* Block comment */
@@ -35,7 +35,7 @@ Regular double quoted strings can have newlines.
 
 If a property key is a valid identifier then the quotes can be omitted, just like in regular JavaScript.
 
-```json
+```javascript
 {
 	unquotedKey: true
 }
@@ -45,7 +45,7 @@ If a property key is a valid identifier then the quotes can be omitted, just lik
 
 Commas are not required to separate elements of an array:
 
-```json
+```javascript
 [
 	1
 	2
@@ -55,7 +55,7 @@ Commas are not required to separate elements of an array:
 
 or an object:
 
-```json
+```javascript
 {
 	a: 1
 	b: 2
@@ -69,6 +69,6 @@ You can use [numeric separators](https://github.com/tc39/proposal-numeric-separa
 
 **Example**
 
-```json
+```javascript
 5_000
 ```

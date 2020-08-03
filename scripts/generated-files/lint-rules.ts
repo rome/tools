@@ -56,7 +56,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: lintRulesFolder.append("index.ts"),
-			scriptName: "lint-rules",
+			scriptName: "generated-files/lint-rules",
 		},
 		async () => {
 			let lines = [];
@@ -78,7 +78,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: INTERNAL.append("diagnostics", "categories.ts"),
-			scriptName: "lint-rules",
+			scriptName: "generated-files/lint-rules",
 		},
 		async () => {
 			const lines = ["type LintDiagnosticCategory ="];
@@ -94,7 +94,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: lintRulesFolder.append("tests.ts"),
-			scriptName: "lint-rules",
+			scriptName: "generated-files/lint-rules",
 		},
 		async () => {
 			const lines = [];
@@ -149,7 +149,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: lintRulesDocFolder.append("index.md"),
-			scriptName: "lint-rules",
+			scriptName: "generated-files/lint-rules",
 		},
 		async () => {
 			const lines = [];

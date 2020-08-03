@@ -2,6 +2,6 @@
 layout: layouts/base.liquid
 ---
 
-<main id="main-content" class="content">
+<main id="main-content" class="content {% if layout-type == "split" %}split{% else %}single{% endif %} {{ main-class }}">
 	{{ content | safe }}
 </main>

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONParserOptions, JSONValue, PathToComments, Tokens} from "./types";
+import {JSONParserOptions, JSONValue, RJSONCommentMap, Tokens} from "./types";
 import {createJSONParser} from "./parse";
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {stringifyRootConsumer} from "./stringify";
@@ -17,12 +17,13 @@ export {
 	JSONParserOptions,
 	JSONPropertyValue,
 	JSONValue,
+	RJSONCommentMap,
 } from "./types";
 
 export type ConsumeJSONResult = {
 	hasExtensions: boolean;
 	consumer: Consumer;
-	comments: PathToComments;
+	comments: RJSONCommentMap;
 };
 
 export function consumeJSON(opts: JSONParserOptions): Consumer {
@@ -59,7 +60,7 @@ export function tokenizeJSON(
 export function stringifyRJSONFromConsumer(
 	opts: {
 		consumer: Consumer;
-		comments: PathToComments;
+		comments: RJSONCommentMap;
 	},
 ): string {
 	return stringifyRootConsumer(opts.consumer, opts.comments);
@@ -73,8 +74,11 @@ export function stringifyJSONExtra(res: ConsumeJSONResult): string {
 	}
 }
 
-export function stringifyRJSON(value: unknown): string {
-	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), new Map());
+export function stringifyRJSON(
+	value: unknown,
+	comments: RJSONCommentMap = new Map(),
+): string {
+	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), comments);
 }
 
 export function stringifyJSON(value: unknown): string {

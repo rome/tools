@@ -8,7 +8,7 @@ export async function main() {
 	await modifyGeneratedFile(
 		{
 			path: virtualIndex,
-			scriptName: "virtual-modules",
+			scriptName: "generated-files/virtual-modules",
 		},
 		async () => {
 			let lines = [];
