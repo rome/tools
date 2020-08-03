@@ -258,7 +258,7 @@ export default class RecoveryStore {
 		await this.truncate();
 		const timestamp = new Date().toISOString();
 		const storeId = `${Date.now()}-${req.query.commandName}-${req.id}`;
-		const command = req.getDiagnosticLocationFromFlags("none", "").sourceText;
+		const command = req.getDiagnosticLocationFromFlags("none").sourceText;
 		const store: MemoryStore = {
 			index: {
 				timestamp,

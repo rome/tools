@@ -17,7 +17,9 @@ import {VERSION} from "../common/constants";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {
 	createDirectory,
+	readDirectory,
 	readFileText,
+	removeDirectory,
 	removeFile,
 	writeFile,
 } from "@internal/fs";
@@ -111,6 +113,17 @@ export default class Cache {
 			// Write any remaining
 			await this.writePending("end");
 		});
+	}
+
+	async clear() {
+		// Remove contents but not the directory itself
+		for (const path of await readDirectory(this.cachePath)) {
+			await removeDirectory(path);
+		}
+
+		// Clear internal structures
+		this.loadedEntries.clear();
+		this.pendingWrites.clear();
 	}
 
 	async writePending(reason: "queue" | "end") {

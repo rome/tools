@@ -64,6 +64,7 @@ import {
 	VoidCallback,
 	mergeObjects,
 } from "@internal/typescript-helpers";
+import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 // rome-ignore lint/ts/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
@@ -830,8 +831,19 @@ export default class Reporter implements ReporterNamespace {
 		);
 	}
 
-	command(command: string) {
-		this.log(markup`<dim>$ ${command}</dim>`);
+	command(command: string, prefix: boolean = true) {
+		let highlighted = concatMarkup(
+			highlightShell({
+				input: command,
+			}),
+			markup`\n`,
+		);
+
+		if (prefix) {
+			highlighted = markup`<emphasis>$</emphasis> <view>${highlighted}</view>`;
+		}
+
+		this.log(highlighted);
 	}
 
 	namespace(prefix: AnyMarkup): ReporterNamespace {

@@ -5,7 +5,11 @@ import {ServerRequest} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
 import {createDirectory, exists, writeFile} from "@internal/fs";
-import {JSONObject, stringifyRJSON} from "@internal/codec-json";
+import {
+	JSONObject,
+	RJSONCommentMap,
+	stringifyRJSON,
+} from "@internal/codec-json";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import Linter from "../linter/Linter";
 import {PROJECT_CONFIG_DIRECTORY, ProjectDefinition} from "@internal/project";
@@ -97,8 +101,24 @@ export default createServerCommand<Flags>({
 		// We are only using JSONObject here because we don't have an accurate type definition for what
 		// the config actually looks like on disk
 		let config: JSONObject = {
+			root: true,
 			name: cwd.getBasename(),
 		};
+
+		// Comments to include in the created project config
+		const comments: RJSONCommentMap = new Map();
+		comments.set(
+			"",
+			{
+				inner: [],
+				outer: [
+					{
+						type: "LineComment",
+						value: "For configuration documentation see http://romefrontend.dev/#project-configuration",
+					},
+				],
+			},
+		);
 
 		// Ensure project is evicted and recreated properly
 		let project: undefined | ProjectDefinition;
@@ -113,7 +133,7 @@ export default createServerCommand<Flags>({
 				...config,
 				...partial,
 			};
-			await writeFile(configPath, stringifyRJSON(config));
+			await writeFile(configPath, stringifyRJSON(config, comments));
 
 			// Add it again
 			project = await server.projectManager.assertProject(cwd);

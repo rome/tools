@@ -143,6 +143,7 @@ export default class WorkerManager {
 			userConfig: this.server.userConfig,
 			bridge,
 			globalErrorHandlers: false,
+			dedicated: false,
 		});
 
 		// We make an assumption elsewhere in the code that this is always the first worker

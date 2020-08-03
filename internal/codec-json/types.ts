@@ -23,7 +23,7 @@ export type PathComments = {
 	outer: Comments;
 };
 
-export type PathToComments = Map<string, PathComments>;
+export type RJSONCommentMap = Map<string, PathComments>;
 
 export type LineComment = {
 	type: "LineComment";

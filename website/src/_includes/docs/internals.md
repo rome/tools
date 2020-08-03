@@ -31,3 +31,13 @@ Tags are not color-specific. ie. rather than `<green>` we have `<success>`. This
 When rendering we perform layout calculation according to a provided column width, in most cases reported to us by the shell. This layout calculation includes line wrapping, padding, horizontal rules, and text alignment.
 
 We avoid the common pitfalls of in-band ANSI formatting by doing the formatting as the final step when all the text has been split into non-overlapping ranges for ANSI code insertion.
+
+### Type Safety
+
+While we are in JavaScript land, we embrace TypeScript by using as many strong types as possible. We have sparing usages of wide types like `object` and `any` casts. With no dependencies we are able to extend this coverage and confidence everywhere. We never consume arbitrary data like JSON without first passing it through some validation and normalization process.
+
+### Self Hosted
+
+Rome is bundled, compiled, linted, and tested by itself. Once Rome was built and had the capabilities necessary to build itself, we removed the other tools and instead used a build of Rome.
+
+Read more about self hosting at [Self-hosting (compilers) - Wikipedia](https://en.wikipedia.org/wiki/Self-hosting_(compilers))

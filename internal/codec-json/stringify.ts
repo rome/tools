@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Comments, PathComments, PathToComments} from "./types";
+import {Comments, PathComments, RJSONCommentMap} from "./types";
 import {naturalCompare} from "@internal/string-utils";
 import {isValidWord} from "./parse";
 import {Consumer} from "@internal/consume";
@@ -137,7 +137,7 @@ function sortMap(map: Map<string, Consumer>): Map<string, Consumer> {
 }
 
 type StringifyOptions = {
-	comments: PathToComments;
+	comments: RJSONCommentMap;
 	isTopLevel: boolean;
 	level: number;
 	stack: Set<unknown>;
@@ -298,7 +298,7 @@ function stringifyObject(
 
 export function stringifyRootConsumer(
 	consumer: Consumer,
-	pathToComments: PathToComments,
+	pathToComments: RJSONCommentMap,
 ): string {
 	const opts: StringifyOptions = {
 		comments: pathToComments,

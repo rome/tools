@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {StaticMarkup, markup} from "@internal/markup";
 import {toKebabCase} from "@internal/string-utils";
-import {buildSuggestionAdvice} from "../helpers";
+import {DiagnosticAdvice} from "../types";
 
 export const flags = createDiagnosticsCategory({
 	UNSUPPORTED_SHORTHANDS: {message: markup`Shorthand flags are not supported`},
@@ -31,58 +31,69 @@ export const flags = createDiagnosticsCategory({
 	DISALLOWED_REQUEST_FLAG: (key: string) => ({
 		message: markup`This command does not support the <emphasis>${key}</emphasis> flag`,
 	}),
-	UNKNOWN_ACTION: (action: string) => ({
-		message: markup`Unknown action ${action}`,
+	UNKNOWN_SUBCOMMAND: (action: string) => ({
+		message: markup`Unknown subcommand ${action}`,
 	}),
 	NO_FILES_FOUND: (noun: undefined | string) => ({
 		message: noun === undefined
 			? markup`No files found`
 			: markup`No files to ${noun} found`,
 	}),
-	UNKNOWN_COMMAND_SUGGESTED: (
-		unknownCommandName: string,
-		commandName: string,
-		description: undefined | StaticMarkup,
-		command: string,
-	) => ({
-		category: "flags/invalid",
-		message: markup`Unknown command <emphasis>${unknownCommandName}</emphasis>`,
-		advice: [
-			{
+	UNKNOWN_COMMAND: (
+		{
+			programName,
+			commandName,
+			suggestedName,
+			suggestedDescription,
+			suggestedCommand,
+		}: {
+			programName: string;
+			commandName: string;
+			suggestedName: undefined | string;
+			suggestedDescription: undefined | StaticMarkup;
+			suggestedCommand: undefined | string;
+		},
+	) => {
+		const advice: DiagnosticAdvice = [];
+
+		if (suggestedName !== undefined) {
+			const description =
+				suggestedDescription === undefined
+					? ""
+					: markup` ${suggestedDescription}`;
+			advice.push({
 				type: "log",
 				category: "info",
-				text: markup`Did you mean <emphasis>${commandName}</emphasis> instead? ${description ===
-				undefined
-					? ""
-					: markup` ${description}`}`,
-			},
-			{
+				text: markup`Did you mean <emphasis>${suggestedName}</emphasis> instead?${description}`,
+			});
+		}
+
+		if (suggestedCommand !== undefined) {
+			advice.push({
 				type: "code",
 				language: "shell",
-				sourceText: command,
-			},
-		],
-	}),
-	COMMAND_REQUIRED: (
-		programName: string,
-		commandName: string,
-		knownCommands: Array<string>,
-	) => ({
-		category: "flags/invalid",
-		message: commandName === ""
-			? markup`No command specified`
-			: markup`Unknown command <emphasis>${commandName}</emphasis>`,
-		advice: [
-			...buildSuggestionAdvice(commandName, knownCommands),
-			{
-				type: "log",
-				category: "info",
-				text: markup`To see available commands run`,
-			},
-			{
-				type: "command",
-				command: `${programName} --help`,
-			},
-		],
-	}),
+				sourceText: suggestedCommand,
+			});
+		}
+
+		return {
+			category: "flags/invalid",
+			message: commandName === ""
+				? markup`No command specified`
+				: markup`Unknown command <emphasis>${commandName}</emphasis>`,
+			advice: [
+				...advice,
+				{
+					type: "log",
+					category: "info",
+					text: markup`To see all available commands run`,
+				},
+				{
+					type: "code",
+					language: "shell",
+					sourceText: `${programName} --help`,
+				},
+			],
+		};
+	},
 });

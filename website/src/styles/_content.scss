@@ -11,7 +11,7 @@
 			text-decoration: underline;
 		}
 
-		&:focus{
+		&:focus {
 			@extend .not-sr-only;
 		}
 
@@ -20,15 +20,20 @@
 		}
 	}
 
+	.header-copied {
+		font-size: 16px;
+		opacity: 1;
+		transition: 1s ease-out;
+		margin-left: 5px;
+	}
 
+	&.rules > section > section {
+		padding: 0 !important;
 
-	section.rules{
-
-		padding: 0;
-
-		h1, h2{
-			margin: $unit $unit * 2;
+		h1, h2 {
+			margin: $unit $unit * 2 !important;
 			border: 0;
+			display: block;
 			@include mobile-only() {
 				margin: $unit $unit;
 			}
@@ -38,7 +43,7 @@
 			border-top: 1px solid var(--soft-border-color);
 		}
 
-		.rule{
+		.rule {
 			padding: $unit $unit * 2;
 
 			@include mobile-only() {
@@ -46,7 +51,7 @@
 			}
 
 			border-top: 1px solid var(--soft-border-color);
-			h3{
+			h3 {
 				font-size: 1.25em;
 				margin-top: 0;
 				border: 0;
@@ -57,12 +62,12 @@
 		.rule:nth-child(even) {
 			background-color: var(--table-even-row-color);
 		}
-
 	}
 
-	section {
-		padding: 0 $unit * 2 $unit * 2 $unit * 2;
+	&.split > section > section, &.single > section, &.split > section > h1 {
+		padding: $unit * 2;
 		background-color: var(--container-color);
+		margin: 0;
 		margin-top: $unit;
 		margin-left: $unit;
 
@@ -80,7 +85,10 @@
 			border-bottom: 1px solid var(--soft-border-color);
 			border-top: 1px solid var(--soft-border-color);
 		}
+	}
 
+	&.split > section > section, &.single > section {
+		padding-top: 0;
 	}
 
 	p, ul, ol, pre, h4, h5 {
@@ -98,11 +106,27 @@
 
 	ul, ol {
 		margin-left: 16px;
+
+		li {
+			margin: 4px 0;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		ul, ol {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+	}
+
+	ol li {
+		list-style: decimal;
 	}
 
 	ul li {
 		list-style: disc;
-		margin: 4px 0;
 	}
 
 	h1, h2, h3, h4, h5 {
@@ -177,8 +201,12 @@
 		margin: $unit 0 $unit * 1.5 0;
 		padding: $unit;
 
-		> p {
-			margin: 0;
+		> p:first-child {
+			margin-top: 0;
+		}
+
+		> p:last-child {
+			margin-bottom: 0;
 		}
 	}
 }

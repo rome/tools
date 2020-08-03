@@ -77,6 +77,7 @@
 	.toc-menu {
 		height: 100%;
 		overflow: auto;
+		border-top: 1px solid var(--soft-border-color);
 	}
 
 	.sidebar-top {
@@ -120,13 +121,24 @@
 
 .site-navigation-container {
 	overflow: hidden;
-	border-top: 1px solid var(--soft-border-color);
 	flex-shrink: 0;
-	border-bottom: 1px solid var(--soft-border-color);
+
+	@include desktop-only() {
+		transition: height 0.5s ease-in-out;
+	}
 }
 
 .site-navigation {
 	font-weight: bold;
+	border-bottom: 1px solid var(--soft-border-color);
+
+	&:first-child {
+		border-top: 1px solid var(--soft-border-color);
+	}
+
+	&:last-child {
+		border-bottom: none;
+	}
 
 	a {
 		height: auto;

@@ -1,17 +1,18 @@
 ## Project Configuration
 
-Rome needs to know how to find your project and what files it includes. To do this we require a project configuration file.
+**Rome** needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your config can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and allows you to omit syntax.
+Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and has a simpler syntax.
 
 All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
 
-We are deliberately lean with our configuration. Any additional options increases the potential for bugs, makes it harder to maintain, and .
-
+We are deliberately lean with the supported configuration. We do not include options just for the sake of personalization. We aim to offer everything out of the box and only introduce configuration if absolutely necessary.
 
 ```json
 name: "project-name"
 version: "^0.0.0"
+root: true
+extends: "../other-file"
 
 lint: {
 	ignore: []
@@ -29,6 +30,23 @@ The Rome cache is portable, meaning it contains no references to absolute paths.
 
 ```bash
 rome config set name "project-name"
+```
+
+#### `extends`
+
+TODO
+
+```bash
+rome config set-directory extends "some-other-file"
+```
+
+#### `root`
+
+By default, Rome will search parent directories for other projects to initialize. TODO
+
+```bash
+rome config enable root
+rome config disable root
 ```
 
 #### `version`
@@ -83,6 +101,10 @@ Alternatively, your project config can be included in a `rome` field inside of `
 }
 ```
 
+### Nested Projects
+
+TODO
+
 ### Path Patterns
 
 Some configuration options contain path patterns. If you have ever used `.gitignore` then it's the same familiar syntax. These are also called [glob patterns](https://en.wikipedia.org/wiki/Glob_(programming)).
@@ -108,20 +130,16 @@ scripts
 !scripts/navigation.js
 ```
 
-will cause everything inside the ``.
+This will ignore everything in the `scripts` directory besides the file `navigation.js`.
 
 ##### Base Directory
 
 Say that you have the following directory structure:
 
 ```text
-babies/
-	juniper
-
-cats/
-	babies/
-		orion
-		nev
+babies/juniper
+cats/babies/orion
+cats/babies/nev
 ```
 
 And you only wanted to ignore the folder `babies` that contained `juniper`. If you wrote just `babies` then it would match both directories. However, you can prefix it with `/babies` and it will only match the folder at the base.

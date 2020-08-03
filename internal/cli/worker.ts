@@ -20,6 +20,7 @@ export default async function worker() {
 	const worker = new Worker({
 		bridge,
 		globalErrorHandlers: true,
+		dedicated: true,
 	});
 	await worker.init();
 	bridge.handshake();

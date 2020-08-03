@@ -24,6 +24,9 @@ const headerMobile = document.querySelector(".header-mobile");
 const tocList = document.querySelector(".toc");
 
 /** @type {HTMLElement}*/
+const siteNavigation = document.querySelector(".site-navigation-container");
+
+/** @type {HTMLElement}*/
 const tocContainer = document.querySelector(".toc-menu");
 
 /** @type {Array<HTMLAnchorElement>}*/
@@ -62,6 +65,12 @@ class TableOfContents {
 
 		/** @type {undefined | number}*/
 		this.lastActiveHeading = undefined;
+
+		/** @type {boolean}*/
+		this.isNavCollapsed = false;
+
+		/** @type {undefined | number}*/
+		this.navHeight = undefined;
 	}
 
 	/**
@@ -77,12 +86,19 @@ class TableOfContents {
 		if (target.hasAttribute("href")) {
 			const hash = target.getAttribute("href");
 			window.location.hash = hash;
-			this.scrollToHeading(hash);
+			this.scrollToHeading(hash, true);
 
 			if (isMobile) {
 				toggleMobileSidebar();
 			}
 		}
+	}
+
+	/**
+	 * @returns {number}
+	 */
+	getScrollY() {
+		return scrollY + this.getScrollOffset();
 	}
 
 	/**
@@ -189,8 +205,8 @@ class TableOfContents {
 	 */
 	isActive(i) {
 		const {start, end} = this.headingsCalculated[i];
-		const top = scrollY + this.getScrollOffset();
-		return top >= start && top <= end;
+		const scrollY = this.getScrollY();
+		return scrollY >= start && scrollY <= end;
 	}
 
 	/**
@@ -216,9 +232,16 @@ class TableOfContents {
 		}
 	}
 
+	ensureCalculatedHeadings() {
+		if (!this.hasInitializedHeadings) {
+			this.calculateHeadingsPositions();
+		}
+	}
+
 	checkActive() {
 		if (this.lastActiveHeading !== undefined) {
 			if (this.isActive(this.lastActiveHeading)) {
+				this.checkNavigationCollapse(true);
 				return;
 			} else {
 				this.toggleActive(this.lastActiveHeading, false);
@@ -226,15 +249,16 @@ class TableOfContents {
 			}
 		}
 
-		if (!this.hasInitializedHeadings) {
-			this.calculateHeadingsPositions();
-		}
+		this.ensureCalculatedHeadings();
+
+		let hasActive = false;
 
 		for (let i = 0; i < this.headingsCalculated.length; i++) {
 			if (this.isActive(i)) {
 				// Set the heading as active
 				this.lastActiveHeading = i;
 				this.toggleActive(i, true);
+				hasActive = true;
 
 				// Make sure TOC link is visible
 				let linkTop =
@@ -252,27 +276,131 @@ class TableOfContents {
 				break;
 			}
 		}
+
+		this.checkNavigationCollapse(hasActive);
+	}
+
+	/**
+	 * @param {boolean} hasActive
+	 */
+	checkNavigationCollapse(hasActive) {
+		// Only collapse navigation if we scroll over 300px
+		let isCollapsed = hasActive && this.getScrollY() >= 500;
+		if (isCollapsed && this.isNavCollapsed === isCollapsed) {
+			return;
+		}
+
+		this.isNavCollapsed = isCollapsed;
+
+		if (!this.navHeight) {
+			this.navHeight = siteNavigation.clientHeight;
+		}
+
+		if (isCollapsed) {
+			siteNavigation.style.height = "0px";
+		} else {
+			siteNavigation.style.height = `${this.navHeight}px`;
+		}
 	}
 
 	/**
 	 * @param {string} hash
+	 * @param {boolean} smooth
+	 * @returns {boolean}
 	 */
-	scrollToHeading(hash) {
+	scrollToHeading(hash, smooth) {
 		const heading = document.getElementById(hash.replace(/^(#)/, ""));
 		if (!heading) {
-			return;
+			return false;
 		}
 
 		heading.setAttribute("tabindex", "-1");
 		heading.focus();
 
-		window.scrollTo(0, this.getHeadingTop(heading));
+		this.ensureCalculatedHeadings();
+		window.scrollTo({
+			top: this.getHeadingTop(heading),
+			left: 0,
+			behavior: smooth ? "smooth" : undefined,
+		});
 		this.checkActive();
+		return true;
+	}
+
+	/**
+	 * Fully scroll and copy hash to tech when clicking an anchor next to a heading
+	 *
+	 * @param {MouseEvent} event
+	 * @param {HTMLElement} target
+	 */
+	handleHeadingAnchorClick(event, target) {
+		event.preventDefault();
+
+		const hash = target.getAttribute("href");
+		window.location.hash = hash;
+		this.scrollToHeading(hash, true);
+		navigator.clipboard.writeText(window.location.href);
+
+		// Only another copied text can appear here so delete it if it exists
+		if (target.nextElementSibling != null) {
+			target.nextElementSibling.remove();
+		}
+
+		const copied = document.createElement("span");
+		copied.classList.add("header-copied");
+		copied.textContent = "Copied to clipboard";
+		target.parentElement.appendChild(copied);
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				copied.style.opacity = "0";
+			});
+		});
+		copied.addEventListener(
+			"transitionend",
+			() => {
+				copied.remove();
+			},
+		);
+	}
+
+	/**
+	* Intercept link clicks, if they are just hashes on the current page then
+	* just scroll
+	*
+	* @param {MouseEvent} event
+	* @param {HTMLElement} target
+	*/
+	handleAnchorClick(event, target) {
+		let href = target.getAttribute("href");
+		if (href === undefined) {
+			return;
+		}
+
+		// Remove current origin
+		if (href.startsWith(location.origin)) {
+			href = href.slice(location.origin.length);
+		}
+
+		// Remove current pathname
+		if (href.startsWith(location.pathname)) {
+			href = href.slice(location.pathname.length);
+		}
+
+		// If href starts with a hash then it's referring to the current page
+		if (href[0] !== "#") {
+			return;
+		}
+
+		if (this.scrollToHeading(href, true)) {
+			event.preventDefault();
+		}
 	}
 
 	attach() {
+		this.checkActive();
+
 		if (window.location.hash !== "") {
-			this.scrollToHeading(window.location.hash);
+			this.scrollToHeading(window.location.hash, false);
 		}
 
 		tocList.addEventListener("click", this.handleTOCClick.bind(this), false);
@@ -295,19 +423,22 @@ class TableOfContents {
 		document.addEventListener(
 			"click",
 			(event) => {
-				if (!(event.target instanceof HTMLElement)) {
+				const {target} = event;
+				if (!(target instanceof HTMLElement)) {
 					return;
 				}
 
-				if (!event.target.matches(".header-anchor")) {
+				if (event.ctrlKey || event.metaKey) {
 					return;
 				}
 
-				event.preventDefault();
+				if (target.matches(".header-anchor")) {
+					this.handleHeadingAnchorClick(event, target);
+				}
 
-				const hash = event.target.getAttribute("href");
-				window.location.hash = hash;
-				this.scrollToHeading(hash);
+				if (target.matches("a")) {
+					this.handleAnchorClick(event, target);
+				}
 			},
 			false,
 		);
@@ -344,22 +475,22 @@ function randomShuffle(array) {
 	return array;
 }
 
-const teamList = document.querySelector(".team-list");
-const teamArr = document.querySelectorAll(".team-list li");
-if (teamArr.length > 0) {
-	for (const li of randomShuffle(Array.from(teamArr))) {
+const teamLists = document.querySelectorAll(".team-list");
+for (const teamList of teamLists) {
+	const items = teamList.querySelectorAll("li");
+	for (const li of randomShuffle(Array.from(items))) {
 		teamList.appendChild(li);
 	}
 }
 
-//# Homepage example expander
+//# Code expanders
 
-const homepageExample = document.querySelector(".homepage-example");
-if (homepageExample != null) {
-	homepageExample.addEventListener(
+const collapsed = document.querySelectorAll("pre.collapsed");
+for (const elem of collapsed) {
+	elem.addEventListener(
 		"click",
 		() => {
-			homepageExample.classList.remove("collapsed");
+			elem.classList.remove("collapsed");
 		},
 	);
 }
@@ -423,6 +554,7 @@ docsearchInput.addEventListener(
 		script.addEventListener(
 			"load",
 			() => {
+				// @ts-ignore
 				return window.docsearch({
 					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
 					indexName: "romefrontend",
@@ -435,3 +567,29 @@ docsearchInput.addEventListener(
 	},
 	{once: true},
 );
+
+//# Header scrolls to top
+const topAnchors = document.querySelectorAll(".logo, [href='#top']");
+for (const elem of topAnchors) {
+	elem.addEventListener(
+		"click",
+		(e) => {
+			if (window.scrollY > 0) {
+				e.preventDefault();
+
+				window.scrollTo({
+					top: 0,
+					left: 0,
+					behavior: "smooth",
+				});
+
+				// Remove the hash
+				history.pushState(
+					"",
+					document.title,
+					window.location.pathname + window.location.search,
+				);
+			}
+		},
+	);
+}

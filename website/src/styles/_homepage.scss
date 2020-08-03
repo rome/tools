@@ -89,7 +89,7 @@ ul.home-actions {
 	}
 
 	li {
-		padding: 10px;
+		padding: 10px 20px;
 		flex: 1;
 		text-align: center;
 		border-right: 1px solid var(--soft-border-color);
@@ -111,7 +111,7 @@ html[data-theme='dark'] {
 	}
 }
 
-pre.homepage-example {
+pre.collapsable {
 	position: relative;
 	transition: all 200ms ease-in-out;
 

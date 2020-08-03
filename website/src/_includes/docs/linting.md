@@ -1,14 +1,13 @@
 ## Linting
 
-We've built Rome to be fantastic at displaying [diagnostics](#diagnostics) and providing as much information as possible for you to understand and fix them. We don't believe that existing JavaScript linters do enough. More often they get in the way. Sometimes conventions, while making code more consistent, make it difficult to remember and work on. We have tried to address this in Rome with the following ways:
+We've built Rome to be fantastic at displaying [diagnostics](#diagnostics) and providing as much information as possible for you to understand and fix them.
 
- - Providing as much context as possible on why a diagnostic was produced.
- - Make it obvious and tell you how to fix it (if possible).
- - Offer powerful autofixes so you don't even need to make most changes yourself (via [fixes]()).
- - Offer autofix suggestions for scenarios for potentially unsafe fixes (via [suggestions]()).
- - Make it easy to review all diagnostics and perform actions on them (via [review]()).
+We aim for Rome to have more opinions, do more for you, while being easy to use. We do this by:
 
-To use the Rome linter, you also need to use the autoformatter. Our autofixes rely on being able to modify your code in a rich way which requires being able to consistently format the result.
+ - Providing as much context as possible on why a diagnostic was produced, including references and explanations for common problems.
+ - Offering recommended fixes so you don't need to make most changes yourself (see [recommended fixes](#recommended)).
+- Offering suggested fixes for circumstances with multiple or potentially unsafe fixes (see [suggested fixes](#suggested)).
+- Integrating with your editor to automatically format code on save, and perform actions on diagnostics such as selecting fix suggestions or adding suppression comments (see [editor integration](#editor-integration)).
 
 ### Command Usage
 
@@ -33,42 +32,78 @@ You can limit this to specific files or directories with:
 rome check App.js components/
 ```
 
-To apply [formatting](#formatting) and [recommended fixes](#fixing), add the [`--apply`](#--apply) flag:
-
-```bash
-rome check --apply
-```
-
-To enter an interactive [review mode](#reviewing-diagnostics), add the [`--review`](#--review) flag. This displays each [diagnostic](#diagnostics) and allows you to perform actions on them such as automatically fixing, adding a suppression comment, choosing a specific fix suggestion, and more.
-
-```bash
-rome check --review
-```
-
-Or, if you'd like to run `check` automatically every time a file is changed, add the `--watch` flag:
+Rerun automatically every time a file is changed:
 
 ```bash
 rome check --watch
 ```
 
+Apply [recommended fixes](#recommended) and [formatting](#formatting):
+
+```bash
+rome check --apply
+```
+
+Apply only [formatting](#formatting):
+
+```bash
+rome check --format-only
+```
+
+Choose [suggested fixes](#suggested):
+
+```bash
+rome check --review
+```
+
 ### Rules
 
-Check the full [list of rules](/docs/lint/rules).
-
+We have support for over 100 rules, including the most common rules needed working with TypeScript and React. Check the full [list of rules](/docs/lint/rules). All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
 
 ### Formatting
 
-To use the Rome linter we require usage of the Rome formatter. We offer powerful autofixes for most of our lint errors, which can only be done by taking control of code formatting.
+To use the Rome linter we require usage of the Rome formatter. We offer powerful fixes for most of our lint errors, which can only be done by taking control of code formatting.
+
+Notable formatting choices include:
 
  - Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
- - String quotes: Double. Consistent quote style across all supported languages.
+ - Double string quotes. Consistent quote style across all supported languages.
 
-### Fixing
+### Applying Fixes
 
-Rome has two different types of autofixes that can be applied:
+Rome has two different types of fixes:
 
-1. **Recommended fixes.** These are changes we are confident we can apply for all cases and generally safe. They are generally basic 1:1 .
-2. **Suggested fixes.** These are for scenarios where there could be multiple ways to fix an issue, or doing so would be unsafe. These require an explicit action to fix.
+#### Recommended
+
+These are always safe to apply and wont risk breaking your code. To apply [formatting](#formatting) and [recommended fixes](#fixing), add the [`--apply`](#--apply) flag:
+
+```bash
+rome check --apply
+```
+
+#### Suggested
+
+These are for scenarios where there could be multiple ways to fix an issue, or doing so automatically would be unsafe. We include suggestions on some diagnostics for possible fixes. These require an explicit action to apply and can be done via [reviewing](#reviewing).
+
+### Reviewing
+
+All diagnostics have different actions that can be performed. These include applying fix suggestions, adding a suppression comment, and more.
+
+They require an explicit action to apply and can be chosen via the CLI with the `--review` flag on any command:
+
+```bash
+rome check --review
+```
+
+This displays each [diagnostic](#diagnostics) provides you with a list of actions that you can select using keyboard navigation.
+
+Alternatively, these actions can be applied via a supported [editor integration](#editor-integration).
+
+{% include docs/linting-review.md %}
+
+### Configuration
+
+See [Project Configuration](#project-configuration) for configuration options.
 
 ### Diagnostics
 
@@ -78,18 +113,16 @@ Diagnostics are what Rome calls errors. They are emitted absolutely everywhere w
 
 Diagnostics consist of six main parts:
 
-- The header contains the **filename**, **line**, and **column**. They refer to the position that we believe is the root of an issue.
-- Followed is the **message** which contains a summary of what we believe is wrong.
-- The **Code frame** contains a snippet of the file referred in the header.
+- The header contains the **filename**, **line**, and **column**. They refer to the position that we believe is the main cause of a problem.
+- Followed is the **message** which contains a single-line summary of what we believe is wrong.
+- The **code frame** contains a snippet of the file referred in the header. This allows you to see what it's referring to without having to jump into your editor and look it up.
 - **Advice** is freeform and appears at the end of a diagnostic. It can include additional messages, lists, other code frames, and more. It gives you more details about why you're seeing the diagnostic, and how you might fix it.
 
 {% include docs/diagnostic-anatomy.md %}
 
-Diagnostics that are fixable are indicated with a label that appears in the header:
+Diagnostics that are fixable via `--apply` are indicated with a label that appears in the header:
 
 {% include docs/diagnostic-anatomy-fixable.md %}
-
-#### Reviewing Diagnostics
 
 #### Suppressions
 
@@ -127,10 +160,10 @@ You can suppress multiple categories by separating them with a space.
 
 ##### Explanation
 
-You can provide an additional explanation that includes why you suppressed the error in the first place, by prefixing it with a colon.
+You can provide an additional explanation for the suppressed error by prefixing it with a colon:
 
 ```javascript
-// rome-ignore lint/js/noExplicitAny: Describe here why you are suppressing this error.
+// rome-ignore lint/js/noExplicitAny: Explanation here
 ```
 
 ### Editor Integration
@@ -143,4 +176,4 @@ Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io
 
 Once an editor extension has been installed, the version of Rome in your project will be automatically found and used. As we improve Rome and add new functionality any changes will automatically work with your editor!
 
-We welcome contributions adding official extensions for other mainstream editors. See [contributing](/contributing) for more information. LSP communication is done by [`rome lsp` command](#rome-lsp).
+We welcome contributions adding official extensions for other mainstream editors. See [contributing](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md) for more information. LSP communication is done by the [`rome lsp` command](#rome-lsp).

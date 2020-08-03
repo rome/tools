@@ -16,7 +16,7 @@ type Flags = {
 
 export default createServerCommand<Flags>({
 	category: commandCategories.INTERNAL,
-	description: markup`TODO`,
+	description: markup`do nothing`,
 	usage: "",
 	examples: [],
 	defineFlags(c) {

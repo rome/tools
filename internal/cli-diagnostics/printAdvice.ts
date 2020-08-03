@@ -159,7 +159,6 @@ function printAction(
 
 	const command = serializeCLIFlags(
 		{
-			prefix: "",
 			programName: "rome",
 			commandName: item.command,
 			args: item.args ?? [],

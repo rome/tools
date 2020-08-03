@@ -50,12 +50,14 @@
 
 ```
 # .config/rome.rjson
+//For configuration documentation see http://romefrontend.dev/#project-configuration
 name: "project"
 lint: {
 	globals: [
 		"unknownVariable"
 ]
 }
+root: true
 
 # .editorconfig
 [*]
@@ -139,7 +141,9 @@ unknownVariable;
 
 ```
 # .config/rome.rjson
+//For configuration documentation see http://romefrontend.dev/#project-configuration
 name: "project"
+root: true
 
 
 # .editorconfig

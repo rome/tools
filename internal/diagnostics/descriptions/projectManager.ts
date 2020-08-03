@@ -16,8 +16,9 @@ export const projectManager = createDiagnosticsCategory({
 						text: markup`Version control root was set to the project root as it was not configured. To configure a different directory run`,
 					},
 					{
-						type: "command",
-						command: "rome config set-directory vcs.root DIRECTORY_HERE",
+						type: "code",
+						language: "shell",
+						sourceText: "rome config set-directory vcs.root DIRECTORY_HERE",
 					},
 				]
 			: [

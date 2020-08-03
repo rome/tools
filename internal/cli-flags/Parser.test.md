@@ -10,13 +10,13 @@
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -30,16 +30,16 @@
 
 ```
 
- argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No command specified
 
-    $ test
-           ^
+    test
+         ^
 
-  ℹ To see available commands run
+  ℹ To see all available commands run
 
-  $ test --help
+    test --help
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,13 +61,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -86,13 +86,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -113,13 +113,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -135,21 +135,20 @@ Object {}
 
 ```
 
- argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown command foo
 
-    $ test foo foo
-           ^^^
+    test foo
+         ^^^
 
-  ℹ Did you mean foobar?
+  ℹ Did you mean foobar instead?
 
-  - foo
-  + foobar
+    test foobar
 
-  ℹ To see available commands run
+  ℹ To see all available commands run
 
-  $ test --help
+    test --help
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -165,13 +164,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -185,16 +184,20 @@ Object {}
 
 ```
 
- argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown command foo
 
-    $ test foo
-           ^^^
+    test foo
+         ^^^
 
-  ℹ Did you mean foobar instead?  A much cooler command
+  ℹ Did you mean foobar instead? A much cooler command
 
-    $ test foobar
+    test foobar
+
+  ℹ To see all available commands run
+
+    test --help
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -210,13 +213,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -230,12 +233,12 @@ Object {}
 
 ```
 
- argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Incorrect cased flag name at fooBar
 
-    $ test --fooBar
-           ^^^^^^^^
+    test --fooBar
+         ^^^^^^^^
 
   ℹ Use foo-bar instead
 
@@ -253,13 +256,13 @@ Object {}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -273,12 +276,12 @@ Object {}
 
 ```
 
- argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Shorthand flags are not supported at f
 
-    $ test -f
-           ^^
+    test -f
+         ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -300,14 +303,14 @@ Object {name: "sebastian"}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -337,14 +340,14 @@ Object {name: "sebastian"}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    the name of the coolest person in the world
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -374,14 +377,14 @@ Object {run: false}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -411,14 +414,14 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -448,14 +451,14 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -485,14 +488,14 @@ Object {name: "sebastian"}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -522,14 +525,14 @@ Object {name: undefined}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -559,14 +562,14 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -596,14 +599,14 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -633,14 +636,14 @@ Object {name: "sebastian"}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -664,14 +667,14 @@ Object {name: "sebastian"}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+  test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help                            Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands (values: fish|bash)
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands (values: fish|bash)
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -685,12 +688,12 @@ Object {name: "sebastian"}
 
 ```
 
- argv:1:6 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ argv:1:4 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a string at name
 
-    $ test
-          ^
+    test
+        ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

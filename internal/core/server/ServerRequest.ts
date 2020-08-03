@@ -579,7 +579,6 @@ export default class ServerRequest {
 
 	getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
-		prefix?: string,
 	): RequiredProps<DiagnosticLocation, "sourceText"> {
 		const {query} = this;
 		const clientFlags = this.client.flags;
@@ -604,7 +603,6 @@ export default class ServerRequest {
 
 		return serializeCLIFlags(
 			{
-				prefix,
 				programName: "rome",
 				commandName: query.commandName,
 				flags,

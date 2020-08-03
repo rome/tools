@@ -101,7 +101,10 @@ export async function main() {
 		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];
 
 		await modifyGeneratedFile(
-			ROOT.append(`website/src/docs/lint/rules/${ruleName}.md`),
+			{
+				path: ROOT.append(`website/src/docs/lint/rules/${ruleName}.md`),
+				scriptName: "generated-files/lint-rules-docs",
+			},
 			async () => {
 				const lines = [];
 

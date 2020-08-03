@@ -17,7 +17,7 @@ import {
 	JSONParserResult,
 	JSONValue,
 	PathComments,
-	PathToComments,
+	RJSONCommentMap,
 	Tokens,
 } from "./types";
 import {
@@ -148,7 +148,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					: opts.consumeDiagnosticCategory;
 		}
 
-		pathToComments: PathToComments;
+		pathToComments: RJSONCommentMap;
 		hasExtensions: boolean;
 		pathKeys: ConsumePath;
 		paths: Map<string, PathInfo>;

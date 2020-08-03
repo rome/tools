@@ -2,35 +2,22 @@
 	<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logo_transparent.png" width="700">
 </p>
 
-**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. Read more about our language support [here](https://romefrontend.dev/docs/language-support).
+<!-- This intro is synced with the website via the `./rome run scripts/generate-files/website-intro` script. Make sure you run it after modifying anything between these comments. -->
+<!-- INTRO START -->
+**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
-**Rome** unifies functionality that has previously been completely separate tools. Most frontend tooling have a significant overlap in responsibilities and implementation. There is value in these being a single tool. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
+**Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
-**Rome** has been built from scratch and contains no third-party library dependencies.
+**Rome** unifies functionality that has previously been separate tools. Building upon a shared base allows us to provide a cohesive experience for processing code, displaying errors, parallelizing work, caching, and configuration.
 
-**Rome** has strong conventions and aims to have minimal configuration. Read more about our project philosophy [here](https://romefrontend.dev/about#philosophy).
+**Rome** has strong conventions and aims to have minimal configuration. Read more about our [project philosophy](https://romefrontend.dev/#philosophy).
 
-**Rome** is maintained by a [team of volunteers](https://romefrontend.dev/about/#team). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io) and [Yarn](https://yarnpkg.com).
+**Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](https://romefrontend.dev/credits) for more information.
 
-**Rome** is [MIT licensed](LICENSE), and the project managed under the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md).
+**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
 
-## History
-
-**Rome** derives its name from proverbs such as "All Roads Lead to Rome", "Rome wasn't built in a day" and "When in Rome, do as the Romans do". This refers to the expansive scope and the desire for conformity across the project. It started as a joke at the office.
-
-**Rome** has a logo of a Roman arch, one of the most influential patterns in architecture. It symbolizes a strong foundation, allowing you to build large projects without having to ponder the underlying architecture, and reinventing the wheel.
-
-## Codebase
-
-**Rome** is written completely in TypeScript with sparing usage of loose types.
-
-**Rome** runs on Node.js.
-
-**Rome** is [self-hosted](<https://en.wikipedia.org/wiki/Self-hosting_(compilers)>) and compiles itself with an old version.
-
-**Rome** supports processing [JSX](https://reactjs.org/docs/introducing-jsx.html) and [TypeScript](https://www.typescriptlang.org/) annotated code.
-
-See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
+**Rome** is [MIT licensed](LICENSE) and moderated under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
+<!-- INTRO END -->
 
 ## Status
 
@@ -52,7 +39,7 @@ See [Getting Started](https://romefrontend.dev/docs/getting-started/) for more u
 
 ## Philosophy
 
-Project philosophy can be found on our [website](https://romefrontend.dev/about#philosophy).
+Project philosophy can be found on our [website](https://romefrontend.dev/#philosophy).
 
 ## Community
 

@@ -113,9 +113,11 @@ export default async function executeMain(
 	let exitCode: undefined | number;
 
 	if (typeof res === "object" && res != null && typeof res.main === "function") {
-		const code = await Promise.resolve(res.main(args));
+		let code = await Promise.resolve(res.main(args));
 		if (typeof code === "number") {
 			exitCode = code;
+		} else {
+			exitCode = 0;
 		}
 	}
 

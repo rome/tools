@@ -16,6 +16,7 @@ import {
 } from "@internal/consume";
 import {
 	dedent,
+	findClosestStringMatch,
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
@@ -26,7 +27,7 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
-import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
+import {AnyMarkups, StaticMarkup, concatMarkup, markup} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -34,6 +35,8 @@ import {
 } from "@internal/diagnostics";
 import {JSONObject} from "@internal/codec-json";
 import {exists, readFileText, writeFile} from "@internal/fs";
+import {prettyFormatEager} from "@internal/pretty-format";
+import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 export type Examples = Array<{
 	description: StaticMarkup;
@@ -634,7 +637,7 @@ export default class Parser<T> {
 
 			const {default: defaultValue} = def;
 			if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
-				descCol = markup`${descCol} (default: ${JSON.stringify(defaultValue)})`;
+				descCol = markup`${descCol} - default ${prettyFormatEager(defaultValue)}`;
 			}
 
 			if (def.type === "string" && def.allowedValues !== undefined) {
@@ -642,13 +645,17 @@ export default class Parser<T> {
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					descCol = markup`${descCol} (values: ${displayAllowedValues.join("|")})`;
+					const printedValues = concatMarkup(
+						displayAllowedValues.map((value) => prettyFormatEager(value)),
+						markup` `,
+					);
+					descCol = markup`${descCol} - values ${printedValues})`;
 				}
 			}
 
 			optionOutput.push({
 				argName,
-				arg: markup`<color fg="brightBlack">${argCol}</color>`,
+				arg: concatMarkup(highlightShell({input: argCol}), markup` `),
 				description: descCol,
 			});
 		}
@@ -686,7 +693,7 @@ export default class Parser<T> {
 				commandParts.push(usage);
 
 				const command = commandParts.join(" ");
-				reporter.command(command);
+				reporter.command(command, false);
 			},
 		);
 	}
@@ -1010,11 +1017,15 @@ export default class Parser<T> {
 		const {programName, commandSuggestions} = this.opts;
 		let {args} = this;
 		let commandName = args.join(" ");
-		let description = descriptions.FLAGS.COMMAND_REQUIRED(
+		let displayArgs: Array<string> = [];
+
+		const opts: Parameters<typeof descriptions.FLAGS.UNKNOWN_COMMAND>[0] = {
 			programName,
 			commandName,
-			Array.from(this.commands.keys()),
-		);
+			suggestedName: undefined,
+			suggestedDescription: undefined,
+			suggestedCommand: undefined,
+		};
 
 		// If we were provided with a list of command suggestions, try and find one
 		if (commandSuggestions !== undefined) {
@@ -1023,34 +1034,44 @@ export default class Parser<T> {
 				const suggestion = commandSuggestions[possibleCommandName];
 				if (suggestion !== undefined) {
 					commandName = possibleCommandName;
-					args = args.slice(i + 1);
-					description = descriptions.FLAGS.UNKNOWN_COMMAND_SUGGESTED(
-						commandName,
-						suggestion.commandName,
-						suggestion.description,
-						serializeCLIFlags(
-							{
-								...this.getSerializeOptions(),
-								commandName: suggestion.commandName,
-								args,
-								defaultFlags,
-								flags: rawFlags,
-							},
-							"none",
-						).sourceText,
-					);
+					displayArgs = args.slice(i + 1);
+
+					opts.suggestedName = suggestion.commandName;
+					opts.suggestedDescription = suggestion.description;
 					break;
 				}
 			}
 		}
 
+		// If we don't have a suggestion then try to find another closest one
+		if (opts.suggestedName === undefined) {
+			opts.suggestedName = findClosestStringMatch(
+				commandName,
+				Array.from(this.commands.keys()),
+			);
+		}
+
+		// Set suggestedCommand
+		if (opts.suggestedName !== undefined) {
+			opts.suggestedCommand = serializeCLIFlags(
+				{
+					...this.getSerializeOptions(),
+					commandName: opts.suggestedName,
+					args: displayArgs,
+					defaultFlags,
+					flags: rawFlags,
+				},
+				"none",
+			).sourceText;
+		}
+
 		const diag: Diagnostic = {
-			description,
+			description: descriptions.FLAGS.UNKNOWN_COMMAND(opts),
 			location: serializeCLIFlags(
 				{
 					...this.getSerializeOptions(),
 					commandName,
-					args,
+					args: displayArgs,
 					defaultFlags,
 					flags: rawFlags,
 				},
