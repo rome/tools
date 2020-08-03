@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/statement-expression/migrated_0003/input.js"
 		end: Object {
 			column: 0
-			index: 9
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "esprima/statement-expression/migrated_0003/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					identifierName: "a\0u0061"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

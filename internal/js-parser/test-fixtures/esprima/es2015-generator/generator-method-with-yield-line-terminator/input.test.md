@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 		end: Object {
 			column: 0
-			index: 30
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 				end: Object {
 					column: 4
-					index: 29
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 					end: Object {
 						column: 3
-						index: 28
 						line: 4
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -85,12 +77,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -99,12 +89,10 @@ JSRoot {
 							filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 							end: Object {
 								column: 1
-								index: 26
 								line: 4
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 								end: Object {
 									column: 1
-									index: 26
 									line: 4
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -152,12 +136,10 @@ JSRoot {
 										filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 										end: Object {
 											column: 7
-											index: 20
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 15
 											line: 2
 										}
 									}
@@ -168,12 +150,10 @@ JSRoot {
 											filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 											end: Object {
 												column: 7
-												index: 20
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 15
 												line: 2
 											}
 										}
@@ -184,12 +164,10 @@ JSRoot {
 										filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 										end: Object {
 											column: 3
-											index: 24
 											line: 3
 										}
 										start: Object {
 											column: 2
-											index: 23
 											line: 3
 										}
 									}
@@ -200,12 +178,10 @@ JSRoot {
 											filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 											end: Object {
 												column: 3
-												index: 24
 												line: 3
 											}
 											start: Object {
 												column: 2
-												index: 23
 												line: 3
 											}
 										}

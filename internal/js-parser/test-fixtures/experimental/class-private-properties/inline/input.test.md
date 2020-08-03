@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/inline/input.js"
 		end: Object {
 			column: 0
-			index: 49
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/inline/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/inline/input.js"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/inline/input.js"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -166,12 +149,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 									start: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 								}
@@ -180,12 +161,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -196,12 +175,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/inline/input.js"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 						}
@@ -214,19 +191,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -243,12 +217,10 @@ JSRoot {
 					identifierName: "B"
 					end: Object {
 						column: 7
-						index: 28
 						line: 3
 					}
 					start: Object {
 						column: 6
-						index: 27
 						line: 3
 					}
 				}
@@ -257,12 +229,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/inline/input.js"
 				end: Object {
 					column: 27
-					index: 48
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 21
 					line: 3
 				}
 			}
@@ -275,12 +245,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/inline/input.js"
 					end: Object {
 						column: 27
-						index: 48
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 21
 						line: 3
 					}
 				}
@@ -294,12 +262,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 12
-										index: 33
 										line: 3
 									}
 									start: Object {
 										column: 11
-										index: 32
 										line: 3
 									}
 								}
@@ -308,12 +274,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 12
-									index: 33
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 31
 									line: 3
 								}
 							}
@@ -325,12 +289,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 16
-									index: 37
 									line: 3
 								}
 								start: Object {
 									column: 15
-									index: 36
 									line: 3
 								}
 							}
@@ -340,12 +302,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/inline/input.js"
 							end: Object {
 								column: 17
-								index: 38
 								line: 3
 							}
 							start: Object {
 								column: 10
-								index: 31
 								line: 3
 							}
 						}
@@ -358,19 +318,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 31
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 12
-									index: 33
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 31
 									line: 3
 								}
 							}
@@ -385,12 +342,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 20
-										index: 41
 										line: 3
 									}
 									start: Object {
 										column: 19
-										index: 40
 										line: 3
 									}
 								}
@@ -399,12 +354,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 20
-									index: 41
 									line: 3
 								}
 								start: Object {
 									column: 18
-									index: 39
 									line: 3
 								}
 							}
@@ -416,12 +369,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 24
-									index: 45
 									line: 3
 								}
 								start: Object {
 									column: 23
-									index: 44
 									line: 3
 								}
 							}
@@ -431,12 +382,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/inline/input.js"
 							end: Object {
 								column: 25
-								index: 46
 								line: 3
 							}
 							start: Object {
 								column: 18
-								index: 39
 								line: 3
 							}
 						}
@@ -449,19 +398,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 18
-								index: 39
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
 									column: 20
-									index: 41
 									line: 3
 								}
 								start: Object {
 									column: 18
-									index: 39
 									line: 3
 								}
 							}

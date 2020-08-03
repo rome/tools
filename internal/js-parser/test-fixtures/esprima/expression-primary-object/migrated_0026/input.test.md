@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-primary-object/migrated_0026/input.js"
 		end: Object {
 			column: 20
-			index: 20
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/expression-primary-object/migrated_0026/input.js"
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/expression-primary-object/migrated_0026/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/expression-primary-object/migrated_0026/input.js"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -102,12 +92,10 @@ JSRoot {
 										identifierName: "__proto__"
 										end: Object {
 											column: 15
-											index: 15
 											line: 1
 										}
 										start: Object {
 											column: 6
-											index: 6
 											line: 1
 										}
 									}
@@ -116,12 +104,10 @@ JSRoot {
 									filename: "esprima/expression-primary-object/migrated_0026/input.js"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 6
-										index: 6
 										line: 1
 									}
 								}
@@ -133,12 +119,10 @@ JSRoot {
 									filename: "esprima/expression-primary-object/migrated_0026/input.js"
 									end: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -147,12 +131,10 @@ JSRoot {
 								filename: "esprima/expression-primary-object/migrated_0026/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}

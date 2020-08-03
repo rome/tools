@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/tuple-rest-after-optional/input.ts"
 		end: Object {
 			column: 0
-			index: 57
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/types/tuple-rest-after-optional/input.ts"
 				end: Object {
 					column: 56
-					index: 56
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/types/tuple-rest-after-optional/input.ts"
 					end: Object {
 						column: 56
-						index: 56
 						line: 1
 					}
 					start: Object {
 						column: 54
-						index: 54
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "typescript/types/tuple-rest-after-optional/input.ts"
 					end: Object {
 						column: 53
-						index: 53
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 						identifierName: "args"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "typescript/types/tuple-rest-after-optional/input.ts"
 							end: Object {
 								column: 52
-								index: 52
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "typescript/types/tuple-rest-after-optional/input.ts"
 								end: Object {
 									column: 52
-									index: 52
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -153,12 +137,10 @@ JSRoot {
 									filename: "typescript/types/tuple-rest-after-optional/input.ts"
 									end: Object {
 										column: 51
-										index: 51
 										line: 1
 									}
 									start: Object {
 										column: 40
-										index: 40
 										line: 1
 									}
 								}
@@ -167,12 +149,10 @@ JSRoot {
 										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 51
-											index: 51
 											line: 1
 										}
 										start: Object {
 											column: 43
-											index: 43
 											line: 1
 										}
 									}
@@ -181,12 +161,10 @@ JSRoot {
 											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 49
-												index: 49
 												line: 1
 											}
 											start: Object {
 												column: 43
-												index: 43
 												line: 1
 											}
 										}
@@ -201,12 +179,10 @@ JSRoot {
 										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 23
-											index: 23
 											line: 1
 										}
 									}
@@ -215,12 +191,10 @@ JSRoot {
 											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 23
-												index: 23
 												line: 1
 											}
 										}
@@ -233,12 +207,10 @@ JSRoot {
 										filename: "typescript/types/tuple-rest-after-optional/input.ts"
 										end: Object {
 											column: 38
-											index: 38
 											line: 1
 										}
 										start: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 									}
@@ -247,12 +219,10 @@ JSRoot {
 											filename: "typescript/types/tuple-rest-after-optional/input.ts"
 											end: Object {
 												column: 37
-												index: 37
 												line: 1
 											}
 											start: Object {
 												column: 31
-												index: 31
 												line: 1
 											}
 										}

@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 		end: Object {
 			column: 0
-			index: 40
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 13
-					index: 27
 					line: 2
 				}
 			}
@@ -85,12 +79,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 14
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 13
-								index: 27
 								line: 2
 							}
 						}
@@ -108,12 +100,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 24
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 23
 						line: 2
 					}
 				}
@@ -122,12 +112,10 @@ JSRoot {
 				filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 				end: Object {
 					column: 25
-					index: 39
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -138,12 +126,10 @@ JSRoot {
 					filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 					end: Object {
 						column: 25
-						index: 39
 						line: 2
 					}
 					start: Object {
 						column: 22
-						index: 36
 						line: 2
 					}
 				}
@@ -160,12 +146,10 @@ JSRoot {
 					filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 					end: Object {
 						column: 22
-						index: 36
 						line: 2
 					}
 					start: Object {
 						column: 10
-						index: 24
 						line: 2
 					}
 				}
@@ -175,12 +159,10 @@ JSRoot {
 							filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 							end: Object {
 								column: 21
-								index: 35
 								line: 2
 							}
 							start: Object {
 								column: 11
-								index: 25
 								line: 2
 							}
 						}
@@ -191,12 +173,10 @@ JSRoot {
 								filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 								end: Object {
 									column: 21
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 							}
@@ -208,12 +188,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 20
-									index: 34
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 33
 									line: 2
 								}
 							}
@@ -224,12 +202,10 @@ JSRoot {
 									filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 									end: Object {
 										column: 20
-										index: 34
 										line: 2
 									}
 									start: Object {
 										column: 19
-										index: 33
 										line: 2
 									}
 								}
@@ -242,12 +218,10 @@ JSRoot {
 									filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 									end: Object {
 										column: 15
-										index: 29
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 26
 										line: 2
 									}
 								}
@@ -258,12 +232,10 @@ JSRoot {
 										filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 										end: Object {
 											column: 15
-											index: 29
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 26
 											line: 2
 										}
 									}
@@ -278,12 +250,10 @@ JSRoot {
 													identifierName: "a"
 													end: Object {
 														column: 14
-														index: 28
 														line: 2
 													}
 													start: Object {
 														column: 13
-														index: 27
 														line: 2
 													}
 												}
@@ -292,12 +262,10 @@ JSRoot {
 												filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 												end: Object {
 													column: 14
-													index: 28
 													line: 2
 												}
 												start: Object {
 													column: 13
-													index: 27
 													line: 2
 												}
 											}
@@ -309,12 +277,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 14
-													index: 28
 													line: 2
 												}
 												start: Object {
 													column: 13
-													index: 27
 													line: 2
 												}
 											}
@@ -323,12 +289,10 @@ JSRoot {
 											filename: "esprima/es2015-array-pattern/dupe-param-3/input.js"
 											end: Object {
 												column: 14
-												index: 28
 												line: 2
 											}
 											start: Object {
 												column: 13
-												index: 27
 												line: 2
 											}
 										}

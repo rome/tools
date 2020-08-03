@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 		end: Object {
 			column: 0
-			index: 37
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 			}
@@ -86,12 +80,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 				end: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -122,12 +112,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 				}
@@ -138,12 +126,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 					end: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 					start: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 				}
@@ -153,12 +139,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 						}
@@ -169,12 +153,10 @@ JSRoot {
 								identifierName: "yield"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}

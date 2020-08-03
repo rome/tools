@@ -20,12 +20,10 @@ JSRoot {
 		filename: "typescript/types/read-only-1/input.ts"
 		end: Object {
 			column: 37
-			index: 37
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/read-only-1/input.ts"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 			}
@@ -62,12 +58,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 			}
@@ -82,12 +76,10 @@ JSRoot {
 					identifierName: "T30"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -98,12 +90,10 @@ JSRoot {
 				filename: "typescript/types/read-only-1/input.ts"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -113,12 +103,10 @@ JSRoot {
 					filename: "typescript/types/read-only-1/input.ts"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 						filename: "typescript/types/read-only-1/input.ts"
 						end: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}

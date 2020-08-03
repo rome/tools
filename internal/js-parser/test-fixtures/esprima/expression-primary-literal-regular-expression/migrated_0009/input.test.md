@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 		end: Object {
 			column: 17
-			index: 17
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -104,12 +94,10 @@ JSRoot {
 								filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -118,12 +106,10 @@ JSRoot {
 									filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 									end: Object {
 										column: 14
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -134,12 +120,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 											end: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 											start: Object {
 												column: 9
-												index: 9
 												line: 1
 											}
 										}
@@ -150,12 +134,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 11
-														index: 11
 														line: 1
 													}
 													start: Object {
 														column: 10
-														index: 10
 														line: 1
 													}
 												}
@@ -166,12 +148,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 													start: Object {
 														column: 11
-														index: 11
 														line: 1
 													}
 												}
@@ -182,12 +162,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 													start: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 												}
@@ -198,12 +176,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 													end: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 													start: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 												}

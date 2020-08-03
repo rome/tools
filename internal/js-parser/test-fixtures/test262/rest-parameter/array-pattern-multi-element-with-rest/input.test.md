@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 		end: Object {
 			column: 0
-			index: 50
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "multiElementWithRest"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 				end: Object {
 					column: 49
-					index: 49
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 					end: Object {
 						column: 49
-						index: 49
 						line: 1
 					}
 					start: Object {
 						column: 47
-						index: 47
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 					end: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 					start: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 				}
@@ -106,12 +96,10 @@ JSRoot {
 						filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 						end: Object {
 							column: 45
-							index: 45
 							line: 1
 						}
 						start: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 					}
@@ -122,12 +110,10 @@ JSRoot {
 							filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 							end: Object {
 								column: 45
-								index: 45
 								line: 1
 							}
 							start: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 						}
@@ -139,12 +125,10 @@ JSRoot {
 							identifierName: "c"
 							end: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 							start: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 						}
@@ -155,12 +139,10 @@ JSRoot {
 								filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 								end: Object {
 									column: 44
-									index: 44
 									line: 1
 								}
 								start: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 							}
@@ -174,12 +156,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 								start: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 							}
@@ -190,12 +170,10 @@ JSRoot {
 									filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 									end: Object {
 										column: 35
-										index: 35
 										line: 1
 									}
 									start: Object {
 										column: 34
-										index: 34
 										line: 1
 									}
 								}
@@ -208,12 +186,10 @@ JSRoot {
 								identifierName: "b"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 							}
@@ -224,12 +200,10 @@ JSRoot {
 									filename: "test262/rest-parameter/array-pattern-multi-element-with-rest/input.js"
 									end: Object {
 										column: 38
-										index: 38
 										line: 1
 									}
 									start: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 								}

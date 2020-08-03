@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/get-generic/input.ts"
 		end: Object {
 			column: 0
-			index: 40
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/class/get-generic/input.ts"
 				end: Object {
 					column: 1
-					index: 39
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 					filename: "typescript/class/get-generic/input.ts"
 					end: Object {
 						column: 1
-						index: 39
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 7
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 22
 										line: 2
 									}
 								}
@@ -107,12 +97,10 @@ JSRoot {
 								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 7
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 22
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 							filename: "typescript/class/get-generic/input.ts"
 							end: Object {
 								column: 19
-								index: 37
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 22
 								line: 2
 							}
 						}
@@ -140,19 +126,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 22
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 7
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 22
 									line: 2
 								}
 							}
@@ -168,12 +151,10 @@ JSRoot {
 								filename: "typescript/class/get-generic/input.ts"
 								end: Object {
 									column: 18
-									index: 36
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 28
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									filename: "typescript/class/get-generic/input.ts"
 									end: Object {
 										column: 18
-										index: 36
 										line: 2
 									}
 									start: Object {
 										column: 14
-										index: 32
 										line: 2
 									}
 								}
@@ -197,12 +176,10 @@ JSRoot {
 									filename: "typescript/class/get-generic/input.ts"
 									end: Object {
 										column: 10
-										index: 28
 										line: 2
 									}
 									start: Object {
 										column: 7
-										index: 25
 										line: 2
 									}
 								}
@@ -215,12 +192,10 @@ JSRoot {
 											filename: "typescript/class/get-generic/input.ts"
 											end: Object {
 												column: 9
-												index: 27
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 26
 												line: 2
 											}
 										}

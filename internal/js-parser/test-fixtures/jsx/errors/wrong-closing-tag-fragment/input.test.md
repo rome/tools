@@ -21,12 +21,10 @@ JSRoot {
 		filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 		end: Object {
 			column: 0
-			index: 15
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -94,12 +86,10 @@ JSRoot {
 							filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
 							end: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}

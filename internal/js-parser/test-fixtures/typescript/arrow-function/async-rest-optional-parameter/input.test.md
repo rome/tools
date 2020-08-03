@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 						end: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 							filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -116,12 +104,10 @@ JSRoot {
 							filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 						}
@@ -131,12 +117,10 @@ JSRoot {
 								filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}
@@ -145,12 +129,10 @@ JSRoot {
 									filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 									end: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -159,12 +141,10 @@ JSRoot {
 										filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 										end: Object {
 											column: 19
-											index: 19
 											line: 1
 										}
 										start: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 									}

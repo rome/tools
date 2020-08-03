@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/trailing-comma/input.js"
 		end: Object {
 			column: 0
-			index: 68
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -90,12 +82,10 @@ JSRoot {
 						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -107,12 +97,10 @@ JSRoot {
 				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 18
-					index: 37
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 19
 					line: 2
 				}
 			}
@@ -121,12 +109,10 @@ JSRoot {
 					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 18
-						index: 37
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 25
 						line: 2
 					}
 				}
@@ -136,12 +122,10 @@ JSRoot {
 						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 17
-							index: 36
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 26
 							line: 2
 						}
 					}
@@ -154,12 +138,10 @@ JSRoot {
 				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 45
-					index: 64
 					line: 2
 				}
 				start: Object {
 					column: 19
-					index: 38
 					line: 2
 				}
 			}
@@ -169,12 +151,10 @@ JSRoot {
 						filename: "experimental/module-attributes/trailing-comma/input.js"
 						end: Object {
 							column: 43
-							index: 62
 							line: 2
 						}
 						start: Object {
 							column: 21
-							index: 40
 							line: 2
 						}
 					}
@@ -184,12 +164,10 @@ JSRoot {
 							filename: "experimental/module-attributes/trailing-comma/input.js"
 							end: Object {
 								column: 26
-								index: 45
 								line: 2
 							}
 							start: Object {
 								column: 25
-								index: 44
 								line: 2
 							}
 						}
@@ -200,12 +178,10 @@ JSRoot {
 							filename: "experimental/module-attributes/trailing-comma/input.js"
 							end: Object {
 								column: 43
-								index: 62
 								line: 2
 							}
 							start: Object {
 								column: 27
-								index: 46
 								line: 2
 							}
 						}
@@ -215,12 +191,10 @@ JSRoot {
 									filename: "experimental/module-attributes/trailing-comma/input.js"
 									end: Object {
 										column: 41
-										index: 60
 										line: 2
 									}
 									start: Object {
 										column: 29
-										index: 48
 										line: 2
 									}
 								}
@@ -231,12 +205,10 @@ JSRoot {
 										identifierName: "type"
 										end: Object {
 											column: 33
-											index: 52
 											line: 2
 										}
 										start: Object {
 											column: 29
-											index: 48
 											line: 2
 										}
 									}
@@ -246,12 +218,10 @@ JSRoot {
 										filename: "experimental/module-attributes/trailing-comma/input.js"
 										end: Object {
 											column: 41
-											index: 60
 											line: 2
 										}
 										start: Object {
 											column: 35
-											index: 54
 											line: 2
 										}
 									}
@@ -261,12 +231,10 @@ JSRoot {
 											filename: "experimental/module-attributes/trailing-comma/input.js"
 											end: Object {
 												column: 41
-												index: 60
 												line: 2
 											}
 											start: Object {
 												column: 35
-												index: 54
 												line: 2
 											}
 										}
@@ -283,12 +251,10 @@ JSRoot {
 				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 46
-					index: 65
 					line: 2
 				}
 				start: Object {
 					column: 45
-					index: 64
 					line: 2
 				}
 			}
@@ -298,12 +264,10 @@ JSRoot {
 					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 46
-						index: 65
 						line: 2
 					}
 					start: Object {
 						column: 45
-						index: 64
 						line: 2
 					}
 				}
@@ -314,12 +278,10 @@ JSRoot {
 				filename: "experimental/module-attributes/trailing-comma/input.js"
 				end: Object {
 					column: 48
-					index: 67
 					line: 2
 				}
 				start: Object {
 					column: 46
-					index: 65
 					line: 2
 				}
 			}
@@ -329,12 +291,10 @@ JSRoot {
 					filename: "experimental/module-attributes/trailing-comma/input.js"
 					end: Object {
 						column: 47
-						index: 66
 						line: 2
 					}
 					start: Object {
 						column: 46
-						index: 65
 						line: 2
 					}
 				}

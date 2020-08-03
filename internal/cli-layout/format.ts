@@ -8,8 +8,10 @@
 import {
 	AnyMarkup,
 	MarkupLinesAndWidth,
+	isSingleEscaped,
 	joinMarkupLines,
 	readMarkup,
+	serializeLazyMarkup,
 } from "@internal/markup";
 import {GridOutputFormat, UserGridOptions} from "./types";
 import Grid from "./Grid";
@@ -17,17 +19,14 @@ import {ob1Get1} from "@internal/ob1";
 import {splitChars, splitLines} from "@internal/string-utils";
 
 export function renderGrid(
-	safe: AnyMarkup,
+	safeMaybeLazy: AnyMarkup,
 	opts: UserGridOptions = {},
 	format: GridOutputFormat,
 ): MarkupLinesAndWidth {
+	const safe = serializeLazyMarkup(safeMaybeLazy);
+
 	// Optimization for rendering a single escaped string with no columns
-	if (
-		opts.columns === undefined &&
-		safe.type === "MARKUP" &&
-		safe.parts.length === 1 &&
-		typeof safe.parts[0] === "string"
-	) {
+	if (opts.columns === undefined && isSingleEscaped(safe)) {
 		let line = safe.parts[0];
 
 		if (opts.convertTabs) {
@@ -50,7 +49,7 @@ export function renderGrid(
 		sourceText: input,
 		view: {},
 	});
-	grid.drawChildren(grid.parse(input, undefined), []);
+	grid.drawChildren(grid.parse(safe, undefined), []);
 	return {
 		width: ob1Get1(grid.getWidth()),
 		lines: grid.getLines(format),

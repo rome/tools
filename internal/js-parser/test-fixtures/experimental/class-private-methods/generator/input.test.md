@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-methods/generator/input.js"
 		end: Object {
 			column: 0
-			index: 56
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Hotel"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-methods/generator/input.js"
 				end: Object {
 					column: 1
-					index: 55
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-methods/generator/input.js"
 					end: Object {
 						column: 1
-						index: 55
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "evil"
 									end: Object {
 										column: 8
-										index: 22
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 18
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 8
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 17
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/generator/input.js"
 							end: Object {
 								column: 3
-								index: 53
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 						}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 10
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 22
 									line: 2
 								}
 							}
@@ -161,19 +145,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 8
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/generator/input.js"
 								end: Object {
 									column: 3
-									index: 53
 									line: 4
 								}
 								start: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 							}
@@ -199,12 +178,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/generator/input.js"
 										end: Object {
 											column: 22
-											index: 49
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 31
 											line: 3
 										}
 									}
@@ -214,12 +191,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/generator/input.js"
 											end: Object {
 												column: 21
-												index: 48
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 31
 												line: 3
 											}
 										}
@@ -229,12 +204,10 @@ JSRoot {
 												filename: "experimental/class-private-methods/generator/input.js"
 												end: Object {
 													column: 21
-													index: 48
 													line: 3
 												}
 												start: Object {
 													column: 10
-													index: 37
 													line: 3
 												}
 											}
@@ -245,12 +218,10 @@ JSRoot {
 													identifierName: "notReally"
 													end: Object {
 														column: 19
-														index: 46
 														line: 3
 													}
 													start: Object {
 														column: 10
-														index: 37
 														line: 3
 													}
 												}

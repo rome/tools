@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 		end: Object {
 			column: 0
-			index: 47
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 13
-					index: 26
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 17
 					line: 3
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 				end: Object {
 					column: 8
-					index: 46
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 					end: Object {
 						column: 7
-						index: 45
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 						end: Object {
 							column: 7
-							index: 45
 							line: 5
 						}
 						start: Object {
 							column: 5
-							index: 43
 							line: 5
 						}
 					}
@@ -111,12 +101,10 @@ JSRoot {
 						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 						end: Object {
 							column: 4
-							index: 42
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -128,12 +116,10 @@ JSRoot {
 								identifierName: "first"
 								end: Object {
 									column: 9
-									index: 11
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 6
 									line: 2
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 								end: Object {
 									column: 4
-									index: 42
 									line: 5
 								}
 								start: Object {
 									column: 5
-									index: 43
 									line: 5
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 								identifierName: "third"
 								end: Object {
 									column: 9
-									index: 37
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 32
 									line: 4
 								}
 							}

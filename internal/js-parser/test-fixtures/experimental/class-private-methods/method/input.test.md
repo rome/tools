@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-methods/method/input.js"
 		end: Object {
 			column: 0
-			index: 65
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Hotel"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-methods/method/input.js"
 				end: Object {
 					column: 1
-					index: 64
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-methods/method/input.js"
 					end: Object {
 						column: 1
-						index: 64
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "getBanned"
 									end: Object {
 										column: 12
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 17
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/method/input.js"
 								end: Object {
 									column: 12
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/method/input.js"
 							end: Object {
 								column: 3
-								index: 62
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 						}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/method/input.js"
 								end: Object {
 									column: 14
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 26
 									line: 2
 								}
 							}
@@ -161,19 +145,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/method/input.js"
 								end: Object {
 									column: 12
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/method/input.js"
 								end: Object {
 									column: 3
-									index: 62
 									line: 4
 								}
 								start: Object {
 									column: 15
-									index: 29
 									line: 2
 								}
 							}
@@ -199,12 +178,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/method/input.js"
 										end: Object {
 											column: 27
-											index: 58
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 35
 											line: 3
 										}
 									}
@@ -214,12 +191,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/method/input.js"
 											end: Object {
 												column: 26
-												index: 57
 												line: 3
 											}
 											start: Object {
 												column: 11
-												index: 42
 												line: 3
 											}
 										}
@@ -230,12 +205,10 @@ JSRoot {
 												identifierName: "violentPeople"
 												end: Object {
 													column: 24
-													index: 55
 													line: 3
 												}
 												start: Object {
 													column: 11
-													index: 42
 													line: 3
 												}
 											}

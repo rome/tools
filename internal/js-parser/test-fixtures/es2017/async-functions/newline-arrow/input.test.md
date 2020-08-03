@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/newline-arrow/input.js"
 		end: Object {
 			column: 0
-			index: 13
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/newline-arrow/input.js"
 				end: Object {
 					column: 6
-					index: 12
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2017/async-functions/newline-arrow/input.js"
 					end: Object {
 						column: 6
-						index: 12
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 6
-							index: 12
 							line: 2
 						}
 						start: Object {
 							column: 5
-							index: 11
 							line: 2
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "es2017/async-functions/newline-arrow/input.js"
 						end: Object {
 							column: 4
-							index: 10
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 1
-									index: 7
 									line: 2
 								}
 								start: Object {
 									column: 0
-									index: 6
 									line: 2
 								}
 							}

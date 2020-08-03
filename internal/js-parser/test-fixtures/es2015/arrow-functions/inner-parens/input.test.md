@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/arrow-functions/inner-parens/input.js"
 		end: Object {
 			column: 0
-			index: 25
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/arrow-functions/inner-parens/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/arrow-functions/inner-parens/input.js"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/inner-parens/input.js"
 							end: Object {
 								column: 23
-								index: 23
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2015/arrow-functions/inner-parens/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 									filename: "es2015/arrow-functions/inner-parens/input.js"
 									end: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -158,12 +142,10 @@ JSRoot {
 									filename: "es2015/arrow-functions/inner-parens/input.js"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -175,12 +157,10 @@ JSRoot {
 											identifierName: "foo"
 											end: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}

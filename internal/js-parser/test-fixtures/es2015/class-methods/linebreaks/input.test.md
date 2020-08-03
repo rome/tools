@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/class-methods/linebreaks/input.js"
 		end: Object {
 			column: 1
-			index: 239
 			line: 42
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/class-methods/linebreaks/input.js"
 				end: Object {
 					column: 1
-					index: 239
 					line: 42
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "es2015/class-methods/linebreaks/input.js"
 					end: Object {
 						column: 1
-						index: 239
 						line: 42
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 19
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 18
 										line: 3
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 19
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 27
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 27
 									line: 4
 								}
 								start: Object {
 									column: 5
-									index: 25
 									line: 4
 								}
 							}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 24
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 4
 								}
 							}
@@ -178,19 +160,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 19
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -206,12 +185,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 38
 										line: 7
 									}
 									start: Object {
 										column: 2
-										index: 37
 										line: 7
 									}
 								}
@@ -220,12 +197,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 38
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 7
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 8
-								index: 47
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 31
 								line: 6
 							}
 						}
@@ -250,12 +223,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 8
-									index: 47
 									line: 8
 								}
 								start: Object {
 									column: 6
-									index: 45
 									line: 8
 								}
 							}
@@ -269,19 +240,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 31
 								line: 6
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 38
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 31
 									line: 6
 								}
 							}
@@ -298,12 +266,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 5
-									index: 44
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 41
 									line: 8
 								}
 							}
@@ -315,12 +281,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 4
-											index: 43
 											line: 8
 										}
 										start: Object {
 											column: 3
-											index: 42
 											line: 8
 										}
 									}
@@ -331,12 +295,10 @@ JSRoot {
 											filename: "es2015/class-methods/linebreaks/input.js"
 											end: Object {
 												column: 4
-												index: 43
 												line: 8
 											}
 											start: Object {
 												column: 3
-												index: 42
 												line: 8
 											}
 										}
@@ -355,12 +317,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 62
 										line: 10
 									}
 									start: Object {
 										column: 2
-										index: 51
 										line: 10
 									}
 								}
@@ -369,12 +329,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
-									index: 62
 									line: 10
 								}
 								start: Object {
 									column: 2
-									index: 51
 									line: 10
 								}
 							}
@@ -383,12 +341,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 70
 								line: 11
 							}
 							start: Object {
 								column: 2
-								index: 51
 								line: 10
 							}
 						}
@@ -399,12 +355,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 70
 									line: 11
 								}
 								start: Object {
 									column: 5
-									index: 68
 									line: 11
 								}
 							}
@@ -422,12 +376,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 67
 									line: 11
 								}
 								start: Object {
 									column: 2
-									index: 65
 									line: 11
 								}
 							}
@@ -441,19 +393,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 51
 								line: 10
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
-									index: 62
 									line: 10
 								}
 								start: Object {
 									column: 2
-									index: 51
 									line: 10
 								}
 							}
@@ -469,12 +418,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 75
 										line: 13
 									}
 									start: Object {
 										column: 2
-										index: 74
 										line: 13
 									}
 								}
@@ -483,12 +430,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 75
 									line: 13
 								}
 								start: Object {
 									column: 2
-									index: 74
 									line: 13
 								}
 							}
@@ -497,12 +442,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 83
 								line: 14
 							}
 							start: Object {
 								column: 2
-								index: 74
 								line: 13
 							}
 						}
@@ -513,12 +456,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 83
 									line: 14
 								}
 								start: Object {
 									column: 5
-									index: 81
 									line: 14
 								}
 							}
@@ -536,12 +477,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 80
 									line: 14
 								}
 								start: Object {
 									column: 2
-									index: 78
 									line: 14
 								}
 							}
@@ -555,19 +494,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 74
 								line: 13
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 75
 									line: 13
 								}
 								start: Object {
 									column: 2
-									index: 74
 									line: 13
 								}
 							}
@@ -583,12 +519,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 92
 										line: 17
 									}
 									start: Object {
 										column: 2
-										index: 91
 										line: 17
 									}
 								}
@@ -597,12 +531,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 92
 									line: 17
 								}
 								start: Object {
 									column: 2
-									index: 91
 									line: 17
 								}
 							}
@@ -611,12 +543,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 100
 								line: 18
 							}
 							start: Object {
 								column: 2
-								index: 87
 								line: 16
 							}
 						}
@@ -627,12 +557,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 100
 									line: 18
 								}
 								start: Object {
 									column: 5
-									index: 98
 									line: 18
 								}
 							}
@@ -650,12 +578,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 97
 									line: 18
 								}
 								start: Object {
 									column: 2
-									index: 95
 									line: 18
 								}
 							}
@@ -669,19 +595,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 87
 								line: 16
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 92
 									line: 17
 								}
 								start: Object {
 									column: 2
-									index: 87
 									line: 16
 								}
 							}
@@ -697,12 +620,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 120
 										line: 22
 									}
 									start: Object {
 										column: 2
-										index: 119
 										line: 22
 									}
 								}
@@ -711,12 +632,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 120
 									line: 22
 								}
 								start: Object {
 									column: 2
-									index: 119
 									line: 22
 								}
 							}
@@ -725,12 +644,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 128
 								line: 23
 							}
 							start: Object {
 								column: 2
-								index: 104
 								line: 20
 							}
 						}
@@ -741,12 +658,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 128
 									line: 23
 								}
 								start: Object {
 									column: 5
-									index: 126
 									line: 23
 								}
 							}
@@ -764,12 +679,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 125
 									line: 23
 								}
 								start: Object {
 									column: 2
-									index: 123
 									line: 23
 								}
 							}
@@ -783,19 +696,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 104
 								line: 20
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 120
 									line: 22
 								}
 								start: Object {
 									column: 2
-									index: 104
 									line: 20
 								}
 							}
@@ -811,12 +721,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 148
 										line: 27
 									}
 									start: Object {
 										column: 2
-										index: 147
 										line: 27
 									}
 								}
@@ -825,12 +733,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 148
 									line: 27
 								}
 								start: Object {
 									column: 2
-									index: 147
 									line: 27
 								}
 							}
@@ -839,12 +745,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 8
-								index: 157
 								line: 28
 							}
 							start: Object {
 								column: 2
-								index: 132
 								line: 25
 							}
 						}
@@ -855,12 +759,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 8
-									index: 157
 									line: 28
 								}
 								start: Object {
 									column: 6
-									index: 155
 									line: 28
 								}
 							}
@@ -874,19 +776,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 132
 								line: 25
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 148
 									line: 27
 								}
 								start: Object {
 									column: 2
-									index: 132
 									line: 25
 								}
 							}
@@ -903,12 +802,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 5
-									index: 154
 									line: 28
 								}
 								start: Object {
 									column: 2
-									index: 151
 									line: 28
 								}
 							}
@@ -920,12 +817,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 4
-											index: 153
 											line: 28
 										}
 										start: Object {
 											column: 3
-											index: 152
 											line: 28
 										}
 									}
@@ -936,12 +831,10 @@ JSRoot {
 											filename: "es2015/class-methods/linebreaks/input.js"
 											end: Object {
 												column: 4
-												index: 153
 												line: 28
 											}
 											start: Object {
 												column: 3
-												index: 152
 												line: 28
 											}
 										}
@@ -960,12 +853,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 181
 										line: 31
 									}
 									start: Object {
 										column: 2
-										index: 170
 										line: 31
 									}
 								}
@@ -974,12 +865,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
-									index: 181
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 170
 									line: 31
 								}
 							}
@@ -988,12 +877,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 189
 								line: 32
 							}
 							start: Object {
 								column: 2
-								index: 161
 								line: 30
 							}
 						}
@@ -1004,12 +891,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 189
 									line: 32
 								}
 								start: Object {
 									column: 5
-									index: 187
 									line: 32
 								}
 							}
@@ -1027,12 +912,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 186
 									line: 32
 								}
 								start: Object {
 									column: 2
-									index: 184
 									line: 32
 								}
 							}
@@ -1046,19 +929,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 161
 								line: 30
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 13
-									index: 181
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 161
 									line: 30
 								}
 							}
@@ -1074,12 +954,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 203
 										line: 35
 									}
 									start: Object {
 										column: 2
-										index: 202
 										line: 35
 									}
 								}
@@ -1088,12 +966,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 203
 									line: 35
 								}
 								start: Object {
 									column: 2
-									index: 202
 									line: 35
 								}
 							}
@@ -1102,12 +978,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 211
 								line: 36
 							}
 							start: Object {
 								column: 2
-								index: 193
 								line: 34
 							}
 						}
@@ -1118,12 +992,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 211
 									line: 36
 								}
 								start: Object {
 									column: 5
-									index: 209
 									line: 36
 								}
 							}
@@ -1141,12 +1013,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 208
 									line: 36
 								}
 								start: Object {
 									column: 2
-									index: 206
 									line: 36
 								}
 							}
@@ -1160,19 +1030,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 193
 								line: 34
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 203
 									line: 35
 								}
 								start: Object {
 									column: 2
-									index: 193
 									line: 34
 								}
 							}
@@ -1188,12 +1055,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 229
 										line: 40
 									}
 									start: Object {
 										column: 2
-										index: 228
 										line: 40
 									}
 								}
@@ -1202,12 +1067,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 229
 									line: 40
 								}
 								start: Object {
 									column: 2
-									index: 228
 									line: 40
 								}
 							}
@@ -1216,12 +1079,10 @@ JSRoot {
 							filename: "es2015/class-methods/linebreaks/input.js"
 							end: Object {
 								column: 7
-								index: 237
 								line: 41
 							}
 							start: Object {
 								column: 2
-								index: 215
 								line: 38
 							}
 						}
@@ -1232,12 +1093,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 7
-									index: 237
 									line: 41
 								}
 								start: Object {
 									column: 5
-									index: 235
 									line: 41
 								}
 							}
@@ -1255,12 +1114,10 @@ JSRoot {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 4
-									index: 234
 									line: 41
 								}
 								start: Object {
 									column: 2
-									index: 232
 									line: 41
 								}
 							}
@@ -1274,19 +1131,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 215
 								line: 38
 							}
 							loc: Object {
 								filename: "es2015/class-methods/linebreaks/input.js"
 								end: Object {
 									column: 3
-									index: 229
 									line: 40
 								}
 								start: Object {
 									column: 2
-									index: 215
 									line: 38
 								}
 							}

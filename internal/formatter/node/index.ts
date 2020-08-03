@@ -6,8 +6,8 @@
  */
 
 import {AnyNode} from "@internal/ast";
-import {ob1Get0, ob1Get1} from "@internal/ob1";
-import {SourceLocation} from "@internal/parser-core";
+import {ob1Get1} from "@internal/ob1";
+import {SourceLocation, comparePositions} from "@internal/parser-core";
 import parentheses from "./parentheses";
 
 function isOrHasCallExpression(node: AnyNode): boolean {
@@ -32,7 +32,7 @@ function orderLoc(
 	a: SourceLocation,
 	b: SourceLocation,
 ): [SourceLocation, SourceLocation] {
-	if (ob1Get0(a.end.index) < ob1Get0(b.start.index)) {
+	if (comparePositions(a.end, b.start) === -1) {
 		return [a, b];
 	} else {
 		return [b, a];

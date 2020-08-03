@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/regression/10230/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 8
-					index: 23
 					line: 3
 				}
 				start: Object {
 					column: 2
-					index: 17
 					line: 3
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 6
-					index: 33
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 27
 					line: 6
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 1
-					index: 25
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -89,12 +81,10 @@ JSRoot {
 					filename: "comments/regression/10230/input.js"
 					end: Object {
 						column: 1
-						index: 25
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -105,12 +95,10 @@ JSRoot {
 						identifierName: "A"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -121,12 +109,10 @@ JSRoot {
 						filename: "comments/regression/10230/input.js"
 						end: Object {
 							column: 1
-							index: 25
 							line: 4
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -140,12 +126,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 3
-											index: 9
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 8
 											line: 2
 										}
 									}
@@ -154,12 +138,10 @@ JSRoot {
 									filename: "comments/regression/10230/input.js"
 									end: Object {
 										column: 3
-										index: 9
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 8
 										line: 2
 									}
 								}
@@ -171,12 +153,10 @@ JSRoot {
 									filename: "comments/regression/10230/input.js"
 									end: Object {
 										column: 7
-										index: 13
 										line: 2
 									}
 									start: Object {
 										column: 5
-										index: 11
 										line: 2
 									}
 								}
@@ -186,12 +166,10 @@ JSRoot {
 								filename: "comments/regression/10230/input.js"
 								end: Object {
 									column: 7
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 8
 									line: 2
 								}
 							}
@@ -206,12 +184,10 @@ JSRoot {
 				filename: "comments/regression/10230/input.js"
 				end: Object {
 					column: 1
-					index: 35
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 34
 					line: 7
 				}
 			}
@@ -223,12 +199,10 @@ JSRoot {
 					identifierName: "B"
 					end: Object {
 						column: 1
-						index: 35
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 34
 						line: 7
 					}
 				}

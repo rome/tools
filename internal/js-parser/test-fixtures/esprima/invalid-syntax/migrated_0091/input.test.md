@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/invalid-syntax/migrated_0091/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0091/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0091/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -97,12 +89,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0091/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -113,12 +103,10 @@ JSRoot {
 						filename: "esprima/invalid-syntax/migrated_0091/input.js"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 					}
@@ -133,12 +121,10 @@ JSRoot {
 						filename: "esprima/invalid-syntax/migrated_0091/input.js"
 						end: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -150,12 +136,10 @@ JSRoot {
 								identifierName: "arguments"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -167,12 +151,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}

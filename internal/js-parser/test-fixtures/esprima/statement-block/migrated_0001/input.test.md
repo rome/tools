@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-block/migrated_0001/input.js"
 		end: Object {
 			column: 0
-			index: 24
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "esprima/statement-block/migrated_0001/input.js"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "esprima/statement-block/migrated_0001/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 					}
@@ -68,12 +62,10 @@ JSRoot {
 							filename: "esprima/statement-block/migrated_0001/input.js"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}
@@ -84,12 +76,10 @@ JSRoot {
 								identifierName: "doThis"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "esprima/statement-block/migrated_0001/input.js"
 						end: Object {
 							column: 21
-							index: 21
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -116,12 +104,10 @@ JSRoot {
 							filename: "esprima/statement-block/migrated_0001/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -132,12 +118,10 @@ JSRoot {
 								identifierName: "doThat"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

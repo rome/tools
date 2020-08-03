@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/fragment-4/input.jsx"
 		end: Object {
 			column: 0
-			index: 50
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/basic/fragment-4/input.jsx"
 				end: Object {
 					column: 3
-					index: 49
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "jsx/basic/fragment-4/input.jsx"
 					end: Object {
 						column: 3
-						index: 49
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-4/input.jsx"
 							end: Object {
 								column: 2
-								index: 5
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}
@@ -82,12 +74,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-4/input.jsx"
 							end: Object {
 								column: 5
-								index: 45
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 5
 								line: 2
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 									filename: "jsx/basic/fragment-4/input.jsx"
 									end: Object {
 										column: 4
-										index: 12
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 7
 										line: 2
 									}
 								}
@@ -113,12 +101,10 @@ JSRoot {
 									filename: "jsx/basic/fragment-4/input.jsx"
 									end: Object {
 										column: 7
-										index: 39
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 12
 										line: 3
 									}
 								}
@@ -129,12 +115,10 @@ JSRoot {
 											filename: "jsx/basic/fragment-4/input.jsx"
 											end: Object {
 												column: 4
-												index: 36
 												line: 5
 											}
 											start: Object {
 												column: 6
-												index: 14
 												line: 3
 											}
 										}
@@ -147,12 +131,10 @@ JSRoot {
 									filename: "jsx/basic/fragment-4/input.jsx"
 									end: Object {
 										column: 2
-										index: 42
 										line: 6
 									}
 									start: Object {
 										column: 7
-										index: 39
 										line: 5
 									}
 								}
@@ -165,12 +147,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-4/input.jsx"
 							end: Object {
 								column: 0
-								index: 46
 								line: 7
 							}
 							start: Object {
 								column: 5
-								index: 45
 								line: 6
 							}
 						}

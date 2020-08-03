@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 		end: Object {
 			column: 0
-			index: 22
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "E"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 				end: Object {
 					column: 1
-					index: 21
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 							identifierName: "A"
 							end: Object {
 								column: 5
-								index: 14
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 13
 								line: 2
 							}
 						}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 						end: Object {
 							column: 9
-							index: 18
 							line: 2
 						}
 						start: Object {
 							column: 4
-							index: 13
 							line: 2
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 							filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 							end: Object {
 								column: 9
-								index: 18
 								line: 2
 							}
 							start: Object {
 								column: 8
-								index: 17
 								line: 2
 							}
 						}

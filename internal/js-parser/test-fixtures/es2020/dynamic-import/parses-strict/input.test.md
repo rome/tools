@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2020/dynamic-import/parses-strict/input.js"
 		end: Object {
 			column: 0
-			index: 34
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/parses-strict/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/parses-strict/input.js"
 				end: Object {
 					column: 18
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 3
 				}
 			}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/parses-strict/input.js"
 					end: Object {
 						column: 17
-						index: 32
 						line: 3
 					}
 					start: Object {
 						column: 6
-						index: 21
 						line: 3
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "es2020/dynamic-import/parses-strict/input.js"
 						end: Object {
 							column: 16
-							index: 31
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 22
 							line: 3
 						}
 					}

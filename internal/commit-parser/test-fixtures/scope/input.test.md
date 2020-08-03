@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "scope/input.txt"
 		end: Object {
 			column: 45
-			index: 45
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

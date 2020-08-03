@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/undeclared-nested/input.js"
 		end: Object {
 			column: 0
-			index: 59
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/undeclared-nested/input.js"
 				end: Object {
 					column: 1
-					index: 58
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/undeclared-nested/input.js"
 					end: Object {
 						column: 1
-						index: 58
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/undeclared-nested/input.js"
 							end: Object {
 								column: 5
-								index: 15
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -167,12 +150,10 @@ JSRoot {
 									identifierName: "meth"
 									end: Object {
 										column: 6
-										index: 22
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 18
 										line: 3
 									}
 								}
@@ -181,12 +162,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 6
-									index: 22
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -195,12 +174,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/undeclared-nested/input.js"
 							end: Object {
 								column: 3
-								index: 56
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 18
 								line: 3
 							}
 						}
@@ -217,12 +194,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 8
-									index: 24
 									line: 3
 								}
 								start: Object {
 									column: 6
-									index: 22
 									line: 3
 								}
 							}
@@ -236,19 +211,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 18
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 6
-									index: 22
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -259,12 +231,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/undeclared-nested/input.js"
 								end: Object {
 									column: 3
-									index: 56
 									line: 5
 								}
 								start: Object {
 									column: 9
-									index: 25
 									line: 3
 								}
 							}
@@ -274,12 +244,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/undeclared-nested/input.js"
 										end: Object {
 											column: 25
-											index: 52
 											line: 4
 										}
 										start: Object {
 											column: 4
-											index: 31
 											line: 4
 										}
 									}
@@ -289,12 +257,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/undeclared-nested/input.js"
 											end: Object {
 												column: 25
-												index: 52
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 31
 												line: 4
 											}
 										}
@@ -307,12 +273,10 @@ JSRoot {
 														identifierName: "prop"
 														end: Object {
 															column: 12
-															index: 39
 															line: 4
 														}
 														start: Object {
 															column: 8
-															index: 35
 															line: 4
 														}
 													}
@@ -321,12 +285,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/undeclared-nested/input.js"
 													end: Object {
 														column: 24
-														index: 51
 														line: 4
 													}
 													start: Object {
 														column: 8
-														index: 35
 														line: 4
 													}
 												}
@@ -335,12 +297,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/undeclared-nested/input.js"
 														end: Object {
 															column: 24
-															index: 51
 															line: 4
 														}
 														start: Object {
 															column: 15
-															index: 42
 															line: 4
 														}
 													}
@@ -351,12 +311,10 @@ JSRoot {
 															identifierName: "foo"
 															end: Object {
 																column: 18
-																index: 45
 																line: 4
 															}
 															start: Object {
 																column: 15
-																index: 42
 																line: 4
 															}
 														}
@@ -370,12 +328,10 @@ JSRoot {
 																	identifierName: "priv"
 																	end: Object {
 																		column: 24
-																		index: 51
 																		line: 4
 																	}
 																	start: Object {
 																		column: 20
-																		index: 47
 																		line: 4
 																	}
 																}
@@ -384,12 +340,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/undeclared-nested/input.js"
 																end: Object {
 																	column: 24
-																	index: 51
 																	line: 4
 																}
 																start: Object {
 																	column: 19
-																	index: 46
 																	line: 4
 																}
 															}
@@ -398,12 +352,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/undeclared-nested/input.js"
 															end: Object {
 																column: 24
-																index: 51
 																line: 4
 															}
 															start: Object {
 																column: 19
-																index: 46
 																line: 4
 															}
 														}

@@ -18,7 +18,7 @@ import {
 	markup,
 	normalizeMarkup,
 } from "@internal/markup";
-import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {Position} from "@internal/parser-core";
 
@@ -151,7 +151,6 @@ export default class DiagnosticsNormalizer {
 			position: {
 				line: resolved.line ?? ob1Number1,
 				column: resolved.column ?? ob1Number0,
-				index: ob1Number0Neg1,
 			},
 		};
 	}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-properties/asi-failure-generator/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 7
-					index: 27
 					line: 3
 				}
 				start: Object {
 					column: 8
-					index: 28
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-properties/asi-failure-generator/input.js"
 				end: Object {
 					column: 10
-					index: 30
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "experimental/class-properties/asi-failure-generator/input.js"
 					end: Object {
 						column: 10
-						index: 30
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "p"
 									end: Object {
 										column: 3
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 14
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 7
-									index: 27
 									line: 3
 								}
 								start: Object {
 									column: 6
-									index: 18
 									line: 2
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 7
-										index: 19
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 18
 										line: 2
 									}
 								}
@@ -177,12 +159,10 @@ JSRoot {
 									filename: "experimental/class-properties/asi-failure-generator/input.js"
 									end: Object {
 										column: 7
-										index: 27
 										line: 3
 									}
 									start: Object {
 										column: 3
-										index: 23
 										line: 3
 									}
 								}
@@ -193,12 +173,10 @@ JSRoot {
 										identifierName: "m"
 										end: Object {
 											column: 4
-											index: 24
 											line: 3
 										}
 										start: Object {
 											column: 3
-											index: 23
 											line: 3
 										}
 									}
@@ -211,12 +189,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-failure-generator/input.js"
 							end: Object {
 								column: 7
-								index: 27
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -229,19 +205,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -256,12 +229,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 9
-										index: 29
 										line: 3
 									}
 									start: Object {
 										column: 8
-										index: 28
 										line: 3
 									}
 								}
@@ -270,12 +241,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 9
-									index: 29
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 28
 									line: 3
 								}
 							}
@@ -287,12 +256,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-failure-generator/input.js"
 							end: Object {
 								column: 9
-								index: 29
 								line: 3
 							}
 							start: Object {
 								column: 8
-								index: 28
 								line: 3
 							}
 						}
@@ -305,19 +272,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 8
-								index: 28
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-failure-generator/input.js"
 								end: Object {
 									column: 9
-									index: 29
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 28
 									line: 3
 								}
 							}
@@ -331,12 +295,10 @@ JSRoot {
 				filename: "experimental/class-properties/asi-failure-generator/input.js"
 				end: Object {
 					column: 1
-					index: 32
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 31
 					line: 4
 				}
 			}
@@ -346,12 +308,10 @@ JSRoot {
 					filename: "experimental/class-properties/asi-failure-generator/input.js"
 					end: Object {
 						column: 1
-						index: 32
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 31
 						line: 4
 					}
 				}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/import-type-declaration/input.ts"
 		end: Object {
 			column: 0
-			index: 100
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 							identifierName: "T"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -102,12 +92,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -122,12 +110,10 @@ JSRoot {
 				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 34
-					index: 62
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 28
 					line: 2
 				}
 			}
@@ -137,12 +123,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 33
-						index: 61
 						line: 2
 					}
 					start: Object {
 						column: 26
-						index: 54
 						line: 2
 					}
 				}
@@ -153,12 +137,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 15
-							index: 43
 							line: 2
 						}
 						start: Object {
 							column: 14
-							index: 42
 							line: 2
 						}
 					}
@@ -169,12 +151,10 @@ JSRoot {
 							identifierName: "A"
 							end: Object {
 								column: 15
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 14
-								index: 42
 								line: 2
 							}
 						}
@@ -187,12 +167,10 @@ JSRoot {
 								identifierName: "A"
 								end: Object {
 									column: 15
-									index: 43
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 42
 									line: 2
 								}
 							}
@@ -202,12 +180,10 @@ JSRoot {
 							filename: "typescript/types/import-type-declaration/input.ts"
 							end: Object {
 								column: 15
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 14
-								index: 42
 								line: 2
 							}
 						}
@@ -218,12 +194,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 18
-							index: 46
 							line: 2
 						}
 						start: Object {
 							column: 17
-							index: 45
 							line: 2
 						}
 					}
@@ -234,12 +208,10 @@ JSRoot {
 							identifierName: "B"
 							end: Object {
 								column: 18
-								index: 46
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 45
 								line: 2
 							}
 						}
@@ -252,12 +224,10 @@ JSRoot {
 								identifierName: "B"
 								end: Object {
 									column: 18
-									index: 46
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 45
 									line: 2
 								}
 							}
@@ -267,12 +237,10 @@ JSRoot {
 							filename: "typescript/types/import-type-declaration/input.ts"
 							end: Object {
 								column: 18
-								index: 46
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 45
 								line: 2
 							}
 						}
@@ -288,12 +256,10 @@ JSRoot {
 				filename: "typescript/types/import-type-declaration/input.ts"
 				end: Object {
 					column: 36
-					index: 99
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 63
 					line: 3
 				}
 			}
@@ -303,12 +269,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 35
-						index: 98
 						line: 3
 					}
 					start: Object {
 						column: 28
-						index: 91
 						line: 3
 					}
 				}
@@ -318,12 +282,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration/input.ts"
 					end: Object {
 						column: 22
-						index: 85
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 63
 						line: 3
 					}
 				}
@@ -335,12 +297,10 @@ JSRoot {
 							identifierName: "Types"
 							end: Object {
 								column: 22
-								index: 85
 								line: 3
 							}
 							start: Object {
 								column: 17
-								index: 80
 								line: 3
 							}
 						}
@@ -350,12 +310,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration/input.ts"
 						end: Object {
 							column: 22
-							index: 85
 							line: 3
 						}
 						start: Object {
 							column: 17
-							index: 80
 							line: 3
 						}
 					}

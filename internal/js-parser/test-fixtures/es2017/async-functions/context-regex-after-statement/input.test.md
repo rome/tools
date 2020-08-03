@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/context-regex-after-statement/input.js"
 		end: Object {
 			column: 6
-			index: 29
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2017/async-functions/context-regex-after-statement/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -109,12 +99,10 @@ JSRoot {
 				filename: "es2017/async-functions/context-regex-after-statement/input.js"
 				end: Object {
 					column: 6
-					index: 29
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 2
 				}
 			}
@@ -129,12 +117,10 @@ JSRoot {
 					filename: "es2017/async-functions/context-regex-after-statement/input.js"
 					end: Object {
 						column: 6
-						index: 29
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 23
 						line: 2
 					}
 				}
@@ -143,12 +129,10 @@ JSRoot {
 						filename: "es2017/async-functions/context-regex-after-statement/input.js"
 						end: Object {
 							column: 4
-							index: 27
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 24
 							line: 2
 						}
 					}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 2
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 1
-									index: 24
 									line: 2
 								}
 							}
@@ -175,12 +157,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 3
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 25
 									line: 2
 								}
 							}
@@ -191,12 +171,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-regex-after-statement/input.js"
 								end: Object {
 									column: 4
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 26
 									line: 2
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/arguments-in-function/input.js"
 		end: Object {
 			column: 1
-			index: 71
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/arguments-in-function/input.js"
 				end: Object {
 					column: 1
-					index: 71
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "experimental/class-properties/arguments-in-function/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "experimental/class-properties/arguments-in-function/input.js"
 					end: Object {
 						column: 1
-						index: 71
 						line: 5
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 								identifierName: "A"
 								end: Object {
 									column: 9
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 24
 									line: 2
 								}
 							}
@@ -124,12 +112,10 @@ JSRoot {
 							filename: "experimental/class-properties/arguments-in-function/input.js"
 							end: Object {
 								column: 3
-								index: 69
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 18
 								line: 2
 							}
 						}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "experimental/class-properties/arguments-in-function/input.js"
 								end: Object {
 									column: 3
-									index: 69
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 2
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 7
-													index: 35
 													line: 3
 												}
 												start: Object {
 													column: 4
-													index: 32
 													line: 3
 												}
 											}
@@ -175,12 +157,10 @@ JSRoot {
 											filename: "experimental/class-properties/arguments-in-function/input.js"
 											end: Object {
 												column: 7
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 32
 												line: 3
 											}
 										}
@@ -193,12 +173,10 @@ JSRoot {
 												identifierName: "f"
 												end: Object {
 													column: 20
-													index: 48
 													line: 3
 												}
 												start: Object {
 													column: 19
-													index: 47
 													line: 3
 												}
 											}
@@ -207,12 +185,10 @@ JSRoot {
 											filename: "experimental/class-properties/arguments-in-function/input.js"
 											end: Object {
 												column: 36
-												index: 64
 												line: 3
 											}
 											start: Object {
 												column: 10
-												index: 38
 												line: 3
 											}
 										}
@@ -229,12 +205,10 @@ JSRoot {
 												filename: "experimental/class-properties/arguments-in-function/input.js"
 												end: Object {
 													column: 22
-													index: 50
 													line: 3
 												}
 												start: Object {
 													column: 20
-													index: 48
 													line: 3
 												}
 											}
@@ -245,12 +219,10 @@ JSRoot {
 												filename: "experimental/class-properties/arguments-in-function/input.js"
 												end: Object {
 													column: 36
-													index: 64
 													line: 3
 												}
 												start: Object {
 													column: 23
-													index: 51
 													line: 3
 												}
 											}
@@ -260,12 +232,10 @@ JSRoot {
 														filename: "experimental/class-properties/arguments-in-function/input.js"
 														end: Object {
 															column: 34
-															index: 62
 															line: 3
 														}
 														start: Object {
 															column: 25
-															index: 53
 															line: 3
 														}
 													}
@@ -276,12 +246,10 @@ JSRoot {
 															identifierName: "arguments"
 															end: Object {
 																column: 34
-																index: 62
 																line: 3
 															}
 															start: Object {
 																column: 25
-																index: 53
 																line: 3
 															}
 														}
@@ -296,12 +264,10 @@ JSRoot {
 										filename: "experimental/class-properties/arguments-in-function/input.js"
 										end: Object {
 											column: 37
-											index: 65
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 32
 											line: 3
 										}
 									}
@@ -314,19 +280,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 4
-											index: 32
 											line: 3
 										}
 										loc: Object {
 											filename: "experimental/class-properties/arguments-in-function/input.js"
 											end: Object {
 												column: 7
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 32
 												line: 3
 											}
 										}

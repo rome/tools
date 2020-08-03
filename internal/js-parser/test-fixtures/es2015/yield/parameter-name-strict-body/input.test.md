@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/yield/parameter-name-strict-body/input.js"
 		end: Object {
 			column: 36
-			index: 36
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-name-strict-body/input.js"
 				end: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -98,12 +90,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-name-strict-body/input.js"
 					end: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -114,12 +104,10 @@ JSRoot {
 							filename: "es2015/yield/parameter-name-strict-body/input.js"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 						}
@@ -138,12 +126,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-name-strict-body/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -155,12 +141,10 @@ JSRoot {
 							identifierName: "yield"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -171,12 +155,10 @@ JSRoot {
 								filename: "es2015/yield/parameter-name-strict-body/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

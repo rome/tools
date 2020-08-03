@@ -3,9 +3,23 @@ import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@internal/string-utils";
 import {createUnknownFilePath} from "@internal/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
+import {StaticMarkup} from "./escape";
 
 export function createEmptyAttributes(): Consumer {
 	return consumeUnknown({}, "parse/stringMarkup");
+}
+
+export function isSingleEscaped(
+	markup: StaticMarkup,
+): markup is {
+	type: "MARKUP";
+	parts: [string];
+} {
+	return (
+		markup.type === "MARKUP" &&
+		markup.parts.length === 1 &&
+		typeof markup.parts[0] === "string"
+	);
 }
 
 export function humanizeMarkupFilename(

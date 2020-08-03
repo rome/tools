@@ -24,12 +24,10 @@ JSRoot {
 		filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 		end: Object {
 			column: 0
-			index: 69
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -52,12 +50,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 				end: Object {
 					column: 10
-					index: 66
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 					filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 					end: Object {
 						column: 10
-						index: 66
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -102,12 +94,10 @@ JSRoot {
 								identifierName: "fn"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -116,12 +106,10 @@ JSRoot {
 							filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 							end: Object {
 								column: 10
-								index: 66
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -131,12 +119,10 @@ JSRoot {
 								filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 								end: Object {
 									column: 10
-									index: 66
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}
@@ -152,12 +138,10 @@ JSRoot {
 									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -169,12 +153,10 @@ JSRoot {
 											identifierName: ""
 											end: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 											start: Object {
 												column: 21
-												index: 21
 												line: 1
 											}
 										}
@@ -185,12 +167,10 @@ JSRoot {
 												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 22
-													index: 22
 													line: 1
 												}
 												start: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 											}
@@ -203,12 +183,10 @@ JSRoot {
 											identifierName: ""
 											end: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 											start: Object {
 												column: 23
-												index: 23
 												line: 1
 											}
 										}
@@ -219,12 +197,10 @@ JSRoot {
 												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 												start: Object {
 													column: 23
-													index: 23
 													line: 1
 												}
 											}
@@ -238,12 +214,10 @@ JSRoot {
 									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 									end: Object {
 										column: 10
-										index: 66
 										line: 2
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}
@@ -253,12 +227,10 @@ JSRoot {
 											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											end: Object {
 												column: 45
-												index: 45
 												line: 1
 											}
 											start: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 										}
@@ -268,12 +240,10 @@ JSRoot {
 												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 45
-													index: 45
 													line: 1
 												}
 												start: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 											}
@@ -284,12 +254,10 @@ JSRoot {
 											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 											end: Object {
 												column: 10
-												index: 66
 												line: 2
 											}
 											start: Object {
 												column: 45
-												index: 45
 												line: 1
 											}
 										}
@@ -300,12 +268,10 @@ JSRoot {
 													filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 													end: Object {
 														column: 52
-														index: 52
 														line: 1
 													}
 													start: Object {
 														column: 46
-														index: 46
 														line: 1
 													}
 												}
@@ -317,12 +283,10 @@ JSRoot {
 												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 												end: Object {
 													column: 9
-													index: 65
 													line: 2
 												}
 												start: Object {
 													column: 45
-													index: 45
 													line: 1
 												}
 											}
@@ -333,12 +297,10 @@ JSRoot {
 														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 														end: Object {
 															column: 54
-															index: 54
 															line: 1
 														}
 														start: Object {
 															column: 53
-															index: 53
 															line: 1
 														}
 													}
@@ -348,12 +310,10 @@ JSRoot {
 														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 														end: Object {
 															column: 9
-															index: 65
 															line: 2
 														}
 														start: Object {
 															column: 54
-															index: 54
 															line: 1
 														}
 													}
@@ -363,12 +323,10 @@ JSRoot {
 															filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 															end: Object {
 																column: 9
-																index: 65
 																line: 2
 															}
 															start: Object {
 																column: 2
-																index: 58
 																line: 2
 															}
 														}
@@ -379,12 +337,10 @@ JSRoot {
 																filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 																end: Object {
 																	column: 9
-																	index: 65
 																	line: 2
 																}
 																start: Object {
 																	column: 8
-																	index: 64
 																	line: 2
 																}
 															}

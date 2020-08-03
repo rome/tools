@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 							end: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -114,12 +102,10 @@ JSRoot {
 									identifierName: "options"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -134,12 +120,10 @@ JSRoot {
 									filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 									end: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 									start: Object {
 										column: 8
-										index: 8
 										line: 1
 									}
 								}
@@ -150,12 +134,10 @@ JSRoot {
 											filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 											end: Object {
 												column: 21
-												index: 21
 												line: 1
 											}
 											start: Object {
 												column: 9
-												index: 9
 												line: 1
 											}
 										}
@@ -165,12 +147,10 @@ JSRoot {
 												filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
 												end: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 												start: Object {
 													column: 19
-													index: 19
 													line: 1
 												}
 											}
@@ -182,12 +162,10 @@ JSRoot {
 												identifierName: "options"
 												end: Object {
 													column: 16
-													index: 16
 													line: 1
 												}
 												start: Object {
 													column: 9
-													index: 9
 													line: 1
 												}
 											}

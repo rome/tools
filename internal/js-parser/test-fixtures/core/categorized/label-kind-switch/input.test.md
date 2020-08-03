@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/categorized/label-kind-switch/input.js"
 		end: Object {
 			column: 1
-			index: 25
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/categorized/label-kind-switch/input.js"
 				end: Object {
 					column: 1
-					index: 25
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "core/categorized/label-kind-switch/input.js"
 						end: Object {
 							column: 3
-							index: 23
 							line: 3
 						}
 						start: Object {
 							column: 2
-							index: 4
 							line: 2
 						}
 					}
@@ -69,12 +63,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 3
-								index: 5
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 4
 								line: 2
 							}
 						}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "core/categorized/label-kind-switch/input.js"
 							end: Object {
 								column: 3
-								index: 23
 								line: 3
 							}
 							start: Object {
 								column: 5
-								index: 7
 								line: 2
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 								identifierName: "i"
 								end: Object {
 									column: 14
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 15
 									line: 2
 								}
 							}

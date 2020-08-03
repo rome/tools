@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 		end: Object {
 			column: 0
-			index: 28
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "async"
 						end: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -102,12 +92,10 @@ JSRoot {
 				filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 				end: Object {
 					column: 16
-					index: 27
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 			}
@@ -117,12 +105,10 @@ JSRoot {
 					filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 					end: Object {
 						column: 15
-						index: 26
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 11
 						line: 2
 					}
 				}
@@ -133,12 +119,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 						end: Object {
 							column: 15
-							index: 26
 							line: 2
 						}
 						start: Object {
 							column: 14
-							index: 25
 							line: 2
 						}
 					}
@@ -149,12 +133,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 						end: Object {
 							column: 10
-							index: 21
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 11
 							line: 2
 						}
 					}
@@ -165,12 +147,10 @@ JSRoot {
 							identifierName: "async"
 							end: Object {
 								column: 5
-								index: 16
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 11
 								line: 2
 							}
 						}
@@ -180,12 +160,10 @@ JSRoot {
 							filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 							end: Object {
 								column: 8
-								index: 19
 								line: 2
 							}
 							start: Object {
 								column: 5
-								index: 16
 								line: 2
 							}
 						}
@@ -196,12 +174,10 @@ JSRoot {
 									filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 									end: Object {
 										column: 7
-										index: 18
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 17
 										line: 2
 									}
 								}
@@ -212,12 +188,10 @@ JSRoot {
 										identifierName: "T"
 										end: Object {
 											column: 7
-											index: 18
 											line: 2
 										}
 										start: Object {
 											column: 6
-											index: 17
 											line: 2
 										}
 									}

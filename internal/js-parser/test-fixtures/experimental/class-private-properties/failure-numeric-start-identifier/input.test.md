@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 		end: Object {
 			column: 0
-			index: 24
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 16
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 16
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 				end: Object {
 					column: 1
-					index: 23
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 					end: Object {
 						column: 1
-						index: 23
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 5
-										index: 17
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 16
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 								end: Object {
 									column: 5
-									index: 17
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 16
 									line: 2
 								}
 							}
@@ -146,12 +132,10 @@ JSRoot {
 								identifierName: "y"
 								end: Object {
 									column: 9
-									index: 21
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 20
 									line: 2
 								}
 							}
@@ -162,12 +146,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 							end: Object {
 								column: 9
-								index: 21
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 16
 								line: 2
 							}
 						}
@@ -180,19 +162,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/failure-numeric-start-identifier/input.js"
 								end: Object {
 									column: 5
-									index: 17
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 16
 									line: 2
 								}
 							}

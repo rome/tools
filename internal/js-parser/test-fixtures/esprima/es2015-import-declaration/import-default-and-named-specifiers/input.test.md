@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 		end: Object {
 			column: 0
-			index: 30
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -152,12 +136,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -167,12 +149,10 @@ JSRoot {
 							filename: "esprima/es2015-import-declaration/import-default-and-named-specifiers/input.js"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}

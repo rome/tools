@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/import-meta/valid-in-module/input.js"
 		end: Object {
 			column: 0
-			index: 117
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "es2020/import-meta/valid-in-module/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -114,12 +102,10 @@ JSRoot {
 									identifierName: "import"
 									end: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -131,12 +117,10 @@ JSRoot {
 									identifierName: "meta"
 									end: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -151,12 +135,10 @@ JSRoot {
 				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 28
-					index: 51
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 2
 				}
 			}
@@ -166,12 +148,10 @@ JSRoot {
 					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 28
-						index: 51
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 23
 						line: 2
 					}
 				}
@@ -184,12 +164,10 @@ JSRoot {
 								identifierName: "url"
 								end: Object {
 									column: 9
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 29
 									line: 2
 								}
 							}
@@ -198,12 +176,10 @@ JSRoot {
 							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 27
-								index: 50
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 29
 								line: 2
 							}
 						}
@@ -212,12 +188,10 @@ JSRoot {
 								filename: "es2020/import-meta/valid-in-module/input.js"
 								end: Object {
 									column: 27
-									index: 50
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 35
 									line: 2
 								}
 							}
@@ -229,12 +203,10 @@ JSRoot {
 										identifierName: "url"
 										end: Object {
 											column: 27
-											index: 50
 											line: 2
 										}
 										start: Object {
 											column: 24
-											index: 47
 											line: 2
 										}
 									}
@@ -244,12 +216,10 @@ JSRoot {
 									identifierName: "url"
 									end: Object {
 										column: 27
-										index: 50
 										line: 2
 									}
 									start: Object {
 										column: 24
-										index: 47
 										line: 2
 									}
 								}
@@ -259,12 +229,10 @@ JSRoot {
 									filename: "es2020/import-meta/valid-in-module/input.js"
 									end: Object {
 										column: 23
-										index: 46
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 35
 										line: 2
 									}
 								}
@@ -275,12 +243,10 @@ JSRoot {
 										identifierName: "import"
 										end: Object {
 											column: 18
-											index: 41
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 35
 											line: 2
 										}
 									}
@@ -292,12 +258,10 @@ JSRoot {
 										identifierName: "meta"
 										end: Object {
 											column: 23
-											index: 46
 											line: 2
 										}
 										start: Object {
 											column: 19
-											index: 42
 											line: 2
 										}
 									}
@@ -313,12 +277,10 @@ JSRoot {
 				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 12
-					index: 64
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 52
 					line: 3
 				}
 			}
@@ -327,12 +289,10 @@ JSRoot {
 					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 11
-						index: 63
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 52
 						line: 3
 					}
 				}
@@ -343,12 +303,10 @@ JSRoot {
 						identifierName: "import"
 						end: Object {
 							column: 6
-							index: 58
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 52
 							line: 3
 						}
 					}
@@ -360,12 +318,10 @@ JSRoot {
 						identifierName: "meta"
 						end: Object {
 							column: 11
-							index: 63
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 59
 							line: 3
 						}
 					}
@@ -377,12 +333,10 @@ JSRoot {
 				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 16
-					index: 81
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 65
 					line: 4
 				}
 			}
@@ -391,12 +345,10 @@ JSRoot {
 					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 15
-						index: 80
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 65
 						line: 4
 					}
 				}
@@ -408,12 +360,10 @@ JSRoot {
 							identifierName: "url"
 							end: Object {
 								column: 15
-								index: 80
 								line: 4
 							}
 							start: Object {
 								column: 12
-								index: 77
 								line: 4
 							}
 						}
@@ -423,12 +373,10 @@ JSRoot {
 						identifierName: "url"
 						end: Object {
 							column: 15
-							index: 80
 							line: 4
 						}
 						start: Object {
 							column: 12
-							index: 77
 							line: 4
 						}
 					}
@@ -438,12 +386,10 @@ JSRoot {
 						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 11
-							index: 76
 							line: 4
 						}
 						start: Object {
 							column: 0
-							index: 65
 							line: 4
 						}
 					}
@@ -454,12 +400,10 @@ JSRoot {
 							identifierName: "import"
 							end: Object {
 								column: 6
-								index: 71
 								line: 4
 							}
 							start: Object {
 								column: 0
-								index: 65
 								line: 4
 							}
 						}
@@ -471,12 +415,10 @@ JSRoot {
 							identifierName: "meta"
 							end: Object {
 								column: 11
-								index: 76
 								line: 4
 							}
 							start: Object {
 								column: 7
-								index: 72
 								line: 4
 							}
 						}
@@ -489,12 +431,10 @@ JSRoot {
 				filename: "es2020/import-meta/valid-in-module/input.js"
 				end: Object {
 					column: 34
-					index: 116
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 82
 					line: 5
 				}
 			}
@@ -504,12 +444,10 @@ JSRoot {
 					filename: "es2020/import-meta/valid-in-module/input.js"
 					end: Object {
 						column: 33
-						index: 115
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 82
 						line: 5
 					}
 				}
@@ -519,12 +457,10 @@ JSRoot {
 						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 33
-							index: 115
 							line: 5
 						}
 						start: Object {
 							column: 29
-							index: 111
 							line: 5
 						}
 					}
@@ -534,12 +470,10 @@ JSRoot {
 						filename: "es2020/import-meta/valid-in-module/input.js"
 						end: Object {
 							column: 26
-							index: 108
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 82
 							line: 5
 						}
 					}
@@ -551,12 +485,10 @@ JSRoot {
 								identifierName: "couldBeMutable"
 								end: Object {
 									column: 26
-									index: 108
 									line: 5
 								}
 								start: Object {
 									column: 12
-									index: 94
 									line: 5
 								}
 							}
@@ -566,12 +498,10 @@ JSRoot {
 							identifierName: "couldBeMutable"
 							end: Object {
 								column: 26
-								index: 108
 								line: 5
 							}
 							start: Object {
 								column: 12
-								index: 94
 								line: 5
 							}
 						}
@@ -581,12 +511,10 @@ JSRoot {
 							filename: "es2020/import-meta/valid-in-module/input.js"
 							end: Object {
 								column: 11
-								index: 93
 								line: 5
 							}
 							start: Object {
 								column: 0
-								index: 82
 								line: 5
 							}
 						}
@@ -597,12 +525,10 @@ JSRoot {
 								identifierName: "import"
 								end: Object {
 									column: 6
-									index: 88
 									line: 5
 								}
 								start: Object {
 									column: 0
-									index: 82
 									line: 5
 								}
 							}
@@ -614,12 +540,10 @@ JSRoot {
 								identifierName: "meta"
 								end: Object {
 									column: 11
-									index: 93
 									line: 5
 								}
 								start: Object {
 									column: 7
-									index: 89
 									line: 5
 								}
 							}

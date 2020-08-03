@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 		end: Object {
 			column: 0
-			index: 34
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 30
 					line: 2
 				}
 				start: Object {
 					column: 2
-					index: 20
 					line: 2
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 				end: Object {
 					column: 1
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 					end: Object {
 						column: 1
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 								identifierName: "A"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 							end: Object {
 								column: 1
-								index: 33
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 								end: Object {
 									column: 1
-									index: 33
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -158,12 +142,10 @@ JSRoot {
 									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 									end: Object {
 										column: 1
-										index: 33
 										line: 3
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -173,12 +155,10 @@ JSRoot {
 											filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 											end: Object {
 												column: 13
-												index: 31
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 20
 												line: 2
 											}
 										}
@@ -187,12 +167,10 @@ JSRoot {
 												filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 												end: Object {
 													column: 12
-													index: 30
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 20
 													line: 2
 												}
 											}
@@ -203,12 +181,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 5
-														index: 23
 														line: 2
 													}
 													start: Object {
 														column: 2
-														index: 20
 														line: 2
 													}
 												}
@@ -220,12 +196,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 12
-														index: 30
 														line: 2
 													}
 													start: Object {
 														column: 6
-														index: 24
 														line: 2
 													}
 												}

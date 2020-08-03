@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/new-line/input.ts"
 		end: Object {
 			column: 0
-			index: 19
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/new-line/input.ts"
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "type"
 					end: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 				filename: "typescript/types/new-line/input.ts"
 				end: Object {
 					column: 13
-					index: 18
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 5
 					line: 2
 				}
 			}
@@ -84,12 +76,10 @@ JSRoot {
 					filename: "typescript/types/new-line/input.ts"
 					end: Object {
 						column: 12
-						index: 17
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 5
 						line: 2
 					}
 				}
@@ -100,12 +90,10 @@ JSRoot {
 						identifierName: "Foo"
 						end: Object {
 							column: 3
-							index: 8
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 5
 							line: 2
 						}
 					}
@@ -117,12 +105,10 @@ JSRoot {
 						identifierName: "string"
 						end: Object {
 							column: 12
-							index: 17
 							line: 2
 						}
 						start: Object {
 							column: 6
-							index: 11
 							line: 2
 						}
 					}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "g"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 							end: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 									filename: "esprima/es2015-yield/yield-member-expression-property/input.js"
 									end: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 									start: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 										identifierName: "obj"
 										end: Object {
 											column: 25
-											index: 25
 											line: 1
 										}
 										start: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 									}
@@ -170,12 +152,10 @@ JSRoot {
 											identifierName: "yield"
 											end: Object {
 												column: 31
-												index: 31
 												line: 1
 											}
 											start: Object {
 												column: 26
-												index: 26
 												line: 1
 											}
 										}
@@ -185,12 +165,10 @@ JSRoot {
 										identifierName: "yield"
 										end: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 										start: Object {
 											column: 26
-											index: 26
 											line: 1
 										}
 									}

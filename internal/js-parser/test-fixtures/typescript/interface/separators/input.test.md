@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/interface/separators/input.ts"
 		end: Object {
 			column: 0
-			index: 131
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Comma"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 									start: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 								}
@@ -103,12 +93,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 							}
@@ -153,12 +137,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 30
-										index: 30
 										line: 1
 									}
 									start: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 								}
@@ -167,12 +149,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}
@@ -183,12 +163,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 						}
@@ -197,12 +175,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}
@@ -219,12 +195,10 @@ JSRoot {
 					identifierName: "Semi"
 					end: Object {
 						column: 14
-						index: 55
 						line: 2
 					}
 					start: Object {
 						column: 10
-						index: 51
 						line: 2
 					}
 				}
@@ -235,12 +209,10 @@ JSRoot {
 				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 39
-					index: 80
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 41
 					line: 2
 				}
 			}
@@ -249,12 +221,10 @@ JSRoot {
 					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 39
-						index: 80
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 56
 						line: 2
 					}
 				}
@@ -268,12 +238,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 18
-										index: 59
 										line: 2
 									}
 									start: Object {
 										column: 17
-										index: 58
 										line: 2
 									}
 								}
@@ -282,12 +250,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 18
-									index: 59
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 58
 									line: 2
 								}
 							}
@@ -298,12 +264,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 27
-								index: 68
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 58
 								line: 2
 							}
 						}
@@ -312,12 +276,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 26
-									index: 67
 									line: 2
 								}
 								start: Object {
 									column: 20
-									index: 61
 									line: 2
 								}
 							}
@@ -332,12 +294,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 29
-										index: 70
 										line: 2
 									}
 									start: Object {
 										column: 28
-										index: 69
 										line: 2
 									}
 								}
@@ -346,12 +306,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 29
-									index: 70
 									line: 2
 								}
 								start: Object {
 									column: 28
-									index: 69
 									line: 2
 								}
 							}
@@ -362,12 +320,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 37
-								index: 78
 								line: 2
 							}
 							start: Object {
 								column: 28
-								index: 69
 								line: 2
 							}
 						}
@@ -376,12 +332,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 37
-									index: 78
 									line: 2
 								}
 								start: Object {
 									column: 31
-									index: 72
 									line: 2
 								}
 							}
@@ -398,12 +352,10 @@ JSRoot {
 					identifierName: "Newline"
 					end: Object {
 						column: 17
-						index: 98
 						line: 3
 					}
 					start: Object {
 						column: 10
-						index: 91
 						line: 3
 					}
 				}
@@ -414,12 +366,10 @@ JSRoot {
 				filename: "typescript/interface/separators/input.ts"
 				end: Object {
 					column: 1
-					index: 130
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 81
 					line: 3
 				}
 			}
@@ -428,12 +378,10 @@ JSRoot {
 					filename: "typescript/interface/separators/input.ts"
 					end: Object {
 						column: 1
-						index: 130
 						line: 6
 					}
 					start: Object {
 						column: 18
-						index: 99
 						line: 3
 					}
 				}
@@ -447,12 +395,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 5
-										index: 106
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 105
 										line: 4
 									}
 								}
@@ -461,12 +407,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 5
-									index: 106
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 105
 									line: 4
 								}
 							}
@@ -477,12 +421,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 13
-								index: 114
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 105
 								line: 4
 							}
 						}
@@ -491,12 +433,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 13
-									index: 114
 									line: 4
 								}
 								start: Object {
 									column: 7
-									index: 108
 									line: 4
 								}
 							}
@@ -511,12 +451,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 5
-										index: 120
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 119
 										line: 5
 									}
 								}
@@ -525,12 +463,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 5
-									index: 120
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 119
 									line: 5
 								}
 							}
@@ -541,12 +477,10 @@ JSRoot {
 							filename: "typescript/interface/separators/input.ts"
 							end: Object {
 								column: 13
-								index: 128
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 119
 								line: 5
 							}
 						}
@@ -555,12 +489,10 @@ JSRoot {
 								filename: "typescript/interface/separators/input.ts"
 								end: Object {
 									column: 13
-									index: 128
 									line: 5
 								}
 								start: Object {
 									column: 7
-									index: 122
 									line: 5
 								}
 							}

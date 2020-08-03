@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/conditional-decimal/input.js"
 		end: Object {
 			column: 0
-			index: 25
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/conditional-decimal/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/conditional-decimal/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -66,12 +60,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -117,12 +105,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/conditional-decimal/input.js"
 				end: Object {
 					column: 13
-					index: 24
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 3
 				}
 			}
@@ -131,12 +117,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/conditional-decimal/input.js"
 					end: Object {
 						column: 13
-						index: 24
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 11
 						line: 3
 					}
 				}
@@ -146,12 +130,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 4
-							index: 15
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 11
 							line: 3
 						}
 					}
@@ -163,12 +145,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 13
-							index: 24
 							line: 3
 						}
 						start: Object {
 							column: 12
-							index: 23
 							line: 3
 						}
 					}
@@ -180,12 +160,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
 							column: 9
-							index: 20
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 18
 							line: 3
 						}
 					}

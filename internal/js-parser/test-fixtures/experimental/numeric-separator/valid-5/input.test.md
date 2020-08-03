@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/numeric-separator/valid-5/input.js"
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "experimental/numeric-separator/valid-5/input.js"
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "experimental/numeric-separator/valid-5/input.js"
 					end: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

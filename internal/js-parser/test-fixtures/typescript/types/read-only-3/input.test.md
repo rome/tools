@@ -20,12 +20,10 @@ JSRoot {
 		filename: "typescript/types/read-only-3/input.ts"
 		end: Object {
 			column: 0
-			index: 49
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/read-only-3/input.ts"
 				end: Object {
 					column: 48
-					index: 48
 					line: 1
 				}
 				start: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 			}
@@ -62,12 +58,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 			}
@@ -82,12 +76,10 @@ JSRoot {
 					identifierName: "T32"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -98,12 +90,10 @@ JSRoot {
 				filename: "typescript/types/read-only-3/input.ts"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -113,12 +103,10 @@ JSRoot {
 					filename: "typescript/types/read-only-3/input.ts"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -128,12 +116,10 @@ JSRoot {
 						filename: "typescript/types/read-only-3/input.ts"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "typescript/types/read-only-3/input.ts"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 								filename: "typescript/types/read-only-3/input.ts"
 								end: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}

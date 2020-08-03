@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-primary-literal-string/migrated_0000/input.js"
 		end: Object {
 			column: 7
-			index: 7
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "esprima/expression-primary-literal-string/migrated_0000/input.js"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

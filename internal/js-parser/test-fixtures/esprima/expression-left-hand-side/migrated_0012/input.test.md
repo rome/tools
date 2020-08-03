@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 							identifierName: "Earth"
 							end: Object {
 								column: 35
-								index: 35
 								line: 1
 							}
 							start: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 						}
@@ -83,12 +75,10 @@ JSRoot {
 						identifierName: "Earth"
 						end: Object {
 							column: 35
-							index: 35
 							line: 1
 						}
 						start: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 						filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -115,12 +103,10 @@ JSRoot {
 								identifierName: "solarsystem"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 							identifierName: "solarsystem"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -145,12 +129,10 @@ JSRoot {
 							filename: "esprima/expression-left-hand-side/migrated_0012/input.js"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -161,12 +143,10 @@ JSRoot {
 								identifierName: "universe"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 0
 									line: 1
 								}
 							}
@@ -179,12 +159,10 @@ JSRoot {
 									identifierName: "milkyway"
 									end: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -194,12 +172,10 @@ JSRoot {
 								identifierName: "milkyway"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 		end: Object {
 			column: 1
-			index: 45
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 				end: Object {
 					column: 1
-					index: 45
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 					end: Object {
 						column: 1
-						index: 45
 						line: 3
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 							end: Object {
 								column: 26
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 19
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 								end: Object {
 									column: 25
-									index: 42
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 19
 									line: 2
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 									filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 7
-										index: 24
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 19
 										line: 2
 									}
 								}
@@ -156,12 +140,10 @@ JSRoot {
 									filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 									end: Object {
 										column: 25
-										index: 42
 										line: 2
 									}
 									start: Object {
 										column: 8
-										index: 25
 										line: 2
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 										filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 										end: Object {
 											column: 25
-											index: 42
 											line: 2
 										}
 										start: Object {
 											column: 23
-											index: 40
 											line: 2
 										}
 									}
@@ -192,12 +172,10 @@ JSRoot {
 										filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 										end: Object {
 											column: 22
-											index: 39
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 25
 											line: 2
 										}
 									}
@@ -208,12 +186,10 @@ JSRoot {
 												filename: "es2015/yield/parameter-default-inside-arrow-inside-arrow-inside-generator/input.js"
 												end: Object {
 													column: 18
-													index: 35
 													line: 2
 												}
 												start: Object {
 													column: 9
-													index: 26
 													line: 2
 												}
 											}
@@ -224,12 +200,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 10
-														index: 27
 														line: 2
 													}
 													start: Object {
 														column: 9
-														index: 26
 														line: 2
 													}
 												}
@@ -241,12 +215,10 @@ JSRoot {
 													identifierName: "yield"
 													end: Object {
 														column: 18
-														index: 35
 														line: 2
 													}
 													start: Object {
 														column: 13
-														index: 30
 														line: 2
 													}
 												}

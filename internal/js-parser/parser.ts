@@ -18,7 +18,9 @@ import {
 	ParserOptionsWithRequiredPath,
 	ParserUnexpectedOptions,
 	Position,
+	comparePositions,
 	createParser,
+	derivePositionKey,
 } from "@internal/parser-core";
 import {JSParserOptions} from "./options";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
@@ -120,7 +122,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		isTrackingTokens: boolean;
 		inModule: boolean;
 		isLookahead: boolean;
-		parenthesized: Set<Number0>;
+		parenthesized: Set<string>;
 
 		resetTokenizerLine() {
 			this.state.lineStartIndex = this.state.index;
@@ -160,11 +162,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		addParenthesized(node: AnyNode) {
-			this.parenthesized.add(this.getLoc(node).start.index);
+			this.parenthesized.add(derivePositionKey(this.getLoc(node).start));
 		}
 
 		isParenthesized(node: AnyNode): boolean {
-			return this.parenthesized.has(this.getLoc(node).start.index);
+			return this.parenthesized.has(derivePositionKey(this.getLoc(node).start));
 		}
 
 		setState(newState: State) {
@@ -237,7 +239,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		): void {
 			const {state} = this;
 
-			if (state.startPos.index > state.lastEndPos.index) {
+			if (comparePositions(state.startPos, state.lastEndPos) === 1) {
 				this.unexpectedDiagnostic({
 					start: state.lastEndPos,
 					end: state.lastEndPos,
@@ -253,8 +255,6 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		createToken(state: State): Token {
 			const token: Token = {
 				type: state.tokenType,
-				start: state.startPos.index,
-				end: state.endPos.index,
 				loc: {
 					filename: this.filename,
 					start: state.startPos,
@@ -268,7 +268,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		pushToken(token: Token) {
 			const lastToken = this.state.tokens[this.state.tokens.length - 1];
 			if (lastToken !== undefined) {
-				if (token.loc.start.index < lastToken.loc.end.index) {
+				if (comparePositions(token.loc.start, lastToken.loc.end) === -1) {
 					throw new Error(
 						"Trying to push a token that appears before the last pushed token",
 					);
@@ -407,7 +407,10 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		hasPrecedingLineBreak(): boolean {
 			return lineBreak.test(
-				this.getRawInput(this.state.lastEndPos.index, this.state.startPos.index),
+				this.getRawInput(
+					this.getIndexFromPosition(this.state.lastEndPos, this.filename),
+					this.getIndexFromPosition(this.state.startPos, this.filename),
+				),
 			);
 		}
 
@@ -548,6 +551,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 			this.state.lastEndPos = this.state.endPos;
 			this.state.lastStartPos = this.state.startPos;
+			this.state.lastEndIndex = this.state.endIndex;
+			this.state.lastStartIndex = this.state.startIndex;
 			nextToken(this);
 		}
 
@@ -608,6 +613,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return this.state.startPos;
 		}
 
+		// Overrides ParserCore#getIndex
+		getIndex(): Number0 {
+			return this.state.startIndex;
+		}
+
 		// Overrides ParserCore#getLastEndPosition
 		getLastEndPosition(): Position {
 			return this.state.lastEndPos;
@@ -616,11 +626,12 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		// Private method to actually generate a Position
 		getPositionFromState(): Position {
 			const {state} = this;
-			return {
-				index: state.index,
+			const pos: Position = {
 				line: state.curLine,
 				column: ob1Sub(state.index, state.lineStartIndex),
 			};
+			this.indexTracker.setPositionIndex(pos, state.index);
+			return pos;
 		}
 
 		parse(): JSRoot {

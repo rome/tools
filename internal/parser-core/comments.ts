@@ -29,9 +29,8 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {AnyParserCore, SourceLocation} from "@internal/parser-core";
+import {AnyParserCore} from "@internal/parser-core";
 import {AnyComment, AnyNode} from "@internal/ast";
-import {Number0} from "@internal/ob1";
 
 function last<T>(stack: Array<T>): T {
 	return stack[stack.length - 1];
@@ -41,22 +40,6 @@ function getIds(comments: Array<AnyComment>): Array<string> {
 	return comments.map((comment) => comment.id);
 }
 
-function getLoc(node: AnyNode): SourceLocation {
-	const {loc} = node;
-	if (loc === undefined) {
-		throw new Error("No loc found");
-	}
-	return loc;
-}
-
-function start(node: AnyNode): Number0 {
-	return getLoc(node).start.index;
-}
-
-function end(node: AnyNode): Number0 {
-	return getLoc(node).end.index;
-}
-
 function hasComments(
 	comments: undefined | Array<unknown>,
 ): comments is Array<unknown> {
@@ -64,6 +47,7 @@ function hasComments(
 }
 
 function setComments(
+	parser: AnyParserCore,
 	node: AnyNode,
 	key: "leadingComments" | "trailingComments",
 	comments: Array<AnyComment>,
@@ -72,7 +56,10 @@ function setComments(
 
 	for (let i = 0; i < comments.length; i++) {
 		const comment = comments[i];
-		if (start(comment) >= start(node) && end(comment) <= end(node)) {
+		if (
+			parser.getInputStartIndex(comment) >= parser.getInputStartIndex(node) &&
+			parser.getInputEndIndex(comment) <= parser.getInputEndIndex(node)
+		) {
 			innerEndIndex++;
 		} else {
 			break;
@@ -122,7 +109,10 @@ function adjustCommentsAfterTrailingComma(
 	}
 
 	for (let j = 0; j < state.leadingComments.length; j++) {
-		if (end(parser.state.leadingComments[j]) < end(commentPreviousNode)) {
+		if (
+			parser.getInputEndIndex(parser.state.leadingComments[j]) <
+			parser.getInputEndIndex(commentPreviousNode)
+		) {
 			parser.state.leadingComments.splice(j, 1);
 			j--;
 		}
@@ -131,7 +121,7 @@ function adjustCommentsAfterTrailingComma(
 	const newTrailingComments: Array<AnyComment> = [];
 	for (let i = 0; i < state.leadingComments.length; i++) {
 		const leadingComment = state.leadingComments[i];
-		if (end(leadingComment) < end(node)) {
+		if (parser.getInputEndIndex(leadingComment) < parser.getInputEndIndex(node)) {
 			newTrailingComments.push(leadingComment);
 
 			// Perf: we don't need to splice if we are going to reset the array anyway
@@ -172,7 +162,10 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 		// current node, then we're good - all comments in the array will
 		// come after the node and so it's safe to add them as official
 		// trailingComments.
-		if (start(state.trailingComments[0]) >= end(node)) {
+		if (
+			parser.getInputStartIndex(state.trailingComments[0]) >=
+			parser.getInputEndIndex(node)
+		) {
 			trailingComments = state.trailingComments;
 			state.trailingComments = [];
 		} else {
@@ -188,9 +181,9 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 		const lastInStack = last(commentStack);
 		if (
 			hasComments(lastInStack.trailingComments) &&
-			start(
+			parser.getInputStartIndex(
 				parser.comments.assertGetCommentFromId(lastInStack.trailingComments[0]),
-			) >= end(node)
+			) >= parser.getInputEndIndex(node)
 		) {
 			trailingComments = parser.comments.getCommentsFromIds(
 				lastInStack.trailingComments,
@@ -201,12 +194,20 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 
 	// Eating the stack.
 	let firstChild;
-	if (commentStack.length > 0 && start(last(commentStack)) >= start(node)) {
+	if (
+		commentStack.length > 0 &&
+		parser.getInputStartIndex(last(commentStack)) >=
+		parser.getInputStartIndex(node)
+	) {
 		firstChild = commentStack.pop();
 	}
 
 	let lastChild;
-	while (commentStack.length > 0 && start(last(commentStack)) >= start(node)) {
+	while (
+		commentStack.length > 0 &&
+		parser.getInputStartIndex(last(commentStack)) >=
+		parser.getInputStartIndex(node)
+	) {
 		lastChild = commentStack.pop();
 	}
 
@@ -266,13 +267,14 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 		if (hasComments(lastChild.leadingComments)) {
 			if (
 				lastChild !== node &&
-				end(
+				parser.getInputEndIndex(
 					parser.comments.assertGetCommentFromId(
 						last(lastChild.leadingComments),
 					),
-				) <= start(node)
+				) <= parser.getInputStartIndex(node)
 			) {
 				setComments(
+					parser,
 					node,
 					"leadingComments",
 					parser.comments.getCommentsFromIds(lastChild.leadingComments),
@@ -284,14 +286,15 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 				// See also: https://github.com/eslint/espree/issues/158
 				for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
 					if (
-						end(
+						parser.getInputEndIndex(
 							parser.comments.assertGetCommentFromId(
 								lastChild.leadingComments[i],
 							),
 						) <=
-						start(node)
+						parser.getInputStartIndex(node)
 					) {
 						setComments(
+							parser,
 							node,
 							"leadingComments",
 							parser.comments.getCommentsFromIds(
@@ -304,12 +307,15 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 			}
 		}
 	} else if (parser.state.leadingComments.length > 0) {
-		if (end(last(parser.state.leadingComments)) <= start(node)) {
+		if (
+			parser.getInputEndIndex(last(parser.state.leadingComments)) <=
+			parser.getInputStartIndex(node)
+		) {
 			if (parser.state.commentPreviousNode) {
 				for (let j = 0; j < parser.state.leadingComments.length; j++) {
 					if (
-						end(parser.state.leadingComments[j]) <
-						end(parser.state.commentPreviousNode)
+						parser.getInputEndIndex(parser.state.leadingComments[j]) <
+						parser.getInputEndIndex(parser.state.commentPreviousNode)
 					) {
 						parser.state.leadingComments.splice(j, 1);
 						j--;
@@ -318,7 +324,12 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 			}
 
 			if (state.leadingComments.length > 0) {
-				setComments(node, "leadingComments", parser.state.leadingComments);
+				setComments(
+					parser,
+					node,
+					"leadingComments",
+					parser.state.leadingComments,
+				);
 				state.leadingComments = [];
 			}
 		} else {
@@ -335,7 +346,10 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 			// first comment that comes after the given node.
 			let i = 0;
 			while (i < state.leadingComments.length) {
-				if (end(state.leadingComments[i]) > start(node)) {
+				if (
+					parser.getInputEndIndex(state.leadingComments[i]) >
+					parser.getInputStartIndex(node)
+				) {
 					break;
 				} else {
 					i++;
@@ -350,7 +364,7 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 			const leadingComments = state.leadingComments.slice(0, i);
 
 			if (leadingComments.length > 0) {
-				setComments(node, "leadingComments", leadingComments);
+				setComments(parser, node, "leadingComments", leadingComments);
 			}
 
 			// Similarly, trailing comments are attached later. The variable
@@ -365,7 +379,7 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 	parser.state.commentPreviousNode = node;
 
 	if (trailingComments) {
-		setComments(node, "trailingComments", trailingComments);
+		setComments(parser, node, "trailingComments", trailingComments);
 	}
 
 	commentStack.push(node);

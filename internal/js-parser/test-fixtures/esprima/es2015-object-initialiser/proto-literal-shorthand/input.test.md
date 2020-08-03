@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 									filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -107,12 +97,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -155,12 +139,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 									start: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 								}
@@ -169,12 +151,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -186,12 +166,10 @@ JSRoot {
 								identifierName: "__proto__"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -200,12 +178,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}

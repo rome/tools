@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/30/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/30/input.js"
 				end: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2017/async-functions/30/input.js"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2017/async-functions/30/input.js"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "es2017/async-functions/30/input.js"
 								end: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -115,12 +103,10 @@ JSRoot {
 									filename: "es2017/async-functions/30/input.js"
 									end: Object {
 										column: 39
-										index: 39
 										line: 1
 									}
 									start: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 								}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "es2017/async-functions/30/input.js"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 								}
@@ -153,12 +137,10 @@ JSRoot {
 											filename: "es2017/async-functions/30/input.js"
 											end: Object {
 												column: 35
-												index: 35
 												line: 1
 											}
 											start: Object {
 												column: 21
-												index: 21
 												line: 1
 											}
 										}
@@ -169,12 +151,10 @@ JSRoot {
 												filename: "es2017/async-functions/30/input.js"
 												end: Object {
 													column: 35
-													index: 35
 													line: 1
 												}
 												start: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 											}
@@ -189,12 +169,10 @@ JSRoot {
 															identifierName: "async"
 															end: Object {
 																column: 28
-																index: 28
 																line: 1
 															}
 															start: Object {
 																column: 23
-																index: 23
 																line: 1
 															}
 														}
@@ -203,12 +181,10 @@ JSRoot {
 														filename: "es2017/async-functions/30/input.js"
 														end: Object {
 															column: 28
-															index: 28
 															line: 1
 														}
 														start: Object {
 															column: 23
-															index: 23
 															line: 1
 														}
 													}
@@ -220,12 +196,10 @@ JSRoot {
 														identifierName: "bar"
 														end: Object {
 															column: 33
-															index: 33
 															line: 1
 														}
 														start: Object {
 															column: 30
-															index: 30
 															line: 1
 														}
 													}
@@ -234,12 +208,10 @@ JSRoot {
 													filename: "es2017/async-functions/30/input.js"
 													end: Object {
 														column: 33
-														index: 33
 														line: 1
 													}
 													start: Object {
 														column: 23
-														index: 23
 														line: 1
 													}
 												}

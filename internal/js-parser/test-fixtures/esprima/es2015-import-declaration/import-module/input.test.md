@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/import-module/input.js"
 		end: Object {
 			column: 0
-			index: 14
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -41,12 +39,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/import-module/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-module/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/declare/interface-new-line/input.ts"
 		end: Object {
 			column: 0
-			index: 23
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/declare/interface-new-line/input.ts"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "declare"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 					identifierName: "I"
 					end: Object {
 						column: 11
-						index: 19
 						line: 2
 					}
 					start: Object {
 						column: 10
-						index: 18
 						line: 2
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 				filename: "typescript/declare/interface-new-line/input.ts"
 				end: Object {
 					column: 14
-					index: 22
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 8
 					line: 2
 				}
 			}
@@ -103,12 +93,10 @@ JSRoot {
 					filename: "typescript/declare/interface-new-line/input.ts"
 					end: Object {
 						column: 14
-						index: 22
 						line: 2
 					}
 					start: Object {
 						column: 12
-						index: 20
 						line: 2
 					}
 				}

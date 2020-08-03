@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/await-inside-class-methods/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/await-inside-class-methods/input.js"
 				end: Object {
 					column: 1
-					index: 40
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-class-methods/input.js"
 					end: Object {
 						column: 1
-						index: 40
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 						filename: "es2017/async-functions/await-inside-class-methods/input.js"
 						end: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "es2017/async-functions/await-inside-class-methods/input.js"
 						end: Object {
 							column: 1
-							index: 40
 							line: 3
 						}
 						start: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 							filename: "es2017/async-functions/await-inside-class-methods/input.js"
 							end: Object {
 								column: 1
-								index: 40
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -125,12 +113,10 @@ JSRoot {
 											identifierName: "m"
 											end: Object {
 												column: 9
-												index: 23
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 22
 												line: 2
 											}
 										}
@@ -139,12 +125,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 9
-											index: 23
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 22
 											line: 2
 										}
 									}
@@ -153,12 +137,10 @@ JSRoot {
 									filename: "es2017/async-functions/await-inside-class-methods/input.js"
 									end: Object {
 										column: 24
-										index: 38
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 16
 										line: 2
 									}
 								}
@@ -175,12 +157,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 11
-											index: 25
 											line: 2
 										}
 										start: Object {
 											column: 9
-											index: 23
 											line: 2
 										}
 									}
@@ -194,19 +174,16 @@ JSRoot {
 									typeAnnotation: undefined
 									start: Object {
 										column: 2
-										index: 16
 										line: 2
 									}
 									loc: Object {
 										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 9
-											index: 23
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 16
 											line: 2
 										}
 									}
@@ -217,12 +194,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-class-methods/input.js"
 										end: Object {
 											column: 24
-											index: 38
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 26
 											line: 2
 										}
 									}
@@ -232,12 +207,10 @@ JSRoot {
 												filename: "es2017/async-functions/await-inside-class-methods/input.js"
 												end: Object {
 													column: 22
-													index: 36
 													line: 2
 												}
 												start: Object {
 													column: 14
-													index: 28
 													line: 2
 												}
 											}
@@ -246,12 +219,10 @@ JSRoot {
 													filename: "es2017/async-functions/await-inside-class-methods/input.js"
 													end: Object {
 														column: 22
-														index: 36
 														line: 2
 													}
 													start: Object {
 														column: 14
-														index: 28
 														line: 2
 													}
 												}
@@ -262,12 +233,10 @@ JSRoot {
 														filename: "es2017/async-functions/await-inside-class-methods/input.js"
 														end: Object {
 															column: 22
-															index: 36
 															line: 2
 														}
 														start: Object {
 															column: 20
-															index: 34
 															line: 2
 														}
 													}

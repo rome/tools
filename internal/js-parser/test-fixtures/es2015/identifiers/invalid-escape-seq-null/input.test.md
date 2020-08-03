@@ -21,15 +21,41 @@ JSRoot {
 		filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
 		end: Object {
 			column: 0
-			index: 10
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
+				end: Object {
+					column: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					line: 1
+				}
+			}
+			expression: JSNullLiteral {
+				loc: Object {
+					filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
+					end: Object {
+						column: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
@@ -49,45 +75,11 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 3
-					index: 3
 					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
-				end: Object {
-					column: 9
-					index: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-			}
-			expression: JSNullLiteral {
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
-					end: Object {
-						column: 9
-						index: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						index: 0
-						line: 1
-					}
 				}
 			}
 		}

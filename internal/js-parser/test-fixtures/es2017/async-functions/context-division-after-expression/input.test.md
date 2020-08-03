@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/context-division-after-expression/input.js"
 		end: Object {
 			column: 6
-			index: 34
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/context-division-after-expression/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "es2017/async-functions/context-division-after-expression/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 							identifierName: "fn"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "es2017/async-functions/context-division-after-expression/input.js"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 							filename: "es2017/async-functions/context-division-after-expression/input.js"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "es2017/async-functions/context-division-after-expression/input.js"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}
@@ -141,12 +127,10 @@ JSRoot {
 				filename: "es2017/async-functions/context-division-after-expression/input.js"
 				end: Object {
 					column: 6
-					index: 34
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 28
 					line: 2
 				}
 			}
@@ -161,12 +145,10 @@ JSRoot {
 					filename: "es2017/async-functions/context-division-after-expression/input.js"
 					end: Object {
 						column: 6
-						index: 34
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 28
 						line: 2
 					}
 				}
@@ -175,12 +157,10 @@ JSRoot {
 						filename: "es2017/async-functions/context-division-after-expression/input.js"
 						end: Object {
 							column: 4
-							index: 32
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 29
 							line: 2
 						}
 					}
@@ -191,12 +171,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 2
-									index: 30
 									line: 2
 								}
 								start: Object {
 									column: 1
-									index: 29
 									line: 2
 								}
 							}
@@ -207,12 +185,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 3
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 30
 									line: 2
 								}
 							}
@@ -223,12 +199,10 @@ JSRoot {
 								filename: "es2017/async-functions/context-division-after-expression/input.js"
 								end: Object {
 									column: 4
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 31
 									line: 2
 								}
 							}

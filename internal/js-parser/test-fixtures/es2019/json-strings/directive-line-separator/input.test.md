@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2019/json-strings/directive-line-separator/input.js"
 		end: Object {
 			column: 0
-			index: 99
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2019/json-strings/directive-line-separator/input.js"
 				end: Object {
 					column: 82
-					index: 98
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 16
 					line: 3
 				}
 			}
@@ -57,12 +53,10 @@ JSRoot {
 				filename: "es2019/json-strings/directive-line-separator/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

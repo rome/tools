@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/object/disallow-duplicate-method-params/input.js"
 		end: Object {
 			column: 0
-			index: 23
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 15
 					line: 2
 				}
 				start: Object {
 					column: 11
-					index: 14
 					line: 2
 				}
 			}
@@ -68,12 +64,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 12
-								index: 15
 								line: 2
 							}
 							start: Object {
 								column: 11
-								index: 14
 								line: 2
 							}
 						}
@@ -88,12 +82,10 @@ JSRoot {
 				filename: "es2015/object/disallow-duplicate-method-params/input.js"
 				end: Object {
 					column: 2
-					index: 22
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -102,12 +94,10 @@ JSRoot {
 					filename: "es2015/object/disallow-duplicate-method-params/input.js"
 					end: Object {
 						column: 1
-						index: 21
 						line: 3
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -122,12 +112,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 7
-										index: 10
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 7
 										line: 2
 									}
 								}
@@ -136,12 +124,10 @@ JSRoot {
 								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 7
-									index: 10
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 7
 									line: 2
 								}
 							}
@@ -150,12 +136,10 @@ JSRoot {
 							filename: "es2015/object/disallow-duplicate-method-params/input.js"
 							end: Object {
 								column: 16
-								index: 19
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 7
 								line: 2
 							}
 						}
@@ -166,12 +150,10 @@ JSRoot {
 								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 16
-									index: 19
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 17
 									line: 2
 								}
 							}
@@ -188,12 +170,10 @@ JSRoot {
 								filename: "es2015/object/disallow-duplicate-method-params/input.js"
 								end: Object {
 									column: 13
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 10
 									line: 2
 								}
 							}
@@ -205,12 +185,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 9
-											index: 12
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 11
 											line: 2
 										}
 									}
@@ -221,12 +199,10 @@ JSRoot {
 											filename: "es2015/object/disallow-duplicate-method-params/input.js"
 											end: Object {
 												column: 9
-												index: 12
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 11
 												line: 2
 											}
 										}
@@ -239,12 +215,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 12
-											index: 15
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 14
 											line: 2
 										}
 									}
@@ -255,12 +229,10 @@ JSRoot {
 											filename: "es2015/object/disallow-duplicate-method-params/input.js"
 											end: Object {
 												column: 12
-												index: 15
 												line: 2
 											}
 											start: Object {
 												column: 11
-												index: 14
 												line: 2
 											}
 										}

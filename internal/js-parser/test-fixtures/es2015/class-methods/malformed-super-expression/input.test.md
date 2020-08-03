@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/class-methods/malformed-super-expression/input.js"
 		end: Object {
 			column: 1
-			index: 39
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 28
 					line: 3
 				}
 				start: Object {
 					column: 10
-					index: 29
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2015/class-methods/malformed-super-expression/input.js"
 				end: Object {
 					column: 1
-					index: 39
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "es2015/class-methods/malformed-super-expression/input.js"
 					end: Object {
 						column: 1
-						index: 39
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -130,12 +118,10 @@ JSRoot {
 								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "es2015/class-methods/malformed-super-expression/input.js"
 							end: Object {
 								column: 3
-								index: 37
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -166,12 +150,10 @@ JSRoot {
 								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 6
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -185,19 +167,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -208,12 +187,10 @@ JSRoot {
 								filename: "es2015/class-methods/malformed-super-expression/input.js"
 								end: Object {
 									column: 3
-									index: 37
 									line: 4
 								}
 								start: Object {
 									column: 7
-									index: 17
 									line: 2
 								}
 							}
@@ -223,12 +200,10 @@ JSRoot {
 										filename: "es2015/class-methods/malformed-super-expression/input.js"
 										end: Object {
 											column: 14
-											index: 33
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 23
 											line: 3
 										}
 									}
@@ -238,12 +213,10 @@ JSRoot {
 											filename: "es2015/class-methods/malformed-super-expression/input.js"
 											end: Object {
 												column: 13
-												index: 32
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 23
 												line: 3
 											}
 										}
@@ -252,12 +225,10 @@ JSRoot {
 												filename: "es2015/class-methods/malformed-super-expression/input.js"
 												end: Object {
 													column: 9
-													index: 28
 													line: 3
 												}
 												start: Object {
 													column: 4
-													index: 23
 													line: 3
 												}
 											}
@@ -269,12 +240,10 @@ JSRoot {
 												filename: "es2015/class-methods/malformed-super-expression/input.js"
 												end: Object {
 													column: 13
-													index: 32
 													line: 3
 												}
 												start: Object {
 													column: 12
-													index: 31
 													line: 3
 												}
 											}

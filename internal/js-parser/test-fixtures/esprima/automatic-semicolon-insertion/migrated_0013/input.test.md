@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 		end: Object {
 			column: 0
-			index: 23
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 				end: Object {
 					column: 8
-					index: 22
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 					}
@@ -69,12 +63,10 @@ JSRoot {
 							identifierName: "error"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "esprima/automatic-semicolon-insertion/migrated_0013/input.js"
 						end: Object {
 							column: 6
-							index: 20
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 14
 							line: 2
 						}
 					}
@@ -101,12 +91,10 @@ JSRoot {
 							identifierName: "error"
 							end: Object {
 								column: 5
-								index: 19
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 14
 								line: 2
 							}
 						}

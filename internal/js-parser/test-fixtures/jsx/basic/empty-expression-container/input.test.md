@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/empty-expression-container/input.jsx"
 		end: Object {
 			column: 9
-			index: 9
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/basic/empty-expression-container/input.jsx"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "jsx/basic/empty-expression-container/input.jsx"
 						end: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "jsx/basic/empty-expression-container/input.jsx"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "jsx/basic/empty-expression-container/input.jsx"
 							end: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "jsx/basic/empty-expression-container/input.jsx"
 								end: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}

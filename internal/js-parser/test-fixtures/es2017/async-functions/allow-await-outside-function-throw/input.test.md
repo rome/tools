@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 		end: Object {
 			column: 0
-			index: 34
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 29
 					line: 2
 				}
 				start: Object {
 					column: 15
-					index: 30
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 				end: Object {
 					column: 1
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 					end: Object {
 						column: 1
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -131,12 +119,10 @@ JSRoot {
 							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 							end: Object {
 								column: 14
-								index: 29
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -147,12 +133,10 @@ JSRoot {
 								identifierName: "await"
 								end: Object {
 									column: 14
-									index: 29
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 24
 									line: 2
 								}
 							}
@@ -163,12 +147,10 @@ JSRoot {
 							filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 							end: Object {
 								column: 16
-								index: 31
 								line: 2
 							}
 							start: Object {
 								column: 15
-								index: 30
 								line: 2
 							}
 						}
@@ -179,12 +161,10 @@ JSRoot {
 								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 								end: Object {
 									column: 16
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 15
-									index: 30
 									line: 2
 								}
 							}

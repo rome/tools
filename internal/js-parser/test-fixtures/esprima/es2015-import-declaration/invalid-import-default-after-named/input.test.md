@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -116,12 +106,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -134,12 +122,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -149,12 +135,10 @@ JSRoot {
 							filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -167,12 +151,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -182,12 +164,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -198,12 +178,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -214,12 +192,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -230,12 +206,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -246,12 +220,10 @@ JSRoot {
 					identifierName: "from"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -262,12 +234,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 				end: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -277,12 +247,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-default-after-named/input.js"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}

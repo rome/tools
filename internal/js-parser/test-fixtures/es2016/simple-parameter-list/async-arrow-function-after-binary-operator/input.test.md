@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 		end: Object {
 			column: 16
-			index: 16
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

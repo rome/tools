@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/function-name-class-wrapped/input.js"
 		end: Object {
 			column: 0
-			index: 47
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "wrap"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/function-name-class-wrapped/input.js"
 				end: Object {
 					column: 1
-					index: 46
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-class-wrapped/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-class-wrapped/input.js"
 					end: Object {
 						column: 1
-						index: 46
 						line: 3
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 								identifierName: "A"
 								end: Object {
 									column: 11
-									index: 30
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 29
 									line: 2
 								}
 							}
@@ -124,12 +112,10 @@ JSRoot {
 							filename: "es2015/yield/function-name-class-wrapped/input.js"
 							end: Object {
 								column: 25
-								index: 44
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 23
 								line: 2
 							}
 						}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "es2015/yield/function-name-class-wrapped/input.js"
 								end: Object {
 									column: 25
-									index: 44
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 23
 									line: 2
 								}
 							}
@@ -162,12 +146,10 @@ JSRoot {
 												identifierName: "yield"
 												end: Object {
 													column: 19
-													index: 38
 													line: 2
 												}
 												start: Object {
 													column: 14
-													index: 33
 													line: 2
 												}
 											}
@@ -176,12 +158,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 19
-												index: 38
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 33
 												line: 2
 											}
 										}
@@ -190,12 +170,10 @@ JSRoot {
 										filename: "es2015/yield/function-name-class-wrapped/input.js"
 										end: Object {
 											column: 24
-											index: 43
 											line: 2
 										}
 										start: Object {
 											column: 13
-											index: 32
 											line: 2
 										}
 									}
@@ -206,12 +184,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 24
-												index: 43
 												line: 2
 											}
 											start: Object {
 												column: 22
-												index: 41
 												line: 2
 											}
 										}
@@ -229,12 +205,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 21
-												index: 40
 												line: 2
 											}
 											start: Object {
 												column: 19
-												index: 38
 												line: 2
 											}
 										}
@@ -248,19 +222,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 13
-											index: 32
 											line: 2
 										}
 										loc: Object {
 											filename: "es2015/yield/function-name-class-wrapped/input.js"
 											end: Object {
 												column: 19
-												index: 38
 												line: 2
 											}
 											start: Object {
 												column: 13
-												index: 32
 												line: 2
 											}
 										}

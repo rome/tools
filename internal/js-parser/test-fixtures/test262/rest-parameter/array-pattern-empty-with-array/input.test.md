@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "emptyWithArray"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 						filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 						end: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 						start: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 						}
@@ -141,12 +127,10 @@ JSRoot {
 								filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 28
-									index: 28
 									line: 1
 								}
 							}
@@ -157,12 +141,10 @@ JSRoot {
 									filename: "test262/rest-parameter/array-pattern-empty-with-array/input.js"
 									end: Object {
 										column: 30
-										index: 30
 										line: 1
 									}
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 								}

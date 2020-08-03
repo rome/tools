@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "g"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -131,12 +119,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -145,12 +131,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 								end: Object {
 									column: 28
-									index: 28
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 									end: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -181,12 +163,10 @@ JSRoot {
 									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 									end: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 									start: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 								}
@@ -197,12 +177,10 @@ JSRoot {
 											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
 											end: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 											start: Object {
 												column: 26
-												index: 26
 												line: 1
 											}
 										}

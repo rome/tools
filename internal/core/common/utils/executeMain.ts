@@ -20,7 +20,7 @@ import {
 } from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
-import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from "@internal/ob1";
+import {ob1Coerce1, ob1Number0} from "@internal/ob1";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
@@ -84,7 +84,6 @@ export default async function executeMain(
 			const line = Number(lineMatch[2]);
 
 			const pos: Position = {
-				index: ob1Number0Neg1,
 				column: ob1Number0,
 				line: ob1Coerce1(line),
 			};

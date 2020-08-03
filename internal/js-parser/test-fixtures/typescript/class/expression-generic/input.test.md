@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/expression-generic/input.ts"
 		end: Object {
 			column: 0
-			index: 32
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/class/expression-generic/input.ts"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/class/expression-generic/input.ts"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 						filename: "typescript/class/expression-generic/input.ts"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "typescript/class/expression-generic/input.ts"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -102,12 +92,10 @@ JSRoot {
 									filename: "typescript/class/expression-generic/input.ts"
 									end: Object {
 										column: 8
-										index: 8
 										line: 1
 									}
 									start: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 								}
@@ -122,12 +110,10 @@ JSRoot {
 				filename: "typescript/class/expression-generic/input.ts"
 				end: Object {
 					column: 16
-					index: 31
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 2
 				}
 			}
@@ -139,12 +125,10 @@ JSRoot {
 						identifierName: "C"
 						end: Object {
 							column: 8
-							index: 23
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 22
 							line: 2
 						}
 					}
@@ -153,12 +137,10 @@ JSRoot {
 					filename: "typescript/class/expression-generic/input.ts"
 					end: Object {
 						column: 14
-						index: 29
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 16
 						line: 2
 					}
 				}
@@ -171,12 +153,10 @@ JSRoot {
 						filename: "typescript/class/expression-generic/input.ts"
 						end: Object {
 							column: 14
-							index: 29
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 16
 							line: 2
 						}
 					}
@@ -185,12 +165,10 @@ JSRoot {
 							filename: "typescript/class/expression-generic/input.ts"
 							end: Object {
 								column: 11
-								index: 26
 								line: 2
 							}
 							start: Object {
 								column: 8
-								index: 23
 								line: 2
 							}
 						}
@@ -203,12 +181,10 @@ JSRoot {
 									filename: "typescript/class/expression-generic/input.ts"
 									end: Object {
 										column: 10
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 9
-										index: 24
 										line: 2
 									}
 								}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/let/let-at-catch-block/input.js"
 		end: Object {
 			column: 1
-			index: 33
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2015/let/let-at-catch-block/input.js"
 				end: Object {
 					column: 1
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "es2015/let/let-at-catch-block/input.js"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "es2015/let/let-at-catch-block/input.js"
 					end: Object {
 						column: 1
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 						identifierName: "err"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "es2015/let/let-at-catch-block/input.js"
 						end: Object {
 							column: 1
-							index: 33
 							line: 3
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -116,12 +104,10 @@ JSRoot {
 								filename: "es2015/let/let-at-catch-block/input.js"
 								end: Object {
 									column: 10
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 23
 									line: 2
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 									filename: "es2015/let/let-at-catch-block/input.js"
 									end: Object {
 										column: 10
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 23
 										line: 2
 									}
 								}
@@ -149,12 +133,10 @@ JSRoot {
 												identifierName: "let"
 												end: Object {
 													column: 9
-													index: 30
 													line: 2
 												}
 												start: Object {
 													column: 6
-													index: 27
 													line: 2
 												}
 											}
@@ -164,12 +146,10 @@ JSRoot {
 											filename: "es2015/let/let-at-catch-block/input.js"
 											end: Object {
 												column: 9
-												index: 30
 												line: 2
 											}
 											start: Object {
 												column: 6
-												index: 27
 												line: 2
 											}
 										}

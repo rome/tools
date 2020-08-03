@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/meta-properties/statement/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/meta-properties/statement/input.js"
 				end: Object {
 					column: 1
-					index: 30
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/meta-properties/statement/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/meta-properties/statement/input.js"
 					end: Object {
 						column: 1
-						index: 30
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/meta-properties/statement/input.js"
 							end: Object {
 								column: 13
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/meta-properties/statement/input.js"
 								end: Object {
 									column: 12
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 17
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 5
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 17
 										line: 2
 									}
 								}
@@ -154,12 +138,10 @@ JSRoot {
 									identifierName: "target"
 									end: Object {
 										column: 12
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 21
 										line: 2
 									}
 								}

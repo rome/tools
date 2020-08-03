@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/12/input.js"
 		end: Object {
 			column: 46
-			index: 46
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2017/async-functions/12/input.js"
 				end: Object {
 					column: 46
-					index: 46
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2017/async-functions/12/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 							identifierName: "promise"
 							end: Object {
 								column: 26
-								index: 26
 								line: 1
 							}
 							start: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 						}
@@ -108,12 +98,10 @@ JSRoot {
 								filename: "es2017/async-functions/12/input.js"
 								end: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "es2017/async-functions/12/input.js"
 					end: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 					start: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 				}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "es2017/async-functions/12/input.js"
 							end: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 							start: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 								filename: "es2017/async-functions/12/input.js"
 								end: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 								start: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 							}
@@ -172,12 +154,10 @@ JSRoot {
 									identifierName: "promise"
 									end: Object {
 										column: 43
-										index: 43
 										line: 1
 									}
 									start: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 								}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -82,12 +76,10 @@ JSRoot {
 					identifierName: "async"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -101,12 +93,10 @@ JSRoot {
 					identifierName: ""
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -137,12 +125,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -153,12 +139,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -168,12 +152,10 @@ JSRoot {
 							filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 							end: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -184,12 +166,10 @@ JSRoot {
 								identifierName: "await"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}
@@ -200,12 +180,10 @@ JSRoot {
 							filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 							end: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}
@@ -216,12 +194,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 							}
@@ -235,12 +211,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 			}
@@ -250,12 +224,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 				}

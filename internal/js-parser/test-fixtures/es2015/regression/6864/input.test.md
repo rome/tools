@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/regression/6864/input.js"
 		end: Object {
 			column: 0
-			index: 86
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/regression/6864/input.js"
 				end: Object {
 					column: 1
-					index: 85
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/regression/6864/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/regression/6864/input.js"
 					end: Object {
 						column: 1
-						index: 85
 						line: 5
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 17
-								index: 33
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 18
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 15
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 19
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 15
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 9
-										index: 25
 										line: 2
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 15
-											index: 31
 											line: 2
 										}
 										start: Object {
 											column: 14
-											index: 30
 											line: 2
 										}
 									}
@@ -171,12 +153,10 @@ JSRoot {
 										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 13
-											index: 29
 											line: 2
 										}
 										start: Object {
 											column: 9
-											index: 25
 											line: 2
 										}
 									}
@@ -188,12 +168,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 10
-													index: 26
 													line: 2
 												}
 												start: Object {
 													column: 9
-													index: 25
 													line: 2
 												}
 											}
@@ -208,12 +186,10 @@ JSRoot {
 							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 23
-								index: 57
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 36
 								line: 3
 							}
 						}
@@ -223,12 +199,10 @@ JSRoot {
 								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 21
-									index: 55
 									line: 3
 								}
 								start: Object {
 									column: 3
-									index: 37
 									line: 3
 								}
 							}
@@ -237,12 +211,10 @@ JSRoot {
 									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 21
-										index: 55
 										line: 3
 									}
 									start: Object {
 										column: 9
-										index: 43
 										line: 3
 									}
 								}
@@ -253,12 +225,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 21
-											index: 55
 											line: 3
 										}
 										start: Object {
 											column: 20
-											index: 54
 											line: 3
 										}
 									}
@@ -272,12 +242,10 @@ JSRoot {
 										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 19
-											index: 53
 											line: 3
 										}
 										start: Object {
 											column: 9
-											index: 43
 											line: 3
 										}
 									}
@@ -289,12 +257,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 16
-													index: 50
 													line: 3
 												}
 												start: Object {
 													column: 15
-													index: 49
 													line: 3
 												}
 											}
@@ -309,12 +275,10 @@ JSRoot {
 							filename: "es2015/regression/6864/input.js"
 							end: Object {
 								column: 25
-								index: 83
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 60
 								line: 4
 							}
 						}
@@ -324,12 +288,10 @@ JSRoot {
 								filename: "es2015/regression/6864/input.js"
 								end: Object {
 									column: 23
-									index: 81
 									line: 4
 								}
 								start: Object {
 									column: 3
-									index: 61
 									line: 4
 								}
 							}
@@ -338,12 +300,10 @@ JSRoot {
 									filename: "es2015/regression/6864/input.js"
 									end: Object {
 										column: 23
-										index: 81
 										line: 4
 									}
 									start: Object {
 										column: 9
-										index: 67
 										line: 4
 									}
 								}
@@ -354,12 +314,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 23
-											index: 81
 											line: 4
 										}
 										start: Object {
 											column: 22
-											index: 80
 											line: 4
 										}
 									}
@@ -374,12 +332,10 @@ JSRoot {
 										filename: "es2015/regression/6864/input.js"
 										end: Object {
 											column: 21
-											index: 79
 											line: 4
 										}
 										start: Object {
 											column: 9
-											index: 67
 											line: 4
 										}
 									}
@@ -391,12 +347,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 17
-													index: 75
 													line: 4
 												}
 												start: Object {
 													column: 16
-													index: 74
 													line: 4
 												}
 											}

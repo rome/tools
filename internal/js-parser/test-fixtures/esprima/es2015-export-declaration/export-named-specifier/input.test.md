@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 		end: Object {
 			column: 0
-			index: 23
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 							end: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -105,12 +95,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 				end: Object {
 					column: 13
-					index: 22
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 9
 					line: 2
 				}
 			}
@@ -120,12 +108,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-named-specifier/input.js"
 						end: Object {
 							column: 11
-							index: 20
 							line: 2
 						}
 						start: Object {
 							column: 8
-							index: 17
 							line: 2
 						}
 					}
@@ -136,12 +122,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 20
 								line: 2
 							}
 							start: Object {
 								column: 8
-								index: 17
 								line: 2
 							}
 						}
@@ -153,12 +137,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 20
 								line: 2
 							}
 							start: Object {
 								column: 8
-								index: 17
 								line: 2
 							}
 						}

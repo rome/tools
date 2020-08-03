@@ -127,10 +127,7 @@ tt._function.updateContext = function(parser, prevType) {
 		prevType !== tt._else &&
 		!(prevType === tt._return &&
 		lineBreak.test(
-			parser.getRawInput(
-				parser.state.lastEndPos.index,
-				parser.state.startPos.index,
-			),
+			parser.getRawInput(parser.state.lastEndIndex, parser.state.startIndex),
 		)) &&
 		!((prevType === tt.colon || prevType === tt.braceL) &&
 		getCurContext(parser) === types.bStat)

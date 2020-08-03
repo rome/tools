@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -83,12 +77,10 @@ JSRoot {
 						identifierName: "yield"
 						end: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -97,12 +89,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -113,12 +103,10 @@ JSRoot {
 						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 						end: Object {
 							column: 35
-							index: 35
 							line: 1
 						}
 						start: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 					}
@@ -136,12 +124,10 @@ JSRoot {
 						filename: "esprima/es2015-yield/invalid-yield-generator-export-default/input.js"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 					}

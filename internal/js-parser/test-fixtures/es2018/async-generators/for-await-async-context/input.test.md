@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2018/async-generators/for-await-async-context/input.js"
 		end: Object {
 			column: 0
-			index: 43
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 11
-					index: 26
 					line: 2
 				}
 				start: Object {
 					column: 6
-					index: 21
 					line: 2
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "es2018/async-generators/for-await-async-context/input.js"
 				end: Object {
 					column: 1
-					index: 42
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -105,12 +97,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await-async-context/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -121,12 +111,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await-async-context/input.js"
 					end: Object {
 						column: 1
-						index: 42
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -136,12 +124,10 @@ JSRoot {
 							filename: "es2018/async-generators/for-await-async-context/input.js"
 							end: Object {
 								column: 23
-								index: 38
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -152,12 +138,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 18
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 32
 									line: 2
 								}
 							}
@@ -169,12 +153,10 @@ JSRoot {
 								identifierName: "of"
 								end: Object {
 									column: 21
-									index: 36
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 34
 									line: 2
 								}
 							}
@@ -184,12 +166,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 23
-									index: 38
 									line: 2
 								}
 								start: Object {
 									column: 22
-									index: 37
 									line: 2
 								}
 							}
@@ -200,12 +180,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 23
-										index: 38
 										line: 2
 									}
 									start: Object {
 										column: 22
-										index: 37
 										line: 2
 									}
 								}
@@ -216,12 +194,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 16
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 21
 									line: 2
 								}
 							}
@@ -232,12 +208,10 @@ JSRoot {
 									identifierName: "await"
 									end: Object {
 										column: 11
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 21
 										line: 2
 									}
 								}
@@ -250,12 +224,10 @@ JSRoot {
 										identifierName: "let"
 										end: Object {
 											column: 16
-											index: 31
 											line: 2
 										}
 										start: Object {
 											column: 13
-											index: 28
 											line: 2
 										}
 									}
@@ -268,12 +240,10 @@ JSRoot {
 							filename: "es2018/async-generators/for-await-async-context/input.js"
 							end: Object {
 								column: 25
-								index: 40
 								line: 2
 							}
 							start: Object {
 								column: 23
-								index: 38
 								line: 2
 							}
 						}
@@ -283,12 +253,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await-async-context/input.js"
 								end: Object {
 									column: 24
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 23
-									index: 38
 									line: 2
 								}
 							}

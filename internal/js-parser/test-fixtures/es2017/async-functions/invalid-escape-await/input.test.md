@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/invalid-escape-await/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-await/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-await/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -98,12 +90,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-escape-await/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -114,12 +104,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-escape-await/input.js"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "es2017/async-functions/invalid-escape-await/input.js"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 									identifierName: "await"
 									end: Object {
 										column: 30
-										index: 30
 										line: 1
 									}
 									start: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 								}
@@ -161,12 +145,10 @@ JSRoot {
 								filename: "es2017/async-functions/invalid-escape-await/input.js"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 							}
@@ -177,12 +159,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 32
-										index: 32
 										line: 1
 									}
 									start: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 								}

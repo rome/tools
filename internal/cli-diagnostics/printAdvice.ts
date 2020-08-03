@@ -36,7 +36,6 @@ import {
 	readMarkup,
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
-import {ob1Number0Neg1} from "@internal/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {UnknownFilePathSet, createUnknownFilePath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
@@ -312,7 +311,6 @@ function printCode(
 
 	const {frame, truncated: truncatedLines} = buildCodeFrame({
 		type: "all",
-		sourceText: code,
 		truncateLines: MAX_CODE_LINES,
 		lines: toLines({
 			input: code,
@@ -388,7 +386,6 @@ function printFrame(
 
 	const {frame, truncated} = buildCodeFrame({
 		type: "pointer",
-		sourceText,
 		lines,
 		start,
 		end,
@@ -468,7 +465,6 @@ function printStacktrace(
 					filename,
 					language,
 					start: {
-						index: ob1Number0Neg1,
 						line,
 						column,
 					},
@@ -490,7 +486,6 @@ function printStacktrace(
 				column !== undefined
 			) {
 				const pos: Position = {
-					index: ob1Number0Neg1,
 					line,
 					column,
 				};

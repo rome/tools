@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/function-sent/invalid-syntax/input.js"
 		end: Object {
 			column: 0
-			index: 43
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 22
-					index: 40
 					line: 2
 				}
 				start: Object {
 					column: 21
-					index: 39
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/function-sent/invalid-syntax/input.js"
 				end: Object {
 					column: 1
-					index: 42
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "experimental/function-sent/invalid-syntax/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "experimental/function-sent/invalid-syntax/input.js"
 					end: Object {
 						column: 1
-						index: 42
 						line: 3
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -132,12 +120,10 @@ JSRoot {
 							filename: "experimental/function-sent/invalid-syntax/input.js"
 							end: Object {
 								column: 22
-								index: 40
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 20
 								line: 2
 							}
 						}
@@ -147,12 +133,10 @@ JSRoot {
 								filename: "experimental/function-sent/invalid-syntax/input.js"
 								end: Object {
 									column: 10
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 24
 									line: 2
 								}
 							}
@@ -162,12 +146,10 @@ JSRoot {
 								filename: "experimental/function-sent/invalid-syntax/input.js"
 								end: Object {
 									column: 22
-									index: 40
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 30
 									line: 2
 								}
 							}
@@ -176,12 +158,10 @@ JSRoot {
 									filename: "experimental/function-sent/invalid-syntax/input.js"
 									end: Object {
 										column: 22
-										index: 40
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 30
 										line: 2
 									}
 								}
@@ -192,12 +172,10 @@ JSRoot {
 										identifierName: "function"
 										end: Object {
 											column: 20
-											index: 38
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 30
 											line: 2
 										}
 									}
@@ -209,12 +187,10 @@ JSRoot {
 										identifierName: ""
 										end: Object {
 											column: 22
-											index: 40
 											line: 2
 										}
 										start: Object {
 											column: 21
-											index: 39
 											line: 2
 										}
 									}

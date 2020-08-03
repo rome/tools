@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 		end: Object {
 			column: 0
-			index: 42
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 				end: Object {
 					column: 1
-					index: 41
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 					end: Object {
 						column: 1
-						index: 41
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "p"
 									end: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 28
-									index: 38
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 16
 									line: 2
 								}
 							}
@@ -140,12 +126,10 @@ JSRoot {
 									filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 									end: Object {
 										column: 17
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 16
 										line: 2
 									}
 								}
@@ -155,12 +139,10 @@ JSRoot {
 									filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 									end: Object {
 										column: 28
-										index: 38
 										line: 2
 									}
 									start: Object {
 										column: 18
-										index: 28
 										line: 2
 									}
 								}
@@ -171,12 +153,10 @@ JSRoot {
 										filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 										end: Object {
 											column: 28
-											index: 38
 											line: 2
 										}
 										start: Object {
 											column: 24
-											index: 34
 											line: 2
 										}
 									}
@@ -187,12 +167,10 @@ JSRoot {
 											filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 											end: Object {
 												column: 28
-												index: 38
 												line: 2
 											}
 											start: Object {
 												column: 26
-												index: 36
 												line: 2
 											}
 										}
@@ -206,12 +184,10 @@ JSRoot {
 							filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 							end: Object {
 								column: 29
-								index: 39
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -224,19 +200,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}

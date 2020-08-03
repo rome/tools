@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/export-invalid/input.js"
 		end: Object {
 			column: 0
-			index: 37
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2017/async-functions/export-invalid/input.js"
 				end: Object {
 					column: 33
-					index: 33
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "es2017/async-functions/export-invalid/input.js"
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -95,12 +87,10 @@ JSRoot {
 						filename: "es2017/async-functions/export-invalid/input.js"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 					}
@@ -114,12 +104,10 @@ JSRoot {
 						filename: "es2017/async-functions/export-invalid/input.js"
 						end: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -131,12 +119,10 @@ JSRoot {
 								identifierName: "functionX"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 							}
@@ -152,12 +138,10 @@ JSRoot {
 				filename: "es2017/async-functions/export-invalid/input.js"
 				end: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 				start: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 			}

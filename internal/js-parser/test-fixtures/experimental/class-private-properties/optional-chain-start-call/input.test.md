@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 		end: Object {
 			column: 0
-			index: 88
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 16
-					index: 76
 					line: 5
 				}
 				start: Object {
 					column: 16
-					index: 76
 					line: 5
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 				end: Object {
 					column: 1
-					index: 87
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 					end: Object {
 						column: 1
-						index: 87
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 11
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 22
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 11
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 21
 									line: 2
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 27
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 26
 									line: 2
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 									end: Object {
 										column: 27
-										index: 39
 										line: 2
 									}
 									start: Object {
 										column: 25
-										index: 37
 										line: 2
 									}
 								}
@@ -184,12 +166,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 									end: Object {
 										column: 24
-										index: 36
 										line: 2
 									}
 									start: Object {
 										column: 22
-										index: 34
 										line: 2
 									}
 								}
@@ -200,12 +180,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 							end: Object {
 								column: 28
-								index: 40
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -218,19 +196,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 11
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -246,12 +221,10 @@ JSRoot {
 									identifierName: "test"
 									end: Object {
 										column: 13
-										index: 55
 										line: 4
 									}
 									start: Object {
 										column: 9
-										index: 51
 										line: 4
 									}
 								}
@@ -260,12 +233,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 13
-									index: 55
 									line: 4
 								}
 								start: Object {
 									column: 9
-									index: 51
 									line: 4
 								}
 							}
@@ -274,12 +245,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 							end: Object {
 								column: 3
-								index: 85
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 44
 								line: 4
 							}
 						}
@@ -296,12 +265,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 15
-									index: 57
 									line: 4
 								}
 								start: Object {
 									column: 13
-									index: 55
 									line: 4
 								}
 							}
@@ -315,19 +282,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 44
 								line: 4
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 13
-									index: 55
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 44
 									line: 4
 								}
 							}
@@ -338,12 +302,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 								end: Object {
 									column: 3
-									index: 85
 									line: 6
 								}
 								start: Object {
 									column: 16
-									index: 58
 									line: 4
 								}
 							}
@@ -353,12 +315,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 										end: Object {
 											column: 17
-											index: 77
 											line: 5
 										}
 										start: Object {
 											column: 4
-											index: 64
 											line: 5
 										}
 									}
@@ -367,12 +327,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 											end: Object {
 												column: 17
-												index: 77
 												line: 5
 											}
 											start: Object {
 												column: 11
-												index: 71
 												line: 5
 											}
 										}
@@ -383,12 +341,10 @@ JSRoot {
 												identifierName: "Foo"
 												end: Object {
 													column: 14
-													index: 74
 													line: 5
 												}
 												start: Object {
 													column: 11
-													index: 71
 													line: 5
 												}
 											}
@@ -401,12 +357,10 @@ JSRoot {
 													identifierName: ""
 													end: Object {
 														column: 17
-														index: 77
 														line: 5
 													}
 													start: Object {
 														column: 16
-														index: 76
 														line: 5
 													}
 												}
@@ -417,12 +371,10 @@ JSRoot {
 												identifierName: ""
 												end: Object {
 													column: 17
-													index: 77
 													line: 5
 												}
 												start: Object {
 													column: 16
-													index: 76
 													line: 5
 												}
 											}
@@ -434,12 +386,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 										end: Object {
 											column: 21
-											index: 81
 											line: 5
 										}
 										start: Object {
 											column: 17
-											index: 77
 											line: 5
 										}
 									}
@@ -449,12 +399,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/optional-chain-start-call/input.js"
 											end: Object {
 												column: 20
-												index: 80
 												line: 5
 											}
 											start: Object {
 												column: 17
-												index: 77
 												line: 5
 											}
 										}
@@ -465,12 +413,10 @@ JSRoot {
 												identifierName: "m"
 												end: Object {
 													column: 18
-													index: 78
 													line: 5
 												}
 												start: Object {
 													column: 17
-													index: 77
 													line: 5
 												}
 											}

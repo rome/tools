@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-break/migrated_0002/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-break/migrated_0002/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "done"
 					end: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "esprima/statement-break/migrated_0002/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/statement-break/migrated_0002/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 						filename: "esprima/statement-break/migrated_0002/input.js"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 								filename: "esprima/statement-break/migrated_0002/input.js"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 									identifierName: "done"
 									end: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 									start: Object {
 										column: 27
-										index: 27
 										line: 1
 									}
 								}

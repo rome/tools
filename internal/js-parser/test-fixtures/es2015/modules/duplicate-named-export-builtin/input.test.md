@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 		end: Object {
 			column: 0
-			index: 42
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "toString"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 				end: Object {
 					column: 20
-					index: 41
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 21
 					line: 3
 				}
 			}
@@ -136,12 +122,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 						end: Object {
 							column: 17
-							index: 38
 							line: 3
 						}
 						start: Object {
 							column: 9
-							index: 30
 							line: 3
 						}
 					}
@@ -152,12 +136,10 @@ JSRoot {
 							identifierName: "toString"
 							end: Object {
 								column: 17
-								index: 38
 								line: 3
 							}
 							start: Object {
 								column: 9
-								index: 30
 								line: 3
 							}
 						}
@@ -169,12 +151,10 @@ JSRoot {
 							identifierName: "toString"
 							end: Object {
 								column: 17
-								index: 38
 								line: 3
 							}
 							start: Object {
 								column: 9
-								index: 30
 								line: 3
 							}
 						}

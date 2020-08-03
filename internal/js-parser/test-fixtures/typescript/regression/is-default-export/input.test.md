@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/regression/is-default-export/input.ts"
 		end: Object {
 			column: 0
-			index: 63
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						identifierName: "T"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "typescript/regression/is-default-export/input.ts"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 16
-					index: 40
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 2
 				}
 			}
@@ -121,12 +109,10 @@ JSRoot {
 						identifierName: "E"
 						end: Object {
 							column: 13
-							index: 37
 							line: 2
 						}
 						start: Object {
 							column: 12
-							index: 36
 							line: 2
 						}
 					}
@@ -137,12 +123,10 @@ JSRoot {
 					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 16
-						index: 40
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 31
 						line: 2
 					}
 				}
@@ -155,12 +139,10 @@ JSRoot {
 				filename: "typescript/regression/is-default-export/input.ts"
 				end: Object {
 					column: 21
-					index: 62
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 41
 					line: 3
 				}
 			}
@@ -172,12 +154,10 @@ JSRoot {
 						identifierName: "I"
 						end: Object {
 							column: 18
-							index: 59
 							line: 3
 						}
 						start: Object {
 							column: 17
-							index: 58
 							line: 3
 						}
 					}
@@ -188,12 +168,10 @@ JSRoot {
 					filename: "typescript/regression/is-default-export/input.ts"
 					end: Object {
 						column: 21
-						index: 62
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 48
 						line: 3
 					}
 				}
@@ -203,12 +181,10 @@ JSRoot {
 						filename: "typescript/regression/is-default-export/input.ts"
 						end: Object {
 							column: 21
-							index: 62
 							line: 3
 						}
 						start: Object {
 							column: 19
-							index: 60
 							line: 3
 						}
 					}

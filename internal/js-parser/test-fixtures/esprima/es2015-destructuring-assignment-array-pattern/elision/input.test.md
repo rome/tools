@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 		end: Object {
 			column: 0
-			index: 7
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 						end: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 								end: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 								start: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 							}
@@ -114,12 +102,10 @@ JSRoot {
 								filename: "esprima/es2015-destructuring-assignment-array-pattern/elision/input.js"
 								end: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/dynamic-import/return-value/input.js"
 		end: Object {
 			column: 0
-			index: 40
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/return-value/input.js"
 				end: Object {
 					column: 39
-					index: 39
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/return-value/input.js"
 					end: Object {
 						column: 39
-						index: 39
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "importResult"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2020/dynamic-import/return-value/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "es2020/dynamic-import/return-value/input.js"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 							}
@@ -113,12 +101,10 @@ JSRoot {
 									filename: "es2020/dynamic-import/return-value/input.js"
 									end: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 								}

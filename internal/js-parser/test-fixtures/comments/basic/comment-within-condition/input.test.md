@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/comment-within-condition/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 13
-					index: 23
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 14
 					line: 2
 				}
 			}
@@ -74,12 +68,10 @@ JSRoot {
 				filename: "comments/basic/comment-within-condition/input.js"
 				end: Object {
 					column: 20
-					index: 30
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 10
 					line: 2
 				}
 			}
@@ -90,12 +82,10 @@ JSRoot {
 					filename: "comments/basic/comment-within-condition/input.js"
 					end: Object {
 						column: 20
-						index: 30
 						line: 2
 					}
 					start: Object {
 						column: 18
-						index: 28
 						line: 2
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 16
-						index: 26
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 25
 						line: 2
 					}
 				}

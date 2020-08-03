@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/uncategorised/268/input.js"
 		end: Object {
 			column: 53
-			index: 53
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/uncategorised/268/input.js"
 				end: Object {
 					column: 53
-					index: 53
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -67,12 +63,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -87,12 +81,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -102,12 +94,10 @@ JSRoot {
 				filename: "es2015/uncategorised/268/input.js"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -124,12 +114,10 @@ JSRoot {
 					filename: "es2015/uncategorised/268/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -141,12 +129,10 @@ JSRoot {
 					filename: "es2015/uncategorised/268/input.js"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -157,12 +143,10 @@ JSRoot {
 							filename: "es2015/uncategorised/268/input.js"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -174,12 +158,10 @@ JSRoot {
 								filename: "es2015/uncategorised/268/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}

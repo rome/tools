@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 		end: Object {
 			column: 0
-			index: 53
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "T"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 				end: Object {
 					column: 52
-					index: 52
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 					end: Object {
 						column: 51
-						index: 51
 						line: 1
 					}
 					start: Object {
 						column: 43
-						index: 43
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						identifierName: "Array"
 						end: Object {
 							column: 48
-							index: 48
 							line: 1
 						}
 						start: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 						filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 						end: Object {
 							column: 51
-							index: 51
 							line: 1
 						}
 						start: Object {
 							column: 48
-							index: 48
 							line: 1
 						}
 					}
@@ -115,12 +103,10 @@ JSRoot {
 								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 50
-									index: 50
 									line: 1
 								}
 								start: Object {
 									column: 49
-									index: 49
 									line: 1
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 									identifierName: "U"
 									end: Object {
 										column: 50
-										index: 50
 										line: 1
 									}
 									start: Object {
 										column: 49
-										index: 49
 										line: 1
 									}
 								}
@@ -150,12 +134,10 @@ JSRoot {
 					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -166,12 +148,10 @@ JSRoot {
 							filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -180,12 +160,10 @@ JSRoot {
 								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -195,12 +173,10 @@ JSRoot {
 								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 								end: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -214,12 +190,10 @@ JSRoot {
 												identifierName: "x"
 												end: Object {
 													column: 29
-													index: 29
 													line: 1
 												}
 												start: Object {
 													column: 28
-													index: 28
 													line: 1
 												}
 											}
@@ -228,12 +202,10 @@ JSRoot {
 											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 28
-												index: 28
 												line: 1
 											}
 										}
@@ -244,12 +216,10 @@ JSRoot {
 										filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 										end: Object {
 											column: 37
-											index: 37
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}
@@ -258,12 +228,10 @@ JSRoot {
 											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
 											end: Object {
 												column: 37
-												index: 37
 												line: 1
 											}
 											start: Object {
 												column: 31
-												index: 31
 												line: 1
 											}
 										}

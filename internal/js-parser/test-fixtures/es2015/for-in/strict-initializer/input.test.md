@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/for-in/strict-initializer/input.js"
 		end: Object {
 			column: 22
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "es2015/for-in/strict-initializer/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 5
-					index: 19
 					line: 2
 				}
 			}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2015/for-in/strict-initializer/input.js"
 				end: Object {
 					column: 22
-					index: 36
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/for-in/strict-initializer/input.js"
 					end: Object {
 						column: 22
-						index: 36
 						line: 2
 					}
 					start: Object {
 						column: 21
-						index: 35
 						line: 2
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 					filename: "es2015/for-in/strict-initializer/input.js"
 					end: Object {
 						column: 20
-						index: 34
 						line: 2
 					}
 					start: Object {
 						column: 18
-						index: 32
 						line: 2
 					}
 				}
@@ -124,12 +112,10 @@ JSRoot {
 					filename: "es2015/for-in/strict-initializer/input.js"
 					end: Object {
 						column: 14
-						index: 28
 						line: 2
 					}
 					start: Object {
 						column: 5
-						index: 19
 						line: 2
 					}
 				}
@@ -142,12 +128,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 10
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 23
 									line: 2
 								}
 							}
@@ -156,12 +140,10 @@ JSRoot {
 							filename: "es2015/for-in/strict-initializer/input.js"
 							end: Object {
 								column: 14
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 23
 								line: 2
 							}
 						}
@@ -172,12 +154,10 @@ JSRoot {
 								filename: "es2015/for-in/strict-initializer/input.js"
 								end: Object {
 									column: 14
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 27
 									line: 2
 								}
 							}

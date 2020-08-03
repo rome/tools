@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/regression/11183/input.js"
 		end: Object {
 			column: 0
-			index: 48
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 2
-					index: 13
 					line: 2
 				}
 				start: Object {
 					column: 2
-					index: 13
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "X"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -97,12 +89,10 @@ JSRoot {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -113,12 +103,10 @@ JSRoot {
 				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 2
-					index: 13
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 			}
@@ -129,12 +117,10 @@ JSRoot {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 2
-						index: 13
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 11
 						line: 2
 					}
 				}
@@ -148,12 +134,10 @@ JSRoot {
 					identifierName: "x"
 					end: Object {
 						column: 10
-						index: 25
 						line: 4
 					}
 					start: Object {
 						column: 9
-						index: 24
 						line: 4
 					}
 				}
@@ -162,12 +146,10 @@ JSRoot {
 				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 29
-					index: 44
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 4
 				}
 			}
@@ -184,12 +166,10 @@ JSRoot {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 12
-						index: 27
 						line: 4
 					}
 					start: Object {
 						column: 10
-						index: 25
 						line: 4
 					}
 				}
@@ -200,12 +180,10 @@ JSRoot {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 29
-						index: 44
 						line: 4
 					}
 					start: Object {
 						column: 13
-						index: 28
 						line: 4
 					}
 				}
@@ -216,12 +194,10 @@ JSRoot {
 							filename: "es2015/regression/11183/input.js"
 							end: Object {
 								column: 27
-								index: 42
 								line: 4
 							}
 							start: Object {
 								column: 15
-								index: 30
 								line: 4
 							}
 						}
@@ -234,12 +210,10 @@ JSRoot {
 				filename: "es2015/regression/11183/input.js"
 				end: Object {
 					column: 2
-					index: 47
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 45
 					line: 5
 				}
 			}
@@ -250,12 +224,10 @@ JSRoot {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
 						column: 2
-						index: 47
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 45
 						line: 5
 					}
 				}

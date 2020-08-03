@@ -25,12 +25,10 @@ JSRoot {
 		filename: "typescript/type-arguments/tsx/input.tsx"
 		end: Object {
 			column: 0
-			index: 31
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "typescript/type-arguments/tsx/input.tsx"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -73,12 +67,10 @@ JSRoot {
 					filename: "typescript/type-arguments/tsx/input.tsx"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 					}
@@ -102,12 +92,10 @@ JSRoot {
 								filename: "typescript/type-arguments/tsx/input.tsx"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 				filename: "typescript/type-arguments/tsx/input.tsx"
 				end: Object {
 					column: 13
-					index: 30
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 17
 					line: 2
 				}
 			}
@@ -137,12 +123,10 @@ JSRoot {
 						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 2
-							index: 19
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 18
 							line: 2
 						}
 					}
@@ -154,12 +138,10 @@ JSRoot {
 					filename: "typescript/type-arguments/tsx/input.tsx"
 					end: Object {
 						column: 12
-						index: 29
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 17
 						line: 2
 					}
 				}
@@ -168,12 +150,10 @@ JSRoot {
 						filename: "typescript/type-arguments/tsx/input.tsx"
 						end: Object {
 							column: 10
-							index: 27
 							line: 2
 						}
 						start: Object {
 							column: 2
-							index: 19
 							line: 2
 						}
 					}
@@ -183,12 +163,10 @@ JSRoot {
 								filename: "typescript/type-arguments/tsx/input.tsx"
 								end: Object {
 									column: 9
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 20
 									line: 2
 								}
 							}

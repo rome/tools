@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/parenthised-chain/input.js"
 		end: Object {
 			column: 15
-			index: 39
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 							identifierName: "c"
 							end: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -83,12 +75,10 @@ JSRoot {
 						identifierName: "c"
 						end: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}
@@ -132,12 +118,10 @@ JSRoot {
 								identifierName: "b"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -148,12 +132,10 @@ JSRoot {
 							identifierName: "b"
 							end: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -166,12 +148,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 11
-					index: 22
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 3
 				}
 			}
@@ -181,12 +161,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 10
-						index: 21
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 11
 						line: 3
 					}
 				}
@@ -195,12 +173,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 8
-							index: 19
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 11
 							line: 3
 						}
 					}
@@ -212,12 +188,10 @@ JSRoot {
 								identifierName: "c"
 								end: Object {
 									column: 8
-									index: 19
 									line: 3
 								}
 								start: Object {
 									column: 7
-									index: 18
 									line: 3
 								}
 							}
@@ -227,12 +201,10 @@ JSRoot {
 							identifierName: "c"
 							end: Object {
 								column: 8
-								index: 19
 								line: 3
 							}
 							start: Object {
 								column: 7
-								index: 18
 								line: 3
 							}
 						}
@@ -242,12 +214,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							end: Object {
 								column: 5
-								index: 16
 								line: 3
 							}
 							start: Object {
 								column: 1
-								index: 12
 								line: 3
 							}
 						}
@@ -258,12 +228,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 2
-									index: 13
 									line: 3
 								}
 								start: Object {
 									column: 1
-									index: 12
 									line: 3
 								}
 							}
@@ -276,12 +244,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 5
-										index: 16
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 15
 										line: 3
 									}
 								}
@@ -292,12 +258,10 @@ JSRoot {
 								identifierName: "b"
 								end: Object {
 									column: 5
-									index: 16
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 15
 									line: 3
 								}
 							}
@@ -311,12 +275,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/parenthised-chain/input.js"
 				end: Object {
 					column: 15
-					index: 39
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 5
 				}
 			}
@@ -325,12 +287,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/parenthised-chain/input.js"
 					end: Object {
 						column: 14
-						index: 38
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 24
 						line: 5
 					}
 				}
@@ -342,12 +302,10 @@ JSRoot {
 							identifierName: "e"
 							end: Object {
 								column: 14
-								index: 38
 								line: 5
 							}
 							start: Object {
 								column: 13
-								index: 37
 								line: 5
 							}
 						}
@@ -358,12 +316,10 @@ JSRoot {
 						identifierName: "e"
 						end: Object {
 							column: 14
-							index: 38
 							line: 5
 						}
 						start: Object {
 							column: 13
-							index: 37
 							line: 5
 						}
 					}
@@ -373,12 +329,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/parenthised-chain/input.js"
 						end: Object {
 							column: 11
-							index: 35
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 24
 							line: 5
 						}
 					}
@@ -390,12 +344,10 @@ JSRoot {
 								identifierName: "d"
 								end: Object {
 									column: 11
-									index: 35
 									line: 5
 								}
 								start: Object {
 									column: 10
-									index: 34
 									line: 5
 								}
 							}
@@ -405,12 +357,10 @@ JSRoot {
 							identifierName: "d"
 							end: Object {
 								column: 11
-								index: 35
 								line: 5
 							}
 							start: Object {
 								column: 10
-								index: 34
 								line: 5
 							}
 						}
@@ -420,12 +370,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/parenthised-chain/input.js"
 							end: Object {
 								column: 9
-								index: 33
 								line: 5
 							}
 							start: Object {
 								column: 0
-								index: 24
 								line: 5
 							}
 						}
@@ -437,12 +385,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 9
-										index: 33
 										line: 5
 									}
 									start: Object {
 										column: 8
-										index: 32
 										line: 5
 									}
 								}
@@ -453,12 +399,10 @@ JSRoot {
 								identifierName: "c"
 								end: Object {
 									column: 9
-									index: 33
 									line: 5
 								}
 								start: Object {
 									column: 8
-									index: 32
 									line: 5
 								}
 							}
@@ -468,12 +412,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/parenthised-chain/input.js"
 								end: Object {
 									column: 5
-									index: 29
 									line: 5
 								}
 								start: Object {
 									column: 1
-									index: 25
 									line: 5
 								}
 							}
@@ -484,12 +426,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 2
-										index: 26
 										line: 5
 									}
 									start: Object {
 										column: 1
-										index: 25
 										line: 5
 									}
 								}
@@ -502,12 +442,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 5
-											index: 29
 											line: 5
 										}
 										start: Object {
 											column: 4
-											index: 28
 											line: 5
 										}
 									}
@@ -518,12 +456,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 5
-										index: 29
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 28
 										line: 5
 									}
 								}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 				end: Object {
 					column: 1
-					index: 40
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 					end: Object {
 						column: 1
-						index: 40
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 						filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 						end: Object {
 							column: 1
-							index: 40
 							line: 3
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 							filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 							end: Object {
 								column: 1
-								index: 40
 								line: 3
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 											filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 											end: Object {
 												column: 11
-												index: 31
 												line: 2
 											}
 											start: Object {
 												column: 3
-												index: 23
 												line: 2
 											}
 										}
@@ -139,12 +125,10 @@ JSRoot {
 												filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 												end: Object {
 													column: 11
-													index: 31
 													line: 2
 												}
 												start: Object {
 													column: 9
-													index: 29
 													line: 2
 												}
 											}
@@ -154,12 +138,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 										end: Object {
 											column: 12
-											index: 32
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 22
 											line: 2
 										}
 									}
@@ -168,12 +150,10 @@ JSRoot {
 									filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 									end: Object {
 										column: 18
-										index: 38
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 22
 										line: 2
 									}
 								}
@@ -184,12 +164,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 										end: Object {
 											column: 18
-											index: 38
 											line: 2
 										}
 										start: Object {
 											column: 15
-											index: 35
 											line: 2
 										}
 									}
@@ -207,12 +185,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 										end: Object {
 											column: 14
-											index: 34
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 32
 											line: 2
 										}
 									}
@@ -226,19 +202,16 @@ JSRoot {
 									typeAnnotation: undefined
 									start: Object {
 										column: 2
-										index: 22
 										line: 2
 									}
 									loc: Object {
 										filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 										end: Object {
 											column: 12
-											index: 32
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 22
 											line: 2
 										}
 									}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/function-sent/enabled-call-statement/input.js"
 		end: Object {
 			column: 0
-			index: 39
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/function-sent/enabled-call-statement/input.js"
 				end: Object {
 					column: 1
-					index: 38
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "experimental/function-sent/enabled-call-statement/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "experimental/function-sent/enabled-call-statement/input.js"
 					end: Object {
 						column: 1
-						index: 38
 						line: 3
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "experimental/function-sent/enabled-call-statement/input.js"
 							end: Object {
 								column: 18
-								index: 36
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 20
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/function-sent/enabled-call-statement/input.js"
 								end: Object {
 									column: 17
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 20
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 									filename: "experimental/function-sent/enabled-call-statement/input.js"
 									end: Object {
 										column: 15
-										index: 33
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 20
 										line: 2
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 										identifierName: "function"
 										end: Object {
 											column: 10
-											index: 28
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 20
 											line: 2
 										}
 									}
@@ -169,12 +151,10 @@ JSRoot {
 										identifierName: "sent"
 										end: Object {
 											column: 15
-											index: 33
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 29
 											line: 2
 										}
 									}

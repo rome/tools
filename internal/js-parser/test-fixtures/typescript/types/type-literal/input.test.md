@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/types/type-literal/input.ts"
 		end: Object {
 			column: 0
-			index: 121
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/types/type-literal/input.ts"
 				end: Object {
 					column: 96
-					index: 120
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 2
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "typescript/types/type-literal/input.ts"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/types/type-literal/input.ts"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 								filename: "typescript/types/type-literal/input.ts"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -104,12 +94,10 @@ JSRoot {
 									filename: "typescript/types/type-literal/input.ts"
 									end: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -118,12 +106,10 @@ JSRoot {
 										filename: "typescript/types/type-literal/input.ts"
 										end: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 										start: Object {
 											column: 9
-											index: 9
 											line: 1
 										}
 									}
@@ -137,12 +123,10 @@ JSRoot {
 														identifierName: "x"
 														end: Object {
 															column: 12
-															index: 12
 															line: 1
 														}
 														start: Object {
 															column: 11
-															index: 11
 															line: 1
 														}
 													}
@@ -151,12 +135,10 @@ JSRoot {
 													filename: "typescript/types/type-literal/input.ts"
 													end: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 													start: Object {
 														column: 11
-														index: 11
 														line: 1
 													}
 												}
@@ -167,12 +149,10 @@ JSRoot {
 												filename: "typescript/types/type-literal/input.ts"
 												end: Object {
 													column: 20
-													index: 20
 													line: 1
 												}
 												start: Object {
 													column: 11
-													index: 11
 													line: 1
 												}
 											}
@@ -181,12 +161,10 @@ JSRoot {
 													filename: "typescript/types/type-literal/input.ts"
 													end: Object {
 														column: 20
-														index: 20
 														line: 1
 													}
 													start: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 												}
@@ -201,12 +179,10 @@ JSRoot {
 							filename: "typescript/types/type-literal/input.ts"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

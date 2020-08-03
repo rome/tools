@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/function-with-this/input.ts"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/function-with-this/input.ts"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/function-with-this/input.ts"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/function-with-this/input.ts"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/function-with-this/input.ts"
 									end: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/function-with-this/input.ts"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -112,12 +100,10 @@ JSRoot {
 											filename: "typescript/types/function-with-this/input.ts"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 										}
@@ -129,12 +115,10 @@ JSRoot {
 											filename: "typescript/types/function-with-this/input.ts"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 7
-												index: 7
 												line: 1
 											}
 										}
@@ -146,12 +130,10 @@ JSRoot {
 													identifierName: "this"
 													end: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 													start: Object {
 														column: 8
-														index: 8
 														line: 1
 													}
 												}
@@ -161,12 +143,10 @@ JSRoot {
 														filename: "typescript/types/function-with-this/input.ts"
 														end: Object {
 															column: 20
-															index: 20
 															line: 1
 														}
 														start: Object {
 															column: 8
-															index: 8
 															line: 1
 														}
 													}
@@ -175,12 +155,10 @@ JSRoot {
 															filename: "typescript/types/function-with-this/input.ts"
 															end: Object {
 																column: 20
-																index: 20
 																line: 1
 															}
 															start: Object {
 																column: 14
-																index: 14
 																line: 1
 															}
 														}
@@ -197,12 +175,10 @@ JSRoot {
 							filename: "typescript/types/function-with-this/input.ts"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

@@ -336,7 +336,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 	}
 
 	if (parser.match(tt.parenL) || parser.match(tt.name)) {
-		parser.state.potentialArrowAt = parser.state.startPos.index;
+		parser.state.potentialArrowAt = parser.getIndex();
 	}
 
 	let left: AnyJSExpression | T = parseMaybeConditional(
@@ -402,7 +402,7 @@ export function parseMaybeConditional(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getLoc(expr).start.index === potentialArrowAt
+		parser.getInputStartIndex(expr) === potentialArrowAt
 	) {
 		return expr;
 	}
@@ -426,7 +426,7 @@ export function tryParseConditionalConsequent(
 	}>();
 
 	brancher.add(() => {
-		parser.state.noArrowParamsConversionAt.push(parser.state.startPos.index);
+		parser.state.noArrowParamsConversionAt.push(parser.getIndex());
 		const consequent = parseMaybeAssign(parser, "conditional consequent");
 		parser.state.noArrowParamsConversionAt.pop();
 		return {
@@ -465,7 +465,7 @@ export function parseConditional(
 		if (branch.hasBranch()) {
 			return branch.pick();
 		} else {
-			refNeedsArrowPos.index = parser.state.startPos.index;
+			refNeedsArrowPos.index = parser.getIndex();
 			return expr;
 		}
 	}
@@ -512,9 +512,13 @@ export function forwardNoArrowParamsConversionAt<T>(
 	start: Position,
 	parse: () => T,
 ): T {
-	if (parser.state.noArrowParamsConversionAt.includes(start.index)) {
+	if (
+		parser.state.noArrowParamsConversionAt.includes(
+			parser.getIndexFromPosition(start, parser.filename),
+		)
+	) {
 		let result: T;
-		parser.state.noArrowParamsConversionAt.push(parser.state.startPos.index);
+		parser.state.noArrowParamsConversionAt.push(parser.getIndex());
 		result = parse();
 		parser.state.noArrowParamsConversionAt.pop();
 		return result;
@@ -559,7 +563,7 @@ export function parseExpressionOps(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getLoc(expr).start.index === potentialArrowAt
+		parser.getInputStartIndex(expr) === potentialArrowAt
 	) {
 		return expr;
 	}
@@ -806,7 +810,7 @@ export function parseExpressionWithPossibleSubscripts(
 
 	if (
 		expr.type === "JSArrowFunctionExpression" &&
-		parser.getLoc(expr).start.index === potentialArrowAt
+		parser.getInputStartIndex(expr) === potentialArrowAt
 	) {
 		return expr;
 	}
@@ -829,7 +833,9 @@ export function parseSubscripts(
 	if (
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
-		parser.state.noArrowAt.includes(startPos.index)
+		parser.state.noArrowAt.includes(
+			parser.getIndexFromPosition(startPos, parser.filename),
+		)
 	) {
 		const argsStart = parser.getPosition();
 		const openContext = parser.expectOpening(
@@ -1274,13 +1280,14 @@ export function atPossibleAsync(
 	parser: JSParser,
 	base: AnyJSExpression,
 ): boolean {
-	const loc = parser.getLoc(base);
+	const start = parser.getInputStartIndex(base);
+	const end = parser.getInputEndIndex(base);
 	return (
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
-		parser.state.lastEndPos.index === loc.end.index &&
+		parser.state.lastEndIndex === end &&
 		!parser.canInsertSemicolon() &&
-		parser.getRawInput(loc.start.index, loc.end.index) === "async"
+		parser.getRawInput(start, end) === "async"
 	);
 }
 
@@ -1518,8 +1525,7 @@ export function parseExpressionAtom(
 		readRegexp(parser);
 	}
 
-	const canBeArrow =
-		parser.state.potentialArrowAt === parser.state.startPos.index;
+	const canBeArrow = parser.state.potentialArrowAt === parser.getIndex();
 
 	// We don't want to match <! as it's the start of a HTML comment
 	if (
@@ -1802,8 +1808,9 @@ export function parseParenAndDistinguishExpression(
 	canBeArrow: boolean,
 ): AnyJSExpression {
 	const startPos = parser.getPosition();
+	const startIndex = parser.getIndex();
 
-	if (parser.state.noArrowAt.includes(startPos.index)) {
+	if (parser.state.noArrowAt.includes(startIndex)) {
 		canBeArrow = false;
 	}
 
@@ -2209,10 +2216,10 @@ export function parseTemplateElement(
 		}
 	}
 
-	const raw = parser.getRawInput(
-		parser.state.startPos.index,
-		parser.state.endPos.index,
-	).replace(/\r\n?/g, "\n");
+	const raw = parser.getRawInput(parser.state.startIndex, parser.state.endIndex).replace(
+		/\r\n?/g,
+		"\n",
+	);
 	const cooked = tokenValue === undefined ? raw : String(tokenValue);
 
 	parser.next();
@@ -2728,7 +2735,7 @@ export function parseObjectProperty(
 
 			if (parser.match(tt.eq) && refShorthandDefaultPos) {
 				if (refShorthandDefaultPos.index === ob1Number0) {
-					refShorthandDefaultPos.index = parser.state.startPos.index;
+					refShorthandDefaultPos.index = parser.getIndex();
 				}
 
 				value = parseMaybeDefault(parser, start, value);
@@ -3258,7 +3265,7 @@ export function checkFunctionNameAndParams(
 	body: AnyJSExpression | JSBlockStatement,
 	force?: boolean,
 ): void {
-	const {isArrowFunction, isMethod, id, rest, params, start} = opts;
+	const {isArrowFunction, isMethod, id, rest, start, params} = opts;
 
 	if (
 		!isSimpleParamList(params, rest) &&
@@ -3274,16 +3281,16 @@ export function checkFunctionNameAndParams(
 		}
 	}
 
+	const startIndex = parser.getIndexFromPosition(start, parser.filename);
 	if (
 		isArrowFunction &&
 		force !== true &&
-		parser.state.noArrowParamsConversionAt.includes(start.index)
+		parser.state.noArrowParamsConversionAt.includes(startIndex)
 	) {
 		return undefined;
 	}
 
 	// If this is a strict mode function, verify that argument names
-
 	// are not repeated, and it does not try to bind the words `eval`
 	const _isStrictBody = isStrictBody(parser, body);
 	const isStrict = parser.inScope("STRICT") || _isStrictBody;
@@ -3408,7 +3415,7 @@ export function parseCallArgument(
 		);
 
 		if (refTrailingCommaPos && parser.match(tt.comma)) {
-			refTrailingCommaPos.index = parser.state.startPos.index;
+			refTrailingCommaPos.index = parser.getIndex();
 		}
 
 		return elt;
@@ -3554,8 +3561,8 @@ export function parseIdentifierName(
 		// context-managing code already ignored the keyword
 		if (
 			(name === "class" || name === "function") &&
-			(parser.state.lastEndPos.index !== ob1Inc(parser.state.lastStartPos.index) ||
-			parser.input.charCodeAt(ob1Get0(parser.state.lastStartPos.index)) !==
+			(parser.state.lastEndIndex !== ob1Inc(parser.state.lastStartIndex) ||
+			parser.input.charCodeAt(ob1Get0(parser.state.lastStartIndex)) !==
 			charCodes.dot)
 		) {
 			parser.state.context.pop();
@@ -3792,11 +3799,10 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	const {flags, pattern} = value;
 
 	const regexParser = createRegExpParser({
+		// Advance past first slash
 		offsetPosition: {
-			// Advance passed first slash
-			...start,
+			line: start.line,
 			column: ob1Inc(start.column),
-			index: ob1Inc(start.index),
 		},
 		path: parser.filename,
 		input: pattern,
@@ -3806,7 +3812,7 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	const {diagnostics, expression} = regexParser.parse();
 
 	for (const diagnostic of diagnostics) {
-		parser.unexpectedDiagnostic(diagnostic);
+		parser.addDiagnostic(diagnostic);
 	}
 
 	return parser.finishNode(

@@ -16,12 +16,10 @@ HTMLRoot {
 		filename: "smoke/input.html"
 		end: Object {
 			column: 6
-			index: 218
 			line: 19
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -33,12 +31,10 @@ HTMLRoot {
 				filename: "smoke/input.html"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -50,12 +46,10 @@ HTMLRoot {
 				filename: "smoke/input.html"
 				end: Object {
 					column: 30
-					index: 210
 					line: 17
 				}
 				start: Object {
 					column: 1
-					index: 181
 					line: 17
 				}
 			}
@@ -70,12 +64,10 @@ HTMLRoot {
 					filename: "smoke/input.html"
 					end: Object {
 						column: 4
-						index: 28
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 25
 						line: 2
 					}
 				}
@@ -87,12 +79,10 @@ HTMLRoot {
 				filename: "smoke/input.html"
 				end: Object {
 					column: 6
-					index: 218
 					line: 19
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 2
 				}
 			}
@@ -104,12 +94,10 @@ HTMLRoot {
 							filename: "smoke/input.html"
 							end: Object {
 								column: 7
-								index: 37
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 32
 								line: 3
 							}
 						}
@@ -120,12 +108,10 @@ HTMLRoot {
 						filename: "smoke/input.html"
 						end: Object {
 							column: 26
-							index: 56
 							line: 3
 						}
 						start: Object {
 							column: 1
-							index: 31
 							line: 3
 						}
 					}
@@ -137,12 +123,10 @@ HTMLRoot {
 									filename: "smoke/input.html"
 									end: Object {
 										column: 19
-										index: 49
 										line: 3
 									}
 									start: Object {
 										column: 8
-										index: 38
 										line: 3
 									}
 								}
@@ -153,12 +137,10 @@ HTMLRoot {
 									filename: "smoke/input.html"
 									end: Object {
 										column: 24
-										index: 54
 										line: 3
 									}
 									start: Object {
 										column: 20
-										index: 50
 										line: 3
 									}
 								}
@@ -167,12 +149,10 @@ HTMLRoot {
 								filename: "smoke/input.html"
 								end: Object {
 									column: 24
-									index: 54
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 38
 									line: 3
 								}
 							}
@@ -185,12 +165,10 @@ HTMLRoot {
 						filename: "smoke/input.html"
 						end: Object {
 							column: 6
-							index: 117
 							line: 14
 						}
 						start: Object {
 							column: 1
-							index: 58
 							line: 4
 						}
 					}
@@ -202,12 +180,10 @@ HTMLRoot {
 							filename: "smoke/input.html"
 							end: Object {
 								column: 11
-								index: 122
 								line: 14
 							}
 							start: Object {
 								column: 7
-								index: 118
 								line: 14
 							}
 						}
@@ -218,12 +194,10 @@ HTMLRoot {
 						filename: "smoke/input.html"
 						end: Object {
 							column: 48
-							index: 159
 							line: 14
 						}
 						start: Object {
 							column: 6
-							index: 117
 							line: 14
 						}
 					}
@@ -235,12 +209,10 @@ HTMLRoot {
 									filename: "smoke/input.html"
 									end: Object {
 										column: 17
-										index: 128
 										line: 14
 									}
 									start: Object {
 										column: 13
-										index: 124
 										line: 14
 									}
 								}
@@ -251,12 +223,10 @@ HTMLRoot {
 								filename: "smoke/input.html"
 								end: Object {
 									column: 41
-									index: 152
 									line: 14
 								}
 								start: Object {
 									column: 12
-									index: 123
 									line: 14
 								}
 							}
@@ -268,12 +238,10 @@ HTMLRoot {
 											filename: "smoke/input.html"
 											end: Object {
 												column: 23
-												index: 134
 												line: 14
 											}
 											start: Object {
 												column: 19
-												index: 130
 												line: 14
 											}
 										}
@@ -284,12 +252,10 @@ HTMLRoot {
 										filename: "smoke/input.html"
 										end: Object {
 											column: 34
-											index: 145
 											line: 14
 										}
 										start: Object {
 											column: 18
-											index: 129
 											line: 14
 										}
 									}
@@ -300,12 +266,10 @@ HTMLRoot {
 												filename: "smoke/input.html"
 												end: Object {
 													column: 27
-													index: 138
 													line: 14
 												}
 												start: Object {
 													column: 24
-													index: 135
 													line: 14
 												}
 											}
@@ -323,12 +287,10 @@ HTMLRoot {
 							filename: "smoke/input.html"
 							end: Object {
 								column: 6
-								index: 167
 								line: 16
 							}
 							start: Object {
 								column: 2
-								index: 163
 								line: 16
 							}
 						}
@@ -339,12 +301,10 @@ HTMLRoot {
 						filename: "smoke/input.html"
 						end: Object {
 							column: 18
-							index: 179
 							line: 16
 						}
 						start: Object {
 							column: 1
-							index: 162
 							line: 16
 						}
 					}
@@ -355,12 +315,10 @@ HTMLRoot {
 								filename: "smoke/input.html"
 								end: Object {
 									column: 11
-									index: 172
 									line: 16
 								}
 								start: Object {
 									column: 7
-									index: 168
 									line: 16
 								}
 							}

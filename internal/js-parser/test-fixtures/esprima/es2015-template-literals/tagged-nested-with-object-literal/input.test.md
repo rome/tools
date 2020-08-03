@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 		end: Object {
 			column: 0
-			index: 45
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "raw"
 						end: Object {
 							column: 3
-							index: 3
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 						end: Object {
 							column: 44
-							index: 44
 							line: 1
 						}
 						start: Object {
 							column: 3
-							index: 3
 							line: 1
 						}
 					}
@@ -101,12 +91,10 @@ JSRoot {
 								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 								start: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 								end: Object {
 									column: 42
-									index: 42
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -154,12 +138,10 @@ JSRoot {
 										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 13
-											index: 13
 											line: 1
 										}
 									}
@@ -172,12 +154,10 @@ JSRoot {
 										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 41
-											index: 41
 											line: 1
 										}
 										start: Object {
 											column: 36
-											index: 36
 											line: 1
 										}
 									}
@@ -190,12 +170,10 @@ JSRoot {
 										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 										end: Object {
 											column: 35
-											index: 35
 											line: 1
 										}
 										start: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 									}
@@ -205,12 +183,10 @@ JSRoot {
 											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 											end: Object {
 												column: 35
-												index: 35
 												line: 1
 											}
 											start: Object {
 												column: 33
-												index: 33
 												line: 1
 											}
 										}
@@ -221,12 +197,10 @@ JSRoot {
 											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 											end: Object {
 												column: 30
-												index: 30
 												line: 1
 											}
 											start: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 										}
@@ -239,12 +213,10 @@ JSRoot {
 													filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
 													end: Object {
 														column: 29
-														index: 29
 														line: 1
 													}
 													start: Object {
 														column: 23
-														index: 23
 														line: 1
 													}
 												}

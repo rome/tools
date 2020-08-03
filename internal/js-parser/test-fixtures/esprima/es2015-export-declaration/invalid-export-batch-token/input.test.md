@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 		end: Object {
 			column: 0
-			index: 11
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -62,12 +58,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 				end: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -109,12 +99,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 					end: Object {
 						column: 0
-						index: 11
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -124,12 +112,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/invalid-export-batch-token/input.js"
 						end: Object {
 							column: 0
-							index: 11
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 11
 							line: 2
 						}
 					}

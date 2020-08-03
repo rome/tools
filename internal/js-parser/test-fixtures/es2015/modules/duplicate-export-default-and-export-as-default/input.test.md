@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 		end: Object {
 			column: 0
-			index: 57
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 23
-					index: 53
 					line: 2
 				}
 				start: Object {
 					column: 9
-					index: 39
 					line: 2
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -81,12 +75,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -97,12 +89,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -111,12 +101,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 					}
@@ -150,12 +136,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 23
-							index: 23
 							line: 1
 						}
 					}
@@ -167,12 +151,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 			}
@@ -184,12 +166,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 				end: Object {
 					column: 26
-					index: 56
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 30
 					line: 2
 				}
 			}
@@ -199,12 +179,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 						end: Object {
 							column: 23
-							index: 53
 							line: 2
 						}
 						start: Object {
 							column: 9
-							index: 39
 							line: 2
 						}
 					}
@@ -215,12 +193,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 23
-								index: 53
 								line: 2
 							}
 							start: Object {
 								column: 16
-								index: 46
 								line: 2
 							}
 						}
@@ -232,12 +208,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 12
-								index: 42
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 39
 								line: 2
 							}
 						}

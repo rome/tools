@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 		end: Object {
 			column: 0
-			index: 523
 			line: 13
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 								}
@@ -104,12 +94,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 18
 														line: 1
 													}
 													start: Object {
 														column: 15
-														index: 15
 														line: 1
 													}
 												}
@@ -118,12 +106,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 18
 													line: 1
 												}
 												start: Object {
 													column: 15
-													index: 15
 													line: 1
 												}
 											}
@@ -135,12 +121,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 18
-													index: 18
 													line: 1
 												}
 												start: Object {
 													column: 15
-													index: 15
 													line: 1
 												}
 											}
@@ -149,12 +133,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 18
-												index: 18
 												line: 1
 											}
 											start: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 										}
@@ -165,12 +147,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -181,12 +161,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 									start: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 								}
@@ -203,12 +181,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 33
-					index: 61
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 28
 					line: 2
 				}
 			}
@@ -217,12 +193,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 33
-						index: 61
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 35
 						line: 2
 					}
 				}
@@ -232,12 +206,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 33
-							index: 61
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 35
 							line: 2
 						}
 					}
@@ -249,12 +221,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 26
-										index: 54
 										line: 2
 									}
 									start: Object {
 										column: 13
-										index: 41
 										line: 2
 									}
 								}
@@ -268,12 +238,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 46
 														line: 2
 													}
 													start: Object {
 														column: 15
-														index: 43
 														line: 2
 													}
 												}
@@ -282,12 +250,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 46
 													line: 2
 												}
 												start: Object {
 													column: 15
-													index: 43
 													line: 2
 												}
 											}
@@ -299,12 +265,10 @@ JSRoot {
 												identifierName: "foo2"
 												end: Object {
 													column: 24
-													index: 52
 													line: 2
 												}
 												start: Object {
 													column: 20
-													index: 48
 													line: 2
 												}
 											}
@@ -313,12 +277,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 24
-												index: 52
 												line: 2
 											}
 											start: Object {
 												column: 15
-												index: 43
 												line: 2
 											}
 										}
@@ -329,12 +291,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 32
-									index: 60
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 41
 									line: 2
 								}
 							}
@@ -345,12 +305,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 32
-										index: 60
 										line: 2
 									}
 									start: Object {
 										column: 29
-										index: 57
 										line: 2
 									}
 								}
@@ -367,12 +325,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 36
-					index: 98
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 62
 					line: 3
 				}
 			}
@@ -381,12 +337,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 36
-						index: 98
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 69
 						line: 3
 					}
 				}
@@ -396,12 +350,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 36
-							index: 98
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 69
 							line: 3
 						}
 					}
@@ -413,12 +365,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 29
-										index: 91
 										line: 3
 									}
 									start: Object {
 										column: 13
-										index: 75
 										line: 3
 									}
 								}
@@ -432,12 +382,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 80
 														line: 3
 													}
 													start: Object {
 														column: 15
-														index: 77
 														line: 3
 													}
 												}
@@ -446,12 +394,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 80
 													line: 3
 												}
 												start: Object {
 													column: 15
-													index: 77
 													line: 3
 												}
 											}
@@ -462,12 +408,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 27
-													index: 89
 													line: 3
 												}
 												start: Object {
 													column: 20
-													index: 82
 													line: 3
 												}
 											}
@@ -481,12 +425,10 @@ JSRoot {
 																identifierName: "baz"
 																end: Object {
 																	column: 25
-																	index: 87
 																	line: 3
 																}
 																start: Object {
 																	column: 22
-																	index: 84
 																	line: 3
 																}
 															}
@@ -495,12 +437,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 25
-																index: 87
 																line: 3
 															}
 															start: Object {
 																column: 22
-																index: 84
 																line: 3
 															}
 														}
@@ -512,12 +452,10 @@ JSRoot {
 															identifierName: "baz"
 															end: Object {
 																column: 25
-																index: 87
 																line: 3
 															}
 															start: Object {
 																column: 22
-																index: 84
 																line: 3
 															}
 														}
@@ -526,12 +464,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 25
-															index: 87
 															line: 3
 														}
 														start: Object {
 															column: 22
-															index: 84
 															line: 3
 														}
 													}
@@ -542,12 +478,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 27
-												index: 89
 												line: 3
 											}
 											start: Object {
 												column: 15
-												index: 77
 												line: 3
 											}
 										}
@@ -558,12 +492,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 35
-									index: 97
 									line: 3
 								}
 								start: Object {
 									column: 13
-									index: 75
 									line: 3
 								}
 							}
@@ -574,12 +506,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 35
-										index: 97
 										line: 3
 									}
 									start: Object {
 										column: 32
-										index: 94
 										line: 3
 									}
 								}
@@ -596,12 +526,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 46
-					index: 145
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 99
 					line: 4
 				}
 			}
@@ -610,12 +538,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 46
-						index: 145
 						line: 4
 					}
 					start: Object {
 						column: 7
-						index: 106
 						line: 4
 					}
 				}
@@ -625,12 +551,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 46
-							index: 145
 							line: 4
 						}
 						start: Object {
 							column: 7
-							index: 106
 							line: 4
 						}
 					}
@@ -642,12 +566,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 39
-										index: 138
 										line: 4
 									}
 									start: Object {
 										column: 13
-										index: 112
 										line: 4
 									}
 								}
@@ -661,12 +583,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 117
 														line: 4
 													}
 													start: Object {
 														column: 15
-														index: 114
 														line: 4
 													}
 												}
@@ -675,12 +595,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 117
 													line: 4
 												}
 												start: Object {
 													column: 15
-													index: 114
 													line: 4
 												}
 											}
@@ -691,12 +609,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 37
-													index: 136
 													line: 4
 												}
 												start: Object {
 													column: 20
-													index: 119
 													line: 4
 												}
 											}
@@ -710,12 +626,10 @@ JSRoot {
 																identifierName: "baz"
 																end: Object {
 																	column: 25
-																	index: 124
 																	line: 4
 																}
 																start: Object {
 																	column: 22
-																	index: 121
 																	line: 4
 																}
 															}
@@ -724,12 +638,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 25
-																index: 124
 																line: 4
 															}
 															start: Object {
 																column: 22
-																index: 121
 																line: 4
 															}
 														}
@@ -740,12 +652,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 35
-																index: 134
 																line: 4
 															}
 															start: Object {
 																column: 28
-																index: 127
 																line: 4
 															}
 														}
@@ -759,12 +669,10 @@ JSRoot {
 																			identifierName: "qux"
 																			end: Object {
 																				column: 33
-																				index: 132
 																				line: 4
 																			}
 																			start: Object {
 																				column: 30
-																				index: 129
 																				line: 4
 																			}
 																		}
@@ -773,12 +681,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 33
-																			index: 132
 																			line: 4
 																		}
 																		start: Object {
 																			column: 30
-																			index: 129
 																			line: 4
 																		}
 																	}
@@ -790,12 +696,10 @@ JSRoot {
 																		identifierName: "qux"
 																		end: Object {
 																			column: 33
-																			index: 132
 																			line: 4
 																		}
 																		start: Object {
 																			column: 30
-																			index: 129
 																			line: 4
 																		}
 																	}
@@ -804,12 +708,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 33
-																		index: 132
 																		line: 4
 																	}
 																	start: Object {
 																		column: 30
-																		index: 129
 																		line: 4
 																	}
 																}
@@ -820,12 +722,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 35
-															index: 134
 															line: 4
 														}
 														start: Object {
 															column: 22
-															index: 121
 															line: 4
 														}
 													}
@@ -836,12 +736,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 37
-												index: 136
 												line: 4
 											}
 											start: Object {
 												column: 15
-												index: 114
 												line: 4
 											}
 										}
@@ -852,12 +750,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 45
-									index: 144
 									line: 4
 								}
 								start: Object {
 									column: 13
-									index: 112
 									line: 4
 								}
 							}
@@ -868,12 +764,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 45
-										index: 144
 										line: 4
 									}
 									start: Object {
 										column: 42
-										index: 141
 										line: 4
 									}
 								}
@@ -890,12 +784,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 53
-					index: 199
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 146
 					line: 5
 				}
 			}
@@ -904,12 +796,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 53
-						index: 199
 						line: 5
 					}
 					start: Object {
 						column: 7
-						index: 153
 						line: 5
 					}
 				}
@@ -919,12 +809,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 53
-							index: 199
 							line: 5
 						}
 						start: Object {
 							column: 7
-							index: 153
 							line: 5
 						}
 					}
@@ -936,12 +824,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 46
-										index: 192
 										line: 5
 									}
 									start: Object {
 										column: 13
-										index: 159
 										line: 5
 									}
 								}
@@ -955,12 +841,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 164
 														line: 5
 													}
 													start: Object {
 														column: 15
-														index: 161
 														line: 5
 													}
 												}
@@ -969,12 +853,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 164
 													line: 5
 												}
 												start: Object {
 													column: 15
-													index: 161
 													line: 5
 												}
 											}
@@ -985,12 +867,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 38
-													index: 184
 													line: 5
 												}
 												start: Object {
 													column: 20
-													index: 166
 													line: 5
 												}
 											}
@@ -1004,12 +884,10 @@ JSRoot {
 																identifierName: "baz"
 																end: Object {
 																	column: 25
-																	index: 171
 																	line: 5
 																}
 																start: Object {
 																	column: 22
-																	index: 168
 																	line: 5
 																}
 															}
@@ -1018,12 +896,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 25
-																index: 171
 																line: 5
 															}
 															start: Object {
 																column: 22
-																index: 168
 																line: 5
 															}
 														}
@@ -1034,12 +910,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 36
-																index: 182
 																line: 5
 															}
 															start: Object {
 																column: 28
-																index: 174
 																line: 5
 															}
 														}
@@ -1053,12 +927,10 @@ JSRoot {
 																			identifierName: "qux2"
 																			end: Object {
 																				column: 34
-																				index: 180
 																				line: 5
 																			}
 																			start: Object {
 																				column: 30
-																				index: 176
 																				line: 5
 																			}
 																		}
@@ -1067,12 +939,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 34
-																			index: 180
 																			line: 5
 																		}
 																		start: Object {
 																			column: 30
-																			index: 176
 																			line: 5
 																		}
 																	}
@@ -1084,12 +954,10 @@ JSRoot {
 																		identifierName: "qux2"
 																		end: Object {
 																			column: 34
-																			index: 180
 																			line: 5
 																		}
 																		start: Object {
 																			column: 30
-																			index: 176
 																			line: 5
 																		}
 																	}
@@ -1098,12 +966,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 34
-																		index: 180
 																		line: 5
 																	}
 																	start: Object {
 																		column: 30
-																		index: 176
 																		line: 5
 																	}
 																}
@@ -1114,12 +980,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 36
-															index: 182
 															line: 5
 														}
 														start: Object {
 															column: 22
-															index: 168
 															line: 5
 														}
 													}
@@ -1130,12 +994,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 38
-												index: 184
 												line: 5
 											}
 											start: Object {
 												column: 15
-												index: 161
 												line: 5
 											}
 										}
@@ -1149,12 +1011,10 @@ JSRoot {
 													identifierName: "foo3"
 													end: Object {
 														column: 44
-														index: 190
 														line: 5
 													}
 													start: Object {
 														column: 40
-														index: 186
 														line: 5
 													}
 												}
@@ -1163,12 +1023,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 44
-													index: 190
 													line: 5
 												}
 												start: Object {
 													column: 40
-													index: 186
 													line: 5
 												}
 											}
@@ -1180,12 +1038,10 @@ JSRoot {
 												identifierName: "foo3"
 												end: Object {
 													column: 44
-													index: 190
 													line: 5
 												}
 												start: Object {
 													column: 40
-													index: 186
 													line: 5
 												}
 											}
@@ -1194,12 +1050,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 44
-												index: 190
 												line: 5
 											}
 											start: Object {
 												column: 40
-												index: 186
 												line: 5
 											}
 										}
@@ -1210,12 +1064,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 52
-									index: 198
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 159
 									line: 5
 								}
 							}
@@ -1226,12 +1078,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 52
-										index: 198
 										line: 5
 									}
 									start: Object {
 										column: 49
-										index: 195
 										line: 5
 									}
 								}
@@ -1248,12 +1098,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 26
-					index: 226
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 200
 					line: 6
 				}
 			}
@@ -1262,12 +1110,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 26
-						index: 226
 						line: 6
 					}
 					start: Object {
 						column: 7
-						index: 207
 						line: 6
 					}
 				}
@@ -1277,12 +1123,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 26
-							index: 226
 							line: 6
 						}
 						start: Object {
 							column: 7
-							index: 207
 							line: 6
 						}
 					}
@@ -1294,12 +1138,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 19
-										index: 219
 										line: 6
 									}
 									start: Object {
 										column: 13
-										index: 213
 										line: 6
 									}
 								}
@@ -1311,12 +1153,10 @@ JSRoot {
 											identifierName: "foo4"
 											end: Object {
 												column: 18
-												index: 218
 												line: 6
 											}
 											start: Object {
 												column: 14
-												index: 214
 												line: 6
 											}
 										}
@@ -1327,12 +1167,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 218
 													line: 6
 												}
 												start: Object {
 													column: 14
-													index: 214
 													line: 6
 												}
 											}
@@ -1344,12 +1182,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 25
-									index: 225
 									line: 6
 								}
 								start: Object {
 									column: 13
-									index: 213
 									line: 6
 								}
 							}
@@ -1360,12 +1196,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 25
-										index: 225
 										line: 6
 									}
 									start: Object {
 										column: 22
-										index: 222
 										line: 6
 									}
 								}
@@ -1382,12 +1216,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 28
-					index: 255
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 227
 					line: 7
 				}
 			}
@@ -1396,12 +1228,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 28
-						index: 255
 						line: 7
 					}
 					start: Object {
 						column: 7
-						index: 234
 						line: 7
 					}
 				}
@@ -1411,12 +1241,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 28
-							index: 255
 							line: 7
 						}
 						start: Object {
 							column: 7
-							index: 234
 							line: 7
 						}
 					}
@@ -1428,12 +1256,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 21
-										index: 248
 										line: 7
 									}
 									start: Object {
 										column: 13
-										index: 240
 										line: 7
 									}
 								}
@@ -1444,12 +1270,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 20
-												index: 247
 												line: 7
 											}
 											start: Object {
 												column: 14
-												index: 241
 												line: 7
 											}
 										}
@@ -1460,12 +1284,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 20
-													index: 247
 													line: 7
 												}
 												start: Object {
 													column: 14
-													index: 241
 													line: 7
 												}
 											}
@@ -1478,12 +1300,10 @@ JSRoot {
 													identifierName: "baz2"
 													end: Object {
 														column: 19
-														index: 246
 														line: 7
 													}
 													start: Object {
 														column: 15
-														index: 242
 														line: 7
 													}
 												}
@@ -1494,12 +1314,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 19
-															index: 246
 															line: 7
 														}
 														start: Object {
 															column: 15
-															index: 242
 															line: 7
 														}
 													}
@@ -1513,12 +1331,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 27
-									index: 254
 									line: 7
 								}
 								start: Object {
 									column: 13
-									index: 240
 									line: 7
 								}
 							}
@@ -1529,12 +1345,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 27
-										index: 254
 										line: 7
 									}
 									start: Object {
 										column: 24
-										index: 251
 										line: 7
 									}
 								}
@@ -1551,12 +1365,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 55
-					index: 311
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 256
 					line: 8
 				}
 			}
@@ -1565,12 +1377,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 55
-						index: 311
 						line: 8
 					}
 					start: Object {
 						column: 7
-						index: 263
 						line: 8
 					}
 				}
@@ -1580,12 +1390,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 55
-							index: 311
 							line: 8
 						}
 						start: Object {
 							column: 7
-							index: 263
 							line: 8
 						}
 					}
@@ -1597,12 +1405,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 48
-										index: 304
 										line: 8
 									}
 									start: Object {
 										column: 13
-										index: 269
 										line: 8
 									}
 								}
@@ -1613,12 +1419,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 29
-												index: 285
 												line: 8
 											}
 											start: Object {
 												column: 14
-												index: 270
 												line: 8
 											}
 										}
@@ -1629,12 +1433,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 29
-													index: 285
 													line: 8
 												}
 												start: Object {
 													column: 14
-													index: 270
 													line: 8
 												}
 											}
@@ -1649,12 +1451,10 @@ JSRoot {
 															identifierName: "foo"
 															end: Object {
 																column: 19
-																index: 275
 																line: 8
 															}
 															start: Object {
 																column: 16
-																index: 272
 																line: 8
 															}
 														}
@@ -1663,12 +1463,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 19
-															index: 275
 															line: 8
 														}
 														start: Object {
 															column: 16
-															index: 272
 															line: 8
 														}
 													}
@@ -1679,12 +1477,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 27
-															index: 283
 															line: 8
 														}
 														start: Object {
 															column: 21
-															index: 277
 															line: 8
 														}
 													}
@@ -1696,12 +1492,10 @@ JSRoot {
 																identifierName: "baz3"
 																end: Object {
 																	column: 26
-																	index: 282
 																	line: 8
 																}
 																start: Object {
 																	column: 22
-																	index: 278
 																	line: 8
 																}
 															}
@@ -1712,12 +1506,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 26
-																		index: 282
 																		line: 8
 																	}
 																	start: Object {
 																		column: 22
-																		index: 278
 																		line: 8
 																	}
 																}
@@ -1729,12 +1521,10 @@ JSRoot {
 													filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 													end: Object {
 														column: 27
-														index: 283
 														line: 8
 													}
 													start: Object {
 														column: 16
-														index: 272
 														line: 8
 													}
 												}
@@ -1747,12 +1537,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 47
-												index: 303
 												line: 8
 											}
 											start: Object {
 												column: 31
-												index: 287
 												line: 8
 											}
 										}
@@ -1763,12 +1551,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 47
-													index: 303
 													line: 8
 												}
 												start: Object {
 													column: 31
-													index: 287
 													line: 8
 												}
 											}
@@ -1783,12 +1569,10 @@ JSRoot {
 															identifierName: "foo2"
 															end: Object {
 																column: 37
-																index: 293
 																line: 8
 															}
 															start: Object {
 																column: 33
-																index: 289
 																line: 8
 															}
 														}
@@ -1797,12 +1581,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 37
-															index: 293
 															line: 8
 														}
 														start: Object {
 															column: 33
-															index: 289
 															line: 8
 														}
 													}
@@ -1813,12 +1595,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 45
-															index: 301
 															line: 8
 														}
 														start: Object {
 															column: 39
-															index: 295
 															line: 8
 														}
 													}
@@ -1830,12 +1610,10 @@ JSRoot {
 																identifierName: "baz4"
 																end: Object {
 																	column: 44
-																	index: 300
 																	line: 8
 																}
 																start: Object {
 																	column: 40
-																	index: 296
 																	line: 8
 																}
 															}
@@ -1846,12 +1624,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 44
-																		index: 300
 																		line: 8
 																	}
 																	start: Object {
 																		column: 40
-																		index: 296
 																		line: 8
 																	}
 																}
@@ -1863,12 +1639,10 @@ JSRoot {
 													filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 													end: Object {
 														column: 45
-														index: 301
 														line: 8
 													}
 													start: Object {
 														column: 33
-														index: 289
 														line: 8
 													}
 												}
@@ -1881,12 +1655,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 54
-									index: 310
 									line: 8
 								}
 								start: Object {
 									column: 13
-									index: 269
 									line: 8
 								}
 							}
@@ -1897,12 +1669,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 54
-										index: 310
 										line: 8
 									}
 									start: Object {
 										column: 51
-										index: 307
 										line: 8
 									}
 								}
@@ -1919,12 +1689,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 69
-					index: 381
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 312
 					line: 9
 				}
 			}
@@ -1933,12 +1701,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 69
-						index: 381
 						line: 9
 					}
 					start: Object {
 						column: 7
-						index: 319
 						line: 9
 					}
 				}
@@ -1948,12 +1714,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 69
-							index: 381
 							line: 9
 						}
 						start: Object {
 							column: 7
-							index: 319
 							line: 9
 						}
 					}
@@ -1965,12 +1729,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 62
-										index: 374
 										line: 9
 									}
 									start: Object {
 										column: 13
-										index: 325
 										line: 9
 									}
 								}
@@ -1984,12 +1746,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 330
 														line: 9
 													}
 													start: Object {
 														column: 15
-														index: 327
 														line: 9
 													}
 												}
@@ -1998,12 +1758,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 330
 													line: 9
 												}
 												start: Object {
 													column: 15
-													index: 327
 													line: 9
 												}
 											}
@@ -2014,12 +1772,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 37
-													index: 349
 													line: 9
 												}
 												start: Object {
 													column: 20
-													index: 332
 													line: 9
 												}
 											}
@@ -2033,12 +1789,10 @@ JSRoot {
 																identifierName: "baz"
 																end: Object {
 																	column: 25
-																	index: 337
 																	line: 9
 																}
 																start: Object {
 																	column: 22
-																	index: 334
 																	line: 9
 																}
 															}
@@ -2047,12 +1801,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 25
-																index: 337
 																line: 9
 															}
 															start: Object {
 																column: 22
-																index: 334
 																line: 9
 															}
 														}
@@ -2063,12 +1815,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 35
-																index: 347
 																line: 9
 															}
 															start: Object {
 																column: 27
-																index: 339
 																line: 9
 															}
 														}
@@ -2082,12 +1832,10 @@ JSRoot {
 																			identifierName: "qux3"
 																			end: Object {
 																				column: 33
-																				index: 345
 																				line: 9
 																			}
 																			start: Object {
 																				column: 29
-																				index: 341
 																				line: 9
 																			}
 																		}
@@ -2096,12 +1844,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 33
-																			index: 345
 																			line: 9
 																		}
 																		start: Object {
 																			column: 29
-																			index: 341
 																			line: 9
 																		}
 																	}
@@ -2113,12 +1859,10 @@ JSRoot {
 																		identifierName: "qux3"
 																		end: Object {
 																			column: 33
-																			index: 345
 																			line: 9
 																		}
 																		start: Object {
 																			column: 29
-																			index: 341
 																			line: 9
 																		}
 																	}
@@ -2127,12 +1871,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 33
-																		index: 345
 																		line: 9
 																	}
 																	start: Object {
 																		column: 29
-																		index: 341
 																		line: 9
 																	}
 																}
@@ -2143,12 +1885,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 35
-															index: 347
 															line: 9
 														}
 														start: Object {
 															column: 22
-															index: 334
 															line: 9
 														}
 													}
@@ -2159,12 +1899,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 37
-												index: 349
 												line: 9
 											}
 											start: Object {
 												column: 15
-												index: 327
 												line: 9
 											}
 										}
@@ -2178,12 +1916,10 @@ JSRoot {
 													identifierName: "foo2"
 													end: Object {
 														column: 43
-														index: 355
 														line: 9
 													}
 													start: Object {
 														column: 39
-														index: 351
 														line: 9
 													}
 												}
@@ -2192,12 +1928,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 43
-													index: 355
 													line: 9
 												}
 												start: Object {
 													column: 39
-													index: 351
 													line: 9
 												}
 											}
@@ -2208,12 +1942,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 60
-													index: 372
 													line: 9
 												}
 												start: Object {
 													column: 45
-													index: 357
 													line: 9
 												}
 											}
@@ -2227,12 +1959,10 @@ JSRoot {
 																identifierName: "baz2"
 																end: Object {
 																	column: 51
-																	index: 363
 																	line: 9
 																}
 																start: Object {
 																	column: 47
-																	index: 359
 																	line: 9
 																}
 															}
@@ -2241,12 +1971,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 51
-																index: 363
 																line: 9
 															}
 															start: Object {
 																column: 47
-																index: 359
 																line: 9
 															}
 														}
@@ -2257,12 +1985,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 59
-																index: 371
 																line: 9
 															}
 															start: Object {
 																column: 53
-																index: 365
 																line: 9
 															}
 														}
@@ -2274,12 +2000,10 @@ JSRoot {
 																	identifierName: "qux4"
 																	end: Object {
 																		column: 58
-																		index: 370
 																		line: 9
 																	}
 																	start: Object {
 																		column: 54
-																		index: 366
 																		line: 9
 																	}
 																}
@@ -2290,12 +2014,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 58
-																			index: 370
 																			line: 9
 																		}
 																		start: Object {
 																			column: 54
-																			index: 366
 																			line: 9
 																		}
 																	}
@@ -2307,12 +2029,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 59
-															index: 371
 															line: 9
 														}
 														start: Object {
 															column: 47
-															index: 359
 															line: 9
 														}
 													}
@@ -2323,12 +2043,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 60
-												index: 372
 												line: 9
 											}
 											start: Object {
 												column: 39
-												index: 351
 												line: 9
 											}
 										}
@@ -2339,12 +2057,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 68
-									index: 380
 									line: 9
 								}
 								start: Object {
 									column: 13
-									index: 325
 									line: 9
 								}
 							}
@@ -2355,12 +2071,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 68
-										index: 380
 										line: 9
 									}
 									start: Object {
 										column: 65
-										index: 377
 										line: 9
 									}
 								}
@@ -2377,12 +2091,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 71
-					index: 453
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 382
 					line: 10
 				}
 			}
@@ -2391,12 +2103,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 71
-						index: 453
 						line: 10
 					}
 					start: Object {
 						column: 7
-						index: 389
 						line: 10
 					}
 				}
@@ -2406,12 +2116,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 71
-							index: 453
 							line: 10
 						}
 						start: Object {
 							column: 7
-							index: 389
 							line: 10
 						}
 					}
@@ -2423,12 +2131,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 64
-										index: 446
 										line: 10
 									}
 									start: Object {
 										column: 13
-										index: 395
 										line: 10
 									}
 								}
@@ -2442,12 +2148,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 400
 														line: 10
 													}
 													start: Object {
 														column: 15
-														index: 397
 														line: 10
 													}
 												}
@@ -2456,12 +2160,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 400
 													line: 10
 												}
 												start: Object {
 													column: 15
-													index: 397
 													line: 10
 												}
 											}
@@ -2472,12 +2174,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 37
-													index: 419
 													line: 10
 												}
 												start: Object {
 													column: 20
-													index: 402
 													line: 10
 												}
 											}
@@ -2491,12 +2191,10 @@ JSRoot {
 																identifierName: "baz"
 																end: Object {
 																	column: 25
-																	index: 407
 																	line: 10
 																}
 																start: Object {
 																	column: 22
-																	index: 404
 																	line: 10
 																}
 															}
@@ -2505,12 +2203,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 25
-																index: 407
 																line: 10
 															}
 															start: Object {
 																column: 22
-																index: 404
 																line: 10
 															}
 														}
@@ -2521,12 +2217,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 35
-																index: 417
 																line: 10
 															}
 															start: Object {
 																column: 27
-																index: 409
 																line: 10
 															}
 														}
@@ -2540,12 +2234,10 @@ JSRoot {
 																			identifierName: "qux5"
 																			end: Object {
 																				column: 33
-																				index: 415
 																				line: 10
 																			}
 																			start: Object {
 																				column: 29
-																				index: 411
 																				line: 10
 																			}
 																		}
@@ -2554,12 +2246,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 33
-																			index: 415
 																			line: 10
 																		}
 																		start: Object {
 																			column: 29
-																			index: 411
 																			line: 10
 																		}
 																	}
@@ -2571,12 +2261,10 @@ JSRoot {
 																		identifierName: "qux5"
 																		end: Object {
 																			column: 33
-																			index: 415
 																			line: 10
 																		}
 																		start: Object {
 																			column: 29
-																			index: 411
 																			line: 10
 																		}
 																	}
@@ -2585,12 +2273,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 33
-																		index: 415
 																		line: 10
 																	}
 																	start: Object {
 																		column: 29
-																		index: 411
 																		line: 10
 																	}
 																}
@@ -2601,12 +2287,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 35
-															index: 417
 															line: 10
 														}
 														start: Object {
 															column: 22
-															index: 404
 															line: 10
 														}
 													}
@@ -2617,12 +2301,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 37
-												index: 419
 												line: 10
 											}
 											start: Object {
 												column: 15
-												index: 397
 												line: 10
 											}
 										}
@@ -2636,12 +2318,10 @@ JSRoot {
 													identifierName: "foo2"
 													end: Object {
 														column: 43
-														index: 425
 														line: 10
 													}
 													start: Object {
 														column: 39
-														index: 421
 														line: 10
 													}
 												}
@@ -2650,12 +2330,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 43
-													index: 425
 													line: 10
 												}
 												start: Object {
 													column: 39
-													index: 421
 													line: 10
 												}
 											}
@@ -2666,12 +2344,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 62
-													index: 444
 													line: 10
 												}
 												start: Object {
 													column: 45
-													index: 427
 													line: 10
 												}
 											}
@@ -2685,12 +2361,10 @@ JSRoot {
 																identifierName: "baz2"
 																end: Object {
 																	column: 51
-																	index: 433
 																	line: 10
 																}
 																start: Object {
 																	column: 47
-																	index: 429
 																	line: 10
 																}
 															}
@@ -2699,12 +2373,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 51
-																index: 433
 																line: 10
 															}
 															start: Object {
 																column: 47
-																index: 429
 																line: 10
 															}
 														}
@@ -2715,12 +2387,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 61
-																index: 443
 																line: 10
 															}
 															start: Object {
 																column: 53
-																index: 435
 																line: 10
 															}
 														}
@@ -2731,12 +2401,10 @@ JSRoot {
 																	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																	end: Object {
 																		column: 60
-																		index: 442
 																		line: 10
 																	}
 																	start: Object {
 																		column: 54
-																		index: 436
 																		line: 10
 																	}
 																}
@@ -2747,12 +2415,10 @@ JSRoot {
 																		filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																		end: Object {
 																			column: 60
-																			index: 442
 																			line: 10
 																		}
 																		start: Object {
 																			column: 54
-																			index: 436
 																			line: 10
 																		}
 																	}
@@ -2767,12 +2433,10 @@ JSRoot {
 																					identifierName: "qux6"
 																					end: Object {
 																						column: 59
-																						index: 441
 																						line: 10
 																					}
 																					start: Object {
 																						column: 55
-																						index: 437
 																						line: 10
 																					}
 																				}
@@ -2781,12 +2445,10 @@ JSRoot {
 																				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																				end: Object {
 																					column: 59
-																					index: 441
 																					line: 10
 																				}
 																				start: Object {
 																					column: 55
-																					index: 437
 																					line: 10
 																				}
 																			}
@@ -2798,12 +2460,10 @@ JSRoot {
 																				identifierName: "qux6"
 																				end: Object {
 																					column: 59
-																					index: 441
 																					line: 10
 																				}
 																				start: Object {
 																					column: 55
-																					index: 437
 																					line: 10
 																				}
 																			}
@@ -2812,12 +2472,10 @@ JSRoot {
 																			filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 																			end: Object {
 																				column: 59
-																				index: 441
 																				line: 10
 																			}
 																			start: Object {
 																				column: 55
-																				index: 437
 																				line: 10
 																			}
 																		}
@@ -2830,12 +2488,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 61
-															index: 443
 															line: 10
 														}
 														start: Object {
 															column: 47
-															index: 429
 															line: 10
 														}
 													}
@@ -2846,12 +2502,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 62
-												index: 444
 												line: 10
 											}
 											start: Object {
 												column: 39
-												index: 421
 												line: 10
 											}
 										}
@@ -2862,12 +2516,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 70
-									index: 452
 									line: 10
 								}
 								start: Object {
 									column: 13
-									index: 395
 									line: 10
 								}
 							}
@@ -2878,12 +2530,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 70
-										index: 452
 										line: 10
 									}
 									start: Object {
 										column: 67
-										index: 449
 										line: 10
 									}
 								}
@@ -2900,12 +2550,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 27
-					index: 481
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 454
 					line: 11
 				}
 			}
@@ -2914,12 +2562,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 27
-						index: 481
 						line: 11
 					}
 					start: Object {
 						column: 7
-						index: 461
 						line: 11
 					}
 				}
@@ -2929,12 +2575,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 27
-							index: 481
 							line: 11
 						}
 						start: Object {
 							column: 7
-							index: 461
 							line: 11
 						}
 					}
@@ -2946,12 +2590,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 20
-										index: 474
 										line: 11
 									}
 									start: Object {
 										column: 13
-										index: 467
 										line: 11
 									}
 								}
@@ -2965,12 +2607,10 @@ JSRoot {
 													identifierName: "Foo"
 													end: Object {
 														column: 18
-														index: 472
 														line: 11
 													}
 													start: Object {
 														column: 15
-														index: 469
 														line: 11
 													}
 												}
@@ -2979,12 +2619,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 472
 													line: 11
 												}
 												start: Object {
 													column: 15
-													index: 469
 													line: 11
 												}
 											}
@@ -2996,12 +2634,10 @@ JSRoot {
 												identifierName: "Foo"
 												end: Object {
 													column: 18
-													index: 472
 													line: 11
 												}
 												start: Object {
 													column: 15
-													index: 469
 													line: 11
 												}
 											}
@@ -3010,12 +2646,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 18
-												index: 472
 												line: 11
 											}
 											start: Object {
 												column: 15
-												index: 469
 												line: 11
 											}
 										}
@@ -3026,12 +2660,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 26
-									index: 480
 									line: 11
 								}
 								start: Object {
 									column: 13
-									index: 467
 									line: 11
 								}
 							}
@@ -3042,12 +2674,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 26
-										index: 480
 										line: 11
 									}
 									start: Object {
 										column: 23
-										index: 477
 										line: 11
 									}
 								}
@@ -3064,12 +2694,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 				end: Object {
 					column: 40
-					index: 522
 					line: 12
 				}
 				start: Object {
 					column: 0
-					index: 482
 					line: 12
 				}
 			}
@@ -3078,12 +2706,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 					end: Object {
 						column: 40
-						index: 522
 						line: 12
 					}
 					start: Object {
 						column: 7
-						index: 489
 						line: 12
 					}
 				}
@@ -3093,12 +2719,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 						end: Object {
 							column: 40
-							index: 522
 							line: 12
 						}
 						start: Object {
 							column: 7
-							index: 489
 							line: 12
 						}
 					}
@@ -3110,12 +2734,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 									end: Object {
 										column: 33
-										index: 515
 										line: 12
 									}
 									start: Object {
 										column: 13
-										index: 495
 										line: 12
 									}
 								}
@@ -3129,12 +2751,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 18
-														index: 500
 														line: 12
 													}
 													start: Object {
 														column: 15
-														index: 497
 														line: 12
 													}
 												}
@@ -3143,12 +2763,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 18
-													index: 500
 													line: 12
 												}
 												start: Object {
 													column: 15
-													index: 497
 													line: 12
 												}
 											}
@@ -3159,12 +2777,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 												end: Object {
 													column: 31
-													index: 513
 													line: 12
 												}
 												start: Object {
 													column: 20
-													index: 502
 													line: 12
 												}
 											}
@@ -3174,12 +2790,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 21
-															index: 503
 															line: 12
 														}
 														start: Object {
 															column: 22
-															index: 504
 															line: 12
 														}
 													}
@@ -3189,12 +2803,10 @@ JSRoot {
 														filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 														end: Object {
 															column: 23
-															index: 505
 															line: 12
 														}
 														start: Object {
 															column: 23
-															index: 505
 															line: 12
 														}
 													}
@@ -3206,12 +2818,10 @@ JSRoot {
 														identifierName: "qux7"
 														end: Object {
 															column: 29
-															index: 511
 															line: 12
 														}
 														start: Object {
 															column: 25
-															index: 507
 															line: 12
 														}
 													}
@@ -3222,12 +2832,10 @@ JSRoot {
 															filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 															end: Object {
 																column: 29
-																index: 511
 																line: 12
 															}
 															start: Object {
 																column: 25
-																index: 507
 																line: 12
 															}
 														}
@@ -3239,12 +2847,10 @@ JSRoot {
 											filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 											end: Object {
 												column: 31
-												index: 513
 												line: 12
 											}
 											start: Object {
 												column: 15
-												index: 497
 												line: 12
 											}
 										}
@@ -3255,12 +2861,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 								end: Object {
 									column: 39
-									index: 521
 									line: 12
 								}
 								start: Object {
 									column: 13
-									index: 495
 									line: 12
 								}
 							}
@@ -3271,12 +2875,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 39
-										index: 521
 										line: 12
 									}
 									start: Object {
 										column: 36
-										index: 518
 										line: 12
 									}
 								}

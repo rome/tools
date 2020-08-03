@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "custom/input.txt"
 		end: Object {
 			column: 39
-			index: 39
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

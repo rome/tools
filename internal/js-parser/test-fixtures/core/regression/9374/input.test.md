@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/regression/9374/input.js"
 		end: Object {
 			column: 0
-			index: 40
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "test"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "core/regression/9374/input.js"
 				end: Object {
 					column: 1
-					index: 39
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "core/regression/9374/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "core/regression/9374/input.js"
 					end: Object {
 						column: 1
-						index: 39
 						line: 3
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "core/regression/9374/input.js"
 							end: Object {
 								column: 18
-								index: 37
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 21
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "core/regression/9374/input.js"
 								end: Object {
 									column: 17
-									index: 36
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 21
 									line: 2
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 									filename: "core/regression/9374/input.js"
 									end: Object {
 										column: 17
-										index: 36
 										line: 2
 									}
 									start: Object {
 										column: 8
-										index: 27
 										line: 2
 									}
 								}
@@ -155,12 +139,10 @@ JSRoot {
 										identifierName: "Foo"
 										end: Object {
 											column: 15
-											index: 34
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 31
 											line: 2
 										}
 									}

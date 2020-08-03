@@ -21,12 +21,10 @@ JSRoot {
 		filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 		end: Object {
 			column: 0
-			index: 18
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 						filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -94,12 +86,10 @@ JSRoot {
 					filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -111,12 +101,10 @@ JSRoot {
 								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 							}
@@ -127,12 +115,10 @@ JSRoot {
 								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -173,12 +155,10 @@ JSRoot {
 							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -190,12 +170,10 @@ JSRoot {
 								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -205,12 +183,10 @@ JSRoot {
 							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -222,12 +198,10 @@ JSRoot {
 								filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -237,12 +211,10 @@ JSRoot {
 							filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 		end: Object {
 			column: 0
-			index: 88
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 62
 					line: 4
 				}
 				start: Object {
 					column: 13
-					index: 63
 					line: 4
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 				end: Object {
 					column: 3
-					index: 87
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 					end: Object {
 						column: 2
-						index: 86
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 						filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 							identifierName: "Object"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 								identifierName: "create"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 							identifierName: "create"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 						}
@@ -171,12 +153,10 @@ JSRoot {
 							filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 							end: Object {
 								column: 1
-								index: 85
 								line: 7
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -190,12 +170,10 @@ JSRoot {
 											identifierName: "foo"
 											end: Object {
 												column: 5
-												index: 25
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 22
 												line: 2
 											}
 										}
@@ -204,12 +182,10 @@ JSRoot {
 										filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 										end: Object {
 											column: 5
-											index: 25
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 22
 											line: 2
 										}
 									}
@@ -219,12 +195,10 @@ JSRoot {
 										filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 										end: Object {
 											column: 3
-											index: 83
 											line: 6
 										}
 										start: Object {
 											column: 7
-											index: 27
 											line: 2
 										}
 									}
@@ -238,12 +212,10 @@ JSRoot {
 														identifierName: "get"
 														end: Object {
 															column: 7
-															index: 36
 															line: 3
 														}
 														start: Object {
 															column: 4
-															index: 33
 															line: 3
 														}
 													}
@@ -252,12 +224,10 @@ JSRoot {
 													filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 													end: Object {
 														column: 7
-														index: 36
 														line: 3
 													}
 													start: Object {
 														column: 4
-														index: 33
 														line: 3
 													}
 												}
@@ -268,12 +238,10 @@ JSRoot {
 													filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 													end: Object {
 														column: 5
-														index: 79
 														line: 5
 													}
 													start: Object {
 														column: 9
-														index: 38
 														line: 3
 													}
 												}
@@ -290,12 +258,10 @@ JSRoot {
 														filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 														end: Object {
 															column: 19
-															index: 48
 															line: 3
 														}
 														start: Object {
 															column: 17
-															index: 46
 															line: 3
 														}
 													}
@@ -306,12 +272,10 @@ JSRoot {
 														filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 														end: Object {
 															column: 5
-															index: 79
 															line: 5
 														}
 														start: Object {
 															column: 19
-															index: 48
 															line: 3
 														}
 													}
@@ -321,12 +285,10 @@ JSRoot {
 																filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																end: Object {
 																	column: 23
-																	index: 73
 																	line: 4
 																}
 																start: Object {
 																	column: 6
-																	index: 56
 																	line: 4
 																}
 															}
@@ -335,12 +297,10 @@ JSRoot {
 																	filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																	end: Object {
 																		column: 22
-																		index: 72
 																		line: 4
 																	}
 																	start: Object {
 																		column: 13
-																		index: 63
 																		line: 4
 																	}
 																}
@@ -349,12 +309,10 @@ JSRoot {
 																		filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 																		end: Object {
 																			column: 18
-																			index: 68
 																			line: 4
 																		}
 																		start: Object {
 																			column: 13
-																			index: 63
 																			line: 4
 																		}
 																	}
@@ -367,12 +325,10 @@ JSRoot {
 																			identifierName: "foo"
 																			end: Object {
 																				column: 22
-																				index: 72
 																				line: 4
 																			}
 																			start: Object {
 																				column: 19
-																				index: 69
 																				line: 4
 																			}
 																		}
@@ -382,12 +338,10 @@ JSRoot {
 																		identifierName: "foo"
 																		end: Object {
 																			column: 22
-																			index: 72
 																			line: 4
 																		}
 																		start: Object {
 																			column: 19
-																			index: 69
 																			line: 4
 																		}
 																	}
@@ -401,12 +355,10 @@ JSRoot {
 												filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 												end: Object {
 													column: 5
-													index: 79
 													line: 5
 												}
 												start: Object {
 													column: 4
-													index: 33
 													line: 3
 												}
 											}
@@ -417,12 +369,10 @@ JSRoot {
 									filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 									end: Object {
 										column: 3
-										index: 83
 										line: 6
 									}
 									start: Object {
 										column: 2
-										index: 22
 										line: 2
 									}
 								}

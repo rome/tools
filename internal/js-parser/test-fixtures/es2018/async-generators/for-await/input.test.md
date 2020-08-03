@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2018/async-generators/for-await/input.js"
 		end: Object {
 			column: 0
-			index: 49
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2018/async-generators/for-await/input.js"
 				end: Object {
 					column: 1
-					index: 48
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await/input.js"
 					end: Object {
 						column: 1
-						index: 48
 						line: 3
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "es2018/async-generators/for-await/input.js"
 							end: Object {
 								column: 25
-								index: 46
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 23
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await/input.js"
 								end: Object {
 									column: 25
-									index: 46
 									line: 2
 								}
 								start: Object {
 									column: 24
-									index: 45
 									line: 2
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 								identifierName: "y"
 								end: Object {
 									column: 23
-									index: 44
 									line: 2
 								}
 								start: Object {
 									column: 22
-									index: 43
 									line: 2
 								}
 							}
@@ -155,12 +139,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await/input.js"
 								end: Object {
 									column: 18
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 34
 									line: 2
 								}
 							}
@@ -173,12 +155,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 18
-												index: 39
 												line: 2
 											}
 											start: Object {
 												column: 17
-												index: 38
 												line: 2
 											}
 										}
@@ -188,12 +168,10 @@ JSRoot {
 										filename: "es2018/async-generators/for-await/input.js"
 										end: Object {
 											column: 18
-											index: 39
 											line: 2
 										}
 										start: Object {
 											column: 17
-											index: 38
 											line: 2
 										}
 									}

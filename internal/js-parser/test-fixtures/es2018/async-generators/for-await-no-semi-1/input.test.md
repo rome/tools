@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 		end: Object {
 			column: 0
-			index: 46
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 35
 					line: 2
 				}
 				start: Object {
 					column: 13
-					index: 34
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 				end: Object {
 					column: 1
-					index: 45
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 					end: Object {
 						column: 1
-						index: 45
 						line: 3
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -133,12 +121,10 @@ JSRoot {
 							filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 							end: Object {
 								column: 22
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 23
 								line: 2
 							}
 						}
@@ -147,12 +133,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 								end: Object {
 									column: 22
-									index: 43
 									line: 2
 								}
 								start: Object {
 									column: 21
-									index: 42
 									line: 2
 								}
 							}
@@ -163,12 +147,10 @@ JSRoot {
 								filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 								end: Object {
 									column: 19
-									index: 40
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 35
 									line: 2
 								}
 							}

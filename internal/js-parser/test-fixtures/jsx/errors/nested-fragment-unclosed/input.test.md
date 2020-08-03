@@ -21,12 +21,10 @@ JSRoot {
 		filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 		end: Object {
 			column: 0
-			index: 8
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 							end: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -81,12 +75,10 @@ JSRoot {
 				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -95,12 +87,10 @@ JSRoot {
 					filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -111,12 +101,10 @@ JSRoot {
 							filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 							end: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}

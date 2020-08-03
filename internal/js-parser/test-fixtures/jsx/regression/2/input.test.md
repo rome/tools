@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/regression/2/input.jsx"
 		end: Object {
 			column: 30
-			index: 30
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/regression/2/input.jsx"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "jsx/regression/2/input.jsx"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "jsx/regression/2/input.jsx"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "jsx/regression/2/input.jsx"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 									filename: "jsx/regression/2/input.jsx"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 								}
@@ -118,12 +106,10 @@ JSRoot {
 								filename: "jsx/regression/2/input.jsx"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -133,12 +119,10 @@ JSRoot {
 										filename: "jsx/regression/2/input.jsx"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 11
-											index: 11
 											line: 1
 										}
 									}
@@ -149,12 +133,10 @@ JSRoot {
 											identifierName: "test"
 											end: Object {
 												column: 19
-												index: 19
 												line: 1
 											}
 											start: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 										}

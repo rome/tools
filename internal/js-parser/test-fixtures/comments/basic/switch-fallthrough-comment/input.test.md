@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/switch-fallthrough-comment/input.js"
 		end: Object {
 			column: 0
-			index: 92
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/switch-fallthrough-comment/input.js"
 				end: Object {
 					column: 10
-					index: 24
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 18
 					line: 2
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/switch-fallthrough-comment/input.js"
 				end: Object {
 					column: 24
-					index: 61
 					line: 4
 				}
 				start: Object {
 					column: 8
-					index: 45
 					line: 4
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "comments/basic/switch-fallthrough-comment/input.js"
 				end: Object {
 					column: 1
-					index: 91
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -88,12 +80,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 						filename: "comments/basic/switch-fallthrough-comment/input.js"
 						end: Object {
 							column: 11
-							index: 36
 							line: 3
 						}
 						start: Object {
 							column: 4
-							index: 29
 							line: 3
 						}
 					}
@@ -124,12 +112,10 @@ JSRoot {
 							filename: "comments/basic/switch-fallthrough-comment/input.js"
 							end: Object {
 								column: 10
-								index: 35
 								line: 3
 							}
 							start: Object {
 								column: 9
-								index: 34
 								line: 3
 							}
 						}
@@ -141,12 +127,10 @@ JSRoot {
 						filename: "comments/basic/switch-fallthrough-comment/input.js"
 						end: Object {
 							column: 15
-							index: 89
 							line: 6
 						}
 						start: Object {
 							column: 4
-							index: 66
 							line: 5
 						}
 					}
@@ -158,12 +142,10 @@ JSRoot {
 							filename: "comments/basic/switch-fallthrough-comment/input.js"
 							end: Object {
 								column: 10
-								index: 72
 								line: 5
 							}
 							start: Object {
 								column: 9
-								index: 71
 								line: 5
 							}
 						}
@@ -174,12 +156,10 @@ JSRoot {
 								filename: "comments/basic/switch-fallthrough-comment/input.js"
 								end: Object {
 									column: 15
-									index: 89
 									line: 6
 								}
 								start: Object {
 									column: 8
-									index: 82
 									line: 6
 								}
 							}
@@ -189,12 +169,10 @@ JSRoot {
 									filename: "comments/basic/switch-fallthrough-comment/input.js"
 									end: Object {
 										column: 14
-										index: 88
 										line: 6
 									}
 									start: Object {
 										column: 8
-										index: 82
 										line: 6
 									}
 								}
@@ -205,12 +183,10 @@ JSRoot {
 										identifierName: "doIt"
 										end: Object {
 											column: 12
-											index: 86
 											line: 6
 										}
 										start: Object {
 											column: 8
-											index: 82
 											line: 6
 										}
 									}

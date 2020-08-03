@@ -100,7 +100,6 @@ export async function main() {
 			},
 		],
 	);
-	return;
 
 	// Add to builders
 	await readIndexFile(

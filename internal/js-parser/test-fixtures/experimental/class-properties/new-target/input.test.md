@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/new-target/input.js"
 		end: Object {
 			column: 0
-			index: 258
 			line: 11
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "X"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/new-target/input.js"
 				end: Object {
 					column: 1
-					index: 257
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-properties/new-target/input.js"
 					end: Object {
 						column: 1
-						index: 257
 						line: 10
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 10
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 9
-										index: 19
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 19
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 23
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 16
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 13
-										index: 23
 										line: 2
 									}
 								}
@@ -153,12 +137,10 @@ JSRoot {
 									identifierName: "target"
 									end: Object {
 										column: 23
-										index: 33
 										line: 2
 									}
 									start: Object {
 										column: 17
-										index: 27
 										line: 2
 									}
 								}
@@ -170,12 +152,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 24
-								index: 34
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -188,19 +168,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -215,12 +192,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 10
-										index: 45
 										line: 3
 									}
 									start: Object {
 										column: 9
-										index: 44
 										line: 3
 									}
 								}
@@ -229,12 +204,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 45
 									line: 3
 								}
 								start: Object {
 									column: 9
-									index: 44
 									line: 3
 								}
 							}
@@ -245,12 +218,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 39
-									index: 74
 									line: 3
 								}
 								start: Object {
 									column: 14
-									index: 49
 									line: 3
 								}
 							}
@@ -261,12 +232,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 17
-										index: 52
 										line: 3
 									}
 									start: Object {
 										column: 14
-										index: 49
 										line: 3
 									}
 								}
@@ -277,12 +246,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 39
-										index: 74
 										line: 3
 									}
 									start: Object {
 										column: 20
-										index: 55
 										line: 3
 									}
 								}
@@ -293,12 +260,10 @@ JSRoot {
 										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 21
-											index: 56
 											line: 3
 										}
 										start: Object {
 											column: 20
-											index: 55
 											line: 3
 										}
 									}
@@ -308,12 +273,10 @@ JSRoot {
 										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 39
-											index: 74
 											line: 3
 										}
 										start: Object {
 											column: 24
-											index: 59
 											line: 3
 										}
 									}
@@ -324,12 +287,10 @@ JSRoot {
 											identifierName: "bar"
 											end: Object {
 												column: 27
-												index: 62
 												line: 3
 											}
 											start: Object {
 												column: 24
-												index: 59
 												line: 3
 											}
 										}
@@ -340,12 +301,10 @@ JSRoot {
 												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 38
-													index: 73
 													line: 3
 												}
 												start: Object {
 													column: 28
-													index: 63
 													line: 3
 												}
 											}
@@ -356,12 +315,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 31
-														index: 66
 														line: 3
 													}
 													start: Object {
 														column: 28
-														index: 63
 														line: 3
 													}
 												}
@@ -373,12 +330,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 38
-														index: 73
 														line: 3
 													}
 													start: Object {
 														column: 32
-														index: 67
 														line: 3
 													}
 												}
@@ -394,12 +349,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 41
-								index: 76
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 37
 								line: 3
 							}
 						}
@@ -412,19 +365,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 37
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 45
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 3
 								}
 							}
@@ -439,12 +389,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 10
-										index: 87
 										line: 4
 									}
 									start: Object {
 										column: 9
-										index: 86
 										line: 4
 									}
 								}
@@ -453,12 +401,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 87
 									line: 4
 								}
 								start: Object {
 									column: 9
-									index: 86
 									line: 4
 								}
 							}
@@ -468,12 +414,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 29
-									index: 106
 									line: 4
 								}
 								start: Object {
 									column: 13
-									index: 90
 									line: 4
 								}
 							}
@@ -488,12 +432,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 18
-										index: 95
 										line: 4
 									}
 									start: Object {
 										column: 13
-										index: 90
 										line: 4
 									}
 								}
@@ -503,12 +445,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 29
-										index: 106
 										line: 4
 									}
 									start: Object {
 										column: 19
-										index: 96
 										line: 4
 									}
 								}
@@ -519,12 +459,10 @@ JSRoot {
 										identifierName: "new"
 										end: Object {
 											column: 22
-											index: 99
 											line: 4
 										}
 										start: Object {
 											column: 19
-											index: 96
 											line: 4
 										}
 									}
@@ -536,12 +474,10 @@ JSRoot {
 										identifierName: "target"
 										end: Object {
 											column: 29
-											index: 106
 											line: 4
 										}
 										start: Object {
 											column: 23
-											index: 100
 											line: 4
 										}
 									}
@@ -554,12 +490,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 30
-								index: 107
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 79
 								line: 4
 							}
 						}
@@ -572,19 +506,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 79
 								line: 4
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 87
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 79
 									line: 4
 								}
 							}
@@ -599,12 +530,10 @@ JSRoot {
 									identifierName: "d"
 									end: Object {
 										column: 10
-										index: 118
 										line: 5
 									}
 									start: Object {
 										column: 9
-										index: 117
 										line: 5
 									}
 								}
@@ -613,12 +542,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 118
 									line: 5
 								}
 								start: Object {
 									column: 9
-									index: 117
 									line: 5
 								}
 							}
@@ -628,12 +555,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 37
-									index: 145
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 121
 									line: 5
 								}
 							}
@@ -644,12 +569,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 37
-										index: 145
 										line: 5
 									}
 									start: Object {
 										column: 35
-										index: 143
 										line: 5
 									}
 								}
@@ -664,12 +587,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 34
-										index: 142
 										line: 5
 									}
 									start: Object {
 										column: 13
-										index: 121
 										line: 5
 									}
 								}
@@ -680,12 +601,10 @@ JSRoot {
 											filename: "experimental/class-properties/new-target/input.js"
 											end: Object {
 												column: 30
-												index: 138
 												line: 5
 											}
 											start: Object {
 												column: 14
-												index: 122
 												line: 5
 											}
 										}
@@ -696,12 +615,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 17
-													index: 125
 													line: 5
 												}
 												start: Object {
 													column: 14
-													index: 122
 													line: 5
 												}
 											}
@@ -711,12 +628,10 @@ JSRoot {
 												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 30
-													index: 138
 													line: 5
 												}
 												start: Object {
 													column: 20
-													index: 128
 													line: 5
 												}
 											}
@@ -727,12 +642,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 23
-														index: 131
 														line: 5
 													}
 													start: Object {
 														column: 20
-														index: 128
 														line: 5
 													}
 												}
@@ -744,12 +657,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 30
-														index: 138
 														line: 5
 													}
 													start: Object {
 														column: 24
-														index: 132
 														line: 5
 													}
 												}
@@ -765,12 +676,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 38
-								index: 146
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 110
 								line: 5
 							}
 						}
@@ -783,19 +692,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 110
 								line: 5
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 10
-									index: 118
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 110
 									line: 5
 								}
 							}
@@ -810,12 +716,10 @@ JSRoot {
 									identifierName: "e"
 									end: Object {
 										column: 3
-										index: 150
 										line: 6
 									}
 									start: Object {
 										column: 2
-										index: 149
 										line: 6
 									}
 								}
@@ -824,12 +728,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 150
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 149
 									line: 6
 								}
 							}
@@ -839,12 +741,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 16
-									index: 163
 									line: 6
 								}
 								start: Object {
 									column: 6
-									index: 153
 									line: 6
 								}
 							}
@@ -855,12 +755,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 9
-										index: 156
 										line: 6
 									}
 									start: Object {
 										column: 6
-										index: 153
 										line: 6
 									}
 								}
@@ -872,12 +770,10 @@ JSRoot {
 									identifierName: "target"
 									end: Object {
 										column: 16
-										index: 163
 										line: 6
 									}
 									start: Object {
 										column: 10
-										index: 157
 										line: 6
 									}
 								}
@@ -889,12 +785,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 17
-								index: 164
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 149
 								line: 6
 							}
 						}
@@ -907,19 +801,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 149
 								line: 6
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 150
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 149
 									line: 6
 								}
 							}
@@ -934,12 +825,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 3
-										index: 168
 										line: 7
 									}
 									start: Object {
 										column: 2
-										index: 167
 										line: 7
 									}
 								}
@@ -948,12 +837,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 168
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 167
 									line: 7
 								}
 							}
@@ -964,12 +851,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 32
-									index: 197
 									line: 7
 								}
 								start: Object {
 									column: 7
-									index: 172
 									line: 7
 								}
 							}
@@ -980,12 +865,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 10
-										index: 175
 										line: 7
 									}
 									start: Object {
 										column: 7
-										index: 172
 										line: 7
 									}
 								}
@@ -996,12 +879,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 32
-										index: 197
 										line: 7
 									}
 									start: Object {
 										column: 13
-										index: 178
 										line: 7
 									}
 								}
@@ -1012,12 +893,10 @@ JSRoot {
 										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 14
-											index: 179
 											line: 7
 										}
 										start: Object {
 											column: 13
-											index: 178
 											line: 7
 										}
 									}
@@ -1027,12 +906,10 @@ JSRoot {
 										filename: "experimental/class-properties/new-target/input.js"
 										end: Object {
 											column: 32
-											index: 197
 											line: 7
 										}
 										start: Object {
 											column: 17
-											index: 182
 											line: 7
 										}
 									}
@@ -1043,12 +920,10 @@ JSRoot {
 											identifierName: "bar"
 											end: Object {
 												column: 20
-												index: 185
 												line: 7
 											}
 											start: Object {
 												column: 17
-												index: 182
 												line: 7
 											}
 										}
@@ -1059,12 +934,10 @@ JSRoot {
 												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 31
-													index: 196
 													line: 7
 												}
 												start: Object {
 													column: 21
-													index: 186
 													line: 7
 												}
 											}
@@ -1075,12 +948,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 24
-														index: 189
 														line: 7
 													}
 													start: Object {
 														column: 21
-														index: 186
 														line: 7
 													}
 												}
@@ -1092,12 +963,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 31
-														index: 196
 														line: 7
 													}
 													start: Object {
 														column: 25
-														index: 190
 														line: 7
 													}
 												}
@@ -1113,12 +982,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 34
-								index: 199
 								line: 7
 							}
 							start: Object {
 								column: 2
-								index: 167
 								line: 7
 							}
 						}
@@ -1131,19 +998,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 167
 								line: 7
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 168
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 167
 									line: 7
 								}
 							}
@@ -1158,12 +1022,10 @@ JSRoot {
 									identifierName: "g"
 									end: Object {
 										column: 3
-										index: 203
 										line: 8
 									}
 									start: Object {
 										column: 2
-										index: 202
 										line: 8
 									}
 								}
@@ -1172,12 +1034,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 203
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 202
 									line: 8
 								}
 							}
@@ -1187,12 +1047,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 22
-									index: 222
 									line: 8
 								}
 								start: Object {
 									column: 6
-									index: 206
 									line: 8
 								}
 							}
@@ -1207,12 +1065,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 11
-										index: 211
 										line: 8
 									}
 									start: Object {
 										column: 6
-										index: 206
 										line: 8
 									}
 								}
@@ -1222,12 +1078,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 22
-										index: 222
 										line: 8
 									}
 									start: Object {
 										column: 12
-										index: 212
 										line: 8
 									}
 								}
@@ -1238,12 +1092,10 @@ JSRoot {
 										identifierName: "new"
 										end: Object {
 											column: 15
-											index: 215
 											line: 8
 										}
 										start: Object {
 											column: 12
-											index: 212
 											line: 8
 										}
 									}
@@ -1255,12 +1107,10 @@ JSRoot {
 										identifierName: "target"
 										end: Object {
 											column: 22
-											index: 222
 											line: 8
 										}
 										start: Object {
 											column: 16
-											index: 216
 											line: 8
 										}
 									}
@@ -1273,12 +1123,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 23
-								index: 223
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 202
 								line: 8
 							}
 						}
@@ -1291,19 +1139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 202
 								line: 8
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 203
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 202
 									line: 8
 								}
 							}
@@ -1318,12 +1163,10 @@ JSRoot {
 									identifierName: "h"
 									end: Object {
 										column: 3
-										index: 227
 										line: 9
 									}
 									start: Object {
 										column: 2
-										index: 226
 										line: 9
 									}
 								}
@@ -1332,12 +1175,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 227
 									line: 9
 								}
 								start: Object {
 									column: 2
-									index: 226
 									line: 9
 								}
 							}
@@ -1347,12 +1188,10 @@ JSRoot {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 30
-									index: 254
 									line: 9
 								}
 								start: Object {
 									column: 6
-									index: 230
 									line: 9
 								}
 							}
@@ -1363,12 +1202,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 30
-										index: 254
 										line: 9
 									}
 									start: Object {
 										column: 28
-										index: 252
 										line: 9
 									}
 								}
@@ -1383,12 +1220,10 @@ JSRoot {
 									filename: "experimental/class-properties/new-target/input.js"
 									end: Object {
 										column: 27
-										index: 251
 										line: 9
 									}
 									start: Object {
 										column: 6
-										index: 230
 										line: 9
 									}
 								}
@@ -1399,12 +1234,10 @@ JSRoot {
 											filename: "experimental/class-properties/new-target/input.js"
 											end: Object {
 												column: 23
-												index: 247
 												line: 9
 											}
 											start: Object {
 												column: 7
-												index: 231
 												line: 9
 											}
 										}
@@ -1415,12 +1248,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 10
-													index: 234
 													line: 9
 												}
 												start: Object {
 													column: 7
-													index: 231
 													line: 9
 												}
 											}
@@ -1430,12 +1261,10 @@ JSRoot {
 												filename: "experimental/class-properties/new-target/input.js"
 												end: Object {
 													column: 23
-													index: 247
 													line: 9
 												}
 												start: Object {
 													column: 13
-													index: 237
 													line: 9
 												}
 											}
@@ -1446,12 +1275,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 16
-														index: 240
 														line: 9
 													}
 													start: Object {
 														column: 13
-														index: 237
 														line: 9
 													}
 												}
@@ -1463,12 +1290,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 23
-														index: 247
 														line: 9
 													}
 													start: Object {
 														column: 17
-														index: 241
 														line: 9
 													}
 												}
@@ -1484,12 +1309,10 @@ JSRoot {
 							filename: "experimental/class-properties/new-target/input.js"
 							end: Object {
 								column: 31
-								index: 255
 								line: 9
 							}
 							start: Object {
 								column: 2
-								index: 226
 								line: 9
 							}
 						}
@@ -1502,19 +1325,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 226
 								line: 9
 							}
 							loc: Object {
 								filename: "experimental/class-properties/new-target/input.js"
 								end: Object {
 									column: 3
-									index: 227
 									line: 9
 								}
 								start: Object {
 									column: 2
-									index: 226
 									line: 9
 								}
 							}

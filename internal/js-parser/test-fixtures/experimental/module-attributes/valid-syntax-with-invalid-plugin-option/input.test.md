@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 		end: Object {
 			column: 0
-			index: 46
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -79,12 +73,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -111,12 +101,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -126,12 +114,10 @@ JSRoot {
 						filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -143,12 +129,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 			}
@@ -159,12 +143,10 @@ JSRoot {
 					identifierName: "type"
 					end: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 					start: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 				}
@@ -174,12 +156,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 				}
@@ -189,12 +169,10 @@ JSRoot {
 						filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 36
-							index: 36
 							line: 1
 						}
 					}
@@ -206,12 +184,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 				end: Object {
 					column: 45
-					index: 45
 					line: 1
 				}
 				start: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 			}
@@ -221,12 +197,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-invalid-plugin-option/input.js"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 				}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 		end: Object {
 			column: 0
-			index: 269
 			line: 33
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 19
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 19
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 40
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 40
 						line: 4
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -132,12 +120,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 22
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -148,12 +134,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 38
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 25
 								line: 3
 							}
 						}
@@ -169,12 +153,10 @@ JSRoot {
 					identifierName: "b"
 					end: Object {
 						column: 10
-						index: 52
 						line: 6
 					}
 					start: Object {
 						column: 9
-						index: 51
 						line: 6
 					}
 				}
@@ -183,12 +165,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 90
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 42
 					line: 6
 				}
 			}
@@ -205,12 +185,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 54
 						line: 6
 					}
 					start: Object {
 						column: 10
-						index: 52
 						line: 6
 					}
 				}
@@ -221,12 +199,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 90
 						line: 10
 					}
 					start: Object {
 						column: 13
-						index: 55
 						line: 6
 					}
 				}
@@ -237,12 +213,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 64
 								line: 7
 							}
 							start: Object {
 								column: 2
-								index: 59
 								line: 7
 							}
 						}
@@ -253,12 +227,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 72
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 67
 								line: 8
 							}
 						}
@@ -269,12 +241,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 88
 								line: 9
 							}
 							start: Object {
 								column: 2
-								index: 75
 								line: 9
 							}
 						}
@@ -290,12 +260,10 @@ JSRoot {
 					identifierName: "c"
 					end: Object {
 						column: 10
-						index: 102
 						line: 12
 					}
 					start: Object {
 						column: 9
-						index: 101
 						line: 12
 					}
 				}
@@ -304,12 +272,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 132
 					line: 15
 				}
 				start: Object {
 					column: 0
-					index: 92
 					line: 12
 				}
 			}
@@ -326,12 +292,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 104
 						line: 12
 					}
 					start: Object {
 						column: 10
-						index: 102
 						line: 12
 					}
 				}
@@ -342,12 +306,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 132
 						line: 15
 					}
 					start: Object {
 						column: 13
-						index: 105
 						line: 12
 					}
 				}
@@ -358,12 +320,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 122
 								line: 13
 							}
 							start: Object {
 								column: 2
-								index: 109
 								line: 13
 							}
 						}
@@ -374,12 +334,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 130
 								line: 14
 							}
 							start: Object {
 								column: 2
-								index: 125
 								line: 14
 							}
 						}
@@ -395,12 +353,10 @@ JSRoot {
 					identifierName: "d"
 					end: Object {
 						column: 10
-						index: 144
 						line: 17
 					}
 					start: Object {
 						column: 9
-						index: 143
 						line: 17
 					}
 				}
@@ -409,12 +365,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 182
 					line: 21
 				}
 				start: Object {
 					column: 0
-					index: 134
 					line: 17
 				}
 			}
@@ -431,12 +385,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 146
 						line: 17
 					}
 					start: Object {
 						column: 10
-						index: 144
 						line: 17
 					}
 				}
@@ -447,12 +399,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 182
 						line: 21
 					}
 					start: Object {
 						column: 13
-						index: 147
 						line: 17
 					}
 				}
@@ -463,12 +413,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 164
 								line: 18
 							}
 							start: Object {
 								column: 2
-								index: 151
 								line: 18
 							}
 						}
@@ -479,12 +427,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 172
 								line: 19
 							}
 							start: Object {
 								column: 2
-								index: 167
 								line: 19
 							}
 						}
@@ -495,12 +441,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 7
-								index: 180
 								line: 20
 							}
 							start: Object {
 								column: 2
-								index: 175
 								line: 20
 							}
 						}
@@ -516,12 +460,10 @@ JSRoot {
 					identifierName: "c"
 					end: Object {
 						column: 10
-						index: 194
 						line: 23
 					}
 					start: Object {
 						column: 9
-						index: 193
 						line: 23
 					}
 				}
@@ -530,12 +472,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 222
 					line: 26
 				}
 				start: Object {
 					column: 0
-					index: 184
 					line: 23
 				}
 			}
@@ -552,12 +492,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 196
 						line: 23
 					}
 					start: Object {
 						column: 10
-						index: 194
 						line: 23
 					}
 				}
@@ -567,12 +505,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 222
 						line: 26
 					}
 					start: Object {
 						column: 13
-						index: 197
 						line: 23
 					}
 				}
@@ -583,12 +519,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 214
 								line: 24
 							}
 							start: Object {
 								column: 2
-								index: 201
 								line: 24
 							}
 						}
@@ -600,12 +534,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 5
-								index: 220
 								line: 25
 							}
 							start: Object {
 								column: 2
-								index: 217
 								line: 25
 							}
 						}
@@ -616,12 +548,10 @@ JSRoot {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {
 									column: 4
-									index: 219
 									line: 25
 								}
 								start: Object {
 									column: 2
-									index: 217
 									line: 25
 								}
 							}
@@ -638,12 +568,10 @@ JSRoot {
 					identifierName: "d"
 					end: Object {
 						column: 10
-						index: 234
 						line: 28
 					}
 					start: Object {
 						column: 9
-						index: 233
 						line: 28
 					}
 				}
@@ -652,12 +580,10 @@ JSRoot {
 				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				end: Object {
 					column: 1
-					index: 268
 					line: 32
 				}
 				start: Object {
 					column: 0
-					index: 224
 					line: 28
 				}
 			}
@@ -674,12 +600,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 12
-						index: 236
 						line: 28
 					}
 					start: Object {
 						column: 10
-						index: 234
 						line: 28
 					}
 				}
@@ -689,12 +613,10 @@ JSRoot {
 					filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 					end: Object {
 						column: 1
-						index: 268
 						line: 32
 					}
 					start: Object {
 						column: 13
-						index: 237
 						line: 28
 					}
 				}
@@ -705,12 +627,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 15
-								index: 254
 								line: 29
 							}
 							start: Object {
 								column: 2
-								index: 241
 								line: 29
 							}
 						}
@@ -722,12 +642,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 5
-								index: 260
 								line: 30
 							}
 							start: Object {
 								column: 2
-								index: 257
 								line: 30
 							}
 						}
@@ -738,12 +656,10 @@ JSRoot {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {
 									column: 4
-									index: 259
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 257
 									line: 30
 								}
 							}
@@ -754,12 +670,10 @@ JSRoot {
 							filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 							end: Object {
 								column: 5
-								index: 266
 								line: 31
 							}
 							start: Object {
 								column: 2
-								index: 263
 								line: 31
 							}
 						}
@@ -770,12 +684,10 @@ JSRoot {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {
 									column: 4
-									index: 265
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 263
 									line: 31
 								}
 							}

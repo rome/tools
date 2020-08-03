@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/object/invalid-property-initializer-1/input.js"
 		end: Object {
 			column: 0
-			index: 45
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 7
-					index: 37
 					line: 3
 				}
 				start: Object {
 					column: 6
-					index: 36
 					line: 3
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "core/object/invalid-property-initializer-1/input.js"
 				end: Object {
 					column: 11
-					index: 41
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "core/object/invalid-property-initializer-1/input.js"
 					end: Object {
 						column: 11
-						index: 41
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 								identifierName: "obj"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -113,12 +103,10 @@ JSRoot {
 							filename: "core/object/invalid-property-initializer-1/input.js"
 							end: Object {
 								column: 11
-								index: 41
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "core/object/invalid-property-initializer-1/input.js"
 								end: Object {
 									column: 11
-									index: 41
 									line: 3
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 									filename: "core/object/invalid-property-initializer-1/input.js"
 									end: Object {
 										column: 11
-										index: 41
 										line: 3
 									}
 									start: Object {
 										column: 8
-										index: 38
 										line: 3
 									}
 								}
@@ -160,12 +144,10 @@ JSRoot {
 									filename: "core/object/invalid-property-initializer-1/input.js"
 									end: Object {
 										column: 5
-										index: 35
 										line: 3
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}
@@ -179,12 +161,10 @@ JSRoot {
 													identifierName: "bar"
 													end: Object {
 														column: 5
-														index: 19
 														line: 2
 													}
 													start: Object {
 														column: 2
-														index: 16
 														line: 2
 													}
 												}
@@ -193,12 +173,10 @@ JSRoot {
 												filename: "core/object/invalid-property-initializer-1/input.js"
 												end: Object {
 													column: 5
-													index: 19
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 16
 													line: 2
 												}
 											}
@@ -209,12 +187,10 @@ JSRoot {
 												filename: "core/object/invalid-property-initializer-1/input.js"
 												end: Object {
 													column: 14
-													index: 28
 													line: 2
 												}
 												start: Object {
 													column: 7
-													index: 21
 													line: 2
 												}
 											}
@@ -225,12 +201,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 8
-														index: 22
 														line: 2
 													}
 													start: Object {
 														column: 7
-														index: 21
 														line: 2
 													}
 												}
@@ -242,12 +216,10 @@ JSRoot {
 													filename: "core/object/invalid-property-initializer-1/input.js"
 													end: Object {
 														column: 14
-														index: 28
 														line: 2
 													}
 													start: Object {
 														column: 11
-														index: 25
 														line: 2
 													}
 												}
@@ -257,12 +229,10 @@ JSRoot {
 											filename: "core/object/invalid-property-initializer-1/input.js"
 											end: Object {
 												column: 14
-												index: 28
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 16
 												line: 2
 											}
 										}
@@ -276,12 +246,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 5
-														index: 35
 														line: 3
 													}
 													start: Object {
 														column: 2
-														index: 32
 														line: 3
 													}
 												}
@@ -290,12 +258,10 @@ JSRoot {
 												filename: "core/object/invalid-property-initializer-1/input.js"
 												end: Object {
 													column: 5
-													index: 35
 													line: 3
 												}
 												start: Object {
 													column: 2
-													index: 32
 													line: 3
 												}
 											}
@@ -307,12 +273,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 5
-													index: 35
 													line: 3
 												}
 												start: Object {
 													column: 2
-													index: 32
 													line: 3
 												}
 											}
@@ -321,12 +285,10 @@ JSRoot {
 											filename: "core/object/invalid-property-initializer-1/input.js"
 											end: Object {
 												column: 5
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 2
-												index: 32
 												line: 3
 											}
 										}
@@ -343,12 +305,10 @@ JSRoot {
 				filename: "core/object/invalid-property-initializer-1/input.js"
 				end: Object {
 					column: 2
-					index: 44
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 42
 					line: 4
 				}
 			}
@@ -358,12 +318,10 @@ JSRoot {
 					filename: "core/object/invalid-property-initializer-1/input.js"
 					end: Object {
 						column: 1
-						index: 43
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 42
 						line: 4
 					}
 				}

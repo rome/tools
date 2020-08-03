@@ -206,13 +206,11 @@ export function serializeCLIFlags(
 	let start: DiagnosticLocation["start"] = {
 		line: ob1Number1,
 		column: startColumn,
-		index: startColumn,
 	};
 
 	let end: DiagnosticLocation["end"] = {
 		line: ob1Number1,
 		column: endColumn,
-		index: endColumn,
 	};
 
 	if (target === "none") {

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/default-parameter-values/input.ts"
 		end: Object {
 			column: 0
-			index: 22
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/default-parameter-values/input.ts"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/arrow-function/default-parameter-values/input.ts"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "typescript/arrow-function/default-parameter-values/input.ts"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "typescript/arrow-function/default-parameter-values/input.ts"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 								filename: "typescript/arrow-function/default-parameter-values/input.ts"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 									filename: "typescript/arrow-function/default-parameter-values/input.ts"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 								}
@@ -135,12 +121,10 @@ JSRoot {
 									filename: "typescript/arrow-function/default-parameter-values/input.ts"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -150,12 +134,10 @@ JSRoot {
 										filename: "typescript/arrow-function/default-parameter-values/input.ts"
 										end: Object {
 											column: 10
-											index: 10
 											line: 1
 										}
 										start: Object {
 											column: 11
-											index: 11
 											line: 1
 										}
 									}
@@ -164,12 +146,10 @@ JSRoot {
 											filename: "typescript/arrow-function/default-parameter-values/input.ts"
 											end: Object {
 												column: 10
-												index: 10
 												line: 1
 											}
 											start: Object {
 												column: 4
-												index: 4
 												line: 1
 											}
 										}

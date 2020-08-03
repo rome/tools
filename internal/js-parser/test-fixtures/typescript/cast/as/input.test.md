@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/cast/as/input.ts"
 		end: Object {
 			column: 0
-			index: 107
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 40
-					index: 48
 					line: 2
 				}
 				start: Object {
 					column: 18
-					index: 26
 					line: 2
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 42
-					index: 91
 					line: 3
 				}
 				start: Object {
 					column: 19
-					index: 68
 					line: 3
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -86,12 +78,10 @@ JSRoot {
 					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -102,12 +92,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "T"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -153,12 +137,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 17
-					index: 25
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 8
 					line: 2
 				}
 			}
@@ -167,12 +149,10 @@ JSRoot {
 					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 16
-						index: 24
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 8
 						line: 2
 					}
 				}
@@ -181,12 +161,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 16
-							index: 24
 							line: 2
 						}
 						start: Object {
 							column: 9
-							index: 17
 							line: 2
 						}
 					}
@@ -197,12 +175,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 5
-							index: 13
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 8
 							line: 2
 						}
 					}
@@ -213,12 +189,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 1
-								index: 9
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 8
 								line: 2
 							}
 						}
@@ -230,12 +204,10 @@ JSRoot {
 							identifierName: "y"
 							end: Object {
 								column: 5
-								index: 13
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 12
 								line: 2
 							}
 						}
@@ -250,12 +222,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 18
-					index: 67
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 49
 					line: 3
 				}
 			}
@@ -266,12 +236,10 @@ JSRoot {
 					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 17
-						index: 66
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 49
 						line: 3
 					}
 				}
@@ -283,12 +251,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 1
-							index: 50
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 49
 							line: 3
 						}
 					}
@@ -298,12 +264,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 17
-							index: 66
 							line: 3
 						}
 						start: Object {
 							column: 6
-							index: 55
 							line: 3
 						}
 					}
@@ -312,12 +276,10 @@ JSRoot {
 							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 17
-								index: 66
 								line: 3
 							}
 							start: Object {
 								column: 11
-								index: 60
 								line: 3
 							}
 						}
@@ -329,12 +291,10 @@ JSRoot {
 							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 7
-								index: 56
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 55
 								line: 3
 							}
 						}
@@ -348,12 +308,10 @@ JSRoot {
 				filename: "typescript/cast/as/input.ts"
 				end: Object {
 					column: 14
-					index: 106
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 92
 					line: 4
 				}
 			}
@@ -363,12 +321,10 @@ JSRoot {
 					filename: "typescript/cast/as/input.ts"
 					end: Object {
 						column: 13
-						index: 105
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 92
 						line: 4
 					}
 				}
@@ -378,12 +334,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 13
-							index: 105
 							line: 4
 						}
 						start: Object {
 							column: 12
-							index: 104
 							line: 4
 						}
 					}
@@ -394,12 +348,10 @@ JSRoot {
 							identifierName: "T"
 							end: Object {
 								column: 13
-								index: 105
 								line: 4
 							}
 							start: Object {
 								column: 12
-								index: 104
 								line: 4
 							}
 						}
@@ -411,12 +363,10 @@ JSRoot {
 						filename: "typescript/cast/as/input.ts"
 						end: Object {
 							column: 8
-							index: 100
 							line: 4
 						}
 						start: Object {
 							column: 0
-							index: 92
 							line: 4
 						}
 					}
@@ -425,12 +375,10 @@ JSRoot {
 							filename: "typescript/cast/as/input.ts"
 							end: Object {
 								column: 8
-								index: 100
 								line: 4
 							}
 							start: Object {
 								column: 5
-								index: 97
 								line: 4
 							}
 						}
@@ -443,12 +391,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 1
-								index: 93
 								line: 4
 							}
 							start: Object {
 								column: 0
-								index: 92
 								line: 4
 							}
 						}

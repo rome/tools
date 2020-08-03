@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-super-property/new_super/input.js"
 		end: Object {
 			column: 0
-			index: 64
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-super-property/new_super/input.js"
 				end: Object {
 					column: 1
-					index: 63
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "esprima/es2015-super-property/new_super/input.js"
 					end: Object {
 						column: 1
-						index: 63
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						identifierName: "B"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 7
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 24
 										line: 2
 									}
 								}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/new_super/input.js"
 								end: Object {
 									column: 7
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 							filename: "esprima/es2015-super-property/new_super/input.js"
 							end: Object {
 								column: 5
-								index: 61
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/new_super/input.js"
 								end: Object {
 									column: 9
-									index: 29
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 27
 									line: 2
 								}
 							}
@@ -177,19 +159,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 							loc: Object {
 								filename: "esprima/es2015-super-property/new_super/input.js"
 								end: Object {
 									column: 7
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -200,12 +179,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/new_super/input.js"
 								end: Object {
 									column: 5
-									index: 61
 									line: 4
 								}
 								start: Object {
 									column: 10
-									index: 30
 									line: 2
 								}
 							}
@@ -215,12 +192,10 @@ JSRoot {
 										filename: "esprima/es2015-super-property/new_super/input.js"
 										end: Object {
 											column: 23
-											index: 55
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 40
 											line: 3
 										}
 									}
@@ -232,12 +207,10 @@ JSRoot {
 											filename: "esprima/es2015-super-property/new_super/input.js"
 											end: Object {
 												column: 23
-												index: 55
 												line: 3
 											}
 											start: Object {
 												column: 8
-												index: 40
 												line: 3
 											}
 										}
@@ -246,12 +219,10 @@ JSRoot {
 												filename: "esprima/es2015-super-property/new_super/input.js"
 												end: Object {
 													column: 21
-													index: 53
 													line: 3
 												}
 												start: Object {
 													column: 12
-													index: 44
 													line: 3
 												}
 											}
@@ -260,12 +231,10 @@ JSRoot {
 													filename: "esprima/es2015-super-property/new_super/input.js"
 													end: Object {
 														column: 17
-														index: 49
 														line: 3
 													}
 													start: Object {
 														column: 12
-														index: 44
 														line: 3
 													}
 												}
@@ -278,12 +247,10 @@ JSRoot {
 														identifierName: "bar"
 														end: Object {
 															column: 21
-															index: 53
 															line: 3
 														}
 														start: Object {
 															column: 18
-															index: 50
 															line: 3
 														}
 													}
@@ -293,12 +260,10 @@ JSRoot {
 													identifierName: "bar"
 													end: Object {
 														column: 21
-														index: 53
 														line: 3
 													}
 													start: Object {
 														column: 18
-														index: 50
 														line: 3
 													}
 												}

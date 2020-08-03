@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/module-namespace/head/input.ts"
 		end: Object {
 			column: 0
-			index: 60
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "N"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 					identifierName: "M"
 					end: Object {
 						column: 11
-						index: 26
 						line: 2
 					}
 					start: Object {
 						column: 10
-						index: 25
 						line: 2
 					}
 				}
@@ -102,12 +92,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 18
-					index: 33
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 2
 				}
 			}
@@ -119,12 +107,10 @@ JSRoot {
 						identifierName: "N"
 						end: Object {
 							column: 13
-							index: 28
 							line: 2
 						}
 						start: Object {
 							column: 12
-							index: 27
 							line: 2
 						}
 					}
@@ -133,12 +119,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 18
-						index: 33
 						line: 2
 					}
 					start: Object {
 						column: 12
-						index: 27
 						line: 2
 					}
 				}
@@ -150,12 +134,10 @@ JSRoot {
 							identifierName: "O"
 							end: Object {
 								column: 15
-								index: 30
 								line: 2
 							}
 							start: Object {
 								column: 14
-								index: 29
 								line: 2
 							}
 						}
@@ -164,12 +146,10 @@ JSRoot {
 						filename: "typescript/module-namespace/head/input.ts"
 						end: Object {
 							column: 18
-							index: 33
 							line: 2
 						}
 						start: Object {
 							column: 14
-							index: 29
 							line: 2
 						}
 					}
@@ -179,12 +159,10 @@ JSRoot {
 							filename: "typescript/module-namespace/head/input.ts"
 							end: Object {
 								column: 18
-								index: 33
 								line: 2
 							}
 							start: Object {
 								column: 16
-								index: 31
 								line: 2
 							}
 						}
@@ -200,12 +178,10 @@ JSRoot {
 					identifierName: "M"
 					end: Object {
 						column: 8
-						index: 42
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 41
 						line: 3
 					}
 				}
@@ -214,12 +190,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 11
-					index: 45
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 34
 					line: 3
 				}
 			}
@@ -229,12 +203,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 11
-						index: 45
 						line: 3
 					}
 					start: Object {
 						column: 9
-						index: 43
 						line: 3
 					}
 				}
@@ -247,12 +219,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 10
-						index: 56
 						line: 4
 					}
 					start: Object {
 						column: 7
-						index: 53
 						line: 4
 					}
 				}
@@ -262,12 +232,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head/input.ts"
 				end: Object {
 					column: 13
-					index: 59
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 46
 					line: 4
 				}
 			}
@@ -277,12 +245,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head/input.ts"
 					end: Object {
 						column: 13
-						index: 59
 						line: 4
 					}
 					start: Object {
 						column: 11
-						index: 57
 						line: 4
 					}
 				}

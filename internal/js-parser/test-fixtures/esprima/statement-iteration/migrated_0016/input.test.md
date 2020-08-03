@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-iteration/migrated_0016/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-iteration/migrated_0016/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0016/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0016/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -102,12 +92,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -119,12 +107,10 @@ JSRoot {
 						filename: "esprima/statement-iteration/migrated_0016/input.js"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -136,12 +122,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0016/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -152,12 +136,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 					}
@@ -169,12 +151,10 @@ JSRoot {
 						filename: "esprima/statement-iteration/migrated_0016/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -185,12 +165,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0016/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 				}
@@ -199,12 +177,10 @@ JSRoot {
 						filename: "esprima/statement-iteration/migrated_0016/input.js"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 					}
@@ -215,12 +191,10 @@ JSRoot {
 							identifierName: "process"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 						}
@@ -233,12 +207,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}

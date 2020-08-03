@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/export-extensions/default-default-asi/input.js"
 		end: Object {
 			column: 0
-			index: 27
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "experimental/export-extensions/default-default-asi/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "from"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 				filename: "experimental/export-extensions/default-default-asi/input.js"
 				end: Object {
 					column: 6
-					index: 26
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 20
 					line: 2
 				}
 			}
@@ -84,12 +76,10 @@ JSRoot {
 					filename: "experimental/export-extensions/default-default-asi/input.js"
 					end: Object {
 						column: 5
-						index: 25
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 20
 						line: 2
 					}
 				}

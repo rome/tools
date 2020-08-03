@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "smoke/input.txt"
 		end: Object {
 			column: 40
-			index: 40
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

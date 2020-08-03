@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 		end: Object {
 			column: 0
-			index: 28
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 										identifierName: "method"
 										end: Object {
 											column: 12
-											index: 12
 											line: 1
 										}
 										start: Object {
 											column: 6
-											index: 6
 											line: 1
 										}
 									}
@@ -117,12 +105,10 @@ JSRoot {
 									filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 6
-										index: 6
 										line: 1
 									}
 								}
@@ -131,12 +117,10 @@ JSRoot {
 								filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 								end: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -147,12 +131,10 @@ JSRoot {
 									filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 									start: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 								}
@@ -169,12 +151,10 @@ JSRoot {
 									filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 									end: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}
@@ -185,12 +165,10 @@ JSRoot {
 										identifierName: "test"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 									}
@@ -201,12 +179,10 @@ JSRoot {
 											filename: "esprima/es2015-rest-parameter/object-shorthand-method/input.js"
 											end: Object {
 												column: 20
-												index: 20
 												line: 1
 											}
 											start: Object {
 												column: 16
-												index: 16
 												line: 1
 											}
 										}

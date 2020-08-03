@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-unary/migrated_0009/input.js"
 		end: Object {
 			column: 0
-			index: 3
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/expression-unary/migrated_0009/input.js"
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/expression-unary/migrated_0009/input.js"
 					end: Object {
 						column: 2
-						index: 2
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}

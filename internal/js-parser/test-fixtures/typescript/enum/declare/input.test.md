@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/enum/declare/input.ts"
 		end: Object {
 			column: 17
-			index: 17
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "E"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -57,12 +53,10 @@ JSRoot {
 				filename: "typescript/enum/declare/input.ts"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

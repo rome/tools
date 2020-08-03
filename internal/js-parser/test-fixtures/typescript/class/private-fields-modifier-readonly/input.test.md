@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 		end: Object {
 			column: 0
-			index: 50
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 				end: Object {
 					column: 1
-					index: 49
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 					end: Object {
 						column: 1
-						index: 49
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 13
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 22
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 21
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 							end: Object {
 								column: 14
-								index: 24
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -166,12 +149,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 13
-										index: 38
 										line: 3
 									}
 									start: Object {
 										column: 12
-										index: 37
 										line: 3
 									}
 								}
@@ -180,12 +161,10 @@ JSRoot {
 								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
-									index: 38
 									line: 3
 								}
 								start: Object {
 									column: 11
-									index: 36
 									line: 3
 								}
 							}
@@ -195,12 +174,10 @@ JSRoot {
 							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 							end: Object {
 								column: 22
-								index: 47
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 27
 								line: 3
 							}
 						}
@@ -209,12 +186,10 @@ JSRoot {
 								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 21
-									index: 46
 									line: 3
 								}
 								start: Object {
 									column: 15
-									index: 40
 									line: 3
 								}
 							}
@@ -228,19 +203,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 27
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
 								end: Object {
 									column: 13
-									index: 38
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 27
 									line: 3
 								}
 							}

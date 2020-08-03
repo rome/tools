@@ -13,7 +13,7 @@ import {
 	LocationRangeKind,
 } from "@internal/v8";
 import {SourceMapConsumer} from "@internal/codec-source-map";
-import {Position} from "@internal/parser-core";
+import {Position, derivePositionKey} from "@internal/parser-core";
 import {urlToFilename} from "./utils";
 import {
 	Number0,
@@ -133,7 +133,6 @@ export default class CoverageCollector {
 				}
 
 				const pos: Position = {
-					index: newIndex,
 					line,
 					column,
 				};
@@ -193,12 +192,10 @@ export default class CoverageCollector {
 					filename: sourceStart.source,
 					count,
 					start: {
-						index: ob1Coerce0(startOffset),
 						line: sourceStart.line,
 						column: sourceStart.column,
 					},
 					end: {
-						index: ob1Coerce0(endOffset),
 						line: sourceEnd.line,
 						column: sourceEnd.column,
 					},
@@ -228,8 +225,8 @@ export default class CoverageCollector {
 
 			let uncoveredFunctions: Set<Number1> = new Set();
 			let coveredFunctions: Set<Number1> = new Set();
-			let uncoveredBranches: Set<Number0> = new Set();
-			let coveredBranches: Set<Number0> = new Set();
+			let uncoveredBranches: Set<string> = new Set();
+			let coveredBranches: Set<string> = new Set();
 
 			for (const {count, kind, start, end} of ranges) {
 				// Fill in lines
@@ -244,17 +241,17 @@ export default class CoverageCollector {
 				// Mark covered kind
 				if (kind === "function") {
 					if (count === 0) {
-						uncoveredBranches.add(start.index);
+						uncoveredBranches.add(derivePositionKey(start));
 						uncoveredFunctions.add(start.line);
 					} else {
 						coveredFunctions.add(start.line);
-						coveredBranches.add(start.index);
+						coveredBranches.add(derivePositionKey(start));
 					}
 				} else if (kind === "branch") {
 					if (count === 0) {
-						uncoveredBranches.add(start.index);
+						uncoveredBranches.add(derivePositionKey(start));
 					} else {
-						coveredBranches.add(start.index);
+						coveredBranches.add(derivePositionKey(start));
 					}
 				}
 			}

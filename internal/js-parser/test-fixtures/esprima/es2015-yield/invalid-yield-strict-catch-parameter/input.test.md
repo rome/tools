@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 		end: Object {
 			column: 0
-			index: 38
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 33
-					index: 33
 					line: 1
 				}
 				start: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -131,12 +119,10 @@ JSRoot {
 						filename: "esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 35
-							index: 35
 							line: 1
 						}
 					}
@@ -148,12 +134,10 @@ JSRoot {
 						identifierName: "yield"
 						end: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 						start: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 					}

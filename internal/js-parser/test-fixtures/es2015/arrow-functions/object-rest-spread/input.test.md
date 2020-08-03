@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/arrow-functions/object-rest-spread/input.js"
 		end: Object {
 			column: 0
-			index: 45
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/arrow-functions/object-rest-spread/input.js"
 				end: Object {
 					column: 2
-					index: 44
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/arrow-functions/object-rest-spread/input.js"
 					end: Object {
 						column: 2
-						index: 44
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/object-rest-spread/input.js"
 							end: Object {
 								column: 1
-								index: 43
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "es2015/arrow-functions/object-rest-spread/input.js"
 								end: Object {
 									column: 1
-									index: 43
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -114,12 +102,10 @@ JSRoot {
 									filename: "es2015/arrow-functions/object-rest-spread/input.js"
 									end: Object {
 										column: 1
-										index: 43
 										line: 3
 									}
 									start: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 								}
@@ -134,12 +120,10 @@ JSRoot {
 									filename: "es2015/arrow-functions/object-rest-spread/input.js"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -149,12 +133,10 @@ JSRoot {
 											filename: "es2015/arrow-functions/object-rest-spread/input.js"
 											end: Object {
 												column: 31
-												index: 31
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}
@@ -165,12 +147,10 @@ JSRoot {
 												identifierName: "other"
 												end: Object {
 													column: 29
-													index: 29
 													line: 1
 												}
 												start: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 											}
@@ -185,12 +165,10 @@ JSRoot {
 															identifierName: "title"
 															end: Object {
 																column: 19
-																index: 19
 																line: 1
 															}
 															start: Object {
 																column: 14
-																index: 14
 																line: 1
 															}
 														}
@@ -199,12 +177,10 @@ JSRoot {
 														filename: "es2015/arrow-functions/object-rest-spread/input.js"
 														end: Object {
 															column: 19
-															index: 19
 															line: 1
 														}
 														start: Object {
 															column: 14
-															index: 14
 															line: 1
 														}
 													}
@@ -216,12 +192,10 @@ JSRoot {
 														identifierName: "title"
 														end: Object {
 															column: 19
-															index: 19
 															line: 1
 														}
 														start: Object {
 															column: 14
-															index: 14
 															line: 1
 														}
 													}
@@ -230,12 +204,10 @@ JSRoot {
 													filename: "es2015/arrow-functions/object-rest-spread/input.js"
 													end: Object {
 														column: 19
-														index: 19
 														line: 1
 													}
 													start: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 												}

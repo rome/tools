@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/export-default-anonymous-class/input.js"
 		end: Object {
 			column: 0
-			index: 122
 			line: 11
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 3
-					index: 35
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 7
-					index: 98
 					line: 7
 				}
 				start: Object {
 					column: 4
-					index: 63
 					line: 5
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 				filename: "comments/basic/export-default-anonymous-class/input.js"
 				end: Object {
 					column: 1
-					index: 121
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 36
 					line: 4
 				}
 			}
@@ -89,12 +81,10 @@ JSRoot {
 						filename: "comments/basic/export-default-anonymous-class/input.js"
 						end: Object {
 							column: 1
-							index: 121
 							line: 10
 						}
 						start: Object {
 							column: 15
-							index: 51
 							line: 4
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 					filename: "comments/basic/export-default-anonymous-class/input.js"
 					end: Object {
 						column: 1
-						index: 121
 						line: 10
 					}
 					start: Object {
 						column: 15
-						index: 51
 						line: 4
 					}
 				}
@@ -123,12 +111,10 @@ JSRoot {
 						filename: "comments/basic/export-default-anonymous-class/input.js"
 						end: Object {
 							column: 1
-							index: 121
 							line: 10
 						}
 						start: Object {
 							column: 15
-							index: 51
 							line: 4
 						}
 					}
@@ -144,12 +130,10 @@ JSRoot {
 										identifierName: "method1"
 										end: Object {
 											column: 11
-											index: 110
 											line: 8
 										}
 										start: Object {
 											column: 4
-											index: 103
 											line: 8
 										}
 									}
@@ -159,12 +143,10 @@ JSRoot {
 									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 11
-										index: 110
 										line: 8
 									}
 									start: Object {
 										column: 4
-										index: 103
 										line: 8
 									}
 								}
@@ -174,12 +156,10 @@ JSRoot {
 								filename: "comments/basic/export-default-anonymous-class/input.js"
 								end: Object {
 									column: 5
-									index: 119
 									line: 9
 								}
 								start: Object {
 									column: 4
-									index: 103
 									line: 8
 								}
 							}
@@ -190,12 +170,10 @@ JSRoot {
 									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 5
-										index: 119
 										line: 9
 									}
 									start: Object {
 										column: 13
-										index: 112
 										line: 8
 									}
 								}
@@ -213,12 +191,10 @@ JSRoot {
 									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 13
-										index: 112
 										line: 8
 									}
 									start: Object {
 										column: 11
-										index: 110
 										line: 8
 									}
 								}
@@ -233,19 +209,16 @@ JSRoot {
 								typeAnnotation: undefined
 								start: Object {
 									column: 4
-									index: 103
 									line: 8
 								}
 								loc: Object {
 									filename: "comments/basic/export-default-anonymous-class/input.js"
 									end: Object {
 										column: 11
-										index: 110
 										line: 8
 									}
 									start: Object {
 										column: 4
-										index: 103
 										line: 8
 									}
 								}

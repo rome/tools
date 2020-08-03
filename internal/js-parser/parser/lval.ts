@@ -10,7 +10,11 @@ import {
 	createIndexTracker,
 	isStrictBindReservedWord,
 } from "@internal/js-parser-utils";
-import {Position, SourceLocation} from "@internal/parser-core";
+import {
+	Position,
+	SourceLocation,
+	comparePositions,
+} from "@internal/parser-core";
 import {types as tt} from "../tokenizer/types";
 import {
 	AnyJSAssignmentPattern,
@@ -957,8 +961,10 @@ export function parseMaybeDefault(
 		target.type === "JSBindingAssignmentPattern" &&
 		target.meta !== undefined &&
 		target.meta.typeAnnotation !== undefined &&
-		parser.getLoc(target.right).start.index <
-		parser.getLoc(target.meta.typeAnnotation).start.index
+		comparePositions(
+			parser.getLoc(target.right).start,
+			parser.getLoc(target.meta.typeAnnotation).start,
+		) === -1
 	) {
 		parser.unexpectedDiagnostic({
 			loc: target.meta.typeAnnotation.loc,

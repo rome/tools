@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}
@@ -115,12 +103,10 @@ JSRoot {
 									filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 									end: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -131,12 +117,10 @@ JSRoot {
 										filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 										end: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 										start: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 									}
@@ -154,12 +138,10 @@ JSRoot {
 										filename: "esprima/es2015-export-declaration/export-var-anonymous-function/input.js"
 										end: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 										start: Object {
 											column: 26
-											index: 26
 											line: 1
 										}
 									}

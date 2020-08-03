@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 		end: Object {
 			column: 0
-			index: 42
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 				end: Object {
 					column: 41
-					index: 41
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 					end: Object {
 						column: 41
-						index: 41
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 							end: Object {
 								column: 41
-								index: 41
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 								end: Object {
 									column: 41
-									index: 41
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 									filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 									end: Object {
 										column: 38
-										index: 39
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -158,12 +142,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 											end: Object {
 												column: 38
-												index: 38
 												line: 1
 											}
 											start: Object {
 												column: 9
-												index: 9
 												line: 1
 											}
 										}
@@ -174,12 +156,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 16
-														index: 16
 														line: 1
 													}
 													start: Object {
 														column: 10
-														index: 10
 														line: 1
 													}
 												}
@@ -189,12 +169,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 29
-														index: 29
 														line: 1
 													}
 													start: Object {
 														column: 16
-														index: 16
 														line: 1
 													}
 												}
@@ -204,12 +182,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 22
-															index: 22
 															line: 1
 														}
 														start: Object {
 															column: 16
-															index: 16
 															line: 1
 														}
 													}
@@ -220,12 +196,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 29
-															index: 29
 															line: 1
 														}
 														start: Object {
 															column: 23
-															index: 23
 															line: 1
 														}
 													}
@@ -237,12 +211,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 35
-														index: 35
 														line: 1
 													}
 													start: Object {
 														column: 29
-														index: 29
 														line: 1
 													}
 												}
@@ -252,12 +224,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 													end: Object {
 														column: 38
-														index: 38
 														line: 1
 													}
 													start: Object {
 														column: 35
-														index: 35
 														line: 1
 													}
 												}
@@ -267,12 +237,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 38
-															index: 38
 															line: 1
 														}
 														start: Object {
 															column: 37
-															index: 37
 															line: 1
 														}
 													}
@@ -283,12 +251,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 														end: Object {
 															column: 36
-															index: 36
 															line: 1
 														}
 														start: Object {
 															column: 35
-															index: 35
 															line: 1
 														}
 													}

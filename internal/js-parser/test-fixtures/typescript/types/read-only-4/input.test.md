@@ -20,12 +20,10 @@ JSRoot {
 		filename: "typescript/types/read-only-4/input.ts"
 		end: Object {
 			column: 0
-			index: 45
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/read-only-4/input.ts"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 			}
@@ -62,12 +58,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 33
-					index: 33
 					line: 1
 				}
 				start: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 			}
@@ -82,12 +76,10 @@ JSRoot {
 					identifierName: "T33"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -98,12 +90,10 @@ JSRoot {
 				filename: "typescript/types/read-only-4/input.ts"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -113,12 +103,10 @@ JSRoot {
 					filename: "typescript/types/read-only-4/input.ts"
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 						filename: "typescript/types/read-only-4/input.ts"
 						end: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -143,12 +129,10 @@ JSRoot {
 							identifierName: "Array"
 							end: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 							filename: "typescript/types/read-only-4/input.ts"
 							end: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -173,12 +155,10 @@ JSRoot {
 									filename: "typescript/types/read-only-4/input.ts"
 									end: Object {
 										column: 32
-										index: 32
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}

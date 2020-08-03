@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 		end: Object {
 			column: 0
-			index: 28
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -102,12 +92,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/import-namespace-specifier/input.js"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}

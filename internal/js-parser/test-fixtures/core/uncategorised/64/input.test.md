@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/uncategorised/64/input.js"
 		end: Object {
 			column: 11
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/uncategorised/64/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "core/uncategorised/64/input.js"
 				end: Object {
 					column: 11
-					index: 36
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					identifierName: "x"
 					end: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 					filename: "core/uncategorised/64/input.js"
 					end: Object {
 						column: 11
-						index: 36
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "core/uncategorised/64/input.js"
 							end: Object {
 								column: 9
-								index: 34
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 25
 								line: 2
 							}
 						}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "core/uncategorised/64/input.js"
 								end: Object {
 									column: 8
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 0
-									index: 25
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									identifierName: "doThat"
 									end: Object {
 										column: 6
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 0
-										index: 25
 										line: 2
 									}
 								}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-if/migrated_0004/input.js"
 		end: Object {
 			column: 0
-			index: 43
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-if/migrated_0004/input.js"
 				end: Object {
 					column: 42
-					index: 42
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "morning"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "esprima/statement-if/migrated_0004/input.js"
 					end: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 					start: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/statement-if/migrated_0004/input.js"
 						end: Object {
 							column: 42
-							index: 42
 							line: 1
 						}
 						start: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 							identifierName: "goodDay"
 							end: Object {
 								column: 40
-								index: 40
 								line: 1
 							}
 							start: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 						}
@@ -116,12 +104,10 @@ JSRoot {
 					filename: "esprima/statement-if/migrated_0004/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -131,12 +117,10 @@ JSRoot {
 						filename: "esprima/statement-if/migrated_0004/input.js"
 						end: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -147,12 +131,10 @@ JSRoot {
 							identifierName: "goodMorning"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}

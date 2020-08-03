@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/modifiers-methods-async/input.ts"
 		end: Object {
 			column: 0
-			index: 257
 			line: 12
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/class/modifiers-methods-async/input.ts"
 				end: Object {
 					column: 41
-					index: 41
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -58,12 +54,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 16
-						index: 58
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 57
 						line: 2
 					}
 				}
@@ -74,12 +68,10 @@ JSRoot {
 				filename: "typescript/class/modifiers-methods-async/input.ts"
 				end: Object {
 					column: 1
-					index: 256
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 42
 					line: 2
 				}
 			}
@@ -93,12 +85,10 @@ JSRoot {
 					filename: "typescript/class/modifiers-methods-async/input.ts"
 					end: Object {
 						column: 1
-						index: 256
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 42
 						line: 2
 					}
 				}
@@ -113,12 +103,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 20
-										index: 81
 										line: 3
 									}
 									start: Object {
 										column: 19
-										index: 80
 										line: 3
 									}
 								}
@@ -127,12 +115,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
-									index: 81
 									line: 3
 								}
 								start: Object {
 									column: 19
-									index: 80
 									line: 3
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 23
-								index: 84
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 65
 								line: 3
 							}
 						}
@@ -164,12 +148,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
-									index: 83
 									line: 3
 								}
 								start: Object {
 									column: 20
-									index: 81
 									line: 3
 								}
 							}
@@ -183,19 +165,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 65
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
-									index: 81
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 65
 									line: 3
 								}
 							}
@@ -211,12 +190,10 @@ JSRoot {
 									identifierName: "s"
 									end: Object {
 										column: 18
-										index: 103
 										line: 4
 									}
 									start: Object {
 										column: 17
-										index: 102
 										line: 4
 									}
 								}
@@ -225,12 +202,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 18
-									index: 103
 									line: 4
 								}
 								start: Object {
 									column: 17
-									index: 102
 									line: 4
 								}
 							}
@@ -239,12 +214,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 23
-								index: 108
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 89
 								line: 4
 							}
 						}
@@ -255,12 +228,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 23
-									index: 108
 									line: 4
 								}
 								start: Object {
 									column: 21
-									index: 106
 									line: 4
 								}
 							}
@@ -278,12 +249,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
-									index: 105
 									line: 4
 								}
 								start: Object {
 									column: 18
-									index: 103
 									line: 4
 								}
 							}
@@ -297,19 +266,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 89
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 18
-									index: 103
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 89
 									line: 4
 								}
 							}
@@ -325,12 +291,10 @@ JSRoot {
 									identifierName: "pua"
 									end: Object {
 										column: 29
-										index: 138
 										line: 5
 									}
 									start: Object {
 										column: 26
-										index: 135
 										line: 5
 									}
 								}
@@ -339,12 +303,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
-									index: 138
 									line: 5
 								}
 								start: Object {
 									column: 26
-									index: 135
 									line: 5
 								}
 							}
@@ -354,12 +316,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 32
-								index: 141
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 113
 								line: 5
 							}
 						}
@@ -376,12 +336,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 31
-									index: 140
 									line: 5
 								}
 								start: Object {
 									column: 29
-									index: 138
 									line: 5
 								}
 							}
@@ -395,19 +353,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 113
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
-									index: 138
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 113
 									line: 5
 								}
 							}
@@ -423,12 +378,10 @@ JSRoot {
 									identifierName: "pus"
 									end: Object {
 										column: 27
-										index: 169
 										line: 6
 									}
 									start: Object {
 										column: 24
-										index: 166
 										line: 6
 									}
 								}
@@ -437,12 +390,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
-									index: 169
 									line: 6
 								}
 								start: Object {
 									column: 24
-									index: 166
 									line: 6
 								}
 							}
@@ -451,12 +402,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 32
-								index: 174
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 146
 								line: 6
 							}
 						}
@@ -467,12 +416,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 32
-									index: 174
 									line: 6
 								}
 								start: Object {
 									column: 30
-									index: 172
 									line: 6
 								}
 							}
@@ -490,12 +437,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 29
-									index: 171
 									line: 6
 								}
 								start: Object {
 									column: 27
-									index: 169
 									line: 6
 								}
 							}
@@ -509,19 +454,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 146
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
-									index: 169
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 146
 									line: 6
 								}
 							}
@@ -537,12 +479,10 @@ JSRoot {
 									identifierName: "pu"
 									end: Object {
 										column: 19
-										index: 195
 										line: 8
 									}
 									start: Object {
 										column: 17
-										index: 193
 										line: 8
 									}
 								}
@@ -551,12 +491,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 19
-									index: 195
 									line: 8
 								}
 								start: Object {
 									column: 17
-									index: 193
 									line: 8
 								}
 							}
@@ -565,12 +503,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 24
-								index: 200
 								line: 8
 							}
 							start: Object {
 								column: 4
-								index: 180
 								line: 8
 							}
 						}
@@ -581,12 +517,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 24
-									index: 200
 									line: 8
 								}
 								start: Object {
 									column: 22
-									index: 198
 									line: 8
 								}
 							}
@@ -604,12 +538,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 21
-									index: 197
 									line: 8
 								}
 								start: Object {
 									column: 19
-									index: 195
 									line: 8
 								}
 							}
@@ -623,19 +555,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 180
 								line: 8
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 19
-									index: 195
 									line: 8
 								}
 								start: Object {
 									column: 4
-									index: 180
 									line: 8
 								}
 							}
@@ -651,12 +580,10 @@ JSRoot {
 									identifierName: "po"
 									end: Object {
 										column: 22
-										index: 223
 										line: 9
 									}
 									start: Object {
 										column: 20
-										index: 221
 										line: 9
 									}
 								}
@@ -665,12 +592,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
-									index: 223
 									line: 9
 								}
 								start: Object {
 									column: 20
-									index: 221
 									line: 9
 								}
 							}
@@ -679,12 +604,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 27
-								index: 228
 								line: 9
 							}
 							start: Object {
 								column: 4
-								index: 205
 								line: 9
 							}
 						}
@@ -695,12 +618,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 27
-									index: 228
 									line: 9
 								}
 								start: Object {
 									column: 25
-									index: 226
 									line: 9
 								}
 							}
@@ -718,12 +639,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 24
-									index: 225
 									line: 9
 								}
 								start: Object {
 									column: 22
-									index: 223
 									line: 9
 								}
 							}
@@ -737,19 +656,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 205
 								line: 9
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
-									index: 223
 									line: 9
 								}
 								start: Object {
 									column: 4
-									index: 205
 									line: 9
 								}
 							}
@@ -765,12 +681,10 @@ JSRoot {
 									identifierName: "pi"
 									end: Object {
 										column: 20
-										index: 249
 										line: 10
 									}
 									start: Object {
 										column: 18
-										index: 247
 										line: 10
 									}
 								}
@@ -779,12 +693,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
-									index: 249
 									line: 10
 								}
 								start: Object {
 									column: 18
-									index: 247
 									line: 10
 								}
 							}
@@ -793,12 +705,10 @@ JSRoot {
 							filename: "typescript/class/modifiers-methods-async/input.ts"
 							end: Object {
 								column: 25
-								index: 254
 								line: 10
 							}
 							start: Object {
 								column: 4
-								index: 233
 								line: 10
 							}
 						}
@@ -809,12 +719,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 25
-									index: 254
 									line: 10
 								}
 								start: Object {
 									column: 23
-									index: 252
 									line: 10
 								}
 							}
@@ -832,12 +740,10 @@ JSRoot {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 22
-									index: 251
 									line: 10
 								}
 								start: Object {
 									column: 20
-									index: 249
 									line: 10
 								}
 							}
@@ -851,19 +757,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 233
 								line: 10
 							}
 							loc: Object {
 								filename: "typescript/class/modifiers-methods-async/input.ts"
 								end: Object {
 									column: 20
-									index: 249
 									line: 10
 								}
 								start: Object {
 									column: 4
-									index: 233
 									line: 10
 								}
 							}

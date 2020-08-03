@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/abstract-false-positive/input.ts"
 		end: Object {
 			column: 0
-			index: 88
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/class/abstract-false-positive/input.ts"
 				end: Object {
 					column: 62
-					index: 62
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "typescript/class/abstract-false-positive/input.ts"
 				end: Object {
 					column: 24
-					index: 87
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 63
 					line: 2
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 					identifierName: "abstract"
 					end: Object {
 						column: 23
-						index: 86
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 78
 						line: 2
 					}
 				}

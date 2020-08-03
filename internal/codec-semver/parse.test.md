@@ -17,12 +17,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -42,12 +40,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -70,12 +66,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -102,12 +96,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 18
-			index: 18
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -127,12 +119,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -152,12 +142,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 17
-			index: 17
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -180,12 +168,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -212,12 +198,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 22
-			index: 22
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -250,12 +234,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 34
-			index: 34
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -278,12 +260,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 20
-			index: 20
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -298,12 +278,10 @@ VersionRange {
 		filename: undefined
 		end: Object {
 			column: 8
-			index: 8
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -312,12 +290,10 @@ VersionRange {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -332,12 +308,10 @@ VersionRange {
 			filename: undefined
 			end: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 			start: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 		}
@@ -358,12 +332,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -378,12 +350,10 @@ Wildcard {
 		filename: undefined
 		end: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -398,12 +368,10 @@ Wildcard {
 		filename: undefined
 		end: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -423,12 +391,10 @@ AbsoluteVersion {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -443,12 +409,10 @@ LogicalOr {
 		filename: undefined
 		end: Object {
 			column: 78
-			index: 78
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -458,12 +422,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -477,12 +439,10 @@ LogicalOr {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -493,12 +453,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 78
-				index: 78
 				line: 1
 			}
 			start: Object {
 				column: 10
-				index: 10
 				line: 1
 			}
 		}
@@ -508,12 +466,10 @@ LogicalOr {
 				filename: undefined
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -530,12 +486,10 @@ LogicalOr {
 					filename: undefined
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -546,12 +500,10 @@ LogicalOr {
 				filename: undefined
 				end: Object {
 					column: 78
-					index: 78
 					line: 1
 				}
 				start: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 			}
@@ -561,12 +513,10 @@ LogicalOr {
 					filename: undefined
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 				}
@@ -580,12 +530,10 @@ LogicalOr {
 						filename: undefined
 						end: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 						start: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 					}
@@ -596,12 +544,10 @@ LogicalOr {
 					filename: undefined
 					end: Object {
 						column: 78
-						index: 78
 						line: 1
 					}
 					start: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 				}
@@ -611,12 +557,10 @@ LogicalOr {
 						filename: undefined
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 					}
@@ -630,12 +574,10 @@ LogicalOr {
 							filename: undefined
 							end: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 							start: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 						}
@@ -646,12 +588,10 @@ LogicalOr {
 						filename: undefined
 						end: Object {
 							column: 78
-							index: 78
 							line: 1
 						}
 						start: Object {
 							column: 47
-							index: 47
 							line: 1
 						}
 					}
@@ -661,12 +601,10 @@ LogicalOr {
 							filename: undefined
 							end: Object {
 								column: 58
-								index: 58
 								line: 1
 							}
 							start: Object {
 								column: 47
-								index: 47
 								line: 1
 							}
 						}
@@ -683,12 +621,10 @@ LogicalOr {
 								filename: undefined
 								end: Object {
 									column: 58
-									index: 58
 									line: 1
 								}
 								start: Object {
 									column: 48
-									index: 48
 									line: 1
 								}
 							}
@@ -699,12 +635,10 @@ LogicalOr {
 							filename: undefined
 							end: Object {
 								column: 78
-								index: 78
 								line: 1
 							}
 							start: Object {
 								column: 62
-								index: 62
 								line: 1
 							}
 						}
@@ -714,12 +648,10 @@ LogicalOr {
 								filename: undefined
 								end: Object {
 									column: 68
-									index: 68
 									line: 1
 								}
 								start: Object {
 									column: 62
-									index: 62
 									line: 1
 								}
 							}
@@ -733,12 +665,10 @@ LogicalOr {
 									filename: undefined
 									end: Object {
 										column: 68
-										index: 68
 										line: 1
 									}
 									start: Object {
 										column: 63
-										index: 63
 										line: 1
 									}
 								}
@@ -750,12 +680,10 @@ LogicalOr {
 								filename: undefined
 								end: Object {
 									column: 78
-									index: 78
 									line: 1
 								}
 								start: Object {
 									column: 72
-									index: 72
 									line: 1
 								}
 							}
@@ -769,12 +697,10 @@ LogicalOr {
 									filename: undefined
 									end: Object {
 										column: 78
-										index: 78
 										line: 1
 									}
 									start: Object {
 										column: 73
-										index: 73
 										line: 1
 									}
 								}
@@ -801,12 +727,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -826,12 +750,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -851,12 +773,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -876,12 +796,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -901,12 +819,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -926,12 +842,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -951,12 +865,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -976,12 +888,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1001,12 +911,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1026,12 +934,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1051,12 +957,10 @@ WildcardVersion {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1071,12 +975,10 @@ VersionRange {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1090,12 +992,10 @@ VersionRange {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1110,12 +1010,10 @@ VersionRange {
 			filename: undefined
 			end: Object {
 				column: 12
-				index: 12
 				line: 1
 			}
 			start: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 		}
@@ -1131,12 +1029,10 @@ LogicalOr {
 		filename: undefined
 		end: Object {
 			column: 7
-			index: 7
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1150,12 +1046,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1170,12 +1064,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -1191,12 +1083,10 @@ LogicalOr {
 		filename: undefined
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1210,12 +1100,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1225,12 +1113,10 @@ LogicalOr {
 			filename: undefined
 			end: Object {
 				column: 10
-				index: 10
 				line: 1
 			}
 			start: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 		}
@@ -1244,12 +1130,10 @@ LogicalOr {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 			}
@@ -1264,12 +1148,10 @@ LogicalOr {
 				filename: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -1287,12 +1169,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1306,12 +1186,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -1327,12 +1205,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 14
-			index: 14
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1342,12 +1218,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1361,12 +1235,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -1378,12 +1250,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 14
-				index: 14
 				line: 1
 			}
 			start: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 		}
@@ -1397,12 +1267,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -1420,12 +1288,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1439,12 +1305,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -1460,12 +1324,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 14
-			index: 14
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1475,12 +1337,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1494,12 +1354,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -1511,12 +1369,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 14
-				index: 14
 				line: 1
 			}
 			start: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 		}
@@ -1530,12 +1386,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -1553,12 +1407,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1572,12 +1424,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -1593,12 +1443,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1608,12 +1456,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1627,12 +1473,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -1644,12 +1488,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 12
-				index: 12
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -1663,12 +1505,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -1686,12 +1526,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1705,12 +1543,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -1726,12 +1562,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1741,12 +1575,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1760,12 +1592,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -1777,12 +1607,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 12
-				index: 12
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -1796,12 +1624,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -1819,12 +1645,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1838,12 +1662,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -1859,12 +1681,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1874,12 +1694,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -1893,12 +1711,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -1910,12 +1726,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 12
-				index: 12
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -1929,12 +1743,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -1952,12 +1764,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 5
-			index: 5
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1971,12 +1781,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -1992,12 +1800,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2007,12 +1813,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2026,12 +1830,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -2043,12 +1845,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 12
-				index: 12
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -2062,12 +1862,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -2085,12 +1883,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2104,12 +1900,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -2125,12 +1919,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2140,12 +1932,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2159,12 +1949,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -2176,12 +1964,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 10
-				index: 10
 				line: 1
 			}
 			start: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 		}
@@ -2195,12 +1981,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -2218,12 +2002,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2237,12 +2019,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -2258,12 +2038,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2273,12 +2051,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2292,12 +2068,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -2309,12 +2083,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 10
-				index: 10
 				line: 1
 			}
 			start: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 		}
@@ -2328,12 +2100,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -2351,12 +2121,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 3
-			index: 3
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2370,12 +2138,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -2391,12 +2157,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 8
-			index: 8
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2406,12 +2170,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2425,12 +2187,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -2442,12 +2202,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 			start: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 		}
@@ -2461,12 +2219,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -2484,12 +2240,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 3
-			index: 3
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2503,12 +2257,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -2524,12 +2276,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 8
-			index: 8
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2539,12 +2289,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2558,12 +2306,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -2575,12 +2321,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 			start: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 		}
@@ -2594,12 +2338,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -2617,12 +2359,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 3
-			index: 3
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2636,12 +2376,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -2657,12 +2395,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 8
-			index: 8
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2672,12 +2408,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2691,12 +2425,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -2708,12 +2440,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 			start: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 		}
@@ -2727,12 +2457,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -2750,12 +2478,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 3
-			index: 3
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2769,12 +2495,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -2790,12 +2514,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 8
-			index: 8
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2805,12 +2527,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2824,12 +2544,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -2841,12 +2559,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 			start: Object {
 				column: 5
-				index: 5
 				line: 1
 			}
 		}
@@ -2860,12 +2576,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -2883,12 +2597,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2902,12 +2614,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -2923,12 +2633,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -2938,12 +2646,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -2957,12 +2663,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -2974,12 +2678,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 		}
@@ -2993,12 +2695,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -3016,12 +2716,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 2
-			index: 2
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3035,12 +2733,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 		}
@@ -3056,12 +2752,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 6
-			index: 6
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3071,12 +2765,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -3090,12 +2782,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -3107,12 +2797,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 6
-				index: 6
 				line: 1
 			}
 			start: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 		}
@@ -3126,12 +2814,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -3149,12 +2835,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 1
-			index: 1
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3168,12 +2852,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -3189,12 +2871,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3204,12 +2884,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -3223,12 +2901,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -3240,12 +2916,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 		}
@@ -3259,12 +2933,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -3282,12 +2954,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 1
-			index: 1
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3301,12 +2971,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -3322,12 +2990,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3337,12 +3003,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -3356,12 +3020,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -3373,12 +3035,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 		}
@@ -3392,12 +3052,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -3415,12 +3073,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 1
-			index: 1
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3434,12 +3090,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -3455,12 +3109,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3470,12 +3122,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -3489,12 +3139,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -3506,12 +3154,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 		}
@@ -3525,12 +3171,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -3548,12 +3192,10 @@ Comparator {
 		filename: undefined
 		end: Object {
 			column: 1
-			index: 1
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3567,12 +3209,10 @@ Comparator {
 			filename: undefined
 			end: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -3588,12 +3228,10 @@ LogicalAnd {
 		filename: undefined
 		end: Object {
 			column: 4
-			index: 4
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -3603,12 +3241,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 2
-				index: 2
 				line: 1
 			}
 			start: Object {
 				column: 0
-				index: 0
 				line: 1
 			}
 		}
@@ -3622,12 +3258,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -3639,12 +3273,10 @@ LogicalAnd {
 			filename: undefined
 			end: Object {
 				column: 4
-				index: 4
 				line: 1
 			}
 			start: Object {
 				column: 3
-				index: 3
 				line: 1
 			}
 		}
@@ -3658,12 +3290,10 @@ LogicalAnd {
 				filename: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}

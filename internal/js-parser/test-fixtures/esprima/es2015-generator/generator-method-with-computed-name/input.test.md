@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 		end: Object {
 			column: 0
-			index: 52
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 				end: Object {
 					column: 2
-					index: 51
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 					end: Object {
 						column: 1
-						index: 50
 						line: 3
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -74,12 +68,10 @@ JSRoot {
 						filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -90,12 +82,10 @@ JSRoot {
 						filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 						end: Object {
 							column: 1
-							index: 50
 							line: 3
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 								end: Object {
 									column: 33
-									index: 48
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 19
 									line: 2
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 									filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 									end: Object {
 										column: 33
-										index: 48
 										line: 2
 									}
 									start: Object {
 										column: 11
-										index: 26
 										line: 2
 									}
 								}
@@ -138,12 +124,10 @@ JSRoot {
 													filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 													end: Object {
 														column: 25
-														index: 40
 														line: 2
 													}
 													start: Object {
 														column: 15
-														index: 30
 														line: 2
 													}
 												}
@@ -154,12 +138,10 @@ JSRoot {
 														identifierName: "iter"
 														end: Object {
 															column: 25
-															index: 40
 															line: 2
 														}
 														start: Object {
 															column: 21
-															index: 36
 															line: 2
 														}
 													}
@@ -169,12 +151,10 @@ JSRoot {
 												filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 												end: Object {
 													column: 26
-													index: 41
 													line: 2
 												}
 												start: Object {
 													column: 14
-													index: 29
 													line: 2
 												}
 											}
@@ -183,12 +163,10 @@ JSRoot {
 											filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 											end: Object {
 												column: 31
-												index: 46
 												line: 2
 											}
 											start: Object {
 												column: 13
-												index: 28
 												line: 2
 											}
 										}
@@ -199,12 +177,10 @@ JSRoot {
 												filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 												end: Object {
 													column: 31
-													index: 46
 													line: 2
 												}
 												start: Object {
 													column: 29
-													index: 44
 													line: 2
 												}
 											}
@@ -222,12 +198,10 @@ JSRoot {
 												filename: "esprima/es2015-generator/generator-method-with-computed-name/input.js"
 												end: Object {
 													column: 28
-													index: 43
 													line: 2
 												}
 												start: Object {
 													column: 26
-													index: 41
 													line: 2
 												}
 											}

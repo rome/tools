@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 		end: Object {
 			column: 21
-			index: 21
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 						}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}

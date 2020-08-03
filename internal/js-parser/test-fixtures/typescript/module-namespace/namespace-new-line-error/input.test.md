@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/module-namespace/namespace-new-line-error/input.ts"
 		end: Object {
 			column: 0
-			index: 17
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 3
-					index: 13
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 14
 					line: 2
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "typescript/module-namespace/namespace-new-line-error/input.ts"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					identifierName: "namespace"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 				filename: "typescript/module-namespace/namespace-new-line-error/input.ts"
 				end: Object {
 					column: 3
-					index: 13
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 10
 					line: 2
 				}
 			}
@@ -109,12 +99,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 3
-						index: 13
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 10
 						line: 2
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 				filename: "typescript/module-namespace/namespace-new-line-error/input.ts"
 				end: Object {
 					column: 6
-					index: 16
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 14
 					line: 2
 				}
 			}

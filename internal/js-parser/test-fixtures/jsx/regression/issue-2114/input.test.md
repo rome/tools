@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/regression/issue-2114/input.jsx"
 		end: Object {
 			column: 0
-			index: 52
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/regression/issue-2114/input.jsx"
 				end: Object {
 					column: 51
-					index: 51
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "jsx/regression/issue-2114/input.jsx"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "jsx/regression/issue-2114/input.jsx"
 					end: Object {
 						column: 50
-						index: 50
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 								filename: "jsx/regression/issue-2114/input.jsx"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 							}
@@ -103,12 +93,10 @@ JSRoot {
 								filename: "jsx/regression/issue-2114/input.jsx"
 								end: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -117,12 +105,10 @@ JSRoot {
 							filename: "jsx/regression/issue-2114/input.jsx"
 							end: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}

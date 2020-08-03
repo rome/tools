@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 		end: Object {
 			column: 0
-			index: 20
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -82,12 +74,10 @@ JSRoot {
 						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 							identifierName: "rest"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -118,12 +106,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 12
-											index: 12
 											line: 1
 										}
 										start: Object {
 											column: 11
-											index: 11
 											line: 1
 										}
 									}
@@ -132,12 +118,10 @@ JSRoot {
 									filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -149,12 +133,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -163,12 +145,10 @@ JSRoot {
 								filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}

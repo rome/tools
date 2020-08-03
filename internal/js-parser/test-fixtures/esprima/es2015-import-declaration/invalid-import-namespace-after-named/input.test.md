@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -116,12 +106,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -134,12 +122,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -149,12 +135,10 @@ JSRoot {
 							filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -167,12 +151,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 			}
@@ -182,12 +164,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -197,12 +177,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -214,12 +192,10 @@ JSRoot {
 						identifierName: "as"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -231,12 +207,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 			}
@@ -247,12 +221,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -263,12 +235,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -279,12 +249,10 @@ JSRoot {
 					identifierName: "from"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -295,12 +263,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 			}
@@ -310,12 +276,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 				}

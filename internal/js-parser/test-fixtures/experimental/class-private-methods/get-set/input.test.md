@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-methods/get-set/input.js"
 		end: Object {
 			column: 0
-			index: 100
 			line: 9
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Hotel"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-methods/get-set/input.js"
 				end: Object {
 					column: 1
-					index: 99
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-methods/get-set/input.js"
 					end: Object {
 						column: 1
-						index: 99
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "evil"
 									end: Object {
 										column: 11
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 7
-										index: 21
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 20
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/get-set/input.js"
 							end: Object {
 								column: 3
-								index: 52
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 						}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 13
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 							}
@@ -161,19 +145,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 3
-									index: 52
 									line: 4
 								}
 								start: Object {
 									column: 14
-									index: 28
 									line: 2
 								}
 							}
@@ -199,12 +178,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/get-set/input.js"
 										end: Object {
 											column: 18
-											index: 48
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 34
 											line: 3
 										}
 									}
@@ -214,12 +191,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/get-set/input.js"
 											end: Object {
 												column: 17
-												index: 47
 												line: 3
 											}
 											start: Object {
 												column: 11
-												index: 41
 												line: 3
 											}
 										}
@@ -230,12 +205,10 @@ JSRoot {
 												identifierName: "ohNo"
 												end: Object {
 													column: 15
-													index: 45
 													line: 3
 												}
 												start: Object {
 													column: 11
-													index: 41
 													line: 3
 												}
 											}
@@ -255,12 +228,10 @@ JSRoot {
 									identifierName: "evil"
 									end: Object {
 										column: 11
-										index: 64
 										line: 5
 									}
 									start: Object {
 										column: 7
-										index: 60
 										line: 5
 									}
 								}
@@ -269,12 +240,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 11
-									index: 64
 									line: 5
 								}
 								start: Object {
 									column: 6
-									index: 59
 									line: 5
 								}
 							}
@@ -283,12 +252,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/get-set/input.js"
 							end: Object {
 								column: 3
-								index: 97
 								line: 7
 							}
 							start: Object {
 								column: 2
-								index: 55
 								line: 5
 							}
 						}
@@ -301,19 +268,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 55
 								line: 5
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 11
-									index: 64
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 55
 									line: 5
 								}
 							}
@@ -330,12 +294,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 14
-									index: 67
 									line: 5
 								}
 								start: Object {
 									column: 11
-									index: 64
 									line: 5
 								}
 							}
@@ -347,12 +309,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 13
-											index: 66
 											line: 5
 										}
 										start: Object {
 											column: 12
-											index: 65
 											line: 5
 										}
 									}
@@ -363,12 +323,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/get-set/input.js"
 											end: Object {
 												column: 13
-												index: 66
 												line: 5
 											}
 											start: Object {
 												column: 12
-												index: 65
 												line: 5
 											}
 										}
@@ -382,12 +340,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/get-set/input.js"
 								end: Object {
 									column: 3
-									index: 97
 									line: 7
 								}
 								start: Object {
 									column: 15
-									index: 68
 									line: 5
 								}
 							}
@@ -397,12 +353,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/get-set/input.js"
 										end: Object {
 											column: 23
-											index: 93
 											line: 6
 										}
 										start: Object {
 											column: 4
-											index: 74
 											line: 6
 										}
 									}
@@ -411,12 +365,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/get-set/input.js"
 											end: Object {
 												column: 22
-												index: 92
 												line: 6
 											}
 											start: Object {
 												column: 11
-												index: 81
 												line: 6
 											}
 										}
@@ -427,12 +379,10 @@ JSRoot {
 												identifierName: "makeEvil"
 												end: Object {
 													column: 19
-													index: 89
 													line: 6
 												}
 												start: Object {
 													column: 11
-													index: 81
 													line: 6
 												}
 											}
@@ -445,12 +395,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 21
-														index: 91
 														line: 6
 													}
 													start: Object {
 														column: 20
-														index: 90
 														line: 6
 													}
 												}

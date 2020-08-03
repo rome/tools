@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/edge-cases/input.js"
 		end: Object {
 			column: 1
-			index: 381
 			line: 50
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A1"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 34
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 34
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 23
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 22
 										line: 3
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 3
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 3
-								index: 23
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 13
 								line: 2
 							}
 						}
@@ -140,19 +126,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 13
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 13
 									line: 2
 								}
 							}
@@ -167,12 +150,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 32
 										line: 4
 									}
 									start: Object {
 										column: 2
-										index: 26
 										line: 4
 									}
 								}
@@ -182,12 +163,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 8
-									index: 32
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 4
 								}
 							}
@@ -199,12 +178,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
-								index: 32
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 26
 								line: 4
 							}
 						}
@@ -219,12 +196,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 32
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 4
 								}
 							}
@@ -241,12 +216,10 @@ JSRoot {
 					identifierName: "A2"
 					end: Object {
 						column: 8
-						index: 44
 						line: 7
 					}
 					start: Object {
 						column: 6
-						index: 42
 						line: 7
 					}
 				}
@@ -255,12 +228,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 14
-					index: 50
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 36
 					line: 7
 				}
 			}
@@ -273,12 +244,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 14
-						index: 50
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 36
 						line: 7
 					}
 				}
@@ -292,12 +261,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 12
-										index: 48
 										line: 7
 									}
 									start: Object {
 										column: 11
-										index: 47
 										line: 7
 									}
 								}
@@ -306,12 +273,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
-									index: 48
 									line: 7
 								}
 								start: Object {
 									column: 11
-									index: 47
 									line: 7
 								}
 							}
@@ -323,12 +288,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 12
-								index: 48
 								line: 7
 							}
 							start: Object {
 								column: 11
-								index: 47
 								line: 7
 							}
 						}
@@ -341,19 +304,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 11
-								index: 47
 								line: 7
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
-									index: 48
 									line: 7
 								}
 								start: Object {
 									column: 11
-									index: 47
 									line: 7
 								}
 							}
@@ -370,12 +330,10 @@ JSRoot {
 					identifierName: "A3"
 					end: Object {
 						column: 8
-						index: 59
 						line: 8
 					}
 					start: Object {
 						column: 6
-						index: 57
 						line: 8
 					}
 				}
@@ -384,12 +342,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 16
-					index: 67
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 51
 					line: 8
 				}
 			}
@@ -402,12 +358,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 16
-						index: 67
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 51
 						line: 8
 					}
 				}
@@ -421,12 +375,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 14
-										index: 65
 										line: 8
 									}
 									start: Object {
 										column: 11
-										index: 62
 										line: 8
 									}
 								}
@@ -435,12 +387,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
-									index: 65
 									line: 8
 								}
 								start: Object {
 									column: 11
-									index: 62
 									line: 8
 								}
 							}
@@ -452,12 +402,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 14
-								index: 65
 								line: 8
 							}
 							start: Object {
 								column: 11
-								index: 62
 								line: 8
 							}
 						}
@@ -470,19 +418,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 11
-								index: 62
 								line: 8
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
-									index: 65
 									line: 8
 								}
 								start: Object {
 									column: 11
-									index: 62
 									line: 8
 								}
 							}
@@ -499,12 +444,10 @@ JSRoot {
 					identifierName: "A4"
 					end: Object {
 						column: 8
-						index: 76
 						line: 9
 					}
 					start: Object {
 						column: 6
-						index: 74
 						line: 9
 					}
 				}
@@ -513,12 +456,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 16
-					index: 84
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 68
 					line: 9
 				}
 			}
@@ -531,12 +472,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 16
-						index: 84
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 68
 						line: 9
 					}
 				}
@@ -550,12 +489,10 @@ JSRoot {
 									identifierName: "set"
 									end: Object {
 										column: 14
-										index: 82
 										line: 9
 									}
 									start: Object {
 										column: 11
-										index: 79
 										line: 9
 									}
 								}
@@ -564,12 +501,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
-									index: 82
 									line: 9
 								}
 								start: Object {
 									column: 11
-									index: 79
 									line: 9
 								}
 							}
@@ -581,12 +516,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 14
-								index: 82
 								line: 9
 							}
 							start: Object {
 								column: 11
-								index: 79
 								line: 9
 							}
 						}
@@ -599,19 +532,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 11
-								index: 79
 								line: 9
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 14
-									index: 82
 									line: 9
 								}
 								start: Object {
 									column: 11
-									index: 79
 									line: 9
 								}
 							}
@@ -628,12 +558,10 @@ JSRoot {
 					identifierName: "A5"
 					end: Object {
 						column: 8
-						index: 93
 						line: 10
 					}
 					start: Object {
 						column: 6
-						index: 91
 						line: 10
 					}
 				}
@@ -642,12 +570,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 19
-					index: 104
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 85
 					line: 10
 				}
 			}
@@ -660,12 +586,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 19
-						index: 104
 						line: 10
 					}
 					start: Object {
 						column: 0
-						index: 85
 						line: 10
 					}
 				}
@@ -679,12 +603,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 17
-										index: 102
 										line: 10
 									}
 									start: Object {
 										column: 11
-										index: 96
 										line: 10
 									}
 								}
@@ -694,12 +616,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 17
-									index: 102
 									line: 10
 								}
 								start: Object {
 									column: 11
-									index: 96
 									line: 10
 								}
 							}
@@ -711,12 +631,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 17
-								index: 102
 								line: 10
 							}
 							start: Object {
 								column: 11
-								index: 96
 								line: 10
 							}
 						}
@@ -731,12 +649,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 17
-									index: 102
 									line: 10
 								}
 								start: Object {
 									column: 11
-									index: 96
 									line: 10
 								}
 							}
@@ -753,12 +669,10 @@ JSRoot {
 					identifierName: "A6"
 					end: Object {
 						column: 8
-						index: 113
 						line: 11
 					}
 					start: Object {
 						column: 6
-						index: 111
 						line: 11
 					}
 				}
@@ -767,12 +681,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 18
-					index: 123
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 105
 					line: 11
 				}
 			}
@@ -785,12 +697,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 18
-						index: 123
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 105
 						line: 11
 					}
 				}
@@ -804,12 +714,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 16
-										index: 121
 										line: 11
 									}
 									start: Object {
 										column: 11
-										index: 116
 										line: 11
 									}
 								}
@@ -818,12 +726,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 16
-									index: 121
 									line: 11
 								}
 								start: Object {
 									column: 11
-									index: 116
 									line: 11
 								}
 							}
@@ -835,12 +741,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 16
-								index: 121
 								line: 11
 							}
 							start: Object {
 								column: 11
-								index: 116
 								line: 11
 							}
 						}
@@ -853,19 +757,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 11
-								index: 116
 								line: 11
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 16
-									index: 121
 									line: 11
 								}
 								start: Object {
 									column: 11
-									index: 116
 									line: 11
 								}
 							}
@@ -882,12 +783,10 @@ JSRoot {
 					identifierName: "A7"
 					end: Object {
 						column: 8
-						index: 133
 						line: 13
 					}
 					start: Object {
 						column: 6
-						index: 131
 						line: 13
 					}
 				}
@@ -896,12 +795,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 152
 					line: 16
 				}
 				start: Object {
 					column: 0
-					index: 125
 					line: 13
 				}
 			}
@@ -914,12 +811,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 152
 						line: 16
 					}
 					start: Object {
 						column: 0
-						index: 125
 						line: 13
 					}
 				}
@@ -933,12 +828,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 5
-										index: 141
 										line: 14
 									}
 									start: Object {
 										column: 2
-										index: 138
 										line: 14
 									}
 								}
@@ -947,12 +840,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
-									index: 141
 									line: 14
 								}
 								start: Object {
 									column: 2
-									index: 138
 									line: 14
 								}
 							}
@@ -964,12 +855,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 5
-								index: 141
 								line: 14
 							}
 							start: Object {
 								column: 2
-								index: 138
 								line: 14
 							}
 						}
@@ -982,19 +871,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 138
 								line: 14
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
-									index: 141
 									line: 14
 								}
 								start: Object {
 									column: 2
-									index: 138
 									line: 14
 								}
 							}
@@ -1010,12 +896,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 4
-										index: 146
 										line: 15
 									}
 									start: Object {
 										column: 3
-										index: 145
 										line: 15
 									}
 								}
@@ -1024,12 +908,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
-									index: 146
 									line: 15
 								}
 								start: Object {
 									column: 3
-									index: 145
 									line: 15
 								}
 							}
@@ -1038,12 +920,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
-								index: 150
 								line: 15
 							}
 							start: Object {
 								column: 2
-								index: 144
 								line: 15
 							}
 						}
@@ -1054,12 +934,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 150
 									line: 15
 								}
 								start: Object {
 									column: 6
-									index: 148
 									line: 15
 								}
 							}
@@ -1077,12 +955,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
-									index: 148
 									line: 15
 								}
 								start: Object {
 									column: 4
-									index: 146
 									line: 15
 								}
 							}
@@ -1096,19 +972,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 144
 								line: 15
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
-									index: 146
 									line: 15
 								}
 								start: Object {
 									column: 2
-									index: 144
 									line: 15
 								}
 							}
@@ -1125,12 +998,10 @@ JSRoot {
 					identifierName: "A8"
 					end: Object {
 						column: 8
-						index: 162
 						line: 18
 					}
 					start: Object {
 						column: 6
-						index: 160
 						line: 18
 					}
 				}
@@ -1139,12 +1010,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 184
 					line: 21
 				}
 				start: Object {
 					column: 0
-					index: 154
 					line: 18
 				}
 			}
@@ -1157,12 +1026,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 184
 						line: 21
 					}
 					start: Object {
 						column: 0
-						index: 154
 						line: 18
 					}
 				}
@@ -1177,12 +1044,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 4
-										index: 178
 										line: 20
 									}
 									start: Object {
 										column: 3
-										index: 177
 										line: 20
 									}
 								}
@@ -1191,12 +1056,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
-									index: 178
 									line: 20
 								}
 								start: Object {
 									column: 3
-									index: 177
 									line: 20
 								}
 							}
@@ -1205,12 +1068,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 8
-								index: 182
 								line: 20
 							}
 							start: Object {
 								column: 2
-								index: 167
 								line: 19
 							}
 						}
@@ -1221,12 +1082,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 182
 									line: 20
 								}
 								start: Object {
 									column: 6
-									index: 180
 									line: 20
 								}
 							}
@@ -1244,12 +1103,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
-									index: 180
 									line: 20
 								}
 								start: Object {
 									column: 4
-									index: 178
 									line: 20
 								}
 							}
@@ -1263,19 +1120,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 167
 								line: 19
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
-									index: 178
 									line: 20
 								}
 								start: Object {
 									column: 2
-									index: 167
 									line: 19
 								}
 							}
@@ -1292,12 +1146,10 @@ JSRoot {
 					identifierName: "A9"
 					end: Object {
 						column: 8
-						index: 194
 						line: 23
 					}
 					start: Object {
 						column: 6
-						index: 192
 						line: 23
 					}
 				}
@@ -1306,12 +1158,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 214
 					line: 26
 				}
 				start: Object {
 					column: 0
-					index: 186
 					line: 23
 				}
 			}
@@ -1324,12 +1174,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 214
 						line: 26
 					}
 					start: Object {
 						column: 0
-						index: 186
 						line: 23
 					}
 				}
@@ -1343,12 +1191,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 204
 										line: 24
 									}
 									start: Object {
 										column: 2
-										index: 199
 										line: 24
 									}
 								}
@@ -1357,12 +1203,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 204
 									line: 24
 								}
 								start: Object {
 									column: 2
-									index: 199
 									line: 24
 								}
 							}
@@ -1374,12 +1218,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
-								index: 204
 								line: 24
 							}
 							start: Object {
 								column: 2
-								index: 199
 								line: 24
 							}
 						}
@@ -1392,19 +1234,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 199
 								line: 24
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 204
 									line: 24
 								}
 								start: Object {
 									column: 2
-									index: 199
 									line: 24
 								}
 							}
@@ -1420,12 +1259,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 208
 										line: 25
 									}
 									start: Object {
 										column: 2
-										index: 207
 										line: 25
 									}
 								}
@@ -1434,12 +1271,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 208
 									line: 25
 								}
 								start: Object {
 									column: 2
-									index: 207
 									line: 25
 								}
 							}
@@ -1448,12 +1283,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
-								index: 212
 								line: 25
 							}
 							start: Object {
 								column: 2
-								index: 207
 								line: 25
 							}
 						}
@@ -1464,12 +1297,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 212
 									line: 25
 								}
 								start: Object {
 									column: 5
-									index: 210
 									line: 25
 								}
 							}
@@ -1487,12 +1318,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 5
-									index: 210
 									line: 25
 								}
 								start: Object {
 									column: 3
-									index: 208
 									line: 25
 								}
 							}
@@ -1506,19 +1335,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 207
 								line: 25
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 208
 									line: 25
 								}
 								start: Object {
 									column: 2
-									index: 207
 									line: 25
 								}
 							}
@@ -1535,12 +1361,10 @@ JSRoot {
 					identifierName: "A10"
 					end: Object {
 						column: 9
-						index: 225
 						line: 28
 					}
 					start: Object {
 						column: 6
-						index: 222
 						line: 28
 					}
 				}
@@ -1549,12 +1373,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 250
 					line: 32
 				}
 				start: Object {
 					column: 0
-					index: 216
 					line: 28
 				}
 			}
@@ -1567,12 +1389,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 250
 						line: 32
 					}
 					start: Object {
 						column: 0
-						index: 216
 						line: 28
 					}
 				}
@@ -1586,12 +1406,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 244
 										line: 30
 									}
 									start: Object {
 										column: 2
-										index: 239
 										line: 30
 									}
 								}
@@ -1600,12 +1418,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 244
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 239
 									line: 30
 								}
 							}
@@ -1617,12 +1433,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 7
-								index: 244
 								line: 30
 							}
 							start: Object {
 								column: 2
-								index: 230
 								line: 29
 							}
 						}
@@ -1635,19 +1449,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 230
 								line: 29
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 244
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 230
 									line: 29
 								}
 							}
@@ -1662,12 +1473,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 248
 										line: 31
 									}
 									start: Object {
 										column: 2
-										index: 247
 										line: 31
 									}
 								}
@@ -1676,12 +1485,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 248
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 247
 									line: 31
 								}
 							}
@@ -1693,12 +1500,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 3
-								index: 248
 								line: 31
 							}
 							start: Object {
 								column: 2
-								index: 247
 								line: 31
 							}
 						}
@@ -1711,19 +1516,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 247
 								line: 31
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 3
-									index: 248
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 247
 									line: 31
 								}
 							}
@@ -1740,12 +1542,10 @@ JSRoot {
 					identifierName: "A11"
 					end: Object {
 						column: 9
-						index: 261
 						line: 34
 					}
 					start: Object {
 						column: 6
-						index: 258
 						line: 34
 					}
 				}
@@ -1754,12 +1554,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 21
-					index: 273
 					line: 34
 				}
 				start: Object {
 					column: 0
-					index: 252
 					line: 34
 				}
 			}
@@ -1772,12 +1570,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 21
-						index: 273
 						line: 34
 					}
 					start: Object {
 						column: 0
-						index: 252
 						line: 34
 					}
 				}
@@ -1791,12 +1587,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 18
-										index: 270
 										line: 34
 									}
 									start: Object {
 										column: 12
-										index: 264
 										line: 34
 									}
 								}
@@ -1806,12 +1600,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 18
-									index: 270
 									line: 34
 								}
 								start: Object {
 									column: 12
-									index: 264
 									line: 34
 								}
 							}
@@ -1823,12 +1615,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 19
-								index: 271
 								line: 34
 							}
 							start: Object {
 								column: 12
-								index: 264
 								line: 34
 							}
 						}
@@ -1843,12 +1633,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 18
-									index: 270
 									line: 34
 								}
 								start: Object {
 									column: 12
-									index: 264
 									line: 34
 								}
 							}
@@ -1865,12 +1653,10 @@ JSRoot {
 					identifierName: "A12"
 					end: Object {
 						column: 9
-						index: 284
 						line: 36
 					}
 					start: Object {
 						column: 6
-						index: 281
 						line: 36
 					}
 				}
@@ -1879,12 +1665,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 302
 					line: 38
 				}
 				start: Object {
 					column: 0
-					index: 275
 					line: 36
 				}
 			}
@@ -1897,12 +1681,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 302
 						line: 38
 					}
 					start: Object {
 						column: 0
-						index: 275
 						line: 36
 					}
 				}
@@ -1916,12 +1698,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 295
 										line: 37
 									}
 									start: Object {
 										column: 2
-										index: 289
 										line: 37
 									}
 								}
@@ -1931,12 +1711,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 8
-									index: 295
 									line: 37
 								}
 								start: Object {
 									column: 2
-									index: 289
 									line: 37
 								}
 							}
@@ -1948,12 +1726,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 12
-									index: 299
 									line: 37
 								}
 								start: Object {
 									column: 11
-									index: 298
 									line: 37
 								}
 							}
@@ -1964,12 +1740,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 13
-								index: 300
 								line: 37
 							}
 							start: Object {
 								column: 2
-								index: 289
 								line: 37
 							}
 						}
@@ -1984,12 +1758,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 295
 									line: 37
 								}
 								start: Object {
 									column: 2
-									index: 289
 									line: 37
 								}
 							}
@@ -2006,12 +1778,10 @@ JSRoot {
 					identifierName: "A13"
 					end: Object {
 						column: 9
-						index: 313
 						line: 40
 					}
 					start: Object {
 						column: 6
-						index: 310
 						line: 40
 					}
 				}
@@ -2020,12 +1790,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 335
 					line: 43
 				}
 				start: Object {
 					column: 0
-					index: 304
 					line: 40
 				}
 			}
@@ -2038,12 +1806,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 335
 						line: 43
 					}
 					start: Object {
 						column: 0
-						index: 304
 						line: 40
 					}
 				}
@@ -2057,12 +1823,10 @@ JSRoot {
 									filename: "experimental/class-properties/edge-cases/input.js"
 									end: Object {
 										column: 6
-										index: 328
 										line: 42
 									}
 									start: Object {
 										column: 3
-										index: 325
 										line: 42
 									}
 								}
@@ -2071,12 +1835,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 329
 									line: 42
 								}
 								start: Object {
 									column: 2
-									index: 324
 									line: 42
 								}
 							}
@@ -2085,12 +1847,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 11
-								index: 333
 								line: 42
 							}
 							start: Object {
 								column: 2
-								index: 318
 								line: 41
 							}
 						}
@@ -2101,12 +1861,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 11
-									index: 333
 									line: 42
 								}
 								start: Object {
 									column: 9
-									index: 331
 									line: 42
 								}
 							}
@@ -2124,12 +1882,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 9
-									index: 331
 									line: 42
 								}
 								start: Object {
 									column: 7
-									index: 329
 									line: 42
 								}
 							}
@@ -2143,19 +1899,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 318
 								line: 41
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 7
-									index: 329
 									line: 42
 								}
 								start: Object {
 									column: 2
-									index: 318
 									line: 41
 								}
 							}
@@ -2172,12 +1925,10 @@ JSRoot {
 					identifierName: "A14"
 					end: Object {
 						column: 9
-						index: 346
 						line: 45
 					}
 					start: Object {
 						column: 6
-						index: 343
 						line: 45
 					}
 				}
@@ -2186,12 +1937,10 @@ JSRoot {
 				filename: "experimental/class-properties/edge-cases/input.js"
 				end: Object {
 					column: 1
-					index: 381
 					line: 50
 				}
 				start: Object {
 					column: 0
-					index: 337
 					line: 45
 				}
 			}
@@ -2204,12 +1953,10 @@ JSRoot {
 					filename: "experimental/class-properties/edge-cases/input.js"
 					end: Object {
 						column: 1
-						index: 381
 						line: 50
 					}
 					start: Object {
 						column: 0
-						index: 337
 						line: 45
 					}
 				}
@@ -2224,12 +1971,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 372
 										line: 48
 									}
 									start: Object {
 										column: 2
-										index: 366
 										line: 48
 									}
 								}
@@ -2238,12 +1983,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 372
 									line: 48
 								}
 								start: Object {
 									column: 2
-									index: 366
 									line: 48
 								}
 							}
@@ -2252,12 +1995,10 @@ JSRoot {
 							filename: "experimental/class-properties/edge-cases/input.js"
 							end: Object {
 								column: 6
-								index: 379
 								line: 49
 							}
 							start: Object {
 								column: 2
-								index: 351
 								line: 46
 							}
 						}
@@ -2268,12 +2009,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 6
-									index: 379
 									line: 49
 								}
 								start: Object {
 									column: 4
-									index: 377
 									line: 49
 								}
 							}
@@ -2291,12 +2030,10 @@ JSRoot {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 4
-									index: 377
 									line: 49
 								}
 								start: Object {
 									column: 2
-									index: 375
 									line: 49
 								}
 							}
@@ -2310,19 +2047,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 351
 								line: 46
 							}
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {
 									column: 8
-									index: 372
 									line: 48
 								}
 								start: Object {
 									column: 2
-									index: 351
 									line: 46
 								}
 							}

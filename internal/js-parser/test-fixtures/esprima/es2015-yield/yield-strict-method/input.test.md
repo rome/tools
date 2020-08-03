@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/yield-strict-method/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-strict-method/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-strict-method/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-strict-method/input.js"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 									identifierName: "yield"
 									end: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -102,12 +92,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -116,12 +104,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/yield-strict-method/input.js"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -132,12 +118,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}
@@ -155,12 +139,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-strict-method/input.js"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}

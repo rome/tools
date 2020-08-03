@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 								identifierName: "const"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -113,12 +103,10 @@ JSRoot {
 							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -148,12 +134,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 				end: Object {
 					column: 17
-					index: 40
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 3
 				}
 			}
@@ -163,12 +147,10 @@ JSRoot {
 					filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 					end: Object {
 						column: 17
-						index: 40
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 23
 						line: 3
 					}
 				}
@@ -181,12 +163,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 12
-									index: 35
 									line: 3
 								}
 								start: Object {
 									column: 11
-									index: 34
 									line: 3
 								}
 							}
@@ -195,12 +175,10 @@ JSRoot {
 							filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 							end: Object {
 								column: 16
-								index: 39
 								line: 3
 							}
 							start: Object {
 								column: 11
-								index: 34
 								line: 3
 							}
 						}
@@ -211,12 +189,10 @@ JSRoot {
 								filename: "es2015/identifiers/invalid-escape-seq-const/input.js"
 								end: Object {
 									column: 16
-									index: 39
 									line: 3
 								}
 								start: Object {
 									column: 15
-									index: 38
 									line: 3
 								}
 							}

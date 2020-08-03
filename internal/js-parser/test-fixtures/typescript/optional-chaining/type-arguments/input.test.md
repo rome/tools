@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/optional-chaining/type-arguments/input.ts"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/optional-chaining/type-arguments/input.ts"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/optional-chaining/type-arguments/input.ts"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -66,12 +60,10 @@ JSRoot {
 						filename: "typescript/optional-chaining/type-arguments/input.ts"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -81,12 +73,10 @@ JSRoot {
 								filename: "typescript/optional-chaining/type-arguments/input.ts"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 							}
@@ -98,12 +88,10 @@ JSRoot {
 						filename: "typescript/optional-chaining/type-arguments/input.ts"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -115,12 +103,10 @@ JSRoot {
 								identifierName: "greet"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 							identifierName: "greet"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -146,12 +130,10 @@ JSRoot {
 							filename: "typescript/optional-chaining/type-arguments/input.ts"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -162,12 +144,10 @@ JSRoot {
 								identifierName: "example"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 0
 									line: 1
 								}
 							}
@@ -180,12 +160,10 @@ JSRoot {
 									identifierName: "inner"
 									end: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 									start: Object {
 										column: 8
-										index: 8
 										line: 1
 									}
 								}
@@ -195,12 +173,10 @@ JSRoot {
 								identifierName: "inner"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 		end: Object {
 			column: 0
-			index: 26
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 				end: Object {
 					column: 21
-					index: 25
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 					end: Object {
 						column: 21
-						index: 25
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 								end: Object {
 									column: 9
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 8
 									line: 2
 								}
 							}
@@ -88,12 +80,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 7
-													index: 11
 													line: 2
 												}
 												start: Object {
 													column: 6
-													index: 10
 													line: 2
 												}
 											}
@@ -102,12 +92,10 @@ JSRoot {
 											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 7
-												index: 11
 												line: 2
 											}
 											start: Object {
 												column: 6
-												index: 10
 												line: 2
 											}
 										}
@@ -119,12 +107,10 @@ JSRoot {
 											identifierName: "a"
 											end: Object {
 												column: 7
-												index: 11
 												line: 2
 											}
 											start: Object {
 												column: 6
-												index: 10
 												line: 2
 											}
 										}
@@ -133,12 +119,10 @@ JSRoot {
 										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 										end: Object {
 											column: 7
-											index: 11
 											line: 2
 										}
 										start: Object {
 											column: 6
-											index: 10
 											line: 2
 										}
 									}
@@ -149,12 +133,10 @@ JSRoot {
 							filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 							end: Object {
 								column: 20
-								index: 24
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 8
 								line: 2
 							}
 						}
@@ -163,12 +145,10 @@ JSRoot {
 								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 								end: Object {
 									column: 20
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 16
 									line: 2
 								}
 							}
@@ -182,12 +162,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 15
-													index: 19
 													line: 2
 												}
 												start: Object {
 													column: 14
-													index: 18
 													line: 2
 												}
 											}
@@ -196,12 +174,10 @@ JSRoot {
 											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 15
-												index: 19
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 18
 												line: 2
 											}
 										}
@@ -213,12 +189,10 @@ JSRoot {
 											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {
 												column: 18
-												index: 22
 												line: 2
 											}
 											start: Object {
 												column: 17
-												index: 21
 												line: 2
 											}
 										}
@@ -227,12 +201,10 @@ JSRoot {
 										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 										end: Object {
 											column: 18
-											index: 22
 											line: 2
 										}
 										start: Object {
 											column: 14
-											index: 18
 											line: 2
 										}
 									}

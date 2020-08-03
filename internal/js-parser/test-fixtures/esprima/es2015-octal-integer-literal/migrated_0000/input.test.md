@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 		end: Object {
 			column: 0
-			index: 3
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/es2015-octal-integer-literal/migrated_0000/input.js"
 					end: Object {
 						column: 2
-						index: 2
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

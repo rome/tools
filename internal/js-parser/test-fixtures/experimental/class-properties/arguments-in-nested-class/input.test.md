@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 		end: Object {
 			column: 0
-			index: 77
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 37
-					index: 65
 					line: 3
 				}
 				start: Object {
 					column: 28
-					index: 56
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 				end: Object {
 					column: 1
-					index: 76
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 					end: Object {
 						column: 1
-						index: 76
 						line: 5
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -134,12 +122,10 @@ JSRoot {
 								identifierName: "A"
 								end: Object {
 									column: 9
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 24
 									line: 2
 								}
 							}
@@ -148,12 +134,10 @@ JSRoot {
 							filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 							end: Object {
 								column: 3
-								index: 74
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 18
 								line: 2
 							}
 						}
@@ -166,12 +150,10 @@ JSRoot {
 								filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 								end: Object {
 									column: 3
-									index: 74
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 2
 								}
 							}
@@ -185,12 +167,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 7
-													index: 35
 													line: 3
 												}
 												start: Object {
 													column: 4
-													index: 32
 													line: 3
 												}
 											}
@@ -199,12 +179,10 @@ JSRoot {
 											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 7
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 32
 												line: 3
 											}
 										}
@@ -217,12 +195,10 @@ JSRoot {
 												identifierName: "B"
 												end: Object {
 													column: 17
-													index: 45
 													line: 3
 												}
 												start: Object {
 													column: 16
-													index: 44
 													line: 3
 												}
 											}
@@ -231,12 +207,10 @@ JSRoot {
 											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 41
-												index: 69
 												line: 3
 											}
 											start: Object {
 												column: 10
-												index: 38
 												line: 3
 											}
 										}
@@ -249,12 +223,10 @@ JSRoot {
 												filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 												end: Object {
 													column: 41
-													index: 69
 													line: 3
 												}
 												start: Object {
 													column: 10
-													index: 38
 													line: 3
 												}
 											}
@@ -269,12 +241,10 @@ JSRoot {
 																identifierName: "bar"
 																end: Object {
 																	column: 23
-																	index: 51
 																	line: 3
 																}
 																start: Object {
 																	column: 20
-																	index: 48
 																	line: 3
 																}
 															}
@@ -283,12 +253,10 @@ JSRoot {
 															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 23
-																index: 51
 																line: 3
 															}
 															start: Object {
 																column: 20
-																index: 48
 																line: 3
 															}
 														}
@@ -297,12 +265,10 @@ JSRoot {
 														filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 														end: Object {
 															column: 39
-															index: 67
 															line: 3
 														}
 														start: Object {
 															column: 20
-															index: 48
 															line: 3
 														}
 													}
@@ -319,12 +285,10 @@ JSRoot {
 															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 25
-																index: 53
 																line: 3
 															}
 															start: Object {
 																column: 23
-																index: 51
 																line: 3
 															}
 														}
@@ -338,19 +302,16 @@ JSRoot {
 														typeAnnotation: undefined
 														start: Object {
 															column: 20
-															index: 48
 															line: 3
 														}
 														loc: Object {
 															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 23
-																index: 51
 																line: 3
 															}
 															start: Object {
 																column: 20
-																index: 48
 																line: 3
 															}
 														}
@@ -361,12 +322,10 @@ JSRoot {
 															filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 															end: Object {
 																column: 39
-																index: 67
 																line: 3
 															}
 															start: Object {
 																column: 26
-																index: 54
 																line: 3
 															}
 														}
@@ -376,12 +335,10 @@ JSRoot {
 																	filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 																	end: Object {
 																		column: 37
-																		index: 65
 																		line: 3
 																	}
 																	start: Object {
 																		column: 28
-																		index: 56
 																		line: 3
 																	}
 																}
@@ -392,12 +349,10 @@ JSRoot {
 																		identifierName: "arguments"
 																		end: Object {
 																			column: 37
-																			index: 65
 																			line: 3
 																		}
 																		start: Object {
 																			column: 28
-																			index: 56
 																			line: 3
 																		}
 																	}
@@ -415,12 +370,10 @@ JSRoot {
 										filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 										end: Object {
 											column: 42
-											index: 70
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 32
 											line: 3
 										}
 									}
@@ -433,19 +386,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 4
-											index: 32
 											line: 3
 										}
 										loc: Object {
 											filename: "experimental/class-properties/arguments-in-nested-class/input.js"
 											end: Object {
 												column: 7
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 32
 												line: 3
 											}
 										}

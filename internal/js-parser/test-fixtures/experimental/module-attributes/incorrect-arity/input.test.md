@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/incorrect-arity/input.js"
 		end: Object {
 			column: 0
-			index: 74
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -90,12 +82,10 @@ JSRoot {
 						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -107,12 +97,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 20
-					index: 30
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 10
 					line: 2
 				}
 			}
@@ -121,12 +109,10 @@ JSRoot {
 					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 20
-						index: 30
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 16
 						line: 2
 					}
 				}
@@ -136,12 +122,10 @@ JSRoot {
 						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 19
-							index: 29
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 17
 							line: 2
 						}
 					}
@@ -154,12 +138,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 46
-					index: 56
 					line: 2
 				}
 				start: Object {
 					column: 21
-					index: 31
 					line: 2
 				}
 			}
@@ -169,12 +151,10 @@ JSRoot {
 						filename: "experimental/module-attributes/incorrect-arity/input.js"
 						end: Object {
 							column: 44
-							index: 54
 							line: 2
 						}
 						start: Object {
 							column: 23
-							index: 33
 							line: 2
 						}
 					}
@@ -184,12 +164,10 @@ JSRoot {
 							filename: "experimental/module-attributes/incorrect-arity/input.js"
 							end: Object {
 								column: 28
-								index: 38
 								line: 2
 							}
 							start: Object {
 								column: 27
-								index: 37
 								line: 2
 							}
 						}
@@ -200,12 +178,10 @@ JSRoot {
 							filename: "experimental/module-attributes/incorrect-arity/input.js"
 							end: Object {
 								column: 44
-								index: 54
 								line: 2
 							}
 							start: Object {
 								column: 29
-								index: 39
 								line: 2
 							}
 						}
@@ -215,12 +191,10 @@ JSRoot {
 									filename: "experimental/module-attributes/incorrect-arity/input.js"
 									end: Object {
 										column: 43
-										index: 53
 										line: 2
 									}
 									start: Object {
 										column: 31
-										index: 41
 										line: 2
 									}
 								}
@@ -231,12 +205,10 @@ JSRoot {
 										identifierName: "type"
 										end: Object {
 											column: 35
-											index: 45
 											line: 2
 										}
 										start: Object {
 											column: 31
-											index: 41
 											line: 2
 										}
 									}
@@ -246,12 +218,10 @@ JSRoot {
 										filename: "experimental/module-attributes/incorrect-arity/input.js"
 										end: Object {
 											column: 43
-											index: 53
 											line: 2
 										}
 										start: Object {
 											column: 37
-											index: 47
 											line: 2
 										}
 									}
@@ -261,12 +231,10 @@ JSRoot {
 											filename: "experimental/module-attributes/incorrect-arity/input.js"
 											end: Object {
 												column: 43
-												index: 53
 												line: 2
 											}
 											start: Object {
 												column: 37
-												index: 47
 												line: 2
 											}
 										}
@@ -283,12 +251,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 47
-					index: 57
 					line: 2
 				}
 				start: Object {
 					column: 46
-					index: 56
 					line: 2
 				}
 			}
@@ -298,12 +264,10 @@ JSRoot {
 					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 47
-						index: 57
 						line: 2
 					}
 					start: Object {
 						column: 46
-						index: 56
 						line: 2
 					}
 				}
@@ -314,12 +278,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 61
-					index: 71
 					line: 2
 				}
 				start: Object {
 					column: 48
-					index: 58
 					line: 2
 				}
 			}
@@ -329,12 +291,10 @@ JSRoot {
 					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 61
-						index: 71
 						line: 2
 					}
 					start: Object {
 						column: 48
-						index: 58
 						line: 2
 					}
 				}
@@ -345,12 +305,10 @@ JSRoot {
 				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				end: Object {
 					column: 63
-					index: 73
 					line: 2
 				}
 				start: Object {
 					column: 61
-					index: 71
 					line: 2
 				}
 			}
@@ -360,12 +318,10 @@ JSRoot {
 					filename: "experimental/module-attributes/incorrect-arity/input.js"
 					end: Object {
 						column: 62
-						index: 72
 						line: 2
 					}
 					start: Object {
 						column: 61
-						index: 71
 						line: 2
 					}
 				}

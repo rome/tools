@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/index-signature/input.ts"
 		end: Object {
 			column: 0
-			index: 65
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/index-signature/input.ts"
 				end: Object {
 					column: 1
-					index: 64
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/index-signature/input.ts"
 					end: Object {
 						column: 1
-						index: 64
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 14
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 							}
@@ -103,12 +93,10 @@ JSRoot {
 									filename: "typescript/class/index-signature/input.ts"
 									end: Object {
 										column: 14
-										index: 24
 										line: 2
 									}
 									start: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 								}
@@ -117,12 +105,10 @@ JSRoot {
 										filename: "typescript/class/index-signature/input.ts"
 										end: Object {
 											column: 14
-											index: 24
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 18
 											line: 2
 										}
 									}
@@ -134,12 +120,10 @@ JSRoot {
 							filename: "typescript/class/index-signature/input.ts"
 							end: Object {
 								column: 21
-								index: 31
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -148,12 +132,10 @@ JSRoot {
 								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 20
-									index: 30
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 27
 									line: 2
 								}
 							}
@@ -166,12 +148,10 @@ JSRoot {
 								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 23
-									index: 55
 									line: 3
 								}
 								start: Object {
 									column: 14
-									index: 46
 									line: 3
 								}
 							}
@@ -180,12 +160,10 @@ JSRoot {
 									filename: "typescript/class/index-signature/input.ts"
 									end: Object {
 										column: 23
-										index: 55
 										line: 3
 									}
 									start: Object {
 										column: 14
-										index: 46
 										line: 3
 									}
 								}
@@ -194,12 +172,10 @@ JSRoot {
 										filename: "typescript/class/index-signature/input.ts"
 										end: Object {
 											column: 23
-											index: 55
 											line: 3
 										}
 										start: Object {
 											column: 17
-											index: 49
 											line: 3
 										}
 									}
@@ -211,12 +187,10 @@ JSRoot {
 							filename: "typescript/class/index-signature/input.ts"
 							end: Object {
 								column: 30
-								index: 62
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 36
 								line: 3
 							}
 						}
@@ -225,12 +199,10 @@ JSRoot {
 								filename: "typescript/class/index-signature/input.ts"
 								end: Object {
 									column: 29
-									index: 61
 									line: 3
 								}
 								start: Object {
 									column: 26
-									index: 58
 									line: 3
 								}
 							}

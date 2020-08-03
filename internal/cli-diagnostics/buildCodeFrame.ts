@@ -113,7 +113,6 @@ type FormattedLine = {
 
 export default function buildCodeFrame(
 	{
-		sourceText,
 		lines: allLines,
 		truncateLines,
 		start,
@@ -121,7 +120,6 @@ export default function buildCodeFrame(
 		type,
 		markerMessage = markup``,
 	}: {
-		sourceText: string;
 		lines: ToLines;
 		type: "pointer" | "all";
 		truncateLines?: number;
@@ -302,9 +300,12 @@ export default function buildCodeFrame(
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
 	if (isEmptyMarkup(markerMessage) && start !== undefined && end !== undefined) {
-		const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
-		if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
-			markerMessage = markup``;
+		const line = allLines[ob1Get0(ob1Coerce1To0(start.line))];
+		if (line !== undefined) {
+			const text = line[0].slice(ob1Get0(start.column), ob1Get0(end.column));
+			if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
+				markerMessage = markup``;
+			}
 		}
 	}
 

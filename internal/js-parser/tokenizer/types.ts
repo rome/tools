@@ -207,3 +207,9 @@ export const types = {
 };
 
 export type TokenTypes = typeof types[keyof typeof types];
+
+// Get the labels of all tokens
+// This is gross lol but better than having a manual union
+export type TokenLabels = {
+	[Key in keyof typeof types]: typeof types[Key]["label"]
+}[keyof typeof types];

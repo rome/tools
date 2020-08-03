@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-properties/super-inside-function/input.js"
 		end: Object {
 			column: 0
-			index: 55
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 23
-					index: 33
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 38
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-properties/super-inside-function/input.js"
 				end: Object {
 					column: 1
-					index: 54
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "experimental/class-properties/super-inside-function/input.js"
 					end: Object {
 						column: 1
-						index: 54
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -147,12 +133,10 @@ JSRoot {
 									identifierName: "fn"
 									end: Object {
 										column: 19
-										index: 29
 										line: 2
 									}
 									start: Object {
 										column: 17
-										index: 27
 										line: 2
 									}
 								}
@@ -161,12 +145,10 @@ JSRoot {
 								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 3
-									index: 52
 									line: 4
 								}
 								start: Object {
 									column: 8
-									index: 18
 									line: 2
 								}
 							}
@@ -183,12 +165,10 @@ JSRoot {
 									filename: "experimental/class-properties/super-inside-function/input.js"
 									end: Object {
 										column: 21
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 19
-										index: 29
 										line: 2
 									}
 								}
@@ -199,12 +179,10 @@ JSRoot {
 									filename: "experimental/class-properties/super-inside-function/input.js"
 									end: Object {
 										column: 3
-										index: 52
 										line: 4
 									}
 									start: Object {
 										column: 22
-										index: 32
 										line: 2
 									}
 								}
@@ -214,12 +192,10 @@ JSRoot {
 											filename: "experimental/class-properties/super-inside-function/input.js"
 											end: Object {
 												column: 14
-												index: 48
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 38
 												line: 3
 											}
 										}
@@ -229,12 +205,10 @@ JSRoot {
 												filename: "experimental/class-properties/super-inside-function/input.js"
 												end: Object {
 													column: 13
-													index: 47
 													line: 3
 												}
 												start: Object {
 													column: 4
-													index: 38
 													line: 3
 												}
 											}
@@ -243,12 +217,10 @@ JSRoot {
 													filename: "experimental/class-properties/super-inside-function/input.js"
 													end: Object {
 														column: 11
-														index: 45
 														line: 3
 													}
 													start: Object {
 														column: 4
-														index: 38
 														line: 3
 													}
 												}
@@ -257,12 +229,10 @@ JSRoot {
 														filename: "experimental/class-properties/super-inside-function/input.js"
 														end: Object {
 															column: 9
-															index: 43
 															line: 3
 														}
 														start: Object {
 															column: 4
-															index: 38
 															line: 3
 														}
 													}
@@ -275,12 +245,10 @@ JSRoot {
 															identifierName: "x"
 															end: Object {
 																column: 11
-																index: 45
 																line: 3
 															}
 															start: Object {
 																column: 10
-																index: 44
 																line: 3
 															}
 														}
@@ -290,12 +258,10 @@ JSRoot {
 														identifierName: "x"
 														end: Object {
 															column: 11
-															index: 45
 															line: 3
 														}
 														start: Object {
 															column: 10
-															index: 44
 															line: 3
 														}
 													}
@@ -312,12 +278,10 @@ JSRoot {
 							filename: "experimental/class-properties/super-inside-function/input.js"
 							end: Object {
 								column: 3
-								index: 52
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -330,19 +294,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/super-inside-function/input.js"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}

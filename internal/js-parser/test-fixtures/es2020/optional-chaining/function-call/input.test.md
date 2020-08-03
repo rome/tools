@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/function-call/input.js"
 		end: Object {
 			column: 10
-			index: 64
 			line: 9
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "func"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 12
-					index: 22
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 10
 					line: 3
 				}
 			}
@@ -99,12 +89,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 12
-						index: 22
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 10
 						line: 3
 					}
 				}
@@ -115,12 +103,10 @@ JSRoot {
 						identifierName: "func"
 						end: Object {
 							column: 4
-							index: 14
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 10
 							line: 3
 						}
 					}
@@ -133,12 +119,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 8
-								index: 18
 								line: 3
 							}
 							start: Object {
 								column: 7
-								index: 17
 								line: 3
 							}
 						}
@@ -150,12 +134,10 @@ JSRoot {
 							identifierName: "b"
 							end: Object {
 								column: 11
-								index: 21
 								line: 3
 							}
 							start: Object {
 								column: 10
-								index: 20
 								line: 3
 							}
 						}
@@ -168,12 +150,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 11
-					index: 35
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 5
 				}
 			}
@@ -183,12 +163,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 11
-						index: 35
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 24
 						line: 5
 					}
 				}
@@ -197,12 +175,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 7
-							index: 31
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 24
 							line: 5
 						}
 					}
@@ -213,12 +189,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 1
-								index: 25
 								line: 5
 							}
 							start: Object {
 								column: 0
-								index: 24
 								line: 5
 							}
 						}
@@ -231,12 +205,10 @@ JSRoot {
 								identifierName: "func"
 								end: Object {
 									column: 7
-									index: 31
 									line: 5
 								}
 								start: Object {
 									column: 3
-									index: 27
 									line: 5
 								}
 							}
@@ -247,12 +219,10 @@ JSRoot {
 							identifierName: "func"
 							end: Object {
 								column: 7
-								index: 31
 								line: 5
 							}
 							start: Object {
 								column: 3
-								index: 27
 								line: 5
 							}
 						}
@@ -265,12 +235,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 15
-					index: 52
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 37
 					line: 7
 				}
 			}
@@ -279,12 +247,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 15
-						index: 52
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 37
 						line: 7
 					}
 				}
@@ -296,12 +262,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 11
-								index: 48
 								line: 7
 							}
 							start: Object {
 								column: 10
-								index: 47
 								line: 7
 							}
 						}
@@ -313,12 +277,10 @@ JSRoot {
 							identifierName: "b"
 							end: Object {
 								column: 14
-								index: 51
 								line: 7
 							}
 							start: Object {
 								column: 13
-								index: 50
 								line: 7
 							}
 						}
@@ -329,12 +291,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 7
-							index: 44
 							line: 7
 						}
 						start: Object {
 							column: 0
-							index: 37
 							line: 7
 						}
 					}
@@ -345,12 +305,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 1
-								index: 38
 								line: 7
 							}
 							start: Object {
 								column: 0
-								index: 37
 								line: 7
 							}
 						}
@@ -363,12 +321,10 @@ JSRoot {
 								identifierName: "func"
 								end: Object {
 									column: 7
-									index: 44
 									line: 7
 								}
 								start: Object {
 									column: 3
-									index: 40
 									line: 7
 								}
 							}
@@ -379,12 +335,10 @@ JSRoot {
 							identifierName: "func"
 							end: Object {
 								column: 7
-								index: 44
 								line: 7
 							}
 							start: Object {
 								column: 3
-								index: 40
 								line: 7
 							}
 						}
@@ -397,12 +351,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/function-call/input.js"
 				end: Object {
 					column: 10
-					index: 64
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 54
 					line: 9
 				}
 			}
@@ -412,12 +364,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
 						column: 10
-						index: 64
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 54
 						line: 9
 					}
 				}
@@ -426,12 +376,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/function-call/input.js"
 						end: Object {
 							column: 6
-							index: 60
 							line: 9
 						}
 						start: Object {
 							column: 0
-							index: 54
 							line: 9
 						}
 					}
@@ -442,12 +390,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 1
-								index: 55
 								line: 9
 							}
 							start: Object {
 								column: 0
-								index: 54
 								line: 9
 							}
 						}
@@ -460,12 +406,10 @@ JSRoot {
 								identifierName: "func"
 								end: Object {
 									column: 6
-									index: 60
 									line: 9
 								}
 								start: Object {
 									column: 2
-									index: 56
 									line: 9
 								}
 							}
@@ -475,12 +419,10 @@ JSRoot {
 							identifierName: "func"
 							end: Object {
 								column: 6
-								index: 60
 								line: 9
 							}
 							start: Object {
 								column: 2
-								index: 56
 								line: 9
 							}
 						}

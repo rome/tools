@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/constructor/input.ts"
 		end: Object {
 			column: 0
-			index: 125
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/constructor/input.ts"
 				end: Object {
 					column: 1
-					index: 124
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/constructor/input.ts"
 					end: Object {
 						column: 1
-						index: 124
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 15
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 38
-								index: 48
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -168,12 +151,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 37
-									index: 47
 									line: 2
 								}
 								start: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 							}
@@ -185,12 +166,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 17
-											index: 27
 											line: 2
 										}
 										start: Object {
 											column: 16
-											index: 26
 											line: 2
 										}
 									}
@@ -200,12 +179,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 25
-												index: 35
 												line: 2
 											}
 											start: Object {
 												column: 16
-												index: 26
 												line: 2
 											}
 										}
@@ -214,12 +191,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 25
-													index: 35
 													line: 2
 												}
 												start: Object {
 													column: 19
-													index: 29
 													line: 2
 												}
 											}
@@ -233,12 +208,10 @@ JSRoot {
 										identifierName: "y"
 										end: Object {
 											column: 28
-											index: 38
 											line: 2
 										}
 										start: Object {
 											column: 27
-											index: 37
 											line: 2
 										}
 									}
@@ -248,12 +221,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 36
-												index: 46
 												line: 2
 											}
 											start: Object {
 												column: 27
-												index: 37
 												line: 2
 											}
 										}
@@ -262,12 +233,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 36
-													index: 46
 													line: 2
 												}
 												start: Object {
 													column: 30
-													index: 40
 													line: 2
 												}
 											}
@@ -287,12 +256,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 15
-										index: 64
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 53
 										line: 3
 									}
 								}
@@ -301,12 +268,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 64
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 53
 									line: 3
 								}
 							}
@@ -316,12 +281,10 @@ JSRoot {
 							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 38
-								index: 87
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 53
 								line: 3
 							}
 						}
@@ -334,19 +297,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 53
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 64
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 53
 									line: 3
 								}
 							}
@@ -363,12 +323,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 37
-									index: 86
 									line: 3
 								}
 								start: Object {
 									column: 15
-									index: 64
 									line: 3
 								}
 							}
@@ -380,12 +338,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 17
-											index: 66
 											line: 3
 										}
 										start: Object {
 											column: 16
-											index: 65
 											line: 3
 										}
 									}
@@ -395,12 +351,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 25
-												index: 74
 												line: 3
 											}
 											start: Object {
 												column: 16
-												index: 65
 												line: 3
 											}
 										}
@@ -409,12 +363,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 25
-													index: 74
 													line: 3
 												}
 												start: Object {
 													column: 19
-													index: 68
 													line: 3
 												}
 											}
@@ -428,12 +380,10 @@ JSRoot {
 										identifierName: "y"
 										end: Object {
 											column: 28
-											index: 77
 											line: 3
 										}
 										start: Object {
 											column: 27
-											index: 76
 											line: 3
 										}
 									}
@@ -443,12 +393,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 36
-												index: 85
 												line: 3
 											}
 											start: Object {
 												column: 27
-												index: 76
 												line: 3
 											}
 										}
@@ -457,12 +405,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 36
-													index: 85
 													line: 3
 												}
 												start: Object {
 													column: 30
-													index: 79
 													line: 3
 												}
 											}
@@ -482,12 +428,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 15
-										index: 103
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 92
 										line: 4
 									}
 								}
@@ -496,12 +440,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 103
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 92
 									line: 4
 								}
 							}
@@ -510,12 +452,10 @@ JSRoot {
 							filename: "typescript/class/constructor/input.ts"
 							end: Object {
 								column: 34
-								index: 122
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 92
 								line: 4
 							}
 						}
@@ -526,12 +466,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 34
-									index: 122
 									line: 4
 								}
 								start: Object {
 									column: 32
-									index: 120
 									line: 4
 								}
 							}
@@ -545,19 +483,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 92
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 15
-									index: 103
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 92
 									line: 4
 								}
 							}
@@ -574,12 +509,10 @@ JSRoot {
 								filename: "typescript/class/constructor/input.ts"
 								end: Object {
 									column: 31
-									index: 119
 									line: 4
 								}
 								start: Object {
 									column: 15
-									index: 103
 									line: 4
 								}
 							}
@@ -591,12 +524,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 17
-											index: 105
 											line: 4
 										}
 										start: Object {
 											column: 16
-											index: 104
 											line: 4
 										}
 									}
@@ -606,12 +537,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 22
-												index: 110
 												line: 4
 											}
 											start: Object {
 												column: 16
-												index: 104
 												line: 4
 											}
 										}
@@ -620,12 +549,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 22
-													index: 110
 													line: 4
 												}
 												start: Object {
 													column: 19
-													index: 107
 													line: 4
 												}
 											}
@@ -639,12 +566,10 @@ JSRoot {
 										identifierName: "y"
 										end: Object {
 											column: 25
-											index: 113
 											line: 4
 										}
 										start: Object {
 											column: 24
-											index: 112
 											line: 4
 										}
 									}
@@ -654,12 +579,10 @@ JSRoot {
 											filename: "typescript/class/constructor/input.ts"
 											end: Object {
 												column: 30
-												index: 118
 												line: 4
 											}
 											start: Object {
 												column: 24
-												index: 112
 												line: 4
 											}
 										}
@@ -668,12 +591,10 @@ JSRoot {
 												filename: "typescript/class/constructor/input.ts"
 												end: Object {
 													column: 30
-													index: 118
 													line: 4
 												}
 												start: Object {
 													column: 27
-													index: 115
 													line: 4
 												}
 											}

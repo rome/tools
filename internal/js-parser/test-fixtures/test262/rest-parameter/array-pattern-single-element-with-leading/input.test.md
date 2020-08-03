@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 		end: Object {
 			column: 0
-			index: 48
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "singleElementWithLeading"
 					end: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 				end: Object {
 					column: 47
-					index: 47
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 					end: Object {
 						column: 47
-						index: 47
 						line: 1
 					}
 					start: Object {
 						column: 45
-						index: 45
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 35
-								index: 35
 								line: 1
 							}
 							start: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 						}
@@ -124,12 +112,10 @@ JSRoot {
 								filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 								end: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 								start: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 						filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 40
-							index: 40
 							line: 1
 						}
 					}
@@ -158,12 +142,10 @@ JSRoot {
 							filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 							end: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 							start: Object {
 								column: 40
-								index: 40
 								line: 1
 							}
 						}
@@ -176,12 +158,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 42
-									index: 42
 									line: 1
 								}
 								start: Object {
 									column: 41
-									index: 41
 									line: 1
 								}
 							}
@@ -192,12 +172,10 @@ JSRoot {
 									filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
 									end: Object {
 										column: 42
-										index: 42
 										line: 1
 									}
 									start: Object {
 										column: 41
-										index: 41
 										line: 1
 									}
 								}

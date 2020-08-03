@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/function-name-generator-wrapped/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "wrap"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/function-name-generator-wrapped/input.js"
 				end: Object {
 					column: 1
-					index: 40
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-generator-wrapped/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-generator-wrapped/input.js"
 					end: Object {
 						column: 1
-						index: 40
 						line: 3
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/yield/function-name-generator-wrapped/input.js"
 							end: Object {
 								column: 19
-								index: 38
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 23
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/yield/function-name-generator-wrapped/input.js"
 								end: Object {
 									column: 18
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 5
-									index: 24
 									line: 2
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 												identifierName: "yield"
 												end: Object {
 													column: 12
-													index: 31
 													line: 2
 												}
 												start: Object {
 													column: 7
-													index: 26
 													line: 2
 												}
 											}
@@ -155,12 +139,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 12
-												index: 31
 												line: 2
 											}
 											start: Object {
 												column: 7
-												index: 26
 												line: 2
 											}
 										}
@@ -169,12 +151,10 @@ JSRoot {
 										filename: "es2015/yield/function-name-generator-wrapped/input.js"
 										end: Object {
 											column: 17
-											index: 36
 											line: 2
 										}
 										start: Object {
 											column: 6
-											index: 25
 											line: 2
 										}
 									}
@@ -185,12 +165,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 17
-												index: 36
 												line: 2
 											}
 											start: Object {
 												column: 15
-												index: 34
 												line: 2
 											}
 										}
@@ -208,12 +186,10 @@ JSRoot {
 											filename: "es2015/yield/function-name-generator-wrapped/input.js"
 											end: Object {
 												column: 14
-												index: 33
 												line: 2
 											}
 											start: Object {
 												column: 12
-												index: 31
 												line: 2
 											}
 										}

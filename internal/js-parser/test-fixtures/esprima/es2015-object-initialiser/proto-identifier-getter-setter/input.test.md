@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 		end: Object {
 			column: 0
-			index: 61
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 				end: Object {
 					column: 60
-					index: 60
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 					end: Object {
 						column: 59
-						index: 59
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -84,12 +76,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -113,12 +101,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}
@@ -147,12 +131,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 							}
@@ -161,12 +143,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -177,12 +157,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 							}
@@ -200,12 +178,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}
@@ -221,12 +197,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 52
-										index: 52
 										line: 1
 									}
 									start: Object {
 										column: 43
-										index: 43
 										line: 1
 									}
 								}
@@ -235,12 +209,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 52
-									index: 52
 									line: 1
 								}
 								start: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 							}
@@ -249,12 +221,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 							end: Object {
 								column: 57
-								index: 57
 								line: 1
 							}
 							start: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 						}
@@ -265,12 +235,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 57
-									index: 57
 									line: 1
 								}
 								start: Object {
 									column: 55
-									index: 55
 									line: 1
 								}
 							}
@@ -287,12 +255,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 								end: Object {
 									column: 55
-									index: 55
 									line: 1
 								}
 								start: Object {
 									column: 52
-									index: 52
 									line: 1
 								}
 							}
@@ -304,12 +270,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 54
-											index: 54
 											line: 1
 										}
 										start: Object {
 											column: 53
-											index: 53
 											line: 1
 										}
 									}
@@ -320,12 +284,10 @@ JSRoot {
 											filename: "esprima/es2015-object-initialiser/proto-identifier-getter-setter/input.js"
 											end: Object {
 												column: 54
-												index: 54
 												line: 1
 											}
 											start: Object {
 												column: 53
-												index: 53
 												line: 1
 											}
 										}

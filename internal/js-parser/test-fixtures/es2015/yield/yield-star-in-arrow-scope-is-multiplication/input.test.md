@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 		end: Object {
 			column: 14
-			index: 14
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 								identifierName: "e"
 								end: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 0
 									line: 1
 								}
 							}
@@ -104,12 +94,10 @@ JSRoot {
 						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -120,12 +108,10 @@ JSRoot {
 							identifierName: "yield"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -137,12 +123,10 @@ JSRoot {
 							filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}

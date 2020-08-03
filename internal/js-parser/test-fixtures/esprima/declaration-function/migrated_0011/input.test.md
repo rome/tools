@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/declaration-function/migrated_0011/input.js"
 		end: Object {
 			column: 0
-			index: 39
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/declaration-function/migrated_0011/input.js"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/declaration-function/migrated_0011/input.js"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "hello"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "esprima/declaration-function/migrated_0011/input.js"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 									identifierName: "hi"
 									end: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -115,12 +103,10 @@ JSRoot {
 								filename: "esprima/declaration-function/migrated_0011/input.js"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "esprima/declaration-function/migrated_0011/input.js"
 									end: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 									start: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 								}
@@ -153,12 +137,10 @@ JSRoot {
 									filename: "esprima/declaration-function/migrated_0011/input.js"
 									end: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -168,12 +150,10 @@ JSRoot {
 											filename: "esprima/declaration-function/migrated_0011/input.js"
 											end: Object {
 												column: 35
-												index: 35
 												line: 1
 											}
 											start: Object {
 												column: 28
-												index: 28
 												line: 1
 											}
 										}
@@ -183,12 +163,10 @@ JSRoot {
 												filename: "esprima/declaration-function/migrated_0011/input.js"
 												end: Object {
 													column: 35
-													index: 35
 													line: 1
 												}
 												start: Object {
 													column: 28
-													index: 28
 													line: 1
 												}
 											}
@@ -199,12 +177,10 @@ JSRoot {
 													identifierName: "sayHi"
 													end: Object {
 														column: 33
-														index: 33
 														line: 1
 													}
 													start: Object {
 														column: 28
-														index: 28
 														line: 1
 													}
 												}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2018/object-rest-spread/7/input.js"
 		end: Object {
 			column: 0
-			index: 26
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2018/object-rest-spread/7/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2018/object-rest-spread/7/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 								filename: "es2018/object-rest-spread/7/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -128,12 +116,10 @@ JSRoot {
 												identifierName: "y"
 												end: Object {
 													column: 13
-													index: 13
 													line: 1
 												}
 												start: Object {
 													column: 12
-													index: 12
 													line: 1
 												}
 											}
@@ -142,12 +128,10 @@ JSRoot {
 											filename: "es2018/object-rest-spread/7/input.js"
 											end: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}
@@ -159,12 +143,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}
@@ -173,12 +155,10 @@ JSRoot {
 										filename: "es2018/object-rest-spread/7/input.js"
 										end: Object {
 											column: 13
-											index: 13
 											line: 1
 										}
 										start: Object {
 											column: 12
-											index: 12
 											line: 1
 										}
 									}
@@ -192,12 +172,10 @@ JSRoot {
 												identifierName: "z"
 												end: Object {
 													column: 16
-													index: 16
 													line: 1
 												}
 												start: Object {
 													column: 15
-													index: 15
 													line: 1
 												}
 											}
@@ -206,12 +184,10 @@ JSRoot {
 											filename: "es2018/object-rest-spread/7/input.js"
 											end: Object {
 												column: 16
-												index: 16
 												line: 1
 											}
 											start: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 										}
@@ -223,12 +199,10 @@ JSRoot {
 											identifierName: "z"
 											end: Object {
 												column: 16
-												index: 16
 												line: 1
 											}
 											start: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 										}
@@ -237,12 +211,10 @@ JSRoot {
 										filename: "es2018/object-rest-spread/7/input.js"
 										end: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 										start: Object {
 											column: 15
-											index: 15
 											line: 1
 										}
 									}
@@ -253,12 +225,10 @@ JSRoot {
 							filename: "es2018/object-rest-spread/7/input.js"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -269,12 +239,10 @@ JSRoot {
 								identifierName: "obj"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 							}

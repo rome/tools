@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/regression/non-octal-float/input.js"
 		end: Object {
 			column: 0
-			index: 5
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/regression/non-octal-float/input.js"
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "core/regression/non-octal-float/input.js"
 					end: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

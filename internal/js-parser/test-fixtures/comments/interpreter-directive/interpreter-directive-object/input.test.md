@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 		end: Object {
 			column: 0
-			index: 46
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 			filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 			end: Object {
 				column: 25
-				index: 25
 				line: 1
 			}
 			start: Object {
 				column: 1
-				index: 1
 				line: 1
 			}
 		}
@@ -52,12 +48,10 @@ JSRoot {
 				filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 				end: Object {
 					column: 18
-					index: 45
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 27
 					line: 3
 				}
 			}
@@ -67,12 +61,10 @@ JSRoot {
 					filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 					end: Object {
 						column: 18
-						index: 45
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 27
 						line: 3
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 								filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 								end: Object {
 									column: 13
-									index: 40
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 31
 									line: 3
 								}
 							}
@@ -103,12 +93,10 @@ JSRoot {
 												identifierName: "spawn"
 												end: Object {
 													column: 11
-													index: 38
 													line: 3
 												}
 												start: Object {
 													column: 6
-													index: 33
 													line: 3
 												}
 											}
@@ -117,12 +105,10 @@ JSRoot {
 											filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 											end: Object {
 												column: 11
-												index: 38
 												line: 3
 											}
 											start: Object {
 												column: 6
-												index: 33
 												line: 3
 											}
 										}
@@ -134,12 +120,10 @@ JSRoot {
 											identifierName: "spawn"
 											end: Object {
 												column: 11
-												index: 38
 												line: 3
 											}
 											start: Object {
 												column: 6
-												index: 33
 												line: 3
 											}
 										}
@@ -148,12 +132,10 @@ JSRoot {
 										filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 										end: Object {
 											column: 11
-											index: 38
 											line: 3
 										}
 										start: Object {
 											column: 6
-											index: 33
 											line: 3
 										}
 									}
@@ -164,12 +146,10 @@ JSRoot {
 							filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 							end: Object {
 								column: 17
-								index: 44
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 31
 								line: 3
 							}
 						}
@@ -180,12 +160,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 17
-									index: 44
 									line: 3
 								}
 								start: Object {
 									column: 16
-									index: 43
 									line: 3
 								}
 							}

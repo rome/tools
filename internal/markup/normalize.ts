@@ -150,7 +150,7 @@ export function normalizeMarkup(
 	truncated: boolean;
 } {
 	const {textLength, text} = normalizeMarkupChildren(
-		parseMarkup(readMarkup(input)),
+		parseMarkup(input),
 		opts,
 		maxLength,
 	);

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 		end: Object {
 			column: 0
-			index: 30
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 								filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 									filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 									end: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -122,12 +110,10 @@ JSRoot {
 										filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -139,12 +125,10 @@ JSRoot {
 												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 												end: Object {
 													column: 14
-													index: 14
 													line: 1
 												}
 												start: Object {
 													column: 8
-													index: 8
 													line: 1
 												}
 											}
@@ -153,12 +137,10 @@ JSRoot {
 													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 													end: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 													start: Object {
 														column: 8
-														index: 8
 														line: 1
 													}
 												}
@@ -172,12 +154,10 @@ JSRoot {
 											filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 											end: Object {
 												column: 27
-												index: 27
 												line: 1
 											}
 											start: Object {
 												column: 16
-												index: 16
 												line: 1
 											}
 										}
@@ -186,12 +166,10 @@ JSRoot {
 												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 												end: Object {
 													column: 27
-													index: 27
 													line: 1
 												}
 												start: Object {
 													column: 19
-													index: 19
 													line: 1
 												}
 											}
@@ -200,12 +178,10 @@ JSRoot {
 													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 													end: Object {
 														column: 25
-														index: 25
 														line: 1
 													}
 													start: Object {
 														column: 19
-														index: 19
 														line: 1
 													}
 												}
@@ -220,12 +196,10 @@ JSRoot {
 							filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

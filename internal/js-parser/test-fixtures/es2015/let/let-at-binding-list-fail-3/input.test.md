@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 		end: Object {
 			column: 0
-			index: 16
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -86,12 +78,10 @@ JSRoot {
 										identifierName: "let"
 										end: Object {
 											column: 8
-											index: 8
 											line: 1
 										}
 										start: Object {
 											column: 5
-											index: 5
 											line: 1
 										}
 									}
@@ -102,12 +92,10 @@ JSRoot {
 											filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 											end: Object {
 												column: 8
-												index: 8
 												line: 1
 											}
 											start: Object {
 												column: 5
-												index: 5
 												line: 1
 											}
 										}
@@ -119,12 +107,10 @@ JSRoot {
 							filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -134,12 +120,10 @@ JSRoot {
 								filename: "es2015/let/let-at-binding-list-fail-3/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

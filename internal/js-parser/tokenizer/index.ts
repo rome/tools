@@ -10,7 +10,7 @@ import {
 	JSInterpreterDirective,
 	JSNumericLiteral,
 } from "@internal/ast";
-import {Position, SourceLocation} from "@internal/parser-core";
+import {Position, SourceLocation, TokenBase} from "@internal/parser-core";
 import {JSParser} from "../parser";
 import {xhtmlEntityNameToChar} from "@internal/html-parser";
 import {
@@ -24,6 +24,7 @@ import {
 	validateRegexFlags,
 } from "@internal/js-parser-utils";
 import {
+	TokenLabels,
 	TokenType,
 	TokenTypes,
 	keywords as keywordTypes,
@@ -122,10 +123,12 @@ const allowedNumericSeparatorSiblings = {
 // used for the onToken callback and the external tokenizer.
 export type Token = {
 	type: TokenTypes;
-	start: Number0;
-	end: Number0;
 	loc: SourceLocation;
 };
+
+export interface PublicToken extends TokenBase {
+	type: TokenLabels;
+}
 
 export class RegExpTokenValue {
 	constructor(pattern: string, flags: Set<string>) {
@@ -179,7 +182,7 @@ export function setStrict(parser: JSParser, isStrict: boolean): void {
 		return undefined;
 	}
 
-	parser.state.index = parser.state.startPos.index;
+	parser.state.index = parser.state.startIndex;
 	while (parser.state.index < parser.state.lineStartIndex) {
 		parser.state.lineStartIndex = ob1Coerce0(
 			parser.input.lastIndexOf("\n", ob1Get0(parser.state.lineStartIndex) - 2) +
@@ -206,6 +209,7 @@ export function nextToken(parser: JSParser): void {
 	parser.state.containsOctal = false;
 	parser.state.octalPosition = undefined;
 	parser.state.startPos = parser.getPositionFromState();
+	parser.state.startIndex = parser.state.index;
 
 	if (parser.state.index >= parser.length) {
 		finishToken(parser, tt.eof);
@@ -333,8 +337,6 @@ function pushComment(
 	if (parser.shouldCreateToken()) {
 		parser.pushToken({
 			type: tt.comment,
-			start: opts.startPos.index,
-			end: opts.endPos.index,
 			loc,
 		});
 	}
@@ -534,6 +536,7 @@ export function finishToken(
 	val?: unknown,
 ): void {
 	parser.state.endPos = parser.getPositionFromState();
+	parser.state.endIndex = parser.state.index;
 
 	const prevType = parser.state.tokenType;
 	parser.state.tokenType = type;
@@ -679,9 +682,9 @@ function readTokenPlusMin(parser: JSParser, code: number): void {
 			next === charCodes.dash &&
 			!parser.inModule &&
 			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.greaterThan &&
-			(parser.state.lastEndPos.index === ob1Number0 ||
+			(parser.state.lastEndIndex === ob1Number0 ||
 			lineBreak.test(
-				parser.getRawInput(parser.state.lastEndPos.index, parser.state.index),
+				parser.getRawInput(parser.state.lastEndIndex, parser.state.index),
 			))
 		) {
 			// A `-->` line comment
@@ -1261,7 +1264,7 @@ function readRadixNumber(
 
 // Read an integer, octal integer, or floating-point number.
 function readNumber(parser: JSParser, startsWithDot: boolean): void {
-	const start = parser.state.startPos;
+	const start = parser.state.startIndex;
 	let isFloat = false;
 	let isBigInt = false;
 
@@ -1273,8 +1276,8 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	}
 
 	let isOctal =
-		ob1Get0(parser.state.index) - ob1Get0(start.index) >= 2 &&
-		parser.input.charCodeAt(ob1Get0(start.index)) === charCodes.digit0;
+		ob1Get0(parser.state.index) - ob1Get0(start) >= 2 &&
+		parser.input.charCodeAt(ob1Get0(start)) === charCodes.digit0;
 	if (isOctal) {
 		if (parser.inScope("STRICT")) {
 			parser.unexpectedDiagnostic({
@@ -1283,7 +1286,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 			});
 		}
 
-		if (/[89]/.test(parser.getRawInput(start.index, parser.state.index))) {
+		if (/[89]/.test(parser.getRawInput(start, parser.state.index))) {
 			isOctal = false;
 		}
 	}
@@ -1345,10 +1348,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	}
 
 	// Remove "_" for numeric literal separator, and "n" for BigInts
-	const str = parser.getRawInput(start.index, parser.state.index).replace(
-		/[_n]/g,
-		"",
-	);
+	const str = parser.getRawInput(start, parser.state.index).replace(/[_n]/g, "");
 
 	if (isBigInt) {
 		finishToken(parser, tt.bigint, str);
@@ -1466,7 +1466,7 @@ export function readTemplateToken(parser: JSParser): void {
 			parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.leftCurlyBrace)
 		) {
 			if (
-				parser.state.index === parser.state.startPos.index &&
+				parser.state.index === parser.state.startIndex &&
 				parser.match(tt.template)
 			) {
 				if (ch === charCodes.dollarSign) {
@@ -1754,10 +1754,7 @@ export function isBraceBlock(parser: JSParser, prevType: TokenType): boolean {
 		(prevType === tt.name && parser.state.exprAllowed)
 	) {
 		return lineBreak.test(
-			parser.getRawInput(
-				parser.state.lastEndPos.index,
-				parser.state.startPos.index,
-			),
+			parser.getRawInput(parser.state.lastEndIndex, parser.state.startIndex),
 		);
 	}
 
@@ -1836,7 +1833,7 @@ function readTokenJsx(parser: JSParser): void {
 		const code = parser.input.charCodeAt(getIndex(parser));
 
 		if (code === charCodes.lessThan || code === charCodes.leftCurlyBrace) {
-			if (parser.state.index === parser.state.startPos.index) {
+			if (parser.state.index === parser.state.startIndex) {
 				if (code === charCodes.lessThan && parser.state.exprAllowed) {
 					bumpIndex(parser);
 					return finishToken(parser, tt.jsxTagStart);

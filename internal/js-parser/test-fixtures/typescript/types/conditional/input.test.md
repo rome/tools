@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/conditional/input.ts"
 		end: Object {
 			column: 0
-			index: 47
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/conditional/input.ts"
 				end: Object {
 					column: 46
-					index: 46
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/conditional/input.ts"
 					end: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/conditional/input.ts"
 								end: Object {
 									column: 45
-									index: 45
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/conditional/input.ts"
 									end: Object {
 										column: 45
-										index: 45
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/conditional/input.ts"
 										end: Object {
 											column: 45
-											index: 45
 											line: 1
 										}
 										start: Object {
 											column: 5
-											index: 5
 											line: 1
 										}
 									}
@@ -112,12 +100,10 @@ JSRoot {
 											filename: "typescript/types/conditional/input.ts"
 											end: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 											start: Object {
 												column: 7
-												index: 7
 												line: 1
 											}
 										}
@@ -127,12 +113,10 @@ JSRoot {
 											filename: "typescript/types/conditional/input.ts"
 											end: Object {
 												column: 28
-												index: 28
 												line: 1
 											}
 											start: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 										}
@@ -142,12 +126,10 @@ JSRoot {
 											filename: "typescript/types/conditional/input.ts"
 											end: Object {
 												column: 45
-												index: 45
 												line: 1
 											}
 											start: Object {
 												column: 41
-												index: 41
 												line: 1
 											}
 										}
@@ -157,12 +139,10 @@ JSRoot {
 											filename: "typescript/types/conditional/input.ts"
 											end: Object {
 												column: 38
-												index: 38
 												line: 1
 											}
 											start: Object {
 												column: 31
-												index: 31
 												line: 1
 											}
 										}
@@ -175,12 +155,10 @@ JSRoot {
 							filename: "typescript/types/conditional/input.ts"
 							end: Object {
 								column: 45
-								index: 45
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

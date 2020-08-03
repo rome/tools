@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/extends-empty/input.ts"
 		end: Object {
 			column: 0
-			index: 26
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -85,12 +79,10 @@ JSRoot {
 				filename: "typescript/class/extends-empty/input.ts"
 				end: Object {
 					column: 1
-					index: 25
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "typescript/class/extends-empty/input.ts"
 					end: Object {
 						column: 1
-						index: 25
 						line: 2
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}

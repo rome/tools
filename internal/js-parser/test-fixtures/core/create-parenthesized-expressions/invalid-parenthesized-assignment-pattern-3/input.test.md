@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 		end: Object {
 			column: 21
-			index: 21
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 						identifierName: "t"
 						end: Object {
 							column: 21
-							index: 21
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 						filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -124,12 +112,10 @@ JSRoot {
 								filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}
@@ -143,12 +129,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 5
-													index: 5
 													line: 1
 												}
 												start: Object {
 													column: 4
-													index: 4
 													line: 1
 												}
 											}
@@ -157,12 +141,10 @@ JSRoot {
 											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 											end: Object {
 												column: 5
-												index: 5
 												line: 1
 											}
 											start: Object {
 												column: 4
-												index: 4
 												line: 1
 											}
 										}
@@ -173,12 +155,10 @@ JSRoot {
 											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 											end: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 											start: Object {
 												column: 7
-												index: 7
 												line: 1
 											}
 										}
@@ -189,12 +169,10 @@ JSRoot {
 													filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 													end: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 													start: Object {
 														column: 8
-														index: 8
 														line: 1
 													}
 												}
@@ -205,12 +183,10 @@ JSRoot {
 														identifierName: "b"
 														end: Object {
 															column: 9
-															index: 9
 															line: 1
 														}
 														start: Object {
 															column: 8
-															index: 8
 															line: 1
 														}
 													}
@@ -222,12 +198,10 @@ JSRoot {
 														filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 														end: Object {
 															column: 13
-															index: 13
 															line: 1
 														}
 														start: Object {
 															column: 12
-															index: 12
 															line: 1
 														}
 													}
@@ -239,12 +213,10 @@ JSRoot {
 										filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
 										end: Object {
 											column: 14
-											index: 14
 											line: 1
 										}
 										start: Object {
 											column: 4
-											index: 4
 											line: 1
 										}
 									}

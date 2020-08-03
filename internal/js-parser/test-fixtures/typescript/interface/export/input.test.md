@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/interface/export/input.ts"
 		end: Object {
 			column: 0
-			index: 52
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/interface/export/input.ts"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						identifierName: "I"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/interface/export/input.ts"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "typescript/interface/export/input.ts"
 						end: Object {
 							column: 21
-							index: 21
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 				filename: "typescript/interface/export/input.ts"
 				end: Object {
 					column: 29
-					index: 51
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 22
 					line: 2
 				}
 			}
@@ -121,12 +109,10 @@ JSRoot {
 						identifierName: "A"
 						end: Object {
 							column: 26
-							index: 48
 							line: 2
 						}
 						start: Object {
 							column: 25
-							index: 47
 							line: 2
 						}
 					}
@@ -137,12 +123,10 @@ JSRoot {
 					filename: "typescript/interface/export/input.ts"
 					end: Object {
 						column: 29
-						index: 51
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 37
 						line: 2
 					}
 				}
@@ -152,12 +136,10 @@ JSRoot {
 						filename: "typescript/interface/export/input.ts"
 						end: Object {
 							column: 29
-							index: 51
 							line: 2
 						}
 						start: Object {
 							column: 27
-							index: 49
 							line: 2
 						}
 					}

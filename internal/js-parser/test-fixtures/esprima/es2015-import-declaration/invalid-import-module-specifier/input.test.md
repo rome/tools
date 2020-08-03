@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 		end: Object {
 			column: 0
-			index: 22
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					identifierName: "bar"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -112,12 +102,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -129,12 +117,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}

@@ -20,12 +20,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -42,12 +40,10 @@ Object {
 				sourceTypeJS: "module"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -97,12 +93,10 @@ Object {
 			identifierName: "foo"
 			end: Object {
 				column: 16
-				index: 16
 				line: 1
 			}
 			start: Object {
 				column: 13
-				index: 13
 				line: 1
 			}
 		}
@@ -117,12 +111,10 @@ Object {
 				identifierName: "foo"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -153,12 +145,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -196,12 +186,10 @@ Object {
 			identifierName: "bar"
 			end: Object {
 				column: 11
-				index: 11
 				line: 1
 			}
 			start: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 		}
@@ -210,12 +198,10 @@ Object {
 			identifierName: "foo"
 			end: Object {
 				column: 9
-				index: 34
 				line: 2
 			}
 			start: Object {
 				column: 6
-				index: 31
 				line: 2
 			}
 		}
@@ -231,12 +217,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -247,12 +231,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -277,12 +259,10 @@ Object {
 			identifierName: "foo"
 			end: Object {
 				column: 16
-				index: 16
 				line: 1
 			}
 			start: Object {
 				column: 13
-				index: 13
 				line: 1
 			}
 		}
@@ -296,12 +276,10 @@ Object {
 				sourceText: undefined
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -337,12 +315,10 @@ Object {
 				identifierName: "foo"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -355,12 +331,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 19
-					index: 45
 					line: 2
 				}
 				start: Object {
 					column: 14
-					index: 40
 					line: 2
 				}
 			}
@@ -390,12 +364,10 @@ Object {
 			identifierName: "yes"
 			end: Object {
 				column: 12
-				index: 30
 				line: 3
 			}
 			start: Object {
 				column: 9
-				index: 27
 				line: 3
 			}
 		}
@@ -412,12 +384,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -433,12 +403,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 16
-					index: 51
 					line: 4
 				}
 				start: Object {
 					column: 9
-					index: 44
 					line: 4
 				}
 			}
@@ -466,12 +434,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -505,12 +471,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 			}
@@ -540,12 +504,10 @@ Object {
 			identifierName: "Bar"
 			end: Object {
 				column: 16
-				index: 64
 				line: 3
 			}
 			start: Object {
 				column: 13
-				index: 61
 				line: 3
 			}
 		}
@@ -554,12 +516,10 @@ Object {
 			identifierName: "foo"
 			end: Object {
 				column: 19
-				index: 42
 				line: 2
 			}
 			start: Object {
 				column: 16
-				index: 39
 				line: 2
 			}
 		}
@@ -568,12 +528,10 @@ Object {
 			identifierName: "yes"
 			end: Object {
 				column: 16
-				index: 16
 				line: 1
 			}
 			start: Object {
 				column: 13
-				index: 13
 				line: 1
 			}
 		}
@@ -588,12 +546,10 @@ Object {
 				identifierName: "yes"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -607,12 +563,10 @@ Object {
 				identifierName: "foo"
 				end: Object {
 					column: 19
-					index: 42
 					line: 2
 				}
 				start: Object {
 					column: 16
-					index: 39
 					line: 2
 				}
 			}
@@ -626,12 +580,10 @@ Object {
 				identifierName: "Bar"
 				end: Object {
 					column: 16
-					index: 64
 					line: 3
 				}
 				start: Object {
 					column: 13
-					index: 61
 					line: 3
 				}
 			}
@@ -659,12 +611,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -692,12 +642,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -711,12 +659,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -730,12 +676,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -749,12 +693,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 43
-					index: 43
 					line: 1
 				}
 				start: Object {
 					column: 33
-					index: 33
 					line: 1
 				}
 			}
@@ -771,12 +713,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 58
-					index: 58
 					line: 1
 				}
 				start: Object {
 					column: 50
-					index: 50
 					line: 1
 				}
 			}
@@ -787,12 +727,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -803,12 +741,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -819,12 +755,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -835,12 +769,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 33
-							index: 33
 							line: 1
 						}
 					}
@@ -868,12 +800,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -891,12 +821,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -920,12 +848,10 @@ Object {
 			identifierName: "bar"
 			end: Object {
 				column: 10
-				index: 10
 				line: 1
 			}
 			start: Object {
 				column: 7
-				index: 7
 				line: 1
 			}
 		}
@@ -941,12 +867,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -957,12 +881,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -988,12 +910,10 @@ Object {
 			identifierName: "bar"
 			end: Object {
 				column: 11
-				index: 11
 				line: 1
 			}
 			start: Object {
 				column: 8
-				index: 8
 				line: 1
 			}
 		}
@@ -1002,12 +922,10 @@ Object {
 			identifierName: "foo"
 			end: Object {
 				column: 16
-				index: 16
 				line: 1
 			}
 			start: Object {
 				column: 13
-				index: 13
 				line: 1
 			}
 		}
@@ -1016,12 +934,10 @@ Object {
 			identifierName: "lol"
 			end: Object {
 				column: 32
-				index: 32
 				line: 1
 			}
 			start: Object {
 				column: 29
-				index: 29
 				line: 1
 			}
 		}
@@ -1030,12 +946,10 @@ Object {
 			identifierName: "to"
 			end: Object {
 				column: 42
-				index: 42
 				line: 1
 			}
 			start: Object {
 				column: 40
-				index: 40
 				line: 1
 			}
 		}
@@ -1051,12 +965,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 57
-					index: 57
 					line: 1
 				}
 				start: Object {
 					column: 49
-					index: 49
 					line: 1
 				}
 			}
@@ -1067,12 +979,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -1083,12 +993,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -1099,12 +1007,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -1115,12 +1021,10 @@ Object {
 						filename: "unknown"
 						end: Object {
 							column: 42
-							index: 42
 							line: 1
 						}
 						start: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 					}
@@ -1153,12 +1057,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 			}
@@ -1187,12 +1089,10 @@ Object {
 				identifierName: "foo"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 			}
@@ -1206,12 +1106,10 @@ Object {
 				identifierName: "bar"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 			}
@@ -1225,12 +1123,10 @@ Object {
 				identifierName: "yes"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -1254,12 +1150,10 @@ Object {
 			identifierName: "yeah"
 			end: Object {
 				column: 13
-				index: 42
 				line: 3
 			}
 			start: Object {
 				column: 9
-				index: 38
 				line: 3
 			}
 		}
@@ -1276,12 +1170,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 			}
@@ -1297,12 +1189,10 @@ Object {
 				filename: "unknown"
 				end: Object {
 					column: 16
-					index: 63
 					line: 4
 				}
 				start: Object {
 					column: 2
-					index: 49
 					line: 4
 				}
 			}
@@ -1325,12 +1215,10 @@ Object {
 		filename: "unknown"
 		end: Object {
 			column: 14
-			index: 14
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -1360,12 +1248,10 @@ Object {
 			identifierName: "yes"
 			end: Object {
 				column: 12
-				index: 59
 				line: 6
 			}
 			start: Object {
 				column: 9
-				index: 56
 				line: 6
 			}
 		}

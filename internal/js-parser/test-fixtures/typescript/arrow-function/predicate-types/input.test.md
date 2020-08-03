@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/predicate-types/input.ts"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/predicate-types/input.ts"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/arrow-function/predicate-types/input.ts"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -66,12 +60,10 @@ JSRoot {
 						filename: "typescript/arrow-function/predicate-types/input.ts"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "typescript/arrow-function/predicate-types/input.ts"
 						end: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 							filename: "typescript/arrow-function/predicate-types/input.ts"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 						}
@@ -114,12 +102,10 @@ JSRoot {
 								filename: "typescript/arrow-function/predicate-types/input.ts"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -149,12 +133,10 @@ JSRoot {
 								filename: "typescript/arrow-function/predicate-types/input.ts"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}
@@ -164,12 +146,10 @@ JSRoot {
 									filename: "typescript/arrow-function/predicate-types/input.ts"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 								}
@@ -178,12 +158,10 @@ JSRoot {
 										filename: "typescript/arrow-function/predicate-types/input.ts"
 										end: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 										start: Object {
 											column: 4
-											index: 4
 											line: 1
 										}
 									}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 		end: Object {
 			column: 0
-			index: 98
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 				end: Object {
 					column: 44
-					index: 70
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 30
 					line: 3
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 				end: Object {
 					column: 1
-					index: 97
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 					end: Object {
 						column: 1
-						index: 97
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 						filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 						filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 						end: Object {
 							column: 1
-							index: 97
 							line: 6
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 									identifierName: "C"
 									end: Object {
 										column: 9
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 8
-										index: 22
 										line: 2
 									}
 								}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 								end: Object {
 									column: 3
-									index: 95
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -155,12 +139,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 									end: Object {
 										column: 3
-										index: 95
 										line: 5
 									}
 									start: Object {
 										column: 2
-										index: 16
 										line: 2
 									}
 								}
@@ -175,12 +157,10 @@ JSRoot {
 													identifierName: "p"
 													end: Object {
 														column: 6
-														index: 77
 														line: 4
 													}
 													start: Object {
 														column: 5
-														index: 76
 														line: 4
 													}
 												}
@@ -190,12 +170,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 												end: Object {
 													column: 6
-													index: 77
 													line: 4
 												}
 												start: Object {
 													column: 4
-													index: 75
 													line: 4
 												}
 											}
@@ -205,12 +183,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 												end: Object {
 													column: 19
-													index: 90
 													line: 4
 												}
 												start: Object {
 													column: 9
-													index: 80
 													line: 4
 												}
 											}
@@ -221,12 +197,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 													end: Object {
 														column: 19
-														index: 90
 														line: 4
 													}
 													start: Object {
 														column: 15
-														index: 86
 														line: 4
 													}
 												}
@@ -237,12 +211,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 														end: Object {
 															column: 19
-															index: 90
 															line: 4
 														}
 														start: Object {
 															column: 17
-															index: 88
 															line: 4
 														}
 													}
@@ -255,12 +227,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 											end: Object {
 												column: 20
-												index: 91
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 75
 												line: 4
 											}
 										}
@@ -274,19 +244,16 @@ JSRoot {
 											typeAnnotation: undefined
 											start: Object {
 												column: 4
-												index: 75
 												line: 4
 											}
 											loc: Object {
 												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 												end: Object {
 													column: 6
-													index: 77
 													line: 4
 												}
 												start: Object {
 													column: 4
-													index: 75
 													line: 4
 												}
 											}

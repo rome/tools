@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/module-namespace/global-in-module/input.ts"
 		end: Object {
 			column: 0
-			index: 65
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 					filename: "typescript/module-namespace/global-in-module/input.ts"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/module-namespace/global-in-module/input.ts"
 				end: Object {
 					column: 1
-					index: 64
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/module-namespace/global-in-module/input.ts"
 					end: Object {
 						column: 1
-						index: 64
 						line: 5
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 								identifierName: "global"
 								end: Object {
 									column: 10
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 25
 									line: 2
 								}
 							}
@@ -102,12 +92,10 @@ JSRoot {
 							filename: "typescript/module-namespace/global-in-module/input.ts"
 							end: Object {
 								column: 5
-								index: 62
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 25
 								line: 2
 							}
 						}
@@ -116,12 +104,10 @@ JSRoot {
 								filename: "typescript/module-namespace/global-in-module/input.ts"
 								end: Object {
 									column: 5
-									index: 62
 									line: 4
 								}
 								start: Object {
 									column: 11
-									index: 32
 									line: 2
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 										filename: "typescript/module-namespace/global-in-module/input.ts"
 										end: Object {
 											column: 22
-											index: 56
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 42
 											line: 3
 										}
 									}
@@ -146,12 +130,10 @@ JSRoot {
 											filename: "typescript/module-namespace/global-in-module/input.ts"
 											end: Object {
 												column: 22
-												index: 56
 												line: 3
 											}
 											start: Object {
 												column: 8
-												index: 42
 												line: 3
 											}
 										}
@@ -163,12 +145,10 @@ JSRoot {
 														filename: "typescript/module-namespace/global-in-module/input.ts"
 														end: Object {
 															column: 21
-															index: 55
 															line: 3
 														}
 														start: Object {
 															column: 12
-															index: 46
 															line: 3
 														}
 													}
@@ -178,12 +158,10 @@ JSRoot {
 															filename: "typescript/module-namespace/global-in-module/input.ts"
 															end: Object {
 																column: 21
-																index: 55
 																line: 3
 															}
 															start: Object {
 																column: 12
-																index: 46
 																line: 3
 															}
 														}
@@ -192,12 +170,10 @@ JSRoot {
 																filename: "typescript/module-namespace/global-in-module/input.ts"
 																end: Object {
 																	column: 21
-																	index: 55
 																	line: 3
 																}
 																start: Object {
 																	column: 15
-																	index: 49
 																	line: 3
 																}
 															}
@@ -209,12 +185,10 @@ JSRoot {
 													filename: "typescript/module-namespace/global-in-module/input.ts"
 													end: Object {
 														column: 21
-														index: 55
 														line: 3
 													}
 													start: Object {
 														column: 12
-														index: 46
 														line: 3
 													}
 												}

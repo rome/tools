@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/module-namespace/top-level-await/input.ts"
 		end: Object {
 			column: 0
-			index: 40
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "N"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/module-namespace/top-level-await/input.ts"
 				end: Object {
 					column: 1
-					index: 39
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "typescript/module-namespace/top-level-await/input.ts"
 					end: Object {
 						column: 1
-						index: 39
 						line: 3
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 							filename: "typescript/module-namespace/top-level-await/input.ts"
 							end: Object {
 								column: 23
-								index: 37
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 18
 								line: 2
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "typescript/module-namespace/top-level-await/input.ts"
 								end: Object {
 									column: 23
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 							}
@@ -116,12 +104,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 11
-												index: 25
 												line: 2
 											}
 											start: Object {
 												column: 10
-												index: 24
 												line: 2
 											}
 										}
@@ -130,12 +116,10 @@ JSRoot {
 										filename: "typescript/module-namespace/top-level-await/input.ts"
 										end: Object {
 											column: 22
-											index: 36
 											line: 2
 										}
 										start: Object {
 											column: 10
-											index: 24
 											line: 2
 										}
 									}
@@ -144,12 +128,10 @@ JSRoot {
 											filename: "typescript/module-namespace/top-level-await/input.ts"
 											end: Object {
 												column: 22
-												index: 36
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 28
 												line: 2
 											}
 										}
@@ -160,12 +142,10 @@ JSRoot {
 												filename: "typescript/module-namespace/top-level-await/input.ts"
 												end: Object {
 													column: 22
-													index: 36
 													line: 2
 												}
 												start: Object {
 													column: 20
-													index: 34
 													line: 2
 												}
 											}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/input-not-followed-by-regex/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f2"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/input-not-followed-by-regex/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/input-not-followed-by-regex/input.js"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/input-not-followed-by-regex/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/yield/input-not-followed-by-regex/input.js"
 							end: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/yield/input-not-followed-by-regex/input.js"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 									filename: "es2015/yield/input-not-followed-by-regex/input.js"
 									end: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -157,12 +141,10 @@ JSRoot {
 									filename: "es2015/yield/input-not-followed-by-regex/input.js"
 									end: Object {
 										column: 32
-										index: 32
 										line: 1
 									}
 									start: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 								}
@@ -173,12 +155,10 @@ JSRoot {
 										identifierName: "yield"
 										end: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 										start: Object {
 											column: 23
-											index: 23
 											line: 1
 										}
 									}
@@ -190,12 +170,10 @@ JSRoot {
 										filename: "es2015/yield/input-not-followed-by-regex/input.js"
 										end: Object {
 											column: 32
-											index: 32
 											line: 1
 										}
 										start: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 									}

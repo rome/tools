@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/function/getter-setter/input.ts"
 		end: Object {
 			column: 2
-			index: 78
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/function/getter-setter/input.ts"
 				end: Object {
 					column: 2
-					index: 35
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/function/getter-setter/input.ts"
 					end: Object {
 						column: 2
-						index: 35
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "g"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "typescript/function/getter-setter/input.ts"
 							end: Object {
 								column: 1
-								index: 34
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "typescript/function/getter-setter/input.ts"
 								end: Object {
 									column: 1
-									index: 34
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -118,12 +106,10 @@ JSRoot {
 												identifierName: "m"
 												end: Object {
 													column: 7
-													index: 19
 													line: 2
 												}
 												start: Object {
 													column: 6
-													index: 18
 													line: 2
 												}
 											}
@@ -132,12 +118,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 7
-												index: 19
 												line: 2
 											}
 											start: Object {
 												column: 6
-												index: 18
 												line: 2
 											}
 										}
@@ -146,12 +130,10 @@ JSRoot {
 										filename: "typescript/function/getter-setter/input.ts"
 										end: Object {
 											column: 20
-											index: 32
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 14
 											line: 2
 										}
 									}
@@ -162,12 +144,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 20
-												index: 32
 												line: 2
 											}
 											start: Object {
 												column: 18
-												index: 30
 												line: 2
 											}
 										}
@@ -184,12 +164,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 17
-												index: 29
 												line: 2
 											}
 											start: Object {
 												column: 7
-												index: 19
 												line: 2
 											}
 										}
@@ -200,12 +178,10 @@ JSRoot {
 												identifierName: "this"
 												end: Object {
 													column: 12
-													index: 24
 													line: 2
 												}
 												start: Object {
 													column: 8
-													index: 20
 													line: 2
 												}
 											}
@@ -215,12 +191,10 @@ JSRoot {
 													filename: "typescript/function/getter-setter/input.ts"
 													end: Object {
 														column: 16
-														index: 28
 														line: 2
 													}
 													start: Object {
 														column: 8
-														index: 20
 														line: 2
 													}
 												}
@@ -230,12 +204,10 @@ JSRoot {
 														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 16
-															index: 28
 															line: 2
 														}
 														start: Object {
 															column: 14
-															index: 26
 															line: 2
 														}
 													}
@@ -255,12 +227,10 @@ JSRoot {
 				filename: "typescript/function/getter-setter/input.ts"
 				end: Object {
 					column: 2
-					index: 78
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 36
 					line: 4
 				}
 			}
@@ -270,12 +240,10 @@ JSRoot {
 					filename: "typescript/function/getter-setter/input.ts"
 					end: Object {
 						column: 2
-						index: 78
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 36
 						line: 4
 					}
 				}
@@ -288,12 +256,10 @@ JSRoot {
 								identifierName: "s"
 								end: Object {
 									column: 7
-									index: 43
 									line: 4
 								}
 								start: Object {
 									column: 6
-									index: 42
 									line: 4
 								}
 							}
@@ -302,12 +268,10 @@ JSRoot {
 							filename: "typescript/function/getter-setter/input.ts"
 							end: Object {
 								column: 1
-								index: 77
 								line: 6
 							}
 							start: Object {
 								column: 6
-								index: 42
 								line: 4
 							}
 						}
@@ -316,12 +280,10 @@ JSRoot {
 								filename: "typescript/function/getter-setter/input.ts"
 								end: Object {
 									column: 1
-									index: 77
 									line: 6
 								}
 								start: Object {
 									column: 10
-									index: 46
 									line: 4
 								}
 							}
@@ -336,12 +298,10 @@ JSRoot {
 												identifierName: "m"
 												end: Object {
 													column: 7
-													index: 55
 													line: 5
 												}
 												start: Object {
 													column: 6
-													index: 54
 													line: 5
 												}
 											}
@@ -350,12 +310,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 7
-												index: 55
 												line: 5
 											}
 											start: Object {
 												column: 6
-												index: 54
 												line: 5
 											}
 										}
@@ -364,12 +322,10 @@ JSRoot {
 										filename: "typescript/function/getter-setter/input.ts"
 										end: Object {
 											column: 27
-											index: 75
 											line: 5
 										}
 										start: Object {
 											column: 2
-											index: 50
 											line: 5
 										}
 									}
@@ -380,12 +336,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 27
-												index: 75
 												line: 5
 											}
 											start: Object {
 												column: 25
-												index: 73
 												line: 5
 											}
 										}
@@ -401,12 +355,10 @@ JSRoot {
 											filename: "typescript/function/getter-setter/input.ts"
 											end: Object {
 												column: 24
-												index: 72
 												line: 5
 											}
 											start: Object {
 												column: 7
-												index: 55
 												line: 5
 											}
 										}
@@ -418,12 +370,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 23
-														index: 71
 														line: 5
 													}
 													start: Object {
 														column: 18
-														index: 66
 														line: 5
 													}
 												}
@@ -434,12 +384,10 @@ JSRoot {
 														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 23
-															index: 71
 															line: 5
 														}
 														start: Object {
 															column: 18
-															index: 66
 															line: 5
 														}
 													}
@@ -453,12 +401,10 @@ JSRoot {
 												identifierName: "this"
 												end: Object {
 													column: 12
-													index: 60
 													line: 5
 												}
 												start: Object {
 													column: 8
-													index: 56
 													line: 5
 												}
 											}
@@ -468,12 +414,10 @@ JSRoot {
 													filename: "typescript/function/getter-setter/input.ts"
 													end: Object {
 														column: 16
-														index: 64
 														line: 5
 													}
 													start: Object {
 														column: 8
-														index: 56
 														line: 5
 													}
 												}
@@ -483,12 +427,10 @@ JSRoot {
 														filename: "typescript/function/getter-setter/input.ts"
 														end: Object {
 															column: 16
-															index: 64
 															line: 5
 														}
 														start: Object {
 															column: 14
-															index: 62
 															line: 5
 														}
 													}

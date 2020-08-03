@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/surrounding-call-comments/input.js"
 		end: Object {
 			column: 0
-			index: 61
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/surrounding-call-comments/input.js"
 				end: Object {
 					column: 16
-					index: 31
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 19
 					line: 2
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/surrounding-call-comments/input.js"
 				end: Object {
 					column: 15
-					index: 58
 					line: 4
 				}
 				start: Object {
 					column: 4
-					index: 47
 					line: 4
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 				filename: "comments/basic/surrounding-call-comments/input.js"
 				end: Object {
 					column: 1
-					index: 60
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -111,12 +101,10 @@ JSRoot {
 					filename: "comments/basic/surrounding-call-comments/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "comments/basic/surrounding-call-comments/input.js"
 					end: Object {
 						column: 1
-						index: 60
 						line: 5
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "comments/basic/surrounding-call-comments/input.js"
 							end: Object {
 								column: 10
-								index: 42
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 36
 								line: 3
 							}
 						}
@@ -160,12 +144,10 @@ JSRoot {
 								filename: "comments/basic/surrounding-call-comments/input.js"
 								end: Object {
 									column: 9
-									index: 41
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 36
 									line: 3
 								}
 							}
@@ -177,12 +159,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 7
-										index: 39
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 36
 										line: 3
 									}
 								}

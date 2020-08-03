@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/let/let-with-linebreak/input.js"
 		end: Object {
 			column: 0
-			index: 11
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/let/let-with-linebreak/input.js"
 				end: Object {
 					column: 6
-					index: 10
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/let/let-with-linebreak/input.js"
 					end: Object {
 						column: 6
-						index: 10
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 9
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 8
 									line: 2
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "es2015/let/let-with-linebreak/input.js"
 							end: Object {
 								column: 5
-								index: 9
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 8
 								line: 2
 							}
 						}

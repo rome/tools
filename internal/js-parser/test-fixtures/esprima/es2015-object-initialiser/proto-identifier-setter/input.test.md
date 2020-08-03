@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 		end: Object {
 			column: 0
-			index: 42
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 				end: Object {
 					column: 41
-					index: 41
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -84,12 +76,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -113,12 +101,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}
@@ -147,12 +131,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 							}
@@ -161,12 +143,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -177,12 +157,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 							}
@@ -199,12 +177,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}
@@ -216,12 +192,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 35
-											index: 35
 											line: 1
 										}
 										start: Object {
 											column: 34
-											index: 34
 											line: 1
 										}
 									}
@@ -232,12 +206,10 @@ JSRoot {
 											filename: "esprima/es2015-object-initialiser/proto-identifier-setter/input.js"
 											end: Object {
 												column: 35
-												index: 35
 												line: 1
 											}
 											start: Object {
 												column: 34
-												index: 34
 												line: 1
 											}
 										}

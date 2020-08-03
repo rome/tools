@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/optional-async-error/input.js"
 		end: Object {
 			column: 1
-			index: 80
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -50,12 +48,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 41
 					line: 3
 				}
 				start: Object {
 					column: 9
-					index: 41
 					line: 3
 				}
 			}
@@ -70,12 +66,10 @@ JSRoot {
 					identifierName: "B"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -84,12 +78,10 @@ JSRoot {
 				filename: "typescript/class/optional-async-error/input.js"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -103,12 +95,10 @@ JSRoot {
 					filename: "typescript/class/optional-async-error/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -122,12 +112,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 19
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 18
 						line: 2
 					}
 				}
@@ -136,12 +124,10 @@ JSRoot {
 				filename: "typescript/class/optional-async-error/input.js"
 				end: Object {
 					column: 1
-					index: 80
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 12
 					line: 2
 				}
 			}
@@ -153,12 +139,10 @@ JSRoot {
 					filename: "typescript/class/optional-async-error/input.js"
 					end: Object {
 						column: 1
-						index: 80
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 12
 						line: 2
 					}
 				}
@@ -169,12 +153,10 @@ JSRoot {
 						identifierName: "B"
 						end: Object {
 							column: 17
-							index: 29
 							line: 2
 						}
 						start: Object {
 							column: 16
-							index: 28
 							line: 2
 						}
 					}
@@ -190,12 +172,10 @@ JSRoot {
 									identifierName: "method"
 									end: Object {
 										column: 17
-										index: 49
 										line: 3
 									}
 									start: Object {
 										column: 11
-										index: 43
 										line: 3
 									}
 								}
@@ -204,12 +184,10 @@ JSRoot {
 								filename: "typescript/class/optional-async-error/input.js"
 								end: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 								start: Object {
 									column: 11
-									index: 43
 									line: 3
 								}
 							}
@@ -219,12 +197,10 @@ JSRoot {
 							filename: "typescript/class/optional-async-error/input.js"
 							end: Object {
 								column: 46
-								index: 78
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 36
 								line: 3
 							}
 						}
@@ -237,19 +213,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 36
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/optional-async-error/input.js"
 								end: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 36
 									line: 3
 								}
 							}
@@ -265,12 +238,10 @@ JSRoot {
 								filename: "typescript/class/optional-async-error/input.js"
 								end: Object {
 									column: 45
-									index: 77
 									line: 3
 								}
 								start: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 							}
@@ -282,12 +253,10 @@ JSRoot {
 										identifierName: "val"
 										end: Object {
 											column: 21
-											index: 53
 											line: 3
 										}
 										start: Object {
 											column: 18
-											index: 50
 											line: 3
 										}
 									}
@@ -297,12 +266,10 @@ JSRoot {
 											filename: "typescript/class/optional-async-error/input.js"
 											end: Object {
 												column: 29
-												index: 61
 												line: 3
 											}
 											start: Object {
 												column: 18
-												index: 50
 												line: 3
 											}
 										}
@@ -311,12 +278,10 @@ JSRoot {
 												filename: "typescript/class/optional-async-error/input.js"
 												end: Object {
 													column: 29
-													index: 61
 													line: 3
 												}
 												start: Object {
 													column: 23
-													index: 55
 													line: 3
 												}
 											}
@@ -329,12 +294,10 @@ JSRoot {
 									filename: "typescript/class/optional-async-error/input.js"
 									end: Object {
 										column: 45
-										index: 77
 										line: 3
 									}
 									start: Object {
 										column: 32
-										index: 64
 										line: 3
 									}
 								}
@@ -345,12 +308,10 @@ JSRoot {
 										identifierName: "Promise"
 										end: Object {
 											column: 39
-											index: 71
 											line: 3
 										}
 										start: Object {
 											column: 32
-											index: 64
 											line: 3
 										}
 									}
@@ -360,12 +321,10 @@ JSRoot {
 										filename: "typescript/class/optional-async-error/input.js"
 										end: Object {
 											column: 45
-											index: 77
 											line: 3
 										}
 										start: Object {
 											column: 39
-											index: 71
 											line: 3
 										}
 									}
@@ -375,12 +334,10 @@ JSRoot {
 												filename: "typescript/class/optional-async-error/input.js"
 												end: Object {
 													column: 44
-													index: 76
 													line: 3
 												}
 												start: Object {
 													column: 40
-													index: 72
 													line: 3
 												}
 											}

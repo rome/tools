@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/meta-properties/new-target-inside-params/input.js"
 		end: Object {
 			column: 0
-			index: 74
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/meta-properties/new-target-inside-params/input.js"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/meta-properties/new-target-inside-params/input.js"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 								}
@@ -155,12 +139,10 @@ JSRoot {
 								filename: "es2015/meta-properties/new-target-inside-params/input.js"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -171,12 +153,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -188,12 +168,10 @@ JSRoot {
 									identifierName: "target"
 									end: Object {
 										column: 27
-										index: 27
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -211,12 +189,10 @@ JSRoot {
 					identifierName: "Bar"
 					end: Object {
 						column: 12
-						index: 44
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 41
 						line: 2
 					}
 				}
@@ -225,12 +201,10 @@ JSRoot {
 				filename: "es2015/meta-properties/new-target-inside-params/input.js"
 				end: Object {
 					column: 41
-					index: 73
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 32
 					line: 2
 				}
 			}
@@ -247,12 +221,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 14
-						index: 46
 						line: 2
 					}
 					start: Object {
 						column: 12
-						index: 44
 						line: 2
 					}
 				}
@@ -263,12 +235,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-target-inside-params/input.js"
 					end: Object {
 						column: 41
-						index: 73
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 47
 						line: 2
 					}
 				}
@@ -278,12 +248,10 @@ JSRoot {
 							filename: "es2015/meta-properties/new-target-inside-params/input.js"
 							end: Object {
 								column: 39
-								index: 71
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 49
 								line: 2
 							}
 						}
@@ -292,12 +260,10 @@ JSRoot {
 								filename: "es2015/meta-properties/new-target-inside-params/input.js"
 								end: Object {
 									column: 39
-									index: 71
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 49
 									line: 2
 								}
 							}
@@ -308,12 +274,10 @@ JSRoot {
 									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 39
-										index: 71
 										line: 2
 									}
 									start: Object {
 										column: 37
-										index: 69
 										line: 2
 									}
 								}
@@ -328,12 +292,10 @@ JSRoot {
 									filename: "es2015/meta-properties/new-target-inside-params/input.js"
 									end: Object {
 										column: 36
-										index: 68
 										line: 2
 									}
 									start: Object {
 										column: 17
-										index: 49
 										line: 2
 									}
 								}
@@ -344,12 +306,10 @@ JSRoot {
 											filename: "es2015/meta-properties/new-target-inside-params/input.js"
 											end: Object {
 												column: 32
-												index: 64
 												line: 2
 											}
 											start: Object {
 												column: 18
-												index: 50
 												line: 2
 											}
 										}
@@ -360,12 +320,10 @@ JSRoot {
 												identifierName: "x"
 												end: Object {
 													column: 19
-													index: 51
 													line: 2
 												}
 												start: Object {
 													column: 18
-													index: 50
 													line: 2
 												}
 											}
@@ -375,12 +333,10 @@ JSRoot {
 												filename: "es2015/meta-properties/new-target-inside-params/input.js"
 												end: Object {
 													column: 32
-													index: 64
 													line: 2
 												}
 												start: Object {
 													column: 22
-													index: 54
 													line: 2
 												}
 											}
@@ -391,12 +347,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 25
-														index: 57
 														line: 2
 													}
 													start: Object {
 														column: 22
-														index: 54
 														line: 2
 													}
 												}
@@ -408,12 +362,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 32
-														index: 64
 														line: 2
 													}
 													start: Object {
 														column: 26
-														index: 58
 														line: 2
 													}
 												}

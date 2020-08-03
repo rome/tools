@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 				end: Object {
 					column: 1
-					index: 32
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 					end: Object {
 						column: 1
-						index: 32
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 							end: Object {
 								column: 15
-								index: 30
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 19
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "esprima/es2015-meta-property/new-target-declaration/input.js"
 								end: Object {
 									column: 14
-									index: 29
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 19
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 7
-										index: 22
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 19
 										line: 2
 									}
 								}
@@ -154,12 +138,10 @@ JSRoot {
 									identifierName: "target"
 									end: Object {
 										column: 14
-										index: 29
 										line: 2
 									}
 									start: Object {
 										column: 8
-										index: 23
 										line: 2
 									}
 								}

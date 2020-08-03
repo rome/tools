@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/failure-spaces/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 3
-					index: 18
 					line: 2
 				}
 				start: Object {
 					column: 3
-					index: 18
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "Spaces"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/failure-spaces/input.js"
 				end: Object {
 					column: 1
-					index: 34
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/failure-spaces/input.js"
 					end: Object {
 						column: 1
-						index: 34
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "wrongSpaces"
 									end: Object {
 										column: 16
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 5
-										index: 20
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/failure-spaces/input.js"
 								end: Object {
 									column: 16
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 17
 									line: 2
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/failure-spaces/input.js"
 							end: Object {
 								column: 17
-								index: 32
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -163,19 +147,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/failure-spaces/input.js"
 								end: Object {
 									column: 16
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 17
 									line: 2
 								}
 							}

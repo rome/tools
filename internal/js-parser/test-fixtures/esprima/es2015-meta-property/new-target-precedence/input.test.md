@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 				end: Object {
 					column: 1
-					index: 40
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 					end: Object {
 						column: 1
-						index: 40
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 							end: Object {
 								column: 23
-								index: 38
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 19
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 								end: Object {
 									column: 22
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 19
 									line: 2
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 									filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 									end: Object {
 										column: 20
-										index: 35
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 19
 										line: 2
 									}
 								}
@@ -153,12 +137,10 @@ JSRoot {
 										filename: "esprima/es2015-meta-property/new-target-precedence/input.js"
 										end: Object {
 											column: 18
-											index: 33
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 23
 											line: 2
 										}
 									}
@@ -169,12 +151,10 @@ JSRoot {
 											identifierName: "new"
 											end: Object {
 												column: 11
-												index: 26
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 23
 												line: 2
 											}
 										}
@@ -186,12 +166,10 @@ JSRoot {
 											identifierName: "target"
 											end: Object {
 												column: 18
-												index: 33
 												line: 2
 											}
 											start: Object {
 												column: 12
-												index: 27
 												line: 2
 											}
 										}

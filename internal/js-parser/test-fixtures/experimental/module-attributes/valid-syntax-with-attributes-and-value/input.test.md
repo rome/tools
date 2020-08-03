@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 			}
@@ -65,12 +61,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 			}
@@ -112,12 +102,10 @@ JSRoot {
 					identifierName: "type"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -142,12 +128,10 @@ JSRoot {
 						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 21
-							index: 21
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -159,12 +143,10 @@ JSRoot {
 				filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 				end: Object {
 					column: 3
-					index: 32
 					line: 2
 				}
 				start: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 			}
@@ -173,12 +155,10 @@ JSRoot {
 					filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 					end: Object {
 						column: 3
-						index: 32
 						line: 2
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -188,12 +168,10 @@ JSRoot {
 						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 					}
@@ -206,12 +184,10 @@ JSRoot {
 							filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 							end: Object {
 								column: 2
-								index: 31
 								line: 2
 							}
 							start: Object {
 								column: 1
-								index: 30
 								line: 2
 							}
 						}
@@ -220,12 +196,10 @@ JSRoot {
 						filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 						end: Object {
 							column: 3
-							index: 32
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 29
 							line: 2
 						}
 					}

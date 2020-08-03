@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/for-of/right-regex/input.js"
 		end: Object {
 			column: 26
-			index: 50
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2015/for-of/right-regex/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -101,12 +91,10 @@ JSRoot {
 							filename: "es2015/for-of/right-regex/input.js"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -124,12 +112,10 @@ JSRoot {
 					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -138,12 +124,10 @@ JSRoot {
 						filename: "es2015/for-of/right-regex/input.js"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -154,12 +138,10 @@ JSRoot {
 								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -170,12 +152,10 @@ JSRoot {
 								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -186,12 +166,10 @@ JSRoot {
 								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -207,12 +185,10 @@ JSRoot {
 				filename: "es2015/for-of/right-regex/input.js"
 				end: Object {
 					column: 26
-					index: 50
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 3
 				}
 			}
@@ -221,12 +197,10 @@ JSRoot {
 					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 26
-						index: 50
 						line: 3
 					}
 					start: Object {
 						column: 25
-						index: 49
 						line: 3
 					}
 				}
@@ -237,12 +211,10 @@ JSRoot {
 					filename: "es2015/for-of/right-regex/input.js"
 					end: Object {
 						column: 22
-						index: 46
 						line: 3
 					}
 					start: Object {
 						column: 5
-						index: 29
 						line: 3
 					}
 				}
@@ -255,12 +227,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 10
-									index: 34
 									line: 3
 								}
 								start: Object {
 									column: 9
-									index: 33
 									line: 3
 								}
 							}
@@ -269,12 +239,10 @@ JSRoot {
 							filename: "es2015/for-of/right-regex/input.js"
 							end: Object {
 								column: 22
-								index: 46
 								line: 3
 							}
 							start: Object {
 								column: 9
-								index: 33
 								line: 3
 							}
 						}
@@ -284,12 +252,10 @@ JSRoot {
 								filename: "es2015/for-of/right-regex/input.js"
 								end: Object {
 									column: 22
-									index: 46
 									line: 3
 								}
 								start: Object {
 									column: 13
-									index: 37
 									line: 3
 								}
 							}
@@ -300,12 +266,10 @@ JSRoot {
 									identifierName: "g"
 									end: Object {
 										column: 22
-										index: 46
 										line: 3
 									}
 									start: Object {
 										column: 21
-										index: 45
 										line: 3
 									}
 								}
@@ -316,12 +280,10 @@ JSRoot {
 									filename: "es2015/for-of/right-regex/input.js"
 									end: Object {
 										column: 20
-										index: 44
 										line: 3
 									}
 									start: Object {
 										column: 13
-										index: 37
 										line: 3
 									}
 								}
@@ -332,12 +294,10 @@ JSRoot {
 										identifierName: "of"
 										end: Object {
 											column: 15
-											index: 39
 											line: 3
 										}
 										start: Object {
 											column: 13
-											index: 37
 											line: 3
 										}
 									}
@@ -349,12 +309,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 20
-											index: 44
 											line: 3
 										}
 										start: Object {
 											column: 17
-											index: 41
 											line: 3
 										}
 									}

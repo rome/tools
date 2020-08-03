@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/switch-no-default-comment/input.js"
 		end: Object {
 			column: 0
-			index: 59
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment/input.js"
 				end: Object {
 					column: 16
-					index: 56
 					line: 4
 				}
 				start: Object {
 					column: 4
-					index: 44
 					line: 4
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment/input.js"
 				end: Object {
 					column: 1
-					index: 58
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 						filename: "comments/basic/switch-no-default-comment/input.js"
 						end: Object {
 							column: 14
-							index: 39
 							line: 3
 						}
 						start: Object {
 							column: 4
-							index: 17
 							line: 2
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "comments/basic/switch-no-default-comment/input.js"
 							end: Object {
 								column: 10
-								index: 23
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 22
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "comments/basic/switch-no-default-comment/input.js"
 								end: Object {
 									column: 14
-									index: 39
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 33
 									line: 3
 								}
 							}

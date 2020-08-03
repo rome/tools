@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/invalid-syntax/migrated_0222/input.js"
 		end: Object {
 			column: 0
-			index: 77
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 				start: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "hello"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0222/input.js"
 				end: Object {
 					column: 76
-					index: 76
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0222/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0222/input.js"
 					end: Object {
 						column: 76
-						index: 76
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -132,12 +120,10 @@ JSRoot {
 							filename: "esprima/invalid-syntax/migrated_0222/input.js"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 						}
@@ -148,12 +134,10 @@ JSRoot {
 							filename: "esprima/invalid-syntax/migrated_0222/input.js"
 							end: Object {
 								column: 60
-								index: 60
 								line: 1
 							}
 							start: Object {
 								column: 40
-								index: 40
 								line: 1
 							}
 						}
@@ -164,12 +148,10 @@ JSRoot {
 							filename: "esprima/invalid-syntax/migrated_0222/input.js"
 							end: Object {
 								column: 74
-								index: 74
 								line: 1
 							}
 							start: Object {
 								column: 61
-								index: 61
 								line: 1
 							}
 						}

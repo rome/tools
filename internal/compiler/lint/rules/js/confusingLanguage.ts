@@ -79,7 +79,11 @@ function check(
 	}
 
 	const lower = input.toLowerCase();
-	const tracker = new PositionTracker(lower, loc.start);
+	const tracker = new PositionTracker({
+		filename: loc.filename,
+		input: lower,
+		offsetPosition: loc.start,
+	});
 	const results: Array<CheckResult> = [];
 
 	// This is a bit more complicated since we try to do the minimal amount of work

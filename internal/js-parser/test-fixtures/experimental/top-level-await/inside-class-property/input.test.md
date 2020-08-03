@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/top-level-await/inside-class-property/input.js"
 		end: Object {
 			column: 0
-			index: 34
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "experimental/top-level-await/inside-class-property/input.js"
 				end: Object {
 					column: 1
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						identifierName: "C"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "experimental/top-level-await/inside-class-property/input.js"
 					end: Object {
 						column: 1
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 						filename: "experimental/top-level-await/inside-class-property/input.js"
 						end: Object {
 							column: 1
-							index: 33
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -107,12 +97,10 @@ JSRoot {
 										identifierName: "p"
 										end: Object {
 											column: 3
-											index: 20
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 19
 											line: 2
 										}
 									}
@@ -121,12 +109,10 @@ JSRoot {
 									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 3
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 19
 										line: 2
 									}
 								}
@@ -136,12 +122,10 @@ JSRoot {
 									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 13
-										index: 30
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 23
 										line: 2
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 										filename: "experimental/top-level-await/inside-class-property/input.js"
 										end: Object {
 											column: 13
-											index: 30
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 29
 											line: 2
 										}
 									}
@@ -169,12 +151,10 @@ JSRoot {
 								filename: "experimental/top-level-await/inside-class-property/input.js"
 								end: Object {
 									column: 14
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 19
 									line: 2
 								}
 							}
@@ -187,19 +167,16 @@ JSRoot {
 								typeAnnotation: undefined
 								start: Object {
 									column: 2
-									index: 19
 									line: 2
 								}
 								loc: Object {
 									filename: "experimental/top-level-await/inside-class-property/input.js"
 									end: Object {
 										column: 3
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 19
 										line: 2
 									}
 								}

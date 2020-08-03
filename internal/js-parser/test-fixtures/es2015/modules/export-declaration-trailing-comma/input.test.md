@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 		end: Object {
 			column: 0
-			index: 77
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 11
-					index: 20
 					line: 2
 				}
 				start: Object {
 					column: 2
-					index: 11
 					line: 2
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 11
-					index: 36
 					line: 3
 				}
 				start: Object {
 					column: 2
-					index: 27
 					line: 3
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 13
-					index: 51
 					line: 4
 				}
 				start: Object {
 					column: 2
-					index: 40
 					line: 4
 				}
 			}
@@ -89,12 +81,10 @@ JSRoot {
 				filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 12
-					index: 64
 					line: 5
 				}
 				start: Object {
 					column: 2
-					index: 54
 					line: 5
 				}
 			}
@@ -109,12 +99,10 @@ JSRoot {
 				filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 				end: Object {
 					column: 24
-					index: 76
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -124,12 +112,10 @@ JSRoot {
 					filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 					end: Object {
 						column: 23
-						index: 75
 						line: 5
 					}
 					start: Object {
 						column: 18
-						index: 70
 						line: 5
 					}
 				}
@@ -146,12 +132,10 @@ JSRoot {
 						filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 						end: Object {
 							column: 15
-							index: 24
 							line: 2
 						}
 						start: Object {
 							column: 12
-							index: 21
 							line: 2
 						}
 					}
@@ -164,12 +148,10 @@ JSRoot {
 							identifierName: "Foo"
 							end: Object {
 								column: 15
-								index: 24
 								line: 2
 							}
 							start: Object {
 								column: 12
-								index: 21
 								line: 2
 							}
 						}
@@ -184,12 +166,10 @@ JSRoot {
 							identifierName: "Foo"
 							end: Object {
 								column: 15
-								index: 24
 								line: 2
 							}
 							start: Object {
 								column: 12
-								index: 21
 								line: 2
 							}
 						}

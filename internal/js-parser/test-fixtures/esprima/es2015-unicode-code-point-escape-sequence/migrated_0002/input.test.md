@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 		end: Object {
 			column: 0
-			index: 19
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

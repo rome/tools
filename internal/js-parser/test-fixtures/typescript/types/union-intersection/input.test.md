@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/union-intersection/input.ts"
 		end: Object {
 			column: 0
-			index: 161
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 36
-											index: 36
 											line: 1
 										}
 										start: Object {
 											column: 11
-											index: 11
 											line: 1
 										}
 									}
@@ -113,12 +101,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 17
-													index: 17
 													line: 1
 												}
 												start: Object {
 													column: 11
-													index: 11
 													line: 1
 												}
 											}
@@ -128,12 +114,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 												start: Object {
 													column: 20
-													index: 20
 													line: 1
 												}
 											}
@@ -143,12 +127,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 36
-													index: 36
 													line: 1
 												}
 												start: Object {
 													column: 27
-													index: 27
 													line: 1
 												}
 											}
@@ -162,12 +144,10 @@ JSRoot {
 							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 36
-								index: 36
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -180,12 +160,10 @@ JSRoot {
 				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 34
-					index: 72
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 38
 					line: 2
 				}
 			}
@@ -195,12 +173,10 @@ JSRoot {
 					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 34
-						index: 72
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 38
 						line: 2
 					}
 				}
@@ -212,12 +188,10 @@ JSRoot {
 								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 33
-									index: 71
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 42
 									line: 2
 								}
 							}
@@ -227,12 +201,10 @@ JSRoot {
 									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 33
-										index: 71
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 42
 										line: 2
 									}
 								}
@@ -241,12 +213,10 @@ JSRoot {
 										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 33
-											index: 71
 											line: 2
 										}
 										start: Object {
 											column: 18
-											index: 56
 											line: 2
 										}
 									}
@@ -256,12 +226,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 24
-													index: 62
 													line: 2
 												}
 												start: Object {
 													column: 18
-													index: 56
 													line: 2
 												}
 											}
@@ -271,12 +239,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 33
-													index: 71
 													line: 2
 												}
 												start: Object {
 													column: 27
-													index: 65
 													line: 2
 												}
 											}
@@ -290,12 +256,10 @@ JSRoot {
 							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 33
-								index: 71
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 42
 								line: 2
 							}
 						}
@@ -308,12 +272,10 @@ JSRoot {
 				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 43
-					index: 116
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 73
 					line: 3
 				}
 			}
@@ -323,12 +285,10 @@ JSRoot {
 					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 43
-						index: 116
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 73
 						line: 3
 					}
 				}
@@ -340,12 +300,10 @@ JSRoot {
 								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 42
-									index: 115
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 77
 									line: 3
 								}
 							}
@@ -355,12 +313,10 @@ JSRoot {
 									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 42
-										index: 115
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 77
 										line: 3
 									}
 								}
@@ -369,12 +325,10 @@ JSRoot {
 										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 42
-											index: 115
 											line: 3
 										}
 										start: Object {
 											column: 17
-											index: 90
 											line: 3
 										}
 									}
@@ -384,12 +338,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 23
-													index: 96
 													line: 3
 												}
 												start: Object {
 													column: 17
-													index: 90
 													line: 3
 												}
 											}
@@ -399,12 +351,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 42
-													index: 115
 													line: 3
 												}
 												start: Object {
 													column: 26
-													index: 99
 													line: 3
 												}
 											}
@@ -414,12 +364,10 @@ JSRoot {
 														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 32
-															index: 105
 															line: 3
 														}
 														start: Object {
 															column: 26
-															index: 99
 															line: 3
 														}
 													}
@@ -429,12 +377,10 @@ JSRoot {
 														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 42
-															index: 115
 															line: 3
 														}
 														start: Object {
 															column: 35
-															index: 108
 															line: 3
 														}
 													}
@@ -450,12 +396,10 @@ JSRoot {
 							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 42
-								index: 115
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 77
 								line: 3
 							}
 						}
@@ -468,12 +412,10 @@ JSRoot {
 				filename: "typescript/types/union-intersection/input.ts"
 				end: Object {
 					column: 43
-					index: 160
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 117
 					line: 4
 				}
 			}
@@ -483,12 +425,10 @@ JSRoot {
 					filename: "typescript/types/union-intersection/input.ts"
 					end: Object {
 						column: 43
-						index: 160
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 117
 						line: 4
 					}
 				}
@@ -500,12 +440,10 @@ JSRoot {
 								filename: "typescript/types/union-intersection/input.ts"
 								end: Object {
 									column: 42
-									index: 159
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 121
 									line: 4
 								}
 							}
@@ -515,12 +453,10 @@ JSRoot {
 									filename: "typescript/types/union-intersection/input.ts"
 									end: Object {
 										column: 42
-										index: 159
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 121
 										line: 4
 									}
 								}
@@ -529,12 +465,10 @@ JSRoot {
 										filename: "typescript/types/union-intersection/input.ts"
 										end: Object {
 											column: 42
-											index: 159
 											line: 4
 										}
 										start: Object {
 											column: 17
-											index: 134
 											line: 4
 										}
 									}
@@ -544,12 +478,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 32
-													index: 149
 													line: 4
 												}
 												start: Object {
 													column: 17
-													index: 134
 													line: 4
 												}
 											}
@@ -559,12 +491,10 @@ JSRoot {
 														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 23
-															index: 140
 															line: 4
 														}
 														start: Object {
 															column: 17
-															index: 134
 															line: 4
 														}
 													}
@@ -574,12 +504,10 @@ JSRoot {
 														filename: "typescript/types/union-intersection/input.ts"
 														end: Object {
 															column: 32
-															index: 149
 															line: 4
 														}
 														start: Object {
 															column: 26
-															index: 143
 															line: 4
 														}
 													}
@@ -591,12 +519,10 @@ JSRoot {
 												filename: "typescript/types/union-intersection/input.ts"
 												end: Object {
 													column: 42
-													index: 159
 													line: 4
 												}
 												start: Object {
 													column: 35
-													index: 152
 													line: 4
 												}
 											}
@@ -610,12 +536,10 @@ JSRoot {
 							filename: "typescript/types/union-intersection/input.ts"
 							end: Object {
 								column: 42
-								index: 159
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 121
 								line: 4
 							}
 						}
