@@ -12,7 +12,7 @@ const builders: Map<string, BuilderMethod<any>> = new Map();
 
 export default builders;
 
-/* GENERATED:START(hash:5d20bc54b36105f96b3ca80f5befae6a982ecb45,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:daa41589ca37b1e553693a9480958c27f971592a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
