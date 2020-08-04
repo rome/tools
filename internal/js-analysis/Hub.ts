@@ -64,7 +64,7 @@ export default class Hub {
 	}
 
 	assertOpen() {
-		if (this.isClosed() && this.isClosing() === false) {
+		if (this.isClosed() && !this.isClosing()) {
 			throw new Error(
 				"This method can only be called when the graph has been open",
 			);
@@ -72,7 +72,7 @@ export default class Hub {
 	}
 
 	assertClosed() {
-		if (this.isOpen() && this.isClosing() === false) {
+		if (this.isOpen() && !this.isClosing()) {
 			throw new Error(
 				"This method can only be called when the graph has been closed",
 			);

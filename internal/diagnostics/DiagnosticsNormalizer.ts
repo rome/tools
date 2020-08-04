@@ -205,7 +205,7 @@ export default class DiagnosticsNormalizer {
 		// During printing we'll fill it back in
 		let {sourceText} = location;
 		if (filename !== undefined && !this.inlinedSourceTextFilenames.has(filename)) {
-			if (sourceText === undefined && filename !== undefined) {
+			if (sourceText === undefined) {
 				sourceText = this.inlineSourceText.get(filename);
 			}
 			if (sourceText === undefined && normalizedFilename !== undefined) {
@@ -219,9 +219,7 @@ export default class DiagnosticsNormalizer {
 
 			// Register filename as inlined if necessary
 			if (sourceText !== undefined) {
-				if (filename !== undefined) {
-					this.inlinedSourceTextFilenames.add(filename);
-				}
+				this.inlinedSourceTextFilenames.add(filename);
 
 				if (normalizedFilename !== undefined) {
 					this.inlinedSourceTextFilenames.add(normalizedFilename);

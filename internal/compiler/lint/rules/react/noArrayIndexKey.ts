@@ -89,7 +89,7 @@ function hasArrayMethod(path: Path) {
 			node.expression.callee.property.type === "JSStaticMemberProperty" &&
 			node.expression.callee.property.value.type === "JSIdentifier"
 		) {
-			return /[map|forEach|filter|some|every|find|findIndex|reduce|reduceRight|]/.test(
+			return /(map|forEach|filter|some|every|find|findIndex|reduce|reduceRight)/.test(
 				node.expression.callee.property.value.name,
 			);
 		}

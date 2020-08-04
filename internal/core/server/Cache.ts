@@ -5,24 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	WorkerAnalyzeDependencyResult,
-	WorkerCompileResult,
-	WorkerLintResult,
-} from "../common/bridges/WorkerBridge";
+import {WorkerAnalyzeDependencyResult, WorkerCompileResult, WorkerLintResult,} from "../common/bridges/WorkerBridge";
 import {ModuleSignature} from "@internal/js-analysis";
 import Server from "./Server";
 import {ProjectDefinition} from "@internal/project";
-import {VERSION} from "../common/constants";
+import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {
-	createDirectory,
-	readDirectory,
-	readFileText,
-	removeDirectory,
-	removeFile,
-	writeFile,
-} from "@internal/fs";
+import {createDirectory, readDirectory, readFileText, removeDirectory, removeFile, writeFile,} from "@internal/fs";
 import {stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
 import {AnyMarkups, markup} from "@internal/markup";
@@ -185,7 +174,7 @@ export default class Cache {
 			configHashes.push(pkg.hash);
 		}
 
-		const entry: CacheEntry = {
+		return {
 			version: VERSION,
 			projectDir: project.directory.join(),
 			configHash: configHashes.join(";"),
@@ -195,8 +184,6 @@ export default class Cache {
 			moduleSignature: undefined,
 			lint: {},
 		};
-
-		return entry;
 	}
 
 	getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {

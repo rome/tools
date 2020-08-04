@@ -99,7 +99,7 @@ export default class ExhaustiveT extends T {
 				}
 			}
 
-			if (compatible === false) {
+			if (!compatible) {
 				extraneous.push(possible);
 			}
 		}

@@ -670,9 +670,7 @@ export default class ParserCore<
 		return this.finishLocAt(start, this.getLastEndPosition());
 	}
 
-	finishLocAt(start: Position, end: Position): SourceLocation
-	finishLocAt(start: Position, end: Position): SourceLocation
-	finishLocAt(start: Position, end: Position): SourceLocation | SourceLocation {
+	finishLocAt(start: Position, end: Position): SourceLocation {
 		return {
 			filename: this.filename,
 			start,

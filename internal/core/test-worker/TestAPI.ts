@@ -20,7 +20,7 @@ import {Event} from "@internal/events";
 import stringDiff from "@internal/string-diff";
 import {getErrorStructure} from "@internal/v8";
 import {prettyFormatToString} from "@internal/pretty-format";
-import {FileReference} from "../common/types/files";
+import {FileReference} from "@internal/core";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,

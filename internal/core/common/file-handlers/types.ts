@@ -6,7 +6,7 @@
  */
 
 import {FileReference} from "@internal/core";
-import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
+import {WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticLanguage,
@@ -16,10 +16,6 @@ import {
 import * as compiler from "@internal/compiler";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {UnknownFilePath} from "@internal/path";
-
-export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-	options: WorkerLintOptions;
-};
 
 export type ExtensionLintResult = {
 	mtime: undefined | number;

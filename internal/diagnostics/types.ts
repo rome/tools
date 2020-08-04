@@ -23,8 +23,6 @@ export type DiagnosticFilter = {
 	line?: Number1;
 };
 
-export type DiagnosticFilters = Array<DiagnosticFilter>;
-
 export type DiagnosticSuppression = {
 	filename: string;
 	category: string;

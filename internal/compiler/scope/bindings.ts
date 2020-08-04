@@ -111,7 +111,6 @@ export type TypeBindingKind =
 	| "class"
 	| "interface"
 	| "alias"
-	| "parameter"
 	| "enum"
 	| "parameter"
 	| "mapped type";

@@ -365,7 +365,7 @@ export default class BundleRequest {
 		);
 
 		//
-		if (inlineSourceMap === true) {
+		if (inlineSourceMap) {
 			const sourceMapComment = sourceMap.toComment();
 			content += sourceMapComment;
 		} else {
@@ -408,6 +408,6 @@ export default class BundleRequest {
 		}
 
 		// Combine
-		return await this.stepCombine(order, false);
+		return this.stepCombine(order, false);
 	}
 }

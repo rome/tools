@@ -221,8 +221,8 @@ export default class WorkerManager {
 		}
 	}
 
-	onNewProject(newProject: ProjectDefinition) {
-		this.server.projectManager.notifyWorkersOfProjects(
+	async onNewProject(newProject: ProjectDefinition) {
+		await this.server.projectManager.notifyWorkersOfProjects(
 			this.getWorkers(),
 			[newProject],
 		);

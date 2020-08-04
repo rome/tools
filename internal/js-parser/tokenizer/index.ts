@@ -330,7 +330,7 @@ function pushComment(
 		parser.syntax.add("jsx");
 	}
 
-	if (parser.isLookahead === false) {
+	if (!parser.isLookahead) {
 		parser.registerComment(comment);
 	}
 
@@ -1685,7 +1685,7 @@ function readWord1(parser: JSParser): string {
 			}
 
 			const isValid = first ? isIdentifierStart : isIdentifierChar;
-			if (isValid(esc) === false) {
+			if (!isValid(esc)) {
 				parser.unexpectedDiagnostic({
 					index: parser.state.index,
 					description: descriptions.JS_PARSER.INVALID_UNICODE_ESCAPE,

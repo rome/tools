@@ -15,11 +15,11 @@ import {
 	ServerQueryResponse,
 } from "../../common/bridges/ServerBridge";
 import {ServerMarker} from "../Server";
-import {ClientFlagsJSON} from "../../common/types/client";
+import {ClientFlagsJSON} from "@internal/core";
 import WebRequest, {stripBundleSuffix} from "./WebRequest";
-import {BundlerConfig} from "../../common/types/bundler";
+import {BundlerConfig} from "@internal/core";
 import {AbsoluteFilePath} from "@internal/path";
-import {PLATFORMS} from "../../common/types/platform";
+import {PLATFORMS} from "@internal/core";
 import {HmrServerMessage} from "./hmr";
 import {ConsumableUrl} from "@internal/codec-url";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";

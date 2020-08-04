@@ -441,7 +441,6 @@ export default class Reporter implements ReporterNamespace {
 
 			if (res[0] === false) {
 				this.error(res[1]);
-				continue;
 			} else {
 				return res[1];
 			}

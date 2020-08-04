@@ -10,7 +10,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {JSONFileReference} from "../common/types/files";
+import {JSONFileReference} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticDescription,
@@ -32,7 +32,7 @@ import {
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions} from "./fs/Resolver";
-import {BundlerConfig} from "../common/types/bundler";
+import {BundlerConfig} from "@internal/core";
 import ServerBridge, {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -90,7 +90,7 @@ import {
 	getFilesFromArgs,
 	watchFilesFromArgs,
 } from "./fs/glob";
-import {LAG_INTERVAL} from "../common/constants";
+import {LAG_INTERVAL} from "@internal/core";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -1011,7 +1011,7 @@ export default class ServerRequest {
 
 		const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
 		const project = await projectManager.assertProject(path);
-		if (project.config.typeCheck.enabled === false) {
+		if (!project.config.typeCheck.enabled) {
 			return prefetchedModuleSignatures;
 		}
 

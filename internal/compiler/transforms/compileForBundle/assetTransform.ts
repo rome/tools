@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 import {getOptions} from "./_utils";
-import {ASSET_EXPORT_TEMPORARY_VALUE} from "@internal/core/common/file-handlers/index";
+import {ASSET_EXPORT_TEMPORARY_VALUE} from "@internal/core/common/file-handlers";
 
 export default createVisitor({
 	name: "asset",

@@ -49,12 +49,12 @@ function isWordChar(char: string): boolean {
 // Check if an input string is a valid word, this is used by the stringifier to
 // determine if a property key should be quoted
 export function isValidWord(word: string): boolean {
-	if (word.length === 0 || isWordStartChar(word[0]) === false) {
+	if (word.length === 0 || !isWordStartChar(word[0])) {
 		return false;
 	}
 
 	for (const char of word) {
-		if (isWordChar(char) === false) {
+		if (!isWordChar(char)) {
 			return false;
 		}
 	}
@@ -81,11 +81,9 @@ function isRJSONStringValueChar(
 	index: Number0,
 	input: string,
 ): boolean {
-	if (char === '"' && !isEscaped(index, input)) {
-		return false;
-	}
+	return !(char === '"' && !isEscaped(index, input));
 
-	return true;
+
 }
 
 // Turn a path into a string key we can use
@@ -600,7 +598,6 @@ export const createJSONParser = createParser((ParserCore) =>
 				}
 
 				// An object or array close is an instant failure
-
 				// Doesn't matter what we're parsing since the subsequent tokens will be validated
 				if (token.type === "BraceClose" || token.type === "BracketClose") {
 					return false;

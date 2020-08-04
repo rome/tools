@@ -14,8 +14,8 @@ import {
 	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
 } from "@internal/diagnostics";
-import {ServerQueryResponse} from "../common/bridges/ServerBridge";
-import {ClientRequestFlags} from "../common/types/client";
+import {ServerQueryResponse} from "@internal/core";
+import {ClientRequestFlags} from "@internal/core";
 import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 import {markup} from "@internal/markup";
@@ -185,7 +185,7 @@ async function ask(
 	);
 
 	// Check if this diagnostic is now out of date
-	printer.fetchFileSources([diag]);
+	await printer.fetchFileSources([diag]);
 	const outdatedFiles = printer.getOutdatedFiles(diag);
 	if (outdatedFiles.size > 0) {
 		const files = Array.from(

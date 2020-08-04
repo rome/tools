@@ -336,7 +336,7 @@ export const createMarkdownParser = createParser((
 			const currentToken = this.getToken();
 			let ordered = false;
 			if (currentToken.type === "ListItem") {
-				if (currentToken.numeric === true) {
+				if (currentToken.numeric) {
 					ordered = true;
 				}
 			}

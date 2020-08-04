@@ -36,7 +36,7 @@ export default createVisitor({
 			const isRequire: boolean =
 				callee.type === "JSReferenceIdentifier" &&
 				callee.name === "require" &&
-				path.scope.hasBinding("require") === false;
+				!path.scope.hasBinding("require");
 			const sourceArg = args[0];
 
 			if (isRequire && args.length === 1 && sourceArg.type === "JSStringLiteral") {

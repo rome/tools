@@ -86,7 +86,7 @@ const VLQ_CONTINUATION_BIT = VLQ_BASE;
  *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
  */
 function toVLQSigned(aValue: number): number {
-	return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1) + 0;
+	return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1);
 }
 
 /**

@@ -56,11 +56,7 @@ export default createVisitor<State>({
 					return path.parent.type === "JSVariableDeclarator";
 				}
 
-				if (isFunctionNode(path.node)) {
-					return true;
-				}
-
-				return false;
+				return isFunctionNode(path.node);
 			});
 
 			// We'll only return an JSArrowFunctionExpression if it was inside of a JSVariableDeclarator

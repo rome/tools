@@ -608,9 +608,7 @@ function parseClassPropertyMeta(
 	const key = parseObjectPropertyKey(parser);
 
 	if (
-		key.type === "JSStaticPropertyKey" &&
-		opts.static === true &&
-		key.value.type === "JSIdentifier" &&
+		key.type === "JSStaticPropertyKey" && opts.static && key.value.type === "JSIdentifier" &&
 		key.value.name === "prototype"
 	) {
 		parser.unexpectedDiagnostic({
@@ -862,7 +860,7 @@ function parseClassId(
 	let idAllowed = true;
 
 	// Allow `class implements Foo {}` in class expressions
-	if (optionalId === true && parser.isContextual("implements")) {
+	if (optionalId && parser.isContextual("implements")) {
 		idAllowed = false;
 	}
 

@@ -53,7 +53,7 @@ export default class UnionT extends T {
 					break;
 				}
 			}
-			if (foundMatch === false) {
+			if (!foundMatch) {
 				uniqTypes.push(type);
 			}
 		}
@@ -105,7 +105,7 @@ export default class UnionT extends T {
 				}
 			}
 
-			if (compatible === false) {
+			if (!compatible) {
 				missing.push(type);
 			}
 		}

@@ -24,7 +24,7 @@ export default createVisitor({
 				mappings.set(name, getPrivateName(name, moduleId));
 			}
 
-			if (scope.hasBinding("exports") === false) {
+			if (!scope.hasBinding("exports")) {
 				mappings.set("exports", getPrefixedNamespace(moduleId));
 			}
 

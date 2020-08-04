@@ -249,7 +249,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		shouldCreateToken() {
-			return this.isTrackingTokens && this.isLookahead === false;
+			return this.isTrackingTokens && !this.isLookahead;
 		}
 
 		createToken(state: State): Token {
@@ -589,7 +589,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				// @ts-ignore
 				let val = state[key];
 
-				const shouldSlice = skipArrays === false || key === "context";
+				const shouldSlice = !skipArrays || key === "context";
 				if (shouldSlice && Array.isArray(val)) {
 					// @ts-ignore
 					state[key] = val.slice();

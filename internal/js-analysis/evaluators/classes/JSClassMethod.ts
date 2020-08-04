@@ -12,7 +12,7 @@ import executeFunction from "../../utils/executeFunction";
 
 export default function JSClassMethod(node: AnyNode, scope: Scope) {
 	node = jsClassMethod.assert(node);
-	if (node.key.type === "JSComputedPropertyKey" === true) {
+	if (node.key.type === "JSComputedPropertyKey") {
 		// TODO
 		return undefined;
 	}

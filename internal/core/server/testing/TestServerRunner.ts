@@ -264,7 +264,7 @@ export default class TestServerRunner {
 		const req = this.request;
 		const {flags} = req.client;
 
-		if (inspector !== undefined && opts.coverage === true) {
+		if (inspector !== undefined && opts.coverage) {
 			await inspector.call("Profiler.enable");
 			await inspector.call(
 				"Profiler.startPreciseCoverage",

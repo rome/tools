@@ -15,7 +15,7 @@ import {
 	createRelativeFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
-import {ClientFlags} from "../core/common/types/client";
+import {ClientFlags} from "@internal/core";
 import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {
 	createDirectory,
@@ -38,7 +38,7 @@ import {
 	serializeJSONProjectConfig,
 } from "@internal/project";
 import {createBridgeFromLocal} from "@internal/events";
-import {FileReference} from "../core/common/types/files";
+import {FileReference} from "@internal/core";
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {

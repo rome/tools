@@ -34,7 +34,7 @@ export default class BooleanLiteralT extends T {
 	}
 
 	humanize(): StaticMarkup {
-		if (this.value === true) {
+		if (this.value) {
 			return markup`true`;
 		} else {
 			return markup`false`;

@@ -761,7 +761,7 @@ export default class Consumer {
 	}
 
 	asOriginalUnknownObject(optional: boolean = false): UnknownObject {
-		if (optional === true && !this.exists()) {
+		if (optional && !this.exists()) {
 			return {};
 		}
 
@@ -799,7 +799,7 @@ export default class Consumer {
 			required: !optional,
 		});
 
-		if (optional === true && !this.exists()) {
+		if (optional && !this.exists()) {
 			return [];
 		}
 

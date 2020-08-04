@@ -111,8 +111,8 @@ export default class Bridge {
 	errorTransports: Map<string, ErrorJSON>;
 
 	attachEndSubscriptionRemoval(subscription: EventSubscription) {
-		this.endEvent.subscribe(() => {
-			subscription.unsubscribe();
+		this.endEvent.subscribe(async () => {
+			await subscription.unsubscribe();
 		});
 	}
 
@@ -315,7 +315,7 @@ export default class Bridge {
 	}
 
 	endWithError(err: Error): void {
-		if (this.alive === false) {
+		if (!this.alive) {
 			return;
 		}
 

@@ -1,5 +1,6 @@
-footer {
+@import "_variables";
 
+footer {
 	--pattern-color: #{$gray-3};
 	--pattern-color-2: #{rgba(0, 0, 0, 0)};
 	--pattern-img-path: var(--pattern-dark-img-path);

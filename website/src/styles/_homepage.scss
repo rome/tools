@@ -1,3 +1,5 @@
+@import "_variables";
+
 .hero {
 	padding: $unit * 2;
 	border-right: 1px solid var(--soft-border-color);

@@ -1,11 +1,7 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isEmptyTemplateLiteral} from "@internal/js-ast-utils";
-import {
-	ARIAProperty,
-	ARIAPropertyDefinition,
-	ariaPropsMap,
-} from "@internal/compiler/lint/utils/aria";
+import {ARIAProperty, ARIAPropertyDefinition, ariaPropsMap,} from "@internal/compiler/lint/utils/aria";
 
 function isCorrectValue(
 	attribute: ARIAPropertyDefinition,
@@ -34,7 +30,7 @@ function isCorrectValue(
 		}
 		case "token": {
 			if (attribute.values) {
-				const result = attribute.values.some((token) => {
+				return attribute.values.some((token) => {
 					if (typeof token === "boolean") {
 						if (typeof value === "string") {
 							return value === "true" || value === "false";
@@ -45,7 +41,6 @@ function isCorrectValue(
 						? value === token
 						: `${value}` === token;
 				});
-				return result;
 			}
 			return false;
 		}

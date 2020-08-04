@@ -33,7 +33,7 @@ import {
 	readFileText,
 	watch,
 } from "@internal/fs";
-import {getFileHandlerFromPath} from "../../common/file-handlers/index";
+import {getFileHandlerFromPath} from "@internal/core";
 import crypto = require("crypto");
 import {FileNotFound} from "@internal/core/common/FileNotFound";
 import {markup} from "@internal/markup";

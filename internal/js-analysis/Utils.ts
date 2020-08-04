@@ -128,7 +128,7 @@ export default class Utils {
 		).join(", ");
 
 		let info = `${t.getConstructor().type}<`;
-		if (safe === false) {
+		if (!safe) {
 			info += `${this.humanize(t)}, `;
 		}
 		info += `${dataStr}>`;
@@ -138,7 +138,7 @@ export default class Utils {
 	}
 
 	assertClosed() {
-		if (this.debug === false) {
+		if (!this.debug) {
 			this.hub.assertClosed();
 		}
 	}
@@ -269,7 +269,7 @@ export default class Utils {
 				);
 			}
 
-			if (this.debug === false) {
+			if (!this.debug) {
 				this.reduceCache.set(type, reduced);
 			}
 

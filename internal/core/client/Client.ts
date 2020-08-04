@@ -29,7 +29,7 @@ import {
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
-import {VERSION} from "../common/constants";
+import {VERSION} from "@internal/core";
 import {TarWriter} from "@internal/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@internal/v8";
 import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
@@ -130,15 +130,9 @@ export default class Client {
 		});
 		this.reporter.redirectOutToErr(true);
 
-		// Suppress stdout when silent is set
-		const isSilent =
-			this.flags.silent === true ||
-			opts.stdout === undefined ||
-			opts.stderr === undefined;
-		const stdout = isSilent ? undefined : opts.stdout;
-
 		this.derivedReporterStreams = this.reporter.attachStdoutStreams(
-			stdout,
+			// Suppress stdout when silent is set
+			this.flags.silent ? undefined : opts.stdout,
 			opts.stderr,
 			this.options.terminalFeatures,
 		);

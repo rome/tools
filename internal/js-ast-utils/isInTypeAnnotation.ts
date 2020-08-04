@@ -34,9 +34,5 @@ export function isInTypeAnnotation(path: Path): boolean {
 		return false;
 	}
 
-	if (isTypeExpressionWrapperNode(match)) {
-		return false;
-	} else {
-		return true;
-	}
+	return !isTypeExpressionWrapperNode(match);
 }

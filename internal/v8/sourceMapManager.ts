@@ -94,7 +94,7 @@ function buildStackString(err: Error): string {
 			parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
 		}
 
-		if (resolvedLocation === false) {
+		if (!resolvedLocation) {
 			parts.push("generated source location");
 		}
 

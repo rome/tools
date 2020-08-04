@@ -25,15 +25,11 @@ export default createVisitor({
 					}
 				}
 
-				if (
-					path.node.type === "JSVariableDeclarator" &&
-					path.node.init &&
-					path.node.init.type === "JSArrowFunctionExpression" &&
-					path.node.init.body.type === "JSXElement"
-				) {
-					return true;
-				}
-				return false;
+				const {node} = path;
+				return node.type === "JSVariableDeclarator" &&
+					node.init !== undefined &&
+					node.init.type === "JSArrowFunctionExpression" &&
+					node.init.body.type === "JSXElement";
 			});
 
 			if (hasJSX) {

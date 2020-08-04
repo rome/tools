@@ -596,7 +596,6 @@ export class Globber {
 			const listing = memoryFs.directoryListings.get(path);
 			if (listing !== undefined) {
 				queue = queue.concat(Array.from(listing.values()));
-				continue;
 			}
 
 			// TODO maybe throw? not a file or directory, doesn't exist!

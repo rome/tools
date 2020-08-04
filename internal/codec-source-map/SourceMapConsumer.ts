@@ -194,7 +194,6 @@ export default class SourceMapConsumer {
 			const mapping = this.exactOriginalPositionFor(line, column);
 			if (mapping === undefined) {
 				column = ob1Dec(column);
-				continue;
 			} else {
 				return mapping;
 			}

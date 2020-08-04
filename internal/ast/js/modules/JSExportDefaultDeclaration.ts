@@ -13,7 +13,7 @@ import {
 	TSInterfaceDeclaration,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
+import {TSDeclareFunction} from "@internal/ast";
 
 export interface JSExportDefaultDeclaration extends NodeBaseWithComments {
 	readonly type: "JSExportDefaultDeclaration";

@@ -109,13 +109,13 @@ async function testLintExpect(
 
 	const diagnostics = processor.getDiagnostics();
 
-	if (expectValid === false) {
+	if (expectValid) {
+		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
+	} else {
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
 
-	if (expectValid === true) {
-		t.is(diagnostics.length, 0, "Expected test not to have diagnostics.");
-	}
+
 
 	const snapshotName = t.snapshot(
 		await printDiagnosticsToString({

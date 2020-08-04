@@ -27,13 +27,10 @@ function rgbTo8BitAnsi([r, g, b]: MarkupRGB): number {
 		return Math.round((r - 8) / 247 * 24) + 232;
 	}
 
-	const ansi =
-		16 +
+	return 16 +
 		36 * Math.round(r / 255 * 5) +
 		6 * Math.round(g / 255 * 5) +
 		Math.round(b / 255 * 5);
-
-	return ansi;
 }
 
 function saturation(rgb: MarkupRGB): number {

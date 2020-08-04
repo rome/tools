@@ -9,7 +9,7 @@ import {markupToHtml} from "@internal/cli-layout";
 import {createUnknownFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {ob1Coerce1} from "@internal/ob1";
-import {ROOT, modifyGeneratedFile} from "../_utils";
+import {modifyGeneratedFile, ROOT} from "../_utils";
 
 const {worker, performFileOperation} = createMockWorker();
 
@@ -79,7 +79,7 @@ async function run(
 			processor.addDiagnostics(res.diagnostics);
 
 			const diagnostics = processor.getDiagnostics();
-			const diagnosticsHTML = await printDiagnosticsToString({
+			return await printDiagnosticsToString({
 				diagnostics,
 				suppressions: [],
 				format: "html",
@@ -88,7 +88,6 @@ async function run(
 					columns: ob1Coerce1(75),
 				},
 			});
-			return diagnosticsHTML;
 		},
 	);
 

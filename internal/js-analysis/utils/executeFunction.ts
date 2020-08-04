@@ -73,7 +73,7 @@ export default function executeFunction(
 	const block = bodyScope.evaluate(node.body);
 
 	// if no types have flowed into the return type then it'll return undefined
-	if (returns.hasConnections() === false) {
+	if (!returns.hasConnections()) {
 		//const ret = new VoidT(scope, node);
 		//returns.shouldMatch(ret);
 	}
@@ -83,6 +83,5 @@ export default function executeFunction(
 	}
 
 	// create the function
-	const func = new FunctionT(scope, node, {params, rest, returns, body: block});
-	return func;
+	return new FunctionT(scope, node, {params, rest, returns, body: block});
 }

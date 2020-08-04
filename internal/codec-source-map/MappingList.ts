@@ -79,7 +79,7 @@ export default class MappingList {
    * copy.
    */
 	toArray(): Array<Mapping> {
-		if (this.sorted === false) {
+		if (!this.sorted) {
 			this.array.sort(compareByGeneratedPositionsInflated);
 			this.sorted = true;
 		}

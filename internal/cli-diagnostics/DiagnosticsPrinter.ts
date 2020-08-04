@@ -212,14 +212,8 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	shouldTruncate(): boolean {
-		if (
-			!this.flags.showAllDiagnostics &&
-			this.displayedCount > this.flags.maxDiagnostics
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		return !this.flags.showAllDiagnostics &&
+			this.displayedCount > this.flags.maxDiagnostics;
 	}
 
 	shouldIgnore(diag: Diagnostic): boolean {
@@ -371,7 +365,6 @@ export default class DiagnosticsPrinter extends Error {
 						if (filename !== undefined) {
 							const path = this.createFilePath(filename);
 							if (
-								filename !== undefined &&
 								line !== undefined &&
 								column !== undefined
 							) {

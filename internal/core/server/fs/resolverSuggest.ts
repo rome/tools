@@ -20,7 +20,7 @@ import {
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
 import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
-import {PLATFORMS} from "../../common/types/platform";
+import {PLATFORMS} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 
 export default function resolverSuggest(

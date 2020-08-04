@@ -213,8 +213,6 @@ export default class SnapshotManager {
 
 							break;
 						}
-
-						continue;
 					}
 				}
 				return snapshot;

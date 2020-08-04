@@ -45,7 +45,7 @@ export function isValidIdentifierName(name: string): boolean {
 		return false;
 	}
 
-	if (isIdentifierStart(getFullCharCodeAt(name, 0)) === false) {
+	if (!isIdentifierStart(getFullCharCodeAt(name, 0))) {
 		return false;
 	}
 

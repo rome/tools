@@ -28,7 +28,7 @@ export const USER_CONFIG_FILENAMES: Array<string> = [
 
 // Constants used to handle scaling
 export const MAX_MASTER_BYTES_BEFORE_WORKERS = 0.5 * MEGABYTE;
-export const MAX_WORKER_BYTES_BEFORE_ADD = 1 * MEGABYTE;
+export const MAX_WORKER_BYTES_BEFORE_ADD = MEGABYTE;
 const CPU_COUNT: number = os.cpus().length;
 export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 

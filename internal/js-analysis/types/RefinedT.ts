@@ -43,10 +43,10 @@ export default class RefinedT extends T {
 				}
 			}
 
-			if (compatible === false) {
-				clean.push(type);
-			} else {
+			if (compatible) {
 				removed.push(type);
+			} else {
+				clean.push(type);
 			}
 		}
 

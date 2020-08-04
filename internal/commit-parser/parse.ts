@@ -139,7 +139,6 @@ export const createCommitParser = createParser((ParserCore) =>
 					if (this.matchToken("Word")) {
 						rawBody += (this.getToken() as Tokens["Word"]).value;
 						this.nextToken();
-						continue;
 					}
 				}
 			} else {

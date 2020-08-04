@@ -50,7 +50,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {VERSION} from "../common/constants";
+import {VERSION} from "@internal/core";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {
@@ -479,7 +479,7 @@ export default class Server {
 
 		// If we aren't a dedicated process then we should only expect a single connection
 		// and when that ends. End the Server.
-		if (this.options.dedicated === false) {
+		if (!this.options.dedicated) {
 			bridge.endEvent.subscribe(() => {
 				this.end();
 			});

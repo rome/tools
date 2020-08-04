@@ -6,7 +6,7 @@
  */
 
 import {Server, ServerRequest} from "@internal/core";
-import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers/index";
+import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,

@@ -44,11 +44,11 @@ export default class ArraySet {
 		const isDuplicate = this.has(str);
 		const idx = this.array.length;
 
-		if (isDuplicate === false || allowDuplicates === true) {
+		if (!isDuplicate || allowDuplicates === true) {
 			this.array.push(str);
 		}
 
-		if (isDuplicate === false) {
+		if (!isDuplicate) {
 			this.set.set(str, idx);
 		}
 	}

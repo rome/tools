@@ -24,7 +24,7 @@ import {
 import {ProjectConfigJSON} from "@internal/project";
 import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
 import {JSONFileReference} from "../types/files";
-import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
+import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
 import {FileNotFound} from "@internal/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@internal/path";

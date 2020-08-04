@@ -137,7 +137,7 @@ export default createVisitor({
 			// Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
 			const newScope = scope.getRootScope().enterEvaluate(newProgram);
 
-			if (opts.moduleAll === true) {
+			if (opts.moduleAll) {
 				// Get all the export names
 				const exportNames: Map<string, string> = new Map();
 				for (const child of newProgram.body) {
@@ -347,7 +347,7 @@ export default createVisitor({
 			}
 		}
 
-		if (node.type === "JSExportAllDeclaration" && opts.moduleAll === true) {
+		if (node.type === "JSExportAllDeclaration" && opts.moduleAll) {
 			const moduleId = getModuleId(node.source.value, opts);
 			if (moduleId === undefined) {
 				return signals.retain;
@@ -371,7 +371,7 @@ export default createVisitor({
 			);
 		}
 
-		if (node.type === "JSExportAllDeclaration" && opts.moduleAll !== true) {
+		if (node.type === "JSExportAllDeclaration" && !opts.moduleAll) {
 			// We can remove these, this signature has already been flagged by analyze() and we'll automatically forward it
 			return signals.remove;
 		}

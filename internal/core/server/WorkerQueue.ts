@@ -83,7 +83,7 @@ export default class WorkerQueue<M> {
 		worker.queue.push([path, metadata, resolve]);
 
 		// Start this worker if it isn't already
-		if (worker.running === false) {
+		if (!worker.running) {
 			const promise = this.processWorker(worker);
 			// Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
 			promise.catch(() => {});

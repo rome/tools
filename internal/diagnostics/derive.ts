@@ -119,7 +119,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
 	}
 
-	if (opts.includeHeaderInAdvice === true) {
+	if (opts.includeHeaderInAdvice) {
 		advice.push({
 			type: "log",
 			category: "none",
@@ -143,7 +143,7 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	if (opts.skipFrame === false) {
+	if (!opts.skipFrame) {
 		if (location.start !== undefined && location.end !== undefined) {
 			advice.push({
 				type: "frame",

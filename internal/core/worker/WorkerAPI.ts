@@ -528,7 +528,7 @@ export default class WorkerAPI {
 		let {diagnostics} = res;
 
 		// Only enable typechecking if enabled in .romeconfig
-		let typeCheckingEnabled = project.config.typeCheck.enabled === true;
+		let typeCheckingEnabled = project.config.typeCheck.enabled;
 		if (project.config.typeCheck.libs.has(ref.real)) {
 			// don't typecheck lib files
 			typeCheckingEnabled = false;

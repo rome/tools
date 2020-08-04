@@ -19,7 +19,7 @@ import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {getFileHandlerFromPath} from "../../common/file-handlers/index";
+import {getFileHandlerFromPath} from "@internal/core";
 import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
 	AnalyzeDependency,

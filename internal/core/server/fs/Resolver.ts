@@ -9,7 +9,7 @@ import {Manifest, ManifestDefinition} from "@internal/codec-js-manifest";
 import Server from "../Server";
 import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
 import {ProjectDefinition, createDefaultProjectConfig} from "@internal/project";
-import {FileReference} from "../../common/types/files";
+import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,

@@ -7,7 +7,7 @@
 
 import Server from "../Server";
 import {SourceLocation} from "@internal/parser-core";
-import {BundleBuddyStats} from "../../common/types/bundler";
+import {BundleBuddyStats} from "@internal/core";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {ResolverOptions} from "../fs/Resolver";
 import WorkerQueue from "../WorkerQueue";
@@ -23,7 +23,7 @@ import {
 	AbsoluteFilePathMap,
 	createUnknownFilePath,
 } from "@internal/path";
-import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
+import {AnalyzeModuleType} from "@internal/core";
 import {markup} from "@internal/markup";
 import {
 	FileNotFound,

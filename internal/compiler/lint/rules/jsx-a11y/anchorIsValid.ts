@@ -24,14 +24,9 @@ function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 }
 
 function falsyHref(attr: JSXAttribute | undefined): boolean {
-	if (
-		attr === undefined ||
+	return attr === undefined ||
 		(attr.value?.type === "JSXExpressionContainer" &&
-		attr.value.expression.type === "JSNullLiteral")
-	) {
-		return true;
-	}
-	return false;
+			attr.value.expression.type === "JSNullLiteral");
 }
 
 export default createVisitor({
