@@ -7,4 +7,7 @@ blacklist	*/"
 	"BLACKLIST;"
 	"someBlacklist;"
 	"SOME_BLACKLIST;"
+	"const payload = {blacklist: []};"
+	"payload.blacklist = [];"
+	"payload.blacklist();"
 ]
