@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 		end: Object {
 			column: 0
-			index: 51
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					identifierName: "async"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 					identifierName: "y"
 					end: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 					start: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				end: Object {
 					column: 50
-					index: 50
 					line: 1
 				}
 				start: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 			}
@@ -132,12 +120,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 				}
@@ -148,12 +134,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 					end: Object {
 						column: 50
-						index: 50
 						line: 1
 					}
 					start: Object {
 						column: 39
-						index: 39
 						line: 1
 					}
 				}
@@ -163,12 +147,10 @@ JSRoot {
 							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 							end: Object {
 								column: 46
-								index: 46
 								line: 1
 							}
 							start: Object {
 								column: 41
-								index: 41
 								line: 1
 							}
 						}
@@ -179,12 +161,10 @@ JSRoot {
 								identifierName: "await"
 								end: Object {
 									column: 46
-									index: 46
 									line: 1
 								}
 								start: Object {
 									column: 41
-									index: 41
 									line: 1
 								}
 							}
@@ -195,12 +175,10 @@ JSRoot {
 							filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 							end: Object {
 								column: 48
-								index: 48
 								line: 1
 							}
 							start: Object {
 								column: 47
-								index: 47
 								line: 1
 							}
 						}
@@ -211,12 +189,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 48
-									index: 48
 									line: 1
 								}
 								start: Object {
 									column: 47
-									index: 47
 									line: 1
 								}
 							}

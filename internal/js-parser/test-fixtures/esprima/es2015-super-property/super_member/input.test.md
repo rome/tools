@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-super-property/super_member/input.js"
 		end: Object {
 			column: 0
-			index: 61
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-super-property/super_member/input.js"
 				end: Object {
 					column: 1
-					index: 60
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "esprima/es2015-super-property/super_member/input.js"
 					end: Object {
 						column: 1
-						index: 60
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						identifierName: "B"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 									identifierName: "X"
 									end: Object {
 										column: 5
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 24
 										line: 2
 									}
 								}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 							filename: "esprima/es2015-super-property/super_member/input.js"
 							end: Object {
 								column: 5
-								index: 58
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 7
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 5
-									index: 25
 									line: 2
 								}
 							}
@@ -177,19 +159,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 							loc: Object {
 								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -200,12 +179,10 @@ JSRoot {
 								filename: "esprima/es2015-super-property/super_member/input.js"
 								end: Object {
 									column: 5
-									index: 58
 									line: 4
 								}
 								start: Object {
 									column: 8
-									index: 28
 									line: 2
 								}
 							}
@@ -215,12 +192,10 @@ JSRoot {
 										filename: "esprima/es2015-super-property/super_member/input.js"
 										end: Object {
 											column: 22
-											index: 52
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 38
 											line: 3
 										}
 									}
@@ -229,12 +204,10 @@ JSRoot {
 											filename: "esprima/es2015-super-property/super_member/input.js"
 											end: Object {
 												column: 22
-												index: 52
 												line: 3
 											}
 											start: Object {
 												column: 15
-												index: 45
 												line: 3
 											}
 										}
@@ -243,12 +216,10 @@ JSRoot {
 												filename: "esprima/es2015-super-property/super_member/input.js"
 												end: Object {
 													column: 20
-													index: 50
 													line: 3
 												}
 												start: Object {
 													column: 15
-													index: 45
 													line: 3
 												}
 											}
@@ -261,12 +232,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 22
-														index: 52
 														line: 3
 													}
 													start: Object {
 														column: 21
-														index: 51
 														line: 3
 													}
 												}
@@ -276,12 +245,10 @@ JSRoot {
 												identifierName: "y"
 												end: Object {
 													column: 22
-													index: 52
 													line: 3
 												}
 												start: Object {
 													column: 21
-													index: 51
 													line: 3
 												}
 											}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/method-computed/input.ts"
 		end: Object {
 			column: 0
-			index: 75
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/method-computed/input.ts"
 				end: Object {
 					column: 1
-					index: 74
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/method-computed/input.ts"
 					end: Object {
 						column: 1
-						index: 74
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -90,12 +82,10 @@ JSRoot {
 									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 20
-										index: 30
 										line: 2
 									}
 									start: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 										identifierName: "Symbol"
 										end: Object {
 											column: 11
-											index: 21
 											line: 2
 										}
 										start: Object {
 											column: 5
-											index: 15
 											line: 2
 										}
 									}
@@ -124,12 +112,10 @@ JSRoot {
 											identifierName: "iterator"
 											end: Object {
 												column: 20
-												index: 30
 												line: 2
 											}
 											start: Object {
 												column: 12
-												index: 22
 												line: 2
 											}
 										}
@@ -139,12 +125,10 @@ JSRoot {
 										identifierName: "iterator"
 										end: Object {
 											column: 20
-											index: 30
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 22
 											line: 2
 										}
 									}
@@ -154,12 +138,10 @@ JSRoot {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -169,12 +151,10 @@ JSRoot {
 							filename: "typescript/class/method-computed/input.ts"
 							end: Object {
 								column: 30
-								index: 40
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -187,19 +167,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -216,12 +193,10 @@ JSRoot {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 29
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 21
-									index: 31
 									line: 2
 								}
 							}
@@ -230,12 +205,10 @@ JSRoot {
 									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 29
-										index: 39
 										line: 2
 									}
 									start: Object {
 										column: 25
-										index: 35
 										line: 2
 									}
 								}
@@ -250,12 +223,10 @@ JSRoot {
 									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 20
-										index: 61
 										line: 3
 									}
 									start: Object {
 										column: 5
-										index: 46
 										line: 3
 									}
 								}
@@ -266,12 +237,10 @@ JSRoot {
 										identifierName: "Symbol"
 										end: Object {
 											column: 11
-											index: 52
 											line: 3
 										}
 										start: Object {
 											column: 5
-											index: 46
 											line: 3
 										}
 									}
@@ -284,12 +253,10 @@ JSRoot {
 											identifierName: "iterator"
 											end: Object {
 												column: 20
-												index: 61
 												line: 3
 											}
 											start: Object {
 												column: 12
-												index: 53
 												line: 3
 											}
 										}
@@ -299,12 +266,10 @@ JSRoot {
 										identifierName: "iterator"
 										end: Object {
 											column: 20
-											index: 61
 											line: 3
 										}
 										start: Object {
 											column: 12
-											index: 53
 											line: 3
 										}
 									}
@@ -314,12 +279,10 @@ JSRoot {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 21
-									index: 62
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 45
 									line: 3
 								}
 							}
@@ -329,12 +292,10 @@ JSRoot {
 							filename: "typescript/class/method-computed/input.ts"
 							end: Object {
 								column: 31
-								index: 72
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 45
 								line: 3
 							}
 						}
@@ -347,19 +308,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 45
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 22
-									index: 63
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 45
 									line: 3
 								}
 							}
@@ -376,12 +334,10 @@ JSRoot {
 								filename: "typescript/class/method-computed/input.ts"
 								end: Object {
 									column: 30
-									index: 71
 									line: 3
 								}
 								start: Object {
 									column: 22
-									index: 63
 									line: 3
 								}
 							}
@@ -390,12 +346,10 @@ JSRoot {
 									filename: "typescript/class/method-computed/input.ts"
 									end: Object {
 										column: 30
-										index: 71
 										line: 3
 									}
 									start: Object {
 										column: 26
-										index: 67
 										line: 3
 									}
 								}

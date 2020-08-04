@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-from-default/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-from-default/input.js"
 				end: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-from-default/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-from-default/input.js"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -104,12 +94,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}

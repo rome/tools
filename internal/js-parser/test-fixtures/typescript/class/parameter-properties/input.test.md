@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/parameter-properties/input.ts"
 		end: Object {
 			column: 0
-			index: 258
 			line: 12
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/class/parameter-properties/input.ts"
 				end: Object {
 					column: 42
-					index: 197
 					line: 8
 				}
 				start: Object {
 					column: 8
-					index: 163
 					line: 8
 				}
 			}
@@ -58,12 +54,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "typescript/class/parameter-properties/input.ts"
 				end: Object {
 					column: 1
-					index: 257
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -90,12 +82,10 @@ JSRoot {
 					filename: "typescript/class/parameter-properties/input.ts"
 					end: Object {
 						column: 1
-						index: 257
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 15
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 								}
@@ -124,12 +112,10 @@ JSRoot {
 								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 							filename: "typescript/class/parameter-properties/input.ts"
 							end: Object {
 								column: 33
-								index: 255
 								line: 10
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -154,12 +138,10 @@ JSRoot {
 								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 33
-									index: 255
 									line: 10
 								}
 								start: Object {
 									column: 31
-									index: 253
 									line: 10
 								}
 							}
@@ -173,19 +155,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -202,12 +181,10 @@ JSRoot {
 								filename: "typescript/class/parameter-properties/input.ts"
 								end: Object {
 									column: 30
-									index: 252
 									line: 10
 								}
 								start: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 							}
@@ -218,12 +195,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 18
-											index: 45
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 35
 											line: 3
 										}
 									}
@@ -234,12 +209,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 18
-												index: 45
 												line: 3
 											}
 											start: Object {
 												column: 8
-												index: 35
 												line: 3
 											}
 										}
@@ -251,12 +224,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 25
-											index: 72
 											line: 4
 										}
 										start: Object {
 											column: 8
-											index: 55
 											line: 4
 										}
 									}
@@ -267,12 +238,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 25
-												index: 72
 												line: 4
 											}
 											start: Object {
 												column: 8
-												index: 55
 												line: 4
 											}
 										}
@@ -284,12 +253,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 21
-											index: 95
 											line: 5
 										}
 										start: Object {
 											column: 8
-											index: 82
 											line: 5
 										}
 									}
@@ -300,12 +267,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 21
-												index: 95
 												line: 5
 											}
 											start: Object {
 												column: 8
-												index: 82
 												line: 5
 											}
 										}
@@ -317,12 +282,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 27
-											index: 124
 											line: 6
 										}
 										start: Object {
 											column: 8
-											index: 105
 											line: 6
 										}
 									}
@@ -333,12 +296,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 27
-												index: 124
 												line: 6
 											}
 											start: Object {
 												column: 8
-												index: 105
 												line: 6
 											}
 										}
@@ -350,12 +311,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 27
-											index: 153
 											line: 7
 										}
 										start: Object {
 											column: 8
-											index: 134
 											line: 7
 										}
 									}
@@ -366,12 +325,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 27
-												index: 153
 												line: 7
 											}
 											start: Object {
 												column: 8
-												index: 134
 												line: 7
 											}
 										}
@@ -383,12 +340,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 22
-											index: 220
 											line: 9
 										}
 										start: Object {
 											column: 8
-											index: 206
 											line: 9
 										}
 									}
@@ -399,12 +354,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 22
-												index: 220
 												line: 9
 											}
 											start: Object {
 												column: 21
-												index: 219
 												line: 9
 											}
 										}
@@ -417,12 +370,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 22
-												index: 220
 												line: 9
 											}
 											start: Object {
 												column: 8
-												index: 206
 												line: 9
 											}
 										}
@@ -435,12 +386,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 18
-												index: 216
 												line: 9
 											}
 											start: Object {
 												column: 17
-												index: 215
 												line: 9
 											}
 										}
@@ -452,12 +401,10 @@ JSRoot {
 												filename: "typescript/class/parameter-properties/input.ts"
 												end: Object {
 													column: 18
-													index: 216
 													line: 9
 												}
 												start: Object {
 													column: 8
-													index: 206
 													line: 9
 												}
 											}
@@ -469,12 +416,10 @@ JSRoot {
 										filename: "typescript/class/parameter-properties/input.ts"
 										end: Object {
 											column: 29
-											index: 251
 											line: 10
 										}
 										start: Object {
 											column: 8
-											index: 230
 											line: 10
 										}
 									}
@@ -485,12 +430,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 29
-												index: 251
 												line: 10
 											}
 											start: Object {
 												column: 8
-												index: 230
 												line: 10
 											}
 										}
@@ -502,12 +445,10 @@ JSRoot {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
 												column: 29
-												index: 251
 												line: 10
 											}
 											start: Object {
 												column: 28
-												index: 250
 												line: 10
 											}
 										}
@@ -519,12 +460,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 16
-												index: 238
 												line: 10
 											}
 											start: Object {
 												column: 15
-												index: 237
 												line: 10
 											}
 										}
@@ -534,12 +473,10 @@ JSRoot {
 												filename: "typescript/class/parameter-properties/input.ts"
 												end: Object {
 													column: 25
-													index: 247
 													line: 10
 												}
 												start: Object {
 													column: 8
-													index: 230
 													line: 10
 												}
 											}
@@ -548,12 +485,10 @@ JSRoot {
 													filename: "typescript/class/parameter-properties/input.ts"
 													end: Object {
 														column: 25
-														index: 247
 														line: 10
 													}
 													start: Object {
 														column: 19
-														index: 241
 														line: 10
 													}
 												}

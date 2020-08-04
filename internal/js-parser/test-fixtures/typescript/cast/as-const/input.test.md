@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/cast/as-const/input.ts"
 		end: Object {
 			column: 0
-			index: 1_128
 			line: 40
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 42
-					index: 42
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 99
-					index: 142
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 43
 					line: 2
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 61
-					index: 821
 					line: 26
 				}
 				start: Object {
 					column: 53
-					index: 813
 					line: 26
 				}
 			}
@@ -93,12 +85,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
-					index: 167
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 143
 					line: 3
 				}
 			}
@@ -109,12 +99,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
-						index: 167
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 143
 						line: 3
 					}
 				}
@@ -128,12 +116,10 @@ JSRoot {
 								identifierName: "v1"
 								end: Object {
 									column: 6
-									index: 149
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 147
 									line: 3
 								}
 							}
@@ -143,12 +129,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
-								index: 166
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 147
 								line: 3
 							}
 						}
@@ -157,12 +141,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
-									index: 166
 									line: 3
 								}
 								start: Object {
 									column: 9
-									index: 152
 									line: 3
 								}
 							}
@@ -172,12 +154,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
-										index: 157
 										line: 3
 									}
 									start: Object {
 										column: 9
-										index: 152
 										line: 3
 									}
 								}
@@ -189,12 +169,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 23
-										index: 166
 										line: 3
 									}
 									start: Object {
 										column: 18
-										index: 161
 										line: 3
 									}
 								}
@@ -209,12 +187,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
-					index: 192
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 168
 					line: 4
 				}
 			}
@@ -224,12 +200,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
-						index: 192
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 168
 						line: 4
 					}
 				}
@@ -242,12 +216,10 @@ JSRoot {
 								identifierName: "v2"
 								end: Object {
 									column: 6
-									index: 174
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 172
 									line: 4
 								}
 							}
@@ -256,12 +228,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
-								index: 191
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 172
 								line: 4
 							}
 						}
@@ -270,12 +240,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
-									index: 191
 									line: 4
 								}
 								start: Object {
 									column: 9
-									index: 177
 									line: 4
 								}
 							}
@@ -286,12 +254,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 23
-										index: 191
 										line: 4
 									}
 									start: Object {
 										column: 18
-										index: 186
 										line: 4
 									}
 								}
@@ -302,12 +268,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
-										index: 182
 										line: 4
 									}
 									start: Object {
 										column: 9
-										index: 177
 										line: 4
 									}
 								}
@@ -320,12 +284,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 13
-												index: 181
 												line: 4
 											}
 											start: Object {
 												column: 10
-												index: 178
 												line: 4
 											}
 										}
@@ -342,12 +304,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
-					index: 214
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 193
 					line: 5
 				}
 			}
@@ -357,12 +317,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
-						index: 214
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 193
 						line: 5
 					}
 				}
@@ -375,12 +333,10 @@ JSRoot {
 								identifierName: "v3"
 								end: Object {
 									column: 6
-									index: 199
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 197
 									line: 5
 								}
 							}
@@ -389,12 +345,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
-								index: 213
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 197
 								line: 5
 							}
 						}
@@ -403,12 +357,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
-									index: 213
 									line: 5
 								}
 								start: Object {
 									column: 9
-									index: 202
 									line: 5
 								}
 							}
@@ -419,12 +371,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
-										index: 204
 										line: 5
 									}
 									start: Object {
 										column: 9
-										index: 202
 										line: 5
 									}
 								}
@@ -436,12 +386,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 20
-										index: 213
 										line: 5
 									}
 									start: Object {
 										column: 15
-										index: 208
 										line: 5
 									}
 								}
@@ -456,12 +404,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
-					index: 237
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 215
 					line: 6
 				}
 			}
@@ -471,12 +417,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
-						index: 237
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 215
 						line: 6
 					}
 				}
@@ -489,12 +433,10 @@ JSRoot {
 								identifierName: "v4"
 								end: Object {
 									column: 6
-									index: 221
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 219
 									line: 6
 								}
 							}
@@ -503,12 +445,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
-								index: 236
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 219
 								line: 6
 							}
 						}
@@ -517,12 +457,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
-									index: 236
 									line: 6
 								}
 								start: Object {
 									column: 9
-									index: 224
 									line: 6
 								}
 							}
@@ -533,12 +471,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 21
-										index: 236
 										line: 6
 									}
 									start: Object {
 										column: 16
-										index: 231
 										line: 6
 									}
 								}
@@ -550,12 +486,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
-										index: 227
 										line: 6
 									}
 									start: Object {
 										column: 9
-										index: 224
 										line: 6
 									}
 								}
@@ -566,12 +500,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
-											index: 227
 											line: 6
 										}
 										start: Object {
 											column: 10
-											index: 225
 											line: 6
 										}
 									}
@@ -587,12 +519,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
-					index: 260
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 238
 					line: 7
 				}
 			}
@@ -602,12 +532,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
-						index: 260
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 238
 						line: 7
 					}
 				}
@@ -620,12 +548,10 @@ JSRoot {
 								identifierName: "v5"
 								end: Object {
 									column: 6
-									index: 244
 									line: 7
 								}
 								start: Object {
 									column: 4
-									index: 242
 									line: 7
 								}
 							}
@@ -634,12 +560,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
-								index: 259
 								line: 7
 							}
 							start: Object {
 								column: 4
-								index: 242
 								line: 7
 							}
 						}
@@ -648,12 +572,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
-									index: 259
 									line: 7
 								}
 								start: Object {
 									column: 9
-									index: 247
 									line: 7
 								}
 							}
@@ -664,12 +586,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 21
-										index: 259
 										line: 7
 									}
 									start: Object {
 										column: 16
-										index: 254
 										line: 7
 									}
 								}
@@ -681,12 +601,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
-										index: 250
 										line: 7
 									}
 									start: Object {
 										column: 9
-										index: 247
 										line: 7
 									}
 								}
@@ -697,12 +615,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
-											index: 250
 											line: 7
 										}
 										start: Object {
 											column: 10
-											index: 248
 											line: 7
 										}
 									}
@@ -718,12 +634,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
-					index: 282
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 261
 					line: 8
 				}
 			}
@@ -733,12 +647,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
-						index: 282
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 261
 						line: 8
 					}
 				}
@@ -751,12 +663,10 @@ JSRoot {
 								identifierName: "v6"
 								end: Object {
 									column: 6
-									index: 267
 									line: 8
 								}
 								start: Object {
 									column: 4
-									index: 265
 									line: 8
 								}
 							}
@@ -765,12 +675,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
-								index: 281
 								line: 8
 							}
 							start: Object {
 								column: 4
-								index: 265
 								line: 8
 							}
 						}
@@ -779,12 +687,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
-									index: 281
 									line: 8
 								}
 								start: Object {
 									column: 9
-									index: 270
 									line: 8
 								}
 							}
@@ -795,12 +701,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
-										index: 272
 										line: 8
 									}
 									start: Object {
 										column: 9
-										index: 270
 										line: 8
 									}
 								}
@@ -812,12 +716,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 20
-										index: 281
 										line: 8
 									}
 									start: Object {
 										column: 15
-										index: 276
 										line: 8
 									}
 								}
@@ -832,12 +734,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
-					index: 305
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 283
 					line: 9
 				}
 			}
@@ -847,12 +747,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
-						index: 305
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 283
 						line: 9
 					}
 				}
@@ -865,12 +763,10 @@ JSRoot {
 								identifierName: "v7"
 								end: Object {
 									column: 6
-									index: 289
 									line: 9
 								}
 								start: Object {
 									column: 4
-									index: 287
 									line: 9
 								}
 							}
@@ -879,12 +775,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
-								index: 304
 								line: 9
 							}
 							start: Object {
 								column: 4
-								index: 287
 								line: 9
 							}
 						}
@@ -893,12 +787,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
-									index: 304
 									line: 9
 								}
 								start: Object {
 									column: 9
-									index: 292
 									line: 9
 								}
 							}
@@ -909,12 +801,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 21
-										index: 304
 										line: 9
 									}
 									start: Object {
 										column: 16
-										index: 299
 										line: 9
 									}
 								}
@@ -926,12 +816,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
-										index: 295
 										line: 9
 									}
 									start: Object {
 										column: 9
-										index: 292
 										line: 9
 									}
 								}
@@ -942,12 +830,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 12
-											index: 295
 											line: 9
 										}
 										start: Object {
 											column: 10
-											index: 293
 											line: 9
 										}
 									}
@@ -963,12 +849,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
-					index: 329
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 306
 					line: 10
 				}
 			}
@@ -978,12 +862,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
-						index: 329
 						line: 10
 					}
 					start: Object {
 						column: 0
-						index: 306
 						line: 10
 					}
 				}
@@ -996,12 +878,10 @@ JSRoot {
 								identifierName: "v8"
 								end: Object {
 									column: 6
-									index: 312
 									line: 10
 								}
 								start: Object {
 									column: 4
-									index: 310
 									line: 10
 								}
 							}
@@ -1010,12 +890,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
-								index: 328
 								line: 10
 							}
 							start: Object {
 								column: 4
-								index: 310
 								line: 10
 							}
 						}
@@ -1024,12 +902,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
-									index: 328
 									line: 10
 								}
 								start: Object {
 									column: 9
-									index: 315
 									line: 10
 								}
 							}
@@ -1039,12 +915,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 13
-										index: 319
 										line: 10
 									}
 									start: Object {
 										column: 9
-										index: 315
 										line: 10
 									}
 								}
@@ -1056,12 +930,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 22
-										index: 328
 										line: 10
 									}
 									start: Object {
 										column: 17
-										index: 323
 										line: 10
 									}
 								}
@@ -1076,12 +948,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 24
-					index: 354
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 330
 					line: 11
 				}
 			}
@@ -1091,12 +961,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 24
-						index: 354
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 330
 						line: 11
 					}
 				}
@@ -1109,12 +977,10 @@ JSRoot {
 								identifierName: "v9"
 								end: Object {
 									column: 6
-									index: 336
 									line: 11
 								}
 								start: Object {
 									column: 4
-									index: 334
 									line: 11
 								}
 							}
@@ -1123,12 +989,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 23
-								index: 353
 								line: 11
 							}
 							start: Object {
 								column: 4
-								index: 334
 								line: 11
 							}
 						}
@@ -1137,12 +1001,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 23
-									index: 353
 									line: 11
 								}
 								start: Object {
 									column: 9
-									index: 339
 									line: 11
 								}
 							}
@@ -1152,12 +1014,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
-										index: 344
 										line: 11
 									}
 									start: Object {
 										column: 9
-										index: 339
 										line: 11
 									}
 								}
@@ -1169,12 +1029,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 23
-										index: 353
 										line: 11
 									}
 									start: Object {
 										column: 18
-										index: 348
 										line: 11
 									}
 								}
@@ -1189,12 +1047,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 21
-					index: 377
 					line: 13
 				}
 				start: Object {
 					column: 0
-					index: 356
 					line: 13
 				}
 			}
@@ -1204,12 +1060,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 21
-						index: 377
 						line: 13
 					}
 					start: Object {
 						column: 0
-						index: 356
 						line: 13
 					}
 				}
@@ -1222,12 +1076,10 @@ JSRoot {
 								identifierName: "a1"
 								end: Object {
 									column: 6
-									index: 362
 									line: 13
 								}
 								start: Object {
 									column: 4
-									index: 360
 									line: 13
 								}
 							}
@@ -1236,12 +1088,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 20
-								index: 376
 								line: 13
 							}
 							start: Object {
 								column: 4
-								index: 360
 								line: 13
 							}
 						}
@@ -1250,12 +1100,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 20
-									index: 376
 									line: 13
 								}
 								start: Object {
 									column: 9
-									index: 365
 									line: 13
 								}
 							}
@@ -1265,12 +1113,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 11
-										index: 367
 										line: 13
 									}
 									start: Object {
 										column: 9
-										index: 365
 										line: 13
 									}
 								}
@@ -1282,12 +1128,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 20
-										index: 376
 										line: 13
 									}
 									start: Object {
 										column: 15
-										index: 371
 										line: 13
 									}
 								}
@@ -1302,12 +1146,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 28
-					index: 406
 					line: 14
 				}
 				start: Object {
 					column: 0
-					index: 378
 					line: 14
 				}
 			}
@@ -1317,12 +1159,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 28
-						index: 406
 						line: 14
 					}
 					start: Object {
 						column: 0
-						index: 378
 						line: 14
 					}
 				}
@@ -1335,12 +1175,10 @@ JSRoot {
 								identifierName: "a2"
 								end: Object {
 									column: 6
-									index: 384
 									line: 14
 								}
 								start: Object {
 									column: 4
-									index: 382
 									line: 14
 								}
 							}
@@ -1349,12 +1187,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 27
-								index: 405
 								line: 14
 							}
 							start: Object {
 								column: 4
-								index: 382
 								line: 14
 							}
 						}
@@ -1363,12 +1199,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 27
-									index: 405
 									line: 14
 								}
 								start: Object {
 									column: 9
-									index: 387
 									line: 14
 								}
 							}
@@ -1379,12 +1213,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 27
-										index: 405
 										line: 14
 									}
 									start: Object {
 										column: 22
-										index: 400
 										line: 14
 									}
 								}
@@ -1394,12 +1226,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 18
-										index: 396
 										line: 14
 									}
 									start: Object {
 										column: 9
-										index: 387
 										line: 14
 									}
 								}
@@ -1411,12 +1241,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 11
-												index: 389
 												line: 14
 											}
 											start: Object {
 												column: 10
-												index: 388
 												line: 14
 											}
 										}
@@ -1428,12 +1256,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 14
-												index: 392
 												line: 14
 											}
 											start: Object {
 												column: 13
-												index: 391
 												line: 14
 											}
 										}
@@ -1445,12 +1271,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 17
-												index: 395
 												line: 14
 											}
 											start: Object {
 												column: 16
-												index: 394
 												line: 14
 											}
 										}
@@ -1467,12 +1291,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 38
-					index: 445
 					line: 15
 				}
 				start: Object {
 					column: 0
-					index: 407
 					line: 15
 				}
 			}
@@ -1482,12 +1304,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 38
-						index: 445
 						line: 15
 					}
 					start: Object {
 						column: 0
-						index: 407
 						line: 15
 					}
 				}
@@ -1500,12 +1320,10 @@ JSRoot {
 								identifierName: "a3"
 								end: Object {
 									column: 6
-									index: 413
 									line: 15
 								}
 								start: Object {
 									column: 4
-									index: 411
 									line: 15
 								}
 							}
@@ -1514,12 +1332,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 37
-								index: 444
 								line: 15
 							}
 							start: Object {
 								column: 4
-								index: 411
 								line: 15
 							}
 						}
@@ -1528,12 +1344,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 37
-									index: 444
 									line: 15
 								}
 								start: Object {
 									column: 9
-									index: 416
 									line: 15
 								}
 							}
@@ -1544,12 +1358,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 37
-										index: 444
 										line: 15
 									}
 									start: Object {
 										column: 32
-										index: 439
 										line: 15
 									}
 								}
@@ -1559,12 +1371,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 28
-										index: 435
 										line: 15
 									}
 									start: Object {
 										column: 9
-										index: 416
 										line: 15
 									}
 								}
@@ -1576,12 +1386,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 12
-												index: 419
 												line: 15
 											}
 											start: Object {
 												column: 10
-												index: 417
 												line: 15
 											}
 										}
@@ -1592,12 +1400,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 21
-												index: 428
 												line: 15
 											}
 											start: Object {
 												column: 14
-												index: 421
 												line: 15
 											}
 										}
@@ -1608,12 +1414,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 27
-												index: 434
 												line: 15
 											}
 											start: Object {
 												column: 23
-												index: 430
 												line: 15
 											}
 										}
@@ -1630,12 +1434,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 33
-					index: 479
 					line: 16
 				}
 				start: Object {
 					column: 0
-					index: 446
 					line: 16
 				}
 			}
@@ -1645,12 +1447,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 33
-						index: 479
 						line: 16
 					}
 					start: Object {
 						column: 0
-						index: 446
 						line: 16
 					}
 				}
@@ -1663,12 +1463,10 @@ JSRoot {
 								identifierName: "a4"
 								end: Object {
 									column: 6
-									index: 452
 									line: 16
 								}
 								start: Object {
 									column: 4
-									index: 450
 									line: 16
 								}
 							}
@@ -1677,12 +1475,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 32
-								index: 478
 								line: 16
 							}
 							start: Object {
 								column: 4
-								index: 450
 								line: 16
 							}
 						}
@@ -1691,12 +1487,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 32
-									index: 478
 									line: 16
 								}
 								start: Object {
 									column: 9
-									index: 455
 									line: 16
 								}
 							}
@@ -1707,12 +1501,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 32
-										index: 478
 										line: 16
 									}
 									start: Object {
 										column: 27
-										index: 473
 										line: 16
 									}
 								}
@@ -1722,12 +1514,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 23
-										index: 469
 										line: 16
 									}
 									start: Object {
 										column: 9
-										index: 455
 										line: 16
 									}
 								}
@@ -1737,12 +1527,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
-												index: 468
 												line: 16
 											}
 											start: Object {
 												column: 10
-												index: 456
 												line: 16
 											}
 										}
@@ -1751,12 +1539,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 22
-													index: 468
 													line: 16
 												}
 												start: Object {
 													column: 13
-													index: 459
 													line: 16
 												}
 											}
@@ -1768,12 +1554,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 15
-															index: 461
 															line: 16
 														}
 														start: Object {
 															column: 14
-															index: 460
 															line: 16
 														}
 													}
@@ -1785,12 +1569,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 18
-															index: 464
 															line: 16
 														}
 														start: Object {
 															column: 17
-															index: 463
 															line: 16
 														}
 													}
@@ -1802,12 +1584,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 21
-															index: 467
 															line: 16
 														}
 														start: Object {
 															column: 20
-															index: 466
 															line: 16
 														}
 													}
@@ -1827,12 +1607,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 19
-					index: 499
 					line: 17
 				}
 				start: Object {
 					column: 0
-					index: 480
 					line: 17
 				}
 			}
@@ -1842,12 +1620,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 19
-						index: 499
 						line: 17
 					}
 					start: Object {
 						column: 0
-						index: 480
 						line: 17
 					}
 				}
@@ -1860,12 +1636,10 @@ JSRoot {
 								identifierName: "a5"
 								end: Object {
 									column: 6
-									index: 486
 									line: 17
 								}
 								start: Object {
 									column: 4
-									index: 484
 									line: 17
 								}
 							}
@@ -1874,12 +1648,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 18
-								index: 498
 								line: 17
 							}
 							start: Object {
 								column: 4
-								index: 484
 								line: 17
 							}
 						}
@@ -1888,12 +1660,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 18
-									index: 498
 									line: 17
 								}
 								start: Object {
 									column: 9
-									index: 489
 									line: 17
 								}
 							}
@@ -1905,12 +1675,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 11
-											index: 491
 											line: 17
 										}
 										start: Object {
 											column: 10
-											index: 490
 											line: 17
 										}
 									}
@@ -1922,12 +1690,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 14
-											index: 494
 											line: 17
 										}
 										start: Object {
 											column: 13
-											index: 493
 											line: 17
 										}
 									}
@@ -1939,12 +1705,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 17
-											index: 497
 											line: 17
 										}
 										start: Object {
 											column: 16
-											index: 496
 											line: 17
 										}
 									}
@@ -1960,12 +1724,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 26
-					index: 526
 					line: 18
 				}
 				start: Object {
 					column: 0
-					index: 500
 					line: 18
 				}
 			}
@@ -1975,12 +1737,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 26
-						index: 526
 						line: 18
 					}
 					start: Object {
 						column: 0
-						index: 500
 						line: 18
 					}
 				}
@@ -1993,12 +1753,10 @@ JSRoot {
 								identifierName: "a6"
 								end: Object {
 									column: 6
-									index: 506
 									line: 18
 								}
 								start: Object {
 									column: 4
-									index: 504
 									line: 18
 								}
 							}
@@ -2007,12 +1765,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 25
-								index: 525
 								line: 18
 							}
 							start: Object {
 								column: 4
-								index: 504
 								line: 18
 							}
 						}
@@ -2021,12 +1777,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 25
-									index: 525
 									line: 18
 								}
 								start: Object {
 									column: 9
-									index: 509
 									line: 18
 								}
 							}
@@ -2037,12 +1791,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 25
-										index: 525
 										line: 18
 									}
 									start: Object {
 										column: 20
-										index: 520
 										line: 18
 									}
 								}
@@ -2052,12 +1804,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 16
-										index: 516
 										line: 18
 									}
 									start: Object {
 										column: 9
-										index: 509
 										line: 18
 									}
 								}
@@ -2067,12 +1817,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
-												index: 515
 												line: 18
 											}
 											start: Object {
 												column: 10
-												index: 510
 												line: 18
 											}
 										}
@@ -2083,12 +1831,10 @@ JSRoot {
 												identifierName: "a5"
 												end: Object {
 													column: 15
-													index: 515
 													line: 18
 												}
 												start: Object {
 													column: 13
-													index: 513
 													line: 18
 												}
 											}
@@ -2106,12 +1852,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 33
-					index: 560
 					line: 19
 				}
 				start: Object {
 					column: 0
-					index: 527
 					line: 19
 				}
 			}
@@ -2121,12 +1865,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 33
-						index: 560
 						line: 19
 					}
 					start: Object {
 						column: 0
-						index: 527
 						line: 19
 					}
 				}
@@ -2139,12 +1881,10 @@ JSRoot {
 								identifierName: "a8"
 								end: Object {
 									column: 6
-									index: 533
 									line: 19
 								}
 								start: Object {
 									column: 4
-									index: 531
 									line: 19
 								}
 							}
@@ -2153,12 +1893,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 32
-								index: 559
 								line: 19
 							}
 							start: Object {
 								column: 4
-								index: 531
 								line: 19
 							}
 						}
@@ -2167,12 +1905,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 32
-									index: 559
 									line: 19
 								}
 								start: Object {
 									column: 9
-									index: 536
 									line: 19
 								}
 							}
@@ -2183,12 +1919,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 32
-										index: 559
 										line: 19
 									}
 									start: Object {
 										column: 27
-										index: 554
 										line: 19
 									}
 								}
@@ -2198,12 +1932,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 23
-										index: 550
 										line: 19
 									}
 									start: Object {
 										column: 9
-										index: 536
 										line: 19
 									}
 								}
@@ -2214,12 +1946,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
-												index: 542
 												line: 19
 											}
 											start: Object {
 												column: 10
-												index: 537
 												line: 19
 											}
 										}
@@ -2229,12 +1959,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
-												index: 549
 												line: 19
 											}
 											start: Object {
 												column: 17
-												index: 544
 												line: 19
 											}
 										}
@@ -2245,12 +1973,10 @@ JSRoot {
 												identifierName: "a7"
 												end: Object {
 													column: 22
-													index: 549
 													line: 19
 												}
 												start: Object {
 													column: 20
-													index: 547
 													line: 19
 												}
 											}
@@ -2268,12 +1994,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 35
-					index: 597
 					line: 21
 				}
 				start: Object {
 					column: 0
-					index: 562
 					line: 21
 				}
 			}
@@ -2283,12 +2007,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 35
-						index: 597
 						line: 21
 					}
 					start: Object {
 						column: 0
-						index: 562
 						line: 21
 					}
 				}
@@ -2301,12 +2023,10 @@ JSRoot {
 								identifierName: "o1"
 								end: Object {
 									column: 6
-									index: 568
 									line: 21
 								}
 								start: Object {
 									column: 4
-									index: 566
 									line: 21
 								}
 							}
@@ -2315,12 +2035,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 34
-								index: 596
 								line: 21
 							}
 							start: Object {
 								column: 4
-								index: 566
 								line: 21
 							}
 						}
@@ -2329,12 +2047,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 34
-									index: 596
 									line: 21
 								}
 								start: Object {
 									column: 9
-									index: 571
 									line: 21
 								}
 							}
@@ -2345,12 +2061,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 34
-										index: 596
 										line: 21
 									}
 									start: Object {
 										column: 29
-										index: 591
 										line: 21
 									}
 								}
@@ -2360,12 +2074,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 25
-										index: 587
 										line: 21
 									}
 									start: Object {
 										column: 9
-										index: 571
 										line: 21
 									}
 								}
@@ -2379,12 +2091,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 12
-														index: 574
 														line: 21
 													}
 													start: Object {
 														column: 11
-														index: 573
 														line: 21
 													}
 												}
@@ -2393,12 +2103,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
-													index: 574
 													line: 21
 												}
 												start: Object {
 													column: 11
-													index: 573
 													line: 21
 												}
 											}
@@ -2410,12 +2118,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
-													index: 578
 													line: 21
 												}
 												start: Object {
 													column: 14
-													index: 576
 													line: 21
 												}
 											}
@@ -2424,12 +2130,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
-												index: 578
 												line: 21
 											}
 											start: Object {
 												column: 11
-												index: 573
 												line: 21
 											}
 										}
@@ -2443,12 +2147,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 19
-														index: 581
 														line: 21
 													}
 													start: Object {
 														column: 18
-														index: 580
 														line: 21
 													}
 												}
@@ -2457,12 +2159,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 19
-													index: 581
 													line: 21
 												}
 												start: Object {
 													column: 18
-													index: 580
 													line: 21
 												}
 											}
@@ -2474,12 +2174,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
-													index: 585
 													line: 21
 												}
 												start: Object {
 													column: 21
-													index: 583
 													line: 21
 												}
 											}
@@ -2488,12 +2186,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
-												index: 585
 												line: 21
 											}
 											start: Object {
 												column: 18
-												index: 580
 												line: 21
 											}
 										}
@@ -2510,12 +2206,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 68
-					index: 666
 					line: 22
 				}
 				start: Object {
 					column: 0
-					index: 598
 					line: 22
 				}
 			}
@@ -2525,12 +2219,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 68
-						index: 666
 						line: 22
 					}
 					start: Object {
 						column: 0
-						index: 598
 						line: 22
 					}
 				}
@@ -2543,12 +2235,10 @@ JSRoot {
 								identifierName: "o2"
 								end: Object {
 									column: 6
-									index: 604
 									line: 22
 								}
 								start: Object {
 									column: 4
-									index: 602
 									line: 22
 								}
 							}
@@ -2557,12 +2247,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 67
-								index: 665
 								line: 22
 							}
 							start: Object {
 								column: 4
-								index: 602
 								line: 22
 							}
 						}
@@ -2571,12 +2259,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 67
-									index: 665
 									line: 22
 								}
 								start: Object {
 									column: 9
-									index: 607
 									line: 22
 								}
 							}
@@ -2587,12 +2273,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 67
-										index: 665
 										line: 22
 									}
 									start: Object {
 										column: 62
-										index: 660
 										line: 22
 									}
 								}
@@ -2602,12 +2286,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 58
-										index: 656
 										line: 22
 									}
 									start: Object {
 										column: 9
-										index: 607
 										line: 22
 									}
 								}
@@ -2621,12 +2303,10 @@ JSRoot {
 													identifierName: "a"
 													end: Object {
 														column: 12
-														index: 610
 														line: 22
 													}
 													start: Object {
 														column: 11
-														index: 609
 														line: 22
 													}
 												}
@@ -2635,12 +2315,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
-													index: 610
 													line: 22
 												}
 												start: Object {
 													column: 11
-													index: 609
 													line: 22
 												}
 											}
@@ -2652,12 +2330,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 15
-													index: 613
 													line: 22
 												}
 												start: Object {
 													column: 14
-													index: 612
 													line: 22
 												}
 											}
@@ -2666,12 +2342,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
-												index: 613
 												line: 22
 											}
 											start: Object {
 												column: 11
-												index: 609
 												line: 22
 											}
 										}
@@ -2684,12 +2358,10 @@ JSRoot {
 													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 20
-														index: 618
 														line: 22
 													}
 													start: Object {
 														column: 17
-														index: 615
 														line: 22
 													}
 												}
@@ -2698,12 +2370,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 20
-													index: 618
 													line: 22
 												}
 												start: Object {
 													column: 17
-													index: 615
 													line: 22
 												}
 											}
@@ -2715,12 +2385,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
-													index: 621
 													line: 22
 												}
 												start: Object {
 													column: 22
-													index: 620
 													line: 22
 												}
 											}
@@ -2729,12 +2397,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
-												index: 621
 												line: 22
 											}
 											start: Object {
 												column: 17
-												index: 615
 												line: 22
 											}
 										}
@@ -2747,12 +2413,10 @@ JSRoot {
 													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 29
-														index: 627
 														line: 22
 													}
 													start: Object {
 														column: 26
-														index: 624
 														line: 22
 													}
 												}
@@ -2761,12 +2425,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 30
-													index: 628
 													line: 22
 												}
 												start: Object {
 													column: 25
-													index: 623
 													line: 22
 												}
 											}
@@ -2778,12 +2440,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 33
-													index: 631
 													line: 22
 												}
 												start: Object {
 													column: 32
-													index: 630
 													line: 22
 												}
 											}
@@ -2792,12 +2452,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 33
-												index: 631
 												line: 22
 											}
 											start: Object {
 												column: 25
-												index: 623
 												line: 22
 											}
 										}
@@ -2812,12 +2470,10 @@ JSRoot {
 													identifierName: "d"
 													end: Object {
 														column: 36
-														index: 634
 														line: 22
 													}
 													start: Object {
 														column: 35
-														index: 633
 														line: 22
 													}
 												}
@@ -2826,12 +2482,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 36
-													index: 634
 													line: 22
 												}
 												start: Object {
 													column: 35
-													index: 633
 													line: 22
 												}
 											}
@@ -2840,12 +2494,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 41
-												index: 639
 												line: 22
 											}
 											start: Object {
 												column: 35
-												index: 633
 												line: 22
 											}
 										}
@@ -2856,12 +2508,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 41
-													index: 639
 													line: 22
 												}
 												start: Object {
 													column: 39
-													index: 637
 													line: 22
 												}
 											}
@@ -2879,12 +2529,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 38
-													index: 636
 													line: 22
 												}
 												start: Object {
 													column: 36
-													index: 634
 													line: 22
 												}
 											}
@@ -2898,12 +2546,10 @@ JSRoot {
 													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 52
-														index: 650
 														line: 22
 													}
 													start: Object {
 														column: 44
-														index: 642
 														line: 22
 													}
 												}
@@ -2913,12 +2559,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 47
-															index: 645
 															line: 22
 														}
 														start: Object {
 															column: 44
-															index: 642
 															line: 22
 														}
 													}
@@ -2929,12 +2573,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 52
-															index: 650
 															line: 22
 														}
 														start: Object {
 															column: 50
-															index: 648
 															line: 22
 														}
 													}
@@ -2944,12 +2586,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 53
-													index: 651
 													line: 22
 												}
 												start: Object {
 													column: 43
-													index: 641
 													line: 22
 												}
 											}
@@ -2961,12 +2601,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 56
-													index: 654
 													line: 22
 												}
 												start: Object {
 													column: 55
-													index: 653
 													line: 22
 												}
 											}
@@ -2975,12 +2613,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 56
-												index: 654
 												line: 22
 											}
 											start: Object {
 												column: 43
-												index: 641
 												line: 22
 											}
 										}
@@ -2997,12 +2633,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 35
-					index: 702
 					line: 23
 				}
 				start: Object {
 					column: 0
-					index: 667
 					line: 23
 				}
 			}
@@ -3012,12 +2646,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 35
-						index: 702
 						line: 23
 					}
 					start: Object {
 						column: 0
-						index: 667
 						line: 23
 					}
 				}
@@ -3030,12 +2662,10 @@ JSRoot {
 								identifierName: "o3"
 								end: Object {
 									column: 6
-									index: 673
 									line: 23
 								}
 								start: Object {
 									column: 4
-									index: 671
 									line: 23
 								}
 							}
@@ -3044,12 +2674,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 34
-								index: 701
 								line: 23
 							}
 							start: Object {
 								column: 4
-								index: 671
 								line: 23
 							}
 						}
@@ -3058,12 +2686,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 34
-									index: 701
 									line: 23
 								}
 								start: Object {
 									column: 9
-									index: 676
 									line: 23
 								}
 							}
@@ -3074,12 +2700,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 34
-										index: 701
 										line: 23
 									}
 									start: Object {
 										column: 29
-										index: 696
 										line: 23
 									}
 								}
@@ -3089,12 +2713,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 25
-										index: 692
 										line: 23
 									}
 									start: Object {
 										column: 9
-										index: 676
 										line: 23
 									}
 								}
@@ -3104,12 +2726,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
-												index: 683
 												line: 23
 											}
 											start: Object {
 												column: 11
-												index: 678
 												line: 23
 											}
 										}
@@ -3120,12 +2740,10 @@ JSRoot {
 												identifierName: "o1"
 												end: Object {
 													column: 16
-													index: 683
 													line: 23
 												}
 												start: Object {
 													column: 14
-													index: 681
 													line: 23
 												}
 											}
@@ -3136,12 +2754,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 23
-												index: 690
 												line: 23
 											}
 											start: Object {
 												column: 18
-												index: 685
 												line: 23
 											}
 										}
@@ -3152,12 +2768,10 @@ JSRoot {
 												identifierName: "o2"
 												end: Object {
 													column: 23
-													index: 690
 													line: 23
 												}
 												start: Object {
 													column: 21
-													index: 688
 													line: 23
 												}
 											}
@@ -3175,12 +2789,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 28
-					index: 731
 					line: 24
 				}
 				start: Object {
 					column: 0
-					index: 703
 					line: 24
 				}
 			}
@@ -3190,12 +2802,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 28
-						index: 731
 						line: 24
 					}
 					start: Object {
 						column: 0
-						index: 703
 						line: 24
 					}
 				}
@@ -3208,12 +2818,10 @@ JSRoot {
 								identifierName: "o5"
 								end: Object {
 									column: 6
-									index: 709
 									line: 24
 								}
 								start: Object {
 									column: 4
-									index: 707
 									line: 24
 								}
 							}
@@ -3222,12 +2830,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 27
-								index: 730
 								line: 24
 							}
 							start: Object {
 								column: 4
-								index: 707
 								line: 24
 							}
 						}
@@ -3236,12 +2842,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 27
-									index: 730
 									line: 24
 								}
 								start: Object {
 									column: 9
-									index: 712
 									line: 24
 								}
 							}
@@ -3252,12 +2856,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 27
-										index: 730
 										line: 24
 									}
 									start: Object {
 										column: 22
-										index: 725
 										line: 24
 									}
 								}
@@ -3267,12 +2869,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 18
-										index: 721
 										line: 24
 									}
 									start: Object {
 										column: 9
-										index: 712
 										line: 24
 									}
 								}
@@ -3282,12 +2882,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
-												index: 719
 												line: 24
 											}
 											start: Object {
 												column: 11
-												index: 714
 												line: 24
 											}
 										}
@@ -3298,12 +2896,10 @@ JSRoot {
 												identifierName: "o4"
 												end: Object {
 													column: 16
-													index: 719
 													line: 24
 												}
 												start: Object {
 													column: 14
-													index: 717
 													line: 24
 												}
 											}
@@ -3321,12 +2917,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
-					index: 759
 					line: 25
 				}
 				start: Object {
 					column: 0
-					index: 732
 					line: 25
 				}
 			}
@@ -3336,12 +2930,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
-						index: 759
 						line: 25
 					}
 					start: Object {
 						column: 0
-						index: 732
 						line: 25
 					}
 				}
@@ -3354,12 +2946,10 @@ JSRoot {
 								identifierName: "o7"
 								end: Object {
 									column: 6
-									index: 738
 									line: 25
 								}
 								start: Object {
 									column: 4
-									index: 736
 									line: 25
 								}
 							}
@@ -3368,12 +2958,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
-								index: 758
 								line: 25
 							}
 							start: Object {
 								column: 4
-								index: 736
 								line: 25
 							}
 						}
@@ -3382,12 +2970,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
-									index: 758
 									line: 25
 								}
 								start: Object {
 									column: 9
-									index: 741
 									line: 25
 								}
 							}
@@ -3398,12 +2984,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 26
-										index: 758
 										line: 25
 									}
 									start: Object {
 										column: 21
-										index: 753
 										line: 25
 									}
 								}
@@ -3413,12 +2997,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 17
-										index: 749
 										line: 25
 									}
 									start: Object {
 										column: 9
-										index: 741
 										line: 25
 									}
 								}
@@ -3428,12 +3010,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 15
-												index: 747
 												line: 25
 											}
 											start: Object {
 												column: 11
-												index: 743
 												line: 25
 											}
 										}
@@ -3444,12 +3024,10 @@ JSRoot {
 												identifierName: "d"
 												end: Object {
 													column: 15
-													index: 747
 													line: 25
 												}
 												start: Object {
 													column: 14
-													index: 746
 													line: 25
 												}
 											}
@@ -3468,12 +3046,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 51
-					index: 811
 					line: 26
 				}
 				start: Object {
 					column: 0
-					index: 760
 					line: 26
 				}
 			}
@@ -3484,12 +3060,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 51
-						index: 811
 						line: 26
 					}
 					start: Object {
 						column: 0
-						index: 760
 						line: 26
 					}
 				}
@@ -3502,12 +3076,10 @@ JSRoot {
 								identifierName: "o9"
 								end: Object {
 									column: 6
-									index: 766
 									line: 26
 								}
 								start: Object {
 									column: 4
-									index: 764
 									line: 26
 								}
 							}
@@ -3516,12 +3088,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 50
-								index: 810
 								line: 26
 							}
 							start: Object {
 								column: 4
-								index: 764
 								line: 26
 							}
 						}
@@ -3530,12 +3100,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 50
-									index: 810
 									line: 26
 								}
 								start: Object {
 									column: 9
-									index: 769
 									line: 26
 								}
 							}
@@ -3546,12 +3114,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 50
-										index: 810
 										line: 26
 									}
 									start: Object {
 										column: 45
-										index: 805
 										line: 26
 									}
 								}
@@ -3561,12 +3127,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 41
-										index: 801
 										line: 26
 									}
 									start: Object {
 										column: 9
-										index: 769
 										line: 26
 									}
 								}
@@ -3580,12 +3144,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 12
-														index: 772
 														line: 26
 													}
 													start: Object {
 														column: 11
-														index: 771
 														line: 26
 													}
 												}
@@ -3594,12 +3156,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
-													index: 772
 													line: 26
 												}
 												start: Object {
 													column: 11
-													index: 771
 													line: 26
 												}
 											}
@@ -3611,12 +3171,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
-													index: 776
 													line: 26
 												}
 												start: Object {
 													column: 14
-													index: 774
 													line: 26
 												}
 											}
@@ -3625,12 +3183,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
-												index: 776
 												line: 26
 											}
 											start: Object {
 												column: 11
-												index: 771
 												line: 26
 											}
 										}
@@ -3645,12 +3201,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 21
-														index: 781
 														line: 26
 													}
 													start: Object {
 														column: 18
-														index: 778
 														line: 26
 													}
 												}
@@ -3659,12 +3213,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 21
-													index: 781
 													line: 26
 												}
 												start: Object {
 													column: 18
-													index: 778
 													line: 26
 												}
 											}
@@ -3673,12 +3225,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 39
-												index: 799
 												line: 26
 											}
 											start: Object {
 												column: 18
-												index: 778
 												line: 26
 											}
 										}
@@ -3695,12 +3245,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 23
-													index: 783
 													line: 26
 												}
 												start: Object {
 													column: 21
-													index: 781
 													line: 26
 												}
 											}
@@ -3711,12 +3259,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 39
-													index: 799
 													line: 26
 												}
 												start: Object {
 													column: 24
-													index: 784
 													line: 26
 												}
 											}
@@ -3726,12 +3272,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 37
-															index: 797
 															line: 26
 														}
 														start: Object {
 															column: 26
-															index: 786
 															line: 26
 														}
 													}
@@ -3741,12 +3285,10 @@ JSRoot {
 															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 37
-																index: 797
 																line: 26
 															}
 															start: Object {
 																column: 26
-																index: 786
 																line: 26
 															}
 														}
@@ -3757,12 +3299,10 @@ JSRoot {
 																filename: "typescript/cast/as-const/input.ts"
 																end: Object {
 																	column: 37
-																	index: 797
 																	line: 26
 																}
 																start: Object {
 																	column: 35
-																	index: 795
 																	line: 26
 																}
 															}
@@ -3772,12 +3312,10 @@ JSRoot {
 																filename: "typescript/cast/as-const/input.ts"
 																end: Object {
 																	column: 32
-																	index: 792
 																	line: 26
 																}
 																start: Object {
 																	column: 26
-																	index: 786
 																	line: 26
 																}
 															}
@@ -3786,12 +3324,10 @@ JSRoot {
 																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 30
-																		index: 790
 																		line: 26
 																	}
 																	start: Object {
 																		column: 26
-																		index: 786
 																		line: 26
 																	}
 																}
@@ -3804,12 +3340,10 @@ JSRoot {
 																		identifierName: "x"
 																		end: Object {
 																			column: 32
-																			index: 792
 																			line: 26
 																		}
 																		start: Object {
 																			column: 31
-																			index: 791
 																			line: 26
 																		}
 																	}
@@ -3819,12 +3353,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 32
-																		index: 792
 																		line: 26
 																	}
 																	start: Object {
 																		column: 31
-																		index: 791
 																		line: 26
 																	}
 																}
@@ -3848,12 +3380,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
-					index: 846
 					line: 28
 				}
 				start: Object {
 					column: 0
-					index: 823
 					line: 28
 				}
 			}
@@ -3864,12 +3394,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
-						index: 846
 						line: 28
 					}
 					start: Object {
 						column: 0
-						index: 823
 						line: 28
 					}
 				}
@@ -3883,12 +3411,10 @@ JSRoot {
 								identifierName: "p1"
 								end: Object {
 									column: 6
-									index: 829
 									line: 28
 								}
 								start: Object {
 									column: 4
-									index: 827
 									line: 28
 								}
 							}
@@ -3898,12 +3424,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
-								index: 845
 								line: 28
 							}
 							start: Object {
 								column: 4
-								index: 827
 								line: 28
 							}
 						}
@@ -3912,12 +3436,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
-									index: 845
 									line: 28
 								}
 								start: Object {
 									column: 9
-									index: 832
 									line: 28
 								}
 							}
@@ -3928,12 +3450,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 12
-										index: 835
 										line: 28
 									}
 									start: Object {
 										column: 10
-										index: 833
 										line: 28
 									}
 								}
@@ -3945,12 +3465,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 22
-										index: 845
 										line: 28
 									}
 									start: Object {
 										column: 17
-										index: 840
 										line: 28
 									}
 								}
@@ -3965,12 +3483,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 26
-					index: 873
 					line: 29
 				}
 				start: Object {
 					column: 0
-					index: 847
 					line: 29
 				}
 			}
@@ -3980,12 +3496,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 26
-						index: 873
 						line: 29
 					}
 					start: Object {
 						column: 0
-						index: 847
 						line: 29
 					}
 				}
@@ -3998,12 +3512,10 @@ JSRoot {
 								identifierName: "p2"
 								end: Object {
 									column: 6
-									index: 853
 									line: 29
 								}
 								start: Object {
 									column: 4
-									index: 851
 									line: 29
 								}
 							}
@@ -4012,12 +3524,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 25
-								index: 872
 								line: 29
 							}
 							start: Object {
 								column: 4
-								index: 851
 								line: 29
 							}
 						}
@@ -4026,12 +3536,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 25
-									index: 872
 									line: 29
 								}
 								start: Object {
 									column: 9
-									index: 856
 									line: 29
 								}
 							}
@@ -4042,12 +3550,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 25
-										index: 872
 										line: 29
 									}
 									start: Object {
 										column: 20
-										index: 867
 										line: 29
 									}
 								}
@@ -4059,12 +3565,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 14
-										index: 861
 										line: 29
 									}
 									start: Object {
 										column: 11
-										index: 858
 										line: 29
 									}
 								}
@@ -4075,12 +3579,10 @@ JSRoot {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
 											column: 14
-											index: 861
 											line: 29
 										}
 										start: Object {
 											column: 12
-											index: 859
 											line: 29
 										}
 									}
@@ -4096,12 +3598,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
-					index: 901
 					line: 30
 				}
 				start: Object {
 					column: 0
-					index: 874
 					line: 30
 				}
 			}
@@ -4111,12 +3611,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
-						index: 901
 						line: 30
 					}
 					start: Object {
 						column: 0
-						index: 874
 						line: 30
 					}
 				}
@@ -4129,12 +3627,10 @@ JSRoot {
 								identifierName: "p3"
 								end: Object {
 									column: 6
-									index: 880
 									line: 30
 								}
 								start: Object {
 									column: 4
-									index: 878
 									line: 30
 								}
 							}
@@ -4143,12 +3639,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
-								index: 900
 								line: 30
 							}
 							start: Object {
 								column: 4
-								index: 878
 								line: 30
 							}
 						}
@@ -4157,12 +3651,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
-									index: 900
 									line: 30
 								}
 								start: Object {
 									column: 9
-									index: 883
 									line: 30
 								}
 							}
@@ -4173,12 +3665,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 26
-										index: 900
 										line: 30
 									}
 									start: Object {
 										column: 21
-										index: 895
 										line: 30
 									}
 								}
@@ -4188,12 +3678,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 16
-										index: 890
 										line: 30
 									}
 									start: Object {
 										column: 10
-										index: 884
 										line: 30
 									}
 								}
@@ -4205,12 +3693,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 14
-												index: 888
 												line: 30
 											}
 											start: Object {
 												column: 12
-												index: 886
 												line: 30
 											}
 										}
@@ -4227,12 +3713,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 29
-					index: 931
 					line: 31
 				}
 				start: Object {
 					column: 0
-					index: 902
 					line: 31
 				}
 			}
@@ -4242,12 +3726,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 29
-						index: 931
 						line: 31
 					}
 					start: Object {
 						column: 0
-						index: 902
 						line: 31
 					}
 				}
@@ -4260,12 +3742,10 @@ JSRoot {
 								identifierName: "p4"
 								end: Object {
 									column: 6
-									index: 908
 									line: 31
 								}
 								start: Object {
 									column: 4
-									index: 906
 									line: 31
 								}
 							}
@@ -4274,12 +3754,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 28
-								index: 930
 								line: 31
 							}
 							start: Object {
 								column: 4
-								index: 906
 								line: 31
 							}
 						}
@@ -4288,12 +3766,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 28
-									index: 930
 									line: 31
 								}
 								start: Object {
 									column: 9
-									index: 911
 									line: 31
 								}
 							}
@@ -4304,12 +3780,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 28
-										index: 930
 										line: 31
 									}
 									start: Object {
 										column: 23
-										index: 925
 										line: 31
 									}
 								}
@@ -4319,12 +3793,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 19
-										index: 921
 										line: 31
 									}
 									start: Object {
 										column: 9
-										index: 911
 										line: 31
 									}
 								}
@@ -4334,12 +3806,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 18
-												index: 920
 												line: 31
 											}
 											start: Object {
 												column: 10
-												index: 912
 												line: 31
 											}
 										}
@@ -4349,12 +3819,10 @@ JSRoot {
 													filename: "typescript/cast/as-const/input.ts"
 													end: Object {
 														column: 17
-														index: 919
 														line: 31
 													}
 													start: Object {
 														column: 11
-														index: 913
 														line: 31
 													}
 												}
@@ -4364,12 +3832,10 @@ JSRoot {
 															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 16
-																index: 918
 																line: 31
 															}
 															start: Object {
 																column: 12
-																index: 914
 																line: 31
 															}
 														}
@@ -4381,12 +3847,10 @@ JSRoot {
 																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 15
-																		index: 917
 																		line: 31
 																	}
 																	start: Object {
 																		column: 13
-																		index: 915
 																		line: 31
 																	}
 																}
@@ -4409,12 +3873,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 62
-					index: 995
 					line: 33
 				}
 				start: Object {
 					column: 0
-					index: 933
 					line: 33
 				}
 			}
@@ -4424,12 +3886,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 62
-						index: 995
 						line: 33
 					}
 					start: Object {
 						column: 0
-						index: 933
 						line: 33
 					}
 				}
@@ -4442,12 +3902,10 @@ JSRoot {
 								identifierName: "x1"
 								end: Object {
 									column: 6
-									index: 939
 									line: 33
 								}
 								start: Object {
 									column: 4
-									index: 937
 									line: 33
 								}
 							}
@@ -4456,12 +3914,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 61
-								index: 994
 								line: 33
 							}
 							start: Object {
 								column: 4
-								index: 937
 								line: 33
 							}
 						}
@@ -4470,12 +3926,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 61
-									index: 994
 									line: 33
 								}
 								start: Object {
 									column: 9
-									index: 942
 									line: 33
 								}
 							}
@@ -4486,12 +3940,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 61
-										index: 994
 										line: 33
 									}
 									start: Object {
 										column: 56
-										index: 989
 										line: 33
 									}
 								}
@@ -4501,12 +3953,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 52
-										index: 985
 										line: 33
 									}
 									start: Object {
 										column: 9
-										index: 942
 										line: 33
 									}
 								}
@@ -4520,12 +3970,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 12
-														index: 945
 														line: 33
 													}
 													start: Object {
 														column: 11
-														index: 944
 														line: 33
 													}
 												}
@@ -4534,12 +3982,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 12
-													index: 945
 													line: 33
 												}
 												start: Object {
 													column: 11
-													index: 944
 													line: 33
 												}
 											}
@@ -4551,12 +3997,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 16
-													index: 949
 													line: 33
 												}
 												start: Object {
 													column: 14
-													index: 947
 													line: 33
 												}
 											}
@@ -4565,12 +4009,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 16
-												index: 949
 												line: 33
 											}
 											start: Object {
 												column: 11
-												index: 944
 												line: 33
 											}
 										}
@@ -4584,12 +4026,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 19
-														index: 952
 														line: 33
 													}
 													start: Object {
 														column: 18
-														index: 951
 														line: 33
 													}
 												}
@@ -4598,12 +4038,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 19
-													index: 952
 													line: 33
 												}
 												start: Object {
 													column: 18
-													index: 951
 													line: 33
 												}
 											}
@@ -4613,12 +4051,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 29
-													index: 962
 													line: 33
 												}
 												start: Object {
 													column: 21
-													index: 954
 													line: 33
 												}
 											}
@@ -4630,12 +4066,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 24
-															index: 957
 															line: 33
 														}
 														start: Object {
 															column: 22
-															index: 955
 															line: 33
 														}
 													}
@@ -4647,12 +4081,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 28
-															index: 961
 															line: 33
 														}
 														start: Object {
 															column: 26
-															index: 959
 															line: 33
 														}
 													}
@@ -4663,12 +4095,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 29
-												index: 962
 												line: 33
 											}
 											start: Object {
 												column: 18
-												index: 951
 												line: 33
 											}
 										}
@@ -4682,12 +4112,10 @@ JSRoot {
 													identifierName: "z"
 													end: Object {
 														column: 32
-														index: 965
 														line: 33
 													}
 													start: Object {
 														column: 31
-														index: 964
 														line: 33
 													}
 												}
@@ -4696,12 +4124,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 32
-													index: 965
 													line: 33
 												}
 												start: Object {
 													column: 31
-													index: 964
 													line: 33
 												}
 											}
@@ -4711,12 +4137,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 50
-													index: 983
 													line: 33
 												}
 												start: Object {
 													column: 34
-													index: 967
 													line: 33
 												}
 											}
@@ -4730,12 +4154,10 @@ JSRoot {
 																identifierName: "a"
 																end: Object {
 																	column: 37
-																	index: 970
 																	line: 33
 																}
 																start: Object {
 																	column: 36
-																	index: 969
 																	line: 33
 																}
 															}
@@ -4744,12 +4166,10 @@ JSRoot {
 															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 37
-																index: 970
 																line: 33
 															}
 															start: Object {
 																column: 36
-																index: 969
 																line: 33
 															}
 														}
@@ -4759,12 +4179,10 @@ JSRoot {
 															filename: "typescript/cast/as-const/input.ts"
 															end: Object {
 																column: 48
-																index: 981
 																line: 33
 															}
 															start: Object {
 																column: 39
-																index: 972
 																line: 33
 															}
 														}
@@ -4778,12 +4196,10 @@ JSRoot {
 																			identifierName: "b"
 																			end: Object {
 																				column: 42
-																				index: 975
 																				line: 33
 																			}
 																			start: Object {
 																				column: 41
-																				index: 974
 																				line: 33
 																			}
 																		}
@@ -4792,12 +4208,10 @@ JSRoot {
 																		filename: "typescript/cast/as-const/input.ts"
 																		end: Object {
 																			column: 42
-																			index: 975
 																			line: 33
 																		}
 																		start: Object {
 																			column: 41
-																			index: 974
 																			line: 33
 																		}
 																	}
@@ -4809,12 +4223,10 @@ JSRoot {
 																		filename: "typescript/cast/as-const/input.ts"
 																		end: Object {
 																			column: 46
-																			index: 979
 																			line: 33
 																		}
 																		start: Object {
 																			column: 44
-																			index: 977
 																			line: 33
 																		}
 																	}
@@ -4823,12 +4235,10 @@ JSRoot {
 																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
 																		column: 46
-																		index: 979
 																		line: 33
 																	}
 																	start: Object {
 																		column: 41
-																		index: 974
 																		line: 33
 																	}
 																}
@@ -4839,12 +4249,10 @@ JSRoot {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
 															column: 48
-															index: 981
 															line: 33
 														}
 														start: Object {
 															column: 36
-															index: 969
 															line: 33
 														}
 													}
@@ -4855,12 +4263,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 50
-												index: 983
 												line: 33
 											}
 											start: Object {
 												column: 31
-												index: 964
 												line: 33
 											}
 										}
@@ -4877,12 +4283,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 20
-					index: 1_017
 					line: 35
 				}
 				start: Object {
 					column: 0
-					index: 997
 					line: 35
 				}
 			}
@@ -4892,12 +4296,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 20
-						index: 1_017
 						line: 35
 					}
 					start: Object {
 						column: 0
-						index: 997
 						line: 35
 					}
 				}
@@ -4910,12 +4312,10 @@ JSRoot {
 								identifierName: "q1"
 								end: Object {
 									column: 6
-									index: 1_003
 									line: 35
 								}
 								start: Object {
 									column: 4
-									index: 1_001
 									line: 35
 								}
 							}
@@ -4924,12 +4324,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 19
-								index: 1_016
 								line: 35
 							}
 							start: Object {
 								column: 4
-								index: 1_001
 								line: 35
 							}
 						}
@@ -4938,12 +4336,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 19
-									index: 1_016
 									line: 35
 								}
 								start: Object {
 									column: 9
-									index: 1_006
 									line: 35
 								}
 							}
@@ -4954,12 +4350,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 19
-										index: 1_016
 										line: 35
 									}
 									start: Object {
 										column: 17
-										index: 1_014
 										line: 35
 									}
 								}
@@ -4971,12 +4365,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 15
-										index: 1_012
 										line: 35
 									}
 									start: Object {
 										column: 10
-										index: 1_007
 										line: 35
 									}
 								}
@@ -4991,12 +4383,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 23
-					index: 1_041
 					line: 36
 				}
 				start: Object {
 					column: 0
-					index: 1_018
 					line: 36
 				}
 			}
@@ -5006,12 +4396,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 23
-						index: 1_041
 						line: 36
 					}
 					start: Object {
 						column: 0
-						index: 1_018
 						line: 36
 					}
 				}
@@ -5024,12 +4412,10 @@ JSRoot {
 								identifierName: "q2"
 								end: Object {
 									column: 6
-									index: 1_024
 									line: 36
 								}
 								start: Object {
 									column: 4
-									index: 1_022
 									line: 36
 								}
 							}
@@ -5038,12 +4424,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 22
-								index: 1_040
 								line: 36
 							}
 							start: Object {
 								column: 4
-								index: 1_022
 								line: 36
 							}
 						}
@@ -5052,12 +4436,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 22
-									index: 1_040
 									line: 36
 								}
 								start: Object {
 									column: 9
-									index: 1_027
 									line: 36
 								}
 							}
@@ -5067,12 +4449,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 22
-										index: 1_040
 										line: 36
 									}
 									start: Object {
 										column: 17
-										index: 1_035
 										line: 36
 									}
 								}
@@ -5084,12 +4464,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 15
-										index: 1_033
 										line: 36
 									}
 									start: Object {
 										column: 10
-										index: 1_028
 										line: 36
 									}
 								}
@@ -5104,12 +4482,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 22
-					index: 1_064
 					line: 37
 				}
 				start: Object {
 					column: 0
-					index: 1_042
 					line: 37
 				}
 			}
@@ -5119,12 +4495,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 22
-						index: 1_064
 						line: 37
 					}
 					start: Object {
 						column: 0
-						index: 1_042
 						line: 37
 					}
 				}
@@ -5137,12 +4511,10 @@ JSRoot {
 								identifierName: "q3"
 								end: Object {
 									column: 6
-									index: 1_048
 									line: 37
 								}
 								start: Object {
 									column: 4
-									index: 1_046
 									line: 37
 								}
 							}
@@ -5151,12 +4523,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 21
-								index: 1_063
 								line: 37
 							}
 							start: Object {
 								column: 4
-								index: 1_046
 								line: 37
 							}
 						}
@@ -5165,12 +4535,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 21
-									index: 1_063
 									line: 37
 								}
 								start: Object {
 									column: 9
-									index: 1_051
 									line: 37
 								}
 							}
@@ -5180,12 +4548,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 21
-										index: 1_063
 										line: 37
 									}
 									start: Object {
 										column: 17
-										index: 1_059
 										line: 37
 									}
 								}
@@ -5197,12 +4563,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 15
-										index: 1_057
 										line: 37
 									}
 									start: Object {
 										column: 10
-										index: 1_052
 										line: 37
 									}
 								}
@@ -5217,12 +4581,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 27
-					index: 1_092
 					line: 38
 				}
 				start: Object {
 					column: 0
-					index: 1_065
 					line: 38
 				}
 			}
@@ -5232,12 +4594,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 27
-						index: 1_092
 						line: 38
 					}
 					start: Object {
 						column: 0
-						index: 1_065
 						line: 38
 					}
 				}
@@ -5250,12 +4610,10 @@ JSRoot {
 								identifierName: "q4"
 								end: Object {
 									column: 6
-									index: 1_071
 									line: 38
 								}
 								start: Object {
 									column: 4
-									index: 1_069
 									line: 38
 								}
 							}
@@ -5264,12 +4622,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 26
-								index: 1_091
 								line: 38
 							}
 							start: Object {
 								column: 4
-								index: 1_069
 								line: 38
 							}
 						}
@@ -5278,12 +4634,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 26
-									index: 1_091
 									line: 38
 								}
 								start: Object {
 									column: 9
-									index: 1_074
 									line: 38
 								}
 							}
@@ -5294,12 +4648,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 15
-										index: 1_080
 										line: 38
 									}
 									start: Object {
 										column: 10
-										index: 1_075
 										line: 38
 									}
 								}
@@ -5309,12 +4661,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 26
-										index: 1_091
 										line: 38
 									}
 									start: Object {
 										column: 17
-										index: 1_082
 										line: 38
 									}
 								}
@@ -5326,12 +4676,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 19
-												index: 1_084
 												line: 38
 											}
 											start: Object {
 												column: 18
-												index: 1_083
 												line: 38
 											}
 										}
@@ -5343,12 +4691,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 22
-												index: 1_087
 												line: 38
 											}
 											start: Object {
 												column: 21
-												index: 1_086
 												line: 38
 											}
 										}
@@ -5360,12 +4706,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 25
-												index: 1_090
 												line: 38
 											}
 											start: Object {
 												column: 24
-												index: 1_089
 												line: 38
 											}
 										}
@@ -5382,12 +4726,10 @@ JSRoot {
 				filename: "typescript/cast/as-const/input.ts"
 				end: Object {
 					column: 34
-					index: 1_127
 					line: 39
 				}
 				start: Object {
 					column: 0
-					index: 1_093
 					line: 39
 				}
 			}
@@ -5397,12 +4739,10 @@ JSRoot {
 					filename: "typescript/cast/as-const/input.ts"
 					end: Object {
 						column: 34
-						index: 1_127
 						line: 39
 					}
 					start: Object {
 						column: 0
-						index: 1_093
 						line: 39
 					}
 				}
@@ -5415,12 +4755,10 @@ JSRoot {
 								identifierName: "q5"
 								end: Object {
 									column: 6
-									index: 1_099
 									line: 39
 								}
 								start: Object {
 									column: 4
-									index: 1_097
 									line: 39
 								}
 							}
@@ -5429,12 +4767,10 @@ JSRoot {
 							filename: "typescript/cast/as-const/input.ts"
 							end: Object {
 								column: 33
-								index: 1_126
 								line: 39
 							}
 							start: Object {
 								column: 4
-								index: 1_097
 								line: 39
 							}
 						}
@@ -5443,12 +4779,10 @@ JSRoot {
 								filename: "typescript/cast/as-const/input.ts"
 								end: Object {
 									column: 33
-									index: 1_126
 									line: 39
 								}
 								start: Object {
 									column: 9
-									index: 1_102
 									line: 39
 								}
 							}
@@ -5459,12 +4793,10 @@ JSRoot {
 									identifierName: "const"
 									end: Object {
 										column: 15
-										index: 1_108
 										line: 39
 									}
 									start: Object {
 										column: 10
-										index: 1_103
 										line: 39
 									}
 								}
@@ -5474,12 +4806,10 @@ JSRoot {
 									filename: "typescript/cast/as-const/input.ts"
 									end: Object {
 										column: 33
-										index: 1_126
 										line: 39
 									}
 									start: Object {
 										column: 17
-										index: 1_110
 										line: 39
 									}
 								}
@@ -5493,12 +4823,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 20
-														index: 1_113
 														line: 39
 													}
 													start: Object {
 														column: 19
-														index: 1_112
 														line: 39
 													}
 												}
@@ -5507,12 +4835,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 20
-													index: 1_113
 													line: 39
 												}
 												start: Object {
 													column: 19
-													index: 1_112
 													line: 39
 												}
 											}
@@ -5524,12 +4850,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 24
-													index: 1_117
 													line: 39
 												}
 												start: Object {
 													column: 22
-													index: 1_115
 													line: 39
 												}
 											}
@@ -5538,12 +4862,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 24
-												index: 1_117
 												line: 39
 											}
 											start: Object {
 												column: 19
-												index: 1_112
 												line: 39
 											}
 										}
@@ -5557,12 +4879,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 27
-														index: 1_120
 														line: 39
 													}
 													start: Object {
 														column: 26
-														index: 1_119
 														line: 39
 													}
 												}
@@ -5571,12 +4891,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 27
-													index: 1_120
 													line: 39
 												}
 												start: Object {
 													column: 26
-													index: 1_119
 													line: 39
 												}
 											}
@@ -5588,12 +4906,10 @@ JSRoot {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
 													column: 31
-													index: 1_124
 													line: 39
 												}
 												start: Object {
 													column: 29
-													index: 1_122
 													line: 39
 												}
 											}
@@ -5602,12 +4918,10 @@ JSRoot {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
 												column: 31
-												index: 1_124
 												line: 39
 											}
 											start: Object {
 												column: 26
-												index: 1_119
 												line: 39
 											}
 										}

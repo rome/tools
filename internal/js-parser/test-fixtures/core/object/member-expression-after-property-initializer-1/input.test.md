@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/object/member-expression-after-property-initializer-1/input.js"
 		end: Object {
 			column: 26
-			index: 26
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 							filename: "core/object/member-expression-after-property-initializer-1/input.js"
 							end: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}
@@ -112,12 +102,10 @@ JSRoot {
 								filename: "core/object/member-expression-after-property-initializer-1/input.js"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "core/object/member-expression-after-property-initializer-1/input.js"
 								end: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 								start: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 							}
@@ -147,12 +133,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 3
-													index: 3
 													line: 1
 												}
 												start: Object {
 													column: 2
-													index: 2
 													line: 1
 												}
 											}
@@ -161,12 +145,10 @@ JSRoot {
 											filename: "core/object/member-expression-after-property-initializer-1/input.js"
 											end: Object {
 												column: 3
-												index: 3
 												line: 1
 											}
 											start: Object {
 												column: 2
-												index: 2
 												line: 1
 											}
 										}
@@ -178,12 +160,10 @@ JSRoot {
 											identifierName: "a"
 											end: Object {
 												column: 3
-												index: 3
 												line: 1
 											}
 											start: Object {
 												column: 2
-												index: 2
 												line: 1
 											}
 										}
@@ -192,12 +172,10 @@ JSRoot {
 										filename: "core/object/member-expression-after-property-initializer-1/input.js"
 										end: Object {
 											column: 3
-											index: 3
 											line: 1
 										}
 										start: Object {
 											column: 2
-											index: 2
 											line: 1
 										}
 									}
@@ -212,12 +190,10 @@ JSRoot {
 							identifierName: "b"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 						}
@@ -230,12 +206,10 @@ JSRoot {
 				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 			}
@@ -245,12 +219,10 @@ JSRoot {
 					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -260,12 +232,10 @@ JSRoot {
 						filename: "core/object/member-expression-after-property-initializer-1/input.js"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -276,12 +246,10 @@ JSRoot {
 						filename: "core/object/member-expression-after-property-initializer-1/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 23
-							index: 23
 							line: 1
 						}
 					}
@@ -293,12 +261,10 @@ JSRoot {
 				filename: "core/object/member-expression-after-property-initializer-1/input.js"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 			}
@@ -308,12 +274,10 @@ JSRoot {
 					filename: "core/object/member-expression-after-property-initializer-1/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 				}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 		end: Object {
 			column: 0
-			index: 63
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 				end: Object {
 					column: 62
-					index: 62
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 					end: Object {
 						column: 61
-						index: 61
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 									filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -83,12 +75,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -98,12 +88,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -112,12 +100,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -132,12 +118,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 35
-										index: 35
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -146,12 +130,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -160,12 +142,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}
@@ -176,12 +156,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 								start: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 							}
@@ -199,12 +177,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 							}
@@ -220,12 +196,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 54
-										index: 54
 										line: 1
 									}
 									start: Object {
 										column: 45
-										index: 45
 										line: 1
 									}
 								}
@@ -234,12 +208,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 54
-									index: 54
 									line: 1
 								}
 								start: Object {
 									column: 45
-									index: 45
 									line: 1
 								}
 							}
@@ -248,12 +220,10 @@ JSRoot {
 							filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 							end: Object {
 								column: 59
-								index: 59
 								line: 1
 							}
 							start: Object {
 								column: 41
-								index: 41
 								line: 1
 							}
 						}
@@ -264,12 +234,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 59
-									index: 59
 									line: 1
 								}
 								start: Object {
 									column: 57
-									index: 57
 									line: 1
 								}
 							}
@@ -286,12 +254,10 @@ JSRoot {
 								filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 								end: Object {
 									column: 57
-									index: 57
 									line: 1
 								}
 								start: Object {
 									column: 54
-									index: 54
 									line: 1
 								}
 							}
@@ -303,12 +269,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 56
-											index: 56
 											line: 1
 										}
 										start: Object {
 											column: 55
-											index: 55
 											line: 1
 										}
 									}
@@ -319,12 +283,10 @@ JSRoot {
 											filename: "esprima/es2015-object-initialiser/proto-literal-getter-setter/input.js"
 											end: Object {
 												column: 56
-												index: 56
 												line: 1
 											}
 											start: Object {
 												column: 55
-												index: 55
 												line: 1
 											}
 										}

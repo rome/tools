@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 		end: Object {
 			column: 0
-			index: 50
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 								identifierName: "export"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -113,12 +103,10 @@ JSRoot {
 							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -148,12 +134,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 6
-					index: 30
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 24
 					line: 3
 				}
 			}
@@ -163,12 +147,10 @@ JSRoot {
 					filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 					end: Object {
 						column: 6
-						index: 30
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 24
 						line: 3
 					}
 				}
@@ -181,12 +163,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 5
-									index: 29
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 							}
@@ -196,12 +176,10 @@ JSRoot {
 							filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 							end: Object {
 								column: 5
-								index: 29
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 28
 								line: 3
 							}
 						}
@@ -216,12 +194,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 				end: Object {
 					column: 18
-					index: 49
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 31
 					line: 4
 				}
 			}
@@ -231,12 +207,10 @@ JSRoot {
 						filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 						end: Object {
 							column: 15
-							index: 46
 							line: 4
 						}
 						start: Object {
 							column: 14
-							index: 45
 							line: 4
 						}
 					}
@@ -247,12 +221,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 15
-								index: 46
 								line: 4
 							}
 							start: Object {
 								column: 14
-								index: 45
 								line: 4
 							}
 						}
@@ -264,12 +236,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 15
-								index: 46
 								line: 4
 							}
 							start: Object {
 								column: 14
-								index: 45
 								line: 4
 							}
 						}

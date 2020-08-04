@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/uncategorised/263/input.js"
 		end: Object {
 			column: 13
-			index: 13
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 6
-					index: 6
 					line: 1
 				}
 			}
@@ -63,12 +59,10 @@ JSRoot {
 					filename: "es2015/uncategorised/263/input.js"
 					end: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -77,12 +71,10 @@ JSRoot {
 				filename: "es2015/uncategorised/263/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -95,12 +87,10 @@ JSRoot {
 					filename: "es2015/uncategorised/263/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -114,12 +104,10 @@ JSRoot {
 									identifierName: "default"
 									end: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 									start: Object {
 										column: 6
-										index: 6
 										line: 1
 									}
 								}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "es2015/uncategorised/263/input.js"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 							filename: "es2015/uncategorised/263/input.js"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -163,19 +147,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							loc: Object {
 								filename: "es2015/uncategorised/263/input.js"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}

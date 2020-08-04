@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 		end: Object {
 			column: 0
-			index: 52
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 									filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 									end: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 									start: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 								}
@@ -102,12 +92,10 @@ JSRoot {
 											identifierName: "foo"
 											end: Object {
 												column: 17
-												index: 17
 												line: 1
 											}
 											start: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 										}
@@ -118,12 +106,10 @@ JSRoot {
 												filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 												end: Object {
 													column: 17
-													index: 17
 													line: 1
 												}
 												start: Object {
 													column: 14
-													index: 14
 													line: 1
 												}
 											}
@@ -135,12 +121,10 @@ JSRoot {
 								filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -151,12 +135,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -173,12 +155,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 24
-					index: 50
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 26
 					line: 2
 				}
 			}
@@ -190,12 +170,10 @@ JSRoot {
 						identifierName: "foo"
 						end: Object {
 							column: 19
-							index: 45
 							line: 2
 						}
 						start: Object {
 							column: 16
-							index: 42
 							line: 2
 						}
 					}
@@ -204,12 +182,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 					end: Object {
 						column: 24
-						index: 50
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 33
 						line: 2
 					}
 				}
@@ -220,12 +196,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 24
-							index: 50
 							line: 2
 						}
 						start: Object {
 							column: 22
-							index: 48
 							line: 2
 						}
 					}
@@ -243,12 +217,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 						end: Object {
 							column: 21
-							index: 47
 							line: 2
 						}
 						start: Object {
 							column: 19
-							index: 45
 							line: 2
 						}
 					}
@@ -260,12 +232,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-destructuring5/input.js"
 				end: Object {
 					column: 25
-					index: 51
 					line: 2
 				}
 				start: Object {
 					column: 24
-					index: 50
 					line: 2
 				}
 			}

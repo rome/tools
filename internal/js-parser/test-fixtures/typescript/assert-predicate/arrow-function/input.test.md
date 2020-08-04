@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/assert-predicate/arrow-function/input.ts"
 		end: Object {
 			column: 0
-			index: 166
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 31
-					index: 149
 					line: 3
 				}
 				start: Object {
 					column: 17
-					index: 135
 					line: 3
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 63
-					index: 63
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 63
-						index: 63
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 								identifierName: "assert1"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 63
-								index: 63
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								end: Object {
 									column: 63
-									index: 63
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 63
-										index: 63
 										line: 1
 									}
 									start: Object {
 										column: 61
-										index: 61
 										line: 1
 									}
 								}
@@ -157,12 +141,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 60
-										index: 60
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 										filename: "typescript/assert-predicate/arrow-function/input.ts"
 										end: Object {
 											column: 57
-											index: 57
 											line: 1
 										}
 										start: Object {
 											column: 42
-											index: 42
 											line: 1
 										}
 									}
@@ -186,12 +166,10 @@ JSRoot {
 											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 57
-												index: 57
 												line: 1
 											}
 											start: Object {
 												column: 51
-												index: 51
 												line: 1
 											}
 										}
@@ -203,12 +181,10 @@ JSRoot {
 											identifierName: "value"
 											end: Object {
 												column: 47
-												index: 47
 												line: 1
 											}
 											start: Object {
 												column: 42
-												index: 42
 												line: 1
 											}
 										}
@@ -221,12 +197,10 @@ JSRoot {
 											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 60
-												index: 60
 												line: 1
 											}
 											start: Object {
 												column: 61
-												index: 61
 												line: 1
 											}
 										}
@@ -236,12 +210,10 @@ JSRoot {
 												filename: "typescript/assert-predicate/arrow-function/input.ts"
 												end: Object {
 													column: 60
-													index: 60
 													line: 1
 												}
 												start: Object {
 													column: 61
-													index: 61
 													line: 1
 												}
 											}
@@ -250,12 +222,10 @@ JSRoot {
 													filename: "typescript/assert-predicate/arrow-function/input.ts"
 													end: Object {
 														column: 31
-														index: 31
 														line: 1
 													}
 													start: Object {
 														column: 24
-														index: 24
 														line: 1
 													}
 												}
@@ -274,12 +244,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 53
-					index: 117
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 64
 					line: 2
 				}
 			}
@@ -289,12 +257,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 53
-						index: 117
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 64
 						line: 2
 					}
 				}
@@ -307,12 +273,10 @@ JSRoot {
 								identifierName: "assert2"
 								end: Object {
 									column: 13
-									index: 77
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 70
 									line: 2
 								}
 							}
@@ -321,12 +285,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 53
-								index: 117
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 70
 								line: 2
 							}
 						}
@@ -335,12 +297,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/arrow-function/input.ts"
 								end: Object {
 									column: 53
-									index: 117
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 80
 									line: 2
 								}
 							}
@@ -351,12 +311,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 53
-										index: 117
 										line: 2
 									}
 									start: Object {
 										column: 51
-										index: 115
 										line: 2
 									}
 								}
@@ -370,12 +328,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/arrow-function/input.ts"
 									end: Object {
 										column: 50
-										index: 114
 										line: 2
 									}
 									start: Object {
 										column: 16
-										index: 80
 										line: 2
 									}
 								}
@@ -386,12 +342,10 @@ JSRoot {
 										filename: "typescript/assert-predicate/arrow-function/input.ts"
 										end: Object {
 											column: 47
-											index: 111
 											line: 2
 										}
 										start: Object {
 											column: 32
-											index: 96
 											line: 2
 										}
 									}
@@ -402,12 +356,10 @@ JSRoot {
 											identifierName: "value"
 											end: Object {
 												column: 47
-												index: 111
 												line: 2
 											}
 											start: Object {
 												column: 42
-												index: 106
 												line: 2
 											}
 										}
@@ -420,12 +372,10 @@ JSRoot {
 											filename: "typescript/assert-predicate/arrow-function/input.ts"
 											end: Object {
 												column: 50
-												index: 114
 												line: 2
 											}
 											start: Object {
 												column: 51
-												index: 115
 												line: 2
 											}
 										}
@@ -435,12 +385,10 @@ JSRoot {
 												filename: "typescript/assert-predicate/arrow-function/input.ts"
 												end: Object {
 													column: 50
-													index: 114
 													line: 2
 												}
 												start: Object {
 													column: 51
-													index: 115
 													line: 2
 												}
 											}
@@ -449,12 +397,10 @@ JSRoot {
 													filename: "typescript/assert-predicate/arrow-function/input.ts"
 													end: Object {
 														column: 31
-														index: 95
 														line: 2
 													}
 													start: Object {
 														column: 24
-														index: 88
 														line: 2
 													}
 												}
@@ -473,12 +419,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 32
-					index: 150
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 118
 					line: 3
 				}
 			}
@@ -488,12 +432,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 32
-						index: 150
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 118
 						line: 3
 					}
 				}
@@ -506,12 +448,10 @@ JSRoot {
 								identifierName: "assert3"
 								end: Object {
 									column: 13
-									index: 131
 									line: 3
 								}
 								start: Object {
 									column: 6
-									index: 124
 									line: 3
 								}
 							}
@@ -520,12 +460,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/arrow-function/input.ts"
 							end: Object {
 								column: 32
-								index: 150
 								line: 3
 							}
 							start: Object {
 								column: 6
-								index: 124
 								line: 3
 							}
 						}
@@ -536,12 +474,10 @@ JSRoot {
 								identifierName: "value"
 								end: Object {
 									column: 22
-									index: 140
 									line: 3
 								}
 								start: Object {
 									column: 17
-									index: 135
 									line: 3
 								}
 							}
@@ -555,12 +491,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 33
-					index: 151
 					line: 3
 				}
 				start: Object {
 					column: 32
-					index: 150
 					line: 3
 				}
 			}
@@ -570,12 +504,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 33
-						index: 151
 						line: 3
 					}
 					start: Object {
 						column: 32
-						index: 150
 						line: 3
 					}
 				}
@@ -586,12 +518,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
 				end: Object {
 					column: 47
-					index: 165
 					line: 3
 				}
 				start: Object {
 					column: 34
-					index: 152
 					line: 3
 				}
 			}
@@ -600,12 +530,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/arrow-function/input.ts"
 					end: Object {
 						column: 47
-						index: 165
 						line: 3
 					}
 					start: Object {
 						column: 34
-						index: 152
 						line: 3
 					}
 				}
@@ -616,12 +544,10 @@ JSRoot {
 						filename: "typescript/assert-predicate/arrow-function/input.ts"
 						end: Object {
 							column: 47
-							index: 165
 							line: 3
 						}
 						start: Object {
 							column: 45
-							index: 163
 							line: 3
 						}
 					}
@@ -635,12 +561,10 @@ JSRoot {
 						filename: "typescript/assert-predicate/arrow-function/input.ts"
 						end: Object {
 							column: 44
-							index: 162
 							line: 3
 						}
 						start: Object {
 							column: 34
-							index: 152
 							line: 3
 						}
 					}
@@ -652,12 +576,10 @@ JSRoot {
 								identifierName: "asserts"
 								end: Object {
 									column: 41
-									index: 159
 									line: 3
 								}
 								start: Object {
 									column: 34
-									index: 152
 									line: 3
 								}
 							}

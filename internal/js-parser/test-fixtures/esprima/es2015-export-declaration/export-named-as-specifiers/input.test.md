@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 		end: Object {
 			column: 0
-			index: 44
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -87,12 +79,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 					}
@@ -119,12 +107,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 						}
@@ -154,12 +138,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 				end: Object {
 					column: 13
-					index: 43
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 30
 					line: 2
 				}
 			}
@@ -169,12 +151,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 					end: Object {
 						column: 13
-						index: 43
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 30
 						line: 2
 					}
 				}
@@ -187,12 +167,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 34
 									line: 2
 								}
 							}
@@ -202,12 +180,10 @@ JSRoot {
 							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							end: Object {
 								column: 7
-								index: 37
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 34
 								line: 2
 							}
 						}
@@ -220,12 +196,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 12
-									index: 42
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 39
 									line: 2
 								}
 							}
@@ -235,12 +209,10 @@ JSRoot {
 							filename: "esprima/es2015-export-declaration/export-named-as-specifiers/input.js"
 							end: Object {
 								column: 12
-								index: 42
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 39
 								line: 2
 							}
 						}

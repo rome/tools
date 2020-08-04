@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/keyword-tag/input.jsx"
 		end: Object {
 			column: 0
-			index: 13
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/basic/keyword-tag/input.jsx"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "jsx/basic/keyword-tag/input.jsx"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "jsx/basic/keyword-tag/input.jsx"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

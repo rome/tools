@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "t"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 						end: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-member-expression/input.js"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}
@@ -115,12 +103,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 									start: Object {
 										column: 2
-										index: 2
 										line: 1
 									}
 								}
@@ -133,12 +119,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 5
-											index: 5
 											line: 1
 										}
 										start: Object {
 											column: 4
-											index: 4
 											line: 1
 										}
 									}
@@ -148,12 +132,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 5
-										index: 5
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}

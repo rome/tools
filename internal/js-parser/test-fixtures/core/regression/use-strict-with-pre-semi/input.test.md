@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/regression/use-strict-with-pre-semi/input.js"
 		end: Object {
 			column: 0
-			index: 56
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "core/regression/use-strict-with-pre-semi/input.js"
 				end: Object {
 					column: 1
-					index: 55
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "core/regression/use-strict-with-pre-semi/input.js"
 					end: Object {
 						column: 1
-						index: 55
 						line: 3
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 2
-								index: 26
 								line: 2
 							}
 							start: Object {
 								column: 1
-								index: 25
 								line: 2
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 16
-								index: 40
 								line: 2
 							}
 							start: Object {
 								column: 3
-								index: 27
 								line: 2
 							}
 						}
@@ -114,12 +102,10 @@ JSRoot {
 								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 15
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 27
 									line: 2
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 29
-								index: 53
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 41
 								line: 2
 							}
 						}
@@ -145,12 +129,10 @@ JSRoot {
 								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 25
-									index: 49
 									line: 2
 								}
 								start: Object {
 									column: 23
-									index: 47
 									line: 2
 								}
 							}
@@ -162,12 +144,10 @@ JSRoot {
 								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 29
-									index: 53
 									line: 2
 								}
 								start: Object {
 									column: 27
-									index: 51
 									line: 2
 								}
 							}
@@ -187,12 +167,10 @@ JSRoot {
 					filename: "core/regression/use-strict-with-pre-semi/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -202,12 +180,10 @@ JSRoot {
 							filename: "core/regression/use-strict-with-pre-semi/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -217,12 +193,10 @@ JSRoot {
 								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -233,12 +207,10 @@ JSRoot {
 								filename: "core/regression/use-strict-with-pre-semi/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -249,12 +221,10 @@ JSRoot {
 									filename: "core/regression/use-strict-with-pre-semi/input.js"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}
@@ -267,12 +237,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 14
-											index: 14
 											line: 1
 										}
 										start: Object {
 											column: 13
-											index: 13
 											line: 1
 										}
 									}
@@ -283,12 +251,10 @@ JSRoot {
 											filename: "core/regression/use-strict-with-pre-semi/input.js"
 											end: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 											start: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 										}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/export/nested-same-name/input.ts"
 		end: Object {
 			column: 0
-			index: 67
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/export/nested-same-name/input.ts"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "typescript/export/nested-same-name/input.ts"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "typescript/export/nested-same-name/input.ts"
 						end: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 								}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "typescript/export/nested-same-name/input.ts"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -116,12 +104,10 @@ JSRoot {
 									filename: "typescript/export/nested-same-name/input.ts"
 									end: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}
@@ -138,12 +124,10 @@ JSRoot {
 				filename: "typescript/export/nested-same-name/input.ts"
 				end: Object {
 					column: 1
-					index: 66
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 20
 					line: 2
 				}
 			}
@@ -155,12 +139,10 @@ JSRoot {
 						identifierName: "N"
 						end: Object {
 							column: 18
-							index: 38
 							line: 2
 						}
 						start: Object {
 							column: 17
-							index: 37
 							line: 2
 						}
 					}
@@ -169,12 +151,10 @@ JSRoot {
 					filename: "typescript/export/nested-same-name/input.ts"
 					end: Object {
 						column: 1
-						index: 66
 						line: 4
 					}
 					start: Object {
 						column: 7
-						index: 27
 						line: 2
 					}
 				}
@@ -183,12 +163,10 @@ JSRoot {
 						filename: "typescript/export/nested-same-name/input.ts"
 						end: Object {
 							column: 1
-							index: 66
 							line: 4
 						}
 						start: Object {
 							column: 19
-							index: 39
 							line: 2
 						}
 					}
@@ -200,12 +178,10 @@ JSRoot {
 								filename: "typescript/export/nested-same-name/input.ts"
 								end: Object {
 									column: 23
-									index: 64
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 45
 									line: 3
 								}
 							}
@@ -214,12 +190,10 @@ JSRoot {
 									filename: "typescript/export/nested-same-name/input.ts"
 									end: Object {
 										column: 23
-										index: 64
 										line: 3
 									}
 									start: Object {
 										column: 11
-										index: 52
 										line: 3
 									}
 								}
@@ -229,12 +203,10 @@ JSRoot {
 										filename: "typescript/export/nested-same-name/input.ts"
 										end: Object {
 											column: 23
-											index: 64
 											line: 3
 										}
 										start: Object {
 											column: 11
-											index: 52
 											line: 3
 										}
 									}
@@ -247,12 +219,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 18
-														index: 59
 														line: 3
 													}
 													start: Object {
 														column: 17
-														index: 58
 														line: 3
 													}
 												}
@@ -261,12 +231,10 @@ JSRoot {
 												filename: "typescript/export/nested-same-name/input.ts"
 												end: Object {
 													column: 22
-													index: 63
 													line: 3
 												}
 												start: Object {
 													column: 17
-													index: 58
 													line: 3
 												}
 											}
@@ -277,12 +245,10 @@ JSRoot {
 													filename: "typescript/export/nested-same-name/input.ts"
 													end: Object {
 														column: 22
-														index: 63
 														line: 3
 													}
 													start: Object {
 														column: 21
-														index: 62
 														line: 3
 													}
 												}

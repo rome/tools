@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/member-access-bracket/input.js"
 		end: Object {
 			column: 13
-			index: 97
 			line: 11
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						identifierName: "obj"
 						end: Object {
 							column: 3
-							index: 3
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 							identifierName: "expr"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -100,12 +90,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -117,12 +105,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 20
-					index: 33
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 13
 					line: 3
 				}
 			}
@@ -131,12 +117,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 20
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 13
 						line: 3
 					}
 				}
@@ -148,12 +132,10 @@ JSRoot {
 							identifierName: "other"
 							end: Object {
 								column: 19
-								index: 32
 								line: 3
 							}
 							start: Object {
 								column: 14
-								index: 27
 								line: 3
 							}
 						}
@@ -163,12 +145,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 20
-							index: 33
 							line: 3
 						}
 						start: Object {
 							column: 13
-							index: 26
 							line: 3
 						}
 					}
@@ -178,12 +158,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
-							index: 24
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 13
 							line: 3
 						}
 					}
@@ -194,12 +172,10 @@ JSRoot {
 							identifierName: "obj"
 							end: Object {
 								column: 3
-								index: 16
 								line: 3
 							}
 							start: Object {
 								column: 0
-								index: 13
 								line: 3
 							}
 						}
@@ -212,12 +188,10 @@ JSRoot {
 								identifierName: "expr"
 								end: Object {
 									column: 10
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 6
-									index: 19
 									line: 3
 								}
 							}
@@ -227,12 +201,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 11
-								index: 24
 								line: 3
 							}
 							start: Object {
 								column: 5
-								index: 18
 								line: 3
 							}
 						}
@@ -245,12 +217,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 11
-					index: 46
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 35
 					line: 5
 				}
 			}
@@ -259,12 +229,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 11
-						index: 46
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 35
 						line: 5
 					}
 				}
@@ -275,12 +243,10 @@ JSRoot {
 						identifierName: "obj"
 						end: Object {
 							column: 3
-							index: 38
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 35
 							line: 5
 						}
 					}
@@ -292,12 +258,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 10
-								index: 45
 								line: 5
 							}
 							start: Object {
 								column: 6
-								index: 41
 								line: 5
 							}
 						}
@@ -307,12 +271,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
-							index: 46
 							line: 5
 						}
 						start: Object {
 							column: 5
-							index: 40
 							line: 5
 						}
 					}
@@ -324,12 +286,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 19
-					index: 67
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 48
 					line: 7
 				}
 			}
@@ -338,12 +298,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 19
-						index: 67
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 48
 						line: 7
 					}
 				}
@@ -354,12 +312,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 18
-								index: 66
 								line: 7
 							}
 							start: Object {
 								column: 14
-								index: 62
 								line: 7
 							}
 						}
@@ -369,12 +325,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 19
-							index: 67
 							line: 7
 						}
 						start: Object {
 							column: 13
-							index: 61
 							line: 7
 						}
 					}
@@ -384,12 +338,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 11
-							index: 59
 							line: 7
 						}
 						start: Object {
 							column: 0
-							index: 48
 							line: 7
 						}
 					}
@@ -400,12 +352,10 @@ JSRoot {
 							identifierName: "obj"
 							end: Object {
 								column: 3
-								index: 51
 								line: 7
 							}
 							start: Object {
 								column: 0
-								index: 48
 								line: 7
 							}
 						}
@@ -417,12 +367,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/member-access-bracket/input.js"
 								end: Object {
 									column: 10
-									index: 58
 									line: 7
 								}
 								start: Object {
 									column: 6
-									index: 54
 									line: 7
 								}
 							}
@@ -432,12 +380,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 11
-								index: 59
 								line: 7
 							}
 							start: Object {
 								column: 5
-								index: 53
 								line: 7
 							}
 						}
@@ -450,12 +396,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 13
-					index: 82
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 69
 					line: 9
 				}
 			}
@@ -464,12 +408,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 13
-						index: 82
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 69
 						line: 9
 					}
 				}
@@ -481,12 +423,10 @@ JSRoot {
 							identifierName: "expr"
 							end: Object {
 								column: 12
-								index: 81
 								line: 9
 							}
 							start: Object {
 								column: 8
-								index: 77
 								line: 9
 							}
 						}
@@ -496,12 +436,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 13
-							index: 82
 							line: 9
 						}
 						start: Object {
 							column: 7
-							index: 76
 							line: 9
 						}
 					}
@@ -511,12 +449,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 5
-							index: 74
 							line: 9
 						}
 						start: Object {
 							column: 0
-							index: 69
 							line: 9
 						}
 					}
@@ -527,12 +463,10 @@ JSRoot {
 							identifierName: "obj"
 							end: Object {
 								column: 3
-								index: 72
 								line: 9
 							}
 							start: Object {
 								column: 0
-								index: 69
 								line: 9
 							}
 						}
@@ -545,12 +479,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 74
 									line: 9
 								}
 								start: Object {
 									column: 4
-									index: 73
 									line: 9
 								}
 							}
@@ -560,12 +492,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 5
-								index: 74
 								line: 9
 							}
 							start: Object {
 								column: 4
-								index: 73
 								line: 9
 							}
 						}
@@ -578,12 +508,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/member-access-bracket/input.js"
 				end: Object {
 					column: 13
-					index: 97
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 84
 					line: 11
 				}
 			}
@@ -592,12 +520,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/member-access-bracket/input.js"
 					end: Object {
 						column: 13
-						index: 97
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 84
 						line: 11
 					}
 				}
@@ -608,12 +534,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/member-access-bracket/input.js"
 							end: Object {
 								column: 12
-								index: 96
 								line: 11
 							}
 							start: Object {
 								column: 8
-								index: 92
 								line: 11
 							}
 						}
@@ -623,12 +547,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 13
-							index: 97
 							line: 11
 						}
 						start: Object {
 							column: 7
-							index: 91
 							line: 11
 						}
 					}
@@ -638,12 +560,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/member-access-bracket/input.js"
 						end: Object {
 							column: 5
-							index: 89
 							line: 11
 						}
 						start: Object {
 							column: 0
-							index: 84
 							line: 11
 						}
 					}
@@ -654,12 +574,10 @@ JSRoot {
 							identifierName: "obj"
 							end: Object {
 								column: 3
-								index: 87
 								line: 11
 							}
 							start: Object {
 								column: 0
-								index: 84
 								line: 11
 							}
 						}
@@ -672,12 +590,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 89
 									line: 11
 								}
 								start: Object {
 									column: 4
-									index: 88
 									line: 11
 								}
 							}
@@ -687,12 +603,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 5
-								index: 89
 								line: 11
 							}
 							start: Object {
 								column: 4
-								index: 88
 								line: 11
 							}
 						}

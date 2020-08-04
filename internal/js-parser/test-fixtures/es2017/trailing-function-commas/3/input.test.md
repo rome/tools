@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/trailing-function-commas/3/input.js"
 		end: Object {
 			column: 25
-			index: 25
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2017/trailing-function-commas/3/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "es2017/trailing-function-commas/3/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "es2017/trailing-function-commas/3/input.js"
 							end: Object {
 								column: 23
-								index: 23
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							loc: Object {
 								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "es2017/trailing-function-commas/3/input.js"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -201,12 +180,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 17
-											index: 17
 											line: 1
 										}
 										start: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 									}
@@ -217,12 +194,10 @@ JSRoot {
 											filename: "es2017/trailing-function-commas/3/input.js"
 											end: Object {
 												column: 17
-												index: 17
 												line: 1
 											}
 											start: Object {
 												column: 16
-												index: 16
 												line: 1
 											}
 										}

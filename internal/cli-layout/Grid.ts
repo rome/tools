@@ -6,6 +6,7 @@
  */
 
 import {
+	AnyMarkup,
 	MarkupLineWrapMode,
 	MarkupParsedAttributes,
 	MarkupParsedChild,
@@ -871,7 +872,7 @@ export default class Grid {
 	}
 
 	parse(
-		sub: undefined | string,
+		sub: undefined | string | AnyMarkup,
 		offsetPosition: undefined | Position,
 	): MarkupParsedChildren {
 		if (sub === undefined) {

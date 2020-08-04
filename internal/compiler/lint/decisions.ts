@@ -9,7 +9,7 @@ import {Position} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
 	DiagnosticCategory,
-	DiagnosticDescriptionOptionalCategory,
+	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 	descriptions,
 } from "@internal/diagnostics";
@@ -23,9 +23,7 @@ import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter"
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
 
-type UnexpectedDecision = (
-	description: DiagnosticDescriptionOptionalCategory,
-) => void;
+type UnexpectedDecision = (description: DiagnosticDescriptionOptional) => void;
 
 function validateAction(
 	raw: string,

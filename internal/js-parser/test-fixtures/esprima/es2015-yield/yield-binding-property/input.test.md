@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/yield-binding-property/input.js"
 		end: Object {
 			column: 0
-			index: 24
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-binding-property/input.js"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-binding-property/input.js"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-binding-property/input.js"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -88,12 +80,10 @@ JSRoot {
 												identifierName: "yield"
 												end: Object {
 													column: 11
-													index: 11
 													line: 1
 												}
 												start: Object {
 													column: 6
-													index: 6
 													line: 1
 												}
 											}
@@ -102,12 +92,10 @@ JSRoot {
 											filename: "esprima/es2015-yield/yield-binding-property/input.js"
 											end: Object {
 												column: 11
-												index: 11
 												line: 1
 											}
 											start: Object {
 												column: 6
-												index: 6
 												line: 1
 											}
 										}
@@ -119,12 +107,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 											start: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 										}
@@ -133,12 +119,10 @@ JSRoot {
 										filename: "esprima/es2015-yield/yield-binding-property/input.js"
 										end: Object {
 											column: 14
-											index: 14
 											line: 1
 										}
 										start: Object {
 											column: 6
-											index: 6
 											line: 1
 										}
 									}
@@ -149,12 +133,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/yield-binding-property/input.js"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -165,12 +147,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}

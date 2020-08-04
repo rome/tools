@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/members-with-reserved-names/input.ts"
 		end: Object {
 			column: 0
-			index: 39
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/members-with-reserved-names/input.ts"
 				end: Object {
 					column: 1
-					index: 38
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/members-with-reserved-names/input.ts"
 					end: Object {
 						column: 1
-						index: 38
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "delete"
 									end: Object {
 										column: 17
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 11
-										index: 21
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 17
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 21
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/members-with-reserved-names/input.ts"
 							end: Object {
 								column: 26
-								index: 36
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 17
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -168,12 +151,10 @@ JSRoot {
 								filename: "typescript/class/members-with-reserved-names/input.ts"
 								end: Object {
 									column: 25
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 27
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									filename: "typescript/class/members-with-reserved-names/input.ts"
 									end: Object {
 										column: 25
-										index: 35
 										line: 2
 									}
 									start: Object {
 										column: 21
-										index: 31
 										line: 2
 									}
 								}

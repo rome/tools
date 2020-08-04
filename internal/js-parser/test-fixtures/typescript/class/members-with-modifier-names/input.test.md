@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/members-with-modifier-names/input.ts"
 		end: Object {
 			column: 0
-			index: 119
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/members-with-modifier-names/input.ts"
 				end: Object {
 					column: 1
-					index: 118
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/members-with-modifier-names/input.ts"
 					end: Object {
 						column: 1
-						index: 118
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "public"
 									end: Object {
 										column: 10
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 19
-								index: 29
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -168,12 +151,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 18
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 18
-										index: 28
 										line: 2
 									}
 									start: Object {
 										column: 14
-										index: 24
 										line: 2
 									}
 								}
@@ -204,12 +183,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 17
-										index: 47
 										line: 3
 									}
 									start: Object {
 										column: 11
-										index: 41
 										line: 3
 									}
 								}
@@ -219,12 +196,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 17
-									index: 47
 									line: 3
 								}
 								start: Object {
 									column: 11
-									index: 41
 									line: 3
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 26
-								index: 56
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 34
 								line: 3
 							}
 						}
@@ -254,12 +227,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 17
-									index: 47
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 34
 									line: 3
 								}
 							}
@@ -276,12 +247,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 25
-									index: 55
 									line: 3
 								}
 								start: Object {
 									column: 17
-									index: 47
 									line: 3
 								}
 							}
@@ -290,12 +259,10 @@ JSRoot {
 									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 25
-										index: 55
 										line: 3
 									}
 									start: Object {
 										column: 21
-										index: 51
 										line: 3
 									}
 								}
@@ -311,12 +278,10 @@ JSRoot {
 									identifierName: "readonly"
 									end: Object {
 										column: 12
-										index: 69
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 61
 										line: 4
 									}
 								}
@@ -325,12 +290,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
-									index: 69
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 61
 									line: 4
 								}
 							}
@@ -342,12 +305,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 16
-									index: 73
 									line: 4
 								}
 								start: Object {
 									column: 15
-									index: 72
 									line: 4
 								}
 							}
@@ -358,12 +319,10 @@ JSRoot {
 							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 17
-								index: 74
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 61
 								line: 4
 							}
 						}
@@ -376,19 +335,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 61
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
-									index: 69
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 61
 									line: 4
 								}
 							}
@@ -404,12 +360,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 9
-										index: 84
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 79
 										line: 5
 									}
 								}
@@ -418,12 +372,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 9
-									index: 84
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 79
 									line: 5
 								}
 							}
@@ -433,12 +385,10 @@ JSRoot {
 							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 21
-								index: 96
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 79
 								line: 5
 							}
 						}
@@ -451,19 +401,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 79
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 9
-									index: 84
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 79
 									line: 5
 								}
 							}
@@ -479,12 +426,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 20
-									index: 95
 									line: 5
 								}
 								start: Object {
 									column: 12
-									index: 87
 									line: 5
 								}
 							}
@@ -493,12 +438,10 @@ JSRoot {
 									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 20
-										index: 95
 										line: 5
 									}
 									start: Object {
 										column: 16
-										index: 91
 										line: 5
 									}
 								}
@@ -508,12 +451,10 @@ JSRoot {
 									filename: "typescript/class/members-with-modifier-names/input.ts"
 									end: Object {
 										column: 12
-										index: 87
 										line: 5
 									}
 									start: Object {
 										column: 9
-										index: 84
 										line: 5
 									}
 								}
@@ -526,12 +467,10 @@ JSRoot {
 											filename: "typescript/class/members-with-modifier-names/input.ts"
 											end: Object {
 												column: 11
-												index: 86
 												line: 5
 											}
 											start: Object {
 												column: 10
-												index: 85
 												line: 5
 											}
 										}
@@ -549,12 +488,10 @@ JSRoot {
 									identifierName: "abstract"
 									end: Object {
 										column: 12
-										index: 109
 										line: 6
 									}
 									start: Object {
 										column: 4
-										index: 101
 										line: 6
 									}
 								}
@@ -563,12 +500,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
-									index: 109
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 101
 									line: 6
 								}
 							}
@@ -579,12 +514,10 @@ JSRoot {
 							filename: "typescript/class/members-with-modifier-names/input.ts"
 							end: Object {
 								column: 19
-								index: 116
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 101
 								line: 6
 							}
 						}
@@ -593,12 +526,10 @@ JSRoot {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 18
-									index: 115
 									line: 6
 								}
 								start: Object {
 									column: 14
-									index: 111
 									line: 6
 								}
 							}
@@ -612,19 +543,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 101
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {
 									column: 12
-									index: 109
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 101
 									line: 6
 								}
 							}

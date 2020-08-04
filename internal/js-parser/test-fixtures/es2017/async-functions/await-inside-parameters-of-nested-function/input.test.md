@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 		end: Object {
 			column: 1
-			index: 55
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 24
-					index: 47
 					line: 2
 				}
 				start: Object {
 					column: 25
-					index: 48
 					line: 2
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 				end: Object {
 					column: 1
-					index: 55
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -105,12 +97,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -121,12 +111,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 					end: Object {
 						column: 1
-						index: 55
 						line: 3
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -139,12 +127,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 14
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 34
 									line: 2
 								}
 							}
@@ -153,12 +139,10 @@ JSRoot {
 							filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 							end: Object {
 								column: 1
-								index: 55
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 25
 								line: 2
 							}
 						}
@@ -174,12 +158,10 @@ JSRoot {
 								filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 24
-									index: 47
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 37
 									line: 2
 								}
 							}
@@ -189,12 +171,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 24
-											index: 47
 											line: 2
 										}
 										start: Object {
 											column: 15
-											index: 38
 											line: 2
 										}
 									}
@@ -205,12 +185,10 @@ JSRoot {
 											identifierName: "await"
 											end: Object {
 												column: 24
-												index: 47
 												line: 2
 											}
 											start: Object {
 												column: 19
-												index: 42
 												line: 2
 											}
 										}
@@ -222,12 +200,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 16
-												index: 39
 												line: 2
 											}
 											start: Object {
 												column: 15
-												index: 38
 												line: 2
 											}
 										}
@@ -238,12 +214,10 @@ JSRoot {
 												filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 												end: Object {
 													column: 16
-													index: 39
 													line: 2
 												}
 												start: Object {
 													column: 15
-													index: 38
 													line: 2
 												}
 											}
@@ -258,12 +232,10 @@ JSRoot {
 								filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 								end: Object {
 									column: 1
-									index: 55
 									line: 3
 								}
 								start: Object {
 									column: 25
-									index: 48
 									line: 2
 								}
 							}
@@ -273,12 +245,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 26
-											index: 49
 											line: 2
 										}
 										start: Object {
 											column: 25
-											index: 48
 											line: 2
 										}
 									}
@@ -289,12 +259,10 @@ JSRoot {
 											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											end: Object {
 												column: 26
-												index: 49
 												line: 2
 											}
 											start: Object {
 												column: 25
-												index: 48
 												line: 2
 											}
 										}
@@ -305,12 +273,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 27
-											index: 50
 											line: 2
 										}
 										start: Object {
 											column: 26
-											index: 49
 											line: 2
 										}
 									}
@@ -320,12 +286,10 @@ JSRoot {
 											filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 											end: Object {
 												column: 27
-												index: 50
 												line: 2
 											}
 											start: Object {
 												column: 26
-												index: 49
 												line: 2
 											}
 										}
@@ -338,12 +302,10 @@ JSRoot {
 										filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 										end: Object {
 											column: 30
-											index: 53
 											line: 2
 										}
 										start: Object {
 											column: 28
-											index: 51
 											line: 2
 										}
 									}

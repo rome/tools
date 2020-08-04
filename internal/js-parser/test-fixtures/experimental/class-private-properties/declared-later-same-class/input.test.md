@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 		end: Object {
 			column: 1
-			index: 33
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 				end: Object {
 					column: 1
-					index: 33
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 					end: Object {
 						column: 1
-						index: 33
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 14
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 17
 									line: 2
 								}
 							}
@@ -134,12 +120,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									end: Object {
 										column: 11
-										index: 21
 										line: 2
 									}
 									start: Object {
 										column: 7
-										index: 17
 										line: 2
 									}
 								}
@@ -153,12 +137,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 14
-												index: 24
 												line: 2
 											}
 											start: Object {
 												column: 13
-												index: 23
 												line: 2
 											}
 										}
@@ -167,12 +149,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 										end: Object {
 											column: 14
-											index: 24
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 22
 											line: 2
 										}
 									}
@@ -181,12 +161,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 									end: Object {
 										column: 14
-										index: 24
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 22
 										line: 2
 									}
 								}
@@ -197,12 +175,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 							end: Object {
 								column: 15
-								index: 25
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -215,19 +191,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -242,12 +215,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 4
-										index: 30
 										line: 3
 									}
 									start: Object {
 										column: 3
-										index: 29
 										line: 3
 									}
 								}
@@ -256,12 +227,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
-									index: 30
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 28
 									line: 3
 								}
 							}
@@ -272,12 +241,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 							end: Object {
 								column: 5
-								index: 31
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 28
 								line: 3
 							}
 						}
@@ -290,19 +257,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 28
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 								end: Object {
 									column: 4
-									index: 30
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 28
 									line: 3
 								}
 							}

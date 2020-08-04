@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/arrow-functions/in-logic-expression/input.js"
 		end: Object {
 			column: 19
-			index: 39
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/arrow-functions/in-logic-expression/input.js"
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/arrow-functions/in-logic-expression/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -82,12 +74,10 @@ JSRoot {
 						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -119,12 +107,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}
@@ -137,12 +123,10 @@ JSRoot {
 				filename: "es2015/arrow-functions/in-logic-expression/input.js"
 				end: Object {
 					column: 19
-					index: 39
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 20
 					line: 2
 				}
 			}
@@ -151,12 +135,10 @@ JSRoot {
 					filename: "es2015/arrow-functions/in-logic-expression/input.js"
 					end: Object {
 						column: 18
-						index: 38
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 20
 						line: 2
 					}
 				}
@@ -167,12 +149,10 @@ JSRoot {
 						identifierName: "b"
 						end: Object {
 							column: 18
-							index: 38
 							line: 2
 						}
 						start: Object {
 							column: 17
-							index: 37
 							line: 2
 						}
 					}
@@ -184,12 +164,10 @@ JSRoot {
 						identifierName: "a"
 						end: Object {
 							column: 14
-							index: 34
 							line: 2
 						}
 						start: Object {
 							column: 13
-							index: 33
 							line: 2
 						}
 					}
@@ -199,12 +177,10 @@ JSRoot {
 						filename: "es2015/arrow-functions/in-logic-expression/input.js"
 						end: Object {
 							column: 9
-							index: 29
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 21
 							line: 2
 						}
 					}
@@ -215,12 +191,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 9
-								index: 29
 								line: 2
 							}
 							start: Object {
 								column: 7
-								index: 27
 								line: 2
 							}
 						}
@@ -236,12 +210,10 @@ JSRoot {
 							filename: "es2015/arrow-functions/in-logic-expression/input.js"
 							end: Object {
 								column: 6
-								index: 26
 								line: 2
 							}
 							start: Object {
 								column: 1
-								index: 21
 								line: 2
 							}
 						}

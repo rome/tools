@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 		end: Object {
 			column: 36
-			index: 36
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 				start: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 				end: Object {
 					column: 36
-					index: 36
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 					end: Object {
 						column: 36
-						index: 36
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 						identifierName: "foo"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 						filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 						end: Object {
 							column: 36
-							index: 36
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -139,12 +125,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -157,12 +141,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}
@@ -171,12 +153,10 @@ JSRoot {
 							filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 							end: Object {
 								column: 36
-								index: 36
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -187,12 +167,10 @@ JSRoot {
 								filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 							}
@@ -210,12 +188,10 @@ JSRoot {
 								filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}

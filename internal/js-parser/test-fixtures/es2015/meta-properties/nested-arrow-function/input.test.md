@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/meta-properties/nested-arrow-function/input.js"
 		end: Object {
 			column: 0
-			index: 41
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/meta-properties/nested-arrow-function/input.js"
 				end: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/meta-properties/nested-arrow-function/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/meta-properties/nested-arrow-function/input.js"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/meta-properties/nested-arrow-function/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/meta-properties/nested-arrow-function/input.js"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 									filename: "es2015/meta-properties/nested-arrow-function/input.js"
 									end: Object {
 										column: 27
-										index: 27
 										line: 1
 									}
 									start: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 								}
@@ -156,12 +140,10 @@ JSRoot {
 									filename: "es2015/meta-properties/nested-arrow-function/input.js"
 									end: Object {
 										column: 38
-										index: 38
 										line: 1
 									}
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 										identifierName: "new"
 										end: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}
@@ -189,12 +169,10 @@ JSRoot {
 										identifierName: "target"
 										end: Object {
 											column: 38
-											index: 38
 											line: 1
 										}
 										start: Object {
 											column: 32
-											index: 32
 											line: 1
 										}
 									}

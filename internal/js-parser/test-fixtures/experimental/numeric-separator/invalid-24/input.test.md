@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/numeric-separator/invalid-24/input.js"
 		end: Object {
 			column: 0
-			index: 6
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "experimental/numeric-separator/invalid-24/input.js"
 				end: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "experimental/numeric-separator/invalid-24/input.js"
 					end: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -97,12 +89,10 @@ JSRoot {
 				filename: "experimental/numeric-separator/invalid-24/input.js"
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -113,12 +103,10 @@ JSRoot {
 					identifierName: "_1_1"
 					end: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}

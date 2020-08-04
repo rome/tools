@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 		end: Object {
 			column: 0
-			index: 36
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 				end: Object {
 					column: 1
-					index: 35
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 					filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 					end: Object {
 						column: 1
-						index: 35
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 13
-										index: 32
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 31
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 								end: Object {
 									column: 13
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 30
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 							filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 							end: Object {
 								column: 14
-								index: 33
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 21
 								line: 2
 							}
 						}
@@ -140,19 +126,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 21
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields-modifier-abstract/input.ts"
 								end: Object {
 									column: 13
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 21
 									line: 2
 								}
 							}

@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 		end: Object {
 			column: 0
-			index: 59
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 51
-					index: 51
 					line: 1
 				}
 				start: Object {
 					column: 46
-					index: 46
 					line: 1
 				}
 			}
@@ -86,12 +80,10 @@ JSRoot {
 					identifierName: "g"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 				end: Object {
 					column: 58
-					index: 58
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -122,12 +112,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 				}
@@ -138,12 +126,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 					end: Object {
 						column: 58
-						index: 58
 						line: 1
 					}
 					start: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 				}
@@ -153,12 +139,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 							end: Object {
 								column: 56
-								index: 56
 								line: 1
 							}
 							start: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 						}
@@ -168,12 +152,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 								end: Object {
 									column: 56
-									index: 56
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}
@@ -186,12 +168,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 34
-												index: 34
 												line: 1
 											}
 											start: Object {
 												column: 33
-												index: 33
 												line: 1
 											}
 										}
@@ -200,12 +180,10 @@ JSRoot {
 										filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 										end: Object {
 											column: 55
-											index: 55
 											line: 1
 										}
 										start: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 									}
@@ -217,12 +195,10 @@ JSRoot {
 												identifierName: "yield"
 												end: Object {
 													column: 51
-													index: 51
 													line: 1
 												}
 												start: Object {
 													column: 46
-													index: 46
 													line: 1
 												}
 											}
@@ -231,12 +207,10 @@ JSRoot {
 											filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 											end: Object {
 												column: 55
-												index: 55
 												line: 1
 											}
 											start: Object {
 												column: 37
-												index: 37
 												line: 1
 											}
 										}
@@ -247,12 +221,10 @@ JSRoot {
 												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 												end: Object {
 													column: 55
-													index: 55
 													line: 1
 												}
 												start: Object {
 													column: 53
-													index: 53
 													line: 1
 												}
 											}
@@ -270,12 +242,10 @@ JSRoot {
 												filename: "esprima/es2015-yield/invalid-yield-generator-strict-function-expression/input.js"
 												end: Object {
 													column: 53
-													index: 53
 													line: 1
 												}
 												start: Object {
 													column: 51
-													index: 51
 													line: 1
 												}
 											}

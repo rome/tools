@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/100/input.js"
 		end: Object {
 			column: 6
-			index: 14
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/uncategorised/100/input.js"
 				end: Object {
 					column: 6
-					index: 14
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

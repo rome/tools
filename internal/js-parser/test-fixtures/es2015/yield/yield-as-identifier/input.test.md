@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/yield-as-identifier/input.js"
 		end: Object {
 			column: 0
-			index: 14
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/yield/yield-as-identifier/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/yield/yield-as-identifier/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "yield"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2015/yield/yield-as-identifier/input.js"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "es2015/yield/yield-as-identifier/input.js"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

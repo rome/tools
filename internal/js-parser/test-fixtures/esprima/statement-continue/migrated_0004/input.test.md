@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-continue/migrated_0004/input.js"
 		end: Object {
 			column: 0
-			index: 48
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-continue/migrated_0004/input.js"
 				end: Object {
 					column: 47
-					index: 47
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "__proto__"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "esprima/statement-continue/migrated_0004/input.js"
 					end: Object {
 						column: 47
-						index: 47
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/statement-continue/migrated_0004/input.js"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 						filename: "esprima/statement-continue/migrated_0004/input.js"
 						end: Object {
 							column: 47
-							index: 47
 							line: 1
 						}
 						start: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 								filename: "esprima/statement-continue/migrated_0004/input.js"
 								end: Object {
 									column: 45
-									index: 45
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 44
-										index: 44
 										line: 1
 									}
 									start: Object {
 										column: 35
-										index: 35
 										line: 1
 									}
 								}

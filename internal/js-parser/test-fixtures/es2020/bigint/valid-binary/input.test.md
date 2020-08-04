@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/bigint/valid-binary/input.js"
 		end: Object {
 			column: 0
-			index: 13
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/bigint/valid-binary/input.js"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2020/bigint/valid-binary/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

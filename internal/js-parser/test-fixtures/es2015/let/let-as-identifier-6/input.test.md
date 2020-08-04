@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/let/let-as-identifier-6/input.js"
 		end: Object {
 			column: 0
-			index: 18
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/let/let-as-identifier-6/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "es2015/let/let-as-identifier-6/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "es2015/let/let-as-identifier-6/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						identifierName: "let"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -101,12 +91,10 @@ JSRoot {
 				filename: "es2015/let/let-as-identifier-6/input.js"
 				end: Object {
 					column: 3
-					index: 17
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -117,12 +105,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 3
-						index: 17
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 14
 						line: 2
 					}
 				}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/37/input.js"
 		end: Object {
 			column: 0
-			index: 30
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/37/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2017/async-functions/37/input.js"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "es2017/async-functions/37/input.js"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -88,12 +80,10 @@ JSRoot {
 												identifierName: "async"
 												end: Object {
 													column: 13
-													index: 13
 													line: 1
 												}
 												start: Object {
 													column: 8
-													index: 8
 													line: 1
 												}
 											}
@@ -102,12 +92,10 @@ JSRoot {
 											filename: "es2017/async-functions/37/input.js"
 											end: Object {
 												column: 13
-												index: 13
 												line: 1
 											}
 											start: Object {
 												column: 8
-												index: 8
 												line: 1
 											}
 										}
@@ -117,12 +105,10 @@ JSRoot {
 											filename: "es2017/async-functions/37/input.js"
 											end: Object {
 												column: 20
-												index: 20
 												line: 1
 											}
 											start: Object {
 												column: 8
-												index: 8
 												line: 1
 											}
 										}
@@ -132,12 +118,10 @@ JSRoot {
 												filename: "es2017/async-functions/37/input.js"
 												end: Object {
 													column: 20
-													index: 20
 													line: 1
 												}
 												start: Object {
 													column: 16
-													index: 16
 													line: 1
 												}
 											}
@@ -149,12 +133,10 @@ JSRoot {
 												identifierName: "async"
 												end: Object {
 													column: 13
-													index: 13
 													line: 1
 												}
 												start: Object {
 													column: 8
-													index: 8
 													line: 1
 												}
 											}
@@ -164,12 +146,10 @@ JSRoot {
 										filename: "es2017/async-functions/37/input.js"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 8
-											index: 8
 											line: 1
 										}
 									}
@@ -180,12 +160,10 @@ JSRoot {
 							filename: "es2017/async-functions/37/input.js"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -196,12 +174,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 28
-									index: 28
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}

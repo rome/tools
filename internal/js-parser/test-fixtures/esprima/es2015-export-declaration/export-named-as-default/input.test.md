@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 		end: Object {
 			column: 0
-			index: 34
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -87,12 +79,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -105,12 +95,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 				end: Object {
 					column: 8
-					index: 33
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 25
 					line: 2
 				}
 			}
@@ -120,12 +108,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 					end: Object {
 						column: 8
-						index: 33
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 25
 						line: 2
 					}
 				}
@@ -138,12 +124,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 29
 									line: 2
 								}
 							}
@@ -153,12 +137,10 @@ JSRoot {
 							filename: "esprima/es2015-export-declaration/export-named-as-default/input.js"
 							end: Object {
 								column: 7
-								index: 32
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 29
 								line: 2
 							}
 						}

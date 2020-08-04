@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/duplicate-modifier-1/input.ts"
 		end: Object {
 			column: 0
-			index: 42
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 19
 					line: 2
 				}
 				start: Object {
 					column: 10
-					index: 20
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "typescript/class/duplicate-modifier-1/input.ts"
 				end: Object {
 					column: 1
-					index: 41
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "typescript/class/duplicate-modifier-1/input.ts"
 					end: Object {
 						column: 1
-						index: 41
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 28
-										index: 38
 										line: 2
 									}
 									start: Object {
 										column: 25
-										index: 35
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "typescript/class/duplicate-modifier-1/input.ts"
 								end: Object {
 									column: 28
-									index: 38
 									line: 2
 								}
 								start: Object {
 									column: 25
-									index: 35
 									line: 2
 								}
 							}
@@ -146,12 +132,10 @@ JSRoot {
 							filename: "typescript/class/duplicate-modifier-1/input.ts"
 							end: Object {
 								column: 29
-								index: 39
 								line: 2
 							}
 							start: Object {
 								column: 25
-								index: 35
 								line: 2
 							}
 						}
@@ -164,19 +148,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 25
-								index: 35
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/duplicate-modifier-1/input.ts"
 								end: Object {
 									column: 28
-									index: 38
 									line: 2
 								}
 								start: Object {
 									column: 25
-									index: 35
 									line: 2
 								}
 							}

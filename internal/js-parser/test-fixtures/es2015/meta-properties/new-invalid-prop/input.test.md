@@ -21,18 +21,29 @@ JSRoot {
 		filename: "es2015/meta-properties/new-invalid-prop/input.js"
 		end: Object {
 			column: 1
-			index: 27
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "es2015/meta-properties/new-invalid-prop/input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 10
+					line: 2
+				}
+				start: Object {
+					column: 6
+					line: 2
+				}
+			}
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -47,21 +58,6 @@ JSRoot {
 					]
 				}
 			}
-			location: Object {
-				filename: "es2015/meta-properties/new-invalid-prop/input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 10
-					index: 25
-					line: 2
-				}
-				start: Object {
-					column: 6
-					index: 21
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
@@ -73,12 +69,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -87,12 +81,10 @@ JSRoot {
 				filename: "es2015/meta-properties/new-invalid-prop/input.js"
 				end: Object {
 					column: 1
-					index: 27
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -109,12 +101,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-invalid-prop/input.js"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -125,12 +115,10 @@ JSRoot {
 					filename: "es2015/meta-properties/new-invalid-prop/input.js"
 					end: Object {
 						column: 1
-						index: 27
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -140,12 +128,10 @@ JSRoot {
 							filename: "es2015/meta-properties/new-invalid-prop/input.js"
 							end: Object {
 								column: 10
-								index: 25
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 17
 								line: 2
 							}
 						}
@@ -154,12 +140,10 @@ JSRoot {
 								filename: "es2015/meta-properties/new-invalid-prop/input.js"
 								end: Object {
 									column: 10
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 17
 									line: 2
 								}
 							}
@@ -170,12 +154,10 @@ JSRoot {
 									identifierName: "new"
 									end: Object {
 										column: 5
-										index: 20
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 17
 										line: 2
 									}
 								}
@@ -187,12 +169,10 @@ JSRoot {
 									identifierName: "prop"
 									end: Object {
 										column: 10
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 21
 										line: 2
 									}
 								}

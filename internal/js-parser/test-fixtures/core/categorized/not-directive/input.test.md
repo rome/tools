@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/categorized/not-directive/input.js"
 		end: Object {
 			column: 0
-			index: 1_130
 			line: 119
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 76
-					index: 256
 					line: 16
 				}
 				start: Object {
 					column: 0
-					index: 180
 					line: 16
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 17
-					index: 34
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 17
 					line: 3
 				}
 			}
@@ -100,12 +90,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 16
-						index: 33
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 17
 						line: 3
 					}
 				}
@@ -115,12 +103,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 29
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 17
 							line: 3
 						}
 					}
@@ -133,12 +119,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 16
-								index: 33
 								line: 3
 							}
 							start: Object {
 								column: 13
-								index: 30
 								line: 3
 							}
 						}
@@ -148,12 +132,10 @@ JSRoot {
 						identifierName: "foo"
 						end: Object {
 							column: 16
-							index: 33
 							line: 3
 						}
 						start: Object {
 							column: 13
-							index: 30
 							line: 3
 						}
 					}
@@ -165,12 +147,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
-					index: 53
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 35
 					line: 4
 				}
 			}
@@ -179,12 +159,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
-						index: 52
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 35
 						line: 4
 					}
 				}
@@ -194,12 +172,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 47
 							line: 4
 						}
 						start: Object {
 							column: 0
-							index: 35
 							line: 4
 						}
 					}
@@ -212,12 +188,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 16
-								index: 51
 								line: 4
 							}
 							start: Object {
 								column: 13
-								index: 48
 								line: 4
 							}
 						}
@@ -226,12 +200,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 17
-							index: 52
 							line: 4
 						}
 						start: Object {
 							column: 12
-							index: 47
 							line: 4
 						}
 					}
@@ -243,12 +215,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
-					index: 72
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 54
 					line: 5
 				}
 			}
@@ -258,12 +228,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
-						index: 71
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 54
 						line: 5
 					}
 				}
@@ -273,12 +241,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 66
 							line: 5
 						}
 						start: Object {
 							column: 0
-							index: 54
 							line: 5
 						}
 					}
@@ -289,12 +255,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 17
-							index: 71
 							line: 5
 						}
 						start: Object {
 							column: 12
-							index: 66
 							line: 5
 						}
 					}
@@ -307,12 +271,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 16
-									index: 70
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 67
 									line: 5
 								}
 							}
@@ -326,12 +288,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 18
-					index: 91
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 73
 					line: 6
 				}
 			}
@@ -340,12 +300,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 17
-						index: 90
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 73
 						line: 6
 					}
 				}
@@ -355,12 +313,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 85
 							line: 6
 						}
 						start: Object {
 							column: 0
-							index: 73
 							line: 6
 						}
 					}
@@ -373,12 +329,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 16
-								index: 89
 								line: 6
 							}
 							start: Object {
 								column: 13
-								index: 86
 								line: 6
 							}
 						}
@@ -391,12 +345,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 7
-					index: 112
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 92
 					line: 7
 				}
 			}
@@ -405,12 +357,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 6
-						index: 111
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 92
 						line: 7
 					}
 				}
@@ -420,12 +370,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 104
 							line: 7
 						}
 						start: Object {
 							column: 0
-							index: 92
 							line: 7
 						}
 					}
@@ -438,12 +386,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 6
-								index: 111
 								line: 8
 							}
 							start: Object {
 								column: 3
-								index: 108
 								line: 8
 							}
 						}
@@ -453,12 +399,10 @@ JSRoot {
 						identifierName: "foo"
 						end: Object {
 							column: 6
-							index: 111
 							line: 8
 						}
 						start: Object {
 							column: 3
-							index: 108
 							line: 8
 						}
 					}
@@ -470,12 +414,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
-					index: 134
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 113
 					line: 9
 				}
 			}
@@ -484,12 +426,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
-						index: 133
 						line: 10
 					}
 					start: Object {
 						column: 0
-						index: 113
 						line: 9
 					}
 				}
@@ -499,12 +439,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 125
 							line: 9
 						}
 						start: Object {
 							column: 0
-							index: 113
 							line: 9
 						}
 					}
@@ -517,12 +455,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 6
-								index: 132
 								line: 10
 							}
 							start: Object {
 								column: 3
-								index: 129
 								line: 10
 							}
 						}
@@ -531,12 +467,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 7
-							index: 133
 							line: 10
 						}
 						start: Object {
 							column: 2
-							index: 128
 							line: 10
 						}
 					}
@@ -548,12 +482,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
-					index: 156
 					line: 12
 				}
 				start: Object {
 					column: 0
-					index: 135
 					line: 11
 				}
 			}
@@ -563,12 +495,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
-						index: 155
 						line: 12
 					}
 					start: Object {
 						column: 0
-						index: 135
 						line: 11
 					}
 				}
@@ -578,12 +508,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 147
 							line: 11
 						}
 						start: Object {
 							column: 0
-							index: 135
 							line: 11
 						}
 					}
@@ -594,12 +522,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 7
-							index: 155
 							line: 12
 						}
 						start: Object {
 							column: 2
-							index: 150
 							line: 12
 						}
 					}
@@ -612,12 +538,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 154
 									line: 12
 								}
 								start: Object {
 									column: 3
-									index: 151
 									line: 12
 								}
 							}
@@ -632,12 +556,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 8
-					index: 178
 					line: 14
 				}
 				start: Object {
 					column: 0
-					index: 157
 					line: 13
 				}
 			}
@@ -646,12 +568,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 7
-						index: 177
 						line: 14
 					}
 					start: Object {
 						column: 0
-						index: 157
 						line: 13
 					}
 				}
@@ -661,12 +581,10 @@ JSRoot {
 						filename: "core/categorized/not-directive/input.js"
 						end: Object {
 							column: 12
-							index: 169
 							line: 13
 						}
 						start: Object {
 							column: 0
-							index: 157
 							line: 13
 						}
 					}
@@ -679,12 +597,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 6
-								index: 176
 								line: 14
 							}
 							start: Object {
 								column: 3
-								index: 173
 								line: 14
 							}
 						}
@@ -698,12 +614,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 5
-					index: 262
 					line: 17
 				}
 				start: Object {
 					column: 0
-					index: 257
 					line: 17
 				}
 			}
@@ -714,12 +628,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 4
-						index: 261
 						line: 17
 					}
 					start: Object {
 						column: 0
-						index: 257
 						line: 17
 					}
 				}
@@ -733,12 +645,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 274
 						line: 19
 					}
 					start: Object {
 						column: 9
-						index: 273
 						line: 19
 					}
 				}
@@ -747,12 +657,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 307
 					line: 22
 				}
 				start: Object {
 					column: 0
-					index: 264
 					line: 19
 				}
 			}
@@ -769,12 +677,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 276
 						line: 19
 					}
 					start: Object {
 						column: 10
-						index: 274
 						line: 19
 					}
 				}
@@ -785,12 +691,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 307
 						line: 22
 					}
 					start: Object {
 						column: 12
-						index: 276
 						line: 19
 					}
 				}
@@ -800,12 +704,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 19
-								index: 297
 								line: 20
 							}
 							start: Object {
 								column: 2
-								index: 280
 								line: 20
 							}
 						}
@@ -814,12 +716,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 18
-									index: 296
 									line: 20
 								}
 								start: Object {
 									column: 2
-									index: 280
 									line: 20
 								}
 							}
@@ -829,12 +729,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 292
 										line: 20
 									}
 									start: Object {
 										column: 2
-										index: 280
 										line: 20
 									}
 								}
@@ -847,12 +745,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 18
-											index: 296
 											line: 20
 										}
 										start: Object {
 											column: 15
-											index: 293
 											line: 20
 										}
 									}
@@ -862,12 +758,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 18
-										index: 296
 										line: 20
 									}
 									start: Object {
 										column: 15
-										index: 293
 										line: 20
 									}
 								}
@@ -879,12 +773,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 305
 								line: 21
 							}
 							start: Object {
 								column: 2
-								index: 300
 								line: 21
 							}
 						}
@@ -894,12 +786,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 304
 									line: 21
 								}
 								start: Object {
 									column: 2
-									index: 300
 									line: 21
 								}
 							}
@@ -916,12 +806,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 319
 						line: 24
 					}
 					start: Object {
 						column: 9
-						index: 318
 						line: 24
 					}
 				}
@@ -930,12 +818,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 353
 					line: 27
 				}
 				start: Object {
 					column: 0
-					index: 309
 					line: 24
 				}
 			}
@@ -952,12 +838,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 321
 						line: 24
 					}
 					start: Object {
 						column: 10
-						index: 319
 						line: 24
 					}
 				}
@@ -968,12 +852,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 353
 						line: 27
 					}
 					start: Object {
 						column: 12
-						index: 321
 						line: 24
 					}
 				}
@@ -983,12 +865,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 343
 								line: 25
 							}
 							start: Object {
 								column: 2
-								index: 325
 								line: 25
 							}
 						}
@@ -997,12 +877,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 342
 									line: 25
 								}
 								start: Object {
 									column: 2
-									index: 325
 									line: 25
 								}
 							}
@@ -1012,12 +890,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 337
 										line: 25
 									}
 									start: Object {
 										column: 2
-										index: 325
 										line: 25
 									}
 								}
@@ -1030,12 +906,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 18
-											index: 341
 											line: 25
 										}
 										start: Object {
 											column: 15
-											index: 338
 											line: 25
 										}
 									}
@@ -1044,12 +918,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
-										index: 342
 										line: 25
 									}
 									start: Object {
 										column: 14
-										index: 337
 										line: 25
 									}
 								}
@@ -1061,12 +933,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 351
 								line: 26
 							}
 							start: Object {
 								column: 2
-								index: 346
 								line: 26
 							}
 						}
@@ -1076,12 +946,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 350
 									line: 26
 								}
 								start: Object {
 									column: 2
-									index: 346
 									line: 26
 								}
 							}
@@ -1098,12 +966,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 365
 						line: 29
 					}
 					start: Object {
 						column: 9
-						index: 364
 						line: 29
 					}
 				}
@@ -1112,12 +978,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 399
 					line: 32
 				}
 				start: Object {
 					column: 0
-					index: 355
 					line: 29
 				}
 			}
@@ -1134,12 +998,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 367
 						line: 29
 					}
 					start: Object {
 						column: 10
-						index: 365
 						line: 29
 					}
 				}
@@ -1150,12 +1012,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 399
 						line: 32
 					}
 					start: Object {
 						column: 12
-						index: 367
 						line: 29
 					}
 				}
@@ -1165,12 +1025,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 389
 								line: 30
 							}
 							start: Object {
 								column: 2
-								index: 371
 								line: 30
 							}
 						}
@@ -1180,12 +1038,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 388
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 371
 									line: 30
 								}
 							}
@@ -1195,12 +1051,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 383
 										line: 30
 									}
 									start: Object {
 										column: 2
-										index: 371
 										line: 30
 									}
 								}
@@ -1211,12 +1065,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
-										index: 388
 										line: 30
 									}
 									start: Object {
 										column: 14
-										index: 383
 										line: 30
 									}
 								}
@@ -1229,12 +1081,10 @@ JSRoot {
 											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 18
-												index: 387
 												line: 30
 											}
 											start: Object {
 												column: 15
-												index: 384
 												line: 30
 											}
 										}
@@ -1248,12 +1098,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 397
 								line: 31
 							}
 							start: Object {
 								column: 2
-								index: 392
 								line: 31
 							}
 						}
@@ -1263,12 +1111,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 396
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 392
 									line: 31
 								}
 							}
@@ -1285,12 +1131,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 411
 						line: 34
 					}
 					start: Object {
 						column: 9
-						index: 410
 						line: 34
 					}
 				}
@@ -1299,12 +1143,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 445
 					line: 37
 				}
 				start: Object {
 					column: 0
-					index: 401
 					line: 34
 				}
 			}
@@ -1321,12 +1163,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 413
 						line: 34
 					}
 					start: Object {
 						column: 10
-						index: 411
 						line: 34
 					}
 				}
@@ -1337,12 +1177,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 445
 						line: 37
 					}
 					start: Object {
 						column: 12
-						index: 413
 						line: 34
 					}
 				}
@@ -1352,12 +1190,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 435
 								line: 35
 							}
 							start: Object {
 								column: 2
-								index: 417
 								line: 35
 							}
 						}
@@ -1366,12 +1202,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 434
 									line: 35
 								}
 								start: Object {
 									column: 2
-									index: 417
 									line: 35
 								}
 							}
@@ -1381,12 +1215,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 429
 										line: 35
 									}
 									start: Object {
 										column: 2
-										index: 417
 										line: 35
 									}
 								}
@@ -1399,12 +1231,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 18
-											index: 433
 											line: 35
 										}
 										start: Object {
 											column: 15
-											index: 430
 											line: 35
 										}
 									}
@@ -1417,12 +1247,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 443
 								line: 36
 							}
 							start: Object {
 								column: 2
-								index: 438
 								line: 36
 							}
 						}
@@ -1432,12 +1260,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 442
 									line: 36
 								}
 								start: Object {
 									column: 2
-									index: 438
 									line: 36
 								}
 							}
@@ -1454,12 +1280,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 457
 						line: 39
 					}
 					start: Object {
 						column: 9
-						index: 456
 						line: 39
 					}
 				}
@@ -1468,12 +1292,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 493
 					line: 43
 				}
 				start: Object {
 					column: 0
-					index: 447
 					line: 39
 				}
 			}
@@ -1490,12 +1312,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 459
 						line: 39
 					}
 					start: Object {
 						column: 10
-						index: 457
 						line: 39
 					}
 				}
@@ -1506,12 +1326,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 493
 						line: 43
 					}
 					start: Object {
 						column: 12
-						index: 459
 						line: 39
 					}
 				}
@@ -1521,12 +1339,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 483
 								line: 41
 							}
 							start: Object {
 								column: 2
-								index: 463
 								line: 40
 							}
 						}
@@ -1535,12 +1351,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 482
 									line: 41
 								}
 								start: Object {
 									column: 2
-									index: 463
 									line: 40
 								}
 							}
@@ -1550,12 +1364,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 475
 										line: 40
 									}
 									start: Object {
 										column: 2
-										index: 463
 										line: 40
 									}
 								}
@@ -1568,12 +1380,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 6
-											index: 482
 											line: 41
 										}
 										start: Object {
 											column: 3
-											index: 479
 											line: 41
 										}
 									}
@@ -1583,12 +1393,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 6
-										index: 482
 										line: 41
 									}
 									start: Object {
 										column: 3
-										index: 479
 										line: 41
 									}
 								}
@@ -1600,12 +1408,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 491
 								line: 42
 							}
 							start: Object {
 								column: 2
-								index: 486
 								line: 42
 							}
 						}
@@ -1615,12 +1421,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 490
 									line: 42
 								}
 								start: Object {
 									column: 2
-									index: 486
 									line: 42
 								}
 							}
@@ -1637,12 +1441,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 505
 						line: 45
 					}
 					start: Object {
 						column: 9
-						index: 504
 						line: 45
 					}
 				}
@@ -1651,12 +1453,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 542
 					line: 49
 				}
 				start: Object {
 					column: 0
-					index: 495
 					line: 45
 				}
 			}
@@ -1673,12 +1473,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 507
 						line: 45
 					}
 					start: Object {
 						column: 10
-						index: 505
 						line: 45
 					}
 				}
@@ -1689,12 +1487,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 542
 						line: 49
 					}
 					start: Object {
 						column: 12
-						index: 507
 						line: 45
 					}
 				}
@@ -1704,12 +1500,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 532
 								line: 47
 							}
 							start: Object {
 								column: 2
-								index: 511
 								line: 46
 							}
 						}
@@ -1718,12 +1512,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 531
 									line: 47
 								}
 								start: Object {
 									column: 2
-									index: 511
 									line: 46
 								}
 							}
@@ -1733,12 +1525,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 523
 										line: 46
 									}
 									start: Object {
 										column: 2
-										index: 511
 										line: 46
 									}
 								}
@@ -1751,12 +1541,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 6
-											index: 530
 											line: 47
 										}
 										start: Object {
 											column: 3
-											index: 527
 											line: 47
 										}
 									}
@@ -1765,12 +1553,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
-										index: 531
 										line: 47
 									}
 									start: Object {
 										column: 2
-										index: 526
 										line: 47
 									}
 								}
@@ -1782,12 +1568,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 540
 								line: 48
 							}
 							start: Object {
 								column: 2
-								index: 535
 								line: 48
 							}
 						}
@@ -1797,12 +1581,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 539
 									line: 48
 								}
 								start: Object {
 									column: 2
-									index: 535
 									line: 48
 								}
 							}
@@ -1819,12 +1601,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 554
 						line: 51
 					}
 					start: Object {
 						column: 9
-						index: 553
 						line: 51
 					}
 				}
@@ -1833,12 +1613,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 591
 					line: 55
 				}
 				start: Object {
 					column: 0
-					index: 544
 					line: 51
 				}
 			}
@@ -1855,12 +1633,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 556
 						line: 51
 					}
 					start: Object {
 						column: 10
-						index: 554
 						line: 51
 					}
 				}
@@ -1871,12 +1647,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 591
 						line: 55
 					}
 					start: Object {
 						column: 12
-						index: 556
 						line: 51
 					}
 				}
@@ -1886,12 +1660,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 581
 								line: 53
 							}
 							start: Object {
 								column: 2
-								index: 560
 								line: 52
 							}
 						}
@@ -1901,12 +1673,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 580
 									line: 53
 								}
 								start: Object {
 									column: 2
-									index: 560
 									line: 52
 								}
 							}
@@ -1916,12 +1686,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 572
 										line: 52
 									}
 									start: Object {
 										column: 2
-										index: 560
 										line: 52
 									}
 								}
@@ -1932,12 +1700,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
-										index: 580
 										line: 53
 									}
 									start: Object {
 										column: 2
-										index: 575
 										line: 53
 									}
 								}
@@ -1950,12 +1716,10 @@ JSRoot {
 											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 6
-												index: 579
 												line: 53
 											}
 											start: Object {
 												column: 3
-												index: 576
 												line: 53
 											}
 										}
@@ -1969,12 +1733,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 589
 								line: 54
 							}
 							start: Object {
 								column: 2
-								index: 584
 								line: 54
 							}
 						}
@@ -1984,12 +1746,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 588
 									line: 54
 								}
 								start: Object {
 									column: 2
-									index: 584
 									line: 54
 								}
 							}
@@ -2006,12 +1766,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 603
 						line: 57
 					}
 					start: Object {
 						column: 9
-						index: 602
 						line: 57
 					}
 				}
@@ -2020,12 +1778,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 640
 					line: 61
 				}
 				start: Object {
 					column: 0
-					index: 593
 					line: 57
 				}
 			}
@@ -2042,12 +1798,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 605
 						line: 57
 					}
 					start: Object {
 						column: 10
-						index: 603
 						line: 57
 					}
 				}
@@ -2058,12 +1812,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 640
 						line: 61
 					}
 					start: Object {
 						column: 12
-						index: 605
 						line: 57
 					}
 				}
@@ -2073,12 +1825,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 630
 								line: 59
 							}
 							start: Object {
 								column: 2
-								index: 609
 								line: 58
 							}
 						}
@@ -2087,12 +1837,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 629
 									line: 59
 								}
 								start: Object {
 									column: 2
-									index: 609
 									line: 58
 								}
 							}
@@ -2102,12 +1850,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 621
 										line: 58
 									}
 									start: Object {
 										column: 2
-										index: 609
 										line: 58
 									}
 								}
@@ -2120,12 +1866,10 @@ JSRoot {
 										identifierName: "foo"
 										end: Object {
 											column: 6
-											index: 628
 											line: 59
 										}
 										start: Object {
 											column: 3
-											index: 625
 											line: 59
 										}
 									}
@@ -2138,12 +1882,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 638
 								line: 60
 							}
 							start: Object {
 								column: 2
-								index: 633
 								line: 60
 							}
 						}
@@ -2153,12 +1895,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 637
 									line: 60
 								}
 								start: Object {
 									column: 2
-									index: 633
 									line: 60
 								}
 							}
@@ -2175,12 +1915,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 652
 						line: 63
 					}
 					start: Object {
 						column: 9
-						index: 651
 						line: 63
 					}
 				}
@@ -2189,12 +1927,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 694
 					line: 67
 				}
 				start: Object {
 					column: 0
-					index: 642
 					line: 63
 				}
 			}
@@ -2211,12 +1947,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 654
 						line: 63
 					}
 					start: Object {
 						column: 10
-						index: 652
 						line: 63
 					}
 				}
@@ -2227,12 +1961,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 694
 						line: 67
 					}
 					start: Object {
 						column: 12
-						index: 654
 						line: 63
 					}
 				}
@@ -2242,12 +1974,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 664
 								line: 64
 							}
 							start: Object {
 								column: 2
-								index: 658
 								line: 64
 							}
 						}
@@ -2257,12 +1987,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 663
 									line: 64
 								}
 								start: Object {
 									column: 2
-									index: 658
 									line: 64
 								}
 							}
@@ -2273,12 +2001,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 661
 										line: 64
 									}
 									start: Object {
 										column: 2
-										index: 658
 										line: 64
 									}
 								}
@@ -2290,12 +2016,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 19
-								index: 684
 								line: 65
 							}
 							start: Object {
 								column: 2
-								index: 667
 								line: 65
 							}
 						}
@@ -2304,12 +2028,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 18
-									index: 683
 									line: 65
 								}
 								start: Object {
 									column: 2
-									index: 667
 									line: 65
 								}
 							}
@@ -2319,12 +2041,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 679
 										line: 65
 									}
 									start: Object {
 										column: 2
-										index: 667
 										line: 65
 									}
 								}
@@ -2337,12 +2057,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 18
-											index: 683
 											line: 65
 										}
 										start: Object {
 											column: 15
-											index: 680
 											line: 65
 										}
 									}
@@ -2352,12 +2070,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 18
-										index: 683
 										line: 65
 									}
 									start: Object {
 										column: 15
-										index: 680
 										line: 65
 									}
 								}
@@ -2369,12 +2085,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 692
 								line: 66
 							}
 							start: Object {
 								column: 2
-								index: 687
 								line: 66
 							}
 						}
@@ -2384,12 +2098,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 691
 									line: 66
 								}
 								start: Object {
 									column: 2
-									index: 687
 									line: 66
 								}
 							}
@@ -2406,12 +2118,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 706
 						line: 69
 					}
 					start: Object {
 						column: 9
-						index: 705
 						line: 69
 					}
 				}
@@ -2420,12 +2130,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 749
 					line: 73
 				}
 				start: Object {
 					column: 0
-					index: 696
 					line: 69
 				}
 			}
@@ -2442,12 +2150,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 708
 						line: 69
 					}
 					start: Object {
 						column: 10
-						index: 706
 						line: 69
 					}
 				}
@@ -2458,12 +2164,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 749
 						line: 73
 					}
 					start: Object {
 						column: 12
-						index: 708
 						line: 69
 					}
 				}
@@ -2473,12 +2177,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 718
 								line: 70
 							}
 							start: Object {
 								column: 2
-								index: 712
 								line: 70
 							}
 						}
@@ -2488,12 +2190,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 717
 									line: 70
 								}
 								start: Object {
 									column: 2
-									index: 712
 									line: 70
 								}
 							}
@@ -2504,12 +2204,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 715
 										line: 70
 									}
 									start: Object {
 										column: 2
-										index: 712
 										line: 70
 									}
 								}
@@ -2521,12 +2219,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 739
 								line: 71
 							}
 							start: Object {
 								column: 2
-								index: 721
 								line: 71
 							}
 						}
@@ -2535,12 +2231,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 738
 									line: 71
 								}
 								start: Object {
 									column: 2
-									index: 721
 									line: 71
 								}
 							}
@@ -2550,12 +2244,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 733
 										line: 71
 									}
 									start: Object {
 										column: 2
-										index: 721
 										line: 71
 									}
 								}
@@ -2568,12 +2260,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 18
-											index: 737
 											line: 71
 										}
 										start: Object {
 											column: 15
-											index: 734
 											line: 71
 										}
 									}
@@ -2582,12 +2272,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
-										index: 738
 										line: 71
 									}
 									start: Object {
 										column: 14
-										index: 733
 										line: 71
 									}
 								}
@@ -2599,12 +2287,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 747
 								line: 72
 							}
 							start: Object {
 								column: 2
-								index: 742
 								line: 72
 							}
 						}
@@ -2614,12 +2300,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 746
 									line: 72
 								}
 								start: Object {
 									column: 2
-									index: 742
 									line: 72
 								}
 							}
@@ -2636,12 +2320,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 761
 						line: 75
 					}
 					start: Object {
 						column: 9
-						index: 760
 						line: 75
 					}
 				}
@@ -2650,12 +2332,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 804
 					line: 79
 				}
 				start: Object {
 					column: 0
-					index: 751
 					line: 75
 				}
 			}
@@ -2672,12 +2352,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 763
 						line: 75
 					}
 					start: Object {
 						column: 10
-						index: 761
 						line: 75
 					}
 				}
@@ -2688,12 +2366,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 804
 						line: 79
 					}
 					start: Object {
 						column: 12
-						index: 763
 						line: 75
 					}
 				}
@@ -2703,12 +2379,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 773
 								line: 76
 							}
 							start: Object {
 								column: 2
-								index: 767
 								line: 76
 							}
 						}
@@ -2718,12 +2392,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 772
 									line: 76
 								}
 								start: Object {
 									column: 2
-									index: 767
 									line: 76
 								}
 							}
@@ -2734,12 +2406,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 770
 										line: 76
 									}
 									start: Object {
 										column: 2
-										index: 767
 										line: 76
 									}
 								}
@@ -2751,12 +2421,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 794
 								line: 77
 							}
 							start: Object {
 								column: 2
-								index: 776
 								line: 77
 							}
 						}
@@ -2766,12 +2434,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 793
 									line: 77
 								}
 								start: Object {
 									column: 2
-									index: 776
 									line: 77
 								}
 							}
@@ -2781,12 +2447,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 788
 										line: 77
 									}
 									start: Object {
 										column: 2
-										index: 776
 										line: 77
 									}
 								}
@@ -2797,12 +2461,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 19
-										index: 793
 										line: 77
 									}
 									start: Object {
 										column: 14
-										index: 788
 										line: 77
 									}
 								}
@@ -2815,12 +2477,10 @@ JSRoot {
 											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 18
-												index: 792
 												line: 77
 											}
 											start: Object {
 												column: 15
-												index: 789
 												line: 77
 											}
 										}
@@ -2834,12 +2494,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 802
 								line: 78
 							}
 							start: Object {
 								column: 2
-								index: 797
 								line: 78
 							}
 						}
@@ -2849,12 +2507,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 801
 									line: 78
 								}
 								start: Object {
 									column: 2
-									index: 797
 									line: 78
 								}
 							}
@@ -2871,12 +2527,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 816
 						line: 81
 					}
 					start: Object {
 						column: 9
-						index: 815
 						line: 81
 					}
 				}
@@ -2885,12 +2539,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 859
 					line: 85
 				}
 				start: Object {
 					column: 0
-					index: 806
 					line: 81
 				}
 			}
@@ -2907,12 +2559,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 818
 						line: 81
 					}
 					start: Object {
 						column: 10
-						index: 816
 						line: 81
 					}
 				}
@@ -2923,12 +2573,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 859
 						line: 85
 					}
 					start: Object {
 						column: 12
-						index: 818
 						line: 81
 					}
 				}
@@ -2938,12 +2586,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 828
 								line: 82
 							}
 							start: Object {
 								column: 2
-								index: 822
 								line: 82
 							}
 						}
@@ -2953,12 +2599,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 827
 									line: 82
 								}
 								start: Object {
 									column: 2
-									index: 822
 									line: 82
 								}
 							}
@@ -2969,12 +2613,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 825
 										line: 82
 									}
 									start: Object {
 										column: 2
-										index: 822
 										line: 82
 									}
 								}
@@ -2986,12 +2628,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 20
-								index: 849
 								line: 83
 							}
 							start: Object {
 								column: 2
-								index: 831
 								line: 83
 							}
 						}
@@ -3000,12 +2640,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 19
-									index: 848
 									line: 83
 								}
 								start: Object {
 									column: 2
-									index: 831
 									line: 83
 								}
 							}
@@ -3015,12 +2653,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 843
 										line: 83
 									}
 									start: Object {
 										column: 2
-										index: 831
 										line: 83
 									}
 								}
@@ -3033,12 +2669,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 18
-											index: 847
 											line: 83
 										}
 										start: Object {
 											column: 15
-											index: 844
 											line: 83
 										}
 									}
@@ -3051,12 +2685,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 857
 								line: 84
 							}
 							start: Object {
 								column: 2
-								index: 852
 								line: 84
 							}
 						}
@@ -3066,12 +2698,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 856
 									line: 84
 								}
 								start: Object {
 									column: 2
-									index: 852
 									line: 84
 								}
 							}
@@ -3088,12 +2718,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 871
 						line: 87
 					}
 					start: Object {
 						column: 9
-						index: 870
 						line: 87
 					}
 				}
@@ -3102,12 +2730,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 916
 					line: 92
 				}
 				start: Object {
 					column: 0
-					index: 861
 					line: 87
 				}
 			}
@@ -3124,12 +2750,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 873
 						line: 87
 					}
 					start: Object {
 						column: 10
-						index: 871
 						line: 87
 					}
 				}
@@ -3140,12 +2764,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 916
 						line: 92
 					}
 					start: Object {
 						column: 12
-						index: 873
 						line: 87
 					}
 				}
@@ -3155,12 +2777,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 883
 								line: 88
 							}
 							start: Object {
 								column: 2
-								index: 877
 								line: 88
 							}
 						}
@@ -3170,12 +2790,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 882
 									line: 88
 								}
 								start: Object {
 									column: 2
-									index: 877
 									line: 88
 								}
 							}
@@ -3186,12 +2804,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 880
 										line: 88
 									}
 									start: Object {
 										column: 2
-										index: 877
 										line: 88
 									}
 								}
@@ -3203,12 +2819,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 906
 								line: 90
 							}
 							start: Object {
 								column: 2
-								index: 886
 								line: 89
 							}
 						}
@@ -3217,12 +2831,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 905
 									line: 90
 								}
 								start: Object {
 									column: 2
-									index: 886
 									line: 89
 								}
 							}
@@ -3232,12 +2844,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 898
 										line: 89
 									}
 									start: Object {
 										column: 2
-										index: 886
 										line: 89
 									}
 								}
@@ -3250,12 +2860,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 6
-											index: 905
 											line: 90
 										}
 										start: Object {
 											column: 3
-											index: 902
 											line: 90
 										}
 									}
@@ -3265,12 +2873,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 6
-										index: 905
 										line: 90
 									}
 									start: Object {
 										column: 3
-										index: 902
 										line: 90
 									}
 								}
@@ -3282,12 +2888,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 914
 								line: 91
 							}
 							start: Object {
 								column: 2
-								index: 909
 								line: 91
 							}
 						}
@@ -3297,12 +2901,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 913
 									line: 91
 								}
 								start: Object {
 									column: 2
-									index: 909
 									line: 91
 								}
 							}
@@ -3319,12 +2921,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 928
 						line: 94
 					}
 					start: Object {
 						column: 9
-						index: 927
 						line: 94
 					}
 				}
@@ -3333,12 +2933,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 974
 					line: 99
 				}
 				start: Object {
 					column: 0
-					index: 918
 					line: 94
 				}
 			}
@@ -3355,12 +2953,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 930
 						line: 94
 					}
 					start: Object {
 						column: 10
-						index: 928
 						line: 94
 					}
 				}
@@ -3371,12 +2967,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 974
 						line: 99
 					}
 					start: Object {
 						column: 12
-						index: 930
 						line: 94
 					}
 				}
@@ -3386,12 +2980,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 940
 								line: 95
 							}
 							start: Object {
 								column: 2
-								index: 934
 								line: 95
 							}
 						}
@@ -3401,12 +2993,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 939
 									line: 95
 								}
 								start: Object {
 									column: 2
-									index: 934
 									line: 95
 								}
 							}
@@ -3417,12 +3007,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 937
 										line: 95
 									}
 									start: Object {
 										column: 2
-										index: 934
 										line: 95
 									}
 								}
@@ -3434,12 +3022,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 964
 								line: 97
 							}
 							start: Object {
 								column: 2
-								index: 943
 								line: 96
 							}
 						}
@@ -3448,12 +3034,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 963
 									line: 97
 								}
 								start: Object {
 									column: 2
-									index: 943
 									line: 96
 								}
 							}
@@ -3463,12 +3047,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 955
 										line: 96
 									}
 									start: Object {
 										column: 2
-										index: 943
 										line: 96
 									}
 								}
@@ -3481,12 +3063,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 6
-											index: 962
 											line: 97
 										}
 										start: Object {
 											column: 3
-											index: 959
 											line: 97
 										}
 									}
@@ -3495,12 +3075,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
-										index: 963
 										line: 97
 									}
 									start: Object {
 										column: 2
-										index: 958
 										line: 97
 									}
 								}
@@ -3512,12 +3090,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 972
 								line: 98
 							}
 							start: Object {
 								column: 2
-								index: 967
 								line: 98
 							}
 						}
@@ -3527,12 +3103,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 971
 									line: 98
 								}
 								start: Object {
 									column: 2
-									index: 967
 									line: 98
 								}
 							}
@@ -3549,12 +3123,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 986
 						line: 101
 					}
 					start: Object {
 						column: 9
-						index: 985
 						line: 101
 					}
 				}
@@ -3563,12 +3135,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 1_032
 					line: 106
 				}
 				start: Object {
 					column: 0
-					index: 976
 					line: 101
 				}
 			}
@@ -3585,12 +3155,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 988
 						line: 101
 					}
 					start: Object {
 						column: 10
-						index: 986
 						line: 101
 					}
 				}
@@ -3601,12 +3169,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 1_032
 						line: 106
 					}
 					start: Object {
 						column: 12
-						index: 988
 						line: 101
 					}
 				}
@@ -3616,12 +3182,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 998
 								line: 102
 							}
 							start: Object {
 								column: 2
-								index: 992
 								line: 102
 							}
 						}
@@ -3631,12 +3195,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 997
 									line: 102
 								}
 								start: Object {
 									column: 2
-									index: 992
 									line: 102
 								}
 							}
@@ -3647,12 +3209,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 995
 										line: 102
 									}
 									start: Object {
 										column: 2
-										index: 992
 										line: 102
 									}
 								}
@@ -3664,12 +3224,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 1_022
 								line: 104
 							}
 							start: Object {
 								column: 2
-								index: 1_001
 								line: 103
 							}
 						}
@@ -3679,12 +3237,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 1_021
 									line: 104
 								}
 								start: Object {
 									column: 2
-									index: 1_001
 									line: 103
 								}
 							}
@@ -3694,12 +3250,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 1_013
 										line: 103
 									}
 									start: Object {
 										column: 2
-										index: 1_001
 										line: 103
 									}
 								}
@@ -3710,12 +3264,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 7
-										index: 1_021
 										line: 104
 									}
 									start: Object {
 										column: 2
-										index: 1_016
 										line: 104
 									}
 								}
@@ -3728,12 +3280,10 @@ JSRoot {
 											filename: "core/categorized/not-directive/input.js"
 											end: Object {
 												column: 6
-												index: 1_020
 												line: 104
 											}
 											start: Object {
 												column: 3
-												index: 1_017
 												line: 104
 											}
 										}
@@ -3747,12 +3297,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 1_030
 								line: 105
 							}
 							start: Object {
 								column: 2
-								index: 1_025
 								line: 105
 							}
 						}
@@ -3762,12 +3310,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 1_029
 									line: 105
 								}
 								start: Object {
 									column: 2
-									index: 1_025
 									line: 105
 								}
 							}
@@ -3784,12 +3330,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 1_044
 						line: 108
 					}
 					start: Object {
 						column: 9
-						index: 1_043
 						line: 108
 					}
 				}
@@ -3798,12 +3342,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 1_090
 					line: 113
 				}
 				start: Object {
 					column: 0
-					index: 1_034
 					line: 108
 				}
 			}
@@ -3820,12 +3362,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 1_046
 						line: 108
 					}
 					start: Object {
 						column: 10
-						index: 1_044
 						line: 108
 					}
 				}
@@ -3836,12 +3376,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 1_090
 						line: 113
 					}
 					start: Object {
 						column: 12
-						index: 1_046
 						line: 108
 					}
 				}
@@ -3851,12 +3389,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 1_056
 								line: 109
 							}
 							start: Object {
 								column: 2
-								index: 1_050
 								line: 109
 							}
 						}
@@ -3866,12 +3402,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 1_055
 									line: 109
 								}
 								start: Object {
 									column: 2
-									index: 1_050
 									line: 109
 								}
 							}
@@ -3882,12 +3416,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 5
-										index: 1_053
 										line: 109
 									}
 									start: Object {
 										column: 2
-										index: 1_050
 										line: 109
 									}
 								}
@@ -3899,12 +3431,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 8
-								index: 1_080
 								line: 111
 							}
 							start: Object {
 								column: 2
-								index: 1_059
 								line: 110
 							}
 						}
@@ -3913,12 +3443,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 7
-									index: 1_079
 									line: 111
 								}
 								start: Object {
 									column: 2
-									index: 1_059
 									line: 110
 								}
 							}
@@ -3928,12 +3456,10 @@ JSRoot {
 									filename: "core/categorized/not-directive/input.js"
 									end: Object {
 										column: 14
-										index: 1_071
 										line: 110
 									}
 									start: Object {
 										column: 2
-										index: 1_059
 										line: 110
 									}
 								}
@@ -3946,12 +3472,10 @@ JSRoot {
 										identifierName: "bar"
 										end: Object {
 											column: 6
-											index: 1_078
 											line: 111
 										}
 										start: Object {
 											column: 3
-											index: 1_075
 											line: 111
 										}
 									}
@@ -3964,12 +3488,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 7
-								index: 1_088
 								line: 112
 							}
 							start: Object {
 								column: 2
-								index: 1_083
 								line: 112
 							}
 						}
@@ -3979,12 +3501,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 6
-									index: 1_087
 									line: 112
 								}
 								start: Object {
 									column: 2
-									index: 1_083
 									line: 112
 								}
 							}
@@ -4001,12 +3521,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 1_102
 						line: 115
 					}
 					start: Object {
 						column: 9
-						index: 1_101
 						line: 115
 					}
 				}
@@ -4015,12 +3533,10 @@ JSRoot {
 				filename: "core/categorized/not-directive/input.js"
 				end: Object {
 					column: 1
-					index: 1_129
 					line: 118
 				}
 				start: Object {
 					column: 0
-					index: 1_092
 					line: 115
 				}
 			}
@@ -4037,12 +3553,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 12
-						index: 1_104
 						line: 115
 					}
 					start: Object {
 						column: 10
-						index: 1_102
 						line: 115
 					}
 				}
@@ -4053,12 +3567,10 @@ JSRoot {
 					filename: "core/categorized/not-directive/input.js"
 					end: Object {
 						column: 1
-						index: 1_129
 						line: 118
 					}
 					start: Object {
 						column: 12
-						index: 1_104
 						line: 115
 					}
 				}
@@ -4068,12 +3580,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 5
-								index: 1_111
 								line: 116
 							}
 							start: Object {
 								column: 2
-								index: 1_108
 								line: 116
 							}
 						}
@@ -4084,12 +3594,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 4
-									index: 1_110
 									line: 116
 								}
 								start: Object {
 									column: 2
-									index: 1_108
 									line: 116
 								}
 							}
@@ -4100,12 +3608,10 @@ JSRoot {
 							filename: "core/categorized/not-directive/input.js"
 							end: Object {
 								column: 15
-								index: 1_127
 								line: 117
 							}
 							start: Object {
 								column: 2
-								index: 1_114
 								line: 117
 							}
 						}
@@ -4115,12 +3621,10 @@ JSRoot {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {
 									column: 14
-									index: 1_126
 									line: 117
 								}
 								start: Object {
 									column: 2
-									index: 1_114
 									line: 117
 								}
 							}

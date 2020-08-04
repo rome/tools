@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/cast/null-assertion-false-positive/input.ts"
 		end: Object {
 			column: 0
-			index: 5
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/cast/null-assertion-false-positive/input.ts"
 				end: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 				filename: "typescript/cast/null-assertion-false-positive/input.ts"
 				end: Object {
 					column: 2
-					index: 4
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 2
 					line: 2
 				}
 			}
@@ -85,12 +77,10 @@ JSRoot {
 					filename: "typescript/cast/null-assertion-false-positive/input.ts"
 					end: Object {
 						column: 2
-						index: 4
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 2
 						line: 2
 					}
 				}
@@ -101,12 +91,10 @@ JSRoot {
 						identifierName: "b"
 						end: Object {
 							column: 2
-							index: 4
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 3
 							line: 2
 						}
 					}

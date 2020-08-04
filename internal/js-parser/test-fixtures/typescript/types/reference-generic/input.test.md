@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/reference-generic/input.ts"
 		end: Object {
 			column: 0
-			index: 22
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/reference-generic/input.ts"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/reference-generic/input.ts"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/reference-generic/input.ts"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/reference-generic/input.ts"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/reference-generic/input.ts"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -114,12 +102,10 @@ JSRoot {
 											identifierName: "Array"
 											end: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 											start: Object {
 												column: 7
-												index: 7
 												line: 1
 											}
 										}
@@ -129,12 +115,10 @@ JSRoot {
 											filename: "typescript/types/reference-generic/input.ts"
 											end: Object {
 												column: 20
-												index: 20
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}
@@ -144,12 +128,10 @@ JSRoot {
 													filename: "typescript/types/reference-generic/input.ts"
 													end: Object {
 														column: 19
-														index: 19
 														line: 1
 													}
 													start: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 												}
@@ -164,12 +146,10 @@ JSRoot {
 							filename: "typescript/types/reference-generic/input.ts"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 		end: Object {
 			column: 0
-			index: 156
 			line: 10
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "yieldSet"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "C"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -118,12 +106,10 @@ JSRoot {
 							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								identifierName: "iter"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -151,12 +135,10 @@ JSRoot {
 							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -172,12 +154,10 @@ JSRoot {
 					identifierName: "g"
 					end: Object {
 						column: 11
-						index: 34
 						line: 2
 					}
 					start: Object {
 						column: 10
-						index: 33
 						line: 2
 					}
 				}
@@ -186,12 +166,10 @@ JSRoot {
 				filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 				end: Object {
 					column: 1
-					index: 155
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 2
 				}
 			}
@@ -208,12 +186,10 @@ JSRoot {
 					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 					end: Object {
 						column: 13
-						index: 36
 						line: 2
 					}
 					start: Object {
 						column: 11
-						index: 34
 						line: 2
 					}
 				}
@@ -224,12 +200,10 @@ JSRoot {
 					filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 					end: Object {
 						column: 1
-						index: 155
 						line: 9
 					}
 					start: Object {
 						column: 14
-						index: 37
 						line: 2
 					}
 				}
@@ -242,12 +216,10 @@ JSRoot {
 								identifierName: "C_"
 								end: Object {
 									column: 10
-									index: 49
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 47
 									line: 3
 								}
 							}
@@ -256,12 +228,10 @@ JSRoot {
 							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 							end: Object {
 								column: 3
-								index: 142
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 41
 								line: 3
 							}
 						}
@@ -274,12 +244,10 @@ JSRoot {
 								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 								end: Object {
 									column: 3
-									index: 142
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 41
 									line: 3
 								}
 							}
@@ -294,12 +262,10 @@ JSRoot {
 												filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 												end: Object {
 													column: 14
-													index: 66
 													line: 4
 												}
 												start: Object {
 													column: 9
-													index: 61
 													line: 4
 												}
 											}
@@ -308,12 +274,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 15
-												index: 67
 												line: 4
 											}
 											start: Object {
 												column: 8
-												index: 60
 												line: 4
 											}
 										}
@@ -322,12 +286,10 @@ JSRoot {
 										filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 										end: Object {
 											column: 41
-											index: 93
 											line: 4
 										}
 										start: Object {
 											column: 4
-											index: 56
 											line: 4
 										}
 									}
@@ -344,12 +306,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 17
-												index: 69
 												line: 4
 											}
 											start: Object {
 												column: 15
-												index: 67
 												line: 4
 											}
 										}
@@ -363,19 +323,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 4
-											index: 56
 											line: 4
 										}
 										loc: Object {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 15
-												index: 67
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 56
 												line: 4
 											}
 										}
@@ -386,12 +343,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 41
-												index: 93
 												line: 4
 											}
 											start: Object {
 												column: 18
-												index: 70
 												line: 4
 											}
 										}
@@ -401,12 +356,10 @@ JSRoot {
 													filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 													end: Object {
 														column: 39
-														index: 91
 														line: 4
 													}
 													start: Object {
 														column: 20
-														index: 72
 														line: 4
 													}
 												}
@@ -416,12 +369,10 @@ JSRoot {
 														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 														end: Object {
 															column: 38
-															index: 90
 															line: 4
 														}
 														start: Object {
 															column: 27
-															index: 79
 															line: 4
 														}
 													}
@@ -440,12 +391,10 @@ JSRoot {
 												filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 												end: Object {
 													column: 14
-													index: 108
 													line: 5
 												}
 												start: Object {
 													column: 9
-													index: 103
 													line: 5
 												}
 											}
@@ -454,12 +403,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 15
-												index: 109
 												line: 5
 											}
 											start: Object {
 												column: 8
-												index: 102
 												line: 5
 											}
 										}
@@ -468,12 +415,10 @@ JSRoot {
 										filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 										end: Object {
 											column: 44
-											index: 138
 											line: 5
 										}
 										start: Object {
 											column: 4
-											index: 98
 											line: 5
 										}
 									}
@@ -486,19 +431,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 4
-											index: 98
 											line: 5
 										}
 										loc: Object {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 15
-												index: 109
 												line: 5
 											}
 											start: Object {
 												column: 4
-												index: 98
 												line: 5
 											}
 										}
@@ -515,12 +457,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 22
-												index: 116
 												line: 5
 											}
 											start: Object {
 												column: 15
-												index: 109
 												line: 5
 											}
 										}
@@ -532,12 +472,10 @@ JSRoot {
 													identifierName: "param"
 													end: Object {
 														column: 21
-														index: 115
 														line: 5
 													}
 													start: Object {
 														column: 16
-														index: 110
 														line: 5
 													}
 												}
@@ -548,12 +486,10 @@ JSRoot {
 														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 														end: Object {
 															column: 21
-															index: 115
 															line: 5
 														}
 														start: Object {
 															column: 16
-															index: 110
 															line: 5
 														}
 													}
@@ -567,12 +503,10 @@ JSRoot {
 											filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 											end: Object {
 												column: 44
-												index: 138
 												line: 5
 											}
 											start: Object {
 												column: 23
-												index: 117
 												line: 5
 											}
 										}
@@ -582,12 +516,10 @@ JSRoot {
 													filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 													end: Object {
 														column: 42
-														index: 136
 														line: 5
 													}
 													start: Object {
 														column: 25
-														index: 119
 														line: 5
 													}
 												}
@@ -597,12 +529,10 @@ JSRoot {
 														filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 														end: Object {
 															column: 41
-															index: 135
 															line: 5
 														}
 														start: Object {
 															column: 25
-															index: 119
 															line: 5
 														}
 													}
@@ -613,12 +543,10 @@ JSRoot {
 															identifierName: "yieldSet"
 															end: Object {
 																column: 33
-																index: 127
 																line: 5
 															}
 															start: Object {
 																column: 25
-																index: 119
 																line: 5
 															}
 														}
@@ -630,12 +558,10 @@ JSRoot {
 															identifierName: "param"
 															end: Object {
 																column: 41
-																index: 135
 																line: 5
 															}
 															start: Object {
 																column: 36
-																index: 130
 																line: 5
 															}
 														}
@@ -653,12 +579,10 @@ JSRoot {
 							filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 							end: Object {
 								column: 9
-								index: 153
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 146
 								line: 8
 							}
 						}
@@ -668,12 +592,10 @@ JSRoot {
 								filename: "es2015/yield/accessor-name-inst-computed-yield-expr/input.js"
 								end: Object {
 									column: 8
-									index: 152
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 146
 									line: 8
 								}
 							}
@@ -684,12 +606,10 @@ JSRoot {
 									identifierName: "C"
 									end: Object {
 										column: 3
-										index: 147
 										line: 8
 									}
 									start: Object {
 										column: 2
-										index: 146
 										line: 8
 									}
 								}
@@ -701,12 +621,10 @@ JSRoot {
 									identifierName: "C_"
 									end: Object {
 										column: 8
-										index: 152
 										line: 8
 									}
 									start: Object {
 										column: 6
-										index: 150
 										line: 8
 									}
 								}

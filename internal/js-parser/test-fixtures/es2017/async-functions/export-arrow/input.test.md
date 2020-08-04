@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/export-arrow/input.js"
 		end: Object {
 			column: 0
-			index: 39
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/export-arrow/input.js"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2017/async-functions/export-arrow/input.js"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 						filename: "es2017/async-functions/export-arrow/input.js"
 						end: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "es2017/async-functions/export-arrow/input.js"
 						end: Object {
 							column: 38
-							index: 38
 							line: 1
 						}
 						start: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 					}
@@ -101,12 +91,10 @@ JSRoot {
 							filename: "es2017/async-functions/export-arrow/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 						}
@@ -117,12 +105,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}

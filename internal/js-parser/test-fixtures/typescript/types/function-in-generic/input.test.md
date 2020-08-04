@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/function-in-generic/input.ts"
 		end: Object {
 			column: 0
-			index: 26
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/function-in-generic/input.ts"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/function-in-generic/input.ts"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/function-in-generic/input.ts"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/function-in-generic/input.ts"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/function-in-generic/input.ts"
 										end: Object {
 											column: 24
-											index: 24
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -114,12 +102,10 @@ JSRoot {
 											identifierName: "Array"
 											end: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 											start: Object {
 												column: 7
-												index: 7
 												line: 1
 											}
 										}
@@ -129,12 +115,10 @@ JSRoot {
 											filename: "typescript/types/function-in-generic/input.ts"
 											end: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 											start: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 										}
@@ -144,12 +128,10 @@ JSRoot {
 													filename: "typescript/types/function-in-generic/input.ts"
 													end: Object {
 														column: 23
-														index: 23
 														line: 1
 													}
 													start: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 												}
@@ -158,12 +140,10 @@ JSRoot {
 														filename: "typescript/types/function-in-generic/input.ts"
 														end: Object {
 															column: 23
-															index: 23
 															line: 1
 														}
 														start: Object {
 															column: 19
-															index: 19
 															line: 1
 														}
 													}
@@ -176,12 +156,10 @@ JSRoot {
 														filename: "typescript/types/function-in-generic/input.ts"
 														end: Object {
 															column: 23
-															index: 23
 															line: 1
 														}
 														start: Object {
 															column: 13
-															index: 13
 															line: 1
 														}
 													}
@@ -197,12 +175,10 @@ JSRoot {
 							filename: "typescript/types/function-in-generic/input.ts"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

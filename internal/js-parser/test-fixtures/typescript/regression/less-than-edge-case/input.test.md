@@ -25,12 +25,10 @@ JSRoot {
 		filename: "typescript/regression/less-than-edge-case/input.tsx"
 		end: Object {
 			column: 1
-			index: 58
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "typescript/regression/less-than-edge-case/input.tsx"
 				end: Object {
 					column: 1
-					index: 58
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 43
-						index: 43
 						line: 1
 					}
 					start: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 						identifierName: "i"
 						end: Object {
 							column: 41
-							index: 41
 							line: 1
 						}
 						start: Object {
 							column: 40
-							index: 40
 							line: 1
 						}
 					}
@@ -89,12 +81,10 @@ JSRoot {
 					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 								identifierName: "i"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -156,12 +140,10 @@ JSRoot {
 					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 1
-						index: 58
 						line: 3
 					}
 					start: Object {
 						column: 45
-						index: 45
 						line: 1
 					}
 				}
@@ -171,12 +153,10 @@ JSRoot {
 							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 9
-								index: 56
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 51
 								line: 2
 							}
 						}
@@ -185,12 +165,10 @@ JSRoot {
 								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								end: Object {
 									column: 8
-									index: 55
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 51
 									line: 2
 								}
 							}
@@ -201,12 +179,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 5
-										index: 52
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 51
 										line: 2
 									}
 								}
@@ -219,12 +195,10 @@ JSRoot {
 										identifierName: "i"
 										end: Object {
 											column: 7
-											index: 54
 											line: 2
 										}
 										start: Object {
 											column: 6
-											index: 53
 											line: 2
 										}
 									}
@@ -240,12 +214,10 @@ JSRoot {
 					filename: "typescript/regression/less-than-edge-case/input.tsx"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -256,12 +228,10 @@ JSRoot {
 						identifierName: "i"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -271,12 +241,10 @@ JSRoot {
 						filename: "typescript/regression/less-than-edge-case/input.tsx"
 						end: Object {
 							column: 38
-							index: 38
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -288,12 +256,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 35
-									index: 35
 									line: 1
 								}
 							}
@@ -303,12 +269,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 35
-								index: 35
 								line: 1
 							}
 						}
@@ -318,12 +282,10 @@ JSRoot {
 							filename: "typescript/regression/less-than-edge-case/input.tsx"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -334,12 +296,10 @@ JSRoot {
 								identifierName: "require"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 							}
@@ -351,12 +311,10 @@ JSRoot {
 									filename: "typescript/regression/less-than-edge-case/input.tsx"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 								}

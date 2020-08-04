@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 		end: Object {
 			column: 0
-			index: 37
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 19
-					index: 35
 					line: 2
 				}
 				start: Object {
 					column: 7
-					index: 23
 					line: 2
 				}
 			}
@@ -67,12 +63,10 @@ JSRoot {
 							filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -89,12 +83,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -104,12 +96,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -120,12 +110,10 @@ JSRoot {
 							identifierName: "Foo"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -137,12 +125,10 @@ JSRoot {
 							identifierName: "Foo"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -157,12 +143,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 				end: Object {
 					column: 19
-					index: 35
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 16
 					line: 2
 				}
 			}
@@ -174,12 +158,10 @@ JSRoot {
 						identifierName: "Foo"
 						end: Object {
 							column: 16
-							index: 32
 							line: 2
 						}
 						start: Object {
 							column: 13
-							index: 29
 							line: 2
 						}
 					}
@@ -188,12 +170,10 @@ JSRoot {
 					filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 					end: Object {
 						column: 19
-						index: 35
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 23
 						line: 2
 					}
 				}
@@ -207,12 +187,10 @@ JSRoot {
 						filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 						end: Object {
 							column: 19
-							index: 35
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 23
 							line: 2
 						}
 					}
@@ -224,12 +202,10 @@ JSRoot {
 				filename: "es2015/modules/duplicate-named-export-class-declaration/input.js"
 				end: Object {
 					column: 20
-					index: 36
 					line: 2
 				}
 				start: Object {
 					column: 19
-					index: 35
 					line: 2
 				}
 			}

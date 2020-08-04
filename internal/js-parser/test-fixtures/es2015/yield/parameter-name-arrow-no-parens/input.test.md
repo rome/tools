@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 		end: Object {
 			column: 12
-			index: 12
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "es2015/yield/parameter-name-arrow-no-parens/input.js"
 						end: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "yield"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 0
 									line: 1
 								}
 							}

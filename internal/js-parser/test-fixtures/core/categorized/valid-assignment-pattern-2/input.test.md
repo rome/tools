@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/categorized/valid-assignment-pattern-2/input.js"
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "core/categorized/valid-assignment-pattern-2/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "core/categorized/valid-assignment-pattern-2/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 						identifierName: "t"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 						filename: "core/categorized/valid-assignment-pattern-2/input.js"
 						end: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -125,12 +113,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}

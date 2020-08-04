@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-export-declaration/export-var/input.js"
 		end: Object {
 			column: 0
-			index: 16
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-export-declaration/export-var/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/es2015-export-declaration/export-var/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "esprima/es2015-export-declaration/export-var/input.js"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -101,12 +91,10 @@ JSRoot {
 								filename: "esprima/es2015-export-declaration/export-var/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/yield-tag/input.jsx"
 		end: Object {
 			column: 0
-			index: 36
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "it"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "jsx/basic/yield-tag/input.jsx"
 				end: Object {
 					column: 1
-					index: 35
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "jsx/basic/yield-tag/input.jsx"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "jsx/basic/yield-tag/input.jsx"
 					end: Object {
 						column: 1
-						index: 35
 						line: 3
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "jsx/basic/yield-tag/input.jsx"
 							end: Object {
 								column: 18
-								index: 33
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 19
 								line: 2
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "jsx/basic/yield-tag/input.jsx"
 								end: Object {
 									column: 17
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 19
 									line: 2
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 										filename: "jsx/basic/yield-tag/input.jsx"
 										end: Object {
 											column: 12
-											index: 27
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 26
 											line: 2
 										}
 									}
@@ -156,12 +140,10 @@ JSRoot {
 									filename: "jsx/basic/yield-tag/input.jsx"
 									end: Object {
 										column: 17
-										index: 32
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 25
 										line: 2
 									}
 								}

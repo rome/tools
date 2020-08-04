@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/expression-implements/input.ts"
 		end: Object {
 			column: 0
-			index: 62
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/class/expression-implements/input.ts"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/class/expression-implements/input.ts"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 						filename: "typescript/class/expression-implements/input.ts"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 								filename: "typescript/class/expression-implements/input.ts"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -99,12 +89,10 @@ JSRoot {
 									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 									start: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 								}
@@ -115,12 +103,10 @@ JSRoot {
 										identifierName: "X"
 										end: Object {
 											column: 19
-											index: 19
 											line: 1
 										}
 										start: Object {
 											column: 18
-											index: 18
 											line: 1
 										}
 									}
@@ -132,12 +118,10 @@ JSRoot {
 										identifierName: "Y"
 										end: Object {
 											column: 21
-											index: 21
 											line: 1
 										}
 										start: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 									}
@@ -148,12 +132,10 @@ JSRoot {
 									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -164,12 +146,10 @@ JSRoot {
 											filename: "typescript/class/expression-implements/input.ts"
 											end: Object {
 												column: 23
-												index: 23
 												line: 1
 											}
 											start: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 										}
@@ -180,12 +160,10 @@ JSRoot {
 												identifierName: "T"
 												end: Object {
 													column: 23
-													index: 23
 													line: 1
 												}
 												start: Object {
 													column: 22
-													index: 22
 													line: 1
 												}
 											}
@@ -203,12 +181,10 @@ JSRoot {
 				filename: "typescript/class/expression-implements/input.ts"
 				end: Object {
 					column: 31
-					index: 61
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 30
 					line: 2
 				}
 			}
@@ -220,12 +196,10 @@ JSRoot {
 						identifierName: "C"
 						end: Object {
 							column: 8
-							index: 38
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 37
 							line: 2
 						}
 					}
@@ -234,12 +208,10 @@ JSRoot {
 					filename: "typescript/class/expression-implements/input.ts"
 					end: Object {
 						column: 29
-						index: 59
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 31
 						line: 2
 					}
 				}
@@ -252,12 +224,10 @@ JSRoot {
 						filename: "typescript/class/expression-implements/input.ts"
 						end: Object {
 							column: 29
-							index: 59
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 31
 							line: 2
 						}
 					}
@@ -267,12 +237,10 @@ JSRoot {
 								filename: "typescript/class/expression-implements/input.ts"
 								end: Object {
 									column: 26
-									index: 56
 									line: 2
 								}
 								start: Object {
 									column: 20
-									index: 50
 									line: 2
 								}
 							}
@@ -281,12 +249,10 @@ JSRoot {
 									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 23
-										index: 53
 										line: 2
 									}
 									start: Object {
 										column: 20
-										index: 50
 										line: 2
 									}
 								}
@@ -297,12 +263,10 @@ JSRoot {
 										identifierName: "X"
 										end: Object {
 											column: 21
-											index: 51
 											line: 2
 										}
 										start: Object {
 											column: 20
-											index: 50
 											line: 2
 										}
 									}
@@ -314,12 +278,10 @@ JSRoot {
 										identifierName: "Y"
 										end: Object {
 											column: 23
-											index: 53
 											line: 2
 										}
 										start: Object {
 											column: 22
-											index: 52
 											line: 2
 										}
 									}
@@ -330,12 +292,10 @@ JSRoot {
 									filename: "typescript/class/expression-implements/input.ts"
 									end: Object {
 										column: 26
-										index: 56
 										line: 2
 									}
 									start: Object {
 										column: 23
-										index: 53
 										line: 2
 									}
 								}
@@ -346,12 +306,10 @@ JSRoot {
 											filename: "typescript/class/expression-implements/input.ts"
 											end: Object {
 												column: 25
-												index: 55
 												line: 2
 											}
 											start: Object {
 												column: 24
-												index: 54
 												line: 2
 											}
 										}
@@ -362,12 +320,10 @@ JSRoot {
 												identifierName: "T"
 												end: Object {
 													column: 25
-													index: 55
 													line: 2
 												}
 												start: Object {
 													column: 24
-													index: 54
 													line: 2
 												}
 											}

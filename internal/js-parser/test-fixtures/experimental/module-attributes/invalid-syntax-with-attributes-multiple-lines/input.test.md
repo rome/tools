@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 			}
@@ -65,12 +61,10 @@ JSRoot {
 				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 				end: Object {
 					column: 5
-					index: 21
 					line: 2
 				}
 				start: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 			}
@@ -112,12 +102,10 @@ JSRoot {
 					identifierName: "type"
 					end: Object {
 						column: 4
-						index: 20
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 16
 						line: 2
 					}
 				}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 					end: Object {
 						column: 5
-						index: 21
 						line: 2
 					}
 					start: Object {
 						column: 4
-						index: 20
 						line: 2
 					}
 				}
@@ -142,12 +128,10 @@ JSRoot {
 						filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 						end: Object {
 							column: 5
-							index: 21
 							line: 2
 						}
 						start: Object {
 							column: 4
-							index: 20
 							line: 2
 						}
 					}
@@ -159,12 +143,10 @@ JSRoot {
 				filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 				end: Object {
 					column: 12
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 6
-					index: 22
 					line: 2
 				}
 			}
@@ -174,12 +156,10 @@ JSRoot {
 					filename: "experimental/module-attributes/invalid-syntax-with-attributes-multiple-lines/input.js"
 					end: Object {
 						column: 12
-						index: 28
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 22
 						line: 2
 					}
 				}

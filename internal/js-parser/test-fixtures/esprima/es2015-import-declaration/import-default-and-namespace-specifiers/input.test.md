@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -117,12 +105,10 @@ JSRoot {
 					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -149,12 +133,10 @@ JSRoot {
 						filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}

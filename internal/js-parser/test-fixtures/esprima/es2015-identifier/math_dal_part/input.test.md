@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-identifier/math_dal_part/input.js"
 		end: Object {
 			column: 0
-			index: 8
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-identifier/math_dal_part/input.js"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-identifier/math_dal_part/input.js"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "_\u{1ee03}"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "esprima/es2015-identifier/math_dal_part/input.js"
 							end: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

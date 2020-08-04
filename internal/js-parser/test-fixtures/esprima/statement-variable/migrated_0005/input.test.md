@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-variable/migrated_0005/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-variable/migrated_0005/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/statement-variable/migrated_0005/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "implements"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "esprima/statement-variable/migrated_0005/input.js"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "interface"
 								end: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -118,12 +106,10 @@ JSRoot {
 							filename: "esprima/statement-variable/migrated_0005/input.js"
 							end: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								identifierName: "package"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 							}
@@ -151,12 +135,10 @@ JSRoot {
 							filename: "esprima/statement-variable/migrated_0005/input.js"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 						}

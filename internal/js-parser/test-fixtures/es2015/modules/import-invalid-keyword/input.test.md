@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/import-invalid-keyword/input.js"
 		end: Object {
 			column: 0
-			index: 32
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 				filename: "es2015/modules/import-invalid-keyword/input.js"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 					filename: "es2015/modules/import-invalid-keyword/input.js"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 						filename: "es2015/modules/import-invalid-keyword/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -116,12 +106,10 @@ JSRoot {
 							identifierName: "debugger"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -134,12 +122,10 @@ JSRoot {
 								identifierName: "debugger"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -149,12 +135,10 @@ JSRoot {
 							filename: "es2015/modules/import-invalid-keyword/input.js"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}

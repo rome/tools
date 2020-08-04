@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/export-default-variable-declaration3/input.js"
 		end: Object {
 			column: 1
-			index: 76
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/modules/export-default-variable-declaration3/input.js"
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/modules/export-default-variable-declaration3/input.js"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 				filename: "es2015/modules/export-default-variable-declaration3/input.js"
 				end: Object {
 					column: 1
-					index: 76
 					line: 3
 				}
 				start: Object {
 					column: 19
-					index: 19
 					line: 1
 				}
 			}
@@ -107,12 +97,10 @@ JSRoot {
 					filename: "es2015/modules/export-default-variable-declaration3/input.js"
 					end: Object {
 						column: 1
-						index: 76
 						line: 3
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -123,12 +111,10 @@ JSRoot {
 						identifierName: "Foo"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -138,12 +124,10 @@ JSRoot {
 						filename: "es2015/modules/export-default-variable-declaration3/input.js"
 						end: Object {
 							column: 1
-							index: 76
 							line: 3
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -158,12 +142,10 @@ JSRoot {
 							filename: "es2015/modules/export-default-variable-declaration3/input.js"
 							end: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -174,12 +156,10 @@ JSRoot {
 							filename: "es2015/modules/export-default-variable-declaration3/input.js"
 							end: Object {
 								column: 1
-								index: 76
 								line: 3
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}
@@ -189,12 +169,10 @@ JSRoot {
 									filename: "es2015/modules/export-default-variable-declaration3/input.js"
 									end: Object {
 										column: 41
-										index: 74
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 37
 										line: 2
 									}
 								}
@@ -204,12 +182,10 @@ JSRoot {
 										filename: "es2015/modules/export-default-variable-declaration3/input.js"
 										end: Object {
 											column: 40
-											index: 73
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 44
 											line: 2
 										}
 									}
@@ -222,12 +198,10 @@ JSRoot {
 												filename: "es2015/modules/export-default-variable-declaration3/input.js"
 												end: Object {
 													column: 39
-													index: 72
 													line: 2
 												}
 												start: Object {
 													column: 12
-													index: 45
 													line: 2
 												}
 											}

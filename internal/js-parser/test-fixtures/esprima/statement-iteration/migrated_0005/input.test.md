@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-iteration/migrated_0005/input.js"
 		end: Object {
 			column: 0
-			index: 24
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-iteration/migrated_0005/input.js"
 				end: Object {
 					column: 13
-					index: 23
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0005/input.js"
 					end: Object {
 						column: 12
-						index: 22
 						line: 2
 					}
 					start: Object {
 						column: 8
-						index: 18
 						line: 2
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 					filename: "esprima/statement-iteration/migrated_0005/input.js"
 					end: Object {
 						column: 1
-						index: 11
 						line: 2
 					}
 					start: Object {
 						column: 3
-						index: 3
 						line: 1
 					}
 				}
@@ -82,12 +74,10 @@ JSRoot {
 						filename: "esprima/statement-iteration/migrated_0005/input.js"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 3
-							index: 3
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 							identifierName: "that"
 							end: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}

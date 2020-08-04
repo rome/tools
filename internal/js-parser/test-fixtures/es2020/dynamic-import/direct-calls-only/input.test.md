@@ -21,18 +21,29 @@ JSRoot {
 		filename: "es2020/dynamic-import/direct-calls-only/input.js"
 		end: Object {
 			column: 0
-			index: 50
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "es2020/dynamic-import/direct-calls-only/input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 20
+					line: 2
+				}
+				start: Object {
+					column: 16
+					line: 2
+				}
+			}
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -47,21 +58,6 @@ JSRoot {
 					]
 				}
 			}
-			location: Object {
-				filename: "es2020/dynamic-import/direct-calls-only/input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 20
-					index: 44
-					line: 2
-				}
-				start: Object {
-					column: 16
-					index: 40
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
@@ -73,12 +69,10 @@ JSRoot {
 					identifierName: "failsParse"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -87,12 +81,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/direct-calls-only/input.js"
 				end: Object {
 					column: 1
-					index: 49
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -109,12 +101,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/direct-calls-only/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -125,12 +115,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/direct-calls-only/input.js"
 					end: Object {
 						column: 1
-						index: 49
 						line: 3
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -140,12 +128,10 @@ JSRoot {
 							filename: "es2020/dynamic-import/direct-calls-only/input.js"
 							end: Object {
 								column: 23
-								index: 47
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 26
 								line: 2
 							}
 						}
@@ -155,12 +141,10 @@ JSRoot {
 								filename: "es2020/dynamic-import/direct-calls-only/input.js"
 								end: Object {
 									column: 22
-									index: 46
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 33
 									line: 2
 								}
 							}
@@ -169,12 +153,10 @@ JSRoot {
 									filename: "es2020/dynamic-import/direct-calls-only/input.js"
 									end: Object {
 										column: 20
-										index: 44
 										line: 2
 									}
 									start: Object {
 										column: 9
-										index: 33
 										line: 2
 									}
 								}
@@ -185,12 +167,10 @@ JSRoot {
 										identifierName: "import"
 										end: Object {
 											column: 15
-											index: 39
 											line: 2
 										}
 										start: Object {
 											column: 9
-											index: 33
 											line: 2
 										}
 									}
@@ -202,12 +182,10 @@ JSRoot {
 										identifierName: "then"
 										end: Object {
 											column: 20
-											index: 44
 											line: 2
 										}
 										start: Object {
 											column: 16
-											index: 40
 											line: 2
 										}
 									}

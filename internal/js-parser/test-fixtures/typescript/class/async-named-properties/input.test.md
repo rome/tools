@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/async-named-properties/input.ts"
 		end: Object {
 			column: 1
-			index: 46
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/async-named-properties/input.ts"
 				end: Object {
 					column: 1
-					index: 46
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/async-named-properties/input.ts"
 					end: Object {
 						column: 1
-						index: 46
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 17
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 7
-									index: 17
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/async-named-properties/input.ts"
 							end: Object {
 								column: 16
-								index: 26
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -139,19 +125,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 8
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -168,12 +151,10 @@ JSRoot {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 16
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 18
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									filename: "typescript/class/async-named-properties/input.ts"
 									end: Object {
 										column: 16
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 22
 										line: 2
 									}
 								}
@@ -203,12 +182,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 34
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 29
 										line: 3
 									}
 								}
@@ -217,12 +194,10 @@ JSRoot {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 7
-									index: 34
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 29
 									line: 3
 								}
 							}
@@ -233,12 +208,10 @@ JSRoot {
 							filename: "typescript/class/async-named-properties/input.ts"
 							end: Object {
 								column: 17
-								index: 44
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 29
 								line: 3
 							}
 						}
@@ -247,12 +220,10 @@ JSRoot {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 17
-									index: 44
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 37
 									line: 3
 								}
 							}
@@ -266,19 +237,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 29
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/async-named-properties/input.ts"
 								end: Object {
 									column: 8
-									index: 35
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 29
 									line: 3
 								}
 							}

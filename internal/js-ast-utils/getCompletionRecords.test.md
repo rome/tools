@@ -14,12 +14,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -29,12 +27,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -79,12 +73,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 			}
@@ -94,12 +86,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 				}
@@ -114,12 +104,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 39
-					index: 39
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -130,12 +118,10 @@ Array [
 					identifierName: "bar"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -146,12 +132,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 39
-						index: 39
 						line: 1
 					}
 					start: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 				}
@@ -161,12 +145,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -176,12 +158,10 @@ Array [
 								filename: "unknown"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}
@@ -204,12 +184,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 			}
@@ -219,12 +197,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 				}
@@ -237,12 +213,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 58
-					index: 58
 					line: 1
 				}
 				start: Object {
 					column: 46
-					index: 46
 					line: 1
 				}
 			}
@@ -252,12 +226,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 57
-						index: 57
 						line: 1
 					}
 					start: Object {
 						column: 53
-						index: 53
 						line: 1
 					}
 				}
@@ -277,12 +249,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 52
-					index: 52
 					line: 1
 				}
 				start: Object {
 					column: 39
-					index: 39
 					line: 1
 				}
 			}
@@ -292,12 +262,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 51
-						index: 51
 						line: 1
 					}
 					start: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 				}
@@ -317,12 +285,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 52
-					index: 52
 					line: 1
 				}
 				start: Object {
 					column: 39
-					index: 39
 					line: 1
 				}
 			}
@@ -332,12 +298,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 51
-						index: 51
 						line: 1
 					}
 					start: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 				}
@@ -362,12 +326,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -388,12 +350,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -404,12 +364,10 @@ Array [
 						filename: "unknown"
 						end: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -432,12 +390,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 			}
@@ -447,12 +403,10 @@ Array [
 						filename: "unknown"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -462,12 +416,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -484,12 +436,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -500,12 +450,10 @@ Array [
 					identifierName: "bar"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -516,12 +464,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 				}
@@ -531,12 +477,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -546,12 +490,10 @@ Array [
 								filename: "unknown"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}
@@ -576,12 +518,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 			}
@@ -591,12 +531,10 @@ Array [
 						filename: "unknown"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -606,12 +544,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -629,12 +565,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 43
-					index: 43
 					line: 1
 				}
 				start: Object {
 					column: 41
-					index: 41
 					line: 1
 				}
 			}
@@ -655,12 +589,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -671,12 +603,10 @@ Array [
 					identifierName: "foo"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -697,12 +627,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -713,12 +641,10 @@ Array [
 					identifierName: "foo"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -729,12 +655,10 @@ Array [
 						filename: "unknown"
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 					}
@@ -744,12 +668,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 						}
@@ -762,12 +684,10 @@ Array [
 								filename: "unknown"
 								end: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 								start: Object {
 									column: 41
-									index: 41
 									line: 1
 								}
 							}
@@ -793,12 +713,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 				start: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 			}
@@ -817,12 +735,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 63
-					index: 63
 					line: 1
 				}
 				start: Object {
 					column: 50
-					index: 50
 					line: 1
 				}
 			}
@@ -832,12 +748,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 62
-						index: 62
 						line: 1
 					}
 					start: Object {
 						column: 57
-						index: 57
 						line: 1
 					}
 				}
@@ -852,12 +766,10 @@ Array [
 				filename: "unknown"
 				end: Object {
 					column: 64
-					index: 64
 					line: 1
 				}
 				start: Object {
 					column: 39
-					index: 39
 					line: 1
 				}
 			}
@@ -867,12 +779,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 47
-						index: 47
 						line: 1
 					}
 					start: Object {
 						column: 43
-						index: 43
 						line: 1
 					}
 				}
@@ -883,12 +793,10 @@ Array [
 					filename: "unknown"
 					end: Object {
 						column: 64
-						index: 64
 						line: 1
 					}
 					start: Object {
 						column: 49
-						index: 49
 						line: 1
 					}
 				}
@@ -898,12 +806,10 @@ Array [
 							filename: "unknown"
 							end: Object {
 								column: 63
-								index: 63
 								line: 1
 							}
 							start: Object {
 								column: 50
-								index: 50
 								line: 1
 							}
 						}
@@ -913,12 +819,10 @@ Array [
 								filename: "unknown"
 								end: Object {
 									column: 62
-									index: 62
 									line: 1
 								}
 								start: Object {
 									column: 57
-									index: 57
 									line: 1
 								}
 							}

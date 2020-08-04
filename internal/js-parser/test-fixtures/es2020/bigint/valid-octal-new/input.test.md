@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/bigint/valid-octal-new/input.js"
 		end: Object {
 			column: 0
-			index: 9
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/bigint/valid-octal-new/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2020/bigint/valid-octal-new/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

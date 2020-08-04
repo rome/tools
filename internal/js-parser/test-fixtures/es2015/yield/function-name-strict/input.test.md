@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/yield/function-name-strict/input.js"
 		end: Object {
 			column: 19
-			index: 33
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "es2015/yield/function-name-strict/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 14
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 9
-					index: 23
 					line: 2
 				}
 			}
@@ -86,12 +80,10 @@ JSRoot {
 					identifierName: "yield"
 					end: Object {
 						column: 14
-						index: 28
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 23
 						line: 2
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 				filename: "es2015/yield/function-name-strict/input.js"
 				end: Object {
 					column: 19
-					index: 33
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-strict/input.js"
 					end: Object {
 						column: 19
-						index: 33
 						line: 2
 					}
 					start: Object {
 						column: 17
-						index: 31
 						line: 2
 					}
 				}
@@ -139,12 +127,10 @@ JSRoot {
 					filename: "es2015/yield/function-name-strict/input.js"
 					end: Object {
 						column: 16
-						index: 30
 						line: 2
 					}
 					start: Object {
 						column: 14
-						index: 28
 						line: 2
 					}
 				}

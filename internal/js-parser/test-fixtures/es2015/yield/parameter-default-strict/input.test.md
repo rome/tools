@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/yield/parameter-default-strict/input.js"
 		end: Object {
 			column: 25
-			index: 39
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-default-strict/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 21
-					index: 35
 					line: 2
 				}
 				start: Object {
 					column: 16
-					index: 30
 					line: 2
 				}
 			}
@@ -86,12 +80,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 11
-						index: 25
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 23
 						line: 2
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-default-strict/input.js"
 				end: Object {
 					column: 25
-					index: 39
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-default-strict/input.js"
 					end: Object {
 						column: 25
-						index: 39
 						line: 2
 					}
 					start: Object {
 						column: 23
-						index: 37
 						line: 2
 					}
 				}
@@ -138,12 +126,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-default-strict/input.js"
 					end: Object {
 						column: 22
-						index: 36
 						line: 2
 					}
 					start: Object {
 						column: 11
-						index: 25
 						line: 2
 					}
 				}
@@ -153,12 +139,10 @@ JSRoot {
 							filename: "es2015/yield/parameter-default-strict/input.js"
 							end: Object {
 								column: 21
-								index: 35
 								line: 2
 							}
 							start: Object {
 								column: 12
-								index: 26
 								line: 2
 							}
 						}
@@ -169,12 +153,10 @@ JSRoot {
 								identifierName: "yield"
 								end: Object {
 									column: 21
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 30
 									line: 2
 								}
 							}
@@ -186,12 +168,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 13
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 26
 									line: 2
 								}
 							}
@@ -202,12 +182,10 @@ JSRoot {
 									filename: "es2015/yield/parameter-default-strict/input.js"
 									end: Object {
 										column: 13
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 26
 										line: 2
 									}
 								}

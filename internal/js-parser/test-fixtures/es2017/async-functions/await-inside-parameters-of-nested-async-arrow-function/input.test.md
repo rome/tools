@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 		end: Object {
 			column: 1
-			index: 52
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 18
-					index: 40
 					line: 2
 				}
 				start: Object {
 					column: 18
-					index: 40
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "fn"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 				end: Object {
 					column: 1
-					index: 52
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 					end: Object {
 						column: 1
-						index: 52
 						line: 3
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -131,12 +119,10 @@ JSRoot {
 							filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 							end: Object {
 								column: 28
-								index: 50
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 24
 								line: 2
 							}
 						}
@@ -145,12 +131,10 @@ JSRoot {
 								filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 								end: Object {
 									column: 27
-									index: 49
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 24
 									line: 2
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 									filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 									end: Object {
 										column: 27
-										index: 49
 										line: 2
 									}
 									start: Object {
 										column: 25
-										index: 47
 										line: 2
 									}
 								}
@@ -181,12 +163,10 @@ JSRoot {
 									filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 									end: Object {
 										column: 24
-										index: 46
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 24
 										line: 2
 									}
 								}
@@ -197,12 +177,10 @@ JSRoot {
 											filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 											end: Object {
 												column: 20
-												index: 42
 												line: 2
 											}
 											start: Object {
 												column: 9
-												index: 31
 												line: 2
 											}
 										}
@@ -213,12 +191,10 @@ JSRoot {
 												identifierName: "x"
 												end: Object {
 													column: 10
-													index: 32
 													line: 2
 												}
 												start: Object {
 													column: 9
-													index: 31
 													line: 2
 												}
 											}
@@ -228,12 +204,10 @@ JSRoot {
 												filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 												end: Object {
 													column: 20
-													index: 42
 													line: 2
 												}
 												start: Object {
 													column: 13
-													index: 35
 													line: 2
 												}
 											}
@@ -244,12 +218,10 @@ JSRoot {
 													filename: "es2017/async-functions/await-inside-parameters-of-nested-async-arrow-function/input.js"
 													end: Object {
 														column: 20
-														index: 42
 														line: 2
 													}
 													start: Object {
 														column: 19
-														index: 41
 														line: 2
 													}
 												}

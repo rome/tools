@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/534/input.js"
 		end: Object {
 			column: 31
-			index: 31
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/534/input.js"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "core/uncategorised/534/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "eval"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "core/uncategorised/534/input.js"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "core/uncategorised/534/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 								identifierName: "arguments"
 								end: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -133,12 +119,10 @@ JSRoot {
 							filename: "core/uncategorised/534/input.js"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -149,12 +133,10 @@ JSRoot {
 								filename: "core/uncategorised/534/input.js"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}

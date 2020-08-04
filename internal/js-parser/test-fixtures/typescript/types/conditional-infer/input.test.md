@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/conditional-infer/input.ts"
 		end: Object {
 			column: 0
-			index: 49
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Element"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/types/conditional-infer/input.ts"
 				end: Object {
 					column: 48
-					index: 48
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "typescript/types/conditional-infer/input.ts"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							filename: "typescript/types/conditional-infer/input.ts"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 					filename: "typescript/types/conditional-infer/input.ts"
 					end: Object {
 						column: 47
-						index: 47
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "T"
 							end: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -151,12 +135,10 @@ JSRoot {
 						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 47
-							index: 47
 							line: 1
 						}
 						start: Object {
 							column: 46
-							index: 46
 							line: 1
 						}
 					}
@@ -167,12 +149,10 @@ JSRoot {
 							identifierName: "T"
 							end: Object {
 								column: 47
-								index: 47
 								line: 1
 							}
 							start: Object {
 								column: 46
-								index: 46
 								line: 1
 							}
 						}
@@ -184,12 +164,10 @@ JSRoot {
 						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 42
-							index: 42
 							line: 1
 						}
 					}
@@ -200,12 +178,10 @@ JSRoot {
 							identifierName: "U"
 							end: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 							start: Object {
 								column: 42
-								index: 42
 								line: 1
 							}
 						}
@@ -216,12 +192,10 @@ JSRoot {
 						filename: "typescript/types/conditional-infer/input.ts"
 						end: Object {
 							column: 39
-							index: 39
 							line: 1
 						}
 						start: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 					}
@@ -230,12 +204,10 @@ JSRoot {
 							filename: "typescript/types/conditional-infer/input.ts"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 						}
@@ -244,12 +216,10 @@ JSRoot {
 								filename: "typescript/types/conditional-infer/input.ts"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}
@@ -259,12 +229,10 @@ JSRoot {
 									filename: "typescript/types/conditional-infer/input.ts"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 35
-										index: 35
 										line: 1
 									}
 								}

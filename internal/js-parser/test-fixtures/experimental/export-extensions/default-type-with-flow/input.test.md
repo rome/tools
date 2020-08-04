@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/export-extensions/default-type-with-flow/input.js"
 		end: Object {
 			column: 0
-			index: 25
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 				filename: "experimental/export-extensions/default-type-with-flow/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 					filename: "experimental/export-extensions/default-type-with-flow/input.js"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "experimental/export-extensions/default-type-with-flow/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 						identifierName: "type"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}

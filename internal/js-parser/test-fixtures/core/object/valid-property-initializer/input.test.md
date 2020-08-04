@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/object/valid-property-initializer/input.js"
 		end: Object {
 			column: 0
-			index: 69
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 7
-					index: 21
 					line: 2
 				}
 				start: Object {
 					column: 6
-					index: 20
 					line: 2
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "core/object/valid-property-initializer/input.js"
 				end: Object {
 					column: 25
-					index: 68
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "core/object/valid-property-initializer/input.js"
 					end: Object {
 						column: 25
-						index: 68
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 								identifierName: "obj"
 								end: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -113,12 +103,10 @@ JSRoot {
 							filename: "core/object/valid-property-initializer/input.js"
 							end: Object {
 								column: 11
-								index: 25
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "core/object/valid-property-initializer/input.js"
 								end: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 									filename: "core/object/valid-property-initializer/input.js"
 									end: Object {
 										column: 11
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 8
-										index: 22
 										line: 2
 									}
 								}
@@ -160,12 +144,10 @@ JSRoot {
 									filename: "core/object/valid-property-initializer/input.js"
 									end: Object {
 										column: 5
-										index: 19
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}
@@ -179,12 +161,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 5
-														index: 19
 														line: 2
 													}
 													start: Object {
 														column: 2
-														index: 16
 														line: 2
 													}
 												}
@@ -193,12 +173,10 @@ JSRoot {
 												filename: "core/object/valid-property-initializer/input.js"
 												end: Object {
 													column: 5
-													index: 19
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 16
 													line: 2
 												}
 											}
@@ -210,12 +188,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 5
-													index: 19
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 16
 													line: 2
 												}
 											}
@@ -224,12 +200,10 @@ JSRoot {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
 												column: 5
-												index: 19
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 16
 												line: 2
 											}
 										}
@@ -245,12 +219,10 @@ JSRoot {
 								filename: "core/object/valid-property-initializer/input.js"
 								end: Object {
 									column: 8
-									index: 35
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 29
 									line: 3
 								}
 							}
@@ -260,12 +232,10 @@ JSRoot {
 									filename: "core/object/valid-property-initializer/input.js"
 									end: Object {
 										column: 8
-										index: 35
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 29
 										line: 3
 									}
 								}
@@ -275,12 +245,10 @@ JSRoot {
 										filename: "core/object/valid-property-initializer/input.js"
 										end: Object {
 											column: 8
-											index: 35
 											line: 3
 										}
 										start: Object {
 											column: 7
-											index: 34
 											line: 3
 										}
 									}
@@ -291,12 +259,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 8
-												index: 35
 												line: 3
 											}
 											start: Object {
 												column: 7
-												index: 34
 												line: 3
 											}
 										}
@@ -308,12 +274,10 @@ JSRoot {
 							filename: "core/object/valid-property-initializer/input.js"
 							end: Object {
 								column: 14
-								index: 41
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 29
 								line: 3
 							}
 						}
@@ -324,12 +288,10 @@ JSRoot {
 								filename: "core/object/valid-property-initializer/input.js"
 								end: Object {
 									column: 14
-									index: 41
 									line: 3
 								}
 								start: Object {
 									column: 11
-									index: 38
 									line: 3
 								}
 							}
@@ -343,12 +305,10 @@ JSRoot {
 								identifierName: ""
 								end: Object {
 									column: 1
-									index: 44
 									line: 4
 								}
 								start: Object {
 									column: 0
-									index: 43
 									line: 4
 								}
 							}
@@ -357,12 +317,10 @@ JSRoot {
 							filename: "core/object/valid-property-initializer/input.js"
 							end: Object {
 								column: 24
-								index: 67
 								line: 4
 							}
 							start: Object {
 								column: 0
-								index: 43
 								line: 4
 							}
 						}
@@ -371,12 +329,10 @@ JSRoot {
 								filename: "core/object/valid-property-initializer/input.js"
 								end: Object {
 									column: 24
-									index: 67
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 47
 									line: 4
 								}
 							}
@@ -390,12 +346,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 9
-													index: 52
 													line: 4
 												}
 												start: Object {
 													column: 6
-													index: 49
 													line: 4
 												}
 											}
@@ -404,12 +358,10 @@ JSRoot {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
 												column: 9
-												index: 52
 												line: 4
 											}
 											start: Object {
 												column: 6
-												index: 49
 												line: 4
 											}
 										}
@@ -421,12 +373,10 @@ JSRoot {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
 												column: 13
-												index: 56
 												line: 4
 											}
 											start: Object {
 												column: 11
-												index: 54
 												line: 4
 											}
 										}
@@ -435,12 +385,10 @@ JSRoot {
 										filename: "core/object/valid-property-initializer/input.js"
 										end: Object {
 											column: 13
-											index: 56
 											line: 4
 										}
 										start: Object {
 											column: 6
-											index: 49
 											line: 4
 										}
 									}
@@ -454,12 +402,10 @@ JSRoot {
 												identifierName: "bar"
 												end: Object {
 													column: 18
-													index: 61
 													line: 4
 												}
 												start: Object {
 													column: 15
-													index: 58
 													line: 4
 												}
 											}
@@ -468,12 +414,10 @@ JSRoot {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
 												column: 18
-												index: 61
 												line: 4
 											}
 											start: Object {
 												column: 15
-												index: 58
 												line: 4
 											}
 										}
@@ -485,12 +429,10 @@ JSRoot {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
 												column: 22
-												index: 65
 												line: 4
 											}
 											start: Object {
 												column: 20
-												index: 63
 												line: 4
 											}
 										}
@@ -499,12 +441,10 @@ JSRoot {
 										filename: "core/object/valid-property-initializer/input.js"
 										end: Object {
 											column: 22
-											index: 65
 											line: 4
 										}
 										start: Object {
 											column: 15
-											index: 58
 											line: 4
 										}
 									}

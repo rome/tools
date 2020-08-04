@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/invalid-inside-loop/input.js"
 		end: Object {
 			column: 32
-			index: 32
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-inside-loop/input.js"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-inside-loop/input.js"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -95,12 +87,10 @@ JSRoot {
 						identifierName: "foo"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 					}
@@ -109,12 +99,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-inside-loop/input.js"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -125,12 +113,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-inside-loop/input.js"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 					}
@@ -148,12 +134,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-inside-loop/input.js"
 						end: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 						start: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 					}

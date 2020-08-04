@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 		end: Object {
 			column: 0
-			index: 10
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

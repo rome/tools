@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/nested/input.js"
 		end: Object {
 			column: 0
-			index: 783
 			line: 40
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Point"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/nested/input.js"
 				end: Object {
 					column: 1
-					index: 782
 					line: 39
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/nested/input.js"
 					end: Object {
 						column: 1
-						index: 782
 						line: 39
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 18
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 17
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 21
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 9
-								index: 23
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 						}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 4
-										index: 28
 										line: 3
 									}
 									start: Object {
 										column: 3
-										index: 27
 										line: 3
 									}
 								}
@@ -196,12 +175,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -213,12 +190,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
-									index: 32
 									line: 3
 								}
 								start: Object {
 									column: 7
-									index: 31
 									line: 3
 								}
 							}
@@ -228,12 +203,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 9
-								index: 33
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 						}
@@ -246,19 +219,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -274,12 +244,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 48
 										line: 5
 									}
 									start: Object {
 										column: 2
-										index: 37
 										line: 5
 									}
 								}
@@ -288,12 +256,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 5
 								}
 							}
@@ -302,12 +268,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 3
-								index: 527
 								line: 28
 							}
 							start: Object {
 								column: 2
-								index: 37
 								line: 5
 							}
 						}
@@ -320,19 +284,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 37
 								line: 5
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 5
 								}
 							}
@@ -349,12 +310,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 27
-									index: 62
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 							}
@@ -364,12 +323,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 19
-											index: 54
 											line: 5
 										}
 										start: Object {
 											column: 14
-											index: 49
 											line: 5
 										}
 									}
@@ -380,12 +337,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 19
-												index: 54
 												line: 5
 											}
 											start: Object {
 												column: 18
-												index: 53
 												line: 5
 											}
 										}
@@ -397,12 +352,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 15
-												index: 50
 												line: 5
 											}
 											start: Object {
 												column: 14
-												index: 49
 												line: 5
 											}
 										}
@@ -413,12 +366,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 15
-													index: 50
 													line: 5
 												}
 												start: Object {
 													column: 14
-													index: 49
 													line: 5
 												}
 											}
@@ -430,12 +381,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
-											index: 61
 											line: 5
 										}
 										start: Object {
 											column: 21
-											index: 56
 											line: 5
 										}
 									}
@@ -446,12 +395,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
-												index: 61
 												line: 5
 											}
 											start: Object {
 												column: 25
-												index: 60
 												line: 5
 											}
 										}
@@ -463,12 +410,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 22
-												index: 57
 												line: 5
 											}
 											start: Object {
 												column: 21
-												index: 56
 												line: 5
 											}
 										}
@@ -479,12 +424,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 22
-													index: 57
 													line: 5
 												}
 												start: Object {
 													column: 21
-													index: 56
 													line: 5
 												}
 											}
@@ -499,12 +442,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 3
-									index: 527
 									line: 28
 								}
 								start: Object {
 									column: 28
-									index: 63
 									line: 5
 								}
 							}
@@ -514,12 +455,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 17
-											index: 82
 											line: 6
 										}
 										start: Object {
 											column: 4
-											index: 69
 											line: 6
 										}
 									}
@@ -529,12 +468,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 16
-												index: 81
 												line: 6
 											}
 											start: Object {
 												column: 4
-												index: 69
 												line: 6
 											}
 										}
@@ -545,12 +482,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 16
-													index: 81
 													line: 6
 												}
 												start: Object {
 													column: 14
-													index: 79
 													line: 6
 												}
 											}
@@ -561,12 +496,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 16
-														index: 81
 														line: 6
 													}
 													start: Object {
 														column: 15
-														index: 80
 														line: 6
 													}
 												}
@@ -577,12 +510,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 11
-													index: 76
 													line: 6
 												}
 												start: Object {
 													column: 4
-													index: 69
 													line: 6
 												}
 											}
@@ -591,12 +522,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
-														index: 73
 														line: 6
 													}
 													start: Object {
 														column: 4
-														index: 69
 														line: 6
 													}
 												}
@@ -610,12 +539,10 @@ JSRoot {
 															identifierName: "x"
 															end: Object {
 																column: 11
-																index: 76
 																line: 6
 															}
 															start: Object {
 																column: 10
-																index: 75
 																line: 6
 															}
 														}
@@ -624,12 +551,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 11
-															index: 76
 															line: 6
 														}
 														start: Object {
 															column: 9
-															index: 74
 															line: 6
 														}
 													}
@@ -638,12 +563,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 11
-														index: 76
 														line: 6
 													}
 													start: Object {
 														column: 9
-														index: 74
 														line: 6
 													}
 												}
@@ -656,12 +579,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 17
-											index: 100
 											line: 7
 										}
 										start: Object {
 											column: 4
-											index: 87
 											line: 7
 										}
 									}
@@ -671,12 +592,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 16
-												index: 99
 												line: 7
 											}
 											start: Object {
 												column: 4
-												index: 87
 												line: 7
 											}
 										}
@@ -687,12 +606,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 16
-													index: 99
 													line: 7
 												}
 												start: Object {
 													column: 14
-													index: 97
 													line: 7
 												}
 											}
@@ -703,12 +620,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 16
-														index: 99
 														line: 7
 													}
 													start: Object {
 														column: 15
-														index: 98
 														line: 7
 													}
 												}
@@ -719,12 +634,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 11
-													index: 94
 													line: 7
 												}
 												start: Object {
 													column: 4
-													index: 87
 													line: 7
 												}
 											}
@@ -733,12 +646,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
-														index: 91
 														line: 7
 													}
 													start: Object {
 														column: 4
-														index: 87
 														line: 7
 													}
 												}
@@ -752,12 +663,10 @@ JSRoot {
 															identifierName: "y"
 															end: Object {
 																column: 11
-																index: 94
 																line: 7
 															}
 															start: Object {
 																column: 10
-																index: 93
 																line: 7
 															}
 														}
@@ -766,12 +675,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 11
-															index: 94
 															line: 7
 														}
 														start: Object {
 															column: 9
-															index: 92
 															line: 7
 														}
 													}
@@ -780,12 +687,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 11
-														index: 94
 														line: 7
 													}
 													start: Object {
 														column: 9
-														index: 92
 														line: 7
 													}
 												}
@@ -798,12 +703,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 6
-											index: 523
 											line: 27
 										}
 										start: Object {
 											column: 4
-											index: 106
 											line: 9
 										}
 									}
@@ -813,12 +716,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 5
-												index: 522
 												line: 27
 											}
 											start: Object {
 												column: 4
-												index: 106
 												line: 9
 											}
 										}
@@ -827,12 +728,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 12
-													index: 114
 													line: 9
 												}
 												start: Object {
 													column: 4
-													index: 106
 													line: 9
 												}
 											}
@@ -841,12 +740,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 8
-														index: 110
 														line: 9
 													}
 													start: Object {
 														column: 4
-														index: 106
 														line: 9
 													}
 												}
@@ -859,12 +756,10 @@ JSRoot {
 														identifierName: "foo"
 														end: Object {
 															column: 12
-															index: 114
 															line: 9
 														}
 														start: Object {
 															column: 9
-															index: 111
 															line: 9
 														}
 													}
@@ -874,12 +769,10 @@ JSRoot {
 													identifierName: "foo"
 													end: Object {
 														column: 12
-														index: 114
 														line: 9
 													}
 													start: Object {
 														column: 9
-														index: 111
 														line: 9
 													}
 												}
@@ -891,12 +784,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 5
-													index: 522
 													line: 27
 												}
 												start: Object {
 													column: 15
-													index: 117
 													line: 9
 												}
 											}
@@ -909,12 +800,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 5
-														index: 522
 														line: 27
 													}
 													start: Object {
 														column: 15
-														index: 117
 														line: 9
 													}
 												}
@@ -928,12 +817,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 8
-																		index: 133
 																		line: 10
 																	}
 																	start: Object {
 																		column: 7
-																		index: 132
 																		line: 10
 																	}
 																}
@@ -942,12 +829,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
-																	index: 133
 																	line: 10
 																}
 																start: Object {
 																	column: 6
-																	index: 131
 																	line: 10
 																}
 															}
@@ -959,12 +844,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
-																	index: 137
 																	line: 10
 																}
 																start: Object {
 																	column: 11
-																	index: 136
 																	line: 10
 																}
 															}
@@ -974,12 +857,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 13
-																index: 138
 																line: 10
 															}
 															start: Object {
 																column: 6
-																index: 131
 																line: 10
 															}
 														}
@@ -992,19 +873,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 131
 																line: 10
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
-																	index: 133
 																	line: 10
 																}
 																start: Object {
 																	column: 6
-																	index: 131
 																	line: 10
 																}
 															}
@@ -1019,12 +897,10 @@ JSRoot {
 																	identifierName: "y"
 																	end: Object {
 																		column: 8
-																		index: 147
 																		line: 11
 																	}
 																	start: Object {
 																		column: 7
-																		index: 146
 																		line: 11
 																	}
 																}
@@ -1033,12 +909,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
-																	index: 147
 																	line: 11
 																}
 																start: Object {
 																	column: 6
-																	index: 145
 																	line: 11
 																}
 															}
@@ -1050,12 +924,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
-																	index: 151
 																	line: 11
 																}
 																start: Object {
 																	column: 11
-																	index: 150
 																	line: 11
 																}
 															}
@@ -1065,12 +937,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 13
-																index: 152
 																line: 11
 															}
 															start: Object {
 																column: 6
-																index: 145
 																line: 11
 															}
 														}
@@ -1083,19 +953,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 145
 																line: 11
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 8
-																	index: 147
 																	line: 11
 																}
 																start: Object {
 																	column: 6
-																	index: 145
 																	line: 11
 																}
 															}
@@ -1111,12 +978,10 @@ JSRoot {
 																	identifierName: "constructor"
 																	end: Object {
 																		column: 17
-																		index: 171
 																		line: 13
 																	}
 																	start: Object {
 																		column: 6
-																		index: 160
 																		line: 13
 																	}
 																}
@@ -1125,12 +990,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 17
-																	index: 171
 																	line: 13
 																}
 																start: Object {
 																	column: 6
-																	index: 160
 																	line: 13
 																}
 															}
@@ -1139,12 +1002,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 7
-																index: 239
 																line: 16
 															}
 															start: Object {
 																column: 6
-																index: 160
 																line: 13
 															}
 														}
@@ -1157,19 +1018,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 160
 																line: 13
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 17
-																	index: 171
 																	line: 13
 																}
 																start: Object {
 																	column: 6
-																	index: 160
 																	line: 13
 																}
 															}
@@ -1186,12 +1044,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 31
-																	index: 185
 																	line: 13
 																}
 																start: Object {
 																	column: 17
-																	index: 171
 																	line: 13
 																}
 															}
@@ -1201,12 +1057,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 23
-																			index: 177
 																			line: 13
 																		}
 																		start: Object {
 																			column: 18
-																			index: 172
 																			line: 13
 																		}
 																	}
@@ -1217,12 +1071,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 23
-																				index: 177
 																				line: 13
 																			}
 																			start: Object {
 																				column: 22
-																				index: 176
 																				line: 13
 																			}
 																		}
@@ -1234,12 +1086,10 @@ JSRoot {
 																			identifierName: "x"
 																			end: Object {
 																				column: 19
-																				index: 173
 																				line: 13
 																			}
 																			start: Object {
 																				column: 18
-																				index: 172
 																				line: 13
 																			}
 																		}
@@ -1250,12 +1100,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 19
-																					index: 173
 																					line: 13
 																				}
 																				start: Object {
 																					column: 18
-																					index: 172
 																					line: 13
 																				}
 																			}
@@ -1267,12 +1115,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
-																			index: 184
 																			line: 13
 																		}
 																		start: Object {
 																			column: 25
-																			index: 179
 																			line: 13
 																		}
 																	}
@@ -1283,12 +1129,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
-																				index: 184
 																				line: 13
 																			}
 																			start: Object {
 																				column: 29
-																				index: 183
 																				line: 13
 																			}
 																		}
@@ -1300,12 +1144,10 @@ JSRoot {
 																			identifierName: "y"
 																			end: Object {
 																				column: 26
-																				index: 180
 																				line: 13
 																			}
 																			start: Object {
 																				column: 25
-																				index: 179
 																				line: 13
 																			}
 																		}
@@ -1316,12 +1158,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 26
-																					index: 180
 																					line: 13
 																				}
 																				start: Object {
 																					column: 25
-																					index: 179
 																					line: 13
 																				}
 																			}
@@ -1336,12 +1176,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 7
-																	index: 239
 																	line: 16
 																}
 																start: Object {
 																	column: 32
-																	index: 186
 																	line: 13
 																}
 															}
@@ -1351,12 +1189,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 21
-																			index: 209
 																			line: 14
 																		}
 																		start: Object {
 																			column: 8
-																			index: 196
 																			line: 14
 																		}
 																	}
@@ -1366,12 +1202,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 20
-																				index: 208
 																				line: 14
 																			}
 																			start: Object {
 																				column: 8
-																				index: 196
 																				line: 14
 																			}
 																		}
@@ -1382,12 +1216,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 20
-																					index: 208
 																					line: 14
 																				}
 																				start: Object {
 																					column: 18
-																					index: 206
 																					line: 14
 																				}
 																			}
@@ -1398,12 +1230,10 @@ JSRoot {
 																					identifierName: "x"
 																					end: Object {
 																						column: 20
-																						index: 208
 																						line: 14
 																					}
 																					start: Object {
 																						column: 19
-																						index: 207
 																						line: 14
 																					}
 																				}
@@ -1414,12 +1244,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 15
-																					index: 203
 																					line: 14
 																				}
 																				start: Object {
 																					column: 8
-																					index: 196
 																					line: 14
 																				}
 																			}
@@ -1428,12 +1256,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 12
-																						index: 200
 																						line: 14
 																					}
 																					start: Object {
 																						column: 8
-																						index: 196
 																						line: 14
 																					}
 																				}
@@ -1447,12 +1273,10 @@ JSRoot {
 																							identifierName: "x"
 																							end: Object {
 																								column: 15
-																								index: 203
 																								line: 14
 																							}
 																							start: Object {
 																								column: 14
-																								index: 202
 																								line: 14
 																							}
 																						}
@@ -1461,12 +1285,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 15
-																							index: 203
 																							line: 14
 																						}
 																						start: Object {
 																							column: 13
-																							index: 201
 																							line: 14
 																						}
 																					}
@@ -1475,12 +1297,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 15
-																						index: 203
 																						line: 14
 																					}
 																					start: Object {
 																						column: 13
-																						index: 201
 																						line: 14
 																					}
 																				}
@@ -1493,12 +1313,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 21
-																			index: 231
 																			line: 15
 																		}
 																		start: Object {
 																			column: 8
-																			index: 218
 																			line: 15
 																		}
 																	}
@@ -1508,12 +1326,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 20
-																				index: 230
 																				line: 15
 																			}
 																			start: Object {
 																				column: 8
-																				index: 218
 																				line: 15
 																			}
 																		}
@@ -1524,12 +1340,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 20
-																					index: 230
 																					line: 15
 																				}
 																				start: Object {
 																					column: 18
-																					index: 228
 																					line: 15
 																				}
 																			}
@@ -1540,12 +1354,10 @@ JSRoot {
 																					identifierName: "y"
 																					end: Object {
 																						column: 20
-																						index: 230
 																						line: 15
 																					}
 																					start: Object {
 																						column: 19
-																						index: 229
 																						line: 15
 																					}
 																				}
@@ -1556,12 +1368,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 15
-																					index: 225
 																					line: 15
 																				}
 																				start: Object {
 																					column: 8
-																					index: 218
 																					line: 15
 																				}
 																			}
@@ -1570,12 +1380,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 12
-																						index: 222
 																						line: 15
 																					}
 																					start: Object {
 																						column: 8
-																						index: 218
 																						line: 15
 																					}
 																				}
@@ -1589,12 +1397,10 @@ JSRoot {
 																							identifierName: "y"
 																							end: Object {
 																								column: 15
-																								index: 225
 																								line: 15
 																							}
 																							start: Object {
 																								column: 14
-																								index: 224
 																								line: 15
 																							}
 																						}
@@ -1603,12 +1409,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 15
-																							index: 225
 																							line: 15
 																						}
 																						start: Object {
 																							column: 13
-																							index: 223
 																							line: 15
 																						}
 																					}
@@ -1617,12 +1421,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 15
-																						index: 225
 																						line: 15
 																					}
 																					start: Object {
 																						column: 13
-																						index: 223
 																						line: 15
 																					}
 																				}
@@ -1643,12 +1445,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 11
-																		index: 252
 																		line: 18
 																	}
 																	start: Object {
 																		column: 10
-																		index: 251
 																		line: 18
 																	}
 																}
@@ -1657,12 +1457,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 252
 																	line: 18
 																}
 																start: Object {
 																	column: 10
-																	index: 251
 																	line: 18
 																}
 															}
@@ -1671,12 +1469,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 32
-																index: 273
 																line: 18
 															}
 															start: Object {
 																column: 6
-																index: 247
 																line: 18
 															}
 														}
@@ -1693,12 +1489,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 13
-																	index: 254
 																	line: 18
 																}
 																start: Object {
 																	column: 11
-																	index: 252
 																	line: 18
 																}
 															}
@@ -1712,19 +1506,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 247
 																line: 18
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 252
 																	line: 18
 																}
 																start: Object {
 																	column: 6
-																	index: 247
 																	line: 18
 																}
 															}
@@ -1735,12 +1526,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 32
-																	index: 273
 																	line: 18
 																}
 																start: Object {
 																	column: 14
-																	index: 255
 																	line: 18
 																}
 															}
@@ -1750,12 +1539,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
-																			index: 271
 																			line: 18
 																		}
 																		start: Object {
 																			column: 16
-																			index: 257
 																			line: 18
 																		}
 																	}
@@ -1764,12 +1551,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
-																				index: 271
 																				line: 18
 																			}
 																			start: Object {
 																				column: 23
-																				index: 264
 																				line: 18
 																			}
 																		}
@@ -1778,12 +1563,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 27
-																					index: 268
 																					line: 18
 																				}
 																				start: Object {
 																					column: 23
-																					index: 264
 																					line: 18
 																				}
 																			}
@@ -1797,12 +1580,10 @@ JSRoot {
 																						identifierName: "x"
 																						end: Object {
 																							column: 30
-																							index: 271
 																							line: 18
 																						}
 																						start: Object {
 																							column: 29
-																							index: 270
 																							line: 18
 																						}
 																					}
@@ -1811,12 +1592,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 30
-																						index: 271
 																						line: 18
 																					}
 																					start: Object {
 																						column: 28
-																						index: 269
 																						line: 18
 																					}
 																				}
@@ -1825,12 +1604,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 30
-																					index: 271
 																					line: 18
 																				}
 																				start: Object {
 																					column: 28
-																					index: 269
 																					line: 18
 																				}
 																			}
@@ -1850,12 +1627,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 11
-																		index: 285
 																		line: 19
 																	}
 																	start: Object {
 																		column: 10
-																		index: 284
 																		line: 19
 																	}
 																}
@@ -1864,12 +1639,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 285
 																	line: 19
 																}
 																start: Object {
 																	column: 10
-																	index: 284
 																	line: 19
 																}
 															}
@@ -1878,12 +1651,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
-																index: 313
 																line: 19
 															}
 															start: Object {
 																column: 6
-																index: 280
 																line: 19
 															}
 														}
@@ -1896,19 +1667,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 280
 																line: 19
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 285
 																	line: 19
 																}
 																start: Object {
 																	column: 6
-																	index: 280
 																	line: 19
 																}
 															}
@@ -1925,12 +1693,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 18
-																	index: 292
 																	line: 19
 																}
 																start: Object {
 																	column: 11
-																	index: 285
 																	line: 19
 																}
 															}
@@ -1942,12 +1708,10 @@ JSRoot {
 																		identifierName: "value"
 																		end: Object {
 																			column: 17
-																			index: 291
 																			line: 19
 																		}
 																		start: Object {
 																			column: 12
-																			index: 286
 																			line: 19
 																		}
 																	}
@@ -1958,12 +1722,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 17
-																				index: 291
 																				line: 19
 																			}
 																			start: Object {
 																				column: 12
-																				index: 286
 																				line: 19
 																			}
 																		}
@@ -1977,12 +1739,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 39
-																	index: 313
 																	line: 19
 																}
 																start: Object {
 																	column: 19
-																	index: 293
 																	line: 19
 																}
 															}
@@ -1992,12 +1752,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 37
-																			index: 311
 																			line: 19
 																		}
 																		start: Object {
 																			column: 21
-																			index: 295
 																			line: 19
 																		}
 																	}
@@ -2007,12 +1765,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 37
-																				index: 311
 																				line: 19
 																			}
 																			start: Object {
 																				column: 21
-																				index: 295
 																				line: 19
 																			}
 																		}
@@ -2023,12 +1779,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 37
-																					index: 311
 																					line: 19
 																				}
 																				start: Object {
 																					column: 31
-																					index: 305
 																					line: 19
 																				}
 																			}
@@ -2039,12 +1793,10 @@ JSRoot {
 																					identifierName: "value"
 																					end: Object {
 																						column: 37
-																						index: 311
 																						line: 19
 																					}
 																					start: Object {
 																						column: 32
-																						index: 306
 																						line: 19
 																					}
 																				}
@@ -2055,12 +1807,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 28
-																					index: 302
 																					line: 19
 																				}
 																				start: Object {
 																					column: 21
-																					index: 295
 																					line: 19
 																				}
 																			}
@@ -2069,12 +1819,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 25
-																						index: 299
 																						line: 19
 																					}
 																					start: Object {
 																						column: 21
-																						index: 295
 																						line: 19
 																					}
 																				}
@@ -2088,12 +1836,10 @@ JSRoot {
 																							identifierName: "x"
 																							end: Object {
 																								column: 28
-																								index: 302
 																								line: 19
 																							}
 																							start: Object {
 																								column: 27
-																								index: 301
 																								line: 19
 																							}
 																						}
@@ -2102,12 +1848,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 28
-																							index: 302
 																							line: 19
 																						}
 																						start: Object {
 																							column: 26
-																							index: 300
 																							line: 19
 																						}
 																					}
@@ -2116,12 +1860,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 28
-																						index: 302
 																						line: 19
 																					}
 																					start: Object {
 																						column: 26
-																						index: 300
 																						line: 19
 																					}
 																				}
@@ -2142,12 +1884,10 @@ JSRoot {
 																	identifierName: "y"
 																	end: Object {
 																		column: 11
-																		index: 326
 																		line: 21
 																	}
 																	start: Object {
 																		column: 10
-																		index: 325
 																		line: 21
 																	}
 																}
@@ -2156,12 +1896,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 326
 																	line: 21
 																}
 																start: Object {
 																	column: 10
-																	index: 325
 																	line: 21
 																}
 															}
@@ -2170,12 +1908,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 32
-																index: 347
 																line: 21
 															}
 															start: Object {
 																column: 6
-																index: 321
 																line: 21
 															}
 														}
@@ -2192,12 +1928,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 13
-																	index: 328
 																	line: 21
 																}
 																start: Object {
 																	column: 11
-																	index: 326
 																	line: 21
 																}
 															}
@@ -2211,19 +1945,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 321
 																line: 21
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 326
 																	line: 21
 																}
 																start: Object {
 																	column: 6
-																	index: 321
 																	line: 21
 																}
 															}
@@ -2234,12 +1965,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 32
-																	index: 347
 																	line: 21
 																}
 																start: Object {
 																	column: 14
-																	index: 329
 																	line: 21
 																}
 															}
@@ -2249,12 +1978,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 30
-																			index: 345
 																			line: 21
 																		}
 																		start: Object {
 																			column: 16
-																			index: 331
 																			line: 21
 																		}
 																	}
@@ -2263,12 +1990,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 30
-																				index: 345
 																				line: 21
 																			}
 																			start: Object {
 																				column: 23
-																				index: 338
 																				line: 21
 																			}
 																		}
@@ -2277,12 +2002,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 27
-																					index: 342
 																					line: 21
 																				}
 																				start: Object {
 																					column: 23
-																					index: 338
 																					line: 21
 																				}
 																			}
@@ -2296,12 +2019,10 @@ JSRoot {
 																						identifierName: "y"
 																						end: Object {
 																							column: 30
-																							index: 345
 																							line: 21
 																						}
 																						start: Object {
 																							column: 29
-																							index: 344
 																							line: 21
 																						}
 																					}
@@ -2310,12 +2031,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 30
-																						index: 345
 																						line: 21
 																					}
 																					start: Object {
 																						column: 28
-																						index: 343
 																						line: 21
 																					}
 																				}
@@ -2324,12 +2043,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 30
-																					index: 345
 																					line: 21
 																				}
 																				start: Object {
 																					column: 28
-																					index: 343
 																					line: 21
 																				}
 																			}
@@ -2349,12 +2066,10 @@ JSRoot {
 																	identifierName: "y"
 																	end: Object {
 																		column: 11
-																		index: 359
 																		line: 22
 																	}
 																	start: Object {
 																		column: 10
-																		index: 358
 																		line: 22
 																	}
 																}
@@ -2363,12 +2078,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 359
 																	line: 22
 																}
 																start: Object {
 																	column: 10
-																	index: 358
 																	line: 22
 																}
 															}
@@ -2377,12 +2090,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
-																index: 387
 																line: 22
 															}
 															start: Object {
 																column: 6
-																index: 354
 																line: 22
 															}
 														}
@@ -2395,19 +2106,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 354
 																line: 22
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 11
-																	index: 359
 																	line: 22
 																}
 																start: Object {
 																	column: 6
-																	index: 354
 																	line: 22
 																}
 															}
@@ -2424,12 +2132,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 18
-																	index: 366
 																	line: 22
 																}
 																start: Object {
 																	column: 11
-																	index: 359
 																	line: 22
 																}
 															}
@@ -2441,12 +2147,10 @@ JSRoot {
 																		identifierName: "value"
 																		end: Object {
 																			column: 17
-																			index: 365
 																			line: 22
 																		}
 																		start: Object {
 																			column: 12
-																			index: 360
 																			line: 22
 																		}
 																	}
@@ -2457,12 +2161,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 17
-																				index: 365
 																				line: 22
 																			}
 																			start: Object {
 																				column: 12
-																				index: 360
 																				line: 22
 																			}
 																		}
@@ -2476,12 +2178,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 39
-																	index: 387
 																	line: 22
 																}
 																start: Object {
 																	column: 19
-																	index: 367
 																	line: 22
 																}
 															}
@@ -2491,12 +2191,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 37
-																			index: 385
 																			line: 22
 																		}
 																		start: Object {
 																			column: 21
-																			index: 369
 																			line: 22
 																		}
 																	}
@@ -2506,12 +2204,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 37
-																				index: 385
 																				line: 22
 																			}
 																			start: Object {
 																				column: 21
-																				index: 369
 																				line: 22
 																			}
 																		}
@@ -2522,12 +2218,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 37
-																					index: 385
 																					line: 22
 																				}
 																				start: Object {
 																					column: 31
-																					index: 379
 																					line: 22
 																				}
 																			}
@@ -2538,12 +2232,10 @@ JSRoot {
 																					identifierName: "value"
 																					end: Object {
 																						column: 37
-																						index: 385
 																						line: 22
 																					}
 																					start: Object {
 																						column: 32
-																						index: 380
 																						line: 22
 																					}
 																				}
@@ -2554,12 +2246,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 28
-																					index: 376
 																					line: 22
 																				}
 																				start: Object {
 																					column: 21
-																					index: 369
 																					line: 22
 																				}
 																			}
@@ -2568,12 +2258,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 25
-																						index: 373
 																						line: 22
 																					}
 																					start: Object {
 																						column: 21
-																						index: 369
 																						line: 22
 																					}
 																				}
@@ -2587,12 +2275,10 @@ JSRoot {
 																							identifierName: "y"
 																							end: Object {
 																								column: 28
-																								index: 376
 																								line: 22
 																							}
 																							start: Object {
 																								column: 27
-																								index: 375
 																								line: 22
 																							}
 																						}
@@ -2601,12 +2287,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 28
-																							index: 376
 																							line: 22
 																						}
 																						start: Object {
 																							column: 26
-																							index: 374
 																							line: 22
 																						}
 																					}
@@ -2615,12 +2299,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 28
-																						index: 376
 																						line: 22
 																					}
 																					start: Object {
 																						column: 26
-																						index: 374
 																						line: 22
 																					}
 																				}
@@ -2641,12 +2323,10 @@ JSRoot {
 																	identifierName: "equals"
 																	end: Object {
 																		column: 12
-																		index: 401
 																		line: 24
 																	}
 																	start: Object {
 																		column: 6
-																		index: 395
 																		line: 24
 																	}
 																}
@@ -2655,12 +2335,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
-																	index: 401
 																	line: 24
 																}
 																start: Object {
 																	column: 6
-																	index: 395
 																	line: 24
 																}
 															}
@@ -2669,12 +2347,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 63
-																index: 452
 																line: 24
 															}
 															start: Object {
 																column: 6
-																index: 395
 																line: 24
 															}
 														}
@@ -2687,19 +2363,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 395
 																line: 24
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 12
-																	index: 401
 																	line: 24
 																}
 																start: Object {
 																	column: 6
-																	index: 395
 																	line: 24
 																}
 															}
@@ -2716,12 +2389,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 15
-																	index: 404
 																	line: 24
 																}
 																start: Object {
 																	column: 12
-																	index: 401
 																	line: 24
 																}
 															}
@@ -2733,12 +2404,10 @@ JSRoot {
 																		identifierName: "p"
 																		end: Object {
 																			column: 14
-																			index: 403
 																			line: 24
 																		}
 																		start: Object {
 																			column: 13
-																			index: 402
 																			line: 24
 																		}
 																	}
@@ -2749,12 +2418,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 14
-																				index: 403
 																				line: 24
 																			}
 																			start: Object {
 																				column: 13
-																				index: 402
 																				line: 24
 																			}
 																		}
@@ -2768,12 +2435,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 63
-																	index: 452
 																	line: 24
 																}
 																start: Object {
 																	column: 16
-																	index: 405
 																	line: 24
 																}
 															}
@@ -2783,12 +2448,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 61
-																			index: 450
 																			line: 24
 																		}
 																		start: Object {
 																			column: 18
-																			index: 407
 																			line: 24
 																		}
 																	}
@@ -2798,12 +2461,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 61
-																				index: 450
 																				line: 24
 																			}
 																			start: Object {
 																				column: 25
-																				index: 414
 																				line: 24
 																			}
 																		}
@@ -2813,12 +2474,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 41
-																					index: 430
 																					line: 24
 																				}
 																				start: Object {
 																					column: 25
-																					index: 414
 																					line: 24
 																				}
 																			}
@@ -2827,12 +2486,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 32
-																						index: 421
 																						line: 24
 																					}
 																					start: Object {
 																						column: 25
-																						index: 414
 																						line: 24
 																					}
 																				}
@@ -2841,12 +2498,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 29
-																							index: 418
 																							line: 24
 																						}
 																						start: Object {
 																							column: 25
-																							index: 414
 																							line: 24
 																						}
 																					}
@@ -2860,12 +2515,10 @@ JSRoot {
 																								identifierName: "x"
 																								end: Object {
 																									column: 32
-																									index: 421
 																									line: 24
 																								}
 																								start: Object {
 																									column: 31
-																									index: 420
 																									line: 24
 																								}
 																							}
@@ -2874,12 +2527,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 32
-																								index: 421
 																								line: 24
 																							}
 																							start: Object {
 																								column: 30
-																								index: 419
 																								line: 24
 																							}
 																						}
@@ -2888,12 +2539,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 32
-																							index: 421
 																							line: 24
 																						}
 																						start: Object {
 																							column: 30
-																							index: 419
 																							line: 24
 																						}
 																					}
@@ -2904,12 +2553,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 41
-																						index: 430
 																						line: 24
 																					}
 																					start: Object {
 																						column: 37
-																						index: 426
 																						line: 24
 																					}
 																				}
@@ -2920,12 +2567,10 @@ JSRoot {
 																						identifierName: "p"
 																						end: Object {
 																							column: 38
-																							index: 427
 																							line: 24
 																						}
 																						start: Object {
 																							column: 37
-																							index: 426
 																							line: 24
 																						}
 																					}
@@ -2939,12 +2584,10 @@ JSRoot {
 																								identifierName: "x"
 																								end: Object {
 																									column: 41
-																									index: 430
 																									line: 24
 																								}
 																								start: Object {
 																									column: 40
-																									index: 429
 																									line: 24
 																								}
 																							}
@@ -2953,12 +2596,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 41
-																								index: 430
 																								line: 24
 																							}
 																							start: Object {
 																								column: 39
-																								index: 428
 																								line: 24
 																							}
 																						}
@@ -2967,12 +2608,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 41
-																							index: 430
 																							line: 24
 																						}
 																						start: Object {
 																							column: 39
-																							index: 428
 																							line: 24
 																						}
 																					}
@@ -2985,12 +2624,10 @@ JSRoot {
 																				filename: "experimental/class-private-properties/nested/input.js"
 																				end: Object {
 																					column: 61
-																					index: 450
 																					line: 24
 																				}
 																				start: Object {
 																					column: 45
-																					index: 434
 																					line: 24
 																				}
 																			}
@@ -2999,12 +2636,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 52
-																						index: 441
 																						line: 24
 																					}
 																					start: Object {
 																						column: 45
-																						index: 434
 																						line: 24
 																					}
 																				}
@@ -3013,12 +2648,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 49
-																							index: 438
 																							line: 24
 																						}
 																						start: Object {
 																							column: 45
-																							index: 434
 																							line: 24
 																						}
 																					}
@@ -3032,12 +2665,10 @@ JSRoot {
 																								identifierName: "y"
 																								end: Object {
 																									column: 52
-																									index: 441
 																									line: 24
 																								}
 																								start: Object {
 																									column: 51
-																									index: 440
 																									line: 24
 																								}
 																							}
@@ -3046,12 +2677,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 52
-																								index: 441
 																								line: 24
 																							}
 																							start: Object {
 																								column: 50
-																								index: 439
 																								line: 24
 																							}
 																						}
@@ -3060,12 +2689,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 52
-																							index: 441
 																							line: 24
 																						}
 																						start: Object {
 																							column: 50
-																							index: 439
 																							line: 24
 																						}
 																					}
@@ -3076,12 +2703,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 61
-																						index: 450
 																						line: 24
 																					}
 																					start: Object {
 																						column: 57
-																						index: 446
 																						line: 24
 																					}
 																				}
@@ -3092,12 +2717,10 @@ JSRoot {
 																						identifierName: "p"
 																						end: Object {
 																							column: 58
-																							index: 447
 																							line: 24
 																						}
 																						start: Object {
 																							column: 57
-																							index: 446
 																							line: 24
 																						}
 																					}
@@ -3111,12 +2734,10 @@ JSRoot {
 																								identifierName: "y"
 																								end: Object {
 																									column: 61
-																									index: 450
 																									line: 24
 																								}
 																								start: Object {
 																									column: 60
-																									index: 449
 																									line: 24
 																								}
 																							}
@@ -3125,12 +2746,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 61
-																								index: 450
 																								line: 24
 																							}
 																							start: Object {
 																								column: 59
-																								index: 448
 																								line: 24
 																							}
 																						}
@@ -3139,12 +2758,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 61
-																							index: 450
 																							line: 24
 																						}
 																						start: Object {
 																							column: 59
-																							index: 448
 																							line: 24
 																						}
 																					}
@@ -3166,12 +2783,10 @@ JSRoot {
 																	identifierName: "toString"
 																	end: Object {
 																		column: 14
-																		index: 468
 																		line: 26
 																	}
 																	start: Object {
 																		column: 6
-																		index: 460
 																		line: 26
 																	}
 																}
@@ -3180,12 +2795,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 14
-																	index: 468
 																	line: 26
 																}
 																start: Object {
 																	column: 6
-																	index: 460
 																	line: 26
 																}
 															}
@@ -3194,12 +2807,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 62
-																index: 516
 																line: 26
 															}
 															start: Object {
 																column: 6
-																index: 460
 																line: 26
 															}
 														}
@@ -3216,12 +2827,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 16
-																	index: 470
 																	line: 26
 																}
 																start: Object {
 																	column: 14
-																	index: 468
 																	line: 26
 																}
 															}
@@ -3235,19 +2844,16 @@ JSRoot {
 															typeAnnotation: undefined
 															start: Object {
 																column: 6
-																index: 460
 																line: 26
 															}
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 14
-																	index: 468
 																	line: 26
 																}
 																start: Object {
 																	column: 6
-																	index: 460
 																	line: 26
 																}
 															}
@@ -3258,12 +2864,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
 																	column: 62
-																	index: 516
 																	line: 26
 																}
 																start: Object {
 																	column: 17
-																	index: 471
 																	line: 26
 																}
 															}
@@ -3273,12 +2877,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/nested/input.js"
 																		end: Object {
 																			column: 60
-																			index: 514
 																			line: 26
 																		}
 																		start: Object {
 																			column: 19
-																			index: 473
 																			line: 26
 																		}
 																	}
@@ -3287,12 +2889,10 @@ JSRoot {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
 																				column: 60
-																				index: 514
 																				line: 26
 																			}
 																			start: Object {
 																				column: 26
-																				index: 480
 																				line: 26
 																			}
 																		}
@@ -3305,12 +2905,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 33
-																						index: 487
 																						line: 26
 																					}
 																					start: Object {
 																						column: 27
-																						index: 481
 																						line: 26
 																					}
 																				}
@@ -3323,12 +2921,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 46
-																						index: 500
 																						line: 26
 																					}
 																					start: Object {
 																						column: 45
-																						index: 499
 																						line: 26
 																					}
 																				}
@@ -3341,12 +2937,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 59
-																						index: 513
 																						line: 26
 																					}
 																					start: Object {
 																						column: 58
-																						index: 512
 																						line: 26
 																					}
 																				}
@@ -3358,12 +2952,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 43
-																						index: 497
 																						line: 26
 																					}
 																					start: Object {
 																						column: 36
-																						index: 490
 																						line: 26
 																					}
 																				}
@@ -3372,12 +2964,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 40
-																							index: 494
 																							line: 26
 																						}
 																						start: Object {
 																							column: 36
-																							index: 490
 																							line: 26
 																						}
 																					}
@@ -3391,12 +2981,10 @@ JSRoot {
 																								identifierName: "x"
 																								end: Object {
 																									column: 43
-																									index: 497
 																									line: 26
 																								}
 																								start: Object {
 																									column: 42
-																									index: 496
 																									line: 26
 																								}
 																							}
@@ -3405,12 +2993,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 43
-																								index: 497
 																								line: 26
 																							}
 																							start: Object {
 																								column: 41
-																								index: 495
 																								line: 26
 																							}
 																						}
@@ -3419,12 +3005,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 43
-																							index: 497
 																							line: 26
 																						}
 																						start: Object {
 																							column: 41
-																							index: 495
 																							line: 26
 																						}
 																					}
@@ -3435,12 +3019,10 @@ JSRoot {
 																					filename: "experimental/class-private-properties/nested/input.js"
 																					end: Object {
 																						column: 56
-																						index: 510
 																						line: 26
 																					}
 																					start: Object {
 																						column: 49
-																						index: 503
 																						line: 26
 																					}
 																				}
@@ -3449,12 +3031,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 53
-																							index: 507
 																							line: 26
 																						}
 																						start: Object {
 																							column: 49
-																							index: 503
 																							line: 26
 																						}
 																					}
@@ -3468,12 +3048,10 @@ JSRoot {
 																								identifierName: "y"
 																								end: Object {
 																									column: 56
-																									index: 510
 																									line: 26
 																								}
 																								start: Object {
 																									column: 55
-																									index: 509
 																									line: 26
 																								}
 																							}
@@ -3482,12 +3060,10 @@ JSRoot {
 																							filename: "experimental/class-private-properties/nested/input.js"
 																							end: Object {
 																								column: 56
-																								index: 510
 																								line: 26
 																							}
 																							start: Object {
 																								column: 54
-																								index: 508
 																								line: 26
 																							}
 																						}
@@ -3496,12 +3072,10 @@ JSRoot {
 																						filename: "experimental/class-private-properties/nested/input.js"
 																						end: Object {
 																							column: 56
-																							index: 510
 																							line: 26
 																						}
 																						start: Object {
 																							column: 54
-																							index: 508
 																							line: 26
 																						}
 																					}
@@ -3531,12 +3105,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 7
-										index: 536
 										line: 30
 									}
 									start: Object {
 										column: 6
-										index: 535
 										line: 30
 									}
 								}
@@ -3545,12 +3117,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 536
 									line: 30
 								}
 								start: Object {
 									column: 6
-									index: 535
 									line: 30
 								}
 							}
@@ -3559,12 +3129,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 28
-								index: 557
 								line: 30
 							}
 							start: Object {
 								column: 2
-								index: 531
 								line: 30
 							}
 						}
@@ -3581,12 +3149,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 9
-									index: 538
 									line: 30
 								}
 								start: Object {
 									column: 7
-									index: 536
 									line: 30
 								}
 							}
@@ -3600,19 +3166,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 531
 								line: 30
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 536
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 531
 									line: 30
 								}
 							}
@@ -3623,12 +3186,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 28
-									index: 557
 									line: 30
 								}
 								start: Object {
 									column: 10
-									index: 539
 									line: 30
 								}
 							}
@@ -3638,12 +3199,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
-											index: 555
 											line: 30
 										}
 										start: Object {
 											column: 12
-											index: 541
 											line: 30
 										}
 									}
@@ -3652,12 +3211,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
-												index: 555
 												line: 30
 											}
 											start: Object {
 												column: 19
-												index: 548
 												line: 30
 											}
 										}
@@ -3666,12 +3223,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 23
-													index: 552
 													line: 30
 												}
 												start: Object {
 													column: 19
-													index: 548
 													line: 30
 												}
 											}
@@ -3685,12 +3240,10 @@ JSRoot {
 														identifierName: "x"
 														end: Object {
 															column: 26
-															index: 555
 															line: 30
 														}
 														start: Object {
 															column: 25
-															index: 554
 															line: 30
 														}
 													}
@@ -3699,12 +3252,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 26
-														index: 555
 														line: 30
 													}
 													start: Object {
 														column: 24
-														index: 553
 														line: 30
 													}
 												}
@@ -3713,12 +3264,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 26
-													index: 555
 													line: 30
 												}
 												start: Object {
 													column: 24
-													index: 553
 													line: 30
 												}
 											}
@@ -3738,12 +3287,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 7
-										index: 565
 										line: 31
 									}
 									start: Object {
 										column: 6
-										index: 564
 										line: 31
 									}
 								}
@@ -3752,12 +3299,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 565
 									line: 31
 								}
 								start: Object {
 									column: 6
-									index: 564
 									line: 31
 								}
 							}
@@ -3766,12 +3311,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 35
-								index: 593
 								line: 31
 							}
 							start: Object {
 								column: 2
-								index: 560
 								line: 31
 							}
 						}
@@ -3784,19 +3327,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 560
 								line: 31
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 565
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 560
 									line: 31
 								}
 							}
@@ -3813,12 +3353,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 14
-									index: 572
 									line: 31
 								}
 								start: Object {
 									column: 7
-									index: 565
 									line: 31
 								}
 							}
@@ -3830,12 +3368,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 13
-											index: 571
 											line: 31
 										}
 										start: Object {
 											column: 8
-											index: 566
 											line: 31
 										}
 									}
@@ -3846,12 +3382,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 13
-												index: 571
 												line: 31
 											}
 											start: Object {
 												column: 8
-												index: 566
 												line: 31
 											}
 										}
@@ -3865,12 +3399,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 35
-									index: 593
 									line: 31
 								}
 								start: Object {
 									column: 15
-									index: 573
 									line: 31
 								}
 							}
@@ -3880,12 +3412,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 33
-											index: 591
 											line: 31
 										}
 										start: Object {
 											column: 17
-											index: 575
 											line: 31
 										}
 									}
@@ -3895,12 +3425,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 33
-												index: 591
 												line: 31
 											}
 											start: Object {
 												column: 17
-												index: 575
 												line: 31
 											}
 										}
@@ -3911,12 +3439,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 33
-													index: 591
 													line: 31
 												}
 												start: Object {
 													column: 27
-													index: 585
 													line: 31
 												}
 											}
@@ -3927,12 +3453,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 33
-														index: 591
 														line: 31
 													}
 													start: Object {
 														column: 28
-														index: 586
 														line: 31
 													}
 												}
@@ -3943,12 +3467,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 24
-													index: 582
 													line: 31
 												}
 												start: Object {
 													column: 17
-													index: 575
 													line: 31
 												}
 											}
@@ -3957,12 +3479,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 21
-														index: 579
 														line: 31
 													}
 													start: Object {
 														column: 17
-														index: 575
 														line: 31
 													}
 												}
@@ -3976,12 +3496,10 @@ JSRoot {
 															identifierName: "x"
 															end: Object {
 																column: 24
-																index: 582
 																line: 31
 															}
 															start: Object {
 																column: 23
-																index: 581
 																line: 31
 															}
 														}
@@ -3990,12 +3508,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 24
-															index: 582
 															line: 31
 														}
 														start: Object {
 															column: 22
-															index: 580
 															line: 31
 														}
 													}
@@ -4004,12 +3520,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 24
-														index: 582
 														line: 31
 													}
 													start: Object {
 														column: 22
-														index: 580
 														line: 31
 													}
 												}
@@ -4030,12 +3544,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 7
-										index: 602
 										line: 33
 									}
 									start: Object {
 										column: 6
-										index: 601
 										line: 33
 									}
 								}
@@ -4044,12 +3556,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 602
 									line: 33
 								}
 								start: Object {
 									column: 6
-									index: 601
 									line: 33
 								}
 							}
@@ -4058,12 +3568,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 28
-								index: 623
 								line: 33
 							}
 							start: Object {
 								column: 2
-								index: 597
 								line: 33
 							}
 						}
@@ -4080,12 +3588,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 9
-									index: 604
 									line: 33
 								}
 								start: Object {
 									column: 7
-									index: 602
 									line: 33
 								}
 							}
@@ -4099,19 +3605,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 597
 								line: 33
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 602
 									line: 33
 								}
 								start: Object {
 									column: 2
-									index: 597
 									line: 33
 								}
 							}
@@ -4122,12 +3625,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 28
-									index: 623
 									line: 33
 								}
 								start: Object {
 									column: 10
-									index: 605
 									line: 33
 								}
 							}
@@ -4137,12 +3638,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 26
-											index: 621
 											line: 33
 										}
 										start: Object {
 											column: 12
-											index: 607
 											line: 33
 										}
 									}
@@ -4151,12 +3650,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 26
-												index: 621
 												line: 33
 											}
 											start: Object {
 												column: 19
-												index: 614
 												line: 33
 											}
 										}
@@ -4165,12 +3662,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 23
-													index: 618
 													line: 33
 												}
 												start: Object {
 													column: 19
-													index: 614
 													line: 33
 												}
 											}
@@ -4184,12 +3679,10 @@ JSRoot {
 														identifierName: "y"
 														end: Object {
 															column: 26
-															index: 621
 															line: 33
 														}
 														start: Object {
 															column: 25
-															index: 620
 															line: 33
 														}
 													}
@@ -4198,12 +3691,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 26
-														index: 621
 														line: 33
 													}
 													start: Object {
 														column: 24
-														index: 619
 														line: 33
 													}
 												}
@@ -4212,12 +3703,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 26
-													index: 621
 													line: 33
 												}
 												start: Object {
 													column: 24
-													index: 619
 													line: 33
 												}
 											}
@@ -4237,12 +3726,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 7
-										index: 631
 										line: 34
 									}
 									start: Object {
 										column: 6
-										index: 630
 										line: 34
 									}
 								}
@@ -4251,12 +3738,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 631
 									line: 34
 								}
 								start: Object {
 									column: 6
-									index: 630
 									line: 34
 								}
 							}
@@ -4265,12 +3750,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 35
-								index: 659
 								line: 34
 							}
 							start: Object {
 								column: 2
-								index: 626
 								line: 34
 							}
 						}
@@ -4283,19 +3766,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 626
 								line: 34
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 7
-									index: 631
 									line: 34
 								}
 								start: Object {
 									column: 2
-									index: 626
 									line: 34
 								}
 							}
@@ -4312,12 +3792,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 14
-									index: 638
 									line: 34
 								}
 								start: Object {
 									column: 7
-									index: 631
 									line: 34
 								}
 							}
@@ -4329,12 +3807,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 13
-											index: 637
 											line: 34
 										}
 										start: Object {
 											column: 8
-											index: 632
 											line: 34
 										}
 									}
@@ -4345,12 +3821,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 13
-												index: 637
 												line: 34
 											}
 											start: Object {
 												column: 8
-												index: 632
 												line: 34
 											}
 										}
@@ -4364,12 +3838,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 35
-									index: 659
 									line: 34
 								}
 								start: Object {
 									column: 15
-									index: 639
 									line: 34
 								}
 							}
@@ -4379,12 +3851,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 33
-											index: 657
 											line: 34
 										}
 										start: Object {
 											column: 17
-											index: 641
 											line: 34
 										}
 									}
@@ -4394,12 +3864,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 33
-												index: 657
 												line: 34
 											}
 											start: Object {
 												column: 17
-												index: 641
 												line: 34
 											}
 										}
@@ -4410,12 +3878,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 33
-													index: 657
 													line: 34
 												}
 												start: Object {
 													column: 27
-													index: 651
 													line: 34
 												}
 											}
@@ -4426,12 +3892,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 33
-														index: 657
 														line: 34
 													}
 													start: Object {
 														column: 28
-														index: 652
 														line: 34
 													}
 												}
@@ -4442,12 +3906,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 24
-													index: 648
 													line: 34
 												}
 												start: Object {
 													column: 17
-													index: 641
 													line: 34
 												}
 											}
@@ -4456,12 +3918,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 21
-														index: 645
 														line: 34
 													}
 													start: Object {
 														column: 17
-														index: 641
 														line: 34
 													}
 												}
@@ -4475,12 +3935,10 @@ JSRoot {
 															identifierName: "y"
 															end: Object {
 																column: 24
-																index: 648
 																line: 34
 															}
 															start: Object {
 																column: 23
-																index: 647
 																line: 34
 															}
 														}
@@ -4489,12 +3947,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 24
-															index: 648
 															line: 34
 														}
 														start: Object {
 															column: 22
-															index: 646
 															line: 34
 														}
 													}
@@ -4503,12 +3959,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 24
-														index: 648
 														line: 34
 													}
 													start: Object {
 														column: 22
-														index: 646
 														line: 34
 													}
 												}
@@ -4529,12 +3983,10 @@ JSRoot {
 									identifierName: "equals"
 									end: Object {
 										column: 8
-										index: 669
 										line: 36
 									}
 									start: Object {
 										column: 2
-										index: 663
 										line: 36
 									}
 								}
@@ -4543,12 +3995,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
-									index: 669
 									line: 36
 								}
 								start: Object {
 									column: 2
-									index: 663
 									line: 36
 								}
 							}
@@ -4557,12 +4007,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 59
-								index: 720
 								line: 36
 							}
 							start: Object {
 								column: 2
-								index: 663
 								line: 36
 							}
 						}
@@ -4575,19 +4023,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 663
 								line: 36
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 8
-									index: 669
 									line: 36
 								}
 								start: Object {
 									column: 2
-									index: 663
 									line: 36
 								}
 							}
@@ -4604,12 +4049,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 11
-									index: 672
 									line: 36
 								}
 								start: Object {
 									column: 8
-									index: 669
 									line: 36
 								}
 							}
@@ -4621,12 +4064,10 @@ JSRoot {
 										identifierName: "p"
 										end: Object {
 											column: 10
-											index: 671
 											line: 36
 										}
 										start: Object {
 											column: 9
-											index: 670
 											line: 36
 										}
 									}
@@ -4637,12 +4078,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 10
-												index: 671
 												line: 36
 											}
 											start: Object {
 												column: 9
-												index: 670
 												line: 36
 											}
 										}
@@ -4656,12 +4095,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 59
-									index: 720
 									line: 36
 								}
 								start: Object {
 									column: 12
-									index: 673
 									line: 36
 								}
 							}
@@ -4671,12 +4108,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 57
-											index: 718
 											line: 36
 										}
 										start: Object {
 											column: 14
-											index: 675
 											line: 36
 										}
 									}
@@ -4686,12 +4121,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 57
-												index: 718
 												line: 36
 											}
 											start: Object {
 												column: 21
-												index: 682
 												line: 36
 											}
 										}
@@ -4701,12 +4134,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 37
-													index: 698
 													line: 36
 												}
 												start: Object {
 													column: 21
-													index: 682
 													line: 36
 												}
 											}
@@ -4715,12 +4146,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 28
-														index: 689
 														line: 36
 													}
 													start: Object {
 														column: 21
-														index: 682
 														line: 36
 													}
 												}
@@ -4729,12 +4158,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 25
-															index: 686
 															line: 36
 														}
 														start: Object {
 															column: 21
-															index: 682
 															line: 36
 														}
 													}
@@ -4748,12 +4175,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 28
-																	index: 689
 																	line: 36
 																}
 																start: Object {
 																	column: 27
-																	index: 688
 																	line: 36
 																}
 															}
@@ -4762,12 +4187,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 28
-																index: 689
 																line: 36
 															}
 															start: Object {
 																column: 26
-																index: 687
 																line: 36
 															}
 														}
@@ -4776,12 +4199,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 28
-															index: 689
 															line: 36
 														}
 														start: Object {
 															column: 26
-															index: 687
 															line: 36
 														}
 													}
@@ -4792,12 +4213,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 37
-														index: 698
 														line: 36
 													}
 													start: Object {
 														column: 33
-														index: 694
 														line: 36
 													}
 												}
@@ -4808,12 +4227,10 @@ JSRoot {
 														identifierName: "p"
 														end: Object {
 															column: 34
-															index: 695
 															line: 36
 														}
 														start: Object {
 															column: 33
-															index: 694
 															line: 36
 														}
 													}
@@ -4827,12 +4244,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 37
-																	index: 698
 																	line: 36
 																}
 																start: Object {
 																	column: 36
-																	index: 697
 																	line: 36
 																}
 															}
@@ -4841,12 +4256,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 37
-																index: 698
 																line: 36
 															}
 															start: Object {
 																column: 35
-																index: 696
 																line: 36
 															}
 														}
@@ -4855,12 +4268,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 37
-															index: 698
 															line: 36
 														}
 														start: Object {
 															column: 35
-															index: 696
 															line: 36
 														}
 													}
@@ -4873,12 +4284,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/nested/input.js"
 												end: Object {
 													column: 57
-													index: 718
 													line: 36
 												}
 												start: Object {
 													column: 41
-													index: 702
 													line: 36
 												}
 											}
@@ -4887,12 +4296,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 48
-														index: 709
 														line: 36
 													}
 													start: Object {
 														column: 41
-														index: 702
 														line: 36
 													}
 												}
@@ -4901,12 +4308,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 45
-															index: 706
 															line: 36
 														}
 														start: Object {
 															column: 41
-															index: 702
 															line: 36
 														}
 													}
@@ -4920,12 +4325,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 48
-																	index: 709
 																	line: 36
 																}
 																start: Object {
 																	column: 47
-																	index: 708
 																	line: 36
 																}
 															}
@@ -4934,12 +4337,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 48
-																index: 709
 																line: 36
 															}
 															start: Object {
 																column: 46
-																index: 707
 																line: 36
 															}
 														}
@@ -4948,12 +4349,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 48
-															index: 709
 															line: 36
 														}
 														start: Object {
 															column: 46
-															index: 707
 															line: 36
 														}
 													}
@@ -4964,12 +4363,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 57
-														index: 718
 														line: 36
 													}
 													start: Object {
 														column: 53
-														index: 714
 														line: 36
 													}
 												}
@@ -4980,12 +4377,10 @@ JSRoot {
 														identifierName: "p"
 														end: Object {
 															column: 54
-															index: 715
 															line: 36
 														}
 														start: Object {
 															column: 53
-															index: 714
 															line: 36
 														}
 													}
@@ -4999,12 +4394,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 57
-																	index: 718
 																	line: 36
 																}
 																start: Object {
 																	column: 56
-																	index: 717
 																	line: 36
 																}
 															}
@@ -5013,12 +4406,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 57
-																index: 718
 																line: 36
 															}
 															start: Object {
 																column: 55
-																index: 716
 																line: 36
 															}
 														}
@@ -5027,12 +4418,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 57
-															index: 718
 															line: 36
 														}
 														start: Object {
 															column: 55
-															index: 716
 															line: 36
 														}
 													}
@@ -5054,12 +4443,10 @@ JSRoot {
 									identifierName: "toString"
 									end: Object {
 										column: 10
-										index: 732
 										line: 38
 									}
 									start: Object {
 										column: 2
-										index: 724
 										line: 38
 									}
 								}
@@ -5068,12 +4455,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 10
-									index: 732
 									line: 38
 								}
 								start: Object {
 									column: 2
-									index: 724
 									line: 38
 								}
 							}
@@ -5082,12 +4467,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/nested/input.js"
 							end: Object {
 								column: 58
-								index: 780
 								line: 38
 							}
 							start: Object {
 								column: 2
-								index: 724
 								line: 38
 							}
 						}
@@ -5104,12 +4487,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 12
-									index: 734
 									line: 38
 								}
 								start: Object {
 									column: 10
-									index: 732
 									line: 38
 								}
 							}
@@ -5123,19 +4504,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 724
 								line: 38
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 10
-									index: 732
 									line: 38
 								}
 								start: Object {
 									column: 2
-									index: 724
 									line: 38
 								}
 							}
@@ -5146,12 +4524,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
 									column: 58
-									index: 780
 									line: 38
 								}
 								start: Object {
 									column: 13
-									index: 735
 									line: 38
 								}
 							}
@@ -5161,12 +4537,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/nested/input.js"
 										end: Object {
 											column: 56
-											index: 778
 											line: 38
 										}
 										start: Object {
 											column: 15
-											index: 737
 											line: 38
 										}
 									}
@@ -5175,12 +4549,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
 												column: 56
-												index: 778
 												line: 38
 											}
 											start: Object {
 												column: 22
-												index: 744
 												line: 38
 											}
 										}
@@ -5193,12 +4565,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 29
-														index: 751
 														line: 38
 													}
 													start: Object {
 														column: 23
-														index: 745
 														line: 38
 													}
 												}
@@ -5211,12 +4581,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 42
-														index: 764
 														line: 38
 													}
 													start: Object {
 														column: 41
-														index: 763
 														line: 38
 													}
 												}
@@ -5229,12 +4597,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 55
-														index: 777
 														line: 38
 													}
 													start: Object {
 														column: 54
-														index: 776
 														line: 38
 													}
 												}
@@ -5246,12 +4612,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 39
-														index: 761
 														line: 38
 													}
 													start: Object {
 														column: 32
-														index: 754
 														line: 38
 													}
 												}
@@ -5260,12 +4624,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 36
-															index: 758
 															line: 38
 														}
 														start: Object {
 															column: 32
-															index: 754
 															line: 38
 														}
 													}
@@ -5279,12 +4641,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 39
-																	index: 761
 																	line: 38
 																}
 																start: Object {
 																	column: 38
-																	index: 760
 																	line: 38
 																}
 															}
@@ -5293,12 +4653,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 39
-																index: 761
 																line: 38
 															}
 															start: Object {
 																column: 37
-																index: 759
 																line: 38
 															}
 														}
@@ -5307,12 +4665,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 39
-															index: 761
 															line: 38
 														}
 														start: Object {
 															column: 37
-															index: 759
 															line: 38
 														}
 													}
@@ -5323,12 +4679,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/nested/input.js"
 													end: Object {
 														column: 52
-														index: 774
 														line: 38
 													}
 													start: Object {
 														column: 45
-														index: 767
 														line: 38
 													}
 												}
@@ -5337,12 +4691,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 49
-															index: 771
 															line: 38
 														}
 														start: Object {
 															column: 45
-															index: 767
 															line: 38
 														}
 													}
@@ -5356,12 +4708,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 52
-																	index: 774
 																	line: 38
 																}
 																start: Object {
 																	column: 51
-																	index: 773
 																	line: 38
 																}
 															}
@@ -5370,12 +4720,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/nested/input.js"
 															end: Object {
 																column: 52
-																index: 774
 																line: 38
 															}
 															start: Object {
 																column: 50
-																index: 772
 																line: 38
 															}
 														}
@@ -5384,12 +4732,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/nested/input.js"
 														end: Object {
 															column: 52
-															index: 774
 															line: 38
 														}
 														start: Object {
 															column: 50
-															index: 772
 															line: 38
 														}
 													}

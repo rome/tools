@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/120/input.js"
 		end: Object {
 			column: 29
-			index: 29
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/120/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "core/uncategorised/120/input.js"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 							identifierName: "solarsystem"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -83,12 +75,10 @@ JSRoot {
 						identifierName: "solarsystem"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 						filename: "core/uncategorised/120/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 							identifierName: "universe"
 							end: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -132,12 +118,10 @@ JSRoot {
 								identifierName: "milkyway"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -147,12 +131,10 @@ JSRoot {
 							identifierName: "milkyway"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}

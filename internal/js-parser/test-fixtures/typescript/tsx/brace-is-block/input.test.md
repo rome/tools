@@ -24,12 +24,10 @@ JSRoot {
 		filename: "typescript/tsx/brace-is-block/input.tsx"
 		end: Object {
 			column: 0
-			index: 128
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -41,12 +39,10 @@ JSRoot {
 				filename: "typescript/tsx/brace-is-block/input.tsx"
 				end: Object {
 					column: 98
-					index: 98
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -62,12 +58,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 106
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 105
 						line: 2
 					}
 				}
@@ -77,12 +71,10 @@ JSRoot {
 				filename: "typescript/tsx/brace-is-block/input.tsx"
 				end: Object {
 					column: 23
-					index: 122
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 99
 					line: 2
 				}
 			}
@@ -95,12 +87,10 @@ JSRoot {
 					filename: "typescript/tsx/brace-is-block/input.tsx"
 					end: Object {
 						column: 23
-						index: 122
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 99
 						line: 2
 					}
 				}
@@ -111,12 +101,10 @@ JSRoot {
 						identifierName: "D"
 						end: Object {
 							column: 17
-							index: 116
 							line: 2
 						}
 						start: Object {
 							column: 16
-							index: 115
 							line: 2
 						}
 					}
@@ -126,12 +114,10 @@ JSRoot {
 						filename: "typescript/tsx/brace-is-block/input.tsx"
 						end: Object {
 							column: 20
-							index: 119
 							line: 2
 						}
 						start: Object {
 							column: 17
-							index: 116
 							line: 2
 						}
 					}
@@ -142,12 +128,10 @@ JSRoot {
 								filename: "typescript/tsx/brace-is-block/input.tsx"
 								end: Object {
 									column: 19
-									index: 118
 									line: 2
 								}
 								start: Object {
 									column: 18
-									index: 117
 									line: 2
 								}
 							}
@@ -158,12 +142,10 @@ JSRoot {
 									identifierName: "T"
 									end: Object {
 										column: 19
-										index: 118
 										line: 2
 									}
 									start: Object {
 										column: 18
-										index: 117
 										line: 2
 									}
 								}
@@ -178,12 +160,10 @@ JSRoot {
 				filename: "typescript/tsx/brace-is-block/input.tsx"
 				end: Object {
 					column: 4
-					index: 127
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 123
 					line: 3
 				}
 			}
@@ -194,12 +174,10 @@ JSRoot {
 						filename: "typescript/tsx/brace-is-block/input.tsx"
 						end: Object {
 							column: 2
-							index: 125
 							line: 3
 						}
 						start: Object {
 							column: 1
-							index: 124
 							line: 3
 						}
 					}
@@ -212,12 +190,10 @@ JSRoot {
 					filename: "typescript/tsx/brace-is-block/input.tsx"
 					end: Object {
 						column: 4
-						index: 127
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 123
 						line: 3
 					}
 				}

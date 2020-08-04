@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 		end: Object {
 			column: 0
-			index: 62
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 				end: Object {
 					column: 61
-					index: 61
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 					end: Object {
 						column: 61
-						index: 61
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -108,12 +98,10 @@ JSRoot {
 							filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 							end: Object {
 								column: 60
-								index: 60
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -128,12 +116,10 @@ JSRoot {
 								filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 								end: Object {
 									column: 60
-									index: 60
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 									filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 									end: Object {
 										column: 58
-										index: 58
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -158,12 +142,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 19
-												index: 19
 												line: 1
 											}
 											start: Object {
 												column: 9
-												index: 9
 												line: 1
 											}
 										}
@@ -174,12 +156,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 													start: Object {
 														column: 10
-														index: 10
 														line: 1
 													}
 												}
@@ -190,12 +170,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 													start: Object {
 														column: 12
-														index: 12
 														line: 1
 													}
 												}
@@ -206,12 +184,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 													start: Object {
 														column: 13
-														index: 13
 														line: 1
 													}
 												}
@@ -222,12 +198,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 15
-														index: 15
 														line: 1
 													}
 													start: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 												}
@@ -237,12 +211,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 18
-														index: 18
 														line: 1
 													}
 													start: Object {
 														column: 15
-														index: 15
 														line: 1
 													}
 												}
@@ -252,12 +224,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 16
-															index: 16
 															line: 1
 														}
 														start: Object {
 															column: 15
-															index: 15
 															line: 1
 														}
 													}
@@ -268,12 +238,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 18
-															index: 18
 															line: 1
 														}
 														start: Object {
 															column: 17
-															index: 17
 															line: 1
 														}
 													}
@@ -287,12 +255,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 19
-												index: 19
 												line: 1
 											}
 										}
@@ -302,12 +268,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 28
-														index: 28
 														line: 1
 													}
 													start: Object {
 														column: 20
-														index: 20
 														line: 1
 													}
 												}
@@ -317,12 +281,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 28
-															index: 28
 															line: 1
 														}
 														start: Object {
 															column: 27
-															index: 27
 															line: 1
 														}
 													}
@@ -333,12 +295,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 26
-															index: 26
 															line: 1
 														}
 														start: Object {
 															column: 20
-															index: 20
 															line: 1
 														}
 													}
@@ -352,12 +312,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 39
-												index: 39
 												line: 1
 											}
 											start: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 										}
@@ -367,12 +325,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 34
-														index: 34
 														line: 1
 													}
 													start: Object {
 														column: 30
-														index: 30
 														line: 1
 													}
 												}
@@ -382,12 +338,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 34
-															index: 34
 															line: 1
 														}
 														start: Object {
 															column: 32
-															index: 32
 															line: 1
 														}
 													}
@@ -398,12 +352,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 31
-															index: 31
 															line: 1
 														}
 														start: Object {
 															column: 30
-															index: 30
 															line: 1
 														}
 													}
@@ -415,12 +367,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 35
-														index: 35
 														line: 1
 													}
 													start: Object {
 														column: 34
-														index: 34
 														line: 1
 													}
 												}
@@ -431,12 +381,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 36
-														index: 36
 														line: 1
 													}
 													start: Object {
 														column: 35
-														index: 35
 														line: 1
 													}
 												}
@@ -447,12 +395,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 37
-														index: 37
 														line: 1
 													}
 													start: Object {
 														column: 36
-														index: 36
 														line: 1
 													}
 												}
@@ -463,12 +409,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 38
-														index: 38
 														line: 1
 													}
 													start: Object {
 														column: 37
-														index: 37
 														line: 1
 													}
 												}
@@ -481,12 +425,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 49
-												index: 49
 												line: 1
 											}
 											start: Object {
 												column: 39
-												index: 39
 												line: 1
 											}
 										}
@@ -496,12 +438,10 @@ JSRoot {
 													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 													end: Object {
 														column: 48
-														index: 48
 														line: 1
 													}
 													start: Object {
 														column: 40
-														index: 40
 														line: 1
 													}
 												}
@@ -511,12 +451,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 48
-															index: 48
 															line: 1
 														}
 														start: Object {
 															column: 42
-															index: 42
 															line: 1
 														}
 													}
@@ -527,12 +465,10 @@ JSRoot {
 														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 														end: Object {
 															column: 41
-															index: 41
 															line: 1
 														}
 														start: Object {
 															column: 40
-															index: 40
 															line: 1
 														}
 													}
@@ -546,12 +482,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 51
-												index: 51
 												line: 1
 											}
 											start: Object {
 												column: 49
-												index: 49
 												line: 1
 											}
 										}
@@ -562,12 +496,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 52
-												index: 52
 												line: 1
 											}
 											start: Object {
 												column: 51
-												index: 51
 												line: 1
 											}
 										}
@@ -578,12 +510,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 53
-												index: 53
 												line: 1
 											}
 											start: Object {
 												column: 52
-												index: 52
 												line: 1
 											}
 										}
@@ -594,12 +524,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 54
-												index: 54
 												line: 1
 											}
 											start: Object {
 												column: 53
-												index: 53
 												line: 1
 											}
 										}
@@ -610,12 +538,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 55
-												index: 55
 												line: 1
 											}
 											start: Object {
 												column: 54
-												index: 54
 												line: 1
 											}
 										}
@@ -626,12 +552,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 56
-												index: 56
 												line: 1
 											}
 											start: Object {
 												column: 55
-												index: 55
 												line: 1
 											}
 										}
@@ -642,12 +566,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 57
-												index: 57
 												line: 1
 											}
 											start: Object {
 												column: 56
-												index: 56
 												line: 1
 											}
 										}
@@ -658,12 +580,10 @@ JSRoot {
 											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 											end: Object {
 												column: 58
-												index: 58
 												line: 1
 											}
 											start: Object {
 												column: 57
-												index: 57
 												line: 1
 											}
 										}

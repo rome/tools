@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 		end: Object {
 			column: 0
-			index: 58
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "function"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 				}
@@ -84,12 +78,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 				end: Object {
 					column: 57
-					index: 57
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -105,12 +97,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -122,12 +112,10 @@ JSRoot {
 							identifierName: "assertIsString"
 							end: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -138,12 +126,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 								end: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -157,12 +143,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 					end: Object {
 						column: 57
-						index: 57
 						line: 1
 					}
 					start: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 				}
@@ -172,12 +156,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 							end: Object {
 								column: 47
-								index: 47
 								line: 1
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}
@@ -188,12 +170,10 @@ JSRoot {
 								identifierName: "value"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}
@@ -204,12 +184,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 							end: Object {
 								column: 48
-								index: 48
 								line: 1
 							}
 							start: Object {
 								column: 47
-								index: 47
 								line: 1
 							}
 						}
@@ -219,12 +197,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 								end: Object {
 									column: 48
-									index: 48
 									line: 1
 								}
 								start: Object {
 									column: 47
-									index: 47
 									line: 1
 								}
 							}
@@ -235,12 +211,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/asserts-as-identifier/input.ts"
 							end: Object {
 								column: 57
-								index: 57
 								line: 1
 							}
 							start: Object {
 								column: 49
-								index: 49
 								line: 1
 							}
 						}
@@ -251,12 +225,10 @@ JSRoot {
 								identifierName: "asserts"
 								end: Object {
 									column: 56
-									index: 56
 									line: 1
 								}
 								start: Object {
 									column: 49
-									index: 49
 									line: 1
 								}
 							}

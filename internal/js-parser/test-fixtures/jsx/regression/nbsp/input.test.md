@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/regression/nbsp/input.jsx"
 		end: Object {
 			column: 0
-			index: 18
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/regression/nbsp/input.jsx"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "jsx/regression/nbsp/input.jsx"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "jsx/regression/nbsp/input.jsx"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							filename: "jsx/regression/nbsp/input.jsx"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 		end: Object {
 			column: 0
-			index: 297
 			line: 14
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 				end: Object {
 					column: 25
-					index: 245
 					line: 7
 				}
 				start: Object {
 					column: 12
-					index: 232
 					line: 7
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 				end: Object {
 					column: 2
-					index: 296
 					line: 13
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 					end: Object {
 						column: 1
-						index: 295
 						line: 13
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 							identifierName: "module"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -118,12 +106,10 @@ JSRoot {
 								identifierName: "exports"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -133,12 +119,10 @@ JSRoot {
 							identifierName: "exports"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -150,12 +134,10 @@ JSRoot {
 						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 						end: Object {
 							column: 1
-							index: 295
 							line: 13
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}
@@ -171,12 +153,10 @@ JSRoot {
 							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -188,12 +168,10 @@ JSRoot {
 									identifierName: "context"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -204,12 +182,10 @@ JSRoot {
 										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 										start: Object {
 											column: 26
-											index: 26
 											line: 1
 										}
 									}
@@ -223,12 +199,10 @@ JSRoot {
 							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 							end: Object {
 								column: 1
-								index: 295
 								line: 13
 							}
 							start: Object {
 								column: 35
-								index: 35
 								line: 1
 							}
 						}
@@ -241,12 +215,10 @@ JSRoot {
 										identifierName: "isConstant"
 										end: Object {
 											column: 23
-											index: 61
 											line: 3
 										}
 										start: Object {
 											column: 13
-											index: 51
 											line: 3
 										}
 									}
@@ -255,12 +227,10 @@ JSRoot {
 									filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 									end: Object {
 										column: 5
-										index: 292
 										line: 11
 									}
 									start: Object {
 										column: 4
-										index: 42
 										line: 3
 									}
 								}
@@ -276,12 +246,10 @@ JSRoot {
 										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 29
-											index: 67
 											line: 3
 										}
 										start: Object {
 											column: 23
-											index: 61
 											line: 3
 										}
 									}
@@ -293,12 +261,10 @@ JSRoot {
 												identifierName: "node"
 												end: Object {
 													column: 28
-													index: 66
 													line: 3
 												}
 												start: Object {
 													column: 24
-													index: 62
 													line: 3
 												}
 											}
@@ -309,12 +275,10 @@ JSRoot {
 													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 28
-														index: 66
 														line: 3
 													}
 													start: Object {
 														column: 24
-														index: 62
 														line: 3
 													}
 												}
@@ -328,12 +292,10 @@ JSRoot {
 										filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 										end: Object {
 											column: 5
-											index: 292
 											line: 11
 										}
 										start: Object {
 											column: 30
-											index: 68
 											line: 3
 										}
 									}
@@ -343,12 +305,10 @@ JSRoot {
 												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 												end: Object {
 													column: 9
-													index: 255
 													line: 8
 												}
 												start: Object {
 													column: 8
-													index: 78
 													line: 4
 												}
 											}
@@ -357,12 +317,10 @@ JSRoot {
 													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 25
-														index: 95
 														line: 4
 													}
 													start: Object {
 														column: 16
-														index: 86
 														line: 4
 													}
 												}
@@ -373,12 +331,10 @@ JSRoot {
 														identifierName: "node"
 														end: Object {
 															column: 20
-															index: 90
 															line: 4
 														}
 														start: Object {
 															column: 16
-															index: 86
 															line: 4
 														}
 													}
@@ -391,12 +347,10 @@ JSRoot {
 															identifierName: "type"
 															end: Object {
 																column: 25
-																index: 95
 																line: 4
 															}
 															start: Object {
 																column: 21
-																index: 91
 																line: 4
 															}
 														}
@@ -406,12 +360,10 @@ JSRoot {
 														identifierName: "type"
 														end: Object {
 															column: 25
-															index: 95
 															line: 4
 														}
 														start: Object {
 															column: 21
-															index: 91
 															line: 4
 														}
 													}
@@ -424,12 +376,10 @@ JSRoot {
 														filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 														end: Object {
 															column: 81
-															index: 219
 															line: 6
 														}
 														start: Object {
 															column: 12
-															index: 111
 															line: 5
 														}
 													}
@@ -439,12 +389,10 @@ JSRoot {
 															filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 															end: Object {
 																column: 37
-																index: 136
 																line: 5
 															}
 															start: Object {
 																column: 17
-																index: 116
 																line: 5
 															}
 														}
@@ -456,12 +404,10 @@ JSRoot {
 																filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																end: Object {
 																	column: 81
-																	index: 219
 																	line: 6
 																}
 																start: Object {
 																	column: 16
-																	index: 154
 																	line: 6
 																}
 															}
@@ -470,12 +416,10 @@ JSRoot {
 																	filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																	end: Object {
 																		column: 80
-																		index: 218
 																		line: 6
 																	}
 																	start: Object {
 																		column: 23
-																		index: 161
 																		line: 6
 																	}
 																}
@@ -486,12 +430,10 @@ JSRoot {
 																		identifierName: "isConstant"
 																		end: Object {
 																			column: 33
-																			index: 171
 																			line: 6
 																		}
 																		start: Object {
 																			column: 23
-																			index: 161
 																			line: 6
 																		}
 																	}
@@ -502,12 +444,10 @@ JSRoot {
 																			filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																			end: Object {
 																				column: 79
-																				index: 217
 																				line: 6
 																			}
 																			start: Object {
 																				column: 34
-																				index: 172
 																				line: 6
 																			}
 																		}
@@ -516,12 +456,10 @@ JSRoot {
 																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																				end: Object {
 																					column: 50
-																					index: 188
 																					line: 6
 																				}
 																				start: Object {
 																					column: 34
-																					index: 172
 																					line: 6
 																				}
 																			}
@@ -532,12 +470,10 @@ JSRoot {
 																					identifierName: "node"
 																					end: Object {
 																						column: 38
-																						index: 176
 																						line: 6
 																					}
 																					start: Object {
 																						column: 34
-																						index: 172
 																						line: 6
 																					}
 																				}
@@ -550,12 +486,10 @@ JSRoot {
 																						identifierName: "expressions"
 																						end: Object {
 																							column: 50
-																							index: 188
 																							line: 6
 																						}
 																						start: Object {
 																							column: 39
-																							index: 177
 																							line: 6
 																						}
 																					}
@@ -565,12 +499,10 @@ JSRoot {
 																					identifierName: "expressions"
 																					end: Object {
 																						column: 50
-																						index: 188
 																						line: 6
 																					}
 																					start: Object {
 																						column: 39
-																						index: 177
 																						line: 6
 																					}
 																				}
@@ -583,12 +515,10 @@ JSRoot {
 																					filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																					end: Object {
 																						column: 78
-																						index: 216
 																						line: 6
 																					}
 																					start: Object {
 																						column: 51
-																						index: 189
 																						line: 6
 																					}
 																				}
@@ -599,12 +529,10 @@ JSRoot {
 																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																						end: Object {
 																							column: 78
-																							index: 216
 																							line: 6
 																						}
 																						start: Object {
 																							column: 77
-																							index: 215
 																							line: 6
 																						}
 																					}
@@ -614,12 +542,10 @@ JSRoot {
 																						filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																						end: Object {
 																							column: 74
-																							index: 212
 																							line: 6
 																						}
 																						start: Object {
 																							column: 51
-																							index: 189
 																							line: 6
 																						}
 																					}
@@ -631,12 +557,10 @@ JSRoot {
 																								identifierName: "length"
 																								end: Object {
 																									column: 74
-																									index: 212
 																									line: 6
 																								}
 																								start: Object {
 																									column: 68
-																									index: 206
 																									line: 6
 																								}
 																							}
@@ -646,12 +570,10 @@ JSRoot {
 																							identifierName: "length"
 																							end: Object {
 																								column: 74
-																								index: 212
 																								line: 6
 																							}
 																							start: Object {
 																								column: 68
-																								index: 206
 																								line: 6
 																							}
 																						}
@@ -661,12 +583,10 @@ JSRoot {
 																							filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																							end: Object {
 																								column: 67
-																								index: 205
 																								line: 6
 																							}
 																							start: Object {
 																								column: 51
-																								index: 189
 																								line: 6
 																							}
 																						}
@@ -677,12 +597,10 @@ JSRoot {
 																								identifierName: "node"
 																								end: Object {
 																									column: 55
-																									index: 193
 																									line: 6
 																								}
 																								start: Object {
 																									column: 51
-																									index: 189
 																									line: 6
 																								}
 																							}
@@ -695,12 +613,10 @@ JSRoot {
 																									identifierName: "expressions"
 																									end: Object {
 																										column: 67
-																										index: 205
 																										line: 6
 																									}
 																									start: Object {
 																										column: 56
-																										index: 194
 																										line: 6
 																									}
 																								}
@@ -710,12 +626,10 @@ JSRoot {
 																								identifierName: "expressions"
 																								end: Object {
 																									column: 67
-																									index: 205
 																									line: 6
 																								}
 																								start: Object {
 																									column: 56
-																									index: 194
 																									line: 6
 																								}
 																							}
@@ -727,12 +641,10 @@ JSRoot {
 																				filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 																				end: Object {
 																					column: 79
-																					index: 217
 																					line: 6
 																				}
 																				start: Object {
 																					column: 50
-																					index: 188
 																					line: 6
 																				}
 																			}
@@ -750,12 +662,10 @@ JSRoot {
 												filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 												end: Object {
 													column: 21
-													index: 286
 													line: 10
 												}
 												start: Object {
 													column: 8
-													index: 273
 													line: 10
 												}
 											}
@@ -765,12 +675,10 @@ JSRoot {
 													filename: "comments/basic/switch-no-default-comment-in-nested-functions/input.js"
 													end: Object {
 														column: 20
-														index: 285
 														line: 10
 													}
 													start: Object {
 														column: 15
-														index: 280
 														line: 10
 													}
 												}

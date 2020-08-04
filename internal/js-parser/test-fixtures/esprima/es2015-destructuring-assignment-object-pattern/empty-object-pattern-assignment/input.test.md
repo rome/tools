@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 		end: Object {
 			column: 0
-			index: 10
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 						end: Object {
 							column: 3
-							index: 3
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "esprima/es2015-destructuring-assignment-object-pattern/empty-object-pattern-assignment/input.js"
 						end: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 						start: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 					}

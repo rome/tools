@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/super/input.js"
 		end: Object {
 			column: 0
-			index: 57
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Fails"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/super/input.js"
 				end: Object {
 					column: 1
-					index: 56
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "experimental/class-properties/super/input.js"
 					end: Object {
 						column: 1
-						index: 56
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "experimental/class-properties/super/input.js"
 						end: Object {
 							column: 35
-							index: 35
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "experimental/class-properties/super/input.js"
 							end: Object {
 								column: 35
-								index: 35
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -124,12 +112,10 @@ JSRoot {
 											identifierName: "c"
 											end: Object {
 												column: 29
-												index: 29
 												line: 1
 											}
 											start: Object {
 												column: 28
-												index: 28
 												line: 1
 											}
 										}
@@ -138,12 +124,10 @@ JSRoot {
 										filename: "experimental/class-properties/super/input.js"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}
@@ -152,12 +136,10 @@ JSRoot {
 									filename: "experimental/class-properties/super/input.js"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 								}
@@ -168,12 +150,10 @@ JSRoot {
 										filename: "experimental/class-properties/super/input.js"
 										end: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 										start: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 									}
@@ -191,12 +171,10 @@ JSRoot {
 										filename: "experimental/class-properties/super/input.js"
 										end: Object {
 											column: 31
-											index: 31
 											line: 1
 										}
 										start: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 									}
@@ -210,19 +188,16 @@ JSRoot {
 									typeAnnotation: undefined
 									start: Object {
 										column: 28
-										index: 28
 										line: 1
 									}
 									loc: Object {
 										filename: "experimental/class-properties/super/input.js"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}
@@ -241,12 +216,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 3
-										index: 41
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 40
 										line: 2
 									}
 								}
@@ -255,12 +228,10 @@ JSRoot {
 								filename: "experimental/class-properties/super/input.js"
 								end: Object {
 									column: 3
-									index: 41
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 40
 									line: 2
 								}
 							}
@@ -271,12 +242,10 @@ JSRoot {
 								filename: "experimental/class-properties/super/input.js"
 								end: Object {
 									column: 15
-									index: 53
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 44
 									line: 2
 								}
 							}
@@ -285,12 +254,10 @@ JSRoot {
 									filename: "experimental/class-properties/super/input.js"
 									end: Object {
 										column: 13
-										index: 51
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 44
 										line: 2
 									}
 								}
@@ -299,12 +266,10 @@ JSRoot {
 										filename: "experimental/class-properties/super/input.js"
 										end: Object {
 											column: 11
-											index: 49
 											line: 2
 										}
 										start: Object {
 											column: 6
-											index: 44
 											line: 2
 										}
 									}
@@ -317,12 +282,10 @@ JSRoot {
 											identifierName: "c"
 											end: Object {
 												column: 13
-												index: 51
 												line: 2
 											}
 											start: Object {
 												column: 12
-												index: 50
 												line: 2
 											}
 										}
@@ -332,12 +295,10 @@ JSRoot {
 										identifierName: "c"
 										end: Object {
 											column: 13
-											index: 51
 											line: 2
 										}
 										start: Object {
 											column: 12
-											index: 50
 											line: 2
 										}
 									}
@@ -350,12 +311,10 @@ JSRoot {
 							filename: "experimental/class-properties/super/input.js"
 							end: Object {
 								column: 16
-								index: 54
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 40
 								line: 2
 							}
 						}
@@ -368,19 +327,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 40
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/super/input.js"
 								end: Object {
 									column: 3
-									index: 41
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 40
 									line: 2
 								}
 							}

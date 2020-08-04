@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +71,10 @@ JSRoot {
 					identifierName: "I"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -91,12 +85,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 				end: Object {
 					column: 1
-					index: 28
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -105,12 +97,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 					end: Object {
 						column: 1
-						index: 28
 						line: 3
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -124,12 +114,10 @@ JSRoot {
 									identifierName: "p"
 									end: Object {
 										column: 4
-										index: 18
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 17
 										line: 2
 									}
 								}
@@ -138,12 +126,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 								end: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 17
 									line: 2
 								}
 							}
@@ -154,12 +140,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 							end: Object {
 								column: 12
-								index: 26
 								line: 2
 							}
 							start: Object {
 								column: 3
-								index: 17
 								line: 2
 							}
 						}
@@ -168,12 +152,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 								end: Object {
 									column: 12
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 20
 									line: 2
 								}
 							}

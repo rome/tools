@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/import/export-import-require/input.ts"
 		end: Object {
 			column: 0
-			index: 32
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/import/export-import-require/input.ts"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/import/export-import-require/input.ts"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "typescript/import/export-import-require/input.ts"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 					}

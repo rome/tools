@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "f"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 									filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 									end: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 									end: Object {
 										column: 34
-										index: 34
 										line: 1
 									}
 									start: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 											filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 											end: Object {
 												column: 32
-												index: 32
 												line: 1
 											}
 											start: Object {
 												column: 21
-												index: 21
 												line: 1
 											}
 										}
@@ -166,12 +148,10 @@ JSRoot {
 												filename: "esprima/es2015-meta-property/new-target-expression/input.js"
 												end: Object {
 													column: 31
-													index: 31
 													line: 1
 												}
 												start: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 											}
@@ -182,12 +162,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 24
-														index: 24
 														line: 1
 													}
 													start: Object {
 														column: 21
-														index: 21
 														line: 1
 													}
 												}
@@ -199,12 +177,10 @@ JSRoot {
 													identifierName: "target"
 													end: Object {
 														column: 31
-														index: 31
 														line: 1
 													}
 													start: Object {
 														column: 25
-														index: 25
 														line: 1
 													}
 												}

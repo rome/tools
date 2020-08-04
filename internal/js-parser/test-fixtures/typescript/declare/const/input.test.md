@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/declare/const/input.ts"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/declare/const/input.ts"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "typescript/declare/const/input.ts"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								filename: "typescript/declare/const/input.ts"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 									filename: "typescript/declare/const/input.ts"
 									end: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 									start: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 								}
@@ -99,12 +89,10 @@ JSRoot {
 										filename: "typescript/declare/const/input.ts"
 										end: Object {
 											column: 23
-											index: 23
 											line: 1
 										}
 										start: Object {
 											column: 17
-											index: 17
 											line: 1
 										}
 									}
@@ -116,12 +104,10 @@ JSRoot {
 							filename: "typescript/declare/const/input.ts"
 							end: Object {
 								column: 23
-								index: 23
 								line: 1
 							}
 							start: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 								filename: "typescript/declare/const/input.ts"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 							}
@@ -148,12 +132,10 @@ JSRoot {
 									filename: "typescript/declare/const/input.ts"
 									end: Object {
 										column: 34
-										index: 34
 										line: 1
 									}
 									start: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 								}
@@ -162,12 +144,10 @@ JSRoot {
 										filename: "typescript/declare/const/input.ts"
 										end: Object {
 											column: 34
-											index: 34
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}
@@ -179,12 +159,10 @@ JSRoot {
 							filename: "typescript/declare/const/input.ts"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}

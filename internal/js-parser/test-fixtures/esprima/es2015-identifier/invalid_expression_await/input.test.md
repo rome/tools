@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -78,12 +74,10 @@ JSRoot {
 				filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -92,12 +86,10 @@ JSRoot {
 					filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -107,12 +99,10 @@ JSRoot {
 						filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 						end: Object {
 							column: 30
-							index: 30
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -125,12 +115,10 @@ JSRoot {
 									identifierName: "answer"
 									end: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -139,12 +127,10 @@ JSRoot {
 								filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}
@@ -154,12 +140,10 @@ JSRoot {
 									filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 									end: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 									start: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 								}
@@ -170,12 +154,10 @@ JSRoot {
 										identifierName: "await"
 										end: Object {
 											column: 25
-											index: 25
 											line: 1
 										}
 										start: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 									}
@@ -187,12 +169,10 @@ JSRoot {
 										filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 28
-											index: 28
 											line: 1
 										}
 									}

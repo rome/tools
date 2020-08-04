@@ -15,12 +15,10 @@ MarkdownRoot {
 		filename: "smoke/input.md"
 		end: Object {
 			column: 3
-			index: 146
 			line: 13
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -32,12 +30,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -49,12 +45,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 8
-					index: 16
 					line: 2
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -66,12 +60,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 9
-					index: 26
 					line: 3
 				}
 				start: Object {
 					column: 8
-					index: 16
 					line: 2
 				}
 			}
@@ -83,12 +75,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 10
-					index: 37
 					line: 4
 				}
 				start: Object {
 					column: 9
-					index: 26
 					line: 3
 				}
 			}
@@ -100,12 +90,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 11
-					index: 49
 					line: 5
 				}
 				start: Object {
 					column: 10
-					index: 37
 					line: 4
 				}
 			}
@@ -117,12 +105,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 12
-					index: 62
 					line: 6
 				}
 				start: Object {
 					column: 11
-					index: 49
 					line: 5
 				}
 			}
@@ -132,12 +118,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 0
-					index: 96
 					line: 8
 				}
 				start: Object {
 					column: 12
-					index: 62
 					line: 6
 				}
 			}
@@ -148,12 +132,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 32
-							index: 95
 							line: 7
 						}
 						start: Object {
 							column: 32
-							index: 95
 							line: 7
 						}
 					}
@@ -164,12 +146,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 32
-							index: 95
 							line: 7
 						}
 						start: Object {
 							column: 32
-							index: 95
 							line: 7
 						}
 					}
@@ -182,12 +162,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 3
-					index: 99
 					line: 8
 				}
 				start: Object {
 					column: 3
-					index: 99
 					line: 8
 				}
 			}
@@ -198,12 +176,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 0
-					index: 129
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 100
 					line: 9
 				}
 			}
@@ -215,12 +191,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 0
-							index: 114
 							line: 10
 						}
 						start: Object {
 							column: 3
-							index: 103
 							line: 9
 						}
 					}
@@ -230,12 +204,10 @@ MarkdownRoot {
 								filename: "smoke/input.md"
 								end: Object {
 									column: 0
-									index: 114
 									line: 10
 								}
 								start: Object {
 									column: 3
-									index: 103
 									line: 9
 								}
 							}
@@ -246,12 +218,10 @@ MarkdownRoot {
 										filename: "smoke/input.md"
 										end: Object {
 											column: 13
-											index: 113
 											line: 9
 										}
 										start: Object {
 											column: 13
-											index: 113
 											line: 9
 										}
 									}
@@ -267,12 +237,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 0
-							index: 129
 							line: 11
 						}
 						start: Object {
 							column: 3
-							index: 117
 							line: 10
 						}
 					}
@@ -282,12 +250,10 @@ MarkdownRoot {
 								filename: "smoke/input.md"
 								end: Object {
 									column: 0
-									index: 129
 									line: 11
 								}
 								start: Object {
 									column: 3
-									index: 117
 									line: 10
 								}
 							}
@@ -298,12 +264,10 @@ MarkdownRoot {
 										filename: "smoke/input.md"
 										end: Object {
 											column: 14
-											index: 128
 											line: 10
 										}
 										start: Object {
 											column: 14
-											index: 128
 											line: 10
 										}
 									}
@@ -320,12 +284,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 3
-					index: 132
 					line: 11
 				}
 				start: Object {
 					column: 3
-					index: 132
 					line: 11
 				}
 			}
@@ -335,12 +297,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 0
-					index: 143
 					line: 13
 				}
 				start: Object {
 					column: 0
-					index: 133
 					line: 12
 				}
 			}
@@ -351,12 +311,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 9
-							index: 142
 							line: 12
 						}
 						start: Object {
 							column: 9
-							index: 142
 							line: 12
 						}
 					}
@@ -367,12 +325,10 @@ MarkdownRoot {
 						filename: "smoke/input.md"
 						end: Object {
 							column: 9
-							index: 142
 							line: 12
 						}
 						start: Object {
 							column: 9
-							index: 142
 							line: 12
 						}
 					}
@@ -385,12 +341,10 @@ MarkdownRoot {
 				filename: "smoke/input.md"
 				end: Object {
 					column: 3
-					index: 146
 					line: 13
 				}
 				start: Object {
 					column: 3
-					index: 146
 					line: 13
 				}
 			}

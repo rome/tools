@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/method-with-newline-with-body/input.ts"
 		end: Object {
 			column: 0
-			index: 32
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/method-with-newline-with-body/input.ts"
 				end: Object {
 					column: 1
-					index: 31
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/method-with-newline-with-body/input.ts"
 					end: Object {
 						column: 1
-						index: 31
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 5
-										index: 15
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 14
 										line: 3
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
-									index: 15
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 3
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/class/method-with-newline-with-body/input.ts"
 							end: Object {
 								column: 5
-								index: 29
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 3
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
-									index: 29
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 22
 									line: 4
 								}
 							}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 7
-									index: 17
 									line: 3
 								}
 								start: Object {
 									column: 5
-									index: 15
 									line: 3
 								}
 							}
@@ -178,19 +160,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/method-with-newline-with-body/input.ts"
 								end: Object {
 									column: 5
-									index: 15
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 3
 								}
 							}

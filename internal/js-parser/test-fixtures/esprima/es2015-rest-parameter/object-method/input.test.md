@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-rest-parameter/object-method/input.js"
 		end: Object {
 			column: 0
-			index: 32
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-rest-parameter/object-method/input.js"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-rest-parameter/object-method/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "o"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "esprima/es2015-rest-parameter/object-method/input.js"
 						end: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -102,12 +92,10 @@ JSRoot {
 										identifierName: "f"
 										end: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 										start: Object {
 											column: 6
-											index: 6
 											line: 1
 										}
 									}
@@ -116,12 +104,10 @@ JSRoot {
 									filename: "esprima/es2015-rest-parameter/object-method/input.js"
 									end: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 									start: Object {
 										column: 6
-										index: 6
 										line: 1
 									}
 								}
@@ -132,12 +118,10 @@ JSRoot {
 									filename: "esprima/es2015-rest-parameter/object-method/input.js"
 									end: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -148,12 +132,10 @@ JSRoot {
 										filename: "esprima/es2015-rest-parameter/object-method/input.js"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 27
-											index: 27
 											line: 1
 										}
 									}
@@ -169,12 +151,10 @@ JSRoot {
 										filename: "esprima/es2015-rest-parameter/object-method/input.js"
 										end: Object {
 											column: 26
-											index: 26
 											line: 1
 										}
 										start: Object {
 											column: 17
-											index: 17
 											line: 1
 										}
 									}
@@ -185,12 +165,10 @@ JSRoot {
 											identifierName: "b"
 											end: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 											start: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 										}
@@ -201,12 +179,10 @@ JSRoot {
 												filename: "esprima/es2015-rest-parameter/object-method/input.js"
 												end: Object {
 													column: 25
-													index: 25
 													line: 1
 												}
 												start: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 											}
@@ -220,12 +196,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 19
-													index: 19
 													line: 1
 												}
 												start: Object {
 													column: 18
-													index: 18
 													line: 1
 												}
 											}
@@ -236,12 +210,10 @@ JSRoot {
 													filename: "esprima/es2015-rest-parameter/object-method/input.js"
 													end: Object {
 														column: 19
-														index: 19
 														line: 1
 													}
 													start: Object {
 														column: 18
-														index: 18
 														line: 1
 													}
 												}
@@ -254,12 +226,10 @@ JSRoot {
 								filename: "esprima/es2015-rest-parameter/object-method/input.js"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/asi2/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/asi2/input.js"
 				end: Object {
 					column: 1
-					index: 30
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/asi2/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/asi2/input.js"
 					end: Object {
 						column: 1
-						index: 30
 						line: 3
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 								filename: "es2015/yield/asi2/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -141,12 +127,10 @@ JSRoot {
 							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 2
-								index: 24
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 22
 								line: 2
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 							filename: "es2015/yield/asi2/input.js"
 							end: Object {
 								column: 6
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 24
 								line: 2
 							}
 						}
@@ -176,12 +158,10 @@ JSRoot {
 								filename: "es2015/yield/asi2/input.js"
 								end: Object {
 									column: 6
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 24
 									line: 2
 								}
 							}
@@ -190,12 +170,10 @@ JSRoot {
 									filename: "es2015/yield/asi2/input.js"
 									end: Object {
 										column: 4
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 25
 										line: 2
 									}
 								}
@@ -206,12 +184,10 @@ JSRoot {
 											filename: "es2015/yield/asi2/input.js"
 											end: Object {
 												column: 4
-												index: 26
 												line: 2
 											}
 											start: Object {
 												column: 3
-												index: 25
 												line: 2
 											}
 										}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/cast/need-parentheses/input.ts"
 		end: Object {
 			column: 0
-			index: 29
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 							identifierName: "y"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 						}
@@ -83,12 +75,10 @@ JSRoot {
 						identifierName: "y"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -98,12 +88,10 @@ JSRoot {
 						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -130,12 +116,10 @@ JSRoot {
 							filename: "typescript/cast/need-parentheses/input.ts"
 							end: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}
@@ -146,12 +130,10 @@ JSRoot {
 								identifierName: "T"
 								end: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}
@@ -165,12 +147,10 @@ JSRoot {
 				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 11
-					index: 22
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 			}
@@ -179,12 +159,10 @@ JSRoot {
 					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 10
-						index: 21
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 11
 						line: 2
 					}
 				}
@@ -196,12 +174,10 @@ JSRoot {
 							identifierName: "y"
 							end: Object {
 								column: 10
-								index: 21
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 20
 								line: 2
 							}
 						}
@@ -211,12 +187,10 @@ JSRoot {
 						identifierName: "y"
 						end: Object {
 							column: 10
-							index: 21
 							line: 2
 						}
 						start: Object {
 							column: 9
-							index: 20
 							line: 2
 						}
 					}
@@ -226,12 +200,10 @@ JSRoot {
 						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 7
-							index: 18
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 12
 							line: 2
 						}
 					}
@@ -242,12 +214,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 2
-								index: 13
 								line: 2
 							}
 							start: Object {
 								column: 1
-								index: 12
 								line: 2
 							}
 						}
@@ -258,12 +228,10 @@ JSRoot {
 							filename: "typescript/cast/need-parentheses/input.ts"
 							end: Object {
 								column: 7
-								index: 18
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 17
 								line: 2
 							}
 						}
@@ -274,12 +242,10 @@ JSRoot {
 								identifierName: "T"
 								end: Object {
 									column: 7
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 17
 									line: 2
 								}
 							}
@@ -293,12 +259,10 @@ JSRoot {
 				filename: "typescript/cast/need-parentheses/input.ts"
 				end: Object {
 					column: 5
-					index: 28
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 3
 				}
 			}
@@ -307,12 +271,10 @@ JSRoot {
 					filename: "typescript/cast/need-parentheses/input.ts"
 					end: Object {
 						column: 4
-						index: 27
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 23
 						line: 3
 					}
 				}
@@ -321,12 +283,10 @@ JSRoot {
 						filename: "typescript/cast/need-parentheses/input.ts"
 						end: Object {
 							column: 2
-							index: 25
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 23
 							line: 3
 						}
 					}
@@ -337,12 +297,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 1
-								index: 24
 								line: 3
 							}
 							start: Object {
 								column: 0
-								index: 23
 								line: 3
 							}
 						}
@@ -356,12 +314,10 @@ JSRoot {
 							identifierName: "y"
 							end: Object {
 								column: 4
-								index: 27
 								line: 3
 							}
 							start: Object {
 								column: 3
-								index: 26
 								line: 3
 							}
 						}
@@ -371,12 +327,10 @@ JSRoot {
 						identifierName: "y"
 						end: Object {
 							column: 4
-							index: 27
 							line: 3
 						}
 						start: Object {
 							column: 3
-							index: 26
 							line: 3
 						}
 					}

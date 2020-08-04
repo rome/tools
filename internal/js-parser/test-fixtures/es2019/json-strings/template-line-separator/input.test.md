@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2019/json-strings/template-line-separator/input.js"
 		end: Object {
 			column: 0
-			index: 102
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2019/json-strings/template-line-separator/input.js"
 				end: Object {
 					column: 83
-					index: 101
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 18
 					line: 3
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "es2019/json-strings/template-line-separator/input.js"
 				end: Object {
 					column: 8
-					index: 17
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "es2019/json-strings/template-line-separator/input.js"
 					end: Object {
 						column: 6
-						index: 15
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 							filename: "es2019/json-strings/template-line-separator/input.js"
 							end: Object {
 								column: 5
-								index: 14
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}

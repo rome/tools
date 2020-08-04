@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-class/migrated_0011/input.js"
 		end: Object {
 			column: 0
-			index: 59
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-class/migrated_0011/input.js"
 				end: Object {
 					column: 58
-					index: 58
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "esprima/es2015-class/migrated_0011/input.js"
 					end: Object {
 						column: 58
-						index: 58
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}
@@ -178,19 +160,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							loc: Object {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -206,12 +185,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 34
-										index: 34
 										line: 1
 									}
 									start: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 								}
@@ -220,12 +197,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}
@@ -250,12 +223,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 							}
@@ -273,12 +244,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 							}
@@ -292,19 +261,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							loc: Object {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -320,12 +286,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 51
-										index: 51
 										line: 1
 									}
 									start: Object {
 										column: 50
-										index: 50
 										line: 1
 									}
 								}
@@ -334,12 +298,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 51
-									index: 51
 									line: 1
 								}
 								start: Object {
 									column: 50
-									index: 50
 									line: 1
 								}
 							}
@@ -348,12 +310,10 @@ JSRoot {
 							filename: "esprima/es2015-class/migrated_0011/input.js"
 							end: Object {
 								column: 56
-								index: 56
 								line: 1
 							}
 							start: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 						}
@@ -364,12 +324,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 56
-									index: 56
 									line: 1
 								}
 								start: Object {
 									column: 54
-									index: 54
 									line: 1
 								}
 							}
@@ -383,19 +341,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							loc: Object {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 51
-									index: 51
 									line: 1
 								}
 								start: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 							}
@@ -412,12 +367,10 @@ JSRoot {
 								filename: "esprima/es2015-class/migrated_0011/input.js"
 								end: Object {
 									column: 54
-									index: 54
 									line: 1
 								}
 								start: Object {
 									column: 51
-									index: 51
 									line: 1
 								}
 							}
@@ -429,12 +382,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 53
-											index: 53
 											line: 1
 										}
 										start: Object {
 											column: 52
-											index: 52
 											line: 1
 										}
 									}
@@ -445,12 +396,10 @@ JSRoot {
 											filename: "esprima/es2015-class/migrated_0011/input.js"
 											end: Object {
 												column: 53
-												index: 53
 												line: 1
 											}
 											start: Object {
 												column: 52
-												index: 52
 												line: 1
 											}
 										}

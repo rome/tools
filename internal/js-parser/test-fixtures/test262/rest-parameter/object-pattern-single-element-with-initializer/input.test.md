@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 		end: Object {
 			column: 0
-			index: 56
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "singleElementWithInitializer"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 				end: Object {
 					column: 55
-					index: 55
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 					end: Object {
 						column: 55
-						index: 55
 						line: 1
 					}
 					start: Object {
 						column: 53
-						index: 53
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 					end: Object {
 						column: 52
-						index: 52
 						line: 1
 					}
 					start: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 						filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 						end: Object {
 							column: 51
-							index: 51
 							line: 1
 						}
 						start: Object {
 							column: 41
-							index: 41
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 							end: Object {
 								column: 51
-								index: 51
 								line: 1
 							}
 							start: Object {
 								column: 41
-								index: 41
 								line: 1
 							}
 						}
@@ -143,12 +129,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 43
-											index: 43
 											line: 1
 										}
 										start: Object {
 											column: 42
-											index: 42
 											line: 1
 										}
 									}
@@ -157,12 +141,10 @@ JSRoot {
 									filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 									end: Object {
 										column: 43
-										index: 43
 										line: 1
 									}
 									start: Object {
 										column: 42
-										index: 42
 										line: 1
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 									filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 									end: Object {
 										column: 50
-										index: 50
 										line: 1
 									}
 									start: Object {
 										column: 45
-										index: 45
 										line: 1
 									}
 								}
@@ -188,12 +168,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 46
-											index: 46
 											line: 1
 										}
 										start: Object {
 											column: 45
-											index: 45
 											line: 1
 										}
 									}
@@ -205,12 +183,10 @@ JSRoot {
 										filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 										end: Object {
 											column: 50
-											index: 50
 											line: 1
 										}
 										start: Object {
 											column: 49
-											index: 49
 											line: 1
 										}
 									}
@@ -220,12 +196,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-single-element-with-initializer/input.js"
 								end: Object {
 									column: 50
-									index: 50
 									line: 1
 								}
 								start: Object {
 									column: 42
-									index: 42
 									line: 1
 								}
 							}

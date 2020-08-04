@@ -21,18 +21,29 @@ JSRoot {
 		filename: "esprima/es2015-meta-property/unknown-property/input.js"
 		end: Object {
 			column: 0
-			index: 45
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "esprima/es2015-meta-property/unknown-property/input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 41
+					line: 1
+				}
+				start: Object {
+					column: 25
+					line: 1
+				}
+			}
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -47,21 +58,6 @@ JSRoot {
 					]
 				}
 			}
-			location: Object {
-				filename: "esprima/es2015-meta-property/unknown-property/input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 41
-					index: 41
-					line: 1
-				}
-				start: Object {
-					column: 25
-					index: 25
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -70,12 +66,10 @@ JSRoot {
 				filename: "esprima/es2015-meta-property/unknown-property/input.js"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -85,12 +79,10 @@ JSRoot {
 					filename: "esprima/es2015-meta-property/unknown-property/input.js"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -103,12 +95,10 @@ JSRoot {
 								identifierName: "f"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -117,12 +107,10 @@ JSRoot {
 							filename: "esprima/es2015-meta-property/unknown-property/input.js"
 							end: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -132,12 +120,10 @@ JSRoot {
 								filename: "esprima/es2015-meta-property/unknown-property/input.js"
 								end: Object {
 									column: 44
-									index: 44
 									line: 1
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -154,12 +140,10 @@ JSRoot {
 									filename: "esprima/es2015-meta-property/unknown-property/input.js"
 									end: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -170,12 +154,10 @@ JSRoot {
 									filename: "esprima/es2015-meta-property/unknown-property/input.js"
 									end: Object {
 										column: 44
-										index: 44
 										line: 1
 									}
 									start: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 								}
@@ -185,12 +167,10 @@ JSRoot {
 											filename: "esprima/es2015-meta-property/unknown-property/input.js"
 											end: Object {
 												column: 42
-												index: 42
 												line: 1
 											}
 											start: Object {
 												column: 21
-												index: 21
 												line: 1
 											}
 										}
@@ -199,12 +179,10 @@ JSRoot {
 												filename: "esprima/es2015-meta-property/unknown-property/input.js"
 												end: Object {
 													column: 41
-													index: 41
 													line: 1
 												}
 												start: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 											}
@@ -215,12 +193,10 @@ JSRoot {
 													identifierName: "new"
 													end: Object {
 														column: 24
-														index: 24
 														line: 1
 													}
 													start: Object {
 														column: 21
-														index: 21
 														line: 1
 													}
 												}
@@ -232,12 +208,10 @@ JSRoot {
 													identifierName: "unknown_property"
 													end: Object {
 														column: 41
-														index: 41
 														line: 1
 													}
 													start: Object {
 														column: 25
-														index: 25
 														line: 1
 													}
 												}

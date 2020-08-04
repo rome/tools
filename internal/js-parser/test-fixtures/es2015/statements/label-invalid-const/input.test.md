@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/statements/label-invalid-const/input.js"
 		end: Object {
 			column: 0
-			index: 23
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/statements/label-invalid-const/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 3
-						index: 3
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/statements/label-invalid-const/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 						filename: "es2015/statements/label-invalid-const/input.js"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 5
-							index: 5
 							line: 1
 						}
 					}
@@ -125,12 +113,10 @@ JSRoot {
 									identifierName: "bar"
 									end: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 									start: Object {
 										column: 11
-										index: 11
 										line: 1
 									}
 								}
@@ -139,12 +125,10 @@ JSRoot {
 								filename: "es2015/statements/label-invalid-const/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}
@@ -153,12 +137,10 @@ JSRoot {
 									filename: "es2015/statements/label-invalid-const/input.js"
 									end: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 									start: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 								}

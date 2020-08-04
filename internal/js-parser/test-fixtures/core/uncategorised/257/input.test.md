@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/257/input.js"
 		end: Object {
 			column: 52
-			index: 52
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/257/input.js"
 				end: Object {
 					column: 52
-					index: 52
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "target1"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "core/uncategorised/257/input.js"
 					end: Object {
 						column: 52
-						index: 52
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						identifierName: "target2"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 						filename: "core/uncategorised/257/input.js"
 						end: Object {
 							column: 52
-							index: 52
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}
@@ -114,12 +102,10 @@ JSRoot {
 							filename: "core/uncategorised/257/input.js"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -130,12 +116,10 @@ JSRoot {
 							filename: "core/uncategorised/257/input.js"
 							end: Object {
 								column: 52
-								index: 52
 								line: 1
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}
@@ -145,12 +129,10 @@ JSRoot {
 									filename: "core/uncategorised/257/input.js"
 									end: Object {
 										column: 50
-										index: 50
 										line: 1
 									}
 									start: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 								}
@@ -161,12 +143,10 @@ JSRoot {
 										identifierName: "target1"
 										end: Object {
 											column: 49
-											index: 49
 											line: 1
 										}
 										start: Object {
 											column: 42
-											index: 42
 											line: 1
 										}
 									}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/import/export-named-import-require/input.ts"
 		end: Object {
 			column: 0
-			index: 39
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/import/export-named-import-require/input.ts"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/import/export-named-import-require/input.ts"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -84,12 +76,10 @@ JSRoot {
 						filename: "typescript/import/export-named-import-require/input.ts"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 				filename: "typescript/import/export-named-import-require/input.ts"
 				end: Object {
 					column: 13
-					index: 38
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 25
 					line: 2
 				}
 			}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "typescript/import/export-named-import-require/input.ts"
 						end: Object {
 							column: 10
-							index: 35
 							line: 2
 						}
 						start: Object {
 							column: 9
-							index: 34
 							line: 2
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 10
-								index: 35
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 34
 								line: 2
 							}
 						}
@@ -151,12 +135,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 10
-								index: 35
 								line: 2
 							}
 							start: Object {
 								column: 9
-								index: 34
 								line: 2
 							}
 						}

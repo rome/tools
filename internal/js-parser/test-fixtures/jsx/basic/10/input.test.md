@@ -21,12 +21,10 @@ JSRoot {
 		filename: "jsx/basic/10/input.jsx"
 		end: Object {
 			column: 32
-			index: 32
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "jsx/basic/10/input.jsx"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "jsx/basic/10/input.jsx"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 						filename: "jsx/basic/10/input.jsx"
 						end: Object {
 							column: 2
-							index: 2
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -88,12 +80,10 @@ JSRoot {
 					filename: "jsx/basic/10/input.jsx"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -103,12 +93,10 @@ JSRoot {
 							filename: "jsx/basic/10/input.jsx"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -118,12 +106,10 @@ JSRoot {
 								filename: "jsx/basic/10/input.jsx"
 								end: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2016/simple-parameter-list/generator-function/input.js"
 		end: Object {
 			column: 0
-			index: 46
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 43
 					line: 2
 				}
 				start: Object {
 					column: 2
-					index: 30
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2016/simple-parameter-list/generator-function/input.js"
 				end: Object {
 					column: 1
-					index: 45
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -93,12 +85,10 @@ JSRoot {
 					filename: "es2016/simple-parameter-list/generator-function/input.js"
 					end: Object {
 						column: 1
-						index: 45
 						line: 3
 					}
 					start: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 				}
@@ -109,12 +99,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/generator-function/input.js"
 							end: Object {
 								column: 15
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 30
 								line: 2
 							}
 						}
@@ -133,12 +121,10 @@ JSRoot {
 					filename: "es2016/simple-parameter-list/generator-function/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -148,12 +134,10 @@ JSRoot {
 							filename: "es2016/simple-parameter-list/generator-function/input.js"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -163,12 +147,10 @@ JSRoot {
 								filename: "es2016/simple-parameter-list/generator-function/input.js"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -180,12 +162,10 @@ JSRoot {
 								identifierName: "options"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -196,12 +176,10 @@ JSRoot {
 									filename: "es2016/simple-parameter-list/generator-function/input.js"
 									end: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 									start: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 								}

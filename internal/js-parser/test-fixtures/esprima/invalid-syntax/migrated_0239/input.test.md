@@ -20,12 +20,10 @@ JSRoot {
 		filename: "esprima/invalid-syntax/migrated_0239/input.js"
 		end: Object {
 			column: 0
-			index: 36
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0239/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -86,12 +80,10 @@ JSRoot {
 					identifierName: "static"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0239/input.js"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0239/input.js"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 				}
@@ -139,12 +127,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0239/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 				}

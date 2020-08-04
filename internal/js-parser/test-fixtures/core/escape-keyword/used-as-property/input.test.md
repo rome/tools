@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/escape-keyword/used-as-property/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 14
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 14
 					line: 2
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "core/escape-keyword/used-as-property/input.js"
 				end: Object {
 					column: 2
-					index: 28
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -81,12 +75,10 @@ JSRoot {
 					filename: "core/escape-keyword/used-as-property/input.js"
 					end: Object {
 						column: 2
-						index: 28
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -113,12 +103,10 @@ JSRoot {
 							filename: "core/escape-keyword/used-as-property/input.js"
 							end: Object {
 								column: 1
-								index: 27
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -127,12 +115,10 @@ JSRoot {
 								filename: "core/escape-keyword/used-as-property/input.js"
 								end: Object {
 									column: 1
-									index: 27
 									line: 3
 								}
 								start: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 							}
@@ -146,12 +132,10 @@ JSRoot {
 												identifierName: "break"
 												end: Object {
 													column: 12
-													index: 22
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 12
 													line: 2
 												}
 											}
@@ -160,12 +144,10 @@ JSRoot {
 											filename: "core/escape-keyword/used-as-property/input.js"
 											end: Object {
 												column: 12
-												index: 22
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 12
 												line: 2
 											}
 										}
@@ -177,12 +159,10 @@ JSRoot {
 											filename: "core/escape-keyword/used-as-property/input.js"
 											end: Object {
 												column: 15
-												index: 25
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 24
 												line: 2
 											}
 										}
@@ -191,12 +171,10 @@ JSRoot {
 										filename: "core/escape-keyword/used-as-property/input.js"
 										end: Object {
 											column: 15
-											index: 25
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 12
 											line: 2
 										}
 									}

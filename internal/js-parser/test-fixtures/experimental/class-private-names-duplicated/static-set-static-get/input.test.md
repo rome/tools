@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 		end: Object {
 			column: 1
-			index: 54
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 				end: Object {
 					column: 1
-					index: 54
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 					end: Object {
 						column: 1
-						index: 54
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 15
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 14
-										index: 24
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 							end: Object {
 								column: 21
-								index: 31
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 21
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 29
 									line: 2
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 18
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 							}
@@ -201,12 +180,10 @@ JSRoot {
 										identifierName: "_"
 										end: Object {
 											column: 17
-											index: 27
 											line: 2
 										}
 										start: Object {
 											column: 16
-											index: 26
 											line: 2
 										}
 									}
@@ -217,12 +194,10 @@ JSRoot {
 											filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 											end: Object {
 												column: 17
-												index: 27
 												line: 2
 											}
 											start: Object {
 												column: 16
-												index: 26
 												line: 2
 											}
 										}
@@ -241,12 +216,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 15
-										index: 47
 										line: 3
 									}
 									start: Object {
 										column: 14
-										index: 46
 										line: 3
 									}
 								}
@@ -255,12 +228,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 15
-									index: 47
 									line: 3
 								}
 								start: Object {
 									column: 13
-									index: 45
 									line: 3
 								}
 							}
@@ -269,12 +240,10 @@ JSRoot {
 							filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 							end: Object {
 								column: 20
-								index: 52
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 34
 								line: 3
 							}
 						}
@@ -285,12 +254,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 20
-									index: 52
 									line: 3
 								}
 								start: Object {
 									column: 18
-									index: 50
 									line: 3
 								}
 							}
@@ -308,12 +275,10 @@ JSRoot {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 								start: Object {
 									column: 15
-									index: 47
 									line: 3
 								}
 							}
@@ -327,19 +292,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 34
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-names-duplicated/static-set-static-get/input.js"
 								end: Object {
 									column: 15
-									index: 47
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 34
 									line: 3
 								}
 							}

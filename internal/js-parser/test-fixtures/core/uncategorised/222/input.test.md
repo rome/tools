@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/222/input.js"
 		end: Object {
 			column: 38
-			index: 38
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/222/input.js"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "core/uncategorised/222/input.js"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "private"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "protected"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -118,12 +106,10 @@ JSRoot {
 							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								identifierName: "public"
 								end: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 								start: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 							}
@@ -151,12 +135,10 @@ JSRoot {
 							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 							start: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 						}
@@ -169,12 +151,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 							}
@@ -184,12 +164,10 @@ JSRoot {
 							filename: "core/uncategorised/222/input.js"
 							end: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 							start: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 						}

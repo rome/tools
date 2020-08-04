@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/modules/export-default-class-expression/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/modules/export-default-class-expression/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 						identifierName: "Foo"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 					}
@@ -68,12 +62,10 @@ JSRoot {
 					filename: "es2015/modules/export-default-class-expression/input.js"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "es2015/modules/export-default-class-expression/input.js"
 						end: Object {
 							column: 28
-							index: 28
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}

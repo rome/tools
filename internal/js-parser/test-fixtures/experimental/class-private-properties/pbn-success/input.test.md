@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/pbn-success/input.js"
 		end: Object {
 			column: 0
-			index: 360
 			line: 20
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Point"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/pbn-success/input.js"
 				end: Object {
 					column: 1
-					index: 359
 					line: 19
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/pbn-success/input.js"
 					end: Object {
 						column: 1
-						index: 359
 						line: 19
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 18
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 17
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 8
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 21
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 9
-								index: 23
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 						}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 16
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 16
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 4
-										index: 28
 										line: 3
 									}
 									start: Object {
 										column: 3
-										index: 27
 										line: 3
 									}
 								}
@@ -196,12 +175,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -213,12 +190,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 8
-									index: 32
 									line: 3
 								}
 								start: Object {
 									column: 7
-									index: 31
 									line: 3
 								}
 							}
@@ -228,12 +203,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 9
-								index: 33
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 						}
@@ -246,19 +219,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -274,12 +244,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 48
 										line: 5
 									}
 									start: Object {
 										column: 2
-										index: 37
 										line: 5
 									}
 								}
@@ -288,12 +256,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 5
 								}
 							}
@@ -302,12 +268,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 3
-								index: 104
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 37
 								line: 5
 							}
 						}
@@ -320,19 +284,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 37
 								line: 5
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 37
 									line: 5
 								}
 							}
@@ -349,12 +310,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 27
-									index: 62
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 48
 									line: 5
 								}
 							}
@@ -364,12 +323,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 19
-											index: 54
 											line: 5
 										}
 										start: Object {
 											column: 14
-											index: 49
 											line: 5
 										}
 									}
@@ -380,12 +337,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 19
-												index: 54
 												line: 5
 											}
 											start: Object {
 												column: 18
-												index: 53
 												line: 5
 											}
 										}
@@ -397,12 +352,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 15
-												index: 50
 												line: 5
 											}
 											start: Object {
 												column: 14
-												index: 49
 												line: 5
 											}
 										}
@@ -413,12 +366,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 15
-													index: 50
 													line: 5
 												}
 												start: Object {
 													column: 14
-													index: 49
 													line: 5
 												}
 											}
@@ -430,12 +381,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 26
-											index: 61
 											line: 5
 										}
 										start: Object {
 											column: 21
-											index: 56
 											line: 5
 										}
 									}
@@ -446,12 +395,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 26
-												index: 61
 												line: 5
 											}
 											start: Object {
 												column: 25
-												index: 60
 												line: 5
 											}
 										}
@@ -463,12 +410,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 22
-												index: 57
 												line: 5
 											}
 											start: Object {
 												column: 21
-												index: 56
 												line: 5
 											}
 										}
@@ -479,12 +424,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 22
-													index: 57
 													line: 5
 												}
 												start: Object {
 													column: 21
-													index: 56
 													line: 5
 												}
 											}
@@ -499,12 +442,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 3
-									index: 104
 									line: 8
 								}
 								start: Object {
 									column: 28
-									index: 63
 									line: 5
 								}
 							}
@@ -514,12 +455,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 17
-											index: 82
 											line: 6
 										}
 										start: Object {
 											column: 4
-											index: 69
 											line: 6
 										}
 									}
@@ -529,12 +468,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 16
-												index: 81
 												line: 6
 											}
 											start: Object {
 												column: 4
-												index: 69
 												line: 6
 											}
 										}
@@ -545,12 +482,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 16
-													index: 81
 													line: 6
 												}
 												start: Object {
 													column: 14
-													index: 79
 													line: 6
 												}
 											}
@@ -561,12 +496,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 16
-														index: 81
 														line: 6
 													}
 													start: Object {
 														column: 15
-														index: 80
 														line: 6
 													}
 												}
@@ -577,12 +510,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 11
-													index: 76
 													line: 6
 												}
 												start: Object {
 													column: 4
-													index: 69
 													line: 6
 												}
 											}
@@ -591,12 +522,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 8
-														index: 73
 														line: 6
 													}
 													start: Object {
 														column: 4
-														index: 69
 														line: 6
 													}
 												}
@@ -610,12 +539,10 @@ JSRoot {
 															identifierName: "x"
 															end: Object {
 																column: 11
-																index: 76
 																line: 6
 															}
 															start: Object {
 																column: 10
-																index: 75
 																line: 6
 															}
 														}
@@ -624,12 +551,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 11
-															index: 76
 															line: 6
 														}
 														start: Object {
 															column: 9
-															index: 74
 															line: 6
 														}
 													}
@@ -638,12 +563,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 11
-														index: 76
 														line: 6
 													}
 													start: Object {
 														column: 9
-														index: 74
 														line: 6
 													}
 												}
@@ -656,12 +579,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 17
-											index: 100
 											line: 7
 										}
 										start: Object {
 											column: 4
-											index: 87
 											line: 7
 										}
 									}
@@ -671,12 +592,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 16
-												index: 99
 												line: 7
 											}
 											start: Object {
 												column: 4
-												index: 87
 												line: 7
 											}
 										}
@@ -687,12 +606,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 16
-													index: 99
 													line: 7
 												}
 												start: Object {
 													column: 14
-													index: 97
 													line: 7
 												}
 											}
@@ -703,12 +620,10 @@ JSRoot {
 													identifierName: "y"
 													end: Object {
 														column: 16
-														index: 99
 														line: 7
 													}
 													start: Object {
 														column: 15
-														index: 98
 														line: 7
 													}
 												}
@@ -719,12 +634,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 11
-													index: 94
 													line: 7
 												}
 												start: Object {
 													column: 4
-													index: 87
 													line: 7
 												}
 											}
@@ -733,12 +646,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 8
-														index: 91
 														line: 7
 													}
 													start: Object {
 														column: 4
-														index: 87
 														line: 7
 													}
 												}
@@ -752,12 +663,10 @@ JSRoot {
 															identifierName: "y"
 															end: Object {
 																column: 11
-																index: 94
 																line: 7
 															}
 															start: Object {
 																column: 10
-																index: 93
 																line: 7
 															}
 														}
@@ -766,12 +675,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 11
-															index: 94
 															line: 7
 														}
 														start: Object {
 															column: 9
-															index: 92
 															line: 7
 														}
 													}
@@ -780,12 +687,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 11
-														index: 94
 														line: 7
 													}
 													start: Object {
 														column: 9
-														index: 92
 														line: 7
 													}
 												}
@@ -806,12 +711,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 7
-										index: 113
 										line: 10
 									}
 									start: Object {
 										column: 6
-										index: 112
 										line: 10
 									}
 								}
@@ -820,12 +723,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 113
 									line: 10
 								}
 								start: Object {
 									column: 6
-									index: 112
 									line: 10
 								}
 							}
@@ -834,12 +735,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 28
-								index: 134
 								line: 10
 							}
 							start: Object {
 								column: 2
-								index: 108
 								line: 10
 							}
 						}
@@ -856,12 +755,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 9
-									index: 115
 									line: 10
 								}
 								start: Object {
 									column: 7
-									index: 113
 									line: 10
 								}
 							}
@@ -875,19 +772,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 108
 								line: 10
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 113
 									line: 10
 								}
 								start: Object {
 									column: 2
-									index: 108
 									line: 10
 								}
 							}
@@ -898,12 +792,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 28
-									index: 134
 									line: 10
 								}
 								start: Object {
 									column: 10
-									index: 116
 									line: 10
 								}
 							}
@@ -913,12 +805,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 26
-											index: 132
 											line: 10
 										}
 										start: Object {
 											column: 12
-											index: 118
 											line: 10
 										}
 									}
@@ -927,12 +817,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 26
-												index: 132
 												line: 10
 											}
 											start: Object {
 												column: 19
-												index: 125
 												line: 10
 											}
 										}
@@ -941,12 +829,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 23
-													index: 129
 													line: 10
 												}
 												start: Object {
 													column: 19
-													index: 125
 													line: 10
 												}
 											}
@@ -960,12 +846,10 @@ JSRoot {
 														identifierName: "x"
 														end: Object {
 															column: 26
-															index: 132
 															line: 10
 														}
 														start: Object {
 															column: 25
-															index: 131
 															line: 10
 														}
 													}
@@ -974,12 +858,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 26
-														index: 132
 														line: 10
 													}
 													start: Object {
 														column: 24
-														index: 130
 														line: 10
 													}
 												}
@@ -988,12 +870,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 26
-													index: 132
 													line: 10
 												}
 												start: Object {
 													column: 24
-													index: 130
 													line: 10
 												}
 											}
@@ -1013,12 +893,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 7
-										index: 142
 										line: 11
 									}
 									start: Object {
 										column: 6
-										index: 141
 										line: 11
 									}
 								}
@@ -1027,12 +905,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 142
 									line: 11
 								}
 								start: Object {
 									column: 6
-									index: 141
 									line: 11
 								}
 							}
@@ -1041,12 +917,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 35
-								index: 170
 								line: 11
 							}
 							start: Object {
 								column: 2
-								index: 137
 								line: 11
 							}
 						}
@@ -1059,19 +933,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 137
 								line: 11
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 142
 									line: 11
 								}
 								start: Object {
 									column: 2
-									index: 137
 									line: 11
 								}
 							}
@@ -1088,12 +959,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 14
-									index: 149
 									line: 11
 								}
 								start: Object {
 									column: 7
-									index: 142
 									line: 11
 								}
 							}
@@ -1105,12 +974,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 13
-											index: 148
 											line: 11
 										}
 										start: Object {
 											column: 8
-											index: 143
 											line: 11
 										}
 									}
@@ -1121,12 +988,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 13
-												index: 148
 												line: 11
 											}
 											start: Object {
 												column: 8
-												index: 143
 												line: 11
 											}
 										}
@@ -1140,12 +1005,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 35
-									index: 170
 									line: 11
 								}
 								start: Object {
 									column: 15
-									index: 150
 									line: 11
 								}
 							}
@@ -1155,12 +1018,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 33
-											index: 168
 											line: 11
 										}
 										start: Object {
 											column: 17
-											index: 152
 											line: 11
 										}
 									}
@@ -1170,12 +1031,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 33
-												index: 168
 												line: 11
 											}
 											start: Object {
 												column: 17
-												index: 152
 												line: 11
 											}
 										}
@@ -1186,12 +1045,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 33
-													index: 168
 													line: 11
 												}
 												start: Object {
 													column: 27
-													index: 162
 													line: 11
 												}
 											}
@@ -1202,12 +1059,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 33
-														index: 168
 														line: 11
 													}
 													start: Object {
 														column: 28
-														index: 163
 														line: 11
 													}
 												}
@@ -1218,12 +1073,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 24
-													index: 159
 													line: 11
 												}
 												start: Object {
 													column: 17
-													index: 152
 													line: 11
 												}
 											}
@@ -1232,12 +1085,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 21
-														index: 156
 														line: 11
 													}
 													start: Object {
 														column: 17
-														index: 152
 														line: 11
 													}
 												}
@@ -1251,12 +1102,10 @@ JSRoot {
 															identifierName: "x"
 															end: Object {
 																column: 24
-																index: 159
 																line: 11
 															}
 															start: Object {
 																column: 23
-																index: 158
 																line: 11
 															}
 														}
@@ -1265,12 +1114,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 24
-															index: 159
 															line: 11
 														}
 														start: Object {
 															column: 22
-															index: 157
 															line: 11
 														}
 													}
@@ -1279,12 +1126,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 24
-														index: 159
 														line: 11
 													}
 													start: Object {
 														column: 22
-														index: 157
 														line: 11
 													}
 												}
@@ -1305,12 +1150,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 7
-										index: 179
 										line: 13
 									}
 									start: Object {
 										column: 6
-										index: 178
 										line: 13
 									}
 								}
@@ -1319,12 +1162,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 179
 									line: 13
 								}
 								start: Object {
 									column: 6
-									index: 178
 									line: 13
 								}
 							}
@@ -1333,12 +1174,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 28
-								index: 200
 								line: 13
 							}
 							start: Object {
 								column: 2
-								index: 174
 								line: 13
 							}
 						}
@@ -1355,12 +1194,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 9
-									index: 181
 									line: 13
 								}
 								start: Object {
 									column: 7
-									index: 179
 									line: 13
 								}
 							}
@@ -1374,19 +1211,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 174
 								line: 13
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 179
 									line: 13
 								}
 								start: Object {
 									column: 2
-									index: 174
 									line: 13
 								}
 							}
@@ -1397,12 +1231,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 28
-									index: 200
 									line: 13
 								}
 								start: Object {
 									column: 10
-									index: 182
 									line: 13
 								}
 							}
@@ -1412,12 +1244,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 26
-											index: 198
 											line: 13
 										}
 										start: Object {
 											column: 12
-											index: 184
 											line: 13
 										}
 									}
@@ -1426,12 +1256,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 26
-												index: 198
 												line: 13
 											}
 											start: Object {
 												column: 19
-												index: 191
 												line: 13
 											}
 										}
@@ -1440,12 +1268,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 23
-													index: 195
 													line: 13
 												}
 												start: Object {
 													column: 19
-													index: 191
 													line: 13
 												}
 											}
@@ -1459,12 +1285,10 @@ JSRoot {
 														identifierName: "y"
 														end: Object {
 															column: 26
-															index: 198
 															line: 13
 														}
 														start: Object {
 															column: 25
-															index: 197
 															line: 13
 														}
 													}
@@ -1473,12 +1297,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 26
-														index: 198
 														line: 13
 													}
 													start: Object {
 														column: 24
-														index: 196
 														line: 13
 													}
 												}
@@ -1487,12 +1309,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 26
-													index: 198
 													line: 13
 												}
 												start: Object {
 													column: 24
-													index: 196
 													line: 13
 												}
 											}
@@ -1512,12 +1332,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 7
-										index: 208
 										line: 14
 									}
 									start: Object {
 										column: 6
-										index: 207
 										line: 14
 									}
 								}
@@ -1526,12 +1344,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 208
 									line: 14
 								}
 								start: Object {
 									column: 6
-									index: 207
 									line: 14
 								}
 							}
@@ -1540,12 +1356,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 35
-								index: 236
 								line: 14
 							}
 							start: Object {
 								column: 2
-								index: 203
 								line: 14
 							}
 						}
@@ -1558,19 +1372,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 203
 								line: 14
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 7
-									index: 208
 									line: 14
 								}
 								start: Object {
 									column: 2
-									index: 203
 									line: 14
 								}
 							}
@@ -1587,12 +1398,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 14
-									index: 215
 									line: 14
 								}
 								start: Object {
 									column: 7
-									index: 208
 									line: 14
 								}
 							}
@@ -1604,12 +1413,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 13
-											index: 214
 											line: 14
 										}
 										start: Object {
 											column: 8
-											index: 209
 											line: 14
 										}
 									}
@@ -1620,12 +1427,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 13
-												index: 214
 												line: 14
 											}
 											start: Object {
 												column: 8
-												index: 209
 												line: 14
 											}
 										}
@@ -1639,12 +1444,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 35
-									index: 236
 									line: 14
 								}
 								start: Object {
 									column: 15
-									index: 216
 									line: 14
 								}
 							}
@@ -1654,12 +1457,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 33
-											index: 234
 											line: 14
 										}
 										start: Object {
 											column: 17
-											index: 218
 											line: 14
 										}
 									}
@@ -1669,12 +1470,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 33
-												index: 234
 												line: 14
 											}
 											start: Object {
 												column: 17
-												index: 218
 												line: 14
 											}
 										}
@@ -1685,12 +1484,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 33
-													index: 234
 													line: 14
 												}
 												start: Object {
 													column: 27
-													index: 228
 													line: 14
 												}
 											}
@@ -1701,12 +1498,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 33
-														index: 234
 														line: 14
 													}
 													start: Object {
 														column: 28
-														index: 229
 														line: 14
 													}
 												}
@@ -1717,12 +1512,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 24
-													index: 225
 													line: 14
 												}
 												start: Object {
 													column: 17
-													index: 218
 													line: 14
 												}
 											}
@@ -1731,12 +1524,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 21
-														index: 222
 														line: 14
 													}
 													start: Object {
 														column: 17
-														index: 218
 														line: 14
 													}
 												}
@@ -1750,12 +1541,10 @@ JSRoot {
 															identifierName: "y"
 															end: Object {
 																column: 24
-																index: 225
 																line: 14
 															}
 															start: Object {
 																column: 23
-																index: 224
 																line: 14
 															}
 														}
@@ -1764,12 +1553,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 24
-															index: 225
 															line: 14
 														}
 														start: Object {
 															column: 22
-															index: 223
 															line: 14
 														}
 													}
@@ -1778,12 +1565,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 24
-														index: 225
 														line: 14
 													}
 													start: Object {
 														column: 22
-														index: 223
 														line: 14
 													}
 												}
@@ -1804,12 +1589,10 @@ JSRoot {
 									identifierName: "equals"
 									end: Object {
 										column: 8
-										index: 246
 										line: 16
 									}
 									start: Object {
 										column: 2
-										index: 240
 										line: 16
 									}
 								}
@@ -1818,12 +1601,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 8
-									index: 246
 									line: 16
 								}
 								start: Object {
 									column: 2
-									index: 240
 									line: 16
 								}
 							}
@@ -1832,12 +1613,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 59
-								index: 297
 								line: 16
 							}
 							start: Object {
 								column: 2
-								index: 240
 								line: 16
 							}
 						}
@@ -1850,19 +1629,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 240
 								line: 16
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 8
-									index: 246
 									line: 16
 								}
 								start: Object {
 									column: 2
-									index: 240
 									line: 16
 								}
 							}
@@ -1879,12 +1655,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 11
-									index: 249
 									line: 16
 								}
 								start: Object {
 									column: 8
-									index: 246
 									line: 16
 								}
 							}
@@ -1896,12 +1670,10 @@ JSRoot {
 										identifierName: "p"
 										end: Object {
 											column: 10
-											index: 248
 											line: 16
 										}
 										start: Object {
 											column: 9
-											index: 247
 											line: 16
 										}
 									}
@@ -1912,12 +1684,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 10
-												index: 248
 												line: 16
 											}
 											start: Object {
 												column: 9
-												index: 247
 												line: 16
 											}
 										}
@@ -1931,12 +1701,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 59
-									index: 297
 									line: 16
 								}
 								start: Object {
 									column: 12
-									index: 250
 									line: 16
 								}
 							}
@@ -1946,12 +1714,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 57
-											index: 295
 											line: 16
 										}
 										start: Object {
 											column: 14
-											index: 252
 											line: 16
 										}
 									}
@@ -1961,12 +1727,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 57
-												index: 295
 												line: 16
 											}
 											start: Object {
 												column: 21
-												index: 259
 												line: 16
 											}
 										}
@@ -1976,12 +1740,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 37
-													index: 275
 													line: 16
 												}
 												start: Object {
 													column: 21
-													index: 259
 													line: 16
 												}
 											}
@@ -1990,12 +1752,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 28
-														index: 266
 														line: 16
 													}
 													start: Object {
 														column: 21
-														index: 259
 														line: 16
 													}
 												}
@@ -2004,12 +1764,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 25
-															index: 263
 															line: 16
 														}
 														start: Object {
 															column: 21
-															index: 259
 															line: 16
 														}
 													}
@@ -2023,12 +1781,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 28
-																	index: 266
 																	line: 16
 																}
 																start: Object {
 																	column: 27
-																	index: 265
 																	line: 16
 																}
 															}
@@ -2037,12 +1793,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 28
-																index: 266
 																line: 16
 															}
 															start: Object {
 																column: 26
-																index: 264
 																line: 16
 															}
 														}
@@ -2051,12 +1805,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 28
-															index: 266
 															line: 16
 														}
 														start: Object {
 															column: 26
-															index: 264
 															line: 16
 														}
 													}
@@ -2067,12 +1819,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 37
-														index: 275
 														line: 16
 													}
 													start: Object {
 														column: 33
-														index: 271
 														line: 16
 													}
 												}
@@ -2083,12 +1833,10 @@ JSRoot {
 														identifierName: "p"
 														end: Object {
 															column: 34
-															index: 272
 															line: 16
 														}
 														start: Object {
 															column: 33
-															index: 271
 															line: 16
 														}
 													}
@@ -2102,12 +1850,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 37
-																	index: 275
 																	line: 16
 																}
 																start: Object {
 																	column: 36
-																	index: 274
 																	line: 16
 																}
 															}
@@ -2116,12 +1862,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 37
-																index: 275
 																line: 16
 															}
 															start: Object {
 																column: 35
-																index: 273
 																line: 16
 															}
 														}
@@ -2130,12 +1874,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 37
-															index: 275
 															line: 16
 														}
 														start: Object {
 															column: 35
-															index: 273
 															line: 16
 														}
 													}
@@ -2148,12 +1890,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/pbn-success/input.js"
 												end: Object {
 													column: 57
-													index: 295
 													line: 16
 												}
 												start: Object {
 													column: 41
-													index: 279
 													line: 16
 												}
 											}
@@ -2162,12 +1902,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 48
-														index: 286
 														line: 16
 													}
 													start: Object {
 														column: 41
-														index: 279
 														line: 16
 													}
 												}
@@ -2176,12 +1914,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 45
-															index: 283
 															line: 16
 														}
 														start: Object {
 															column: 41
-															index: 279
 															line: 16
 														}
 													}
@@ -2195,12 +1931,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 48
-																	index: 286
 																	line: 16
 																}
 																start: Object {
 																	column: 47
-																	index: 285
 																	line: 16
 																}
 															}
@@ -2209,12 +1943,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 48
-																index: 286
 																line: 16
 															}
 															start: Object {
 																column: 46
-																index: 284
 																line: 16
 															}
 														}
@@ -2223,12 +1955,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 48
-															index: 286
 															line: 16
 														}
 														start: Object {
 															column: 46
-															index: 284
 															line: 16
 														}
 													}
@@ -2239,12 +1969,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 57
-														index: 295
 														line: 16
 													}
 													start: Object {
 														column: 53
-														index: 291
 														line: 16
 													}
 												}
@@ -2255,12 +1983,10 @@ JSRoot {
 														identifierName: "p"
 														end: Object {
 															column: 54
-															index: 292
 															line: 16
 														}
 														start: Object {
 															column: 53
-															index: 291
 															line: 16
 														}
 													}
@@ -2274,12 +2000,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 57
-																	index: 295
 																	line: 16
 																}
 																start: Object {
 																	column: 56
-																	index: 294
 																	line: 16
 																}
 															}
@@ -2288,12 +2012,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 57
-																index: 295
 																line: 16
 															}
 															start: Object {
 																column: 55
-																index: 293
 																line: 16
 															}
 														}
@@ -2302,12 +2024,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 57
-															index: 295
 															line: 16
 														}
 														start: Object {
 															column: 55
-															index: 293
 															line: 16
 														}
 													}
@@ -2329,12 +2049,10 @@ JSRoot {
 									identifierName: "toString"
 									end: Object {
 										column: 10
-										index: 309
 										line: 18
 									}
 									start: Object {
 										column: 2
-										index: 301
 										line: 18
 									}
 								}
@@ -2343,12 +2061,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 10
-									index: 309
 									line: 18
 								}
 								start: Object {
 									column: 2
-									index: 301
 									line: 18
 								}
 							}
@@ -2357,12 +2073,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/pbn-success/input.js"
 							end: Object {
 								column: 58
-								index: 357
 								line: 18
 							}
 							start: Object {
 								column: 2
-								index: 301
 								line: 18
 							}
 						}
@@ -2379,12 +2093,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 12
-									index: 311
 									line: 18
 								}
 								start: Object {
 									column: 10
-									index: 309
 									line: 18
 								}
 							}
@@ -2398,19 +2110,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 301
 								line: 18
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 10
-									index: 309
 									line: 18
 								}
 								start: Object {
 									column: 2
-									index: 301
 									line: 18
 								}
 							}
@@ -2421,12 +2130,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/pbn-success/input.js"
 								end: Object {
 									column: 58
-									index: 357
 									line: 18
 								}
 								start: Object {
 									column: 13
-									index: 312
 									line: 18
 								}
 							}
@@ -2436,12 +2143,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/pbn-success/input.js"
 										end: Object {
 											column: 56
-											index: 355
 											line: 18
 										}
 										start: Object {
 											column: 15
-											index: 314
 											line: 18
 										}
 									}
@@ -2450,12 +2155,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/pbn-success/input.js"
 											end: Object {
 												column: 56
-												index: 355
 												line: 18
 											}
 											start: Object {
 												column: 22
-												index: 321
 												line: 18
 											}
 										}
@@ -2468,12 +2171,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 29
-														index: 328
 														line: 18
 													}
 													start: Object {
 														column: 23
-														index: 322
 														line: 18
 													}
 												}
@@ -2486,12 +2187,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 42
-														index: 341
 														line: 18
 													}
 													start: Object {
 														column: 41
-														index: 340
 														line: 18
 													}
 												}
@@ -2504,12 +2203,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 55
-														index: 354
 														line: 18
 													}
 													start: Object {
 														column: 54
-														index: 353
 														line: 18
 													}
 												}
@@ -2521,12 +2218,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 39
-														index: 338
 														line: 18
 													}
 													start: Object {
 														column: 32
-														index: 331
 														line: 18
 													}
 												}
@@ -2535,12 +2230,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 36
-															index: 335
 															line: 18
 														}
 														start: Object {
 															column: 32
-															index: 331
 															line: 18
 														}
 													}
@@ -2554,12 +2247,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 39
-																	index: 338
 																	line: 18
 																}
 																start: Object {
 																	column: 38
-																	index: 337
 																	line: 18
 																}
 															}
@@ -2568,12 +2259,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 39
-																index: 338
 																line: 18
 															}
 															start: Object {
 																column: 37
-																index: 336
 																line: 18
 															}
 														}
@@ -2582,12 +2271,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 39
-															index: 338
 															line: 18
 														}
 														start: Object {
 															column: 37
-															index: 336
 															line: 18
 														}
 													}
@@ -2598,12 +2285,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/pbn-success/input.js"
 													end: Object {
 														column: 52
-														index: 351
 														line: 18
 													}
 													start: Object {
 														column: 45
-														index: 344
 														line: 18
 													}
 												}
@@ -2612,12 +2297,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 49
-															index: 348
 															line: 18
 														}
 														start: Object {
 															column: 45
-															index: 344
 															line: 18
 														}
 													}
@@ -2631,12 +2314,10 @@ JSRoot {
 																identifierName: "y"
 																end: Object {
 																	column: 52
-																	index: 351
 																	line: 18
 																}
 																start: Object {
 																	column: 51
-																	index: 350
 																	line: 18
 																}
 															}
@@ -2645,12 +2326,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/pbn-success/input.js"
 															end: Object {
 																column: 52
-																index: 351
 																line: 18
 															}
 															start: Object {
 																column: 50
-																index: 349
 																line: 18
 															}
 														}
@@ -2659,12 +2338,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/pbn-success/input.js"
 														end: Object {
 															column: 52
-															index: 351
 															line: 18
 														}
 														start: Object {
 															column: 50
-															index: 349
 															line: 18
 														}
 													}

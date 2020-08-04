@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 		end: Object {
 			column: 0
-			index: 73
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 				end: Object {
 					column: 1
-					index: 72
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 					end: Object {
 						column: 1
-						index: 72
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "assertIsString"
 									end: Object {
 										column: 16
-										index: 26
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 16
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 							end: Object {
 								column: 60
-								index: 70
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 60
-									index: 70
 									line: 2
 								}
 								start: Object {
 									column: 58
-									index: 68
 									line: 2
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 16
-									index: 26
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -183,12 +164,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 								end: Object {
 									column: 57
-									index: 67
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 26
 									line: 2
 								}
 							}
@@ -198,12 +177,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 									end: Object {
 										column: 57
-										index: 67
 										line: 2
 									}
 									start: Object {
 										column: 42
-										index: 52
 										line: 2
 									}
 								}
@@ -212,12 +189,10 @@ JSRoot {
 										filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 										end: Object {
 											column: 57
-											index: 67
 											line: 2
 										}
 										start: Object {
 											column: 51
-											index: 61
 											line: 2
 										}
 									}
@@ -229,12 +204,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 47
-											index: 57
 											line: 2
 										}
 										start: Object {
 											column: 42
-											index: 52
 											line: 2
 										}
 									}
@@ -248,12 +221,10 @@ JSRoot {
 										identifierName: "value"
 										end: Object {
 											column: 22
-											index: 32
 											line: 2
 										}
 										start: Object {
 											column: 17
-											index: 27
 											line: 2
 										}
 									}
@@ -263,12 +234,10 @@ JSRoot {
 											filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 											end: Object {
 												column: 31
-												index: 41
 												line: 2
 											}
 											start: Object {
 												column: 17
-												index: 27
 												line: 2
 											}
 										}
@@ -277,12 +246,10 @@ JSRoot {
 												filename: "typescript/assert-predicate/asserts-var-with-predicate/input.ts"
 												end: Object {
 													column: 31
-													index: 41
 													line: 2
 												}
 												start: Object {
 													column: 24
-													index: 34
 													line: 2
 												}
 											}

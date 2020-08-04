@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 		end: Object {
 			column: 1
-			index: 80
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Cl"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 				end: Object {
 					column: 1
-					index: 80
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 					end: Object {
 						column: 1
-						index: 80
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 13
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 13
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 49
 									line: 4
 								}
 								start: Object {
 									column: 6
-									index: 17
 									line: 2
 								}
 							}
@@ -140,12 +126,10 @@ JSRoot {
 									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 									end: Object {
 										column: 19
-										index: 30
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 17
 										line: 2
 									}
 								}
@@ -154,12 +138,10 @@ JSRoot {
 										filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 										end: Object {
 											column: 14
-											index: 25
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 22
 											line: 2
 										}
 									}
@@ -172,12 +154,10 @@ JSRoot {
 												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 												end: Object {
 													column: 13
-													index: 24
 													line: 2
 												}
 												start: Object {
 													column: 12
-													index: 23
 													line: 2
 												}
 											}
@@ -191,12 +171,10 @@ JSRoot {
 									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 									end: Object {
 										column: 3
-										index: 49
 										line: 4
 									}
 									start: Object {
 										column: 20
-										index: 31
 										line: 2
 									}
 								}
@@ -206,12 +184,10 @@ JSRoot {
 											filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 											end: Object {
 												column: 12
-												index: 45
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 37
 												line: 3
 											}
 										}
@@ -220,12 +196,10 @@ JSRoot {
 												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 												end: Object {
 													column: 11
-													index: 44
 													line: 3
 												}
 												start: Object {
 													column: 4
-													index: 37
 													line: 3
 												}
 											}
@@ -236,12 +210,10 @@ JSRoot {
 													filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 													end: Object {
 														column: 11
-														index: 44
 														line: 3
 													}
 													start: Object {
 														column: 10
-														index: 43
 														line: 3
 													}
 												}
@@ -257,12 +229,10 @@ JSRoot {
 							filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 							end: Object {
 								column: 4
-								index: 50
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 13
 								line: 2
 							}
 						}
@@ -275,19 +245,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 13
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 13
 									line: 2
 								}
 							}
@@ -302,12 +269,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 3
-										index: 55
 										line: 6
 									}
 									start: Object {
 										column: 2
-										index: 54
 										line: 6
 									}
 								}
@@ -316,12 +281,10 @@ JSRoot {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 55
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 54
 									line: 6
 								}
 							}
@@ -331,12 +294,10 @@ JSRoot {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 77
 									line: 7
 								}
 								start: Object {
 									column: 6
-									index: 58
 									line: 6
 								}
 							}
@@ -347,12 +308,10 @@ JSRoot {
 									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 									end: Object {
 										column: 3
-										index: 77
 										line: 7
 									}
 									start: Object {
 										column: 20
-										index: 72
 										line: 6
 									}
 								}
@@ -368,12 +327,10 @@ JSRoot {
 									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 									end: Object {
 										column: 19
-										index: 71
 										line: 6
 									}
 									start: Object {
 										column: 6
-										index: 58
 										line: 6
 									}
 								}
@@ -382,12 +339,10 @@ JSRoot {
 										filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 										end: Object {
 											column: 14
-											index: 66
 											line: 6
 										}
 										start: Object {
 											column: 11
-											index: 63
 											line: 6
 										}
 									}
@@ -400,12 +355,10 @@ JSRoot {
 												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 												end: Object {
 													column: 13
-													index: 65
 													line: 6
 												}
 												start: Object {
 													column: 12
-													index: 64
 													line: 6
 												}
 											}
@@ -420,12 +373,10 @@ JSRoot {
 							filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 							end: Object {
 								column: 4
-								index: 78
 								line: 7
 							}
 							start: Object {
 								column: 2
-								index: 54
 								line: 6
 							}
 						}
@@ -438,19 +389,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 54
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 								end: Object {
 									column: 3
-									index: 55
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 54
 									line: 6
 								}
 							}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-generator/static-generator-method/input.js"
 		end: Object {
 			column: 0
-			index: 31
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-generator/static-generator-method/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "esprima/es2015-generator/static-generator-method/input.js"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 									start: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "esprima/es2015-generator/static-generator-method/input.js"
 							end: Object {
 								column: 28
-								index: 28
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 28
-									index: 28
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 25
-									index: 25
 									line: 1
 								}
 								start: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 							}
@@ -178,19 +160,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							loc: Object {
 								filename: "esprima/es2015-generator/static-generator-method/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

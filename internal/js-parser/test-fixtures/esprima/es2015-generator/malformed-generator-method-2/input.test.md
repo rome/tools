@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 		end: Object {
 			column: 0
-			index: 16
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 								}
@@ -130,12 +118,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 							filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -167,12 +151,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 16
 									line: 2
 								}
 							}
@@ -186,19 +168,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							loc: Object {
 								filename: "esprima/es2015-generator/malformed-generator-method-2/input.js"
 								end: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}

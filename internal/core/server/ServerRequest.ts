@@ -564,12 +564,10 @@ export default class ServerRequest {
 		return {
 			sourceText: cwd,
 			start: {
-				index: ob1Number0,
 				line: ob1Number1,
 				column: ob1Number0,
 			},
 			end: {
-				index: ob1Coerce0(cwd.length),
 				line: ob1Number1,
 				column: ob1Coerce0(cwd.length),
 			},

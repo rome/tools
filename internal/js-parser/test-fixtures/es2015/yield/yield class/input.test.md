@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/yield class/input.js"
 		end: Object {
 			column: 0
-			index: 35
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "bar"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/yield/yield class/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/yield/yield class/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/yield/yield class/input.js"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2015/yield/yield class/input.js"
 							end: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2015/yield/yield class/input.js"
 								end: Object {
 									column: 32
-									index: 32
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "es2015/yield/yield class/input.js"
 									end: Object {
 										column: 32
-										index: 32
 										line: 1
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}
@@ -156,12 +140,10 @@ JSRoot {
 										filename: "es2015/yield/yield class/input.js"
 										end: Object {
 											column: 32
-											index: 32
 											line: 1
 										}
 										start: Object {
 											column: 24
-											index: 24
 											line: 1
 										}
 									}

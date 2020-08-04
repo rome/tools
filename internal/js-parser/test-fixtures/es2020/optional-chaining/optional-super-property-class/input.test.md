@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 		end: Object {
 			column: 1
-			index: 50
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 20
-					index: 38
 					line: 3
 				}
 				start: Object {
 					column: 20
-					index: 38
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 				end: Object {
 					column: 1
-					index: 50
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 					end: Object {
 						column: 1
-						index: 50
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 5
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 13
 										line: 2
 									}
 								}
@@ -130,12 +118,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 								end: Object {
 									column: 5
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 13
 									line: 2
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 							end: Object {
 								column: 5
-								index: 48
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 13
 								line: 2
 							}
 						}
@@ -166,12 +150,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 								end: Object {
 									column: 7
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 5
-									index: 14
 									line: 2
 								}
 							}
@@ -185,19 +167,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 13
 								line: 2
 							}
 							loc: Object {
 								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 								end: Object {
 									column: 5
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 13
 									line: 2
 								}
 							}
@@ -208,12 +187,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 								end: Object {
 									column: 5
-									index: 48
 									line: 4
 								}
 								start: Object {
 									column: 7
-									index: 16
 									line: 2
 								}
 							}
@@ -223,12 +200,10 @@ JSRoot {
 										filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 										end: Object {
 											column: 24
-											index: 42
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 26
 											line: 3
 										}
 									}
@@ -237,12 +212,10 @@ JSRoot {
 											filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 											end: Object {
 												column: 23
-												index: 41
 												line: 3
 											}
 											start: Object {
 												column: 15
-												index: 33
 												line: 3
 											}
 										}
@@ -251,12 +224,10 @@ JSRoot {
 												filename: "es2020/optional-chaining/optional-super-property-class/input.js"
 												end: Object {
 													column: 20
-													index: 38
 													line: 3
 												}
 												start: Object {
 													column: 15
-													index: 33
 													line: 3
 												}
 											}
@@ -269,12 +240,10 @@ JSRoot {
 													identifierName: "b"
 													end: Object {
 														column: 23
-														index: 41
 														line: 3
 													}
 													start: Object {
 														column: 22
-														index: 40
 														line: 3
 													}
 												}
@@ -285,12 +254,10 @@ JSRoot {
 												identifierName: "b"
 												end: Object {
 													column: 23
-													index: 41
 													line: 3
 												}
 												start: Object {
 													column: 22
-													index: 40
 													line: 3
 												}
 											}

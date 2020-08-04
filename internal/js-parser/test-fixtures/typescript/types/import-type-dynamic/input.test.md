@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/import-type-dynamic/input.ts"
 		end: Object {
 			column: 0
-			index: 90
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 28
-					index: 28
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 27
-										index: 27
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 27
-											index: 27
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -114,12 +102,10 @@ JSRoot {
 											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 27
-												index: 27
 												line: 1
 											}
 											start: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 										}
@@ -129,12 +115,10 @@ JSRoot {
 												filename: "typescript/types/import-type-dynamic/input.ts"
 												end: Object {
 													column: 26
-													index: 26
 													line: 1
 												}
 												start: Object {
 													column: 21
-													index: 21
 													line: 1
 												}
 											}
@@ -148,12 +132,10 @@ JSRoot {
 							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -166,12 +148,10 @@ JSRoot {
 				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 23
-					index: 52
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 29
 					line: 2
 				}
 			}
@@ -181,12 +161,10 @@ JSRoot {
 					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 23
-						index: 52
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 29
 						line: 2
 					}
 				}
@@ -198,12 +176,10 @@ JSRoot {
 								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 22
-									index: 51
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 33
 									line: 2
 								}
 							}
@@ -213,12 +189,10 @@ JSRoot {
 									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 22
-										index: 51
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 33
 										line: 2
 									}
 								}
@@ -228,12 +202,10 @@ JSRoot {
 										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 22
-											index: 51
 											line: 2
 										}
 										start: Object {
 											column: 7
-											index: 36
 											line: 2
 										}
 									}
@@ -243,12 +215,10 @@ JSRoot {
 											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 19
-												index: 48
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 43
 												line: 2
 											}
 										}
@@ -260,12 +230,10 @@ JSRoot {
 											identifierName: "Y"
 											end: Object {
 												column: 22
-												index: 51
 												line: 2
 											}
 											start: Object {
 												column: 21
-												index: 50
 												line: 2
 											}
 										}
@@ -278,12 +246,10 @@ JSRoot {
 							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 22
-								index: 51
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 33
 								line: 2
 							}
 						}
@@ -296,12 +262,10 @@ JSRoot {
 				filename: "typescript/types/import-type-dynamic/input.ts"
 				end: Object {
 					column: 36
-					index: 89
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 53
 					line: 3
 				}
 			}
@@ -311,12 +275,10 @@ JSRoot {
 					filename: "typescript/types/import-type-dynamic/input.ts"
 					end: Object {
 						column: 36
-						index: 89
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 53
 						line: 3
 					}
 				}
@@ -328,12 +290,10 @@ JSRoot {
 								filename: "typescript/types/import-type-dynamic/input.ts"
 								end: Object {
 									column: 35
-									index: 88
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 57
 									line: 3
 								}
 							}
@@ -343,12 +303,10 @@ JSRoot {
 									filename: "typescript/types/import-type-dynamic/input.ts"
 									end: Object {
 										column: 35
-										index: 88
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 57
 										line: 3
 									}
 								}
@@ -357,12 +315,10 @@ JSRoot {
 										filename: "typescript/types/import-type-dynamic/input.ts"
 										end: Object {
 											column: 35
-											index: 88
 											line: 3
 										}
 										start: Object {
 											column: 7
-											index: 60
 											line: 3
 										}
 									}
@@ -372,12 +328,10 @@ JSRoot {
 											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 18
-												index: 71
 												line: 3
 											}
 											start: Object {
 												column: 14
-												index: 67
 												line: 3
 											}
 										}
@@ -387,12 +341,10 @@ JSRoot {
 											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 35
-												index: 88
 												line: 3
 											}
 											start: Object {
 												column: 27
-												index: 80
 												line: 3
 											}
 										}
@@ -402,12 +354,10 @@ JSRoot {
 													filename: "typescript/types/import-type-dynamic/input.ts"
 													end: Object {
 														column: 34
-														index: 87
 														line: 3
 													}
 													start: Object {
 														column: 28
-														index: 81
 														line: 3
 													}
 												}
@@ -419,12 +369,10 @@ JSRoot {
 											filename: "typescript/types/import-type-dynamic/input.ts"
 											end: Object {
 												column: 27
-												index: 80
 												line: 3
 											}
 											start: Object {
 												column: 20
-												index: 73
 												line: 3
 											}
 										}
@@ -435,12 +383,10 @@ JSRoot {
 												identifierName: "foo"
 												end: Object {
 													column: 23
-													index: 76
 													line: 3
 												}
 												start: Object {
 													column: 20
-													index: 73
 													line: 3
 												}
 											}
@@ -452,12 +398,10 @@ JSRoot {
 												identifierName: "bar"
 												end: Object {
 													column: 27
-													index: 80
 													line: 3
 												}
 												start: Object {
 													column: 24
-													index: 77
 													line: 3
 												}
 											}
@@ -471,12 +415,10 @@ JSRoot {
 							filename: "typescript/types/import-type-dynamic/input.ts"
 							end: Object {
 								column: 35
-								index: 88
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 57
 								line: 3
 							}
 						}

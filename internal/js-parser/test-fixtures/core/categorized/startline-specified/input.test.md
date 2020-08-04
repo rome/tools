@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/categorized/startline-specified/input.js"
 		end: Object {
 			column: 0
-			index: 17
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/categorized/startline-specified/input.js"
 				end: Object {
 					column: 8
-					index: 8
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "core/categorized/startline-specified/input.js"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						identifierName: "call"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "core/categorized/startline-specified/input.js"
 							end: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 							start: Object {
 								column: 5
-								index: 5
 								line: 1
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 				filename: "core/categorized/startline-specified/input.js"
 				end: Object {
 					column: 7
-					index: 16
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 9
 					line: 2
 				}
 			}
@@ -117,12 +105,10 @@ JSRoot {
 					filename: "core/categorized/startline-specified/input.js"
 					end: Object {
 						column: 6
-						index: 15
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 9
 						line: 2
 					}
 				}
@@ -133,12 +119,10 @@ JSRoot {
 						identifierName: "run"
 						end: Object {
 							column: 3
-							index: 12
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 9
 							line: 2
 						}
 					}
@@ -151,12 +135,10 @@ JSRoot {
 							filename: "core/categorized/startline-specified/input.js"
 							end: Object {
 								column: 5
-								index: 14
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 13
 								line: 2
 							}
 						}

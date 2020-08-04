@@ -134,7 +134,7 @@ export function parsePossibleInterpreterDirective(
 	// Check for #!
 	if (
 		parser.match(tt.hash) &&
-		parser.input[ob1Get0(parser.state.endPos.index)] === "!"
+		parser.input[ob1Get0(parser.state.endIndex)] === "!"
 	) {
 		const directive = skipInterpreterDirective(parser, 1);
 
@@ -156,8 +156,8 @@ export function expressionStatementToDirective(
 	const start = parser.getLoc(stmt).start;
 
 	const raw = parser.getRawInput(
-		parser.getLoc(expr).start.index,
-		parser.getLoc(expr).end.index,
+		parser.getInputStartIndex(expr),
+		parser.getInputEndIndex(expr),
 	);
 	const val = raw.slice(1, -1); // remove quotes
 	const end = parser.getLoc(stmt).end;
@@ -824,10 +824,7 @@ export function parseThrowStatement(
 	parser.next();
 	if (
 		lineBreak.test(
-			parser.getRawInput(
-				parser.state.lastEndPos.index,
-				parser.state.startPos.index,
-			),
+			parser.getRawInput(parser.state.lastEndIndex, parser.state.startIndex),
 		)
 	) {
 		parser.unexpectedDiagnostic({
@@ -999,10 +996,11 @@ export function parseLabeledStatement(
 		kind = "switch";
 	}
 
+	const startIndex = parser.getIndexFromPosition(start, parser.filename);
 	for (let i = parser.state.labels.length - 1; i >= 0; i--) {
 		const label = parser.state.labels[i];
-		if (label.statementStart === start.index) {
-			label.statementStart = parser.state.startPos.index;
+		if (label.statementStart === startIndex) {
+			label.statementStart = parser.getIndex();
 			label.kind = kind;
 		} else {
 			break;
@@ -1013,7 +1011,7 @@ export function parseLabeledStatement(
 		name: maybeName,
 		kind,
 		loc: parser.getLoc(expr),
-		statementStart: parser.state.startPos.index,
+		statementStart: parser.getIndex(),
 	});
 
 	let statementContext: StatementContext = "label";

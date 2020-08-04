@@ -21,15 +21,59 @@ JSRoot {
 		filename: "jsx/errors/unclosed-tag/input.jsx"
 		end: Object {
 			column: 0
-			index: 9
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "jsx/errors/unclosed-tag/input.jsx"
+				end: Object {
+					column: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: "foo"
+					loc: Object {
+						filename: "jsx/errors/unclosed-tag/input.jsx"
+						end: Object {
+							column: 4
+							line: 1
+						}
+						start: Object {
+							column: 1
+							line: 1
+						}
+					}
+				}
+				attributes: Array []
+				children: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: Object {
+					filename: "jsx/errors/unclosed-tag/input.jsx"
+					end: Object {
+						column: 5
+						line: 1
+					}
+					start: Object {
+						column: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
@@ -39,12 +83,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 			}
@@ -67,69 +109,15 @@ JSRoot {
 							filename: "jsx/errors/unclosed-tag/input.jsx"
 							end: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}
 					}
 				]
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unclosed-tag/input.jsx"
-				end: Object {
-					column: 5
-					index: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					index: 0
-					line: 1
-				}
-			}
-			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "foo"
-					loc: Object {
-						filename: "jsx/errors/unclosed-tag/input.jsx"
-						end: Object {
-							column: 4
-							index: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							index: 1
-							line: 1
-						}
-					}
-				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unclosed-tag/input.jsx"
-					end: Object {
-						column: 5
-						index: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						index: 0
-						line: 1
-					}
-				}
 			}
 		}
 	]

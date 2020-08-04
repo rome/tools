@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/yield/basic-with-argument/input.js"
 		end: Object {
 			column: 26
-			index: 26
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/yield/basic-with-argument/input.js"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/yield/basic-with-argument/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -74,12 +68,10 @@ JSRoot {
 						filename: "es2015/yield/basic-with-argument/input.js"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 					}
@@ -90,12 +82,10 @@ JSRoot {
 						filename: "es2015/yield/basic-with-argument/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "es2015/yield/basic-with-argument/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 									filename: "es2015/yield/basic-with-argument/input.js"
 									end: Object {
 										column: 23
-										index: 23
 										line: 1
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -136,12 +122,10 @@ JSRoot {
 										identifierName: "v"
 										end: Object {
 											column: 23
-											index: 23
 											line: 1
 										}
 										start: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 									}

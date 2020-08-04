@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 		end: Object {
 			column: 1
-			index: 46
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 16
-					index: 39
 					line: 2
 				}
 				start: Object {
 					column: 11
-					index: 34
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 				end: Object {
 					column: 1
-					index: 46
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 					filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 					end: Object {
 						column: 1
-						index: 46
 						line: 3
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -134,12 +122,10 @@ JSRoot {
 								identifierName: "await"
 								end: Object {
 									column: 16
-									index: 39
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 34
 									line: 2
 								}
 							}
@@ -148,12 +134,10 @@ JSRoot {
 							filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 							end: Object {
 								column: 21
-								index: 44
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 25
 								line: 2
 							}
 						}
@@ -164,12 +148,10 @@ JSRoot {
 								filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 								end: Object {
 									column: 21
-									index: 44
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 42
 									line: 2
 								}
 							}
@@ -187,12 +169,10 @@ JSRoot {
 								filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 								end: Object {
 									column: 18
-									index: 41
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 39
 									line: 2
 								}
 							}

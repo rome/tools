@@ -27,12 +27,10 @@ JSRoot {
 		filename: "comments/html/first-line/input.js"
 		end: Object {
 			column: 0
-			index: 17
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				filename: "comments/html/first-line/input.js"
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "comments/html/first-line/input.js"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 			}

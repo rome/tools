@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 		end: Object {
 			column: 0
-			index: 22
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 3
-					index: 17
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				end: Object {
 					column: 7
-					index: 21
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 14
 					line: 2
 				}
 			}
@@ -98,12 +90,10 @@ JSRoot {
 					filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 					end: Object {
 						column: 7
-						index: 21
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 14
 						line: 2
 					}
 				}
@@ -114,12 +104,10 @@ JSRoot {
 						identifierName: "let"
 						end: Object {
 							column: 3
-							index: 17
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 14
 							line: 2
 						}
 					}
@@ -131,12 +119,10 @@ JSRoot {
 						filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 						end: Object {
 							column: 7
-							index: 21
 							line: 2
 						}
 						start: Object {
 							column: 6
-							index: 20
 							line: 2
 						}
 					}

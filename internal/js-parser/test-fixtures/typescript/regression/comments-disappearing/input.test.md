@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/regression/comments-disappearing/input.ts"
 		end: Object {
 			column: 0
-			index: 71
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 10
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 22
 					line: 2
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 10
-					index: 39
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 33
 					line: 3
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 12
-					index: 52
 					line: 4
 				}
 				start: Object {
 					column: 4
-					index: 44
 					line: 4
 				}
 			}
@@ -89,12 +81,10 @@ JSRoot {
 				filename: "typescript/regression/comments-disappearing/input.ts"
 				end: Object {
 					column: 1
-					index: 70
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -104,12 +94,10 @@ JSRoot {
 					filename: "typescript/regression/comments-disappearing/input.ts"
 					end: Object {
 						column: 1
-						index: 70
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -122,12 +110,10 @@ JSRoot {
 								identifierName: "fun"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 							filename: "typescript/regression/comments-disappearing/input.ts"
 							end: Object {
 								column: 1
-								index: 70
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -150,12 +134,10 @@ JSRoot {
 								filename: "typescript/regression/comments-disappearing/input.ts"
 								end: Object {
 									column: 1
-									index: 70
 									line: 6
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -170,12 +152,10 @@ JSRoot {
 									filename: "typescript/regression/comments-disappearing/input.ts"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -186,12 +166,10 @@ JSRoot {
 									filename: "typescript/regression/comments-disappearing/input.ts"
 									end: Object {
 										column: 1
-										index: 70
 										line: 6
 									}
 									start: Object {
 										column: 16
-										index: 16
 										line: 1
 									}
 								}
@@ -206,12 +184,10 @@ JSRoot {
 											filename: "typescript/regression/comments-disappearing/input.ts"
 											end: Object {
 												column: 15
-												index: 68
 												line: 5
 											}
 											start: Object {
 												column: 4
-												index: 57
 												line: 5
 											}
 										}
@@ -223,12 +199,10 @@ JSRoot {
 												filename: "typescript/regression/comments-disappearing/input.ts"
 												end: Object {
 													column: 13
-													index: 66
 													line: 5
 												}
 												start: Object {
 													column: 12
-													index: 65
 													line: 5
 												}
 											}

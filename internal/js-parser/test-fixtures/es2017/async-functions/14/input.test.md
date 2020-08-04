@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2017/async-functions/14/input.js"
 		end: Object {
 			column: 52
-			index: 52
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2017/async-functions/14/input.js"
 				end: Object {
 					column: 52
-					index: 52
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2017/async-functions/14/input.js"
 					end: Object {
 						column: 52
-						index: 52
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2017/async-functions/14/input.js"
 							end: Object {
 								column: 52
-								index: 52
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "es2017/async-functions/14/input.js"
 								end: Object {
 									column: 52
-									index: 52
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 									filename: "es2017/async-functions/14/input.js"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}
@@ -137,12 +123,10 @@ JSRoot {
 											identifierName: "promise"
 											end: Object {
 												column: 32
-												index: 32
 												line: 1
 											}
 											start: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 										}
@@ -153,12 +137,10 @@ JSRoot {
 												filename: "es2017/async-functions/14/input.js"
 												end: Object {
 													column: 32
-													index: 32
 													line: 1
 												}
 												start: Object {
 													column: 25
-													index: 25
 													line: 1
 												}
 											}
@@ -172,12 +154,10 @@ JSRoot {
 									filename: "es2017/async-functions/14/input.js"
 									end: Object {
 										column: 52
-										index: 52
 										line: 1
 									}
 									start: Object {
 										column: 34
-										index: 34
 										line: 1
 									}
 								}
@@ -187,12 +167,10 @@ JSRoot {
 											filename: "es2017/async-functions/14/input.js"
 											end: Object {
 												column: 50
-												index: 50
 												line: 1
 											}
 											start: Object {
 												column: 36
-												index: 36
 												line: 1
 											}
 										}
@@ -201,12 +179,10 @@ JSRoot {
 												filename: "es2017/async-functions/14/input.js"
 												end: Object {
 													column: 49
-													index: 49
 													line: 1
 												}
 												start: Object {
 													column: 36
-													index: 36
 													line: 1
 												}
 											}
@@ -217,12 +193,10 @@ JSRoot {
 													identifierName: "promise"
 													end: Object {
 														column: 49
-														index: 49
 														line: 1
 													}
 													start: Object {
 														column: 42
-														index: 42
 														line: 1
 													}
 												}

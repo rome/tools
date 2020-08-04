@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/assert-predicate/asserts-this/input.ts"
 		end: Object {
 			column: 0
-			index: 36
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/asserts-this/input.ts"
 				end: Object {
 					column: 1
-					index: 35
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/asserts-this/input.ts"
 					end: Object {
 						column: 1
-						index: 35
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-this/input.ts"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/asserts-this/input.ts"
 							end: Object {
 								column: 22
-								index: 32
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-this/input.ts"
 								end: Object {
 									column: 22
-									index: 32
 									line: 2
 								}
 								start: Object {
 									column: 20
-									index: 30
 									line: 2
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/assert-predicate/asserts-this/input.ts"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/asserts-this/input.ts"
 								end: Object {
 									column: 19
-									index: 29
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 							}
@@ -200,12 +179,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/asserts-this/input.ts"
 									end: Object {
 										column: 19
-										index: 29
 										line: 2
 									}
 									start: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 								}
@@ -216,12 +193,10 @@ JSRoot {
 										identifierName: "this"
 										end: Object {
 											column: 19
-											index: 29
 											line: 2
 										}
 										start: Object {
 											column: 15
-											index: 25
 											line: 2
 										}
 									}

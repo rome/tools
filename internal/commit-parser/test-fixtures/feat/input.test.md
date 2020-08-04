@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "feat/input.txt"
 		end: Object {
 			column: 35
-			index: 35
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/fragment-6/input.jsx"
 		end: Object {
 			column: 0
-			index: 60
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/basic/fragment-6/input.jsx"
 				end: Object {
 					column: 59
-					index: 59
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "jsx/basic/fragment-6/input.jsx"
 					end: Object {
 						column: 59
-						index: 59
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 								filename: "jsx/basic/fragment-6/input.jsx"
 								end: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-6/input.jsx"
 							end: Object {
 								column: 23
-								index: 23
 								line: 1
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 									filename: "jsx/basic/fragment-6/input.jsx"
 									end: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 									start: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 								}
@@ -119,12 +107,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-6/input.jsx"
 							end: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 							start: Object {
 								column: 23
-								index: 23
 								line: 1
 							}
 						}
@@ -134,12 +120,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-6/input.jsx"
 							end: Object {
 								column: 56
-								index: 56
 								line: 1
 							}
 							start: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 						}
@@ -149,12 +133,10 @@ JSRoot {
 								filename: "jsx/basic/fragment-6/input.jsx"
 								end: Object {
 									column: 55
-									index: 55
 									line: 1
 								}
 								start: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 							}

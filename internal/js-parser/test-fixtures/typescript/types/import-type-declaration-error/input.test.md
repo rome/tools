@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/import-type-declaration-error/input.ts"
 		end: Object {
 			column: 51
-			index: 51
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/types/import-type-declaration-error/input.ts"
 				end: Object {
 					column: 51
-					index: 51
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration-error/input.ts"
 					end: Object {
 						column: 50
-						index: 50
 						line: 1
 					}
 					start: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/types/import-type-declaration-error/input.ts"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							identifierName: "FooDefault"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration-error/input.ts"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration-error/input.ts"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "Bar"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 26
-								index: 26
 								line: 1
 							}
 						}
@@ -152,12 +136,10 @@ JSRoot {
 								identifierName: "Bar"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -167,12 +149,10 @@ JSRoot {
 							filename: "typescript/types/import-type-declaration-error/input.ts"
 							end: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 							start: Object {
 								column: 26
-								index: 26
 								line: 1
 							}
 						}
@@ -183,12 +163,10 @@ JSRoot {
 						filename: "typescript/types/import-type-declaration-error/input.ts"
 						end: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 						start: Object {
 							column: 31
-							index: 31
 							line: 1
 						}
 					}
@@ -199,12 +177,10 @@ JSRoot {
 							identifierName: "Baz"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}
@@ -217,12 +193,10 @@ JSRoot {
 								identifierName: "Baz"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 							}
@@ -232,12 +206,10 @@ JSRoot {
 							filename: "typescript/types/import-type-declaration-error/input.ts"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 31
-								index: 31
 								line: 1
 							}
 						}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/interface/export-abstract-interface/input.ts"
 		end: Object {
 			column: 0
-			index: 33
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "typescript/interface/export-abstract-interface/input.ts"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					identifierName: "abstract"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 					identifierName: "I"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 				}
@@ -112,12 +102,10 @@ JSRoot {
 				filename: "typescript/interface/export-abstract-interface/input.ts"
 				end: Object {
 					column: 1
-					index: 32
 					line: 3
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "typescript/interface/export-abstract-interface/input.ts"
 					end: Object {
 						column: 1
-						index: 32
 						line: 3
 					}
 					start: Object {
 						column: 28
-						index: 28
 						line: 1
 					}
 				}

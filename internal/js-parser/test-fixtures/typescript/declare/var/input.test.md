@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/declare/var/input.ts"
 		end: Object {
 			column: 0
-			index: 35
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/declare/var/input.ts"
 				end: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "typescript/declare/var/input.ts"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -86,12 +78,10 @@ JSRoot {
 							filename: "typescript/declare/var/input.ts"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -105,12 +95,10 @@ JSRoot {
 				filename: "typescript/declare/var/input.ts"
 				end: Object {
 					column: 19
-					index: 34
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 2
 				}
 			}
@@ -120,12 +108,10 @@ JSRoot {
 					filename: "typescript/declare/var/input.ts"
 					end: Object {
 						column: 19
-						index: 34
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 15
 						line: 2
 					}
 				}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "typescript/declare/var/input.ts"
 								end: Object {
 									column: 18
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 27
 									line: 2
 								}
 							}
@@ -152,12 +136,10 @@ JSRoot {
 									filename: "typescript/declare/var/input.ts"
 									end: Object {
 										column: 18
-										index: 33
 										line: 2
 									}
 									start: Object {
 										column: 12
-										index: 27
 										line: 2
 									}
 								}
@@ -166,12 +148,10 @@ JSRoot {
 										filename: "typescript/declare/var/input.ts"
 										end: Object {
 											column: 18
-											index: 33
 											line: 2
 										}
 										start: Object {
 											column: 15
-											index: 30
 											line: 2
 										}
 									}
@@ -183,12 +163,10 @@ JSRoot {
 							filename: "typescript/declare/var/input.ts"
 							end: Object {
 								column: 18
-								index: 33
 								line: 2
 							}
 							start: Object {
 								column: 12
-								index: 27
 								line: 2
 							}
 						}

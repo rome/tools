@@ -8,7 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdvice,
-	DiagnosticDescriptionOptionalCategory,
+	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 	Diagnostics,
 	DiagnosticsError,
@@ -262,12 +262,10 @@ export default class Consumer {
 			start: {
 				...start,
 				column: ob1Add(start.column, startIndex),
-				index: ob1Add(start.index, startIndex),
 			},
 			end: {
 				...start,
 				column: ob1Add(start.column, endIndex),
-				index: ob1Add(start.index, endIndex),
 			},
 		};
 	}
@@ -364,7 +362,7 @@ export default class Consumer {
 	}
 
 	unexpected(
-		description: DiagnosticDescriptionOptionalCategory = descriptions.CONSUME.INVALID,
+		description: DiagnosticDescriptionOptional = descriptions.CONSUME.INVALID,
 		opts: UnexpectedConsumerOptions = {},
 	): DiagnosticsError {
 		const {target = "value"} = opts;

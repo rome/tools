@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/statements/label-valid-func-non-strict/input.js"
 		end: Object {
 			column: 0
-			index: 23
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/statements/label-valid-func-non-strict/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 3
-						index: 3
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 						identifierName: "bar"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -85,12 +77,10 @@ JSRoot {
 					filename: "es2015/statements/label-valid-func-non-strict/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "es2015/statements/label-valid-func-non-strict/input.js"
 						end: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -124,12 +112,10 @@ JSRoot {
 						filename: "es2015/statements/label-valid-func-non-strict/input.js"
 						end: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}

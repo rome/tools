@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/122/input.js"
 		end: Object {
 			column: 38
-			index: 38
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/122/input.js"
 				end: Object {
 					column: 38
-					index: 38
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "core/uncategorised/122/input.js"
 					end: Object {
 						column: 38
-						index: 38
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						identifierName: "universe"
 						end: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 							filename: "core/uncategorised/122/input.js"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -100,12 +90,10 @@ JSRoot {
 									identifierName: "galaxyName"
 									end: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 									start: Object {
 										column: 9
-										index: 9
 										line: 1
 									}
 								}
@@ -117,12 +105,10 @@ JSRoot {
 									identifierName: "otherUselessName"
 									end: Object {
 										column: 37
-										index: 37
 										line: 1
 									}
 									start: Object {
 										column: 21
-										index: 21
 										line: 1
 									}
 								}
@@ -133,12 +119,10 @@ JSRoot {
 						filename: "core/uncategorised/122/input.js"
 						end: Object {
 							column: 38
-							index: 38
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}

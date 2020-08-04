@@ -20,12 +20,10 @@ JSRoot {
 		filename: "es2015/uncategorised/290/input.js"
 		end: Object {
 			column: 27
-			index: 27
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -36,12 +34,10 @@ JSRoot {
 				filename: "es2015/uncategorised/290/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2015/uncategorised/290/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "es2015/uncategorised/290/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -109,12 +99,10 @@ JSRoot {
 							identifierName: "test"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -129,12 +117,10 @@ JSRoot {
 							filename: "es2015/uncategorised/290/input.js"
 							end: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -147,12 +133,10 @@ JSRoot {
 							filename: "es2015/uncategorised/290/input.js"
 							end: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}

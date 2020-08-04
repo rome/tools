@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/function/predicate-types/input.ts"
 		end: Object {
 			column: 0
-			index: 72
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "f"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/function/predicate-types/input.ts"
 				end: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/function/predicate-types/input.ts"
 					end: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 					start: Object {
 						column: 33
-						index: 33
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 					filename: "typescript/function/predicate-types/input.ts"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -106,12 +96,10 @@ JSRoot {
 						filename: "typescript/function/predicate-types/input.ts"
 						end: Object {
 							column: 32
-							index: 32
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/function/predicate-types/input.ts"
 							end: Object {
 								column: 32
-								index: 32
 								line: 1
 							}
 							start: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 						}
@@ -137,12 +123,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 						}
@@ -171,12 +153,10 @@ JSRoot {
 								filename: "typescript/function/predicate-types/input.ts"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 							}
@@ -185,12 +165,10 @@ JSRoot {
 									filename: "typescript/function/predicate-types/input.ts"
 									end: Object {
 										column: 17
-										index: 17
 										line: 1
 									}
 									start: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 								}
@@ -205,12 +183,10 @@ JSRoot {
 				filename: "typescript/function/predicate-types/input.ts"
 				end: Object {
 					column: 35
-					index: 71
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 36
 					line: 2
 				}
 			}
@@ -220,12 +196,10 @@ JSRoot {
 					filename: "typescript/function/predicate-types/input.ts"
 					end: Object {
 						column: 34
-						index: 70
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 37
 						line: 2
 					}
 				}
@@ -236,12 +210,10 @@ JSRoot {
 						filename: "typescript/function/predicate-types/input.ts"
 						end: Object {
 							column: 34
-							index: 70
 							line: 2
 						}
 						start: Object {
 							column: 32
-							index: 68
 							line: 2
 						}
 					}
@@ -257,12 +229,10 @@ JSRoot {
 						filename: "typescript/function/predicate-types/input.ts"
 						end: Object {
 							column: 31
-							index: 67
 							line: 2
 						}
 						start: Object {
 							column: 9
-							index: 45
 							line: 2
 						}
 					}
@@ -272,12 +242,10 @@ JSRoot {
 							filename: "typescript/function/predicate-types/input.ts"
 							end: Object {
 								column: 31
-								index: 67
 								line: 2
 							}
 							start: Object {
 								column: 19
-								index: 55
 								line: 2
 							}
 						}
@@ -286,12 +254,10 @@ JSRoot {
 								filename: "typescript/function/predicate-types/input.ts"
 								end: Object {
 									column: 31
-									index: 67
 									line: 2
 								}
 								start: Object {
 									column: 24
-									index: 60
 									line: 2
 								}
 							}
@@ -303,12 +269,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 20
-									index: 56
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 55
 									line: 2
 								}
 							}
@@ -322,12 +286,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 11
-									index: 47
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 46
 									line: 2
 								}
 							}
@@ -337,12 +299,10 @@ JSRoot {
 									filename: "typescript/function/predicate-types/input.ts"
 									end: Object {
 										column: 16
-										index: 52
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 46
 										line: 2
 									}
 								}
@@ -351,12 +311,10 @@ JSRoot {
 										filename: "typescript/function/predicate-types/input.ts"
 										end: Object {
 											column: 16
-											index: 52
 											line: 2
 										}
 										start: Object {
 											column: 13
-											index: 49
 											line: 2
 										}
 									}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-properties/asi-success/input.js"
 		end: Object {
 			column: 0
-			index: 54
 			line: 10
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-properties/asi-success/input.js"
 				end: Object {
 					column: 1
-					index: 21
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-properties/asi-success/input.js"
 					end: Object {
 						column: 1
-						index: 21
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 3
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 14
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
-								index: 15
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -140,19 +126,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -167,12 +150,10 @@ JSRoot {
 									identifierName: "y"
 									end: Object {
 										column: 3
-										index: 19
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 18
 										line: 3
 									}
 								}
@@ -181,12 +162,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 19
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -198,12 +177,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
-								index: 19
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 18
 								line: 3
 							}
 						}
@@ -216,19 +193,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 18
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 19
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -245,12 +219,10 @@ JSRoot {
 					identifierName: "Foo2"
 					end: Object {
 						column: 10
-						index: 33
 						line: 6
 					}
 					start: Object {
 						column: 6
-						index: 29
 						line: 6
 					}
 				}
@@ -259,12 +231,10 @@ JSRoot {
 				filename: "experimental/class-properties/asi-success/input.js"
 				end: Object {
 					column: 1
-					index: 53
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 23
 					line: 6
 				}
 			}
@@ -277,12 +247,10 @@ JSRoot {
 					filename: "experimental/class-properties/asi-success/input.js"
 					end: Object {
 						column: 1
-						index: 53
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 23
 						line: 6
 					}
 				}
@@ -296,12 +264,10 @@ JSRoot {
 									identifierName: "p"
 									end: Object {
 										column: 3
-										index: 39
 										line: 7
 									}
 									start: Object {
 										column: 2
-										index: 38
 										line: 7
 									}
 								}
@@ -310,12 +276,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 39
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 38
 									line: 7
 								}
 							}
@@ -327,12 +291,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 3
-								index: 39
 								line: 7
 							}
 							start: Object {
 								column: 2
-								index: 38
 								line: 7
 							}
 						}
@@ -345,19 +307,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 38
 								line: 7
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 3
-									index: 39
 									line: 7
 								}
 								start: Object {
 									column: 2
-									index: 38
 									line: 7
 								}
 							}
@@ -373,12 +332,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 4
-										index: 44
 										line: 8
 									}
 									start: Object {
 										column: 3
-										index: 43
 										line: 8
 									}
 								}
@@ -387,12 +344,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 5
-									index: 45
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 42
 									line: 8
 								}
 							}
@@ -401,12 +356,10 @@ JSRoot {
 							filename: "experimental/class-properties/asi-success/input.js"
 							end: Object {
 								column: 11
-								index: 51
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 42
 								line: 8
 							}
 						}
@@ -417,12 +370,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 11
-									index: 51
 									line: 8
 								}
 								start: Object {
 									column: 9
-									index: 49
 									line: 8
 								}
 							}
@@ -440,12 +391,10 @@ JSRoot {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 8
-									index: 48
 									line: 8
 								}
 								start: Object {
 									column: 6
-									index: 46
 									line: 8
 								}
 							}
@@ -459,19 +408,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 42
 								line: 8
 							}
 							loc: Object {
 								filename: "experimental/class-properties/asi-success/input.js"
 								end: Object {
 									column: 5
-									index: 45
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 42
 									line: 8
 								}
 							}

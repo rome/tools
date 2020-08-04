@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/enum/members-reserved-words/input.ts"
 		end: Object {
 			column: 0
-			index: 34
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "E"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/enum/members-reserved-words/input.ts"
 				end: Object {
 					column: 1
-					index: 33
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 							identifierName: "const"
 							end: Object {
 								column: 9
-								index: 18
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 13
 								line: 2
 							}
 						}
@@ -88,12 +80,10 @@ JSRoot {
 						filename: "typescript/enum/members-reserved-words/input.ts"
 						end: Object {
 							column: 9
-							index: 18
 							line: 2
 						}
 						start: Object {
 							column: 4
-							index: 13
 							line: 2
 						}
 					}
@@ -106,12 +96,10 @@ JSRoot {
 							identifierName: "default"
 							end: Object {
 								column: 11
-								index: 31
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 24
 								line: 3
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 						filename: "typescript/enum/members-reserved-words/input.ts"
 						end: Object {
 							column: 11
-							index: 31
 							line: 3
 						}
 						start: Object {
 							column: 4
-							index: 24
 							line: 3
 						}
 					}

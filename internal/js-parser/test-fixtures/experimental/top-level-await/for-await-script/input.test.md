@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/top-level-await/for-await-script/input.js"
 		end: Object {
 			column: 25
-			index: 25
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 9
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "experimental/top-level-await/for-await-script/input.js"
 				end: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -82,12 +76,10 @@ JSRoot {
 					identifierName: "a"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 					identifierName: "of"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -114,12 +104,10 @@ JSRoot {
 					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -130,12 +118,10 @@ JSRoot {
 						identifierName: "b"
 						end: Object {
 							column: 23
-							index: 23
 							line: 1
 						}
 						start: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 					}
@@ -146,12 +132,10 @@ JSRoot {
 					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -162,12 +146,10 @@ JSRoot {
 						identifierName: "await"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -179,12 +161,10 @@ JSRoot {
 							filename: "experimental/top-level-await/for-await-script/input.js"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 						}
@@ -197,12 +177,10 @@ JSRoot {
 				filename: "experimental/top-level-await/for-await-script/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -212,12 +190,10 @@ JSRoot {
 					filename: "experimental/top-level-await/for-await-script/input.js"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}

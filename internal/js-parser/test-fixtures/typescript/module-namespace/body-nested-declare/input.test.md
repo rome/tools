@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/module-namespace/body-nested-declare/input.ts"
 		end: Object {
 			column: 0
-			index: 73
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/module-namespace/body-nested-declare/input.ts"
 				end: Object {
 					column: 1
-					index: 72
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/module-namespace/body-nested-declare/input.ts"
 					end: Object {
 						column: 1
-						index: 72
 						line: 5
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 								identifierName: "B"
 								end: Object {
 									column: 15
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 36
 									line: 2
 								}
 							}
@@ -101,12 +91,10 @@ JSRoot {
 							filename: "typescript/module-namespace/body-nested-declare/input.ts"
 							end: Object {
 								column: 5
-								index: 70
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 26
 								line: 2
 							}
 						}
@@ -115,12 +103,10 @@ JSRoot {
 								filename: "typescript/module-namespace/body-nested-declare/input.ts"
 								end: Object {
 									column: 5
-									index: 70
 									line: 4
 								}
 								start: Object {
 									column: 16
-									index: 38
 									line: 2
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 										filename: "typescript/module-namespace/body-nested-declare/input.ts"
 										end: Object {
 											column: 24
-											index: 64
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 48
 											line: 3
 										}
 									}
@@ -145,12 +129,10 @@ JSRoot {
 											filename: "typescript/module-namespace/body-nested-declare/input.ts"
 											end: Object {
 												column: 24
-												index: 64
 												line: 3
 											}
 											start: Object {
 												column: 8
-												index: 48
 												line: 3
 											}
 										}
@@ -162,12 +144,10 @@ JSRoot {
 														filename: "typescript/module-namespace/body-nested-declare/input.ts"
 														end: Object {
 															column: 23
-															index: 63
 															line: 3
 														}
 														start: Object {
 															column: 14
-															index: 54
 															line: 3
 														}
 													}
@@ -177,12 +157,10 @@ JSRoot {
 															filename: "typescript/module-namespace/body-nested-declare/input.ts"
 															end: Object {
 																column: 23
-																index: 63
 																line: 3
 															}
 															start: Object {
 																column: 14
-																index: 54
 																line: 3
 															}
 														}
@@ -191,12 +169,10 @@ JSRoot {
 																filename: "typescript/module-namespace/body-nested-declare/input.ts"
 																end: Object {
 																	column: 23
-																	index: 63
 																	line: 3
 																}
 																start: Object {
 																	column: 17
-																	index: 57
 																	line: 3
 																}
 															}
@@ -208,12 +184,10 @@ JSRoot {
 													filename: "typescript/module-namespace/body-nested-declare/input.ts"
 													end: Object {
 														column: 23
-														index: 63
 														line: 3
 													}
 													start: Object {
 														column: 14
-														index: 54
 														line: 3
 													}
 												}

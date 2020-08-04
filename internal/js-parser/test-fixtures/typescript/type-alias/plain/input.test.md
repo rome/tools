@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/type-alias/plain/input.ts"
 		end: Object {
 			column: 0
-			index: 17
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "T"
 					end: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/type-alias/plain/input.ts"
 				end: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/type-alias/plain/input.ts"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}

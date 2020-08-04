@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 		end: Object {
 			column: 0
-			index: 43
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "g"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 				end: Object {
 					column: 42
-					index: 42
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 					end: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 							end: Object {
 								column: 40
-								index: 40
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 								end: Object {
 									column: 40
-									index: 40
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 										filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 										end: Object {
 											column: 25
-											index: 25
 											line: 1
 										}
 										start: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 									}
@@ -152,12 +136,10 @@ JSRoot {
 											filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 											end: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 											start: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 										}
@@ -168,12 +150,10 @@ JSRoot {
 												identifierName: "a"
 												end: Object {
 													column: 23
-													index: 23
 													line: 1
 												}
 												start: Object {
 													column: 22
-													index: 22
 													line: 1
 												}
 											}
@@ -185,12 +165,10 @@ JSRoot {
 												identifierName: "b"
 												end: Object {
 													column: 25
-													index: 25
 													line: 1
 												}
 												start: Object {
 													column: 24
-													index: 24
 													line: 1
 												}
 											}
@@ -203,12 +181,10 @@ JSRoot {
 										filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 										end: Object {
 											column: 37
-											index: 37
 											line: 1
 										}
 										start: Object {
 											column: 27
-											index: 27
 											line: 1
 										}
 									}
@@ -218,12 +194,10 @@ JSRoot {
 											filename: "esprima/es2015-yield/yield-expression-precedence/input.js"
 											end: Object {
 												column: 37
-												index: 37
 												line: 1
 											}
 											start: Object {
 												column: 34
-												index: 34
 												line: 1
 											}
 										}
@@ -234,12 +208,10 @@ JSRoot {
 												identifierName: "c"
 												end: Object {
 													column: 35
-													index: 35
 													line: 1
 												}
 												start: Object {
 													column: 34
-													index: 34
 													line: 1
 												}
 											}
@@ -251,12 +223,10 @@ JSRoot {
 												identifierName: "d"
 												end: Object {
 													column: 37
-													index: 37
 													line: 1
 												}
 												start: Object {
 													column: 36
-													index: 36
 													line: 1
 												}
 											}
@@ -270,12 +240,10 @@ JSRoot {
 										identifierName: "e"
 										end: Object {
 											column: 40
-											index: 40
 											line: 1
 										}
 										start: Object {
 											column: 39
-											index: 39
 											line: 1
 										}
 									}

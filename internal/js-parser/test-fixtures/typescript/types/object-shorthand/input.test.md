@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/types/object-shorthand/input.ts"
 		end: Object {
 			column: 0
-			index: 88
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "typescript/types/object-shorthand/input.ts"
 				end: Object {
 					column: 20
-					index: 80
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 64
 					line: 3
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/types/object-shorthand/input.ts"
 				end: Object {
 					column: 2
-					index: 87
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/types/object-shorthand/input.ts"
 					end: Object {
 						column: 2
-						index: 87
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 								identifierName: "table"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -102,12 +92,10 @@ JSRoot {
 							filename: "typescript/types/object-shorthand/input.ts"
 							end: Object {
 								column: 1
-								index: 86
 								line: 5
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -116,12 +104,10 @@ JSRoot {
 								filename: "typescript/types/object-shorthand/input.ts"
 								end: Object {
 									column: 1
-									index: 86
 									line: 5
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 												identifierName: "put"
 												end: Object {
 													column: 5
-													index: 21
 													line: 2
 												}
 												start: Object {
 													column: 2
-													index: 18
 													line: 2
 												}
 											}
@@ -150,12 +134,10 @@ JSRoot {
 											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 5
-												index: 21
 												line: 2
 											}
 											start: Object {
 												column: 2
-												index: 18
 												line: 2
 											}
 										}
@@ -164,12 +146,10 @@ JSRoot {
 										filename: "typescript/types/object-shorthand/input.ts"
 										end: Object {
 											column: 3
-											index: 84
 											line: 4
 										}
 										start: Object {
 											column: 2
-											index: 18
 											line: 2
 										}
 									}
@@ -182,12 +162,10 @@ JSRoot {
 											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 3
-												index: 84
 												line: 4
 											}
 											start: Object {
 												column: 42
-												index: 58
 												line: 2
 											}
 										}
@@ -203,12 +181,10 @@ JSRoot {
 											filename: "typescript/types/object-shorthand/input.ts"
 											end: Object {
 												column: 41
-												index: 57
 												line: 2
 											}
 											start: Object {
 												column: 31
-												index: 47
 												line: 2
 											}
 										}
@@ -220,12 +196,10 @@ JSRoot {
 													identifierName: "value"
 													end: Object {
 														column: 37
-														index: 53
 														line: 2
 													}
 													start: Object {
 														column: 32
-														index: 48
 														line: 2
 													}
 												}
@@ -235,12 +209,10 @@ JSRoot {
 														filename: "typescript/types/object-shorthand/input.ts"
 														end: Object {
 															column: 40
-															index: 56
 															line: 2
 														}
 														start: Object {
 															column: 32
-															index: 48
 															line: 2
 														}
 													}
@@ -250,12 +222,10 @@ JSRoot {
 															filename: "typescript/types/object-shorthand/input.ts"
 															end: Object {
 																column: 40
-																index: 56
 																line: 2
 															}
 															start: Object {
 																column: 39
-																index: 55
 																line: 2
 															}
 														}
@@ -266,12 +236,10 @@ JSRoot {
 																identifierName: "T"
 																end: Object {
 																	column: 40
-																	index: 56
 																	line: 2
 																}
 																start: Object {
 																	column: 39
-																	index: 55
 																	line: 2
 																}
 															}
@@ -285,12 +253,10 @@ JSRoot {
 												filename: "typescript/types/object-shorthand/input.ts"
 												end: Object {
 													column: 31
-													index: 47
 													line: 2
 												}
 												start: Object {
 													column: 5
-													index: 21
 													line: 2
 												}
 											}
@@ -302,12 +268,10 @@ JSRoot {
 														filename: "typescript/types/object-shorthand/input.ts"
 														end: Object {
 															column: 30
-															index: 46
 															line: 2
 														}
 														start: Object {
 															column: 6
-															index: 22
 															line: 2
 														}
 													}
@@ -316,12 +280,10 @@ JSRoot {
 															filename: "typescript/types/object-shorthand/input.ts"
 															end: Object {
 																column: 30
-																index: 46
 																line: 2
 															}
 															start: Object {
 																column: 16
-																index: 32
 																line: 2
 															}
 														}
@@ -335,12 +297,10 @@ JSRoot {
 																			identifierName: "id"
 																			end: Object {
 																				column: 20
-																				index: 36
 																				line: 2
 																			}
 																			start: Object {
 																				column: 18
-																				index: 34
 																				line: 2
 																			}
 																		}
@@ -349,12 +309,10 @@ JSRoot {
 																		filename: "typescript/types/object-shorthand/input.ts"
 																		end: Object {
 																			column: 20
-																			index: 36
 																			line: 2
 																		}
 																		start: Object {
 																			column: 18
-																			index: 34
 																			line: 2
 																		}
 																	}
@@ -365,12 +323,10 @@ JSRoot {
 																	filename: "typescript/types/object-shorthand/input.ts"
 																	end: Object {
 																		column: 28
-																		index: 44
 																		line: 2
 																	}
 																	start: Object {
 																		column: 18
-																		index: 34
 																		line: 2
 																	}
 																}
@@ -379,12 +335,10 @@ JSRoot {
 																		filename: "typescript/types/object-shorthand/input.ts"
 																		end: Object {
 																			column: 28
-																			index: 44
 																			line: 2
 																		}
 																		start: Object {
 																			column: 22
-																			index: 38
 																			line: 2
 																		}
 																	}

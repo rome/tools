@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2016/exponentiation-operator/4/input.js"
 		end: Object {
 			column: 21
-			index: 21
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2016/exponentiation-operator/4/input.js"
 				end: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2016/exponentiation-operator/4/input.js"
 					end: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "squared"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "es2016/exponentiation-operator/4/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "es2016/exponentiation-operator/4/input.js"
 								end: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 								start: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 							}
@@ -115,12 +103,10 @@ JSRoot {
 									filename: "es2016/exponentiation-operator/4/input.js"
 									end: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 									start: Object {
 										column: 14
-										index: 14
 										line: 1
 									}
 								}
@@ -132,12 +118,10 @@ JSRoot {
 									filename: "es2016/exponentiation-operator/4/input.js"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 								}

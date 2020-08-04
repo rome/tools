@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/interface/generic/input.ts"
 		end: Object {
 			column: 0
-			index: 49
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "I"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/interface/generic/input.ts"
 				end: Object {
 					column: 48
-					index: 48
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/interface/generic/input.ts"
 					end: Object {
 						column: 48
-						index: 48
 						line: 1
 					}
 					start: Object {
 						column: 46
-						index: 46
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 					filename: "typescript/interface/generic/input.ts"
 					end: Object {
 						column: 45
-						index: 45
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -101,12 +91,10 @@ JSRoot {
 							filename: "typescript/interface/generic/input.ts"
 							end: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -115,12 +103,10 @@ JSRoot {
 								filename: "typescript/interface/generic/input.ts"
 								end: Object {
 									column: 28
-									index: 28
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -130,12 +116,10 @@ JSRoot {
 								filename: "typescript/interface/generic/input.ts"
 								end: Object {
 									column: 44
-									index: 44
 									line: 1
 								}
 								start: Object {
 									column: 31
-									index: 31
 									line: 1
 								}
 							}
@@ -149,12 +133,10 @@ JSRoot {
 												identifierName: "x"
 												end: Object {
 													column: 34
-													index: 34
 													line: 1
 												}
 												start: Object {
 													column: 33
-													index: 33
 													line: 1
 												}
 											}
@@ -163,12 +145,10 @@ JSRoot {
 											filename: "typescript/interface/generic/input.ts"
 											end: Object {
 												column: 34
-												index: 34
 												line: 1
 											}
 											start: Object {
 												column: 33
-												index: 33
 												line: 1
 											}
 										}
@@ -179,12 +159,10 @@ JSRoot {
 										filename: "typescript/interface/generic/input.ts"
 										end: Object {
 											column: 42
-											index: 42
 											line: 1
 										}
 										start: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 									}
@@ -193,12 +171,10 @@ JSRoot {
 											filename: "typescript/interface/generic/input.ts"
 											end: Object {
 												column: 42
-												index: 42
 												line: 1
 											}
 											start: Object {
 												column: 36
-												index: 36
 												line: 1
 											}
 										}

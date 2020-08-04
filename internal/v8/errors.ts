@@ -8,7 +8,7 @@
 import {Position} from "@internal/parser-core";
 import {ErrorFrame, ErrorFrames} from "./types";
 import {isPlainObject} from "@internal/typescript-helpers";
-import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
+import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {
 	NodeSystemError,
 	convertPossibleNodeErrorToDiagnostic,
@@ -93,7 +93,6 @@ export function getDiagnosticLocationFromErrorFrame(
 	frame: ErrorFrame,
 ): DiagnosticLocation {
 	const pos: Position = {
-		index: ob1Number0Neg1,
 		line: frame.lineNumber ?? ob1Number1,
 		column: frame.columnNumber ?? ob1Number0,
 	};

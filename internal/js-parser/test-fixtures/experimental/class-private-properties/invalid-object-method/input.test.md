@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/invalid-object-method/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/invalid-object-method/input.js"
 				end: Object {
 					column: 1
-					index: 32
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/invalid-object-method/input.js"
 					end: Object {
 						column: 1
-						index: 32
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "p"
 									end: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 18
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 18
 									line: 2
 								}
 							}
@@ -140,12 +126,10 @@ JSRoot {
 													identifierName: "x"
 													end: Object {
 														column: 12
-														index: 22
 														line: 2
 													}
 													start: Object {
 														column: 11
-														index: 21
 														line: 2
 													}
 												}
@@ -154,12 +138,10 @@ JSRoot {
 												filename: "experimental/class-private-properties/invalid-object-method/input.js"
 												end: Object {
 													column: 12
-													index: 22
 													line: 2
 												}
 												start: Object {
 													column: 10
-													index: 20
 													line: 2
 												}
 											}
@@ -168,12 +150,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/invalid-object-method/input.js"
 											end: Object {
 												column: 12
-												index: 22
 												line: 2
 											}
 											start: Object {
 												column: 10
-												index: 20
 												line: 2
 											}
 										}
@@ -185,12 +165,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/invalid-object-method/input.js"
 											end: Object {
 												column: 16
-												index: 26
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 24
 												line: 2
 											}
 										}
@@ -199,12 +177,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/invalid-object-method/input.js"
 										end: Object {
 											column: 16
-											index: 26
 											line: 2
 										}
 										start: Object {
 											column: 10
-											index: 20
 											line: 2
 										}
 									}
@@ -216,12 +192,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/invalid-object-method/input.js"
 							end: Object {
 								column: 20
-								index: 30
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -234,19 +208,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/invalid-object-method/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}

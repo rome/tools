@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/class-methods/tricky-names/input.js"
 		end: Object {
 			column: 0
-			index: 312
 			line: 56
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2015/class-methods/tricky-names/input.js"
 				end: Object {
 					column: 1
-					index: 311
 					line: 55
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "es2015/class-methods/tricky-names/input.js"
 					end: Object {
 						column: 1
-						index: 311
 						line: 55
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 12
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 23
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 5
-									index: 21
 									line: 3
 								}
 							}
@@ -159,12 +143,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 20
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 18
 									line: 3
 								}
 							}
@@ -178,19 +160,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -206,12 +185,10 @@ JSRoot {
 									identifierName: "set"
 									end: Object {
 										column: 5
-										index: 30
 										line: 5
 									}
 									start: Object {
 										column: 2
-										index: 27
 										line: 5
 									}
 								}
@@ -220,12 +197,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 30
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 27
 									line: 5
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 38
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 27
 								line: 5
 							}
 						}
@@ -250,12 +223,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 38
 									line: 6
 								}
 								start: Object {
 									column: 5
-									index: 36
 									line: 6
 								}
 							}
@@ -273,12 +244,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 35
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 33
 									line: 6
 								}
 							}
@@ -292,19 +261,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 27
 								line: 5
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 30
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 27
 									line: 5
 								}
 							}
@@ -320,12 +286,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 48
 										line: 8
 									}
 									start: Object {
 										column: 2
-										index: 42
 										line: 8
 									}
 								}
@@ -335,12 +299,10 @@ JSRoot {
 								identifierName: "static"
 								end: Object {
 									column: 8
-									index: 48
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 42
 									line: 8
 								}
 							}
@@ -349,12 +311,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 56
 								line: 9
 							}
 							start: Object {
 								column: 2
-								index: 42
 								line: 8
 							}
 						}
@@ -365,12 +325,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 56
 									line: 9
 								}
 								start: Object {
 									column: 5
-									index: 54
 									line: 9
 								}
 							}
@@ -386,12 +344,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
-									index: 48
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 42
 									line: 8
 								}
 							}
@@ -409,12 +365,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 53
 									line: 9
 								}
 								start: Object {
 									column: 2
-									index: 51
 									line: 9
 								}
 							}
@@ -430,12 +384,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 65
 										line: 11
 									}
 									start: Object {
 										column: 2
-										index: 60
 										line: 11
 									}
 								}
@@ -444,12 +396,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 65
 									line: 11
 								}
 								start: Object {
 									column: 2
-									index: 60
 									line: 11
 								}
 							}
@@ -458,12 +408,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 73
 								line: 12
 							}
 							start: Object {
 								column: 2
-								index: 60
 								line: 11
 							}
 						}
@@ -474,12 +422,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 73
 									line: 12
 								}
 								start: Object {
 									column: 5
-									index: 71
 									line: 12
 								}
 							}
@@ -497,12 +443,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 70
 									line: 12
 								}
 								start: Object {
 									column: 2
-									index: 68
 									line: 12
 								}
 							}
@@ -516,19 +460,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 60
 								line: 11
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 65
 									line: 11
 								}
 								start: Object {
 									column: 2
-									index: 60
 									line: 11
 								}
 							}
@@ -543,12 +484,10 @@ JSRoot {
 									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 7
-										index: 83
 										line: 15
 									}
 									start: Object {
 										column: 2
-										index: 78
 										line: 15
 									}
 								}
@@ -557,12 +496,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 83
 									line: 15
 								}
 								start: Object {
 									column: 2
-									index: 78
 									line: 15
 								}
 							}
@@ -571,12 +508,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 91
 								line: 16
 							}
 							start: Object {
 								column: 2
-								index: 78
 								line: 15
 							}
 						}
@@ -587,12 +522,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 91
 									line: 16
 								}
 								start: Object {
 									column: 5
-									index: 89
 									line: 16
 								}
 							}
@@ -610,12 +543,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 88
 									line: 16
 								}
 								start: Object {
 									column: 2
-									index: 86
 									line: 16
 								}
 							}
@@ -629,19 +560,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 78
 								line: 15
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 83
 									line: 15
 								}
 								start: Object {
 									column: 2
-									index: 78
 									line: 15
 								}
 							}
@@ -656,12 +584,10 @@ JSRoot {
 									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 7
-										index: 100
 										line: 18
 									}
 									start: Object {
 										column: 2
-										index: 95
 										line: 18
 									}
 								}
@@ -670,12 +596,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 100
 									line: 18
 								}
 								start: Object {
 									column: 2
-									index: 95
 									line: 18
 								}
 							}
@@ -684,12 +608,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 108
 								line: 19
 							}
 							start: Object {
 								column: 2
-								index: 95
 								line: 18
 							}
 						}
@@ -700,12 +622,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 108
 									line: 19
 								}
 								start: Object {
 									column: 5
-									index: 106
 									line: 19
 								}
 							}
@@ -723,12 +643,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 105
 									line: 19
 								}
 								start: Object {
 									column: 2
-									index: 103
 									line: 19
 								}
 							}
@@ -742,19 +660,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 95
 								line: 18
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 100
 									line: 18
 								}
 								start: Object {
 									column: 2
-									index: 95
 									line: 18
 								}
 							}
@@ -769,12 +684,10 @@ JSRoot {
 									filename: "es2015/class-methods/tricky-names/input.js"
 									end: Object {
 										column: 9
-										index: 119
 										line: 21
 									}
 									start: Object {
 										column: 2
-										index: 112
 										line: 21
 									}
 								}
@@ -783,12 +696,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 9
-									index: 119
 									line: 21
 								}
 								start: Object {
 									column: 2
-									index: 112
 									line: 21
 								}
 							}
@@ -797,12 +708,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 127
 								line: 22
 							}
 							start: Object {
 								column: 2
-								index: 112
 								line: 21
 							}
 						}
@@ -813,12 +722,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 127
 									line: 22
 								}
 								start: Object {
 									column: 5
-									index: 125
 									line: 22
 								}
 							}
@@ -836,12 +743,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 124
 									line: 22
 								}
 								start: Object {
 									column: 2
-									index: 122
 									line: 22
 								}
 							}
@@ -855,19 +760,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 112
 								line: 21
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 9
-									index: 119
 									line: 21
 								}
 								start: Object {
 									column: 2
-									index: 112
 									line: 21
 								}
 							}
@@ -883,12 +785,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 5
-										index: 144
 										line: 26
 									}
 									start: Object {
 										column: 2
-										index: 141
 										line: 26
 									}
 								}
@@ -897,12 +797,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 144
 									line: 26
 								}
 								start: Object {
 									column: 2
-									index: 141
 									line: 26
 								}
 							}
@@ -911,12 +809,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 152
 								line: 27
 							}
 							start: Object {
 								column: 2
-								index: 132
 								line: 25
 							}
 						}
@@ -927,12 +823,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 152
 									line: 27
 								}
 								start: Object {
 									column: 5
-									index: 150
 									line: 27
 								}
 							}
@@ -950,12 +844,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 149
 									line: 27
 								}
 								start: Object {
 									column: 2
-									index: 147
 									line: 27
 								}
 							}
@@ -969,19 +861,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 132
 								line: 25
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 144
 									line: 26
 								}
 								start: Object {
 									column: 2
-									index: 132
 									line: 25
 								}
 							}
@@ -997,12 +886,10 @@ JSRoot {
 									identifierName: "set"
 									end: Object {
 										column: 5
-										index: 168
 										line: 30
 									}
 									start: Object {
 										column: 2
-										index: 165
 										line: 30
 									}
 								}
@@ -1011,12 +898,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 168
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 165
 									line: 30
 								}
 							}
@@ -1025,12 +910,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 176
 								line: 31
 							}
 							start: Object {
 								column: 2
-								index: 156
 								line: 29
 							}
 						}
@@ -1041,12 +924,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 176
 									line: 31
 								}
 								start: Object {
 									column: 5
-									index: 174
 									line: 31
 								}
 							}
@@ -1064,12 +945,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 173
 									line: 31
 								}
 								start: Object {
 									column: 2
-									index: 171
 									line: 31
 								}
 							}
@@ -1083,19 +962,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 156
 								line: 29
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 5
-									index: 168
 									line: 30
 								}
 								start: Object {
 									column: 2
-									index: 156
 									line: 29
 								}
 							}
@@ -1111,12 +987,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 195
 										line: 34
 									}
 									start: Object {
 										column: 2
-										index: 189
 										line: 34
 									}
 								}
@@ -1125,12 +999,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
-									index: 195
 									line: 34
 								}
 								start: Object {
 									column: 2
-									index: 189
 									line: 34
 								}
 							}
@@ -1139,12 +1011,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 203
 								line: 35
 							}
 							start: Object {
 								column: 2
-								index: 180
 								line: 33
 							}
 						}
@@ -1155,12 +1025,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 203
 									line: 35
 								}
 								start: Object {
 									column: 5
-									index: 201
 									line: 35
 								}
 							}
@@ -1178,12 +1046,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 200
 									line: 35
 								}
 								start: Object {
 									column: 2
-									index: 198
 									line: 35
 								}
 							}
@@ -1197,19 +1063,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 180
 								line: 33
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
-									index: 195
 									line: 34
 								}
 								start: Object {
 									column: 2
-									index: 180
 									line: 33
 								}
 							}
@@ -1225,12 +1088,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 221
 										line: 38
 									}
 									start: Object {
 										column: 2
-										index: 216
 										line: 38
 									}
 								}
@@ -1239,12 +1100,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 221
 									line: 38
 								}
 								start: Object {
 									column: 2
-									index: 216
 									line: 38
 								}
 							}
@@ -1253,12 +1112,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 229
 								line: 39
 							}
 							start: Object {
 								column: 2
-								index: 207
 								line: 37
 							}
 						}
@@ -1269,12 +1126,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 229
 									line: 39
 								}
 								start: Object {
 									column: 5
-									index: 227
 									line: 39
 								}
 							}
@@ -1292,12 +1147,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 226
 									line: 39
 								}
 								start: Object {
 									column: 2
-									index: 224
 									line: 39
 								}
 							}
@@ -1311,19 +1164,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 207
 								line: 37
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 221
 									line: 38
 								}
 								start: Object {
 									column: 2
-									index: 207
 									line: 37
 								}
 							}
@@ -1339,12 +1189,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 243
 										line: 42
 									}
 									start: Object {
 										column: 2
-										index: 242
 										line: 42
 									}
 								}
@@ -1353,12 +1201,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 3
-									index: 243
 									line: 42
 								}
 								start: Object {
 									column: 2
-									index: 242
 									line: 42
 								}
 							}
@@ -1367,12 +1213,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 251
 								line: 43
 							}
 							start: Object {
 								column: 2
-								index: 233
 								line: 41
 							}
 						}
@@ -1383,12 +1227,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 251
 									line: 43
 								}
 								start: Object {
 									column: 5
-									index: 249
 									line: 43
 								}
 							}
@@ -1406,12 +1248,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 248
 									line: 43
 								}
 								start: Object {
 									column: 2
-									index: 246
 									line: 43
 								}
 							}
@@ -1425,19 +1265,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 233
 								line: 41
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 3
-									index: 243
 									line: 42
 								}
 								start: Object {
 									column: 2
-									index: 233
 									line: 41
 								}
 							}
@@ -1453,12 +1290,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 7
-										index: 267
 										line: 47
 									}
 									start: Object {
 										column: 2
-										index: 262
 										line: 47
 									}
 								}
@@ -1467,12 +1302,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 267
 									line: 47
 								}
 								start: Object {
 									column: 2
-									index: 262
 									line: 47
 								}
 							}
@@ -1481,12 +1314,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 275
 								line: 48
 							}
 							start: Object {
 								column: 2
-								index: 256
 								line: 46
 							}
 						}
@@ -1497,12 +1328,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 275
 									line: 48
 								}
 								start: Object {
 									column: 5
-									index: 273
 									line: 48
 								}
 							}
@@ -1520,12 +1349,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 272
 									line: 48
 								}
 								start: Object {
 									column: 2
-									index: 270
 									line: 48
 								}
 							}
@@ -1539,19 +1366,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 256
 								line: 46
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 267
 									line: 47
 								}
 								start: Object {
 									column: 2
-									index: 256
 									line: 46
 								}
 							}
@@ -1567,12 +1391,10 @@ JSRoot {
 									identifierName: "static"
 									end: Object {
 										column: 8
-										index: 301
 										line: 53
 									}
 									start: Object {
 										column: 2
-										index: 295
 										line: 53
 									}
 								}
@@ -1581,12 +1403,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
-									index: 301
 									line: 53
 								}
 								start: Object {
 									column: 2
-									index: 295
 									line: 53
 								}
 							}
@@ -1595,12 +1415,10 @@ JSRoot {
 							filename: "es2015/class-methods/tricky-names/input.js"
 							end: Object {
 								column: 7
-								index: 309
 								line: 54
 							}
 							start: Object {
 								column: 2
-								index: 280
 								line: 51
 							}
 						}
@@ -1611,12 +1429,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 7
-									index: 309
 									line: 54
 								}
 								start: Object {
 									column: 5
-									index: 307
 									line: 54
 								}
 							}
@@ -1634,12 +1450,10 @@ JSRoot {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 4
-									index: 306
 									line: 54
 								}
 								start: Object {
 									column: 2
-									index: 304
 									line: 54
 								}
 							}
@@ -1653,19 +1467,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 280
 								line: 51
 							}
 							loc: Object {
 								filename: "es2015/class-methods/tricky-names/input.js"
 								end: Object {
 									column: 8
-									index: 301
 									line: 53
 								}
 								start: Object {
 									column: 2
-									index: 280
 									line: 51
 								}
 							}

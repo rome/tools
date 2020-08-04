@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/object/async-method-linebreak/input.js"
 		end: Object {
 			column: 0
-			index: 29
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 12
 					line: 2
 				}
 				start: Object {
 					column: 4
-					index: 17
 					line: 3
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/object/async-method-linebreak/input.js"
 				end: Object {
 					column: 2
-					index: 28
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2015/object/async-method-linebreak/input.js"
 					end: Object {
 						column: 1
-						index: 27
 						line: 4
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -95,12 +87,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 7
-										index: 20
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 17
 										line: 3
 									}
 								}
@@ -109,12 +99,10 @@ JSRoot {
 								filename: "es2015/object/async-method-linebreak/input.js"
 								end: Object {
 									column: 7
-									index: 20
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 17
 									line: 3
 								}
 							}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "es2015/object/async-method-linebreak/input.js"
 							end: Object {
 								column: 12
-								index: 25
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 7
 								line: 2
 							}
 						}
@@ -139,12 +125,10 @@ JSRoot {
 								filename: "es2015/object/async-method-linebreak/input.js"
 								end: Object {
 									column: 12
-									index: 25
 									line: 3
 								}
 								start: Object {
 									column: 10
-									index: 23
 									line: 3
 								}
 							}
@@ -162,12 +146,10 @@ JSRoot {
 								filename: "es2015/object/async-method-linebreak/input.js"
 								end: Object {
 									column: 9
-									index: 22
 									line: 3
 								}
 								start: Object {
 									column: 7
-									index: 20
 									line: 3
 								}
 							}

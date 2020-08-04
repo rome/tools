@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2018/async-generators/class-method/input.js"
 		end: Object {
 			column: 0
-			index: 131
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Query"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2018/async-generators/class-method/input.js"
 				end: Object {
 					column: 1
-					index: 130
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "es2018/async-generators/class-method/input.js"
 					end: Object {
 						column: 1
-						index: 130
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "queryAll"
 									end: Object {
 										column: 19
-										index: 33
 										line: 2
 									}
 									start: Object {
 										column: 11
-										index: 25
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "es2018/async-generators/class-method/input.js"
 								end: Object {
 									column: 19
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 25
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "es2018/async-generators/class-method/input.js"
 							end: Object {
 								column: 5
-								index: 128
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 18
 								line: 2
 							}
 						}
@@ -138,19 +124,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 18
 								line: 2
 							}
 							loc: Object {
 								filename: "es2018/async-generators/class-method/input.js"
 								end: Object {
 									column: 19
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 18
 									line: 2
 								}
 							}
@@ -167,12 +150,10 @@ JSRoot {
 								filename: "es2018/async-generators/class-method/input.js"
 								end: Object {
 									column: 24
-									index: 38
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 33
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 										identifierName: "ids"
 										end: Object {
 											column: 23
-											index: 37
 											line: 2
 										}
 										start: Object {
 											column: 20
-											index: 34
 											line: 2
 										}
 									}
@@ -200,12 +179,10 @@ JSRoot {
 											filename: "es2018/async-generators/class-method/input.js"
 											end: Object {
 												column: 23
-												index: 37
 												line: 2
 											}
 											start: Object {
 												column: 20
-												index: 34
 												line: 2
 											}
 										}
@@ -219,12 +196,10 @@ JSRoot {
 								filename: "es2018/async-generators/class-method/input.js"
 								end: Object {
 									column: 5
-									index: 128
 									line: 6
 								}
 								start: Object {
 									column: 25
-									index: 39
 									line: 2
 								}
 							}
@@ -235,12 +210,10 @@ JSRoot {
 										filename: "es2018/async-generators/class-method/input.js"
 										end: Object {
 											column: 9
-											index: 122
 											line: 5
 										}
 										start: Object {
 											column: 8
-											index: 49
 											line: 3
 										}
 									}
@@ -251,12 +224,10 @@ JSRoot {
 											identifierName: "ids"
 											end: Object {
 												column: 28
-												index: 69
 												line: 3
 											}
 											start: Object {
 												column: 25
-												index: 66
 												line: 3
 											}
 										}
@@ -267,12 +238,10 @@ JSRoot {
 											filename: "es2018/async-generators/class-method/input.js"
 											end: Object {
 												column: 21
-												index: 62
 												line: 3
 											}
 											start: Object {
 												column: 13
-												index: 54
 												line: 3
 											}
 										}
@@ -285,12 +254,10 @@ JSRoot {
 														identifierName: "id"
 														end: Object {
 															column: 21
-															index: 62
 															line: 3
 														}
 														start: Object {
 															column: 19
-															index: 60
 															line: 3
 														}
 													}
@@ -300,12 +267,10 @@ JSRoot {
 													filename: "es2018/async-generators/class-method/input.js"
 													end: Object {
 														column: 21
-														index: 62
 														line: 3
 													}
 													start: Object {
 														column: 19
-														index: 60
 														line: 3
 													}
 												}
@@ -318,12 +283,10 @@ JSRoot {
 											filename: "es2018/async-generators/class-method/input.js"
 											end: Object {
 												column: 9
-												index: 122
 												line: 5
 											}
 											start: Object {
 												column: 30
-												index: 71
 												line: 3
 											}
 										}
@@ -333,12 +296,10 @@ JSRoot {
 													filename: "es2018/async-generators/class-method/input.js"
 													end: Object {
 														column: 39
-														index: 112
 														line: 4
 													}
 													start: Object {
 														column: 12
-														index: 85
 														line: 4
 													}
 												}
@@ -348,12 +309,10 @@ JSRoot {
 														filename: "es2018/async-generators/class-method/input.js"
 														end: Object {
 															column: 38
-															index: 111
 															line: 4
 														}
 														start: Object {
 															column: 12
-															index: 85
 															line: 4
 														}
 													}
@@ -362,12 +321,10 @@ JSRoot {
 															filename: "es2018/async-generators/class-method/input.js"
 															end: Object {
 																column: 38
-																index: 111
 																line: 4
 															}
 															start: Object {
 																column: 18
-																index: 91
 																line: 4
 															}
 														}
@@ -376,12 +333,10 @@ JSRoot {
 																filename: "es2018/async-generators/class-method/input.js"
 																end: Object {
 																	column: 38
-																	index: 111
 																	line: 4
 																}
 																start: Object {
 																	column: 24
-																	index: 97
 																	line: 4
 																}
 															}
@@ -393,12 +348,10 @@ JSRoot {
 																		identifierName: "id"
 																		end: Object {
 																			column: 37
-																			index: 110
 																			line: 4
 																		}
 																		start: Object {
 																			column: 35
-																			index: 108
 																			line: 4
 																		}
 																	}
@@ -409,12 +362,10 @@ JSRoot {
 																	filename: "es2018/async-generators/class-method/input.js"
 																	end: Object {
 																		column: 34
-																		index: 107
 																		line: 4
 																	}
 																	start: Object {
 																		column: 24
-																		index: 97
 																		line: 4
 																	}
 																}
@@ -423,12 +374,10 @@ JSRoot {
 																		filename: "es2018/async-generators/class-method/input.js"
 																		end: Object {
 																			column: 28
-																			index: 101
 																			line: 4
 																		}
 																		start: Object {
 																			column: 24
-																			index: 97
 																			line: 4
 																		}
 																	}
@@ -441,12 +390,10 @@ JSRoot {
 																			identifierName: "query"
 																			end: Object {
 																				column: 34
-																				index: 107
 																				line: 4
 																			}
 																			start: Object {
 																				column: 29
-																				index: 102
 																				line: 4
 																			}
 																		}
@@ -456,12 +403,10 @@ JSRoot {
 																		identifierName: "query"
 																		end: Object {
 																			column: 34
-																			index: 107
 																			line: 4
 																		}
 																		start: Object {
 																			column: 29
-																			index: 102
 																			line: 4
 																		}
 																	}

@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "footer/input.txt"
 		end: Object {
 			column: 38
-			index: 100
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

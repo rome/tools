@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 		end: Object {
 			column: 26
-			index: 26
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 23
-							index: 23
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 						end: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -97,12 +87,10 @@ JSRoot {
 							filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 							end: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 							start: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 						}
@@ -112,12 +100,10 @@ JSRoot {
 							filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}
@@ -126,12 +112,10 @@ JSRoot {
 								filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 							}
@@ -143,12 +127,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 								start: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 							}

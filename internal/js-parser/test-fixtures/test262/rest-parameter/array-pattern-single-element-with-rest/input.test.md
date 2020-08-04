@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 		end: Object {
 			column: 0
-			index: 45
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "singleElementWithRest"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 					end: Object {
 						column: 41
-						index: 41
 						line: 1
 					}
 					start: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 						filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 						end: Object {
 							column: 40
-							index: 40
 							line: 1
 						}
 						start: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 							end: Object {
 								column: 40
-								index: 40
 								line: 1
 							}
 							start: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 						}
@@ -140,12 +126,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 								filename: "test262/rest-parameter/array-pattern-single-element-with-rest/input.js"
 								end: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 								start: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 							}

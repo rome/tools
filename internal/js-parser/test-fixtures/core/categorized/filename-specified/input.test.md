@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/categorized/filename-specified/input.js"
 		end: Object {
 			column: 0
-			index: 100
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/categorized/filename-specified/input.js"
 				end: Object {
 					column: 59
-					index: 59
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "core/categorized/filename-specified/input.js"
 				end: Object {
 					column: 39
-					index: 99
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 60
 					line: 2
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "core/categorized/filename-specified/input.js"
 					end: Object {
 						column: 39
-						index: 99
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 60
 						line: 2
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 								identifierName: "node"
 								end: Object {
 									column: 8
-									index: 68
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 64
 									line: 2
 								}
 							}
@@ -106,12 +96,10 @@ JSRoot {
 							filename: "core/categorized/filename-specified/input.js"
 							end: Object {
 								column: 38
-								index: 98
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 64
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "core/categorized/filename-specified/input.js"
 								end: Object {
 									column: 38
-									index: 98
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 71
 									line: 2
 								}
 							}

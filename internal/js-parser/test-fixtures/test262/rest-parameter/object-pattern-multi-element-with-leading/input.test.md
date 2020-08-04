@@ -22,12 +22,10 @@ JSRoot {
 		filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 		end: Object {
 			column: 0
-			index: 65
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "multiElementWithLeading"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 				end: Object {
 					column: 64
-					index: 64
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 					end: Object {
 						column: 64
-						index: 64
 						line: 1
 					}
 					start: Object {
 						column: 62
-						index: 62
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 					end: Object {
 						column: 61
-						index: 61
 						line: 1
 					}
 					start: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 				}
@@ -108,12 +98,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 34
-								index: 34
 								line: 1
 							}
 							start: Object {
 								column: 33
-								index: 33
 								line: 1
 							}
 						}
@@ -124,12 +112,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 34
-									index: 34
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 							identifierName: "y"
 							end: Object {
 								column: 37
-								index: 37
 								line: 1
 							}
 							start: Object {
 								column: 36
-								index: 36
 								line: 1
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 37
-									index: 37
 									line: 1
 								}
 								start: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 							}
@@ -176,12 +158,10 @@ JSRoot {
 						filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 						end: Object {
 							column: 60
-							index: 60
 							line: 1
 						}
 						start: Object {
 							column: 42
-							index: 42
 							line: 1
 						}
 					}
@@ -192,12 +172,10 @@ JSRoot {
 							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 							end: Object {
 								column: 60
-								index: 60
 								line: 1
 							}
 							start: Object {
 								column: 42
-								index: 42
 								line: 1
 							}
 						}
@@ -212,12 +190,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 44
-											index: 44
 											line: 1
 										}
 										start: Object {
 											column: 43
-											index: 43
 											line: 1
 										}
 									}
@@ -226,12 +202,10 @@ JSRoot {
 									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 44
-										index: 44
 										line: 1
 									}
 									start: Object {
 										column: 43
-										index: 43
 										line: 1
 									}
 								}
@@ -243,12 +217,10 @@ JSRoot {
 									identifierName: "r"
 									end: Object {
 										column: 47
-										index: 47
 										line: 1
 									}
 									start: Object {
 										column: 46
-										index: 46
 										line: 1
 									}
 								}
@@ -257,12 +229,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 47
-									index: 47
 									line: 1
 								}
 								start: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 							}
@@ -276,12 +246,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 50
-											index: 50
 											line: 1
 										}
 										start: Object {
 											column: 49
-											index: 49
 											line: 1
 										}
 									}
@@ -290,12 +258,10 @@ JSRoot {
 									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 50
-										index: 50
 										line: 1
 									}
 									start: Object {
 										column: 49
-										index: 49
 										line: 1
 									}
 								}
@@ -307,12 +273,10 @@ JSRoot {
 									identifierName: "s"
 									end: Object {
 										column: 53
-										index: 53
 										line: 1
 									}
 									start: Object {
 										column: 52
-										index: 52
 										line: 1
 									}
 								}
@@ -321,12 +285,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 53
-									index: 53
 									line: 1
 								}
 								start: Object {
 									column: 49
-									index: 49
 									line: 1
 								}
 							}
@@ -340,12 +302,10 @@ JSRoot {
 										identifierName: "c"
 										end: Object {
 											column: 56
-											index: 56
 											line: 1
 										}
 										start: Object {
 											column: 55
-											index: 55
 											line: 1
 										}
 									}
@@ -354,12 +314,10 @@ JSRoot {
 									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 									end: Object {
 										column: 56
-										index: 56
 										line: 1
 									}
 									start: Object {
 										column: 55
-										index: 55
 										line: 1
 									}
 								}
@@ -371,12 +329,10 @@ JSRoot {
 									identifierName: "t"
 									end: Object {
 										column: 59
-										index: 59
 										line: 1
 									}
 									start: Object {
 										column: 58
-										index: 58
 										line: 1
 									}
 								}
@@ -385,12 +341,10 @@ JSRoot {
 								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
 								end: Object {
 									column: 59
-									index: 59
 									line: 1
 								}
 								start: Object {
 									column: 55
-									index: 55
 									line: 1
 								}
 							}

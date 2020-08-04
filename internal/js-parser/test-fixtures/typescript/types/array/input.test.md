@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/array/input.ts"
 		end: Object {
 			column: 0
-			index: 21
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/array/input.ts"
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/array/input.ts"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/array/input.ts"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/array/input.ts"
 									end: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/array/input.ts"
 										end: Object {
 											column: 19
-											index: 19
 											line: 1
 										}
 										start: Object {
 											column: 9
-											index: 9
 											line: 1
 										}
 									}
@@ -112,12 +100,10 @@ JSRoot {
 											filename: "typescript/types/array/input.ts"
 											end: Object {
 												column: 17
-												index: 17
 												line: 1
 											}
 											start: Object {
 												column: 9
-												index: 9
 												line: 1
 											}
 										}
@@ -126,12 +112,10 @@ JSRoot {
 												filename: "typescript/types/array/input.ts"
 												end: Object {
 													column: 15
-													index: 15
 													line: 1
 												}
 												start: Object {
 													column: 9
-													index: 9
 													line: 1
 												}
 											}
@@ -145,12 +129,10 @@ JSRoot {
 							filename: "typescript/types/array/input.ts"
 							end: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

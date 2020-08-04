@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/modules/xml-comment-in-script/input.js"
 		end: Object {
 			column: 0
-			index: 12
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2015/modules/xml-comment-in-script/input.js"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "es2015/modules/xml-comment-in-script/input.js"
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 3
-						index: 3
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

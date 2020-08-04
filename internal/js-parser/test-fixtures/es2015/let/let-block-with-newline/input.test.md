@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/let/let-block-with-newline/input.js"
 		end: Object {
 			column: 0
-			index: 40
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2015/let/let-block-with-newline/input.js"
 				end: Object {
 					column: 17
-					index: 30
 					line: 2
 				}
 				start: Object {
 					column: 11
-					index: 24
 					line: 2
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "es2015/let/let-block-with-newline/input.js"
 				end: Object {
 					column: 1
-					index: 39
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "es2015/let/let-block-with-newline/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 					filename: "es2015/let/let-block-with-newline/input.js"
 					end: Object {
 						column: 1
-						index: 39
 						line: 4
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -103,12 +93,10 @@ JSRoot {
 							filename: "es2015/let/let-block-with-newline/input.js"
 							end: Object {
 								column: 10
-								index: 23
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 17
 								line: 2
 							}
 						}
@@ -119,12 +107,10 @@ JSRoot {
 								identifierName: "L"
 								end: Object {
 									column: 5
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 17
 									line: 2
 								}
 							}
@@ -135,12 +121,10 @@ JSRoot {
 								filename: "es2015/let/let-block-with-newline/input.js"
 								end: Object {
 									column: 10
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 20
 									line: 2
 								}
 							}
@@ -152,12 +136,10 @@ JSRoot {
 									identifierName: "let"
 									end: Object {
 										column: 10
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 7
-										index: 20
 										line: 2
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 							filename: "es2015/let/let-block-with-newline/input.js"
 							end: Object {
 								column: 6
-								index: 37
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 35
 								line: 3
 							}
 						}

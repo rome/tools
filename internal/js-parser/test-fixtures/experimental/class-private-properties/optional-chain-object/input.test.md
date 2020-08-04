@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/optional-chain-object/input.js"
 		end: Object {
 			column: 0
-			index: 220
 			line: 15
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/optional-chain-object/input.js"
 				end: Object {
 					column: 1
-					index: 219
 					line: 14
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/optional-chain-object/input.js"
 					end: Object {
 						column: 1
-						index: 219
 						line: 14
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 11
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 22
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 11
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 21
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 15
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 14
-									index: 26
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/optional-chain-object/input.js"
 							end: Object {
 								column: 16
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 11
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -182,12 +163,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 11
-										index: 40
 										line: 3
 									}
 									start: Object {
 										column: 10
-										index: 39
 										line: 3
 									}
 								}
@@ -196,12 +175,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 11
-									index: 40
 									line: 3
 								}
 								start: Object {
 									column: 9
-									index: 38
 									line: 3
 								}
 							}
@@ -212,12 +189,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 27
-									index: 56
 									line: 3
 								}
 								start: Object {
 									column: 14
-									index: 43
 									line: 3
 								}
 							}
@@ -228,12 +203,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/optional-chain-object/input.js"
 									end: Object {
 										column: 27
-										index: 56
 										line: 3
 									}
 									start: Object {
 										column: 25
-										index: 54
 										line: 3
 									}
 								}
@@ -251,12 +224,10 @@ JSRoot {
 									filename: "experimental/class-private-properties/optional-chain-object/input.js"
 									end: Object {
 										column: 24
-										index: 53
 										line: 3
 									}
 									start: Object {
 										column: 22
-										index: 51
 										line: 3
 									}
 								}
@@ -267,12 +238,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/optional-chain-object/input.js"
 							end: Object {
 								column: 28
-								index: 57
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 31
 								line: 3
 							}
 						}
@@ -285,19 +254,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 31
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 11
-									index: 40
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 31
 									line: 3
 								}
 							}
@@ -313,12 +279,10 @@ JSRoot {
 									identifierName: "test"
 									end: Object {
 										column: 13
-										index: 72
 										line: 5
 									}
 									start: Object {
 										column: 9
-										index: 68
 										line: 5
 									}
 								}
@@ -327,12 +291,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 13
-									index: 72
 									line: 5
 								}
 								start: Object {
 									column: 9
-									index: 68
 									line: 5
 								}
 							}
@@ -341,12 +303,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/optional-chain-object/input.js"
 							end: Object {
 								column: 3
-								index: 217
 								line: 13
 							}
 							start: Object {
 								column: 2
-								index: 61
 								line: 5
 							}
 						}
@@ -363,12 +323,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 15
-									index: 74
 									line: 5
 								}
 								start: Object {
 									column: 13
-									index: 72
 									line: 5
 								}
 							}
@@ -382,19 +340,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 61
 								line: 5
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 13
-									index: 72
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 61
 									line: 5
 								}
 							}
@@ -405,12 +360,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/optional-chain-object/input.js"
 								end: Object {
 									column: 3
-									index: 217
 									line: 13
 								}
 								start: Object {
 									column: 16
-									index: 75
 									line: 5
 								}
 							}
@@ -420,12 +373,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/optional-chain-object/input.js"
 										end: Object {
 											column: 27
-											index: 104
 											line: 6
 										}
 										start: Object {
 											column: 4
-											index: 81
 											line: 6
 										}
 									}
@@ -435,12 +386,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/optional-chain-object/input.js"
 											end: Object {
 												column: 27
-												index: 104
 												line: 6
 											}
 											start: Object {
 												column: 4
-												index: 81
 												line: 6
 											}
 										}
@@ -453,12 +402,10 @@ JSRoot {
 														identifierName: "o"
 														end: Object {
 															column: 11
-															index: 88
 															line: 6
 														}
 														start: Object {
 															column: 10
-															index: 87
 															line: 6
 														}
 													}
@@ -467,12 +414,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/optional-chain-object/input.js"
 													end: Object {
 														column: 26
-														index: 103
 														line: 6
 													}
 													start: Object {
 														column: 10
-														index: 87
 														line: 6
 													}
 												}
@@ -481,12 +426,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 26
-															index: 103
 															line: 6
 														}
 														start: Object {
 															column: 14
-															index: 91
 															line: 6
 														}
 													}
@@ -500,12 +443,10 @@ JSRoot {
 																		identifierName: "Foo"
 																		end: Object {
 																			column: 19
-																			index: 96
 																			line: 6
 																		}
 																		start: Object {
 																			column: 16
-																			index: 93
 																			line: 6
 																		}
 																	}
@@ -514,12 +455,10 @@ JSRoot {
 																	filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																	end: Object {
 																		column: 19
-																		index: 96
 																		line: 6
 																	}
 																	start: Object {
 																		column: 16
-																		index: 93
 																		line: 6
 																	}
 																}
@@ -531,12 +470,10 @@ JSRoot {
 																	identifierName: "Foo"
 																	end: Object {
 																		column: 24
-																		index: 101
 																		line: 6
 																	}
 																	start: Object {
 																		column: 21
-																		index: 98
 																		line: 6
 																	}
 																}
@@ -545,12 +482,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																end: Object {
 																	column: 24
-																	index: 101
 																	line: 6
 																}
 																start: Object {
 																	column: 16
-																	index: 93
 																	line: 6
 																}
 															}
@@ -566,12 +501,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/optional-chain-object/input.js"
 										end: Object {
 											column: 6
-											index: 213
 											line: 12
 										}
 										start: Object {
 											column: 4
-											index: 109
 											line: 7
 										}
 									}
@@ -580,12 +513,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/optional-chain-object/input.js"
 											end: Object {
 												column: 5
-												index: 212
 												line: 12
 											}
 											start: Object {
 												column: 11
-												index: 116
 												line: 7
 											}
 										}
@@ -595,12 +526,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/optional-chain-object/input.js"
 													end: Object {
 														column: 15
-														index: 133
 														line: 8
 													}
 													start: Object {
 														column: 6
-														index: 124
 														line: 8
 													}
 												}
@@ -613,12 +542,10 @@ JSRoot {
 																identifierName: "x"
 																end: Object {
 																	column: 15
-																	index: 133
 																	line: 8
 																}
 																start: Object {
 																	column: 14
-																	index: 132
 																	line: 8
 																}
 															}
@@ -627,12 +554,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 15
-																index: 133
 																line: 8
 															}
 															start: Object {
 																column: 13
-																index: 131
 																line: 8
 															}
 														}
@@ -641,12 +566,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 15
-															index: 133
 															line: 8
 														}
 														start: Object {
 															column: 13
-															index: 131
 															line: 8
 														}
 													}
@@ -656,12 +579,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 12
-															index: 130
 															line: 8
 														}
 														start: Object {
 															column: 6
-															index: 124
 															line: 8
 														}
 													}
@@ -672,12 +593,10 @@ JSRoot {
 															identifierName: "o"
 															end: Object {
 																column: 7
-																index: 125
 																line: 8
 															}
 															start: Object {
 																column: 6
-																index: 124
 																line: 8
 															}
 														}
@@ -690,12 +609,10 @@ JSRoot {
 																identifierName: "Foo"
 																end: Object {
 																	column: 12
-																	index: 130
 																	line: 8
 																}
 																start: Object {
 																	column: 9
-																	index: 127
 																	line: 8
 																}
 															}
@@ -706,12 +623,10 @@ JSRoot {
 															identifierName: "Foo"
 															end: Object {
 																column: 12
-																index: 130
 																line: 8
 															}
 															start: Object {
 																column: 9
-																index: 127
 																line: 8
 															}
 														}
@@ -723,12 +638,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/optional-chain-object/input.js"
 													end: Object {
 														column: 23
-														index: 158
 														line: 9
 													}
 													start: Object {
 														column: 6
-														index: 141
 														line: 9
 													}
 												}
@@ -740,12 +653,10 @@ JSRoot {
 															identifierName: "toFixed"
 															end: Object {
 																column: 23
-																index: 158
 																line: 9
 															}
 															start: Object {
 																column: 16
-																index: 151
 																line: 9
 															}
 														}
@@ -755,12 +666,10 @@ JSRoot {
 														identifierName: "toFixed"
 														end: Object {
 															column: 23
-															index: 158
 															line: 9
 														}
 														start: Object {
 															column: 16
-															index: 151
 															line: 9
 														}
 													}
@@ -770,12 +679,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 15
-															index: 150
 															line: 9
 														}
 														start: Object {
 															column: 6
-															index: 141
 															line: 9
 														}
 													}
@@ -788,12 +695,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 15
-																		index: 150
 																		line: 9
 																	}
 																	start: Object {
 																		column: 14
-																		index: 149
 																		line: 9
 																	}
 																}
@@ -802,12 +707,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																end: Object {
 																	column: 15
-																	index: 150
 																	line: 9
 																}
 																start: Object {
 																	column: 13
-																	index: 148
 																	line: 9
 																}
 															}
@@ -816,12 +719,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 15
-																index: 150
 																line: 9
 															}
 															start: Object {
 																column: 13
-																index: 148
 																line: 9
 															}
 														}
@@ -831,12 +732,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 12
-																index: 147
 																line: 9
 															}
 															start: Object {
 																column: 6
-																index: 141
 																line: 9
 															}
 														}
@@ -847,12 +746,10 @@ JSRoot {
 																identifierName: "o"
 																end: Object {
 																	column: 7
-																	index: 142
 																	line: 9
 																}
 																start: Object {
 																	column: 6
-																	index: 141
 																	line: 9
 																}
 															}
@@ -865,12 +762,10 @@ JSRoot {
 																	identifierName: "Foo"
 																	end: Object {
 																		column: 12
-																		index: 147
 																		line: 9
 																	}
 																	start: Object {
 																		column: 9
-																		index: 144
 																		line: 9
 																	}
 																}
@@ -881,12 +776,10 @@ JSRoot {
 																identifierName: "Foo"
 																end: Object {
 																	column: 12
-																	index: 147
 																	line: 9
 																}
 																start: Object {
 																	column: 9
-																	index: 144
 																	line: 9
 																}
 															}
@@ -899,12 +792,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/optional-chain-object/input.js"
 													end: Object {
 														column: 26
-														index: 186
 														line: 10
 													}
 													start: Object {
 														column: 6
-														index: 166
 														line: 10
 													}
 												}
@@ -916,12 +807,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 25
-																index: 185
 																line: 10
 															}
 															start: Object {
 																column: 24
-																index: 184
 																line: 10
 															}
 														}
@@ -932,12 +821,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 23
-															index: 183
 															line: 10
 														}
 														start: Object {
 															column: 6
-															index: 166
 															line: 10
 														}
 													}
@@ -949,12 +836,10 @@ JSRoot {
 																identifierName: "toFixed"
 																end: Object {
 																	column: 23
-																	index: 183
 																	line: 10
 																}
 																start: Object {
 																	column: 16
-																	index: 176
 																	line: 10
 																}
 															}
@@ -964,12 +849,10 @@ JSRoot {
 															identifierName: "toFixed"
 															end: Object {
 																column: 23
-																index: 183
 																line: 10
 															}
 															start: Object {
 																column: 16
-																index: 176
 																line: 10
 															}
 														}
@@ -979,12 +862,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 15
-																index: 175
 																line: 10
 															}
 															start: Object {
 																column: 6
-																index: 166
 																line: 10
 															}
 														}
@@ -997,12 +878,10 @@ JSRoot {
 																		identifierName: "x"
 																		end: Object {
 																			column: 15
-																			index: 175
 																			line: 10
 																		}
 																		start: Object {
 																			column: 14
-																			index: 174
 																			line: 10
 																		}
 																	}
@@ -1011,12 +890,10 @@ JSRoot {
 																	filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																	end: Object {
 																		column: 15
-																		index: 175
 																		line: 10
 																	}
 																	start: Object {
 																		column: 13
-																		index: 173
 																		line: 10
 																	}
 																}
@@ -1025,12 +902,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																end: Object {
 																	column: 15
-																	index: 175
 																	line: 10
 																}
 																start: Object {
 																	column: 13
-																	index: 173
 																	line: 10
 																}
 															}
@@ -1040,12 +915,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																end: Object {
 																	column: 12
-																	index: 172
 																	line: 10
 																}
 																start: Object {
 																	column: 6
-																	index: 166
 																	line: 10
 																}
 															}
@@ -1056,12 +929,10 @@ JSRoot {
 																	identifierName: "o"
 																	end: Object {
 																		column: 7
-																		index: 167
 																		line: 10
 																	}
 																	start: Object {
 																		column: 6
-																		index: 166
 																		line: 10
 																	}
 																}
@@ -1074,12 +945,10 @@ JSRoot {
 																		identifierName: "Foo"
 																		end: Object {
 																			column: 12
-																			index: 172
 																			line: 10
 																		}
 																		start: Object {
 																			column: 9
-																			index: 169
 																			line: 10
 																		}
 																	}
@@ -1090,12 +959,10 @@ JSRoot {
 																	identifierName: "Foo"
 																	end: Object {
 																		column: 12
-																		index: 172
 																		line: 10
 																	}
 																	start: Object {
 																		column: 9
-																		index: 169
 																		line: 10
 																	}
 																}
@@ -1110,12 +977,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/optional-chain-object/input.js"
 													end: Object {
 														column: 17
-														index: 205
 														line: 11
 													}
 													start: Object {
 														column: 6
-														index: 194
 														line: 11
 													}
 												}
@@ -1124,12 +989,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/optional-chain-object/input.js"
 														end: Object {
 															column: 15
-															index: 203
 															line: 11
 														}
 														start: Object {
 															column: 6
-															index: 194
 															line: 11
 														}
 													}
@@ -1142,12 +1005,10 @@ JSRoot {
 																	identifierName: "m"
 																	end: Object {
 																		column: 15
-																		index: 203
 																		line: 11
 																	}
 																	start: Object {
 																		column: 14
-																		index: 202
 																		line: 11
 																	}
 																}
@@ -1156,12 +1017,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/optional-chain-object/input.js"
 																end: Object {
 																	column: 15
-																	index: 203
 																	line: 11
 																}
 																start: Object {
 																	column: 13
-																	index: 201
 																	line: 11
 																}
 															}
@@ -1170,12 +1029,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 15
-																index: 203
 																line: 11
 															}
 															start: Object {
 																column: 13
-																index: 201
 																line: 11
 															}
 														}
@@ -1185,12 +1042,10 @@ JSRoot {
 															filename: "experimental/class-private-properties/optional-chain-object/input.js"
 															end: Object {
 																column: 12
-																index: 200
 																line: 11
 															}
 															start: Object {
 																column: 6
-																index: 194
 																line: 11
 															}
 														}
@@ -1201,12 +1056,10 @@ JSRoot {
 																identifierName: "o"
 																end: Object {
 																	column: 7
-																	index: 195
 																	line: 11
 																}
 																start: Object {
 																	column: 6
-																	index: 194
 																	line: 11
 																}
 															}
@@ -1219,12 +1072,10 @@ JSRoot {
 																	identifierName: "Foo"
 																	end: Object {
 																		column: 12
-																		index: 200
 																		line: 11
 																	}
 																	start: Object {
 																		column: 9
-																		index: 197
 																		line: 11
 																	}
 																}
@@ -1235,12 +1086,10 @@ JSRoot {
 																identifierName: "Foo"
 																end: Object {
 																	column: 12
-																	index: 200
 																	line: 11
 																}
 																start: Object {
 																	column: 9
-																	index: 197
 																	line: 11
 																}
 															}

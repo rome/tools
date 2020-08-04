@@ -16,13 +16,13 @@ import {
 import {addOriginsToDiagnostics} from "./derive";
 import {naturalCompare} from "@internal/string-utils";
 import {DiagnosticsError} from "./errors";
-import {ob1Get0} from "@internal/ob1";
 import {DiagnosticCategoryPrefix} from "./categories";
 import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
+import {comparePositions} from "@internal/parser-core";
 
 type UniquePart =
 	| "filename"
@@ -430,13 +430,7 @@ export default class DiagnosticsProcessor {
 
 			// Sort all file diagnostics by location start index
 			const sortedFileDiagnostics = fileDiagnostics.sort((a, b) => {
-				const aStart = a.location.start;
-				const bStart = b.location.start;
-				if (aStart === undefined || bStart === undefined) {
-					return 0;
-				} else {
-					return ob1Get0(aStart.index) - ob1Get0(bStart.index);
-				}
+				return comparePositions(a.location.start, b.location.start);
 			});
 
 			sortedDiagnostics = [...sortedDiagnostics, ...sortedFileDiagnostics];

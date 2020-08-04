@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/constructor-with-modifier-names/input.ts"
 		end: Object {
 			column: 0
-			index: 92
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/constructor-with-modifier-names/input.ts"
 				end: Object {
 					column: 1
-					index: 91
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/constructor-with-modifier-names/input.ts"
 					end: Object {
 						column: 1
-						index: 91
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 25
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 14
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/class/constructor-with-modifier-names/input.ts"
 							end: Object {
 								column: 31
-								index: 43
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 31
-									index: 43
 									line: 2
 								}
 								start: Object {
 									column: 29
-									index: 41
 									line: 2
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 28
-									index: 40
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 25
 									line: 2
 								}
 							}
@@ -201,12 +180,10 @@ JSRoot {
 										identifierName: "set"
 										end: Object {
 											column: 17
-											index: 29
 											line: 2
 										}
 										start: Object {
 											column: 14
-											index: 26
 											line: 2
 										}
 									}
@@ -217,12 +194,10 @@ JSRoot {
 											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 17
-												index: 29
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 26
 												line: 2
 											}
 										}
@@ -235,12 +210,10 @@ JSRoot {
 										identifierName: "readonly"
 										end: Object {
 											column: 27
-											index: 39
 											line: 2
 										}
 										start: Object {
 											column: 19
-											index: 31
 											line: 2
 										}
 									}
@@ -251,12 +224,10 @@ JSRoot {
 											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 27
-												index: 39
 												line: 2
 											}
 											start: Object {
 												column: 19
-												index: 31
 												line: 2
 											}
 										}
@@ -275,12 +246,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 57
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 46
 										line: 3
 									}
 								}
@@ -289,12 +258,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
-									index: 57
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 46
 									line: 3
 								}
 							}
@@ -303,12 +270,10 @@ JSRoot {
 							filename: "typescript/class/constructor-with-modifier-names/input.ts"
 							end: Object {
 								column: 45
-								index: 89
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 46
 								line: 3
 							}
 						}
@@ -319,12 +284,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 45
-									index: 89
 									line: 3
 								}
 								start: Object {
 									column: 43
-									index: 87
 									line: 3
 								}
 							}
@@ -338,19 +301,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 46
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 13
-									index: 57
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 46
 									line: 3
 								}
 							}
@@ -367,12 +327,10 @@ JSRoot {
 								filename: "typescript/class/constructor-with-modifier-names/input.ts"
 								end: Object {
 									column: 42
-									index: 86
 									line: 3
 								}
 								start: Object {
 									column: 13
-									index: 57
 									line: 3
 								}
 							}
@@ -384,12 +342,10 @@ JSRoot {
 										identifierName: "set"
 										end: Object {
 											column: 17
-											index: 61
 											line: 3
 										}
 										start: Object {
 											column: 14
-											index: 58
 											line: 3
 										}
 									}
@@ -399,12 +355,10 @@ JSRoot {
 											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 22
-												index: 66
 												line: 3
 											}
 											start: Object {
 												column: 14
-												index: 58
 												line: 3
 											}
 										}
@@ -413,12 +367,10 @@ JSRoot {
 												filename: "typescript/class/constructor-with-modifier-names/input.ts"
 												end: Object {
 													column: 22
-													index: 66
 													line: 3
 												}
 												start: Object {
 													column: 19
-													index: 63
 													line: 3
 												}
 											}
@@ -432,12 +384,10 @@ JSRoot {
 										identifierName: "readonly"
 										end: Object {
 											column: 32
-											index: 76
 											line: 3
 										}
 										start: Object {
 											column: 24
-											index: 68
 											line: 3
 										}
 									}
@@ -447,12 +397,10 @@ JSRoot {
 											filename: "typescript/class/constructor-with-modifier-names/input.ts"
 											end: Object {
 												column: 41
-												index: 85
 												line: 3
 											}
 											start: Object {
 												column: 24
-												index: 68
 												line: 3
 											}
 										}
@@ -461,12 +409,10 @@ JSRoot {
 												filename: "typescript/class/constructor-with-modifier-names/input.ts"
 												end: Object {
 													column: 41
-													index: 85
 													line: 3
 												}
 												start: Object {
 													column: 34
-													index: 78
 													line: 3
 												}
 											}

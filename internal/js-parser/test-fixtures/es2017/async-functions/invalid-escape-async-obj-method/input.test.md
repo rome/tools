@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -66,12 +62,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -99,12 +91,10 @@ JSRoot {
 									identifierName: "async"
 									end: Object {
 										column: 13
-										index: 13
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -113,12 +103,10 @@ JSRoot {
 								filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -130,12 +118,10 @@ JSRoot {
 								identifierName: "async"
 								end: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -162,12 +146,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 14
-					index: 14
 					line: 1
 				}
 			}
@@ -177,12 +159,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -193,12 +173,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -211,12 +189,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 			}
@@ -226,12 +202,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -242,12 +216,10 @@ JSRoot {
 							identifierName: "await"
 							end: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -258,12 +230,10 @@ JSRoot {
 						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 						end: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 						start: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 					}
@@ -274,12 +244,10 @@ JSRoot {
 							identifierName: "x"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 26
-								index: 26
 								line: 1
 							}
 						}
@@ -292,12 +260,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 				start: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 			}
@@ -307,12 +273,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 				}
@@ -323,12 +287,10 @@ JSRoot {
 				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 			}
@@ -338,12 +300,10 @@ JSRoot {
 					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
 					end: Object {
 						column: 32
-						index: 32
 						line: 1
 					}
 					start: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 				}

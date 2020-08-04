@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-methods/async-generator/input.js"
 		end: Object {
 			column: 0
-			index: 213
 			line: 14
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-methods/async-generator/input.js"
 				end: Object {
 					column: 1
-					index: 212
 					line: 13
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-methods/async-generator/input.js"
 					end: Object {
 						column: 1
-						index: 212
 						line: 13
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "readLines"
 									end: Object {
 										column: 19
-										index: 31
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 22
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 19
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 9
-									index: 21
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/async-generator/input.js"
 							end: Object {
 								column: 3
-								index: 210
 								line: 12
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -138,19 +124,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 19
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -167,12 +150,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 25
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 31
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 										identifierName: "path"
 										end: Object {
 											column: 24
-											index: 36
 											line: 2
 										}
 										start: Object {
 											column: 20
-											index: 32
 											line: 2
 										}
 									}
@@ -200,12 +179,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 24
-												index: 36
 												line: 2
 											}
 											start: Object {
 												column: 20
-												index: 32
 												line: 2
 											}
 										}
@@ -219,12 +196,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/async-generator/input.js"
 								end: Object {
 									column: 3
-									index: 210
 									line: 12
 								}
 								start: Object {
 									column: 26
-									index: 38
 									line: 2
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/async-generator/input.js"
 										end: Object {
 											column: 36
-											index: 76
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 44
 											line: 3
 										}
 									}
@@ -249,12 +222,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 36
-												index: 76
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 44
 												line: 3
 											}
 										}
@@ -267,12 +238,10 @@ JSRoot {
 														identifierName: "file"
 														end: Object {
 															column: 12
-															index: 52
 															line: 3
 														}
 														start: Object {
 															column: 8
-															index: 48
 															line: 3
 														}
 													}
@@ -281,12 +250,10 @@ JSRoot {
 													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 35
-														index: 75
 														line: 3
 													}
 													start: Object {
 														column: 8
-														index: 48
 														line: 3
 													}
 												}
@@ -295,12 +262,10 @@ JSRoot {
 														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 35
-															index: 75
 															line: 3
 														}
 														start: Object {
 															column: 15
-															index: 55
 															line: 3
 														}
 													}
@@ -309,12 +274,10 @@ JSRoot {
 															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 35
-																index: 75
 																line: 3
 															}
 															start: Object {
 																column: 21
-																index: 61
 																line: 3
 															}
 														}
@@ -325,12 +288,10 @@ JSRoot {
 																identifierName: "fileOpen"
 																end: Object {
 																	column: 29
-																	index: 69
 																	line: 3
 																}
 																start: Object {
 																	column: 21
-																	index: 61
 																	line: 3
 																}
 															}
@@ -343,12 +304,10 @@ JSRoot {
 																	identifierName: "path"
 																	end: Object {
 																		column: 34
-																		index: 74
 																		line: 3
 																	}
 																	start: Object {
 																		column: 30
-																		index: 70
 																		line: 3
 																	}
 																}
@@ -366,12 +325,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/async-generator/input.js"
 										end: Object {
 											column: 5
-											index: 206
 											line: 11
 										}
 										start: Object {
 											column: 4
-											index: 82
 											line: 5
 										}
 									}
@@ -381,12 +338,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 5
-												index: 206
 												line: 11
 											}
 											start: Object {
 												column: 14
-												index: 173
 												line: 9
 											}
 										}
@@ -396,12 +351,10 @@ JSRoot {
 													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 25
-														index: 200
 														line: 10
 													}
 													start: Object {
 														column: 6
-														index: 181
 														line: 10
 													}
 												}
@@ -410,12 +363,10 @@ JSRoot {
 														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 24
-															index: 199
 															line: 10
 														}
 														start: Object {
 															column: 6
-															index: 181
 															line: 10
 														}
 													}
@@ -425,12 +376,10 @@ JSRoot {
 															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 24
-																index: 199
 																line: 10
 															}
 															start: Object {
 																column: 12
-																index: 187
 																line: 10
 															}
 														}
@@ -439,12 +388,10 @@ JSRoot {
 																filename: "experimental/class-private-methods/async-generator/input.js"
 																end: Object {
 																	column: 22
-																	index: 197
 																	line: 10
 																}
 																start: Object {
 																	column: 12
-																	index: 187
 																	line: 10
 																}
 															}
@@ -455,12 +402,10 @@ JSRoot {
 																	identifierName: "file"
 																	end: Object {
 																		column: 16
-																		index: 191
 																		line: 10
 																	}
 																	start: Object {
 																		column: 12
-																		index: 187
 																		line: 10
 																	}
 																}
@@ -473,12 +418,10 @@ JSRoot {
 																		identifierName: "close"
 																		end: Object {
 																			column: 22
-																			index: 197
 																			line: 10
 																		}
 																		start: Object {
 																			column: 17
-																			index: 192
 																			line: 10
 																		}
 																	}
@@ -488,12 +431,10 @@ JSRoot {
 																	identifierName: "close"
 																	end: Object {
 																		column: 22
-																		index: 197
 																		line: 10
 																	}
 																	start: Object {
 																		column: 17
-																		index: 192
 																		line: 10
 																	}
 																}
@@ -510,12 +451,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/async-generator/input.js"
 											end: Object {
 												column: 5
-												index: 164
 												line: 9
 											}
 											start: Object {
 												column: 8
-												index: 86
 												line: 5
 											}
 										}
@@ -525,12 +464,10 @@ JSRoot {
 													filename: "experimental/class-private-methods/async-generator/input.js"
 													end: Object {
 														column: 7
-														index: 158
 														line: 8
 													}
 													start: Object {
 														column: 6
-														index: 94
 														line: 6
 													}
 												}
@@ -541,12 +478,10 @@ JSRoot {
 														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 22
-															index: 110
 															line: 6
 														}
 														start: Object {
 															column: 13
-															index: 101
 															line: 6
 														}
 													}
@@ -555,12 +490,10 @@ JSRoot {
 															filename: "experimental/class-private-methods/async-generator/input.js"
 															end: Object {
 																column: 22
-																index: 110
 																line: 6
 															}
 															start: Object {
 																column: 14
-																index: 102
 																line: 6
 															}
 														}
@@ -571,12 +504,10 @@ JSRoot {
 																identifierName: "file"
 																end: Object {
 																	column: 18
-																	index: 106
 																	line: 6
 																}
 																start: Object {
 																	column: 14
-																	index: 102
 																	line: 6
 																}
 															}
@@ -589,12 +520,10 @@ JSRoot {
 																	identifierName: "EOF"
 																	end: Object {
 																		column: 22
-																		index: 110
 																		line: 6
 																	}
 																	start: Object {
 																		column: 19
-																		index: 107
 																		line: 6
 																	}
 																}
@@ -604,12 +533,10 @@ JSRoot {
 																identifierName: "EOF"
 																end: Object {
 																	column: 22
-																	index: 110
 																	line: 6
 																}
 																start: Object {
 																	column: 19
-																	index: 107
 																	line: 6
 																}
 															}
@@ -622,12 +549,10 @@ JSRoot {
 														filename: "experimental/class-private-methods/async-generator/input.js"
 														end: Object {
 															column: 7
-															index: 158
 															line: 8
 														}
 														start: Object {
 															column: 24
-															index: 112
 															line: 6
 														}
 													}
@@ -637,12 +562,10 @@ JSRoot {
 																filename: "experimental/class-private-methods/async-generator/input.js"
 																end: Object {
 																	column: 36
-																	index: 150
 																	line: 7
 																}
 																start: Object {
 																	column: 8
-																	index: 122
 																	line: 7
 																}
 															}
@@ -652,12 +575,10 @@ JSRoot {
 																	filename: "experimental/class-private-methods/async-generator/input.js"
 																	end: Object {
 																		column: 35
-																		index: 149
 																		line: 7
 																	}
 																	start: Object {
 																		column: 8
-																		index: 122
 																		line: 7
 																	}
 																}
@@ -666,12 +587,10 @@ JSRoot {
 																		filename: "experimental/class-private-methods/async-generator/input.js"
 																		end: Object {
 																			column: 35
-																			index: 149
 																			line: 7
 																		}
 																		start: Object {
 																			column: 14
-																			index: 128
 																			line: 7
 																		}
 																	}
@@ -681,12 +600,10 @@ JSRoot {
 																			filename: "experimental/class-private-methods/async-generator/input.js"
 																			end: Object {
 																				column: 35
-																				index: 149
 																				line: 7
 																			}
 																			start: Object {
 																				column: 20
-																				index: 134
 																				line: 7
 																			}
 																		}
@@ -695,12 +612,10 @@ JSRoot {
 																				filename: "experimental/class-private-methods/async-generator/input.js"
 																				end: Object {
 																					column: 33
-																					index: 147
 																					line: 7
 																				}
 																				start: Object {
 																					column: 20
-																					index: 134
 																					line: 7
 																				}
 																			}
@@ -711,12 +626,10 @@ JSRoot {
 																					identifierName: "file"
 																					end: Object {
 																						column: 24
-																						index: 138
 																						line: 7
 																					}
 																					start: Object {
 																						column: 20
-																						index: 134
 																						line: 7
 																					}
 																				}
@@ -729,12 +642,10 @@ JSRoot {
 																						identifierName: "readLine"
 																						end: Object {
 																							column: 33
-																							index: 147
 																							line: 7
 																						}
 																						start: Object {
 																							column: 25
-																							index: 139
 																							line: 7
 																						}
 																					}
@@ -744,12 +655,10 @@ JSRoot {
 																					identifierName: "readLine"
 																					end: Object {
 																						column: 33
-																						index: 147
 																						line: 7
 																					}
 																					start: Object {
 																						column: 25
-																						index: 139
 																						line: 7
 																					}
 																				}

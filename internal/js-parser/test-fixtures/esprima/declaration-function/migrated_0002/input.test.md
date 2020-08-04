@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/declaration-function/migrated_0002/input.js"
 		end: Object {
 			column: 0
-			index: 25
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "arguments"
 					end: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "esprima/declaration-function/migrated_0002/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "esprima/declaration-function/migrated_0002/input.js"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 21
-						index: 21
 						line: 1
 					}
 				}
@@ -93,12 +85,10 @@ JSRoot {
 					filename: "esprima/declaration-function/migrated_0002/input.js"
 					end: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}

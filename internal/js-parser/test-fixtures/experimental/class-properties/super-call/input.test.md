@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-properties/super-call/input.js"
 		end: Object {
 			column: 1
-			index: 94
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 17
-					index: 79
 					line: 4
 				}
 				start: Object {
 					column: 12
-					index: 74
 					line: 4
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "experimental/class-properties/super-call/input.js"
 				end: Object {
 					column: 1
-					index: 94
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -100,12 +92,10 @@ JSRoot {
 					filename: "experimental/class-properties/super-call/input.js"
 					end: Object {
 						column: 1
-						index: 94
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 						identifierName: "B"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -137,12 +125,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 13
-										index: 33
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 22
 										line: 2
 									}
 								}
@@ -151,12 +137,10 @@ JSRoot {
 								filename: "experimental/class-properties/super-call/input.js"
 								end: Object {
 									column: 13
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 2
 								}
 							}
@@ -165,12 +149,10 @@ JSRoot {
 							filename: "experimental/class-properties/super-call/input.js"
 							end: Object {
 								column: 3
-								index: 92
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 22
 								line: 2
 							}
 						}
@@ -187,12 +169,10 @@ JSRoot {
 								filename: "experimental/class-properties/super-call/input.js"
 								end: Object {
 									column: 15
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 33
 									line: 2
 								}
 							}
@@ -206,19 +186,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 22
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-properties/super-call/input.js"
 								end: Object {
 									column: 13
-									index: 33
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 2
 								}
 							}
@@ -229,12 +206,10 @@ JSRoot {
 								filename: "experimental/class-properties/super-call/input.js"
 								end: Object {
 									column: 3
-									index: 92
 									line: 6
 								}
 								start: Object {
 									column: 16
-									index: 36
 									line: 2
 								}
 							}
@@ -247,12 +222,10 @@ JSRoot {
 											identifierName: "C"
 											end: Object {
 												column: 11
-												index: 49
 												line: 3
 											}
 											start: Object {
 												column: 10
-												index: 48
 												line: 3
 											}
 										}
@@ -261,12 +234,10 @@ JSRoot {
 										filename: "experimental/class-properties/super-call/input.js"
 										end: Object {
 											column: 5
-											index: 88
 											line: 5
 										}
 										start: Object {
 											column: 4
-											index: 42
 											line: 3
 										}
 									}
@@ -278,12 +249,10 @@ JSRoot {
 											filename: "experimental/class-properties/super-call/input.js"
 											end: Object {
 												column: 5
-												index: 88
 												line: 5
 											}
 											start: Object {
 												column: 4
-												index: 42
 												line: 3
 											}
 										}
@@ -294,12 +263,10 @@ JSRoot {
 												identifierName: "D"
 												end: Object {
 													column: 21
-													index: 59
 													line: 3
 												}
 												start: Object {
 													column: 20
-													index: 58
 													line: 3
 												}
 											}
@@ -314,12 +281,10 @@ JSRoot {
 															identifierName: "foo"
 															end: Object {
 																column: 9
-																index: 71
 																line: 4
 															}
 															start: Object {
 																column: 6
-																index: 68
 																line: 4
 															}
 														}
@@ -328,12 +293,10 @@ JSRoot {
 														filename: "experimental/class-properties/super-call/input.js"
 														end: Object {
 															column: 9
-															index: 71
 															line: 4
 														}
 														start: Object {
 															column: 6
-															index: 68
 															line: 4
 														}
 													}
@@ -344,12 +307,10 @@ JSRoot {
 														filename: "experimental/class-properties/super-call/input.js"
 														end: Object {
 															column: 19
-															index: 81
 															line: 4
 														}
 														start: Object {
 															column: 12
-															index: 74
 															line: 4
 														}
 													}
@@ -358,12 +319,10 @@ JSRoot {
 															filename: "experimental/class-properties/super-call/input.js"
 															end: Object {
 																column: 17
-																index: 79
 																line: 4
 															}
 															start: Object {
 																column: 12
-																index: 74
 																line: 4
 															}
 														}
@@ -375,12 +334,10 @@ JSRoot {
 													filename: "experimental/class-properties/super-call/input.js"
 													end: Object {
 														column: 20
-														index: 82
 														line: 4
 													}
 													start: Object {
 														column: 6
-														index: 68
 														line: 4
 													}
 												}
@@ -393,19 +350,16 @@ JSRoot {
 													typeAnnotation: undefined
 													start: Object {
 														column: 6
-														index: 68
 														line: 4
 													}
 													loc: Object {
 														filename: "experimental/class-properties/super-call/input.js"
 														end: Object {
 															column: 9
-															index: 71
 															line: 4
 														}
 														start: Object {
 															column: 6
-															index: 68
 															line: 4
 														}
 													}

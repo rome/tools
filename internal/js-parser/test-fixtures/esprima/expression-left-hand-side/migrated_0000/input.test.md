@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 		end: Object {
 			column: 0
-			index: 11
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "esprima/expression-left-hand-side/migrated_0000/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 						identifierName: "Button"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}

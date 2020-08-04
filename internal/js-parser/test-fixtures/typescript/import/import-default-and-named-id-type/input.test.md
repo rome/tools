@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/import/import-default-and-named-id-type/input.ts"
 		end: Object {
 			column: 0
-			index: 33
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/import/import-default-and-named-id-type/input.ts"
 				end: Object {
 					column: 32
-					index: 32
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "typescript/import/import-default-and-named-id-type/input.ts"
 					end: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 					start: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/import/import-default-and-named-id-type/input.ts"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 							identifierName: "type"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 7
-								index: 7
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "typescript/import/import-default-and-named-id-type/input.ts"
 						end: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -118,12 +106,10 @@ JSRoot {
 						filename: "typescript/import/import-default-and-named-id-type/input.ts"
 						end: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -134,12 +120,10 @@ JSRoot {
 							identifierName: "bar"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -152,12 +136,10 @@ JSRoot {
 								identifierName: "bar"
 								end: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -167,12 +149,10 @@ JSRoot {
 							filename: "typescript/import/import-default-and-named-id-type/input.ts"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}

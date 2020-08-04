@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 		end: Object {
 			column: 24
-			index: 24
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						identifierName: "sampleTag"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 						end: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 								filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 								filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 								filename: "experimental/template-literal-invalid-escapes-tagged/55/input.js"
 								end: Object {
 									column: 23
-									index: 23
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}

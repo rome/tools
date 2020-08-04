@@ -22,12 +22,10 @@ JSRoot {
 		filename: "core/uncategorised/295/input.js"
 		end: Object {
 			column: 37
-			index: 37
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "core/uncategorised/295/input.js"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "core/uncategorised/295/input.js"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "hi"
 								end: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 							filename: "core/uncategorised/295/input.js"
 							end: Object {
 								column: 36
-								index: 36
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								filename: "core/uncategorised/295/input.js"
 								end: Object {
 									column: 36
-									index: 36
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 									filename: "core/uncategorised/295/input.js"
 									end: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 									start: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 								}
@@ -136,12 +122,10 @@ JSRoot {
 										identifierName: "r"
 										end: Object {
 											column: 23
-											index: 23
 											line: 1
 										}
 										start: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 									}
@@ -152,12 +136,10 @@ JSRoot {
 											filename: "core/uncategorised/295/input.js"
 											end: Object {
 												column: 23
-												index: 23
 												line: 1
 											}
 											start: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 										}
@@ -170,12 +152,10 @@ JSRoot {
 									filename: "core/uncategorised/295/input.js"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 25
-										index: 25
 										line: 1
 									}
 								}
@@ -185,12 +165,10 @@ JSRoot {
 											filename: "core/uncategorised/295/input.js"
 											end: Object {
 												column: 34
-												index: 34
 												line: 1
 											}
 											start: Object {
 												column: 27
-												index: 27
 												line: 1
 											}
 										}
@@ -200,12 +178,10 @@ JSRoot {
 												filename: "core/uncategorised/295/input.js"
 												end: Object {
 													column: 34
-													index: 34
 													line: 1
 												}
 												start: Object {
 													column: 27
-													index: 27
 													line: 1
 												}
 											}
@@ -216,12 +192,10 @@ JSRoot {
 													identifierName: "sayHi"
 													end: Object {
 														column: 32
-														index: 32
 														line: 1
 													}
 													start: Object {
 														column: 27
-														index: 27
 														line: 1
 													}
 												}

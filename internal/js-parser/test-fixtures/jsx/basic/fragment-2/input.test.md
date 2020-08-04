@@ -22,12 +22,10 @@ JSRoot {
 		filename: "jsx/basic/fragment-2/input.jsx"
 		end: Object {
 			column: 0
-			index: 23
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "jsx/basic/fragment-2/input.jsx"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "jsx/basic/fragment-2/input.jsx"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 							filename: "jsx/basic/fragment-2/input.jsx"
 							end: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 							start: Object {
 								column: 2
-								index: 2
 								line: 1
 							}
 						}

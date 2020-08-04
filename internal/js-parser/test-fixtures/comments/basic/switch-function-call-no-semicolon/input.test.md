@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 		end: Object {
 			column: 0
-			index: 82
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 				end: Object {
 					column: 14
-					index: 57
 					line: 4
 				}
 				start: Object {
 					column: 4
-					index: 47
 					line: 4
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 				end: Object {
 					column: 1
-					index: 81
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					identifierName: "x"
 					end: Object {
 						column: 8
-						index: 8
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -88,12 +80,10 @@ JSRoot {
 						filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 						end: Object {
 							column: 20
-							index: 42
 							line: 3
 						}
 						start: Object {
 							column: 2
-							index: 14
 							line: 2
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 							end: Object {
 								column: 8
-								index: 20
 								line: 2
 							}
 							start: Object {
 								column: 7
-								index: 19
 								line: 2
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 								end: Object {
 									column: 20
-									index: 42
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 26
 									line: 3
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 									filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 									end: Object {
 										column: 20
-										index: 42
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 26
 										line: 3
 									}
 								}
@@ -152,12 +136,10 @@ JSRoot {
 											filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 											end: Object {
 												column: 19
-												index: 41
 												line: 3
 											}
 											start: Object {
 												column: 16
-												index: 38
 												line: 3
 											}
 										}
@@ -168,12 +150,10 @@ JSRoot {
 										filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 										end: Object {
 											column: 15
-											index: 37
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 26
 											line: 3
 										}
 									}
@@ -184,12 +164,10 @@ JSRoot {
 											identifierName: "console"
 											end: Object {
 												column: 11
-												index: 33
 												line: 3
 											}
 											start: Object {
 												column: 4
-												index: 26
 												line: 3
 											}
 										}
@@ -202,12 +180,10 @@ JSRoot {
 												identifierName: "log"
 												end: Object {
 													column: 15
-													index: 37
 													line: 3
 												}
 												start: Object {
 													column: 12
-													index: 34
 													line: 3
 												}
 											}
@@ -217,12 +193,10 @@ JSRoot {
 											identifierName: "log"
 											end: Object {
 												column: 15
-												index: 37
 												line: 3
 											}
 											start: Object {
 												column: 12
-												index: 34
 												line: 3
 											}
 										}
@@ -239,12 +213,10 @@ JSRoot {
 						filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 						end: Object {
 							column: 10
-							index: 79
 							line: 6
 						}
 						start: Object {
 							column: 2
-							index: 60
 							line: 5
 						}
 					}
@@ -256,12 +228,10 @@ JSRoot {
 								filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 								end: Object {
 									column: 10
-									index: 79
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 73
 									line: 6
 								}
 							}

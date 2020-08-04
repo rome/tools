@@ -18,9 +18,7 @@ export default function highlightJS(
 		input,
 		tokens,
 		(token, value, prev, next) => {
-			const {type} = token;
-
-			switch (type.label) {
+			switch (token.type) {
 				case "break":
 				case "case":
 				case "catch":
@@ -97,7 +95,7 @@ export default function highlightJS(
 					return {type: "punctuation"};
 
 				case "name": {
-					if (next !== undefined && next.type.label === "(") {
+					if (next !== undefined && next.type === "(") {
 						return {type: "function"};
 					}
 
@@ -118,7 +116,7 @@ export default function highlightJS(
 				case "jsxName":
 					return {
 						type: prev !== undefined &&
-						(prev.type.label === "jsxTagStart" || prev.type.label === "/")
+						(prev.type === "jsxTagStart" || prev.type === "/")
 							? "variable"
 							: "attr-name",
 					};

@@ -1639,7 +1639,7 @@ export function parseTSTypeOrTypePredicateAnnotation(
 	parser: JSParser,
 	returnToken: TokenType,
 ): AnyTSPrimary {
-	let start = parser.getPosition();
+	let start: Position = parser.getPosition();
 	expectTSEnabled(parser, "type annotation", start);
 
 	parser.pushScope("TYPE", true);

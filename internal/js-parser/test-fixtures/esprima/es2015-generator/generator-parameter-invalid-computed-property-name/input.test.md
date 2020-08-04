@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 		end: Object {
 			column: 0
-			index: 51
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 13
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 13
-					index: 28
 					line: 2
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 				end: Object {
 					column: 2
-					index: 50
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 					end: Object {
 						column: 1
-						index: 49
 						line: 3
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -98,12 +90,10 @@ JSRoot {
 						filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -114,12 +104,10 @@ JSRoot {
 						filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 						end: Object {
 							column: 1
-							index: 49
 							line: 3
 						}
 						start: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 					}
@@ -132,12 +120,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 14
-										index: 29
 										line: 2
 									}
 									start: Object {
 										column: 13
-										index: 28
 										line: 2
 									}
 								}
@@ -146,12 +132,10 @@ JSRoot {
 								filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 								end: Object {
 									column: 32
-									index: 47
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 19
 									line: 2
 								}
 							}
@@ -162,12 +146,10 @@ JSRoot {
 									filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 									end: Object {
 										column: 32
-										index: 47
 										line: 2
 									}
 									start: Object {
 										column: 30
-										index: 45
 										line: 2
 									}
 								}
@@ -184,12 +166,10 @@ JSRoot {
 									filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 									end: Object {
 										column: 29
-										index: 44
 										line: 2
 									}
 									start: Object {
 										column: 14
-										index: 29
 										line: 2
 									}
 								}
@@ -200,12 +180,10 @@ JSRoot {
 											filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 											end: Object {
 												column: 28
-												index: 43
 												line: 2
 											}
 											start: Object {
 												column: 14
-												index: 29
 												line: 2
 											}
 										}
@@ -216,12 +194,10 @@ JSRoot {
 												filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 												end: Object {
 													column: 28
-													index: 43
 													line: 2
 												}
 												start: Object {
 													column: 14
-													index: 29
 													line: 2
 												}
 											}
@@ -235,12 +211,10 @@ JSRoot {
 															filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 															end: Object {
 																column: 23
-																index: 38
 																line: 2
 															}
 															start: Object {
 																column: 16
-																index: 31
 																line: 2
 															}
 														}
@@ -251,12 +225,10 @@ JSRoot {
 																filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 																end: Object {
 																	column: 23
-																	index: 38
 																	line: 2
 																}
 																start: Object {
 																	column: 22
-																	index: 37
 																	line: 2
 																}
 															}
@@ -266,12 +238,10 @@ JSRoot {
 														filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 														end: Object {
 															column: 24
-															index: 39
 															line: 2
 														}
 														start: Object {
 															column: 15
-															index: 30
 															line: 2
 														}
 													}
@@ -283,12 +253,10 @@ JSRoot {
 														identifierName: "y"
 														end: Object {
 															column: 27
-															index: 42
 															line: 2
 														}
 														start: Object {
 															column: 26
-															index: 41
 															line: 2
 														}
 													}
@@ -297,12 +265,10 @@ JSRoot {
 													filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
 													end: Object {
 														column: 27
-														index: 42
 														line: 2
 													}
 													start: Object {
 														column: 15
-														index: 30
 														line: 2
 													}
 												}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/directive-prolog/migrated_0000/input.js"
 		end: Object {
 			column: 0
-			index: 47
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/directive-prolog/migrated_0000/input.js"
 				end: Object {
 					column: 46
-					index: 46
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/directive-prolog/migrated_0000/input.js"
 					end: Object {
 						column: 45
-						index: 45
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "esprima/directive-prolog/migrated_0000/input.js"
 						end: Object {
 							column: 43
-							index: 43
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -89,12 +81,10 @@ JSRoot {
 							filename: "esprima/directive-prolog/migrated_0000/input.js"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 						}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "esprima/directive-prolog/migrated_0000/input.js"
 							end: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -120,12 +108,10 @@ JSRoot {
 									filename: "esprima/directive-prolog/migrated_0000/input.js"
 									end: Object {
 										column: 31
-										index: 31
 										line: 1
 									}
 									start: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 								}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "esprima/directive-prolog/migrated_0000/input.js"
 									end: Object {
 										column: 41
-										index: 41
 										line: 1
 									}
 									start: Object {
 										column: 32
-										index: 32
 										line: 1
 									}
 								}
@@ -151,12 +135,10 @@ JSRoot {
 										filename: "esprima/directive-prolog/migrated_0000/input.js"
 										end: Object {
 											column: 41
-											index: 41
 											line: 1
 										}
 										start: Object {
 											column: 40
-											index: 40
 											line: 1
 										}
 									}
@@ -168,12 +150,10 @@ JSRoot {
 										identifierName: "i"
 										end: Object {
 											column: 39
-											index: 39
 											line: 1
 										}
 										start: Object {
 											column: 38
-											index: 38
 											line: 1
 										}
 									}

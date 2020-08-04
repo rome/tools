@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2020/dynamic-import/invalid-new/input.js"
 		end: Object {
 			column: 0
-			index: 19
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/invalid-new/input.js"
 				end: Object {
 					column: 18
-					index: 18
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -78,12 +72,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/invalid-new/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 						filename: "es2020/dynamic-import/invalid-new/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 					}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "es2020/dynamic-import/invalid-new/input.js"
 							end: Object {
 								column: 16
-								index: 16
 								line: 1
 							}
 							start: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 						}

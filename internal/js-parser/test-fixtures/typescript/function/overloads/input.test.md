@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/function/overloads/input.ts"
 		end: Object {
 			column: 0
-			index: 76
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/function/overloads/input.ts"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						identifierName: "f"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "typescript/function/overloads/input.ts"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -90,12 +82,10 @@ JSRoot {
 						filename: "typescript/function/overloads/input.ts"
 						end: Object {
 							column: 36
-							index: 36
 							line: 1
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}
@@ -104,12 +94,10 @@ JSRoot {
 							filename: "typescript/function/overloads/input.ts"
 							end: Object {
 								column: 36
-								index: 36
 								line: 1
 							}
 							start: Object {
 								column: 30
-								index: 30
 								line: 1
 							}
 						}
@@ -122,12 +110,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 								start: Object {
 									column: 18
-									index: 18
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 									filename: "typescript/function/overloads/input.ts"
 									end: Object {
 										column: 27
-										index: 27
 										line: 1
 									}
 									start: Object {
 										column: 18
-										index: 18
 										line: 1
 									}
 								}
@@ -151,12 +135,10 @@ JSRoot {
 										filename: "typescript/function/overloads/input.ts"
 										end: Object {
 											column: 27
-											index: 27
 											line: 1
 										}
 										start: Object {
 											column: 21
-											index: 21
 											line: 1
 										}
 									}
@@ -174,12 +156,10 @@ JSRoot {
 				filename: "typescript/function/overloads/input.ts"
 				end: Object {
 					column: 37
-					index: 75
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 38
 					line: 2
 				}
 			}
@@ -191,12 +171,10 @@ JSRoot {
 						identifierName: "f"
 						end: Object {
 							column: 17
-							index: 55
 							line: 2
 						}
 						start: Object {
 							column: 16
-							index: 54
 							line: 2
 						}
 					}
@@ -205,12 +183,10 @@ JSRoot {
 					filename: "typescript/function/overloads/input.ts"
 					end: Object {
 						column: 37
-						index: 75
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 45
 						line: 2
 					}
 				}
@@ -225,12 +201,10 @@ JSRoot {
 						filename: "typescript/function/overloads/input.ts"
 						end: Object {
 							column: 36
-							index: 74
 							line: 2
 						}
 						start: Object {
 							column: 17
-							index: 55
 							line: 2
 						}
 					}
@@ -239,12 +213,10 @@ JSRoot {
 							filename: "typescript/function/overloads/input.ts"
 							end: Object {
 								column: 36
-								index: 74
 								line: 2
 							}
 							start: Object {
 								column: 30
-								index: 68
 								line: 2
 							}
 						}
@@ -257,12 +229,10 @@ JSRoot {
 								identifierName: "x"
 								end: Object {
 									column: 19
-									index: 57
 									line: 2
 								}
 								start: Object {
 									column: 18
-									index: 56
 									line: 2
 								}
 							}
@@ -272,12 +242,10 @@ JSRoot {
 									filename: "typescript/function/overloads/input.ts"
 									end: Object {
 										column: 27
-										index: 65
 										line: 2
 									}
 									start: Object {
 										column: 18
-										index: 56
 										line: 2
 									}
 								}
@@ -286,12 +254,10 @@ JSRoot {
 										filename: "typescript/function/overloads/input.ts"
 										end: Object {
 											column: 27
-											index: 65
 											line: 2
 										}
 										start: Object {
 											column: 21
-											index: 59
 											line: 2
 										}
 									}

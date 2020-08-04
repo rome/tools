@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/tuple-optional/input.ts"
 		end: Object {
 			column: 0
-			index: 45
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/tuple-optional/input.ts"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/tuple-optional/input.ts"
 					end: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/tuple-optional/input.ts"
 								end: Object {
 									column: 44
-									index: 44
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/tuple-optional/input.ts"
 									end: Object {
 										column: 44
-										index: 44
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -99,12 +89,10 @@ JSRoot {
 										filename: "typescript/types/tuple-optional/input.ts"
 										end: Object {
 											column: 44
-											index: 44
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -116,12 +104,10 @@ JSRoot {
 												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 14
-													index: 14
 													line: 1
 												}
 												start: Object {
 													column: 8
-													index: 8
 													line: 1
 												}
 											}
@@ -130,12 +116,10 @@ JSRoot {
 													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 14
-														index: 14
 														line: 1
 													}
 													start: Object {
 														column: 8
-														index: 8
 														line: 1
 													}
 												}
@@ -148,12 +132,10 @@ JSRoot {
 												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 23
-													index: 23
 													line: 1
 												}
 												start: Object {
 													column: 16
-													index: 16
 													line: 1
 												}
 											}
@@ -162,12 +144,10 @@ JSRoot {
 													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 22
-														index: 22
 														line: 1
 													}
 													start: Object {
 														column: 16
-														index: 16
 														line: 1
 													}
 												}
@@ -180,12 +160,10 @@ JSRoot {
 												filename: "typescript/types/tuple-optional/input.ts"
 												end: Object {
 													column: 43
-													index: 43
 													line: 1
 												}
 												start: Object {
 													column: 25
-													index: 25
 													line: 1
 												}
 											}
@@ -194,12 +172,10 @@ JSRoot {
 													filename: "typescript/types/tuple-optional/input.ts"
 													end: Object {
 														column: 42
-														index: 42
 														line: 1
 													}
 													start: Object {
 														column: 25
-														index: 25
 														line: 1
 													}
 												}
@@ -208,12 +184,10 @@ JSRoot {
 														filename: "typescript/types/tuple-optional/input.ts"
 														end: Object {
 															column: 41
-															index: 41
 															line: 1
 														}
 														start: Object {
 															column: 26
-															index: 26
 															line: 1
 														}
 													}
@@ -223,12 +197,10 @@ JSRoot {
 																filename: "typescript/types/tuple-optional/input.ts"
 																end: Object {
 																	column: 32
-																	index: 32
 																	line: 1
 																}
 																start: Object {
 																	column: 26
-																	index: 26
 																	line: 1
 																}
 															}
@@ -238,12 +210,10 @@ JSRoot {
 																filename: "typescript/types/tuple-optional/input.ts"
 																end: Object {
 																	column: 41
-																	index: 41
 																	line: 1
 																}
 																start: Object {
 																	column: 35
-																	index: 35
 																	line: 1
 																}
 															}
@@ -261,12 +231,10 @@ JSRoot {
 							filename: "typescript/types/tuple-optional/input.ts"
 							end: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

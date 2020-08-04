@@ -21,18 +21,29 @@ JSRoot {
 		filename: "es2020/import-meta/no-other-prop-names/input.js"
 		end: Object {
 			column: 0
-			index: 16
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse/js"}]
+			location: Object {
+				filename: "es2020/import-meta/no-other-prop-names/input.js"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 14
+					line: 1
+				}
+				start: Object {
+					column: 7
+					line: 1
+				}
+			}
 			description: Object {
 				advice: Array []
 				category: "parse/js"
@@ -47,21 +58,6 @@ JSRoot {
 					]
 				}
 			}
-			location: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
-				mtime: undefined
-				sourceText: undefined
-				end: Object {
-					column: 14
-					index: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					index: 7
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -70,12 +66,10 @@ JSRoot {
 				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -84,12 +78,10 @@ JSRoot {
 					filename: "es2020/import-meta/no-other-prop-names/input.js"
 					end: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -100,12 +92,10 @@ JSRoot {
 						identifierName: "import"
 						end: Object {
 							column: 6
-							index: 6
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -117,12 +107,10 @@ JSRoot {
 						identifierName: "notMeta"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}

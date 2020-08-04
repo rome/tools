@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/cast/null-assertion/input.ts"
 		end: Object {
 			column: 0
-			index: 4
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/cast/null-assertion/input.ts"
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/cast/null-assertion/input.ts"
 					end: Object {
 						column: 2
-						index: 2
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						identifierName: "x"
 						end: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/statement-empty/migrated_0000/input.js"
 		end: Object {
 			column: 0
-			index: 2
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/statement-empty/migrated_0000/input.js"
 				end: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}

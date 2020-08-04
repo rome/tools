@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/expression-extends-implements/input.ts"
 		end: Object {
 			column: 0
-			index: 92
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/class/expression-extends-implements/input.ts"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/class/expression-extends-implements/input.ts"
 					end: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 						filename: "typescript/class/expression-extends-implements/input.ts"
 						end: Object {
 							column: 42
-							index: 42
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -83,12 +75,10 @@ JSRoot {
 							filename: "typescript/class/expression-extends-implements/input.ts"
 							end: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -99,12 +89,10 @@ JSRoot {
 								identifierName: "f"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -115,12 +103,10 @@ JSRoot {
 							filename: "typescript/class/expression-extends-implements/input.ts"
 							end: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 							start: Object {
 								column: 18
-								index: 18
 								line: 1
 							}
 						}
@@ -131,12 +117,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 20
-										index: 20
 										line: 1
 									}
 									start: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 								}
@@ -147,12 +131,10 @@ JSRoot {
 										identifierName: "T"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 19
-											index: 19
 											line: 1
 										}
 									}
@@ -166,12 +148,10 @@ JSRoot {
 								filename: "typescript/class/expression-extends-implements/input.ts"
 								end: Object {
 									column: 39
-									index: 39
 									line: 1
 								}
 								start: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 							}
@@ -180,12 +160,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 									start: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 								}
@@ -196,12 +174,10 @@ JSRoot {
 										identifierName: "X"
 										end: Object {
 											column: 34
-											index: 34
 											line: 1
 										}
 										start: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 									}
@@ -213,12 +189,10 @@ JSRoot {
 										identifierName: "Y"
 										end: Object {
 											column: 36
-											index: 36
 											line: 1
 										}
 										start: Object {
 											column: 35
-											index: 35
 											line: 1
 										}
 									}
@@ -229,12 +203,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 39
-										index: 39
 										line: 1
 									}
 									start: Object {
 										column: 36
-										index: 36
 										line: 1
 									}
 								}
@@ -245,12 +217,10 @@ JSRoot {
 											filename: "typescript/class/expression-extends-implements/input.ts"
 											end: Object {
 												column: 38
-												index: 38
 												line: 1
 											}
 											start: Object {
 												column: 37
-												index: 37
 												line: 1
 											}
 										}
@@ -261,12 +231,10 @@ JSRoot {
 												identifierName: "T"
 												end: Object {
 													column: 38
-													index: 38
 													line: 1
 												}
 												start: Object {
 													column: 37
-													index: 37
 													line: 1
 												}
 											}
@@ -284,12 +252,10 @@ JSRoot {
 				filename: "typescript/class/expression-extends-implements/input.ts"
 				end: Object {
 					column: 46
-					index: 91
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 45
 					line: 2
 				}
 			}
@@ -301,12 +267,10 @@ JSRoot {
 						identifierName: "C"
 						end: Object {
 							column: 8
-							index: 53
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 52
 							line: 2
 						}
 					}
@@ -315,12 +279,10 @@ JSRoot {
 					filename: "typescript/class/expression-extends-implements/input.ts"
 					end: Object {
 						column: 44
-						index: 89
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 46
 						line: 2
 					}
 				}
@@ -331,12 +293,10 @@ JSRoot {
 						filename: "typescript/class/expression-extends-implements/input.ts"
 						end: Object {
 							column: 44
-							index: 89
 							line: 2
 						}
 						start: Object {
 							column: 1
-							index: 46
 							line: 2
 						}
 					}
@@ -346,12 +306,10 @@ JSRoot {
 							filename: "typescript/class/expression-extends-implements/input.ts"
 							end: Object {
 								column: 20
-								index: 65
 								line: 2
 							}
 							start: Object {
 								column: 17
-								index: 62
 								line: 2
 							}
 						}
@@ -362,12 +320,10 @@ JSRoot {
 								identifierName: "f"
 								end: Object {
 									column: 18
-									index: 63
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 62
 									line: 2
 								}
 							}
@@ -378,12 +334,10 @@ JSRoot {
 							filename: "typescript/class/expression-extends-implements/input.ts"
 							end: Object {
 								column: 23
-								index: 68
 								line: 2
 							}
 							start: Object {
 								column: 20
-								index: 65
 								line: 2
 							}
 						}
@@ -394,12 +348,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 22
-										index: 67
 										line: 2
 									}
 									start: Object {
 										column: 21
-										index: 66
 										line: 2
 									}
 								}
@@ -410,12 +362,10 @@ JSRoot {
 										identifierName: "T"
 										end: Object {
 											column: 22
-											index: 67
 											line: 2
 										}
 										start: Object {
 											column: 21
-											index: 66
 											line: 2
 										}
 									}
@@ -429,12 +379,10 @@ JSRoot {
 								filename: "typescript/class/expression-extends-implements/input.ts"
 								end: Object {
 									column: 41
-									index: 86
 									line: 2
 								}
 								start: Object {
 									column: 35
-									index: 80
 									line: 2
 								}
 							}
@@ -443,12 +391,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 38
-										index: 83
 										line: 2
 									}
 									start: Object {
 										column: 35
-										index: 80
 										line: 2
 									}
 								}
@@ -459,12 +405,10 @@ JSRoot {
 										identifierName: "X"
 										end: Object {
 											column: 36
-											index: 81
 											line: 2
 										}
 										start: Object {
 											column: 35
-											index: 80
 											line: 2
 										}
 									}
@@ -476,12 +420,10 @@ JSRoot {
 										identifierName: "Y"
 										end: Object {
 											column: 38
-											index: 83
 											line: 2
 										}
 										start: Object {
 											column: 37
-											index: 82
 											line: 2
 										}
 									}
@@ -492,12 +434,10 @@ JSRoot {
 									filename: "typescript/class/expression-extends-implements/input.ts"
 									end: Object {
 										column: 41
-										index: 86
 										line: 2
 									}
 									start: Object {
 										column: 38
-										index: 83
 										line: 2
 									}
 								}
@@ -508,12 +448,10 @@ JSRoot {
 											filename: "typescript/class/expression-extends-implements/input.ts"
 											end: Object {
 												column: 40
-												index: 85
 												line: 2
 											}
 											start: Object {
 												column: 39
-												index: 84
 												line: 2
 											}
 										}
@@ -524,12 +462,10 @@ JSRoot {
 												identifierName: "T"
 												end: Object {
 													column: 40
-													index: 85
 													line: 2
 												}
 												start: Object {
 													column: 39
-													index: 84
 													line: 2
 												}
 											}

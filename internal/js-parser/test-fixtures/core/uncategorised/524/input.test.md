@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/uncategorised/524/input.js"
 		end: Object {
 			column: 3
-			index: 9
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 				start: Object {
 					column: 5
-					index: 5
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "core/uncategorised/524/input.js"
 				end: Object {
 					column: 3
-					index: 9
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -77,12 +71,10 @@ JSRoot {
 					filename: "core/uncategorised/524/input.js"
 					end: Object {
 						column: 2
-						index: 8
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 6
 						line: 2
 					}
 				}

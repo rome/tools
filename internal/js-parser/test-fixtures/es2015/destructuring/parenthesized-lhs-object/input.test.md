@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 		end: Object {
 			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 4
 					line: 1
 				}
 				start: Object {
 					column: 1
-					index: 1
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 						filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 						end: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 						start: Object {
 							column: 8
-							index: 8
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 						filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 						end: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 						start: Object {
 							column: 1
-							index: 1
 							line: 1
 						}
 					}
@@ -127,12 +115,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 3
-											index: 3
 											line: 1
 										}
 										start: Object {
 											column: 2
-											index: 2
 											line: 1
 										}
 									}
@@ -141,12 +127,10 @@ JSRoot {
 									filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 									end: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 									start: Object {
 										column: 2
-										index: 2
 										line: 1
 									}
 								}
@@ -158,12 +142,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 									start: Object {
 										column: 2
-										index: 2
 										line: 1
 									}
 								}
@@ -172,12 +154,10 @@ JSRoot {
 								filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 								end: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 								start: Object {
 									column: 2
-									index: 2
 									line: 1
 								}
 							}

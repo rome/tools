@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/regression/10892/input.js"
 		end: Object {
 			column: 0
-			index: 70
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 3
-					index: 50
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 27
 					line: 3
 				}
 			}
@@ -59,12 +55,10 @@ JSRoot {
 				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "comments/regression/10892/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 						filename: "comments/regression/10892/input.js"
 						end: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 						start: Object {
 							column: 9
-							index: 9
 							line: 1
 						}
 					}
@@ -107,12 +97,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -125,12 +113,10 @@ JSRoot {
 								identifierName: "foo"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -140,12 +126,10 @@ JSRoot {
 							filename: "comments/regression/10892/input.js"
 							end: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -159,12 +143,10 @@ JSRoot {
 				filename: "comments/regression/10892/input.js"
 				end: Object {
 					column: 1
-					index: 69
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 51
 					line: 6
 				}
 			}
@@ -175,12 +157,10 @@ JSRoot {
 					filename: "comments/regression/10892/input.js"
 					end: Object {
 						column: 1
-						index: 69
 						line: 7
 					}
 					start: Object {
 						column: 15
-						index: 66
 						line: 6
 					}
 				}

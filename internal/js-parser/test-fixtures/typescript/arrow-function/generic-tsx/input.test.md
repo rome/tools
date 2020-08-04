@@ -24,12 +24,10 @@ JSRoot {
 		filename: "typescript/arrow-function/generic-tsx/input.tsx"
 		end: Object {
 			column: 0
-			index: 80
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -41,12 +39,10 @@ JSRoot {
 				filename: "typescript/arrow-function/generic-tsx/input.tsx"
 				end: Object {
 					column: 60
-					index: 60
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -59,12 +55,10 @@ JSRoot {
 				filename: "typescript/arrow-function/generic-tsx/input.tsx"
 				end: Object {
 					column: 18
-					index: 79
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 61
 					line: 2
 				}
 			}
@@ -73,12 +67,10 @@ JSRoot {
 					filename: "typescript/arrow-function/generic-tsx/input.tsx"
 					end: Object {
 						column: 17
-						index: 78
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 61
 						line: 2
 					}
 				}
@@ -89,12 +81,10 @@ JSRoot {
 						identifierName: "a"
 						end: Object {
 							column: 17
-							index: 78
 							line: 2
 						}
 						start: Object {
 							column: 16
-							index: 77
 							line: 2
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 						filename: "typescript/arrow-function/generic-tsx/input.tsx"
 						end: Object {
 							column: 15
-							index: 76
 							line: 2
 						}
 						start: Object {
 							column: 3
-							index: 64
 							line: 2
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "typescript/arrow-function/generic-tsx/input.tsx"
 							end: Object {
 								column: 12
-								index: 73
 								line: 2
 							}
 							start: Object {
 								column: 11
-								index: 72
 								line: 2
 							}
 						}
@@ -139,12 +125,10 @@ JSRoot {
 								identifierName: "T"
 								end: Object {
 									column: 12
-									index: 73
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 72
 									line: 2
 								}
 							}
@@ -156,12 +140,10 @@ JSRoot {
 							filename: "typescript/arrow-function/generic-tsx/input.tsx"
 							end: Object {
 								column: 3
-								index: 64
 								line: 2
 							}
 							start: Object {
 								column: 0
-								index: 61
 								line: 2
 							}
 						}
@@ -175,12 +157,10 @@ JSRoot {
 									filename: "typescript/arrow-function/generic-tsx/input.tsx"
 									end: Object {
 										column: 2
-										index: 63
 										line: 2
 									}
 									start: Object {
 										column: 1
-										index: 62
 										line: 2
 									}
 								}
@@ -194,12 +174,10 @@ JSRoot {
 								filename: "typescript/arrow-function/generic-tsx/input.tsx"
 								end: Object {
 									column: 15
-									index: 76
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 77
 									line: 2
 								}
 							}
@@ -209,12 +187,10 @@ JSRoot {
 									filename: "typescript/arrow-function/generic-tsx/input.tsx"
 									end: Object {
 										column: 15
-										index: 76
 										line: 2
 									}
 									start: Object {
 										column: 16
-										index: 77
 										line: 2
 									}
 								}
@@ -224,12 +200,10 @@ JSRoot {
 										filename: "typescript/arrow-function/generic-tsx/input.tsx"
 										end: Object {
 											column: 8
-											index: 69
 											line: 2
 										}
 										start: Object {
 											column: 7
-											index: 68
 											line: 2
 										}
 									}
@@ -240,12 +214,10 @@ JSRoot {
 											identifierName: "T"
 											end: Object {
 												column: 8
-												index: 69
 												line: 2
 											}
 											start: Object {
 												column: 7
-												index: 68
 												line: 2
 											}
 										}

@@ -6,6 +6,15 @@
  */
 
 import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
+import {UnknownFilePath} from "@internal/path";
+import {
+	DiagnosticDescriptionOptional,
+	DiagnosticLocation,
+} from "@internal/diagnostics";
+import {ParserCore} from ".";
+import {ParserCoreState} from "./ParserCore";
+
+export type AnyParserCore = ParserCore<TokensShape, ParserCoreState>;
 
 //# Node types
 export type NodeBase = {
@@ -76,13 +85,40 @@ export type SourceLocation = {
 };
 
 export type Position = {
-	index: Number0;
 	line: Number1;
 	column: Number0;
 };
 
 export const UNKNOWN_POSITION: Position = {
-	index: ob1Number0Neg1,
 	line: ob1Coerce1(-1),
 	column: ob1Number0Neg1,
 };
+
+export type ParserOptions = {
+	retainCarriageReturn?: boolean;
+	path?: string | UnknownFilePath;
+	mtime?: number;
+	input?: string;
+	sourceText?: string;
+	offsetPosition?: Position;
+};
+
+export type ParserOptionsWithRequiredPath = Omit<ParserOptions, "path"> & {
+	path: NonNullable<ParserOptions["path"]>;
+};
+
+export type ParserUnexpectedOptions = {
+	description?: DiagnosticDescriptionOptional;
+	loc?: SourceLocation;
+	start?: Position;
+	end?: Position;
+	token?: TokenBase;
+	index?: Number0;
+	startIndex?: Number0;
+	endIndex?: Number0;
+	location?: DiagnosticLocation;
+};
+
+export type TokenValues<Tokens extends TokensShape> =
+	| Tokens[keyof Tokens]
+	| BaseTokens[keyof BaseTokens];

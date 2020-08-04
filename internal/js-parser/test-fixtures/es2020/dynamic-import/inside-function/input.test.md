@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/dynamic-import/inside-function/input.js"
 		end: Object {
 			column: 0
-			index: 66
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "loadImport"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2020/dynamic-import/inside-function/input.js"
 				end: Object {
 					column: 1
-					index: 65
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/inside-function/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 							identifierName: "file"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 						}
@@ -108,12 +98,10 @@ JSRoot {
 								filename: "es2020/dynamic-import/inside-function/input.js"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 20
-									index: 20
 									line: 1
 								}
 							}
@@ -127,12 +115,10 @@ JSRoot {
 					filename: "es2020/dynamic-import/inside-function/input.js"
 					end: Object {
 						column: 1
-						index: 65
 						line: 3
 					}
 					start: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 				}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "es2020/dynamic-import/inside-function/input.js"
 							end: Object {
 								column: 35
-								index: 63
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 30
 								line: 2
 							}
 						}
@@ -156,12 +140,10 @@ JSRoot {
 								filename: "es2020/dynamic-import/inside-function/input.js"
 								end: Object {
 									column: 34
-									index: 62
 									line: 2
 								}
 								start: Object {
 									column: 15
-									index: 43
 									line: 2
 								}
 							}
@@ -170,12 +152,10 @@ JSRoot {
 									filename: "es2020/dynamic-import/inside-function/input.js"
 									end: Object {
 										column: 33
-										index: 61
 										line: 2
 									}
 									start: Object {
 										column: 16
-										index: 44
 										line: 2
 									}
 								}
@@ -187,12 +167,10 @@ JSRoot {
 											identifierName: "file"
 											end: Object {
 												column: 28
-												index: 56
 												line: 2
 											}
 											start: Object {
 												column: 24
-												index: 52
 												line: 2
 											}
 										}
@@ -207,12 +185,10 @@ JSRoot {
 											filename: "es2020/dynamic-import/inside-function/input.js"
 											end: Object {
 												column: 22
-												index: 50
 												line: 2
 											}
 											start: Object {
 												column: 17
-												index: 45
 												line: 2
 											}
 										}
@@ -225,12 +201,10 @@ JSRoot {
 											filename: "es2020/dynamic-import/inside-function/input.js"
 											end: Object {
 												column: 32
-												index: 60
 												line: 2
 											}
 											start: Object {
 												column: 29
-												index: 57
 												line: 2
 											}
 										}

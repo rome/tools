@@ -21,12 +21,10 @@ JSRoot {
 		filename: "core/uncategorised/309/input.js"
 		end: Object {
 			column: 18
-			index: 52
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "core/uncategorised/309/input.js"
 				end: Object {
 					column: 10
-					index: 44
 					line: 2
 				}
 				start: Object {
 					column: 21
-					index: 21
 					line: 1
 				}
 			}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "core/uncategorised/309/input.js"
 				end: Object {
 					column: 18
-					index: 52
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "core/uncategorised/309/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 					filename: "core/uncategorised/309/input.js"
 					end: Object {
 						column: 18
-						index: 52
 						line: 2
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -103,12 +93,10 @@ JSRoot {
 							filename: "core/uncategorised/309/input.js"
 							end: Object {
 								column: 20
-								index: 20
 								line: 1
 							}
 							start: Object {
 								column: 15
-								index: 15
 								line: 1
 							}
 						}
@@ -119,12 +107,10 @@ JSRoot {
 							filename: "core/uncategorised/309/input.js"
 							end: Object {
 								column: 16
-								index: 50
 								line: 2
 							}
 							start: Object {
 								column: 10
-								index: 44
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								identifierName: "there"
 								end: Object {
 									column: 15
-									index: 49
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 44
 									line: 2
 								}
 							}

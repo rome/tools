@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 		end: Object {
 			column: 0
-			index: 134
 			line: 10
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 				end: Object {
 					column: 20
-					index: 125
 					line: 7
 				}
 				start: Object {
 					column: 8
-					index: 113
 					line: 7
 				}
 			}
@@ -58,12 +54,10 @@ JSRoot {
 					identifierName: "bar"
 					end: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 				end: Object {
 					column: 1
-					index: 133
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -93,12 +85,10 @@ JSRoot {
 					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 12
-						index: 12
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 							identifierName: "a"
 							end: Object {
 								column: 14
-								index: 14
 								line: 1
 							}
 							start: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 						}
@@ -126,12 +114,10 @@ JSRoot {
 								filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 13
-									index: 13
 									line: 1
 								}
 							}
@@ -145,12 +131,10 @@ JSRoot {
 					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 					end: Object {
 						column: 1
-						index: 133
 						line: 9
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -160,12 +144,10 @@ JSRoot {
 							filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 							end: Object {
 								column: 5
-								index: 131
 								line: 8
 							}
 							start: Object {
 								column: 4
-								index: 22
 								line: 2
 							}
 						}
@@ -176,12 +158,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 13
-									index: 31
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 30
 									line: 2
 								}
 							}
@@ -192,12 +172,10 @@ JSRoot {
 									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 									end: Object {
 										column: 18
-										index: 69
 										line: 4
 									}
 									start: Object {
 										column: 8
-										index: 43
 										line: 3
 									}
 								}
@@ -208,12 +186,10 @@ JSRoot {
 										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 										end: Object {
 											column: 14
-											index: 49
 											line: 3
 										}
 										start: Object {
 											column: 13
-											index: 48
 											line: 3
 										}
 									}
@@ -225,12 +201,10 @@ JSRoot {
 											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 											end: Object {
 												column: 18
-												index: 69
 												line: 4
 											}
 											start: Object {
 												column: 12
-												index: 63
 												line: 4
 											}
 										}
@@ -243,12 +217,10 @@ JSRoot {
 									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 									end: Object {
 										column: 18
-										index: 104
 										line: 6
 									}
 									start: Object {
 										column: 8
-										index: 78
 										line: 5
 									}
 								}
@@ -259,12 +231,10 @@ JSRoot {
 										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 										end: Object {
 											column: 14
-											index: 84
 											line: 5
 										}
 										start: Object {
 											column: 13
-											index: 83
 											line: 5
 										}
 									}
@@ -277,12 +247,10 @@ JSRoot {
 											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 											end: Object {
 												column: 18
-												index: 104
 												line: 6
 											}
 											start: Object {
 												column: 12
-												index: 98
 												line: 6
 											}
 										}

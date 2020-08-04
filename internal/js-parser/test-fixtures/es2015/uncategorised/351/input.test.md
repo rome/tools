@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/uncategorised/351/input.js"
 		end: Object {
 			column: 44
-			index: 44
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/uncategorised/351/input.js"
 				end: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2015/uncategorised/351/input.js"
 					end: Object {
 						column: 43
-						index: 43
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -71,12 +65,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -85,12 +77,10 @@ JSRoot {
 								filename: "es2015/uncategorised/351/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -99,12 +89,10 @@ JSRoot {
 							filename: "es2015/uncategorised/351/input.js"
 							end: Object {
 								column: 27
-								index: 27
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -121,12 +109,10 @@ JSRoot {
 								filename: "es2015/uncategorised/351/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 								filename: "es2015/uncategorised/351/input.js"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -152,12 +136,10 @@ JSRoot {
 										filename: "es2015/uncategorised/351/input.js"
 										end: Object {
 											column: 25
-											index: 25
 											line: 1
 										}
 										start: Object {
 											column: 17
-											index: 17
 											line: 1
 										}
 									}
@@ -168,12 +150,10 @@ JSRoot {
 											filename: "es2015/uncategorised/351/input.js"
 											end: Object {
 												column: 25
-												index: 25
 												line: 1
 											}
 											start: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 										}
@@ -191,12 +171,10 @@ JSRoot {
 									identifierName: "__proto__"
 									end: Object {
 										column: 38
-										index: 38
 										line: 1
 									}
 									start: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 								}
@@ -205,12 +183,10 @@ JSRoot {
 								filename: "es2015/uncategorised/351/input.js"
 								end: Object {
 									column: 38
-									index: 38
 									line: 1
 								}
 								start: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 							}
@@ -222,12 +198,10 @@ JSRoot {
 								filename: "es2015/uncategorised/351/input.js"
 								end: Object {
 									column: 41
-									index: 41
 									line: 1
 								}
 								start: Object {
 									column: 40
-									index: 40
 									line: 1
 								}
 							}
@@ -236,12 +210,10 @@ JSRoot {
 							filename: "es2015/uncategorised/351/input.js"
 							end: Object {
 								column: 41
-								index: 41
 								line: 1
 							}
 							start: Object {
 								column: 29
-								index: 29
 								line: 1
 							}
 						}

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 		end: Object {
 			column: 0
-			index: 21
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 				end: Object {
 					column: 10
-					index: 20
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 					end: Object {
 						column: 10
-						index: 20
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 						end: Object {
 							column: 10
-							index: 20
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 17
 							line: 2
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 						end: Object {
 							column: 6
-							index: 16
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "f"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 							end: Object {
 								column: 3
-								index: 13
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								identifierName: "t"
 								end: Object {
 									column: 3
-									index: 13
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}

@@ -20,12 +20,10 @@ CommitRoot {
 		filename: "breaking/input.txt"
 		end: Object {
 			column: 47
-			index: 47
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}

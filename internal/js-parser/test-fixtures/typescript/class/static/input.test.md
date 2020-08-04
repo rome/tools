@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/static/input.ts"
 		end: Object {
 			column: 0
-			index: 101
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/static/input.ts"
 				end: Object {
 					column: 1
-					index: 100
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/static/input.ts"
 					end: Object {
 						column: 1
-						index: 100
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 12
-										index: 22
 										line: 2
 									}
 									start: Object {
 										column: 11
-										index: 21
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 12
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 11
-									index: 21
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 15
-								index: 25
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -143,12 +129,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 14
-									index: 24
 									line: 2
 								}
 								start: Object {
 									column: 12
-									index: 22
 									line: 2
 								}
 							}
@@ -162,19 +146,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 12
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -190,12 +171,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 19
-										index: 45
 										line: 3
 									}
 									start: Object {
 										column: 18
-										index: 44
 										line: 3
 									}
 								}
@@ -204,12 +183,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 19
-									index: 45
 									line: 3
 								}
 								start: Object {
 									column: 18
-									index: 44
 									line: 3
 								}
 							}
@@ -219,12 +196,10 @@ JSRoot {
 							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 22
-								index: 48
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 30
 								line: 3
 							}
 						}
@@ -241,12 +216,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 21
-									index: 47
 									line: 3
 								}
 								start: Object {
 									column: 19
-									index: 45
 									line: 3
 								}
 							}
@@ -260,19 +233,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 30
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 19
-									index: 45
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 30
 									line: 3
 								}
 							}
@@ -288,12 +258,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 22
-										index: 71
 										line: 4
 									}
 									start: Object {
 										column: 21
-										index: 70
 										line: 4
 									}
 								}
@@ -302,12 +270,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
-									index: 71
 									line: 4
 								}
 								start: Object {
 									column: 21
-									index: 70
 									line: 4
 								}
 							}
@@ -317,12 +283,10 @@ JSRoot {
 							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 25
-								index: 74
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 53
 								line: 4
 							}
 						}
@@ -339,12 +303,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 24
-									index: 73
 									line: 4
 								}
 								start: Object {
 									column: 22
-									index: 71
 									line: 4
 								}
 							}
@@ -358,19 +320,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 53
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
-									index: 71
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 53
 									line: 4
 								}
 							}
@@ -386,12 +345,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 20
-										index: 95
 										line: 5
 									}
 									start: Object {
 										column: 19
-										index: 94
 										line: 5
 									}
 								}
@@ -400,12 +357,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 20
-									index: 95
 									line: 5
 								}
 								start: Object {
 									column: 19
-									index: 94
 									line: 5
 								}
 							}
@@ -415,12 +370,10 @@ JSRoot {
 							filename: "typescript/class/static/input.ts"
 							end: Object {
 								column: 23
-								index: 98
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 79
 								line: 5
 							}
 						}
@@ -437,12 +390,10 @@ JSRoot {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 22
-									index: 97
 									line: 5
 								}
 								start: Object {
 									column: 20
-									index: 95
 									line: 5
 								}
 							}
@@ -456,19 +407,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 79
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/static/input.ts"
 								end: Object {
 									column: 20
-									index: 95
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 79
 									line: 5
 								}
 							}

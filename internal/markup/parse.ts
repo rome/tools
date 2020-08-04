@@ -24,8 +24,14 @@ import {
 import {isEscaped} from "@internal/string-utils";
 import {Number0, ob1Add, ob1Dec, ob1Get0, ob1Inc} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
-import {unescapeTextValue} from "./escape";
-import {createEmptyAttributes} from "./util";
+import {
+	AnyMarkup,
+	StaticMarkup,
+	readMarkup,
+	serializeLazyMarkup,
+	unescapeTextValue,
+} from "./escape";
+import {createEmptyAttributes, isSingleEscaped} from "./util";
 import {
 	globalAttributes,
 	tags,
@@ -425,10 +431,46 @@ const createStringMarkupParser = createParser((ParserCore) =>
 	}
 );
 
-export function parseMarkup(input: string, opts: ParserOptions = {}) {
-	try {
-		return createStringMarkupParser({...opts, input}).parse();
-	} catch (err) {
-		throw err;
+const parseCache: WeakMap<StaticMarkup, MarkupParsedChildren> = new WeakMap();
+export function parseMarkup(
+	input: string | AnyMarkup,
+	opts: ParserOptions = {},
+): MarkupParsedChildren {
+	let cacheKey: undefined | StaticMarkup;
+	let children: undefined | MarkupParsedChildren;
+
+	if (typeof input !== "string") {
+		cacheKey = serializeLazyMarkup(input);
+
+		const cached = parseCache.get(cacheKey);
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		// Don't need to parse a single escaped
+		if (isSingleEscaped(cacheKey)) {
+			children = [
+				{
+					type: "Text",
+					value: cacheKey.parts[0],
+					source: true,
+				},
+			];
+		}
+
+		input = readMarkup(input);
 	}
+
+	if (children === undefined) {
+		try {
+			children = createStringMarkupParser({...opts, input}).parse();
+		} catch (err) {
+			throw err;
+		}
+	}
+
+	if (cacheKey !== undefined) {
+		parseCache.set(cacheKey, children);
+	}
+	return children;
 }

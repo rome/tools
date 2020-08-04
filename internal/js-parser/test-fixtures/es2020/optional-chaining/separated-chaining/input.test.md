@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/separated-chaining/input.js"
 		end: Object {
 			column: 0
-			index: 28
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/separated-chaining/input.js"
 				end: Object {
 					column: 13
-					index: 13
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/separated-chaining/input.js"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -68,12 +62,10 @@ JSRoot {
 							identifierName: "f"
 							end: Object {
 								column: 13
-								index: 13
 								line: 1
 							}
 							start: Object {
 								column: 12
-								index: 12
 								line: 1
 							}
 						}
@@ -84,12 +76,10 @@ JSRoot {
 						identifierName: "f"
 						end: Object {
 							column: 13
-							index: 13
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -99,12 +89,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						end: Object {
 							column: 10
-							index: 10
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -116,12 +104,10 @@ JSRoot {
 								identifierName: "e"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 9
-									index: 9
 									line: 1
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 							identifierName: "e"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 						}
@@ -146,12 +130,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							end: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -163,12 +145,10 @@ JSRoot {
 									identifierName: "d"
 									end: Object {
 										column: 8
-										index: 8
 										line: 1
 									}
 									start: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 								}
@@ -178,12 +158,10 @@ JSRoot {
 								identifierName: "d"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -193,12 +171,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								end: Object {
 									column: 6
-									index: 6
 									line: 1
 								}
 								start: Object {
 									column: 0
-									index: 0
 									line: 1
 								}
 							}
@@ -210,12 +186,10 @@ JSRoot {
 										identifierName: "c"
 										end: Object {
 											column: 6
-											index: 6
 											line: 1
 										}
 										start: Object {
 											column: 5
-											index: 5
 											line: 1
 										}
 									}
@@ -225,12 +199,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 6
-										index: 6
 										line: 1
 									}
 									start: Object {
 										column: 5
-										index: 5
 										line: 1
 									}
 								}
@@ -240,12 +212,10 @@ JSRoot {
 									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									end: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 									start: Object {
 										column: 0
-										index: 0
 										line: 1
 									}
 								}
@@ -256,12 +226,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 1
-											index: 1
 											line: 1
 										}
 										start: Object {
 											column: 0
-											index: 0
 											line: 1
 										}
 									}
@@ -274,12 +242,10 @@ JSRoot {
 											identifierName: "b"
 											end: Object {
 												column: 4
-												index: 4
 												line: 1
 											}
 											start: Object {
 												column: 3
-												index: 3
 												line: 1
 											}
 										}
@@ -290,12 +256,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 4
-											index: 4
 											line: 1
 										}
 										start: Object {
 											column: 3
-											index: 3
 											line: 1
 										}
 									}
@@ -311,12 +275,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/separated-chaining/input.js"
 				end: Object {
 					column: 12
-					index: 27
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 15
 					line: 3
 				}
 			}
@@ -325,12 +287,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/separated-chaining/input.js"
 					end: Object {
 						column: 12
-						index: 27
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 15
 						line: 3
 					}
 				}
@@ -342,12 +302,10 @@ JSRoot {
 							identifierName: "f"
 							end: Object {
 								column: 12
-								index: 27
 								line: 3
 							}
 							start: Object {
 								column: 11
-								index: 26
 								line: 3
 							}
 						}
@@ -357,12 +315,10 @@ JSRoot {
 						identifierName: "f"
 						end: Object {
 							column: 12
-							index: 27
 							line: 3
 						}
 						start: Object {
 							column: 11
-							index: 26
 							line: 3
 						}
 					}
@@ -372,12 +328,10 @@ JSRoot {
 						filename: "es2020/optional-chaining/separated-chaining/input.js"
 						end: Object {
 							column: 10
-							index: 25
 							line: 3
 						}
 						start: Object {
 							column: 0
-							index: 15
 							line: 3
 						}
 					}
@@ -389,12 +343,10 @@ JSRoot {
 								identifierName: "e"
 								end: Object {
 									column: 10
-									index: 25
 									line: 3
 								}
 								start: Object {
 									column: 9
-									index: 24
 									line: 3
 								}
 							}
@@ -404,12 +356,10 @@ JSRoot {
 							identifierName: "e"
 							end: Object {
 								column: 10
-								index: 25
 								line: 3
 							}
 							start: Object {
 								column: 9
-								index: 24
 								line: 3
 							}
 						}
@@ -419,12 +369,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/separated-chaining/input.js"
 							end: Object {
 								column: 8
-								index: 23
 								line: 3
 							}
 							start: Object {
 								column: 0
-								index: 15
 								line: 3
 							}
 						}
@@ -436,12 +384,10 @@ JSRoot {
 									identifierName: "d"
 									end: Object {
 										column: 8
-										index: 23
 										line: 3
 									}
 									start: Object {
 										column: 7
-										index: 22
 										line: 3
 									}
 								}
@@ -452,12 +398,10 @@ JSRoot {
 								identifierName: "d"
 								end: Object {
 									column: 8
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 7
-									index: 22
 									line: 3
 								}
 							}
@@ -467,12 +411,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/separated-chaining/input.js"
 								end: Object {
 									column: 5
-									index: 20
 									line: 3
 								}
 								start: Object {
 									column: 0
-									index: 15
 									line: 3
 								}
 							}
@@ -484,12 +426,10 @@ JSRoot {
 										identifierName: "c"
 										end: Object {
 											column: 5
-											index: 20
 											line: 3
 										}
 										start: Object {
 											column: 4
-											index: 19
 											line: 3
 										}
 									}
@@ -499,12 +439,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 5
-										index: 20
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 19
 										line: 3
 									}
 								}
@@ -514,12 +452,10 @@ JSRoot {
 									filename: "es2020/optional-chaining/separated-chaining/input.js"
 									end: Object {
 										column: 3
-										index: 18
 										line: 3
 									}
 									start: Object {
 										column: 0
-										index: 15
 										line: 3
 									}
 								}
@@ -530,12 +466,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 1
-											index: 16
 											line: 3
 										}
 										start: Object {
 											column: 0
-											index: 15
 											line: 3
 										}
 									}
@@ -548,12 +482,10 @@ JSRoot {
 											identifierName: "b"
 											end: Object {
 												column: 3
-												index: 18
 												line: 3
 											}
 											start: Object {
 												column: 2
-												index: 17
 												line: 3
 											}
 										}
@@ -563,12 +495,10 @@ JSRoot {
 										identifierName: "b"
 										end: Object {
 											column: 3
-											index: 18
 											line: 3
 										}
 										start: Object {
 											column: 2
-											index: 17
 											line: 3
 										}
 									}

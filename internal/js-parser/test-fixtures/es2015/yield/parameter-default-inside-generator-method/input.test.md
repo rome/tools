@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 		end: Object {
 			column: 27
-			index: 27
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -95,12 +87,10 @@ JSRoot {
 									identifierName: "method"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -109,12 +99,10 @@ JSRoot {
 								filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -123,12 +111,10 @@ JSRoot {
 							filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -139,12 +125,10 @@ JSRoot {
 								filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 							}
@@ -161,12 +145,10 @@ JSRoot {
 								filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 								end: Object {
 									column: 21
-									index: 21
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -176,12 +158,10 @@ JSRoot {
 										filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 										end: Object {
 											column: 20
-											index: 20
 											line: 1
 										}
 										start: Object {
 											column: 11
-											index: 11
 											line: 1
 										}
 									}
@@ -192,12 +172,10 @@ JSRoot {
 											filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 											end: Object {
 												column: 20
-												index: 20
 												line: 1
 											}
 											start: Object {
 												column: 15
-												index: 15
 												line: 1
 											}
 										}
@@ -209,12 +187,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 12
-												index: 12
 												line: 1
 											}
 											start: Object {
 												column: 11
-												index: 11
 												line: 1
 											}
 										}
@@ -225,12 +201,10 @@ JSRoot {
 												filename: "es2015/yield/parameter-default-inside-generator-method/input.js"
 												end: Object {
 													column: 12
-													index: 12
 													line: 1
 												}
 												start: Object {
 													column: 11
-													index: 11
 													line: 1
 												}
 											}

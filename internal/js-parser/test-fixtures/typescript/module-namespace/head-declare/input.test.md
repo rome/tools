@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/module-namespace/head-declare/input.ts"
 		end: Object {
 			column: 0
-			index: 85
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "N"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head-declare/input.ts"
 				end: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 						identifierName: "M"
 						end: Object {
 							column: 21
-							index: 21
 							line: 1
 						}
 						start: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 					}
@@ -86,12 +78,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head-declare/input.ts"
 					end: Object {
 						column: 24
-						index: 24
 						line: 1
 					}
 					start: Object {
 						column: 20
-						index: 20
 						line: 1
 					}
 				}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "typescript/module-namespace/head-declare/input.ts"
 						end: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 						start: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 					}
@@ -121,12 +109,10 @@ JSRoot {
 					identifierName: "M"
 					end: Object {
 						column: 16
-						index: 41
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 40
 						line: 2
 					}
 				}
@@ -136,12 +122,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head-declare/input.ts"
 				end: Object {
 					column: 19
-					index: 44
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 25
 					line: 2
 				}
 			}
@@ -151,12 +135,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head-declare/input.ts"
 					end: Object {
 						column: 19
-						index: 44
 						line: 2
 					}
 					start: Object {
 						column: 17
-						index: 42
 						line: 2
 					}
 				}
@@ -169,12 +151,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head-declare/input.ts"
 					end: Object {
 						column: 18
-						index: 63
 						line: 3
 					}
 					start: Object {
 						column: 15
-						index: 60
 						line: 3
 					}
 				}
@@ -185,12 +165,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head-declare/input.ts"
 				end: Object {
 					column: 21
-					index: 66
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 45
 					line: 3
 				}
 			}
@@ -200,12 +178,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head-declare/input.ts"
 					end: Object {
 						column: 21
-						index: 66
 						line: 3
 					}
 					start: Object {
 						column: 19
-						index: 64
 						line: 3
 					}
 				}
@@ -219,12 +195,10 @@ JSRoot {
 					identifierName: "global"
 					end: Object {
 						column: 14
-						index: 81
 						line: 4
 					}
 					start: Object {
 						column: 8
-						index: 75
 						line: 4
 					}
 				}
@@ -235,12 +209,10 @@ JSRoot {
 				filename: "typescript/module-namespace/head-declare/input.ts"
 				end: Object {
 					column: 17
-					index: 84
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 67
 					line: 4
 				}
 			}
@@ -250,12 +222,10 @@ JSRoot {
 					filename: "typescript/module-namespace/head-declare/input.ts"
 					end: Object {
 						column: 17
-						index: 84
 						line: 4
 					}
 					start: Object {
 						column: 15
-						index: 82
 						line: 4
 					}
 				}

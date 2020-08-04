@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/private-fields/input.ts"
 		end: Object {
 			column: 0
-			index: 71
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 4
-					index: 50
 					line: 5
 				}
 				start: Object {
 					column: 4
-					index: 50
 					line: 5
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "typescript/class/private-fields/input.ts"
 				end: Object {
 					column: 1
-					index: 70
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "typescript/class/private-fields/input.ts"
 					end: Object {
 						column: 1
-						index: 70
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 13
-								index: 23
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 12
-									index: 22
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 16
 									line: 2
 								}
 							}
@@ -177,19 +159,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -204,12 +183,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 4
-										index: 28
 										line: 3
 									}
 									start: Object {
 										column: 3
-										index: 27
 										line: 3
 									}
 								}
@@ -218,12 +195,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -234,12 +209,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 6
-								index: 30
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 						}
@@ -252,19 +225,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 26
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 29
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 26
 									line: 3
 								}
 							}
@@ -279,12 +249,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 4
-										index: 35
 										line: 4
 									}
 									start: Object {
 										column: 3
-										index: 34
 										line: 4
 									}
 								}
@@ -293,12 +261,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 35
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 33
 									line: 4
 								}
 							}
@@ -308,12 +274,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 14
-								index: 45
 								line: 4
 							}
 							start: Object {
 								column: 2
-								index: 33
 								line: 4
 							}
 						}
@@ -322,12 +286,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 13
-									index: 44
 									line: 4
 								}
 								start: Object {
 									column: 7
-									index: 38
 									line: 4
 								}
 							}
@@ -341,19 +303,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 33
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 36
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 33
 									line: 4
 								}
 							}
@@ -368,12 +327,10 @@ JSRoot {
 									identifierName: "d"
 									end: Object {
 										column: 4
-										index: 50
 										line: 5
 									}
 									start: Object {
 										column: 3
-										index: 49
 										line: 5
 									}
 								}
@@ -382,12 +339,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 50
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 48
 									line: 5
 								}
 							}
@@ -398,12 +353,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 4
-								index: 50
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 48
 								line: 5
 							}
 						}
@@ -416,19 +369,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 48
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 50
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 48
 									line: 5
 								}
 							}
@@ -443,12 +393,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 5
-										index: 51
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 50
 										line: 5
 									}
 								}
@@ -457,12 +405,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 51
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 50
 									line: 5
 								}
 							}
@@ -474,12 +420,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 6
-								index: 52
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 50
 								line: 5
 							}
 						}
@@ -492,19 +436,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 50
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 51
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 50
 									line: 5
 								}
 							}
@@ -519,12 +460,10 @@ JSRoot {
 									identifierName: "e"
 									end: Object {
 										column: 4
-										index: 57
 										line: 6
 									}
 									start: Object {
 										column: 3
-										index: 56
 										line: 6
 									}
 								}
@@ -533,12 +472,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 57
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 55
 									line: 6
 								}
 							}
@@ -549,12 +486,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 4
-								index: 57
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 55
 								line: 6
 							}
 						}
@@ -567,19 +502,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 55
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 4
-									index: 57
 									line: 6
 								}
 								start: Object {
 									column: 2
-									index: 55
 									line: 6
 								}
 							}
@@ -594,12 +526,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 5
-										index: 58
 										line: 6
 									}
 									start: Object {
 										column: 4
-										index: 57
 										line: 6
 									}
 								}
@@ -608,12 +538,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 58
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 57
 									line: 6
 								}
 							}
@@ -624,12 +552,10 @@ JSRoot {
 							filename: "typescript/class/private-fields/input.ts"
 							end: Object {
 								column: 15
-								index: 68
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 57
 								line: 6
 							}
 						}
@@ -638,12 +564,10 @@ JSRoot {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 14
-									index: 67
 									line: 6
 								}
 								start: Object {
 									column: 7
-									index: 60
 									line: 6
 								}
 							}
@@ -657,19 +581,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 57
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/class/private-fields/input.ts"
 								end: Object {
 									column: 5
-									index: 58
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 57
 									line: 6
 								}
 							}

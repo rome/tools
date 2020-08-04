@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/class/extends-strict/input.js"
 		end: Object {
 			column: 0
-			index: 65
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 44
 					line: 2
 				}
 				start: Object {
 					column: 2
-					index: 34
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "es2015/class/extends-strict/input.js"
 				end: Object {
 					column: 7
-					index: 64
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "es2015/class/extends-strict/input.js"
 					end: Object {
 						column: 7
-						index: 64
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -111,12 +101,10 @@ JSRoot {
 						filename: "es2015/class/extends-strict/input.js"
 						end: Object {
 							column: 3
-							index: 60
 							line: 4
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}
@@ -128,12 +116,10 @@ JSRoot {
 								identifierName: "B"
 								end: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 								start: Object {
 									column: 26
-									index: 26
 									line: 1
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "es2015/class/extends-strict/input.js"
 							end: Object {
 								column: 1
-								index: 58
 								line: 4
 							}
 							start: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 						}
@@ -164,12 +148,10 @@ JSRoot {
 								filename: "es2015/class/extends-strict/input.js"
 								end: Object {
 									column: 29
-									index: 29
 									line: 1
 								}
 								start: Object {
 									column: 27
-									index: 27
 									line: 1
 								}
 							}
@@ -180,12 +162,10 @@ JSRoot {
 								filename: "es2015/class/extends-strict/input.js"
 								end: Object {
 									column: 1
-									index: 58
 									line: 4
 								}
 								start: Object {
 									column: 30
-									index: 30
 									line: 1
 								}
 							}
@@ -195,12 +175,10 @@ JSRoot {
 										filename: "es2015/class/extends-strict/input.js"
 										end: Object {
 											column: 12
-											index: 44
 											line: 2
 										}
 										start: Object {
 											column: 2
-											index: 34
 											line: 2
 										}
 									}
@@ -209,12 +187,10 @@ JSRoot {
 											filename: "es2015/class/extends-strict/input.js"
 											end: Object {
 												column: 12
-												index: 44
 												line: 2
 											}
 											start: Object {
 												column: 11
-												index: 43
 												line: 2
 											}
 										}
@@ -225,12 +201,10 @@ JSRoot {
 											filename: "es2015/class/extends-strict/input.js"
 											end: Object {
 												column: 10
-												index: 42
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 40
 												line: 2
 											}
 										}
@@ -241,12 +215,10 @@ JSRoot {
 										filename: "es2015/class/extends-strict/input.js"
 										end: Object {
 											column: 11
-											index: 56
 											line: 3
 										}
 										start: Object {
 											column: 2
-											index: 47
 											line: 3
 										}
 									}
@@ -257,12 +229,10 @@ JSRoot {
 											identifierName: "B"
 											end: Object {
 												column: 10
-												index: 55
 												line: 3
 											}
 											start: Object {
 												column: 9
-												index: 54
 												line: 3
 											}
 										}

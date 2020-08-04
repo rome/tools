@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/expect-plugin/export-type/input.js"
 		end: Object {
 			column: 0
-			index: 26
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				filename: "typescript/expect-plugin/export-type/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 						identifierName: "Foo"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 12
-							index: 12
 							line: 1
 						}
 					}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "typescript/expect-plugin/export-type/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -85,12 +77,10 @@ JSRoot {
 						filename: "typescript/expect-plugin/export-type/input.js"
 						end: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 						start: Object {
 							column: 18
-							index: 18
 							line: 1
 						}
 					}

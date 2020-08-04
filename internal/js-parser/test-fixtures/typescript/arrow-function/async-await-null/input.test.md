@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/arrow-function/async-await-null/input.ts"
 		end: Object {
 			column: 0
-			index: 27
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/arrow-function/async-await-null/input.ts"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "typescript/arrow-function/async-await-null/input.ts"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -65,12 +59,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-await-null/input.ts"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -79,12 +71,10 @@ JSRoot {
 							filename: "typescript/arrow-function/async-await-null/input.ts"
 							end: Object {
 								column: 25
-								index: 25
 								line: 1
 							}
 							start: Object {
 								column: 21
-								index: 21
 								line: 1
 							}
 						}
@@ -101,12 +91,10 @@ JSRoot {
 						filename: "typescript/arrow-function/async-await-null/input.ts"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -115,12 +103,10 @@ JSRoot {
 							filename: "typescript/arrow-function/async-await-null/input.ts"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 6
-								index: 6
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 									filename: "typescript/arrow-function/async-await-null/input.ts"
 									end: Object {
 										column: 8
-										index: 8
 										line: 1
 									}
 									start: Object {
 										column: 7
-										index: 7
 										line: 1
 									}
 								}

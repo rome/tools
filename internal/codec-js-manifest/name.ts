@@ -7,14 +7,14 @@
 
 import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from "@internal/ob1";
 import {
-	DiagnosticDescriptionOptionalCategory,
+	DiagnosticDescriptionOptional,
 	descriptions,
 } from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
 type NormalizeNameUnexpected = (
 	opts: {
-		description: DiagnosticDescriptionOptionalCategory;
+		description: DiagnosticDescriptionOptional;
 		start?: Number0;
 		end?: Number0;
 		at?: "prefix";

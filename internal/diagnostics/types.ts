@@ -99,7 +99,7 @@ export type DiagnosticDescription = {
 	advice: DiagnosticAdvice;
 };
 
-export type DiagnosticDescriptionOptionalCategory = {
+export type DiagnosticDescriptionOptional = {
 	category?: DiagnosticCategory;
 	message: StaticMarkup;
 	advice?: DiagnosticAdvice;

@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/declare/destructure-new-line/input.ts"
 		end: Object {
 			column: 0
-			index: 50
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/declare/destructure-new-line/input.ts"
 				end: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					identifierName: "declare"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 				filename: "typescript/declare/destructure-new-line/input.ts"
 				end: Object {
 					column: 41
-					index: 49
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 8
 					line: 2
 				}
 			}
@@ -84,12 +76,10 @@ JSRoot {
 					filename: "typescript/declare/destructure-new-line/input.ts"
 					end: Object {
 						column: 41
-						index: 49
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 8
 						line: 2
 					}
 				}
@@ -101,12 +91,10 @@ JSRoot {
 								filename: "typescript/declare/destructure-new-line/input.ts"
 								end: Object {
 									column: 40
-									index: 48
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 14
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 												identifierName: "x"
 												end: Object {
 													column: 9
-													index: 17
 													line: 2
 												}
 												start: Object {
 													column: 8
-													index: 16
 													line: 2
 												}
 											}
@@ -134,12 +120,10 @@ JSRoot {
 											filename: "typescript/declare/destructure-new-line/input.ts"
 											end: Object {
 												column: 9
-												index: 17
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 16
 												line: 2
 											}
 										}
@@ -151,12 +135,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 9
-												index: 17
 												line: 2
 											}
 											start: Object {
 												column: 8
-												index: 16
 												line: 2
 											}
 										}
@@ -165,12 +147,10 @@ JSRoot {
 										filename: "typescript/declare/destructure-new-line/input.ts"
 										end: Object {
 											column: 9
-											index: 17
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 16
 											line: 2
 										}
 									}
@@ -184,12 +164,10 @@ JSRoot {
 												identifierName: "y"
 												end: Object {
 													column: 12
-													index: 20
 													line: 2
 												}
 												start: Object {
 													column: 11
-													index: 19
 													line: 2
 												}
 											}
@@ -198,12 +176,10 @@ JSRoot {
 											filename: "typescript/declare/destructure-new-line/input.ts"
 											end: Object {
 												column: 12
-												index: 20
 												line: 2
 											}
 											start: Object {
 												column: 11
-												index: 19
 												line: 2
 											}
 										}
@@ -215,12 +191,10 @@ JSRoot {
 											identifierName: "y"
 											end: Object {
 												column: 12
-												index: 20
 												line: 2
 											}
 											start: Object {
 												column: 11
-												index: 19
 												line: 2
 											}
 										}
@@ -229,12 +203,10 @@ JSRoot {
 										filename: "typescript/declare/destructure-new-line/input.ts"
 										end: Object {
 											column: 12
-											index: 20
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 19
 											line: 2
 										}
 									}
@@ -246,12 +218,10 @@ JSRoot {
 									filename: "typescript/declare/destructure-new-line/input.ts"
 									end: Object {
 										column: 40
-										index: 48
 										line: 2
 									}
 									start: Object {
 										column: 6
-										index: 14
 										line: 2
 									}
 								}
@@ -260,12 +230,10 @@ JSRoot {
 										filename: "typescript/declare/destructure-new-line/input.ts"
 										end: Object {
 											column: 40
-											index: 48
 											line: 2
 										}
 										start: Object {
 											column: 16
-											index: 24
 											line: 2
 										}
 									}
@@ -279,12 +247,10 @@ JSRoot {
 														identifierName: "x"
 														end: Object {
 															column: 19
-															index: 27
 															line: 2
 														}
 														start: Object {
 															column: 18
-															index: 26
 															line: 2
 														}
 													}
@@ -293,12 +259,10 @@ JSRoot {
 													filename: "typescript/declare/destructure-new-line/input.ts"
 													end: Object {
 														column: 19
-														index: 27
 														line: 2
 													}
 													start: Object {
 														column: 18
-														index: 26
 														line: 2
 													}
 												}
@@ -309,12 +273,10 @@ JSRoot {
 												filename: "typescript/declare/destructure-new-line/input.ts"
 												end: Object {
 													column: 28
-													index: 36
 													line: 2
 												}
 												start: Object {
 													column: 18
-													index: 26
 													line: 2
 												}
 											}
@@ -323,12 +285,10 @@ JSRoot {
 													filename: "typescript/declare/destructure-new-line/input.ts"
 													end: Object {
 														column: 27
-														index: 35
 														line: 2
 													}
 													start: Object {
 														column: 21
-														index: 29
 														line: 2
 													}
 												}
@@ -343,12 +303,10 @@ JSRoot {
 														identifierName: "y"
 														end: Object {
 															column: 30
-															index: 38
 															line: 2
 														}
 														start: Object {
 															column: 29
-															index: 37
 															line: 2
 														}
 													}
@@ -357,12 +315,10 @@ JSRoot {
 													filename: "typescript/declare/destructure-new-line/input.ts"
 													end: Object {
 														column: 30
-														index: 38
 														line: 2
 													}
 													start: Object {
 														column: 29
-														index: 37
 														line: 2
 													}
 												}
@@ -373,12 +329,10 @@ JSRoot {
 												filename: "typescript/declare/destructure-new-line/input.ts"
 												end: Object {
 													column: 38
-													index: 46
 													line: 2
 												}
 												start: Object {
 													column: 29
-													index: 37
 													line: 2
 												}
 											}
@@ -387,12 +341,10 @@ JSRoot {
 													filename: "typescript/declare/destructure-new-line/input.ts"
 													end: Object {
 														column: 38
-														index: 46
 														line: 2
 													}
 													start: Object {
 														column: 32
-														index: 40
 														line: 2
 													}
 												}
@@ -407,12 +359,10 @@ JSRoot {
 							filename: "typescript/declare/destructure-new-line/input.ts"
 							end: Object {
 								column: 40
-								index: 48
 								line: 2
 							}
 							start: Object {
 								column: 6
-								index: 14
 								line: 2
 							}
 						}

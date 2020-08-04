@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 		end: Object {
 			column: 20
-			index: 20
 			line: 1
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 12
-					index: 12
 					line: 1
 				}
 				start: Object {
 					column: 7
-					index: 7
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 					end: Object {
 						column: 19
-						index: 19
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 						filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 						end: Object {
 							column: 19
-							index: 19
 							line: 1
 						}
 						start: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 					}
@@ -111,12 +101,10 @@ JSRoot {
 						filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 						end: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -127,12 +115,10 @@ JSRoot {
 								filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 								end: Object {
 									column: 16
-									index: 16
 									line: 1
 								}
 								start: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 							}

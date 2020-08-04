@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/export-extensions/export-with-ts/input.js"
 		end: Object {
 			column: 0
-			index: 165
 			line: 8
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 15
-					index: 15
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -79,12 +73,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 						identifierName: "abstract"
 						end: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 						start: Object {
 							column: 7
-							index: 7
 							line: 1
 						}
 					}
@@ -130,12 +118,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 					start: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 				}
@@ -144,12 +130,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 26
-					index: 26
 					line: 1
 				}
 				start: Object {
 					column: 16
-					index: 16
 					line: 1
 				}
 			}
@@ -163,12 +147,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 26
-						index: 26
 						line: 1
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -182,12 +164,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 14
-					index: 41
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 27
 					line: 2
 				}
 			}
@@ -197,12 +177,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 14
-						index: 41
 						line: 2
 					}
 					start: Object {
 						column: 15
-						index: 42
 						line: 2
 					}
 				}
@@ -212,12 +190,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 14
-						index: 41
 						line: 2
 					}
 					start: Object {
 						column: 7
-						index: 34
 						line: 2
 					}
 				}
@@ -228,12 +204,10 @@ JSRoot {
 						identifierName: "declare"
 						end: Object {
 							column: 14
-							index: 41
 							line: 2
 						}
 						start: Object {
 							column: 7
-							index: 34
 							line: 2
 						}
 					}
@@ -248,12 +222,10 @@ JSRoot {
 					identifierName: "B"
 					end: Object {
 						column: 26
-						index: 53
 						line: 2
 					}
 					start: Object {
 						column: 25
-						index: 52
 						line: 2
 					}
 				}
@@ -264,12 +236,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 29
-					index: 56
 					line: 2
 				}
 				start: Object {
 					column: 15
-					index: 42
 					line: 2
 				}
 			}
@@ -279,12 +249,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 29
-						index: 56
 						line: 2
 					}
 					start: Object {
 						column: 27
-						index: 54
 						line: 2
 					}
 				}
@@ -298,12 +266,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 11
-					index: 68
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 57
 					line: 3
 				}
 			}
@@ -313,12 +279,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 11
-						index: 68
 						line: 3
 					}
 					start: Object {
 						column: 12
-						index: 69
 						line: 3
 					}
 				}
@@ -328,12 +292,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 11
-						index: 68
 						line: 3
 					}
 					start: Object {
 						column: 7
-						index: 64
 						line: 3
 					}
 				}
@@ -344,12 +306,10 @@ JSRoot {
 						identifierName: "enum"
 						end: Object {
 							column: 11
-							index: 68
 							line: 3
 						}
 						start: Object {
 							column: 7
-							index: 64
 							line: 3
 						}
 					}
@@ -361,12 +321,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 13
-					index: 70
 					line: 3
 				}
 				start: Object {
 					column: 12
-					index: 69
 					line: 3
 				}
 			}
@@ -377,12 +335,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 13
-						index: 70
 						line: 3
 					}
 					start: Object {
 						column: 12
-						index: 69
 						line: 3
 					}
 				}
@@ -395,12 +351,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 16
-					index: 73
 					line: 3
 				}
 				start: Object {
 					column: 14
-					index: 71
 					line: 3
 				}
 			}
@@ -412,12 +366,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 21
-					index: 95
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 74
 					line: 4
 				}
 			}
@@ -429,12 +381,10 @@ JSRoot {
 						identifierName: "D"
 						end: Object {
 							column: 18
-							index: 92
 							line: 4
 						}
 						start: Object {
 							column: 17
-							index: 91
 							line: 4
 						}
 					}
@@ -445,12 +395,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 21
-						index: 95
 						line: 4
 					}
 					start: Object {
 						column: 7
-						index: 81
 						line: 4
 					}
 				}
@@ -460,12 +408,10 @@ JSRoot {
 						filename: "experimental/export-extensions/export-with-ts/input.js"
 						end: Object {
 							column: 21
-							index: 95
 							line: 4
 						}
 						start: Object {
 							column: 19
-							index: 93
 							line: 4
 						}
 					}
@@ -480,12 +426,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 13
-					index: 109
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 96
 					line: 5
 				}
 			}
@@ -495,12 +439,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 13
-						index: 109
 						line: 5
 					}
 					start: Object {
 						column: 14
-						index: 110
 						line: 5
 					}
 				}
@@ -510,12 +452,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 13
-						index: 109
 						line: 5
 					}
 					start: Object {
 						column: 7
-						index: 103
 						line: 5
 					}
 				}
@@ -526,12 +466,10 @@ JSRoot {
 						identifierName: "module"
 						end: Object {
 							column: 13
-							index: 109
 							line: 5
 						}
 						start: Object {
 							column: 7
-							index: 103
 							line: 5
 						}
 					}
@@ -543,12 +481,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 15
-					index: 111
 					line: 5
 				}
 				start: Object {
 					column: 14
-					index: 110
 					line: 5
 				}
 			}
@@ -559,12 +495,10 @@ JSRoot {
 					identifierName: "E"
 					end: Object {
 						column: 15
-						index: 111
 						line: 5
 					}
 					start: Object {
 						column: 14
-						index: 110
 						line: 5
 					}
 				}
@@ -577,12 +511,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 18
-					index: 114
 					line: 5
 				}
 				start: Object {
 					column: 16
-					index: 112
 					line: 5
 				}
 			}
@@ -595,12 +527,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 16
-					index: 131
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 115
 					line: 6
 				}
 			}
@@ -610,12 +540,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 16
-						index: 131
 						line: 6
 					}
 					start: Object {
 						column: 17
-						index: 132
 						line: 6
 					}
 				}
@@ -625,12 +553,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 16
-						index: 131
 						line: 6
 					}
 					start: Object {
 						column: 7
-						index: 122
 						line: 6
 					}
 				}
@@ -641,12 +567,10 @@ JSRoot {
 						identifierName: "namespace"
 						end: Object {
 							column: 16
-							index: 131
 							line: 6
 						}
 						start: Object {
 							column: 7
-							index: 122
 							line: 6
 						}
 					}
@@ -658,12 +582,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 18
-					index: 133
 					line: 6
 				}
 				start: Object {
 					column: 17
-					index: 132
 					line: 6
 				}
 			}
@@ -674,12 +596,10 @@ JSRoot {
 					identifierName: "F"
 					end: Object {
 						column: 18
-						index: 133
 						line: 6
 					}
 					start: Object {
 						column: 17
-						index: 132
 						line: 6
 					}
 				}
@@ -692,12 +612,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 21
-					index: 136
 					line: 6
 				}
 				start: Object {
 					column: 19
-					index: 134
 					line: 6
 				}
 			}
@@ -709,12 +627,10 @@ JSRoot {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
 				end: Object {
 					column: 27
-					index: 164
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 137
 					line: 7
 				}
 			}
@@ -726,12 +642,10 @@ JSRoot {
 						identifierName: "G"
 						end: Object {
 							column: 13
-							index: 150
 							line: 7
 						}
 						start: Object {
 							column: 12
-							index: 149
 							line: 7
 						}
 					}
@@ -741,12 +655,10 @@ JSRoot {
 					filename: "experimental/export-extensions/export-with-ts/input.js"
 					end: Object {
 						column: 27
-						index: 164
 						line: 7
 					}
 					start: Object {
 						column: 7
-						index: 144
 						line: 7
 					}
 				}
@@ -755,12 +667,10 @@ JSRoot {
 						filename: "experimental/export-extensions/export-with-ts/input.js"
 						end: Object {
 							column: 26
-							index: 163
 							line: 7
 						}
 						start: Object {
 							column: 16
-							index: 153
 							line: 7
 						}
 					}
@@ -771,12 +681,10 @@ JSRoot {
 							identifierName: "foo"
 							end: Object {
 								column: 26
-								index: 163
 								line: 7
 							}
 							start: Object {
 								column: 23
-								index: 160
 								line: 7
 							}
 						}

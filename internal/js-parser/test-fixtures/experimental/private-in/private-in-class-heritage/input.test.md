@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/private-in/private-in-class-heritage/input.js"
 		end: Object {
 			column: 0
-			index: 74
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -49,12 +47,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 21
-					index: 54
 					line: 4
 				}
 				start: Object {
 					column: 21
-					index: 54
 					line: 4
 				}
 			}
@@ -69,12 +65,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -83,12 +77,10 @@ JSRoot {
 				filename: "experimental/private-in/private-in-class-heritage/input.js"
 				end: Object {
 					column: 1
-					index: 73
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -101,12 +93,10 @@ JSRoot {
 					filename: "experimental/private-in/private-in-class-heritage/input.js"
 					end: Object {
 						column: 1
-						index: 73
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -120,12 +110,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 16
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 15
 										line: 2
 									}
 								}
@@ -134,12 +122,10 @@ JSRoot {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 4
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -151,12 +137,10 @@ JSRoot {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 8
-									index: 20
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 19
 									line: 2
 								}
 							}
@@ -166,12 +150,10 @@ JSRoot {
 							filename: "experimental/private-in/private-in-class-heritage/input.js"
 							end: Object {
 								column: 9
-								index: 21
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -184,19 +166,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 4
-									index: 16
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -212,12 +191,10 @@ JSRoot {
 									identifierName: "test"
 									end: Object {
 										column: 6
-										index: 28
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 24
 										line: 3
 									}
 								}
@@ -226,12 +203,10 @@ JSRoot {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 6
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 24
 									line: 3
 								}
 							}
@@ -240,12 +215,10 @@ JSRoot {
 							filename: "experimental/private-in/private-in-class-heritage/input.js"
 							end: Object {
 								column: 3
-								index: 71
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 24
 								line: 3
 							}
 						}
@@ -262,12 +235,10 @@ JSRoot {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 8
-									index: 30
 									line: 3
 								}
 								start: Object {
 									column: 6
-									index: 28
 									line: 3
 								}
 							}
@@ -281,19 +252,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 24
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 6
-									index: 28
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 24
 									line: 3
 								}
 							}
@@ -304,12 +272,10 @@ JSRoot {
 								filename: "experimental/private-in/private-in-class-heritage/input.js"
 								end: Object {
 									column: 3
-									index: 71
 									line: 5
 								}
 								start: Object {
 									column: 9
-									index: 31
 									line: 3
 								}
 							}
@@ -322,12 +288,10 @@ JSRoot {
 											identifierName: "X"
 											end: Object {
 												column: 11
-												index: 44
 												line: 4
 											}
 											start: Object {
 												column: 10
-												index: 43
 												line: 4
 											}
 										}
@@ -336,12 +300,10 @@ JSRoot {
 										filename: "experimental/private-in/private-in-class-heritage/input.js"
 										end: Object {
 											column: 29
-											index: 62
 											line: 4
 										}
 										start: Object {
 											column: 4
-											index: 37
 											line: 4
 										}
 									}
@@ -353,12 +315,10 @@ JSRoot {
 											filename: "experimental/private-in/private-in-class-heritage/input.js"
 											end: Object {
 												column: 29
-												index: 62
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 37
 												line: 4
 											}
 										}
@@ -368,12 +328,10 @@ JSRoot {
 												filename: "experimental/private-in/private-in-class-heritage/input.js"
 												end: Object {
 													column: 22
-													index: 55
 													line: 4
 												}
 												start: Object {
 													column: 21
-													index: 54
 													line: 4
 												}
 											}
@@ -388,12 +346,10 @@ JSRoot {
 															identifierName: ""
 															end: Object {
 																column: 28
-																index: 61
 																line: 4
 															}
 															start: Object {
 																column: 27
-																index: 60
 																line: 4
 															}
 														}
@@ -402,12 +358,10 @@ JSRoot {
 														filename: "experimental/private-in/private-in-class-heritage/input.js"
 														end: Object {
 															column: 28
-															index: 61
 															line: 4
 														}
 														start: Object {
 															column: 27
-															index: 60
 															line: 4
 														}
 													}
@@ -419,12 +373,10 @@ JSRoot {
 													filename: "experimental/private-in/private-in-class-heritage/input.js"
 													end: Object {
 														column: 28
-														index: 61
 														line: 4
 													}
 													start: Object {
 														column: 27
-														index: 60
 														line: 4
 													}
 												}
@@ -437,19 +389,16 @@ JSRoot {
 													typeAnnotation: undefined
 													start: Object {
 														column: 27
-														index: 60
 														line: 4
 													}
 													loc: Object {
 														filename: "experimental/private-in/private-in-class-heritage/input.js"
 														end: Object {
 															column: 28
-															index: 61
 															line: 4
 														}
 														start: Object {
 															column: 27
-															index: 60
 															line: 4
 														}
 													}
@@ -463,12 +412,10 @@ JSRoot {
 										filename: "experimental/private-in/private-in-class-heritage/input.js"
 										end: Object {
 											column: 30
-											index: 63
 											line: 4
 										}
 										start: Object {
 											column: 29
-											index: 62
 											line: 4
 										}
 									}
@@ -478,12 +425,10 @@ JSRoot {
 											filename: "experimental/private-in/private-in-class-heritage/input.js"
 											end: Object {
 												column: 30
-												index: 63
 												line: 4
 											}
 											start: Object {
 												column: 29
-												index: 62
 												line: 4
 											}
 										}
@@ -496,12 +441,10 @@ JSRoot {
 										filename: "experimental/private-in/private-in-class-heritage/input.js"
 										end: Object {
 											column: 33
-											index: 66
 											line: 4
 										}
 										start: Object {
 											column: 31
-											index: 64
 											line: 4
 										}
 									}
@@ -511,12 +454,10 @@ JSRoot {
 										filename: "experimental/private-in/private-in-class-heritage/input.js"
 										end: Object {
 											column: 34
-											index: 67
 											line: 4
 										}
 										start: Object {
 											column: 33
-											index: 66
 											line: 4
 										}
 									}

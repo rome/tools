@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-methods/combined/input.js"
 		end: Object {
 			column: 0
-			index: 160
 			line: 17
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-methods/combined/input.js"
 				end: Object {
 					column: 1
-					index: 159
 					line: 16
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-methods/combined/input.js"
 					end: Object {
 						column: 1
-						index: 159
 						line: 16
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 3
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 14
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
-									index: 19
 									line: 2
 								}
 								start: Object {
 									column: 6
-									index: 18
 									line: 2
 								}
 							}
@@ -138,12 +124,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 8
-								index: 20
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -156,19 +140,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 									identifierName: "a"
 									end: Object {
 										column: 5
-										index: 27
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 26
 										line: 4
 									}
 								}
@@ -198,12 +177,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 5
-									index: 27
 									line: 4
 								}
 								start: Object {
 									column: 3
-									index: 25
 									line: 4
 								}
 							}
@@ -212,12 +189,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 3
-								index: 52
 								line: 6
 							}
 							start: Object {
 								column: 2
-								index: 24
 								line: 4
 							}
 						}
@@ -234,12 +209,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
-									index: 29
 									line: 4
 								}
 								start: Object {
 									column: 5
-									index: 27
 									line: 4
 								}
 							}
@@ -253,19 +226,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 24
 								line: 4
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 5
-									index: 27
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 24
 									line: 4
 								}
 							}
@@ -276,12 +246,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
-									index: 52
 									line: 6
 								}
 								start: Object {
 									column: 8
-									index: 30
 									line: 4
 								}
 							}
@@ -291,12 +259,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 16
-											index: 48
 											line: 5
 										}
 										start: Object {
 											column: 4
-											index: 36
 											line: 5
 										}
 									}
@@ -306,12 +272,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 15
-												index: 47
 												line: 5
 											}
 											start: Object {
 												column: 4
-												index: 36
 												line: 5
 											}
 										}
@@ -321,12 +285,10 @@ JSRoot {
 												filename: "experimental/class-private-methods/combined/input.js"
 												end: Object {
 													column: 15
-													index: 47
 													line: 5
 												}
 												start: Object {
 													column: 10
-													index: 42
 													line: 5
 												}
 											}
@@ -337,12 +299,10 @@ JSRoot {
 													identifierName: "bar"
 													end: Object {
 														column: 13
-														index: 45
 														line: 5
 													}
 													start: Object {
 														column: 10
-														index: 42
 														line: 5
 													}
 												}
@@ -362,12 +322,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 4
-										index: 58
 										line: 8
 									}
 									start: Object {
 										column: 3
-										index: 57
 										line: 8
 									}
 								}
@@ -376,12 +334,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
-									index: 58
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 56
 									line: 8
 								}
 							}
@@ -393,12 +349,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
-									index: 62
 									line: 8
 								}
 								start: Object {
 									column: 7
-									index: 61
 									line: 8
 								}
 							}
@@ -408,12 +362,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 9
-								index: 63
 								line: 8
 							}
 							start: Object {
 								column: 2
-								index: 56
 								line: 8
 							}
 						}
@@ -426,19 +378,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 56
 								line: 8
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
-									index: 58
 									line: 8
 								}
 								start: Object {
 									column: 2
-									index: 56
 									line: 8
 								}
 							}
@@ -454,12 +403,10 @@ JSRoot {
 									identifierName: "b"
 									end: Object {
 										column: 7
-										index: 72
 										line: 10
 									}
 									start: Object {
 										column: 6
-										index: 71
 										line: 10
 									}
 								}
@@ -468,12 +415,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
-									index: 72
 									line: 10
 								}
 								start: Object {
 									column: 6
-									index: 71
 									line: 10
 								}
 							}
@@ -482,12 +427,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 26
-								index: 91
 								line: 10
 							}
 							start: Object {
 								column: 2
-								index: 67
 								line: 10
 							}
 						}
@@ -504,12 +447,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 9
-									index: 74
 									line: 10
 								}
 								start: Object {
 									column: 7
-									index: 72
 									line: 10
 								}
 							}
@@ -523,19 +464,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 67
 								line: 10
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 7
-									index: 72
 									line: 10
 								}
 								start: Object {
 									column: 2
-									index: 67
 									line: 10
 								}
 							}
@@ -546,12 +484,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 26
-									index: 91
 									line: 10
 								}
 								start: Object {
 									column: 10
-									index: 75
 									line: 10
 								}
 							}
@@ -561,12 +497,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 24
-											index: 89
 											line: 10
 										}
 										start: Object {
 											column: 12
-											index: 77
 											line: 10
 										}
 									}
@@ -577,12 +511,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 23
-												index: 88
 												line: 10
 											}
 											start: Object {
 												column: 19
-												index: 84
 												line: 10
 											}
 										}
@@ -601,12 +533,10 @@ JSRoot {
 									identifierName: "c"
 									end: Object {
 										column: 8
-										index: 100
 										line: 11
 									}
 									start: Object {
 										column: 7
-										index: 99
 										line: 11
 									}
 								}
@@ -615,12 +545,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
-									index: 100
 									line: 11
 								}
 								start: Object {
 									column: 6
-									index: 98
 									line: 11
 								}
 							}
@@ -629,12 +557,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 25
-								index: 117
 								line: 11
 							}
 							start: Object {
 								column: 2
-								index: 94
 								line: 11
 							}
 						}
@@ -647,19 +573,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 94
 								line: 11
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 8
-									index: 100
 									line: 11
 								}
 								start: Object {
 									column: 2
-									index: 94
 									line: 11
 								}
 							}
@@ -670,12 +593,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 25
-									index: 117
 									line: 11
 								}
 								start: Object {
 									column: 12
-									index: 104
 									line: 11
 								}
 							}
@@ -685,12 +606,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 23
-											index: 115
 											line: 11
 										}
 										start: Object {
 											column: 14
-											index: 106
 											line: 11
 										}
 									}
@@ -701,12 +620,10 @@ JSRoot {
 											identifierName: "x"
 											end: Object {
 												column: 22
-												index: 114
 												line: 11
 											}
 											start: Object {
 												column: 21
-												index: 113
 												line: 11
 											}
 										}
@@ -726,12 +643,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 11
-									index: 103
 									line: 11
 								}
 								start: Object {
 									column: 8
-									index: 100
 									line: 11
 								}
 							}
@@ -743,12 +658,10 @@ JSRoot {
 										identifierName: "x"
 										end: Object {
 											column: 10
-											index: 102
 											line: 11
 										}
 										start: Object {
 											column: 9
-											index: 101
 											line: 11
 										}
 									}
@@ -759,12 +672,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 10
-												index: 102
 												line: 11
 											}
 											start: Object {
 												column: 9
-												index: 101
 												line: 11
 											}
 										}
@@ -783,12 +694,10 @@ JSRoot {
 									identifierName: "d"
 									end: Object {
 										column: 4
-										index: 123
 										line: 13
 									}
 									start: Object {
 										column: 3
-										index: 122
 										line: 13
 									}
 								}
@@ -797,12 +706,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
-									index: 123
 									line: 13
 								}
 								start: Object {
 									column: 2
-									index: 121
 									line: 13
 								}
 							}
@@ -811,12 +718,10 @@ JSRoot {
 							filename: "experimental/class-private-methods/combined/input.js"
 							end: Object {
 								column: 3
-								index: 157
 								line: 15
 							}
 							start: Object {
 								column: 2
-								index: 121
 								line: 13
 							}
 						}
@@ -833,12 +738,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 6
-									index: 125
 									line: 13
 								}
 								start: Object {
 									column: 4
-									index: 123
 									line: 13
 								}
 							}
@@ -852,19 +755,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 121
 								line: 13
 							}
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 4
-									index: 123
 									line: 13
 								}
 								start: Object {
 									column: 2
-									index: 121
 									line: 13
 								}
 							}
@@ -875,12 +775,10 @@ JSRoot {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
 									column: 3
-									index: 157
 									line: 15
 								}
 								start: Object {
 									column: 7
-									index: 126
 									line: 13
 								}
 							}
@@ -890,12 +788,10 @@ JSRoot {
 										filename: "experimental/class-private-methods/combined/input.js"
 										end: Object {
 											column: 25
-											index: 153
 											line: 14
 										}
 										start: Object {
 											column: 4
-											index: 132
 											line: 14
 										}
 									}
@@ -905,12 +801,10 @@ JSRoot {
 											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {
 												column: 24
-												index: 152
 												line: 14
 											}
 											start: Object {
 												column: 11
-												index: 139
 												line: 14
 											}
 										}
@@ -919,12 +813,10 @@ JSRoot {
 												filename: "experimental/class-private-methods/combined/input.js"
 												end: Object {
 													column: 22
-													index: 150
 													line: 14
 												}
 												start: Object {
 													column: 11
-													index: 139
 													line: 14
 												}
 											}
@@ -935,12 +827,10 @@ JSRoot {
 													identifierName: "Math"
 													end: Object {
 														column: 15
-														index: 143
 														line: 14
 													}
 													start: Object {
 														column: 11
-														index: 139
 														line: 14
 													}
 												}
@@ -953,12 +843,10 @@ JSRoot {
 														identifierName: "random"
 														end: Object {
 															column: 22
-															index: 150
 															line: 14
 														}
 														start: Object {
 															column: 16
-															index: 144
 															line: 14
 														}
 													}
@@ -968,12 +856,10 @@ JSRoot {
 													identifierName: "random"
 													end: Object {
 														column: 22
-														index: 150
 														line: 14
 													}
 													start: Object {
 														column: 16
-														index: 144
 														line: 14
 													}
 												}

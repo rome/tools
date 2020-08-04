@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/regression/destructuring-in-function-type/input.ts"
 		end: Object {
 			column: 0
-			index: 76
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "MyType"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 5
-						index: 5
 						line: 1
 					}
 				}
@@ -55,12 +51,10 @@ JSRoot {
 				filename: "typescript/regression/destructuring-in-function-type/input.ts"
 				end: Object {
 					column: 37
-					index: 37
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -69,12 +63,10 @@ JSRoot {
 					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					end: Object {
 						column: 37
-						index: 37
 						line: 1
 					}
 					start: Object {
 						column: 14
-						index: 14
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 34
-							index: 34
 							line: 1
 						}
 					}
@@ -100,12 +90,10 @@ JSRoot {
 						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 					}
@@ -116,12 +104,10 @@ JSRoot {
 								filename: "typescript/regression/destructuring-in-function-type/input.ts"
 								end: Object {
 									column: 24
-									index: 24
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -131,12 +117,10 @@ JSRoot {
 									filename: "typescript/regression/destructuring-in-function-type/input.ts"
 									end: Object {
 										column: 29
-										index: 29
 										line: 1
 									}
 									start: Object {
 										column: 15
-										index: 15
 										line: 1
 									}
 								}
@@ -145,12 +129,10 @@ JSRoot {
 										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 29
-											index: 29
 											line: 1
 										}
 										start: Object {
 											column: 26
-											index: 26
 											line: 1
 										}
 									}
@@ -166,12 +148,10 @@ JSRoot {
 												identifierName: "theme"
 												end: Object {
 													column: 22
-													index: 22
 													line: 1
 												}
 												start: Object {
 													column: 17
-													index: 17
 													line: 1
 												}
 											}
@@ -180,12 +160,10 @@ JSRoot {
 											filename: "typescript/regression/destructuring-in-function-type/input.ts"
 											end: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 											start: Object {
 												column: 17
-												index: 17
 												line: 1
 											}
 										}
@@ -197,12 +175,10 @@ JSRoot {
 											identifierName: "theme"
 											end: Object {
 												column: 22
-												index: 22
 												line: 1
 											}
 											start: Object {
 												column: 17
-												index: 17
 												line: 1
 											}
 										}
@@ -211,12 +187,10 @@ JSRoot {
 										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 										start: Object {
 											column: 17
-											index: 17
 											line: 1
 										}
 									}
@@ -235,12 +209,10 @@ JSRoot {
 					identifierName: "AnotherType"
 					end: Object {
 						column: 16
-						index: 55
 						line: 3
 					}
 					start: Object {
 						column: 5
-						index: 44
 						line: 3
 					}
 				}
@@ -250,12 +222,10 @@ JSRoot {
 				filename: "typescript/regression/destructuring-in-function-type/input.ts"
 				end: Object {
 					column: 36
-					index: 75
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 39
 					line: 3
 				}
 			}
@@ -264,12 +234,10 @@ JSRoot {
 					filename: "typescript/regression/destructuring-in-function-type/input.ts"
 					end: Object {
 						column: 36
-						index: 75
 						line: 3
 					}
 					start: Object {
 						column: 19
-						index: 58
 						line: 3
 					}
 				}
@@ -278,12 +246,10 @@ JSRoot {
 						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 36
-							index: 75
 							line: 3
 						}
 						start: Object {
 							column: 33
-							index: 72
 							line: 3
 						}
 					}
@@ -295,12 +261,10 @@ JSRoot {
 						filename: "typescript/regression/destructuring-in-function-type/input.ts"
 						end: Object {
 							column: 36
-							index: 75
 							line: 3
 						}
 						start: Object {
 							column: 19
-							index: 58
 							line: 3
 						}
 					}
@@ -311,12 +275,10 @@ JSRoot {
 								filename: "typescript/regression/destructuring-in-function-type/input.ts"
 								end: Object {
 									column: 23
-									index: 62
 									line: 3
 								}
 								start: Object {
 									column: 20
-									index: 59
 									line: 3
 								}
 							}
@@ -326,12 +288,10 @@ JSRoot {
 									filename: "typescript/regression/destructuring-in-function-type/input.ts"
 									end: Object {
 										column: 28
-										index: 67
 										line: 3
 									}
 									start: Object {
 										column: 20
-										index: 59
 										line: 3
 									}
 								}
@@ -340,12 +300,10 @@ JSRoot {
 										filename: "typescript/regression/destructuring-in-function-type/input.ts"
 										end: Object {
 											column: 28
-											index: 67
 											line: 3
 										}
 										start: Object {
 											column: 25
-											index: 64
 											line: 3
 										}
 									}
@@ -359,12 +317,10 @@ JSRoot {
 										identifierName: "a"
 										end: Object {
 											column: 22
-											index: 61
 											line: 3
 										}
 										start: Object {
 											column: 21
-											index: 60
 											line: 3
 										}
 									}
@@ -375,12 +331,10 @@ JSRoot {
 											filename: "typescript/regression/destructuring-in-function-type/input.ts"
 											end: Object {
 												column: 22
-												index: 61
 												line: 3
 											}
 											start: Object {
 												column: 21
-												index: 60
 												line: 3
 											}
 										}

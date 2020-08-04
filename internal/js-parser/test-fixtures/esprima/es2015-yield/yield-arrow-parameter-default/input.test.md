@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 		end: Object {
 			column: 0
-			index: 18
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 				end: Object {
 					column: 17
-					index: 17
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ JSRoot {
 					filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -67,12 +61,10 @@ JSRoot {
 						filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 						filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 						end: Object {
 							column: 14
-							index: 14
 							line: 1
 						}
 						start: Object {
 							column: 0
-							index: 0
 							line: 1
 						}
 					}
@@ -103,12 +93,10 @@ JSRoot {
 								filename: "esprima/es2015-yield/yield-arrow-parameter-default/input.js"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 1
-									index: 1
 									line: 1
 								}
 							}
@@ -119,12 +107,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 2
-										index: 2
 										line: 1
 									}
 									start: Object {
 										column: 1
-										index: 1
 										line: 1
 									}
 								}
@@ -136,12 +122,10 @@ JSRoot {
 									identifierName: "yield"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 5
-										index: 5
 										line: 1
 									}
 								}

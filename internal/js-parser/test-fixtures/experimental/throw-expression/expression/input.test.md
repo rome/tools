@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/throw-expression/expression/input.js"
 		end: Object {
 			column: 0
-			index: 33
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "test"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/throw-expression/expression/input.js"
 				end: Object {
 					column: 1
-					index: 32
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -76,12 +70,10 @@ JSRoot {
 					filename: "experimental/throw-expression/expression/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 					filename: "experimental/throw-expression/expression/input.js"
 					end: Object {
 						column: 1
-						index: 32
 						line: 3
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -107,12 +97,10 @@ JSRoot {
 							filename: "experimental/throw-expression/expression/input.js"
 							end: Object {
 								column: 12
-								index: 30
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 20
 								line: 2
 							}
 						}
@@ -123,12 +111,10 @@ JSRoot {
 								filename: "experimental/throw-expression/expression/input.js"
 								end: Object {
 									column: 10
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 3
-									index: 21
 									line: 2
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 									filename: "experimental/throw-expression/expression/input.js"
 									end: Object {
 										column: 10
-										index: 28
 										line: 2
 									}
 									start: Object {
 										column: 9
-										index: 27
 										line: 2
 									}
 								}

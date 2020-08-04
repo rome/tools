@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2020/optional-chaining/super-method-class/input.js"
 		end: Object {
 			column: 0
-			index: 67
 			line: 6
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "es2020/optional-chaining/super-method-class/input.js"
 				end: Object {
 					column: 1
-					index: 66
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -71,12 +65,10 @@ JSRoot {
 					filename: "es2020/optional-chaining/super-method-class/input.js"
 					end: Object {
 						column: 1
-						index: 66
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -87,12 +79,10 @@ JSRoot {
 						identifierName: "B"
 						end: Object {
 							column: 17
-							index: 17
 							line: 1
 						}
 						start: Object {
 							column: 16
-							index: 16
 							line: 1
 						}
 					}
@@ -108,12 +98,10 @@ JSRoot {
 									identifierName: "constructor"
 									end: Object {
 										column: 15
-										index: 35
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 24
 										line: 2
 									}
 								}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/super-method-class/input.js"
 								end: Object {
 									column: 15
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -136,12 +122,10 @@ JSRoot {
 							filename: "es2020/optional-chaining/super-method-class/input.js"
 							end: Object {
 								column: 5
-								index: 64
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/super-method-class/input.js"
 								end: Object {
 									column: 17
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 15
-									index: 35
 									line: 2
 								}
 							}
@@ -177,19 +159,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 24
 								line: 2
 							}
 							loc: Object {
 								filename: "es2020/optional-chaining/super-method-class/input.js"
 								end: Object {
 									column: 15
-									index: 35
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 24
 									line: 2
 								}
 							}
@@ -200,12 +179,10 @@ JSRoot {
 								filename: "es2020/optional-chaining/super-method-class/input.js"
 								end: Object {
 									column: 5
-									index: 64
 									line: 4
 								}
 								start: Object {
 									column: 17
-									index: 37
 									line: 2
 								}
 							}
@@ -215,12 +192,10 @@ JSRoot {
 										filename: "es2020/optional-chaining/super-method-class/input.js"
 										end: Object {
 											column: 19
-											index: 58
 											line: 3
 										}
 										start: Object {
 											column: 8
-											index: 47
 											line: 3
 										}
 									}
@@ -229,12 +204,10 @@ JSRoot {
 											filename: "es2020/optional-chaining/super-method-class/input.js"
 											end: Object {
 												column: 18
-												index: 57
 												line: 3
 											}
 											start: Object {
 												column: 8
-												index: 47
 												line: 3
 											}
 										}
@@ -244,12 +217,10 @@ JSRoot {
 												filename: "es2020/optional-chaining/super-method-class/input.js"
 												end: Object {
 													column: 15
-													index: 54
 													line: 3
 												}
 												start: Object {
 													column: 8
-													index: 47
 													line: 3
 												}
 											}
@@ -258,12 +229,10 @@ JSRoot {
 													filename: "es2020/optional-chaining/super-method-class/input.js"
 													end: Object {
 														column: 13
-														index: 52
 														line: 3
 													}
 													start: Object {
 														column: 8
-														index: 47
 														line: 3
 													}
 												}
@@ -277,12 +246,10 @@ JSRoot {
 													identifierName: "b"
 													end: Object {
 														column: 18
-														index: 57
 														line: 3
 													}
 													start: Object {
 														column: 17
-														index: 56
 														line: 3
 													}
 												}
@@ -293,12 +260,10 @@ JSRoot {
 												identifierName: "b"
 												end: Object {
 													column: 18
-													index: 57
 													line: 3
 												}
 												start: Object {
 													column: 17
-													index: 56
 													line: 3
 												}
 											}

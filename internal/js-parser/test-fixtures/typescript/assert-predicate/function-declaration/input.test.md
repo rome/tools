@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/assert-predicate/function-declaration/input.ts"
 		end: Object {
 			column: 0
-			index: 164
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 43
-					index: 160
 					line: 3
 				}
 				start: Object {
 					column: 44
-					index: 161
 					line: 3
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "asserts1"
 					end: Object {
 						column: 17
-						index: 17
 						line: 1
 					}
 					start: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				end: Object {
 					column: 62
-					index: 62
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -94,12 +86,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 62
-						index: 62
 						line: 1
 					}
 					start: Object {
 						column: 60
-						index: 60
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 59
-						index: 59
 						line: 1
 					}
 					start: Object {
 						column: 18
-						index: 18
 						line: 1
 					}
 				}
@@ -130,12 +118,10 @@ JSRoot {
 						filename: "typescript/assert-predicate/function-declaration/input.ts"
 						end: Object {
 							column: 59
-							index: 59
 							line: 1
 						}
 						start: Object {
 							column: 44
-							index: 44
 							line: 1
 						}
 					}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "typescript/assert-predicate/function-declaration/input.ts"
 							end: Object {
 								column: 59
-								index: 59
 								line: 1
 							}
 							start: Object {
 								column: 53
-								index: 53
 								line: 1
 							}
 						}
@@ -161,12 +145,10 @@ JSRoot {
 							identifierName: "value"
 							end: Object {
 								column: 49
-								index: 49
 								line: 1
 							}
 							start: Object {
 								column: 44
-								index: 44
 								line: 1
 							}
 						}
@@ -180,12 +162,10 @@ JSRoot {
 							identifierName: "value"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 						}
@@ -195,12 +175,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/function-declaration/input.ts"
 								end: Object {
 									column: 33
-									index: 33
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}
@@ -209,12 +187,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/function-declaration/input.ts"
 									end: Object {
 										column: 33
-										index: 33
 										line: 1
 									}
 									start: Object {
 										column: 26
-										index: 26
 										line: 1
 									}
 								}
@@ -232,12 +208,10 @@ JSRoot {
 					identifierName: "asserts2"
 					end: Object {
 						column: 17
-						index: 81
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 73
 						line: 2
 					}
 				}
@@ -246,12 +220,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				end: Object {
 					column: 52
-					index: 116
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 64
 					line: 2
 				}
 			}
@@ -262,12 +234,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 52
-						index: 116
 						line: 2
 					}
 					start: Object {
 						column: 50
-						index: 114
 						line: 2
 					}
 				}
@@ -283,12 +253,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 49
-						index: 113
 						line: 2
 					}
 					start: Object {
 						column: 18
-						index: 82
 						line: 2
 					}
 				}
@@ -299,12 +267,10 @@ JSRoot {
 						filename: "typescript/assert-predicate/function-declaration/input.ts"
 						end: Object {
 							column: 49
-							index: 113
 							line: 2
 						}
 						start: Object {
 							column: 34
-							index: 98
 							line: 2
 						}
 					}
@@ -315,12 +281,10 @@ JSRoot {
 							identifierName: "value"
 							end: Object {
 								column: 49
-								index: 113
 								line: 2
 							}
 							start: Object {
 								column: 44
-								index: 108
 								line: 2
 							}
 						}
@@ -334,12 +298,10 @@ JSRoot {
 							identifierName: "value"
 							end: Object {
 								column: 24
-								index: 88
 								line: 2
 							}
 							start: Object {
 								column: 19
-								index: 83
 								line: 2
 							}
 						}
@@ -349,12 +311,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/function-declaration/input.ts"
 								end: Object {
 									column: 33
-									index: 97
 									line: 2
 								}
 								start: Object {
 									column: 19
-									index: 83
 									line: 2
 								}
 							}
@@ -363,12 +323,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/function-declaration/input.ts"
 									end: Object {
 										column: 33
-										index: 97
 										line: 2
 									}
 									start: Object {
 										column: 26
-										index: 90
 										line: 2
 									}
 								}
@@ -386,12 +344,10 @@ JSRoot {
 					identifierName: "asserts3"
 					end: Object {
 						column: 17
-						index: 134
 						line: 3
 					}
 					start: Object {
 						column: 9
-						index: 126
 						line: 3
 					}
 				}
@@ -400,12 +356,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				end: Object {
 					column: 45
-					index: 162
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 117
 					line: 3
 				}
 			}
@@ -420,12 +374,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 45
-						index: 162
 						line: 3
 					}
 					start: Object {
 						column: 18
-						index: 135
 						line: 3
 					}
 				}
@@ -436,12 +388,10 @@ JSRoot {
 						filename: "typescript/assert-predicate/function-declaration/input.ts"
 						end: Object {
 							column: 45
-							index: 162
 							line: 3
 						}
 						start: Object {
 							column: 34
-							index: 151
 							line: 3
 						}
 					}
@@ -452,12 +402,10 @@ JSRoot {
 							identifierName: ""
 							end: Object {
 								column: 45
-								index: 162
 								line: 3
 							}
 							start: Object {
 								column: 44
-								index: 161
 								line: 3
 							}
 						}
@@ -471,12 +419,10 @@ JSRoot {
 							identifierName: "value"
 							end: Object {
 								column: 24
-								index: 141
 								line: 3
 							}
 							start: Object {
 								column: 19
-								index: 136
 								line: 3
 							}
 						}
@@ -486,12 +432,10 @@ JSRoot {
 								filename: "typescript/assert-predicate/function-declaration/input.ts"
 								end: Object {
 									column: 33
-									index: 150
 									line: 3
 								}
 								start: Object {
 									column: 19
-									index: 136
 									line: 3
 								}
 							}
@@ -500,12 +444,10 @@ JSRoot {
 									filename: "typescript/assert-predicate/function-declaration/input.ts"
 									end: Object {
 										column: 33
-										index: 150
 										line: 3
 									}
 									start: Object {
 										column: 26
-										index: 143
 										line: 3
 									}
 								}
@@ -520,12 +462,10 @@ JSRoot {
 				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				end: Object {
 					column: 46
-					index: 163
 					line: 3
 				}
 				start: Object {
 					column: 45
-					index: 162
 					line: 3
 				}
 			}
@@ -535,12 +475,10 @@ JSRoot {
 					filename: "typescript/assert-predicate/function-declaration/input.ts"
 					end: Object {
 						column: 46
-						index: 163
 						line: 3
 					}
 					start: Object {
 						column: 45
-						index: 162
 						line: 3
 					}
 				}

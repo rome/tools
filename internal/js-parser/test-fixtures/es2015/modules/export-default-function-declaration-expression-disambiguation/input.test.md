@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 		end: Object {
 			column: 0
-			index: 37
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 15
-							index: 15
 							line: 1
 						}
 					}
@@ -67,12 +61,10 @@ JSRoot {
 					filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 					end: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 					start: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 				}
@@ -83,12 +75,10 @@ JSRoot {
 						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 29
-							index: 29
 							line: 1
 						}
 						start: Object {
 							column: 27
-							index: 27
 							line: 1
 						}
 					}
@@ -106,12 +96,10 @@ JSRoot {
 						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 						end: Object {
 							column: 26
-							index: 26
 							line: 1
 						}
 						start: Object {
 							column: 24
-							index: 24
 							line: 1
 						}
 					}
@@ -123,12 +111,10 @@ JSRoot {
 				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 				end: Object {
 					column: 6
-					index: 36
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 30
 					line: 2
 				}
 			}
@@ -139,12 +125,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 4
-						index: 34
 						line: 2
 					}
 					start: Object {
 						column: 1
-						index: 31
 						line: 2
 					}
 				}

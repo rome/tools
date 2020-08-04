@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/method-no-body/input.ts"
 		end: Object {
 			column: 0
-			index: 36
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/method-no-body/input.ts"
 				end: Object {
 					column: 1
-					index: 35
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/method-no-body/input.ts"
 					end: Object {
 						column: 1
-						index: 35
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 5
-										index: 15
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -121,12 +109,10 @@ JSRoot {
 							filename: "typescript/class/method-no-body/input.ts"
 							end: Object {
 								column: 8
-								index: 18
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 						}
@@ -143,12 +129,10 @@ JSRoot {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 7
-									index: 17
 									line: 2
 								}
 								start: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 							}
@@ -162,19 +146,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 5
-									index: 15
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 							}
@@ -190,12 +171,10 @@ JSRoot {
 									identifierName: "f"
 									end: Object {
 										column: 5
-										index: 24
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 23
 										line: 3
 									}
 								}
@@ -204,12 +183,10 @@ JSRoot {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 5
-									index: 24
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 23
 									line: 3
 								}
 							}
@@ -219,12 +196,10 @@ JSRoot {
 							filename: "typescript/class/method-no-body/input.ts"
 							end: Object {
 								column: 14
-								index: 33
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 23
 								line: 3
 							}
 						}
@@ -237,19 +212,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 4
-								index: 23
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 5
-									index: 24
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 23
 									line: 3
 								}
 							}
@@ -266,12 +238,10 @@ JSRoot {
 								filename: "typescript/class/method-no-body/input.ts"
 								end: Object {
 									column: 13
-									index: 32
 									line: 3
 								}
 								start: Object {
 									column: 5
-									index: 24
 									line: 3
 								}
 							}
@@ -280,12 +250,10 @@ JSRoot {
 									filename: "typescript/class/method-no-body/input.ts"
 									end: Object {
 										column: 13
-										index: 32
 										line: 3
 									}
 									start: Object {
 										column: 9
-										index: 28
 										line: 3
 									}
 								}

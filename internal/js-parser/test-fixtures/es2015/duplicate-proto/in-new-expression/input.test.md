@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2015/duplicate-proto/in-new-expression/input.js"
 		end: Object {
 			column: 0
-			index: 54
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 33
-					index: 33
 					line: 1
 				}
 				start: Object {
 					column: 24
-					index: 24
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2015/duplicate-proto/in-new-expression/input.js"
 				end: Object {
 					column: 53
-					index: 53
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -78,12 +72,10 @@ JSRoot {
 					filename: "es2015/duplicate-proto/in-new-expression/input.js"
 					end: Object {
 						column: 52
-						index: 52
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 						filename: "es2015/duplicate-proto/in-new-expression/input.js"
 						end: Object {
 							column: 52
-							index: 52
 							line: 1
 						}
 						start: Object {
 							column: 4
-							index: 4
 							line: 1
 						}
 					}
@@ -109,12 +99,10 @@ JSRoot {
 								identifierName: "__proto__"
 								end: Object {
 									column: 52
-									index: 52
 									line: 1
 								}
 								start: Object {
 									column: 43
-									index: 43
 									line: 1
 								}
 							}
@@ -124,12 +112,10 @@ JSRoot {
 							identifierName: "__proto__"
 							end: Object {
 								column: 52
-								index: 52
 								line: 1
 							}
 							start: Object {
 								column: 43
-								index: 43
 								line: 1
 							}
 						}
@@ -139,12 +125,10 @@ JSRoot {
 							filename: "es2015/duplicate-proto/in-new-expression/input.js"
 							end: Object {
 								column: 42
-								index: 42
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -158,12 +142,10 @@ JSRoot {
 											identifierName: "__proto__"
 											end: Object {
 												column: 14
-												index: 14
 												line: 1
 											}
 											start: Object {
 												column: 5
-												index: 5
 												line: 1
 											}
 										}
@@ -172,12 +154,10 @@ JSRoot {
 										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										end: Object {
 											column: 14
-											index: 14
 											line: 1
 										}
 										start: Object {
 											column: 5
-											index: 5
 											line: 1
 										}
 									}
@@ -189,12 +169,10 @@ JSRoot {
 										identifierName: "Number"
 										end: Object {
 											column: 22
-											index: 22
 											line: 1
 										}
 										start: Object {
 											column: 16
-											index: 16
 											line: 1
 										}
 									}
@@ -203,12 +181,10 @@ JSRoot {
 									filename: "es2015/duplicate-proto/in-new-expression/input.js"
 									end: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 									start: Object {
 										column: 5
-										index: 5
 										line: 1
 									}
 								}
@@ -222,12 +198,10 @@ JSRoot {
 											identifierName: "__proto__"
 											end: Object {
 												column: 33
-												index: 33
 												line: 1
 											}
 											start: Object {
 												column: 24
-												index: 24
 												line: 1
 											}
 										}
@@ -236,12 +210,10 @@ JSRoot {
 										filename: "es2015/duplicate-proto/in-new-expression/input.js"
 										end: Object {
 											column: 33
-											index: 33
 											line: 1
 										}
 										start: Object {
 											column: 24
-											index: 24
 											line: 1
 										}
 									}
@@ -253,12 +225,10 @@ JSRoot {
 										identifierName: "Number"
 										end: Object {
 											column: 41
-											index: 41
 											line: 1
 										}
 										start: Object {
 											column: 35
-											index: 35
 											line: 1
 										}
 									}
@@ -267,12 +237,10 @@ JSRoot {
 									filename: "es2015/duplicate-proto/in-new-expression/input.js"
 									end: Object {
 										column: 41
-										index: 41
 										line: 1
 									}
 									start: Object {
 										column: 24
-										index: 24
 										line: 1
 									}
 								}

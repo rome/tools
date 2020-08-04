@@ -86,11 +86,15 @@ export type State = ParserCoreState & {
 
 	// Current token offsets
 	startPos: Position;
+	startIndex: Number0;
 	endPos: Position;
+	endIndex: Number0;
 
 	// Position information for the previous token
 	lastEndPos: Position;
+	lastEndIndex: Number0;
 	lastStartPos: Position;
+	lastStartIndex: Number0;
 
 	// The context stack is used to superficially track syntactic
 	// context to predict whether a regular expression is allowed in a
@@ -126,7 +130,6 @@ export type Label = {
 const EMPTY_POS: Position = {
 	line: ob1Number1,
 	column: ob1Number0,
-	index: ob1Number0,
 };
 
 export function createInitialState(): State {
@@ -156,6 +159,10 @@ export function createInitialState(): State {
 		endPos: EMPTY_POS,
 		lastStartPos: EMPTY_POS,
 		lastEndPos: EMPTY_POS,
+		startIndex: ob1Number0,
+		endIndex: ob1Number0,
+		lastEndIndex: ob1Number0,
+		lastStartIndex: ob1Number0,
 		context: [ct.braceStatement],
 		exprAllowed: true,
 		containsOctal: false,

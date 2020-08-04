@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-binary-integer-literal/migrated_0003/input.js"
 		end: Object {
 			column: 0
-			index: 4
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-binary-integer-literal/migrated_0003/input.js"
 				end: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -53,12 +49,10 @@ JSRoot {
 					filename: "esprima/es2015-binary-integer-literal/migrated_0003/input.js"
 					end: Object {
 						column: 3
-						index: 3
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}

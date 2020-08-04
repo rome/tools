@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/types/keywords/input.ts"
 		end: Object {
 			column: 0
-			index: 185
 			line: 13
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -69,12 +63,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -84,12 +76,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 									start: Object {
 										column: 4
-										index: 4
 										line: 1
 									}
 								}
@@ -98,12 +88,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 10
-											index: 10
 											line: 1
 										}
 										start: Object {
 											column: 7
-											index: 7
 											line: 1
 										}
 									}
@@ -115,12 +103,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}
@@ -133,12 +119,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 16
-					index: 28
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 12
 					line: 2
 				}
 			}
@@ -148,12 +132,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 16
-						index: 28
 						line: 2
 					}
 					start: Object {
 						column: 0
-						index: 12
 						line: 2
 					}
 				}
@@ -165,12 +147,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 15
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 16
 									line: 2
 								}
 							}
@@ -180,12 +160,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 15
-										index: 27
 										line: 2
 									}
 									start: Object {
 										column: 4
-										index: 16
 										line: 2
 									}
 								}
@@ -194,12 +172,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 15
-											index: 27
 											line: 2
 										}
 										start: Object {
 											column: 8
-											index: 20
 											line: 2
 										}
 									}
@@ -211,12 +187,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 15
-								index: 27
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 16
 								line: 2
 							}
 						}
@@ -229,12 +203,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
-					index: 44
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 29
 					line: 3
 				}
 			}
@@ -244,12 +216,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
-						index: 44
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 29
 						line: 3
 					}
 				}
@@ -261,12 +231,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
-									index: 43
 									line: 3
 								}
 								start: Object {
 									column: 4
-									index: 33
 									line: 3
 								}
 							}
@@ -276,12 +244,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
-										index: 43
 										line: 3
 									}
 									start: Object {
 										column: 4
-										index: 33
 										line: 3
 									}
 								}
@@ -290,12 +256,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
-											index: 43
 											line: 3
 										}
 										start: Object {
 											column: 7
-											index: 36
 											line: 3
 										}
 									}
@@ -307,12 +271,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
-								index: 43
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 33
 								line: 3
 							}
 						}
@@ -325,12 +287,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
-					index: 59
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 45
 					line: 4
 				}
 			}
@@ -340,12 +300,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
-						index: 59
 						line: 4
 					}
 					start: Object {
 						column: 0
-						index: 45
 						line: 4
 					}
 				}
@@ -357,12 +315,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
-									index: 58
 									line: 4
 								}
 								start: Object {
 									column: 4
-									index: 49
 									line: 4
 								}
 							}
@@ -372,12 +328,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
-										index: 58
 										line: 4
 									}
 									start: Object {
 										column: 4
-										index: 49
 										line: 4
 									}
 								}
@@ -386,12 +340,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
-											index: 58
 											line: 4
 										}
 										start: Object {
 											column: 8
-											index: 53
 											line: 4
 										}
 									}
@@ -403,12 +355,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
-								index: 58
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 49
 								line: 4
 							}
 						}
@@ -421,12 +371,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
-					index: 74
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 60
 					line: 5
 				}
 			}
@@ -436,12 +384,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
-						index: 74
 						line: 5
 					}
 					start: Object {
 						column: 0
-						index: 60
 						line: 5
 					}
 				}
@@ -453,12 +399,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
-									index: 73
 									line: 5
 								}
 								start: Object {
 									column: 4
-									index: 64
 									line: 5
 								}
 							}
@@ -468,12 +412,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
-										index: 73
 										line: 5
 									}
 									start: Object {
 										column: 4
-										index: 64
 										line: 5
 									}
 								}
@@ -482,12 +424,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
-											index: 73
 											line: 5
 										}
 										start: Object {
 											column: 9
-											index: 69
 											line: 5
 										}
 									}
@@ -499,12 +439,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
-								index: 73
 								line: 5
 							}
 							start: Object {
 								column: 4
-								index: 64
 								line: 5
 							}
 						}
@@ -517,12 +455,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 16
-					index: 91
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 75
 					line: 6
 				}
 			}
@@ -532,12 +468,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 16
-						index: 91
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 75
 						line: 6
 					}
 				}
@@ -549,12 +483,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 15
-									index: 90
 									line: 6
 								}
 								start: Object {
 									column: 4
-									index: 79
 									line: 6
 								}
 							}
@@ -564,12 +496,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 15
-										index: 90
 										line: 6
 									}
 									start: Object {
 										column: 4
-										index: 79
 										line: 6
 									}
 								}
@@ -578,12 +508,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 15
-											index: 90
 											line: 6
 										}
 										start: Object {
 											column: 9
-											index: 84
 											line: 6
 										}
 									}
@@ -595,12 +523,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 15
-								index: 90
 								line: 6
 							}
 							start: Object {
 								column: 4
-								index: 79
 								line: 6
 							}
 						}
@@ -613,12 +539,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
-					index: 106
 					line: 7
 				}
 				start: Object {
 					column: 0
-					index: 92
 					line: 7
 				}
 			}
@@ -628,12 +552,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
-						index: 106
 						line: 7
 					}
 					start: Object {
 						column: 0
-						index: 92
 						line: 7
 					}
 				}
@@ -645,12 +567,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
-									index: 105
 									line: 7
 								}
 								start: Object {
 									column: 4
-									index: 96
 									line: 7
 								}
 							}
@@ -660,12 +580,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
-										index: 105
 										line: 7
 									}
 									start: Object {
 										column: 4
-										index: 96
 										line: 7
 									}
 								}
@@ -674,12 +592,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
-											index: 105
 											line: 7
 										}
 										start: Object {
 											column: 7
-											index: 99
 											line: 7
 										}
 									}
@@ -691,12 +607,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
-								index: 105
 								line: 7
 							}
 							start: Object {
 								column: 4
-								index: 96
 								line: 7
 							}
 						}
@@ -709,12 +623,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
-					index: 122
 					line: 8
 				}
 				start: Object {
 					column: 0
-					index: 107
 					line: 8
 				}
 			}
@@ -724,12 +636,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
-						index: 122
 						line: 8
 					}
 					start: Object {
 						column: 0
-						index: 107
 						line: 8
 					}
 				}
@@ -741,12 +651,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
-									index: 121
 									line: 8
 								}
 								start: Object {
 									column: 4
-									index: 111
 									line: 8
 								}
 							}
@@ -756,12 +664,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
-										index: 121
 										line: 8
 									}
 									start: Object {
 										column: 4
-										index: 111
 										line: 8
 									}
 								}
@@ -770,12 +676,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
-											index: 121
 											line: 8
 										}
 										start: Object {
 											column: 8
-											index: 115
 											line: 8
 										}
 									}
@@ -787,12 +691,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
-								index: 121
 								line: 8
 							}
 							start: Object {
 								column: 4
-								index: 111
 								line: 8
 							}
 						}
@@ -805,12 +707,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 15
-					index: 138
 					line: 9
 				}
 				start: Object {
 					column: 0
-					index: 123
 					line: 9
 				}
 			}
@@ -820,12 +720,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 15
-						index: 138
 						line: 9
 					}
 					start: Object {
 						column: 0
-						index: 123
 						line: 9
 					}
 				}
@@ -837,12 +735,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 14
-									index: 137
 									line: 9
 								}
 								start: Object {
 									column: 4
-									index: 127
 									line: 9
 								}
 							}
@@ -852,12 +748,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 14
-										index: 137
 										line: 9
 									}
 									start: Object {
 										column: 4
-										index: 127
 										line: 9
 									}
 								}
@@ -866,12 +760,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 14
-											index: 137
 											line: 9
 										}
 										start: Object {
 											column: 8
-											index: 131
 											line: 9
 										}
 									}
@@ -883,12 +775,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 14
-								index: 137
 								line: 9
 							}
 							start: Object {
 								column: 4
-								index: 127
 								line: 9
 							}
 						}
@@ -901,12 +791,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 17
-					index: 156
 					line: 10
 				}
 				start: Object {
 					column: 0
-					index: 139
 					line: 10
 				}
 			}
@@ -916,12 +804,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 17
-						index: 156
 						line: 10
 					}
 					start: Object {
 						column: 0
-						index: 139
 						line: 10
 					}
 				}
@@ -933,12 +819,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 16
-									index: 155
 									line: 10
 								}
 								start: Object {
 									column: 4
-									index: 143
 									line: 10
 								}
 							}
@@ -948,12 +832,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 16
-										index: 155
 										line: 10
 									}
 									start: Object {
 										column: 4
-										index: 143
 										line: 10
 									}
 								}
@@ -962,12 +844,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 16
-											index: 155
 											line: 10
 										}
 										start: Object {
 											column: 7
-											index: 146
 											line: 10
 										}
 									}
@@ -979,12 +859,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 16
-								index: 155
 								line: 10
 							}
 							start: Object {
 								column: 4
-								index: 143
 								line: 10
 							}
 						}
@@ -997,12 +875,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 12
-					index: 169
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 157
 					line: 11
 				}
 			}
@@ -1012,12 +888,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 12
-						index: 169
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 157
 						line: 11
 					}
 				}
@@ -1029,12 +903,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 11
-									index: 168
 									line: 11
 								}
 								start: Object {
 									column: 4
-									index: 161
 									line: 11
 								}
 							}
@@ -1044,12 +916,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 11
-										index: 168
 										line: 11
 									}
 									start: Object {
 										column: 4
-										index: 161
 										line: 11
 									}
 								}
@@ -1058,12 +928,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 11
-											index: 168
 											line: 11
 										}
 										start: Object {
 											column: 7
-											index: 164
 											line: 11
 										}
 									}
@@ -1075,12 +943,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 11
-								index: 168
 								line: 11
 							}
 							start: Object {
 								column: 4
-								index: 161
 								line: 11
 							}
 						}
@@ -1093,12 +959,10 @@ JSRoot {
 				filename: "typescript/types/keywords/input.ts"
 				end: Object {
 					column: 14
-					index: 184
 					line: 12
 				}
 				start: Object {
 					column: 0
-					index: 170
 					line: 12
 				}
 			}
@@ -1108,12 +972,10 @@ JSRoot {
 					filename: "typescript/types/keywords/input.ts"
 					end: Object {
 						column: 14
-						index: 184
 						line: 12
 					}
 					start: Object {
 						column: 0
-						index: 170
 						line: 12
 					}
 				}
@@ -1125,12 +987,10 @@ JSRoot {
 								filename: "typescript/types/keywords/input.ts"
 								end: Object {
 									column: 13
-									index: 183
 									line: 12
 								}
 								start: Object {
 									column: 4
-									index: 174
 									line: 12
 								}
 							}
@@ -1140,12 +1000,10 @@ JSRoot {
 									filename: "typescript/types/keywords/input.ts"
 									end: Object {
 										column: 13
-										index: 183
 										line: 12
 									}
 									start: Object {
 										column: 4
-										index: 174
 										line: 12
 									}
 								}
@@ -1154,12 +1012,10 @@ JSRoot {
 										filename: "typescript/types/keywords/input.ts"
 										end: Object {
 											column: 13
-											index: 183
 											line: 12
 										}
 										start: Object {
 											column: 7
-											index: 177
 											line: 12
 										}
 									}
@@ -1171,12 +1027,10 @@ JSRoot {
 							filename: "typescript/types/keywords/input.ts"
 							end: Object {
 								column: 13
-								index: 183
 								line: 12
 							}
 							start: Object {
 								column: 4
-								index: 174
 								line: 12
 							}
 						}

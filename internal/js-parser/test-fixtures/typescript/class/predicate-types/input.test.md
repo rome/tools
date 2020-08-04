@@ -22,12 +22,10 @@ JSRoot {
 		filename: "typescript/class/predicate-types/input.ts"
 		end: Object {
 			column: 0
-			index: 84
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "Foo"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "typescript/class/predicate-types/input.ts"
 				end: Object {
 					column: 1
-					index: 83
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "typescript/class/predicate-types/input.ts"
 					end: Object {
 						column: 1
-						index: 83
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -92,12 +84,10 @@ JSRoot {
 									identifierName: "isBar"
 									end: Object {
 										column: 7
-										index: 19
 										line: 2
 									}
 									start: Object {
 										column: 2
-										index: 14
 										line: 2
 									}
 								}
@@ -106,12 +96,10 @@ JSRoot {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
-									index: 19
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -120,12 +108,10 @@ JSRoot {
 							filename: "typescript/class/predicate-types/input.ts"
 							end: Object {
 								column: 3
-								index: 43
 								line: 3
 							}
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 						}
@@ -136,12 +122,10 @@ JSRoot {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 3
-									index: 43
 									line: 3
 								}
 								start: Object {
 									column: 26
-									index: 38
 									line: 2
 								}
 							}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 14
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
-									index: 19
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 14
 									line: 2
 								}
 							}
@@ -184,12 +165,10 @@ JSRoot {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 25
-									index: 37
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 19
 									line: 2
 								}
 							}
@@ -199,12 +178,10 @@ JSRoot {
 									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 25
-										index: 37
 										line: 2
 									}
 									start: Object {
 										column: 11
-										index: 23
 										line: 2
 									}
 								}
@@ -213,12 +190,10 @@ JSRoot {
 										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 15
-											index: 27
 											line: 2
 										}
 										start: Object {
 											column: 11
-											index: 23
 											line: 2
 										}
 									}
@@ -228,12 +203,10 @@ JSRoot {
 										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 25
-											index: 37
 											line: 2
 										}
 										start: Object {
 											column: 19
-											index: 31
 											line: 2
 										}
 									}
@@ -250,12 +223,10 @@ JSRoot {
 									identifierName: "isBaz"
 									end: Object {
 										column: 7
-										index: 51
 										line: 4
 									}
 									start: Object {
 										column: 2
-										index: 46
 										line: 4
 									}
 								}
@@ -264,12 +235,10 @@ JSRoot {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
-									index: 51
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 46
 									line: 4
 								}
 							}
@@ -279,12 +248,10 @@ JSRoot {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 3
-									index: 81
 									line: 5
 								}
 								start: Object {
 									column: 10
-									index: 54
 									line: 4
 								}
 							}
@@ -295,12 +262,10 @@ JSRoot {
 									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 3
-										index: 81
 										line: 5
 									}
 									start: Object {
 										column: 32
-										index: 76
 										line: 4
 									}
 								}
@@ -315,12 +280,10 @@ JSRoot {
 									filename: "typescript/class/predicate-types/input.ts"
 									end: Object {
 										column: 31
-										index: 75
 										line: 4
 									}
 									start: Object {
 										column: 10
-										index: 54
 										line: 4
 									}
 								}
@@ -330,12 +293,10 @@ JSRoot {
 										filename: "typescript/class/predicate-types/input.ts"
 										end: Object {
 											column: 28
-											index: 72
 											line: 4
 										}
 										start: Object {
 											column: 14
-											index: 58
 											line: 4
 										}
 									}
@@ -344,12 +305,10 @@ JSRoot {
 											filename: "typescript/class/predicate-types/input.ts"
 											end: Object {
 												column: 18
-												index: 62
 												line: 4
 											}
 											start: Object {
 												column: 14
-												index: 58
 												line: 4
 											}
 										}
@@ -359,12 +318,10 @@ JSRoot {
 											filename: "typescript/class/predicate-types/input.ts"
 											end: Object {
 												column: 28
-												index: 72
 												line: 4
 											}
 											start: Object {
 												column: 22
-												index: 66
 												line: 4
 											}
 										}
@@ -378,12 +335,10 @@ JSRoot {
 							filename: "typescript/class/predicate-types/input.ts"
 							end: Object {
 								column: 3
-								index: 81
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 46
 								line: 4
 							}
 						}
@@ -396,19 +351,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 46
 								line: 4
 							}
 							loc: Object {
 								filename: "typescript/class/predicate-types/input.ts"
 								end: Object {
 									column: 7
-									index: 51
 									line: 4
 								}
 								start: Object {
 									column: 2
-									index: 46
 									line: 4
 								}
 							}

@@ -16,12 +16,10 @@ CSSRoot {
 		filename: "smoke/input.css"
 		end: Object {
 			column: 1
-			index: 195
 			line: 12
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -33,12 +31,10 @@ CSSRoot {
 				filename: "smoke/input.css"
 				end: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -51,12 +47,10 @@ CSSRoot {
 				filename: "smoke/input.css"
 				end: Object {
 					column: 1
-					index: 78
 					line: 5
 				}
 				start: Object {
 					column: 0
-					index: 22
 					line: 2
 				}
 			}
@@ -68,12 +62,10 @@ CSSRoot {
 						filename: "smoke/input.css"
 						end: Object {
 							column: 4
-							index: 26
 							line: 2
 						}
 						start: Object {
 							column: 0
-							index: 22
 							line: 2
 						}
 					}
@@ -90,12 +82,10 @@ CSSRoot {
 									filename: "smoke/input.css"
 									end: Object {
 										column: 19
-										index: 48
 										line: 3
 									}
 									start: Object {
 										column: 16
-										index: 45
 										line: 3
 									}
 								}
@@ -106,12 +96,10 @@ CSSRoot {
 							filename: "smoke/input.css"
 							end: Object {
 								column: 19
-								index: 48
 								line: 3
 							}
 							start: Object {
 								column: 4
-								index: 33
 								line: 3
 							}
 						}
@@ -129,12 +117,10 @@ CSSRoot {
 											filename: "smoke/input.css"
 											end: Object {
 												column: 19
-												index: 69
 												line: 4
 											}
 											start: Object {
 												column: 16
-												index: 66
 												line: 4
 											}
 										}
@@ -145,12 +131,10 @@ CSSRoot {
 											filename: "smoke/input.css"
 											end: Object {
 												column: 21
-												index: 71
 												line: 4
 											}
 											start: Object {
 												column: 20
-												index: 70
 												line: 4
 											}
 										}
@@ -161,12 +145,10 @@ CSSRoot {
 											filename: "smoke/input.css"
 											end: Object {
 												column: 24
-												index: 74
 												line: 4
 											}
 											start: Object {
 												column: 22
-												index: 72
 												line: 4
 											}
 										}
@@ -176,12 +158,10 @@ CSSRoot {
 									filename: "smoke/input.css"
 									end: Object {
 										column: 25
-										index: 75
 										line: 4
 									}
 									start: Object {
 										column: 11
-										index: 61
 										line: 4
 									}
 								}
@@ -192,12 +172,10 @@ CSSRoot {
 							filename: "smoke/input.css"
 							end: Object {
 								column: 25
-								index: 75
 								line: 4
 							}
 							start: Object {
 								column: 4
-								index: 54
 								line: 4
 							}
 						}
@@ -208,12 +186,10 @@ CSSRoot {
 					filename: "smoke/input.css"
 					end: Object {
 						column: 1
-						index: 78
 						line: 5
 					}
 					start: Object {
 						column: 5
-						index: 27
 						line: 2
 					}
 				}
@@ -225,12 +201,10 @@ CSSRoot {
 				filename: "smoke/input.css"
 				end: Object {
 					column: 1
-					index: 195
 					line: 12
 				}
 				start: Object {
 					column: 0
-					index: 80
 					line: 7
 				}
 			}
@@ -241,12 +215,10 @@ CSSRoot {
 						filename: "smoke/input.css"
 						end: Object {
 							column: 13
-							index: 93
 							line: 7
 						}
 						start: Object {
 							column: 7
-							index: 87
 							line: 7
 						}
 					}
@@ -257,12 +229,10 @@ CSSRoot {
 						filename: "smoke/input.css"
 						end: Object {
 							column: 17
-							index: 97
 							line: 7
 						}
 						start: Object {
 							column: 14
-							index: 94
 							line: 7
 						}
 					}
@@ -275,12 +245,10 @@ CSSRoot {
 								filename: "smoke/input.css"
 								end: Object {
 									column: 28
-									index: 108
 									line: 7
 								}
 								start: Object {
 									column: 19
-									index: 99
 									line: 7
 								}
 							}
@@ -291,12 +259,10 @@ CSSRoot {
 								filename: "smoke/input.css"
 								end: Object {
 									column: 29
-									index: 109
 									line: 7
 								}
 								start: Object {
 									column: 28
-									index: 108
 									line: 7
 								}
 							}
@@ -308,12 +274,10 @@ CSSRoot {
 								filename: "smoke/input.css"
 								end: Object {
 									column: 36
-									index: 116
 									line: 7
 								}
 								start: Object {
 									column: 30
-									index: 110
 									line: 7
 								}
 							}
@@ -324,12 +288,10 @@ CSSRoot {
 						filename: "smoke/input.css"
 						end: Object {
 							column: 37
-							index: 117
 							line: 7
 						}
 						start: Object {
 							column: 18
-							index: 98
 							line: 7
 						}
 					}
@@ -342,12 +304,10 @@ CSSRoot {
 							filename: "smoke/input.css"
 							end: Object {
 								column: 5
-								index: 193
 								line: 11
 							}
 							start: Object {
 								column: 4
-								index: 124
 								line: 8
 							}
 						}
@@ -358,12 +318,10 @@ CSSRoot {
 									filename: "smoke/input.css"
 									end: Object {
 										column: 8
-										index: 128
 										line: 8
 									}
 									start: Object {
 										column: 4
-										index: 124
 										line: 8
 									}
 								}
@@ -380,12 +338,10 @@ CSSRoot {
 												filename: "smoke/input.css"
 												end: Object {
 													column: 24
-													index: 155
 													line: 9
 												}
 												start: Object {
 													column: 20
-													index: 151
 													line: 9
 												}
 											}
@@ -396,12 +352,10 @@ CSSRoot {
 										filename: "smoke/input.css"
 										end: Object {
 											column: 24
-											index: 155
 											line: 9
 										}
 										start: Object {
 											column: 8
-											index: 139
 											line: 9
 										}
 									}
@@ -419,12 +373,10 @@ CSSRoot {
 														filename: "smoke/input.css"
 														end: Object {
 															column: 23
-															index: 180
 															line: 10
 														}
 														start: Object {
 															column: 20
-															index: 177
 															line: 10
 														}
 													}
@@ -435,12 +387,10 @@ CSSRoot {
 														filename: "smoke/input.css"
 														end: Object {
 															column: 25
-															index: 182
 															line: 10
 														}
 														start: Object {
 															column: 24
-															index: 181
 															line: 10
 														}
 													}
@@ -451,12 +401,10 @@ CSSRoot {
 														filename: "smoke/input.css"
 														end: Object {
 															column: 28
-															index: 185
 															line: 10
 														}
 														start: Object {
 															column: 26
-															index: 183
 															line: 10
 														}
 													}
@@ -466,12 +414,10 @@ CSSRoot {
 												filename: "smoke/input.css"
 												end: Object {
 													column: 29
-													index: 186
 													line: 10
 												}
 												start: Object {
 													column: 15
-													index: 172
 													line: 10
 												}
 											}
@@ -482,12 +428,10 @@ CSSRoot {
 										filename: "smoke/input.css"
 										end: Object {
 											column: 29
-											index: 186
 											line: 10
 										}
 										start: Object {
 											column: 8
-											index: 165
 											line: 10
 										}
 									}
@@ -498,12 +442,10 @@ CSSRoot {
 								filename: "smoke/input.css"
 								end: Object {
 									column: 5
-									index: 193
 									line: 11
 								}
 								start: Object {
 									column: 9
-									index: 129
 									line: 8
 								}
 							}
@@ -515,12 +457,10 @@ CSSRoot {
 					filename: "smoke/input.css"
 					end: Object {
 						column: 1
-						index: 195
 						line: 12
 					}
 					start: Object {
 						column: 38
-						index: 118
 						line: 7
 					}
 				}

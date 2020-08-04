@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 		end: Object {
 			column: 0
-			index: 101
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 				end: Object {
 					column: 44
-					index: 74
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 34
 					line: 3
 				}
 			}
@@ -58,12 +54,10 @@ JSRoot {
 					identifierName: "foo"
 					end: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 					start: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 				}
@@ -72,12 +66,10 @@ JSRoot {
 				filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 				end: Object {
 					column: 1
-					index: 100
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -94,12 +86,10 @@ JSRoot {
 					filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 					end: Object {
 						column: 15
-						index: 15
 						line: 1
 					}
 					start: Object {
 						column: 13
-						index: 13
 						line: 1
 					}
 				}
@@ -110,12 +100,10 @@ JSRoot {
 					filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 					end: Object {
 						column: 1
-						index: 100
 						line: 6
 					}
 					start: Object {
 						column: 16
-						index: 16
 						line: 1
 					}
 				}
@@ -128,12 +116,10 @@ JSRoot {
 								identifierName: "C"
 								end: Object {
 									column: 9
-									index: 27
 									line: 2
 								}
 								start: Object {
 									column: 8
-									index: 26
 									line: 2
 								}
 							}
@@ -142,12 +128,10 @@ JSRoot {
 							filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 							end: Object {
 								column: 3
-								index: 98
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 20
 								line: 2
 							}
 						}
@@ -160,12 +144,10 @@ JSRoot {
 								filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 								end: Object {
 									column: 3
-									index: 98
 									line: 5
 								}
 								start: Object {
 									column: 2
-									index: 20
 									line: 2
 								}
 							}
@@ -180,12 +162,10 @@ JSRoot {
 												identifierName: "p"
 												end: Object {
 													column: 5
-													index: 80
 													line: 4
 												}
 												start: Object {
 													column: 4
-													index: 79
 													line: 4
 												}
 											}
@@ -195,12 +175,10 @@ JSRoot {
 											filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 											end: Object {
 												column: 5
-												index: 80
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 79
 												line: 4
 											}
 										}
@@ -211,12 +189,10 @@ JSRoot {
 											filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 											end: Object {
 												column: 18
-												index: 93
 												line: 4
 											}
 											start: Object {
 												column: 8
-												index: 83
 												line: 4
 											}
 										}
@@ -227,12 +203,10 @@ JSRoot {
 												filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 												end: Object {
 													column: 18
-													index: 93
 													line: 4
 												}
 												start: Object {
 													column: 14
-													index: 89
 													line: 4
 												}
 											}
@@ -243,12 +217,10 @@ JSRoot {
 													filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 													end: Object {
 														column: 18
-														index: 93
 														line: 4
 													}
 													start: Object {
 														column: 16
-														index: 91
 														line: 4
 													}
 												}
@@ -262,12 +234,10 @@ JSRoot {
 										filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 										end: Object {
 											column: 19
-											index: 94
 											line: 4
 										}
 										start: Object {
 											column: 4
-											index: 79
 											line: 4
 										}
 									}
@@ -281,19 +251,16 @@ JSRoot {
 										typeAnnotation: undefined
 										start: Object {
 											column: 4
-											index: 79
 											line: 4
 										}
 										loc: Object {
 											filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 											end: Object {
 												column: 5
-												index: 80
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 79
 												line: 4
 											}
 										}

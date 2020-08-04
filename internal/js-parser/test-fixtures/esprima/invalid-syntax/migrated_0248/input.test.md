@@ -21,12 +21,10 @@ JSRoot {
 		filename: "esprima/invalid-syntax/migrated_0248/input.js"
 		end: Object {
 			column: 0
-			index: 26
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -39,12 +37,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 20
-					index: 20
 					line: 1
 				}
 				start: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 			}
@@ -68,12 +64,10 @@ JSRoot {
 							identifierName: "__proto__"
 							end: Object {
 								column: 9
-								index: 9
 								line: 1
 							}
 							start: Object {
 								column: 0
-								index: 0
 								line: 1
 							}
 						}
@@ -88,12 +82,10 @@ JSRoot {
 				filename: "esprima/invalid-syntax/migrated_0248/input.js"
 				end: Object {
 					column: 25
-					index: 25
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -104,12 +96,10 @@ JSRoot {
 					identifierName: "__proto__"
 					end: Object {
 						column: 9
-						index: 9
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -119,12 +109,10 @@ JSRoot {
 					filename: "esprima/invalid-syntax/migrated_0248/input.js"
 					end: Object {
 						column: 25
-						index: 25
 						line: 1
 					}
 					start: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 				}
@@ -135,12 +123,10 @@ JSRoot {
 						identifierName: "__proto__"
 						end: Object {
 							column: 20
-							index: 20
 							line: 1
 						}
 						start: Object {
 							column: 11
-							index: 11
 							line: 1
 						}
 					}
@@ -150,12 +136,10 @@ JSRoot {
 						filename: "esprima/invalid-syntax/migrated_0248/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 22
-							index: 22
 							line: 1
 						}
 					}
@@ -166,12 +150,10 @@ JSRoot {
 							filename: "esprima/invalid-syntax/migrated_0248/input.js"
 							end: Object {
 								column: 24
-								index: 24
 								line: 1
 							}
 							start: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 						}

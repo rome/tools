@@ -21,12 +21,10 @@ JSRoot {
 		filename: "es2020/bigint/decimal-as-property-name/input.js"
 		end: Object {
 			column: 0
-			index: 72
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 2
-					index: 2
 					line: 1
 				}
 				start: Object {
 					column: 3
-					index: 3
 					line: 1
 				}
 			}
@@ -61,12 +57,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 22
-					index: 22
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -75,12 +69,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 22
-						index: 22
 						line: 1
 					}
 					start: Object {
 						column: 1
-						index: 1
 						line: 1
 					}
 				}
@@ -94,12 +86,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 5
-										index: 5
 										line: 1
 									}
 									start: Object {
 										column: 3
-										index: 3
 										line: 1
 									}
 								}
@@ -108,12 +98,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 5
-									index: 5
 									line: 1
 								}
 								start: Object {
 									column: 3
-									index: 3
 									line: 1
 								}
 							}
@@ -125,12 +113,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 8
-									index: 8
 									line: 1
 								}
 								start: Object {
 									column: 7
-									index: 7
 									line: 1
 								}
 							}
@@ -139,12 +125,10 @@ JSRoot {
 							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 8
-								index: 8
 								line: 1
 							}
 							start: Object {
 								column: 3
-								index: 3
 								line: 1
 							}
 						}
@@ -159,12 +143,10 @@ JSRoot {
 									identifierName: ""
 									end: Object {
 										column: 12
-										index: 12
 										line: 1
 									}
 									start: Object {
 										column: 10
-										index: 10
 										line: 1
 									}
 								}
@@ -173,12 +155,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 								start: Object {
 									column: 10
-									index: 10
 									line: 1
 								}
 							}
@@ -187,12 +167,10 @@ JSRoot {
 							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 17
-								index: 17
 								line: 1
 							}
 							start: Object {
 								column: 10
-								index: 10
 								line: 1
 							}
 						}
@@ -203,12 +181,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 17
-									index: 17
 									line: 1
 								}
 								start: Object {
 									column: 15
-									index: 15
 									line: 1
 								}
 							}
@@ -226,12 +202,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 14
-									index: 14
 									line: 1
 								}
 								start: Object {
 									column: 12
-									index: 12
 									line: 1
 								}
 							}
@@ -246,12 +220,10 @@ JSRoot {
 									identifierName: "get"
 									end: Object {
 										column: 22
-										index: 22
 										line: 1
 									}
 									start: Object {
 										column: 19
-										index: 19
 										line: 1
 									}
 								}
@@ -260,12 +232,10 @@ JSRoot {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}
@@ -277,12 +247,10 @@ JSRoot {
 								identifierName: "get"
 								end: Object {
 									column: 22
-									index: 22
 									line: 1
 								}
 								start: Object {
 									column: 19
-									index: 19
 									line: 1
 								}
 							}
@@ -291,12 +259,10 @@ JSRoot {
 							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 22
-								index: 22
 								line: 1
 							}
 							start: Object {
 								column: 19
-								index: 19
 								line: 1
 							}
 						}
@@ -309,12 +275,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 				start: Object {
 					column: 23
-					index: 23
 					line: 1
 				}
 			}
@@ -324,12 +288,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 27
-						index: 27
 						line: 1
 					}
 					start: Object {
 						column: 23
-						index: 23
 						line: 1
 					}
 				}
@@ -339,12 +301,10 @@ JSRoot {
 						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 25
-							index: 25
 							line: 1
 						}
 						start: Object {
 							column: 23
-							index: 23
 							line: 1
 						}
 					}
@@ -358,12 +318,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 				start: Object {
 					column: 27
-					index: 27
 					line: 1
 				}
 			}
@@ -373,12 +331,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 30
-					index: 30
 					line: 1
 				}
 				start: Object {
 					column: 29
-					index: 29
 					line: 1
 				}
 			}
@@ -388,12 +344,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 30
-						index: 30
 						line: 1
 					}
 					start: Object {
 						column: 29
-						index: 29
 						line: 1
 					}
 				}
@@ -404,12 +358,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 34
-					index: 34
 					line: 1
 				}
 				start: Object {
 					column: 31
-					index: 31
 					line: 1
 				}
 			}
@@ -420,12 +372,10 @@ JSRoot {
 					identifierName: "set"
 					end: Object {
 						column: 34
-						index: 34
 						line: 1
 					}
 					start: Object {
 						column: 31
-						index: 31
 						line: 1
 					}
 				}
@@ -436,12 +386,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 				start: Object {
 					column: 35
-					index: 35
 					line: 1
 				}
 			}
@@ -450,12 +398,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 40
-						index: 40
 						line: 1
 					}
 					start: Object {
 						column: 35
-						index: 35
 						line: 1
 					}
 				}
@@ -465,12 +411,10 @@ JSRoot {
 						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 37
-							index: 37
 							line: 1
 						}
 						start: Object {
 							column: 35
-							index: 35
 							line: 1
 						}
 					}
@@ -483,12 +427,10 @@ JSRoot {
 							identifierName: "_"
 							end: Object {
 								column: 39
-								index: 39
 								line: 1
 							}
 							start: Object {
 								column: 38
-								index: 38
 								line: 1
 							}
 						}
@@ -503,12 +445,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 42
-					index: 42
 					line: 1
 				}
 				start: Object {
 					column: 40
-					index: 40
 					line: 1
 				}
 			}
@@ -518,12 +458,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 43
-					index: 43
 					line: 1
 				}
 				start: Object {
 					column: 42
-					index: 42
 					line: 1
 				}
 			}
@@ -533,12 +471,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 43
-						index: 43
 						line: 1
 					}
 					start: Object {
 						column: 42
-						index: 42
 						line: 1
 					}
 				}
@@ -549,12 +485,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 49
-					index: 49
 					line: 1
 				}
 				start: Object {
 					column: 44
-					index: 44
 					line: 1
 				}
 			}
@@ -565,12 +499,10 @@ JSRoot {
 					identifierName: "async"
 					end: Object {
 						column: 49
-						index: 49
 						line: 1
 					}
 					start: Object {
 						column: 44
-						index: 44
 						line: 1
 					}
 				}
@@ -581,12 +513,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 54
-					index: 54
 					line: 1
 				}
 				start: Object {
 					column: 50
-					index: 50
 					line: 1
 				}
 			}
@@ -596,12 +526,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 54
-						index: 54
 						line: 1
 					}
 					start: Object {
 						column: 50
-						index: 50
 						line: 1
 					}
 				}
@@ -611,12 +539,10 @@ JSRoot {
 						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 52
-							index: 52
 							line: 1
 						}
 						start: Object {
 							column: 50
-							index: 50
 							line: 1
 						}
 					}
@@ -630,12 +556,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 57
-					index: 57
 					line: 1
 				}
 				start: Object {
 					column: 55
-					index: 55
 					line: 1
 				}
 			}
@@ -645,12 +569,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 64
-					index: 64
 					line: 1
 				}
 				start: Object {
 					column: 57
-					index: 57
 					line: 1
 				}
 			}
@@ -660,12 +582,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 64
-						index: 64
 						line: 1
 					}
 					start: Object {
 						column: 57
-						index: 57
 						line: 1
 					}
 				}
@@ -675,12 +595,10 @@ JSRoot {
 						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 58
-							index: 58
 							line: 1
 						}
 						start: Object {
 							column: 57
-							index: 57
 							line: 1
 						}
 					}
@@ -691,12 +609,10 @@ JSRoot {
 						filename: "es2020/bigint/decimal-as-property-name/input.js"
 						end: Object {
 							column: 64
-							index: 64
 							line: 1
 						}
 						start: Object {
 							column: 60
-							index: 60
 							line: 1
 						}
 					}
@@ -706,12 +622,10 @@ JSRoot {
 							filename: "es2020/bigint/decimal-as-property-name/input.js"
 							end: Object {
 								column: 62
-								index: 62
 								line: 1
 							}
 							start: Object {
 								column: 60
-								index: 60
 								line: 1
 							}
 						}
@@ -726,12 +640,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 67
-					index: 67
 					line: 1
 				}
 				start: Object {
 					column: 65
-					index: 65
 					line: 1
 				}
 			}
@@ -741,12 +653,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 69
-					index: 69
 					line: 1
 				}
 				start: Object {
 					column: 68
-					index: 68
 					line: 1
 				}
 			}
@@ -756,12 +666,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 69
-						index: 69
 						line: 1
 					}
 					start: Object {
 						column: 68
-						index: 68
 						line: 1
 					}
 				}
@@ -772,12 +680,10 @@ JSRoot {
 				filename: "es2020/bigint/decimal-as-property-name/input.js"
 				end: Object {
 					column: 71
-					index: 71
 					line: 1
 				}
 				start: Object {
 					column: 69
-					index: 69
 					line: 1
 				}
 			}
@@ -787,12 +693,10 @@ JSRoot {
 					filename: "es2020/bigint/decimal-as-property-name/input.js"
 					end: Object {
 						column: 70
-						index: 70
 						line: 1
 					}
 					start: Object {
 						column: 69
-						index: 69
 						line: 1
 					}
 				}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "experimental/module-attributes/import-with-statement/input.js"
 		end: Object {
 			column: 0
-			index: 22
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 10
-					index: 21
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 			}
@@ -65,12 +61,10 @@ JSRoot {
 				filename: "experimental/module-attributes/import-with-statement/input.js"
 				end: Object {
 					column: 10
-					index: 10
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -80,12 +74,10 @@ JSRoot {
 					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 10
-						index: 10
 						line: 1
 					}
 					start: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 				}
@@ -96,12 +88,10 @@ JSRoot {
 				filename: "experimental/module-attributes/import-with-statement/input.js"
 				end: Object {
 					column: 10
-					index: 21
 					line: 2
 				}
 				start: Object {
 					column: 0
-					index: 11
 					line: 2
 				}
 			}
@@ -110,12 +100,10 @@ JSRoot {
 					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 10
-						index: 21
 						line: 2
 					}
 					start: Object {
 						column: 9
-						index: 20
 						line: 2
 					}
 				}
@@ -126,12 +114,10 @@ JSRoot {
 					filename: "experimental/module-attributes/import-with-statement/input.js"
 					end: Object {
 						column: 8
-						index: 19
 						line: 2
 					}
 					start: Object {
 						column: 6
-						index: 17
 						line: 2
 					}
 				}

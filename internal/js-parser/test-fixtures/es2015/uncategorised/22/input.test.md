@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2015/uncategorised/22/input.js"
 		end: Object {
 			column: 5
-			index: 22
 			line: 3
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "es2015/uncategorised/22/input.js"
 				end: Object {
 					column: 5
-					index: 22
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "es2015/uncategorised/22/input.js"
 					end: Object {
 						column: 5
-						index: 22
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 							filename: "es2015/uncategorised/22/input.js"
 							end: Object {
 								column: 4
-								index: 21
 								line: 3
 							}
 							start: Object {
 								column: 1
-								index: 1
 								line: 1
 							}
 						}

@@ -21,12 +21,10 @@ JSRoot {
 		filename: "comments/basic/block-trailing-comment/input.js"
 		end: Object {
 			column: 0
-			index: 27
 			line: 5
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "comments/basic/block-trailing-comment/input.js"
 				end: Object {
 					column: 13
-					index: 24
 					line: 3
 				}
 				start: Object {
 					column: 4
-					index: 15
 					line: 3
 				}
 			}
@@ -56,12 +52,10 @@ JSRoot {
 				filename: "comments/basic/block-trailing-comment/input.js"
 				end: Object {
 					column: 1
-					index: 26
 					line: 4
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 						filename: "comments/basic/block-trailing-comment/input.js"
 						end: Object {
 							column: 8
-							index: 10
 							line: 2
 						}
 						start: Object {
 							column: 4
-							index: 6
 							line: 2
 						}
 					}
@@ -87,12 +79,10 @@ JSRoot {
 							filename: "comments/basic/block-trailing-comment/input.js"
 							end: Object {
 								column: 7
-								index: 9
 								line: 2
 							}
 							start: Object {
 								column: 4
-								index: 6
 								line: 2
 							}
 						}
@@ -103,12 +93,10 @@ JSRoot {
 								identifierName: "a"
 								end: Object {
 									column: 5
-									index: 7
 									line: 2
 								}
 								start: Object {
 									column: 4
-									index: 6
 									line: 2
 								}
 							}

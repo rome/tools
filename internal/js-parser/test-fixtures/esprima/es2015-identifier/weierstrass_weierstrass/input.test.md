@@ -22,12 +22,10 @@ JSRoot {
 		filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
 		end: Object {
 			column: 0
-			index: 12
 			line: 2
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -37,12 +35,10 @@ JSRoot {
 				filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
 				end: Object {
 					column: 11
-					index: 11
 					line: 1
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -52,12 +48,10 @@ JSRoot {
 					filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
 					end: Object {
 						column: 11
-						index: 11
 						line: 1
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 								identifierName: "\u2118\u2118"
 								end: Object {
 									column: 11
-									index: 11
 									line: 1
 								}
 								start: Object {
 									column: 4
-									index: 4
 									line: 1
 								}
 							}
@@ -85,12 +77,10 @@ JSRoot {
 							filename: "esprima/es2015-identifier/weierstrass_weierstrass/input.js"
 							end: Object {
 								column: 11
-								index: 11
 								line: 1
 							}
 							start: Object {
 								column: 4
-								index: 4
 								line: 1
 							}
 						}

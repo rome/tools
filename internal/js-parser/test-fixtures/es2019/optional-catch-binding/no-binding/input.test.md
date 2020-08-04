@@ -22,12 +22,10 @@ JSRoot {
 		filename: "es2019/optional-catch-binding/no-binding/input.js"
 		end: Object {
 			column: 0
-			index: 22
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -38,12 +36,10 @@ JSRoot {
 				filename: "es2019/optional-catch-binding/no-binding/input.js"
 				end: Object {
 					column: 1
-					index: 21
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -54,12 +50,10 @@ JSRoot {
 					filename: "es2019/optional-catch-binding/no-binding/input.js"
 					end: Object {
 						column: 1
-						index: 8
 						line: 3
 					}
 					start: Object {
 						column: 4
-						index: 4
 						line: 1
 					}
 				}
@@ -70,12 +64,10 @@ JSRoot {
 					filename: "es2019/optional-catch-binding/no-binding/input.js"
 					end: Object {
 						column: 1
-						index: 21
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 9
 						line: 4
 					}
 				}
@@ -86,12 +78,10 @@ JSRoot {
 						filename: "es2019/optional-catch-binding/no-binding/input.js"
 						end: Object {
 							column: 1
-							index: 21
 							line: 6
 						}
 						start: Object {
 							column: 6
-							index: 15
 							line: 4
 						}
 					}

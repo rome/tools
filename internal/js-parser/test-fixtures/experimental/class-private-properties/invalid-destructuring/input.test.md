@@ -22,12 +22,10 @@ JSRoot {
 		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 		end: Object {
 			column: 0
-			index: 60
 			line: 7
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -40,12 +38,10 @@ JSRoot {
 					identifierName: "C"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -54,12 +50,10 @@ JSRoot {
 				filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 				end: Object {
 					column: 1
-					index: 59
 					line: 6
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -72,12 +66,10 @@ JSRoot {
 					filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 					end: Object {
 						column: 1
-						index: 59
 						line: 6
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -91,12 +83,10 @@ JSRoot {
 									identifierName: "x"
 									end: Object {
 										column: 4
-										index: 14
 										line: 2
 									}
 									start: Object {
 										column: 3
-										index: 13
 										line: 2
 									}
 								}
@@ -105,12 +95,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -122,12 +110,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 8
-									index: 18
 									line: 2
 								}
 								start: Object {
 									column: 7
-									index: 17
 									line: 2
 								}
 							}
@@ -137,12 +123,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 							end: Object {
 								column: 9
-								index: 19
 								line: 2
 							}
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 						}
@@ -155,19 +139,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 12
 								line: 2
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 4
-									index: 14
 									line: 2
 								}
 								start: Object {
 									column: 2
-									index: 12
 									line: 2
 								}
 							}
@@ -183,12 +164,10 @@ JSRoot {
 									identifierName: "m"
 									end: Object {
 										column: 3
-										index: 23
 										line: 3
 									}
 									start: Object {
 										column: 2
-										index: 22
 										line: 3
 									}
 								}
@@ -197,12 +176,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 3
 								}
 							}
@@ -211,12 +188,10 @@ JSRoot {
 							filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 							end: Object {
 								column: 3
-								index: 57
 								line: 5
 							}
 							start: Object {
 								column: 2
-								index: 22
 								line: 3
 							}
 						}
@@ -233,12 +208,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 5
-									index: 25
 									line: 3
 								}
 								start: Object {
 									column: 3
-									index: 23
 									line: 3
 								}
 							}
@@ -252,19 +225,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 2
-								index: 22
 								line: 3
 							}
 							loc: Object {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
-									index: 23
 									line: 3
 								}
 								start: Object {
 									column: 2
-									index: 22
 									line: 3
 								}
 							}
@@ -275,12 +245,10 @@ JSRoot {
 								filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 								end: Object {
 									column: 3
-									index: 57
 									line: 5
 								}
 								start: Object {
 									column: 6
-									index: 26
 									line: 3
 								}
 							}
@@ -290,12 +258,10 @@ JSRoot {
 										filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 										end: Object {
 											column: 25
-											index: 53
 											line: 4
 										}
 										start: Object {
 											column: 4
-											index: 32
 											line: 4
 										}
 									}
@@ -305,12 +271,10 @@ JSRoot {
 											filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 											end: Object {
 												column: 25
-												index: 53
 												line: 4
 											}
 											start: Object {
 												column: 4
-												index: 32
 												line: 4
 											}
 										}
@@ -322,12 +286,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 														end: Object {
 															column: 17
-															index: 45
 															line: 4
 														}
 														start: Object {
 															column: 10
-															index: 38
 															line: 4
 														}
 													}
@@ -342,12 +304,10 @@ JSRoot {
 																			identifierName: "x"
 																			end: Object {
 																				column: 13
-																				index: 41
 																				line: 4
 																			}
 																			start: Object {
 																				column: 12
-																				index: 40
 																				line: 4
 																			}
 																		}
@@ -356,12 +316,10 @@ JSRoot {
 																		filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																		end: Object {
 																			column: 13
-																			index: 41
 																			line: 4
 																		}
 																		start: Object {
 																			column: 11
-																			index: 39
 																			line: 4
 																		}
 																	}
@@ -370,12 +328,10 @@ JSRoot {
 																	filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																	end: Object {
 																		column: 13
-																		index: 41
 																		line: 4
 																	}
 																	start: Object {
 																		column: 11
-																		index: 39
 																		line: 4
 																	}
 																}
@@ -387,12 +343,10 @@ JSRoot {
 																	identifierName: "x"
 																	end: Object {
 																		column: 16
-																		index: 44
 																		line: 4
 																	}
 																	start: Object {
 																		column: 15
-																		index: 43
 																		line: 4
 																	}
 																}
@@ -401,12 +355,10 @@ JSRoot {
 																filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 																end: Object {
 																	column: 16
-																	index: 44
 																	line: 4
 																}
 																start: Object {
 																	column: 11
-																	index: 39
 																	line: 4
 																}
 															}
@@ -417,12 +369,10 @@ JSRoot {
 													filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 													end: Object {
 														column: 24
-														index: 52
 														line: 4
 													}
 													start: Object {
 														column: 10
-														index: 38
 														line: 4
 													}
 												}
@@ -431,12 +381,10 @@ JSRoot {
 														filename: "experimental/class-private-properties/invalid-destructuring/input.js"
 														end: Object {
 															column: 24
-															index: 52
 															line: 4
 														}
 														start: Object {
 															column: 20
-															index: 48
 															line: 4
 														}
 													}

@@ -11,10 +11,11 @@ import {
 	JSParserUserOptions,
 	normalizeOptions,
 } from "./options";
-import {Token} from "./tokenizer/index";
+import {PublicToken, Token} from "./tokenizer/index";
 import {types as tokTypes} from "./tokenizer/types";
 import {createJSParser} from "./parser";
 import "./tokenizer/context";
+import {ob1Get0} from "@internal/ob1";
 
 export {default as CommentsConsumer} from "./CommentsConsumer";
 
@@ -23,13 +24,21 @@ export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	return createJSParser(options).parse();
 }
 
-export function tokenizeJS(userOptions: JSParserUserOptions): Array<Token> {
+export function tokenizeJS(userOptions: JSParserUserOptions): Array<PublicToken> {
 	const options: JSParserOptions = normalizeOptions(userOptions);
 	const parser = createJSParser({...options, tokens: true});
 	const root = parser.parse();
 
 	const diagnostics = parser.getDiagnostics();
-	let tokens: Array<Token> = parser.state.tokens;
+	let tokens: Array<PublicToken> = [];
+
+	for (const token of parser.state.tokens) {
+		tokens.push({
+			type: token.type.label,
+			start: parser.getIndexFromPosition(token.loc.start, token.loc.filename),
+			end: parser.getIndexFromPosition(token.loc.end, token.loc.filename),
+		});
+	}
 
 	// If we have any diagnostics, then mark anything from the first as invalid
 	if (diagnostics.length > 0 && root.corrupt) {
@@ -40,22 +49,18 @@ export function tokenizeJS(userOptions: JSParserUserOptions): Array<Token> {
 			throw new Error("All parser diagnostics are expected to have a start/end");
 		}
 
-		const invalidStartIndex = invalidStart.index;
-
-		const invalidToken: Token = {
-			type: tokTypes.invalid,
-			start: invalidStart.index,
-			end: invalidEnd.index,
-			loc: {
-				filename: parser.filename,
-				start: invalidStart,
-				end: invalidEnd,
-			},
+		const invalidToken: PublicToken = {
+			type: "invalid",
+			start: parser.getIndexFromPosition(
+				invalidStart,
+				firstDiag.location.filename,
+			),
+			end: parser.getIndexFromPosition(invalidEnd, firstDiag.location.filename),
 		};
 
 		// Remove all tokens after our invalid one
 		tokens = tokens.filter((token) => {
-			return token.loc.start.index >= invalidStartIndex;
+			return ob1Get0(token.start) < ob1Get0(invalidToken.start);
 		});
 
 		tokens.push(invalidToken);

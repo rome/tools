@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/declare-method/input.ts"
 		end: Object {
 			column: 0
-			index: 31
 			line: 4
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 19
 					line: 2
 				}
 				start: Object {
 					column: 10
-					index: 20
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "typescript/class/declare-method/input.ts"
 				end: Object {
 					column: 1
-					index: 30
 					line: 3
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "typescript/class/declare-method/input.ts"
 					end: Object {
 						column: 1
-						index: 30
 						line: 3
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -116,12 +106,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 13
-										index: 23
 										line: 2
 									}
 									start: Object {
 										column: 10
-										index: 20
 										line: 2
 									}
 								}
@@ -130,12 +118,10 @@ JSRoot {
 								filename: "typescript/class/declare-method/input.ts"
 								end: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 							}
@@ -144,12 +130,10 @@ JSRoot {
 							filename: "typescript/class/declare-method/input.ts"
 							end: Object {
 								column: 18
-								index: 28
 								line: 2
 							}
 							start: Object {
 								column: 10
-								index: 20
 								line: 2
 							}
 						}
@@ -160,12 +144,10 @@ JSRoot {
 								filename: "typescript/class/declare-method/input.ts"
 								end: Object {
 									column: 18
-									index: 28
 									line: 2
 								}
 								start: Object {
 									column: 16
-									index: 26
 									line: 2
 								}
 							}
@@ -183,12 +165,10 @@ JSRoot {
 								filename: "typescript/class/declare-method/input.ts"
 								end: Object {
 									column: 15
-									index: 25
 									line: 2
 								}
 								start: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 							}
@@ -202,19 +182,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 20
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/declare-method/input.ts"
 								end: Object {
 									column: 13
-									index: 23
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 							}

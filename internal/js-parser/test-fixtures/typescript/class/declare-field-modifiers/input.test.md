@@ -21,12 +21,10 @@ JSRoot {
 		filename: "typescript/class/declare-field-modifiers/input.ts"
 		end: Object {
 			column: 0
-			index: 203
 			line: 12
 		}
 		start: Object {
 			column: 0
-			index: 0
 			line: 1
 		}
 	}
@@ -44,12 +42,10 @@ JSRoot {
 				sourceText: undefined
 				end: Object {
 					column: 9
-					index: 19
 					line: 2
 				}
 				start: Object {
 					column: 10
-					index: 20
 					line: 2
 				}
 			}
@@ -64,12 +60,10 @@ JSRoot {
 					identifierName: "A"
 					end: Object {
 						column: 7
-						index: 7
 						line: 1
 					}
 					start: Object {
 						column: 6
-						index: 6
 						line: 1
 					}
 				}
@@ -78,12 +72,10 @@ JSRoot {
 				filename: "typescript/class/declare-field-modifiers/input.ts"
 				end: Object {
 					column: 1
-					index: 202
 					line: 11
 				}
 				start: Object {
 					column: 0
-					index: 0
 					line: 1
 				}
 			}
@@ -96,12 +88,10 @@ JSRoot {
 					filename: "typescript/class/declare-field-modifiers/input.ts"
 					end: Object {
 						column: 1
-						index: 202
 						line: 11
 					}
 					start: Object {
 						column: 0
-						index: 0
 						line: 1
 					}
 				}
@@ -115,12 +105,10 @@ JSRoot {
 									identifierName: "foo"
 									end: Object {
 										column: 20
-										index: 30
 										line: 2
 									}
 									start: Object {
 										column: 17
-										index: 27
 										line: 2
 									}
 								}
@@ -129,12 +117,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 20
-									index: 30
 									line: 2
 								}
 								start: Object {
 									column: 17
-									index: 27
 									line: 2
 								}
 							}
@@ -146,12 +132,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 21
-								index: 31
 								line: 2
 							}
 							start: Object {
 								column: 10
-								index: 20
 								line: 2
 							}
 						}
@@ -164,19 +148,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 20
 								line: 2
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 20
-									index: 30
 									line: 2
 								}
 								start: Object {
 									column: 10
-									index: 20
 									line: 2
 								}
 							}
@@ -191,12 +172,10 @@ JSRoot {
 									identifierName: "foo0"
 									end: Object {
 										column: 21
-										index: 53
 										line: 3
 									}
 									start: Object {
 										column: 17
-										index: 49
 										line: 3
 									}
 								}
@@ -205,12 +184,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 53
 									line: 3
 								}
 								start: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 							}
@@ -221,12 +198,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 30
-								index: 62
 								line: 3
 							}
 							start: Object {
 								column: 17
-								index: 49
 								line: 3
 							}
 						}
@@ -235,12 +210,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 29
-									index: 61
 									line: 3
 								}
 								start: Object {
 									column: 23
-									index: 55
 									line: 3
 								}
 							}
@@ -254,19 +227,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 17
-								index: 49
 								line: 3
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 53
 									line: 3
 								}
 								start: Object {
 									column: 17
-									index: 49
 									line: 3
 								}
 							}
@@ -281,12 +251,10 @@ JSRoot {
 									identifierName: "foo1"
 									end: Object {
 										column: 21
-										index: 85
 										line: 5
 									}
 									start: Object {
 										column: 17
-										index: 81
 										line: 5
 									}
 								}
@@ -295,12 +263,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 85
 									line: 5
 								}
 								start: Object {
 									column: 17
-									index: 81
 									line: 5
 								}
 							}
@@ -312,12 +278,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 22
-								index: 86
 								line: 5
 							}
 							start: Object {
 								column: 10
-								index: 74
 								line: 5
 							}
 						}
@@ -330,19 +294,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 74
 								line: 5
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 85
 									line: 5
 								}
 								start: Object {
 									column: 10
-									index: 74
 									line: 5
 								}
 							}
@@ -357,12 +318,10 @@ JSRoot {
 									identifierName: "foo2"
 									end: Object {
 										column: 21
-										index: 108
 										line: 6
 									}
 									start: Object {
 										column: 17
-										index: 104
 										line: 6
 									}
 								}
@@ -371,12 +330,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 108
 									line: 6
 								}
 								start: Object {
 									column: 17
-									index: 104
 									line: 6
 								}
 							}
@@ -388,12 +345,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 22
-								index: 109
 								line: 6
 							}
 							start: Object {
 								column: 17
-								index: 104
 								line: 6
 							}
 						}
@@ -406,19 +361,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 17
-								index: 104
 								line: 6
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 21
-									index: 108
 									line: 6
 								}
 								start: Object {
 									column: 17
-									index: 104
 									line: 6
 								}
 							}
@@ -433,12 +385,10 @@ JSRoot {
 									identifierName: "foo4"
 									end: Object {
 										column: 28
-										index: 139
 										line: 8
 									}
 									start: Object {
 										column: 24
-										index: 135
 										line: 8
 									}
 								}
@@ -447,12 +397,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 139
 									line: 8
 								}
 								start: Object {
 									column: 24
-									index: 135
 									line: 8
 								}
 							}
@@ -464,12 +412,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
-								index: 140
 								line: 8
 							}
 							start: Object {
 								column: 10
-								index: 121
 								line: 8
 							}
 						}
@@ -482,19 +428,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 10
-								index: 121
 								line: 8
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 139
 									line: 8
 								}
 								start: Object {
 									column: 10
-									index: 121
 									line: 8
 								}
 							}
@@ -509,12 +452,10 @@ JSRoot {
 									identifierName: "foo3"
 									end: Object {
 										column: 28
-										index: 169
 										line: 9
 									}
 									start: Object {
 										column: 24
-										index: 165
 										line: 9
 									}
 								}
@@ -523,12 +464,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 169
 									line: 9
 								}
 								start: Object {
 									column: 24
-									index: 165
 									line: 9
 								}
 							}
@@ -540,12 +479,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
-								index: 170
 								line: 9
 							}
 							start: Object {
 								column: 17
-								index: 158
 								line: 9
 							}
 						}
@@ -558,19 +495,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 17
-								index: 158
 								line: 9
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 169
 									line: 9
 								}
 								start: Object {
 									column: 17
-									index: 158
 									line: 9
 								}
 							}
@@ -585,12 +519,10 @@ JSRoot {
 									identifierName: "foo5"
 									end: Object {
 										column: 28
-										index: 199
 										line: 10
 									}
 									start: Object {
 										column: 24
-										index: 195
 										line: 10
 									}
 								}
@@ -599,12 +531,10 @@ JSRoot {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 199
 									line: 10
 								}
 								start: Object {
 									column: 24
-									index: 195
 									line: 10
 								}
 							}
@@ -616,12 +546,10 @@ JSRoot {
 							filename: "typescript/class/declare-field-modifiers/input.ts"
 							end: Object {
 								column: 29
-								index: 200
 								line: 10
 							}
 							start: Object {
 								column: 24
-								index: 195
 								line: 10
 							}
 						}
@@ -634,19 +562,16 @@ JSRoot {
 							typeAnnotation: undefined
 							start: Object {
 								column: 24
-								index: 195
 								line: 10
 							}
 							loc: Object {
 								filename: "typescript/class/declare-field-modifiers/input.ts"
 								end: Object {
 									column: 28
-									index: 199
 									line: 10
 								}
 								start: Object {
 									column: 24
-									index: 195
 									line: 10
 								}
 							}
