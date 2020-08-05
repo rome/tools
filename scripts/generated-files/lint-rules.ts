@@ -126,7 +126,9 @@ export async function main() {
 		if (description) {
 			return description[1].trim();
 		} else {
-			throw new Error(pretty`${path.join()} did not contain a description: ${content}`);
+			throw new Error(
+				pretty`${path.join()} did not contain a description: ${content}`,
+			);
 		}
 	}
 

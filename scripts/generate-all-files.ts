@@ -25,12 +25,7 @@ export async function main(args: Array<string>) {
 
 	reporter.info(markup`Generating files`);
 
-	await Promise.all([
-		lintRules(),
-		virtualModulesMain(),
-		ast(),
-		websiteIntro(),
-	]);
+	await Promise.all([lintRules(), virtualModulesMain(), ast(), websiteIntro()]);
 
 	// Run lint rule docs separately as it can cause race conditions with the others
 	await lintRulesDocs();
