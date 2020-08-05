@@ -173,3 +173,87 @@ someDenylist;
 SOME_DENYLIST;
 
 ```
+
+### `6`
+
+```
+
+ lint/js/confusingLanguage/reject/7/file.ts:1 lint/js/confusingLanguage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The word blacklist can be considered racially charged language.
+
+    const payload = {blacklist: []};
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
+
+  ℹ Consider using denylist instead
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+const payload = {blacklist: []};
+
+```
+
+### `7`
+
+```
+
+ lint/js/confusingLanguage/reject/8/file.ts:1 lint/js/confusingLanguage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The word blacklist can be considered racially charged language.
+
+    payload.blacklist = [];
+    ^^^^^^^^^^^^^^^^^
+
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
+
+  ℹ Consider using denylist instead
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+payload.blacklist = [];
+
+```
+
+### `8`
+
+```
+
+ lint/js/confusingLanguage/reject/9/file.ts:1 lint/js/confusingLanguage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The word blacklist can be considered racially charged language.
+
+    payload.blacklist();
+    ^^^^^^^^^^^^^^^^^
+
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation.
+
+  ℹ Consider using denylist instead
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+payload.blacklist();
+
+```

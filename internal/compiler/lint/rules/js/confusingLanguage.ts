@@ -135,7 +135,7 @@ function check(
 export default createVisitor({
 	name: "js/inconsiderateLanguage",
 	enter(path) {
-		const {node, context} = path;
+		const {node, context, parent} = path;
 
 		const {loc} = node;
 		if (loc !== undefined) {
@@ -147,6 +147,10 @@ export default createVisitor({
 			if (isIdentifierish(node)) {
 				value = node.name;
 			}
+
+			const isSafeFix =
+				parent.type !== "JSStaticPropertyKey" &&
+				parent.type !== "JSStaticMemberProperty";
 
 			if (value !== undefined) {
 				// Produce diagnostics
@@ -160,7 +164,7 @@ export default createVisitor({
 							suggestion,
 							advice,
 						),
-						{tags: {fixable: true}},
+						{tags: {fixable: isSafeFix}},
 					));
 
 					if (suppressed) {
@@ -169,7 +173,7 @@ export default createVisitor({
 				}
 
 				// Autofix if not suppressed
-				if (results.length > 0 && !suppressed) {
+				if (results.length > 0 && isSafeFix && !suppressed) {
 					if (node.type === "CommentBlock" || node.type === "CommentLine") {
 						return signals.replace({
 							...node,
