@@ -16,7 +16,7 @@
   > 2 │ let invalid: bar[];
       │              ^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - bar[]
   + Array<bar>

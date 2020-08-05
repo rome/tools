@@ -18,7 +18,7 @@
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <a·href="http://external.link"·target="_blank">
       1 │ + <a·href="http://external.link">
@@ -53,7 +53,7 @@
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <a·href={dynamicLink}·target="_blank">
       1 │ + <a·href={dynamicLink}>

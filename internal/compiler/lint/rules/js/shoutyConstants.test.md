@@ -22,7 +22,7 @@
       │       ^^^
     2 │ console.log(FOO);
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - FOO
   + "FOO"
@@ -60,7 +60,7 @@ console.log("FOO");
     2 │ function f() {
     3 │   return FOO;
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - FOO
   + "FOO"
@@ -99,7 +99,7 @@ function f() {
       │       ^^^
     2 │ console.log(FOO);
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - FOO
   + "FOO"

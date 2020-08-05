@@ -18,7 +18,7 @@
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - //·comment
   + {/**·comment*/}
@@ -52,7 +52,7 @@ const a = <div>
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - /*·comment·*/
   + {/**·comment·*/}
@@ -86,7 +86,7 @@ const a = <div>
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - /**·comment·*/
   + {/**·comment·*/}

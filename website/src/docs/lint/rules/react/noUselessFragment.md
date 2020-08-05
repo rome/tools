@@ -12,7 +12,7 @@ eleventyNavigation:
 
 MISSING DOCUMENTATION
 
-<!-- GENERATED:START(hash:570f27afd0b9e8f3b3c8ee4594b08870cda24116,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:00664948b76338c6edebc05d8581497b89c62485,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -27,7 +27,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">{foo}</span>
@@ -50,7 +50,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -73,7 +73,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
@@ -94,7 +94,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;React.Fragment&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -117,7 +117,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;Fragment&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
@@ -151,7 +151,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>

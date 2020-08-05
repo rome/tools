@@ -222,7 +222,7 @@ class LintRunner {
 						path,
 						{
 							save: shouldSave,
-							applySafeFixes: applySafeFixes,
+							applySafeFixes,
 							compilerOptions,
 						},
 					)

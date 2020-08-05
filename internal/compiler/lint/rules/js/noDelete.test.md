@@ -16,7 +16,7 @@
   > 2 │ delete arr[0][2];
       │ ^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - delete·arr[0][2]
   + arr[0][2]·=·undefined
@@ -47,7 +47,7 @@ arr[0][2] = undefined;
   > 2 │ delete obj.a.b.c;
       │ ^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - delete·obj.a.b.c
   + obj.a.b.c·=·undefined

@@ -12,7 +12,7 @@ eleventyNavigation:
 
 MISSING DOCUMENTATION
 
-<!-- GENERATED:START(hash:d3dd8f5c7ab94fa8b7dfc0d2a54d6a5ee223d74f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:17699ba55ae067916c4c6ca55f12c2f7fb87ee54,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
@@ -29,7 +29,7 @@ MISSING DOCUMENTATION
     <span style="color: DodgerBlue;"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
     <span style="color: DodgerBlue;">for more details.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href=&quot;http://external.link&quot;</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href=&quot;http://external.link&quot;&gt;</span>
@@ -53,7 +53,7 @@ MISSING DOCUMENTATION
     <span style="color: DodgerBlue;"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
     <span style="color: DodgerBlue;">for more details.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href={dynamicLink}</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href={dynamicLink}&gt;</span>

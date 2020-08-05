@@ -17,7 +17,7 @@
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>
@@ -55,7 +55,7 @@
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -93,7 +93,7 @@
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>
@@ -131,7 +131,7 @@ const Hello = <div>
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -169,7 +169,7 @@ const Hello = <div>
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -207,7 +207,7 @@ const Hello = <>
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>
@@ -248,7 +248,7 @@ const Hello = <>
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -292,7 +292,7 @@ function Foo() {
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>
@@ -335,7 +335,7 @@ function Foo() {
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -377,7 +377,7 @@ function Hello() {
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>
@@ -417,7 +417,7 @@ function Hello() {
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
       1 │ + <>
@@ -457,7 +457,7 @@ function Hello() {
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
       1 │ + <>

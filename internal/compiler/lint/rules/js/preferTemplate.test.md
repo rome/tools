@@ -15,7 +15,7 @@
     const foo = 'bar'; console.log(foo + 'baz')
                                    ^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - foo·+·"baz"
   + `${foo}baz`
@@ -45,7 +45,7 @@ console.log(`${foo}baz`);
     console.log((1 * 2) + 'foo')
                 ^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - 1·*·2·+·"foo"
   + `${1·*·2}foo`
@@ -74,7 +74,7 @@ console.log(`${1 * 2}foo`);
     console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - 1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3
   + `${1}foo${2}barbaz${3}`
@@ -103,7 +103,7 @@ console.log(`${1}foo${2}barbaz${3}`);
     console.log((1 + 'foo') * 2)
                  ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - 1·+·"foo"
   + `${1}foo`
@@ -132,7 +132,7 @@ console.log(`${1}foo` * 2);
     console.log((1 * (2 + 'foo')) + 'bar')
                 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - 1·*·(2·+·"foo")·+·"bar"
   + `${1·*·(2·+·"foo")}bar`
@@ -141,7 +141,7 @@ console.log(`${1}foo` * 2);
 
   ✖ Template literals are preferred over string concatenation.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - 2·+·"foo"
   + `${2}foo`
@@ -170,7 +170,7 @@ console.log(`${1 * `${2}foo`}bar`);
     console.log('foo' + 1)
                 ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - "foo"·+·1
   + `foo${1}`
@@ -199,7 +199,7 @@ console.log(`foo${1}`);
     console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - "foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo"
   + `foobarbaz${"bat"·+·"bam"}boo`
@@ -228,7 +228,7 @@ console.log(`foobarbaz${"bat" + "bam"}boo`);
     console.log('foo' + 1 + 2)
                 ^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - "foo"·+·1·+·2
   + `foo${1}${2}`

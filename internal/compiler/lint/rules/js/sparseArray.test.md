@@ -17,7 +17,7 @@
 
   ℹ Sparse arrays without values for some items can lead to confusion.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   -
   + undefined

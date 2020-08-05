@@ -18,7 +18,7 @@
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <>
     2   │ - → {foo}
@@ -52,7 +52,7 @@
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <>
     2   │ - → foo
@@ -88,7 +88,7 @@
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <>
     2   │ - </>
@@ -120,7 +120,7 @@
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <React.Fragment>
     2   │ - → foo
@@ -154,7 +154,7 @@ foo;
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Fragment>
     2   │ - → foo
@@ -194,7 +194,7 @@ foo;
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <>
     2   │ - → <div·/>

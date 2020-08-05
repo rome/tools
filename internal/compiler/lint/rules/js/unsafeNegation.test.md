@@ -15,7 +15,7 @@
     !1 in [1,2]
     ^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - !1·in·[1,·2]
   + !(1·in·[1,·2])

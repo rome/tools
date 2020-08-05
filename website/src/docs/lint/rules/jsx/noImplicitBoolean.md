@@ -12,7 +12,7 @@ eleventyNavigation:
 
 MISSING DOCUMENTATION
 
-<!-- GENERATED:START(hash:0e322ca8709eea300247c33277a9931bbd9c25ed,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f9ebc4728b8bdb3becc300a1afa6b77ae21cdfa2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">disabled</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
     &lt;<span class="token attr-name">input</span> <span class="token attr-name">disabled</span> <span class="token operator">/</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">disabled</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">disabled</span><span style="color: MediumSeaGreen;"><strong>={true}</strong></span>

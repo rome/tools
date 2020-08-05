@@ -18,7 +18,7 @@
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <input·autoFocus·/>
   + <input·/>
@@ -50,7 +50,7 @@
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <input·autoFocus="true"·/>
   + <input·/>
@@ -82,7 +82,7 @@
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <input·autoFocus={"false"}·/>
   + <input·/>

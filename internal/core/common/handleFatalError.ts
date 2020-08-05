@@ -27,18 +27,13 @@ async function _handleFatalError(
 				description: {
 					category: "internalError/fatal",
 				},
-			},
-		);
-
-		const processor = new DiagnosticsProcessor({
-			normalizeOptions: {
 				label: source,
 				tags: {
 					internal: true,
 					fatal: true,
 				},
 			},
-		});
+		);
 
 		await printDiagnostics({
 			diagnostics,
@@ -46,7 +41,7 @@ async function _handleFatalError(
 			excludeFooter: true,
 			printerOptions: {
 				reporter,
-				processor,
+				processor: new DiagnosticsProcessor(),
 			},
 		});
 	} catch (logErr) {

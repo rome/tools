@@ -16,7 +16,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <br className={'dont-remove-class'}>invalid children</br>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <br·className={"dont-remove-class"}>
     2   │ - → invalid·children
@@ -48,7 +48,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <img>invalid children</img>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <img>
     2   │ - → invalid·children
@@ -80,7 +80,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <hr children={'invalid children'} />
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <hr·children={"invalid·children"}·/>
   + <hr·/>
@@ -110,7 +110,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <area dangerouslySetInnerHTML={{__html: ''}}></area>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <area·dangerouslySetInnerHTML={{__html:·""}}>
     2   │ - </area>
@@ -142,7 +142,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     children</img>
     ^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <img·dangerouslySetInnerHTML={{__html:·""}}·children={"invalid·children"}>
     2   │ - → invalid·children
@@ -174,7 +174,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     React.createElement('img', {children: 'child'})
                                 ^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - React.createElement("img",·{children:·"child"})
 
@@ -203,7 +203,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     React.createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - React.createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
@@ -232,7 +232,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     React.createElement('img', {}, 'child')
                         ^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - React.createElement("img",·{},·"child")
   + React.createElement("img",·{})
@@ -262,7 +262,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     createElement('img', {children: 'child'})
                           ^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - createElement("img",·{children:·"child"})
 
@@ -291,7 +291,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
@@ -320,7 +320,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     createElement('img', {}, 'child')
                   ^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - createElement("img",·{},·"child")
   + createElement("img",·{})

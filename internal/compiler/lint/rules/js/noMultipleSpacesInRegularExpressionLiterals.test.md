@@ -19,7 +19,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {3}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - ···
   + ·{3}
@@ -52,7 +52,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - ··foo
   + ·{2}foo
@@ -85,7 +85,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {3}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - foo···
   + foo·{3}
@@ -118,7 +118,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - foo··bar
   + foo·{2}bar
@@ -151,7 +151,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {7}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - foo···bar····baz
   + foo·{3}bar·{4}baz
@@ -184,7 +184,7 @@ lint/js/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - foo·[ba]r··b(a|z)
   + foo·[ba]r·{2}b(a|z)

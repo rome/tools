@@ -18,7 +18,7 @@
 
   ℹ The filename should be test.ts or the function name should be foo.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -47,7 +47,7 @@ export default function foo() {}
 
   ℹ The filename should be Test.ts or the class name should be Foo.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
