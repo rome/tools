@@ -246,10 +246,6 @@ export default class ParserCore<
 		}
 	}
 
-	private getPrevToken(): TokenValues<Tokens> {
-		return this.prevToken;
-	}
-
 	protected save(): ParserSnapshot<Tokens, State> {
 		return {
 			nextTokenIndex: this.nextTokenIndex,
@@ -500,10 +496,6 @@ export default class ParserCore<
 		} else {
 			return undefined;
 		}
-	}
-
-	private didEatToken(type: keyof Tokens): boolean {
-		return this.eatToken(type) !== undefined;
 	}
 
 	// Check if we're at the end of the input
