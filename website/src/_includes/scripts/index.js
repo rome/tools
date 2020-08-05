@@ -14,6 +14,8 @@ window.addEventListener(
 			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
 				toggleMobileSidebar();
 			}
+
+			toc.checkNavigationCollapse();
 		});
 	},
 );
@@ -27,7 +29,7 @@ const tocList = document.querySelector(".toc");
 const siteNavigation = document.querySelector(".site-navigation-container");
 
 /** @type {HTMLElement}*/
-const tocContainer = document.querySelector(".toc-menu");
+const sidebarScroller = document.querySelector(".sidebar-scroller");
 
 /** @type {Array<HTMLAnchorElement>}*/
 const tocLinks = Array.from(document.querySelectorAll(".toc a"));
@@ -262,15 +264,16 @@ class TableOfContents {
 
 				// Make sure TOC link is visible
 				let linkTop =
-					this.headingsCalculated[i].link.offsetTop - tocContainer.offsetTop;
+					this.headingsCalculated[i].link.offsetTop - sidebarScroller.offsetTop;
 				if (i === 0) {
 					linkTop = 0;
 				}
-				const visibleStart = tocContainer.scrollTop;
-				const visibleEnd = tocContainer.scrollTop + tocContainer.clientHeight;
+				const visibleStart = sidebarScroller.scrollTop;
+				const visibleEnd =
+					sidebarScroller.scrollTop + sidebarScroller.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
-					tocContainer.scrollTop = linkTop;
+					sidebarScroller.scrollTop = linkTop;
 				}
 
 				break;
@@ -286,6 +289,9 @@ class TableOfContents {
 	checkNavigationCollapse(hasActive) {
 		// Only collapse navigation if we scroll over 300px
 		let isCollapsed = hasActive && this.getScrollY() >= 500;
+		if (isMobile) {
+			isCollapsed = false;
+		}
 		if (isCollapsed && this.isNavCollapsed === isCollapsed) {
 			return;
 		}
@@ -298,7 +304,12 @@ class TableOfContents {
 
 		if (isCollapsed) {
 			siteNavigation.style.height = "0px";
+
+			if (sidebarScroller.scrollTop > this.navHeight) {
+				siteNavigation.style.display = "none";
+			}
 		} else {
+			siteNavigation.style.removeProperty("display");
 			siteNavigation.style.height = `${this.navHeight}px`;
 		}
 	}

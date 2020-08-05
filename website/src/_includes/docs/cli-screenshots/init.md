@@ -34,4 +34,4 @@
      GitHub (<a href="https://github.com/romefrontend/rome">https://github.com/romefrontend/rome</a>) or our community
      Discord (<a href="https://discord.gg/rome">https://discord.gg/rome</a>)
 
-</code><div class="expand">Click to Expand</div></pre>
+</code><div aria-hidden="true" class="expand">Click to Expand</div></pre>

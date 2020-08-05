@@ -70,6 +70,6 @@ Once our usage as a linter has matured we will work on releasing the other parts
 | &mdash; JSX  | ✅ | ✅ | ✅ |
 | JSON | ✅ | ✅ | |
 | &mdash; [RJSON](#rome-json) | ✅ | ✅ | |
-| HTML | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) |
-| CSS | ✅ | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) |
-| Markdown | ✅ | ✅ | ⌛ [#123](https://github.com/romefrontend/rome/issues/123) |
+| HTML | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |
+| CSS | ✅ | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |
+| Markdown | ✅ | ✅ | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |

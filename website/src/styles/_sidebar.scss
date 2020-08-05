@@ -77,22 +77,13 @@
 		padding: $unit 0;
 	}
 
-	.toc-menu {
-		height: 100%;
+	.sidebar-scroller {
 		overflow: auto;
 		border-top: 1px solid var(--soft-border-color);
 	}
 
-	.sidebar-top {
-		background-color: var(--container-color);
-		position: sticky;
-		top: 0;
-		z-index: 3;
-	}
-
-	.sidebar-bottom {
-		position: sticky;
-		bottom: 0;
+	.toc-menu {
+		height: 100%;
 	}
 }
 
@@ -134,14 +125,6 @@
 .site-navigation {
 	font-weight: bold;
 	border-bottom: 1px solid var(--soft-border-color);
-
-	&:first-child {
-		border-top: 1px solid var(--soft-border-color);
-	}
-
-	&:last-child {
-		border-bottom: none;
-	}
 
 	a {
 		height: auto;
