@@ -398,6 +398,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_SVG_HAS_TITLE: {
+		category: "lint/jsx-a11y/svgHasTitle",
+		message: markup`Provide <emphasis>title</emphasis> when using <emphasis>svg</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`For accessibility purposes, SVGs should have a title.`,
+			},
+		],
+	},
 	JSX_A11Y_HEADING_USE_CONTENT: {
 		category: "lint/jsx-a11y/useHeadingContent",
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
