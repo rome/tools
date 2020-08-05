@@ -269,7 +269,8 @@ class TableOfContents {
 					linkTop = 0;
 				}
 				const visibleStart = sidebarScroller.scrollTop;
-				const visibleEnd = sidebarScroller.scrollTop + sidebarScroller.clientHeight;
+				const visibleEnd =
+					sidebarScroller.scrollTop + sidebarScroller.clientHeight;
 				const isVisible = linkTop > visibleStart && linkTop < visibleEnd;
 				if (!isVisible) {
 					sidebarScroller.scrollTop = linkTop;
