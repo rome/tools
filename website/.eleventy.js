@@ -174,6 +174,7 @@ module.exports = function(eleventyConfig) {
 					{
 						useShortDoctype: true,
 						removeComments: true,
+						conservativeCollapse: true,
 						collapseWhitespace: true,
 					},
 				);
