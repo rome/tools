@@ -26,6 +26,8 @@ This can be utilized in a CI environment, or even in a network cache for a group
 
 We have our own HTML-ish markup format that is used to declare formatting in strings. We use this format everywhere rather than traditional embedded ANSI color codes. This allows us to remain output agnostic. We currently support rendering to ANSI, HTML, and plain text.
 
+All the "terminal screenshots" you see in the docs were generated from regular Rome CLI commands with the `--output-format html --output-columns 80` flags set.
+
 Tags are not color-specific. ie. rather than `<green>` we have `<success>`. This makes our markup even more semantic and versatile.
 
 When rendering we perform layout calculation according to a provided column width, in most cases reported to us by the shell. This layout calculation includes line wrapping, padding, horizontal rules, and text alignment.

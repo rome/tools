@@ -21,7 +21,7 @@
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   - project/.config/rome.rjson: Your project configuration. Documentation:
-    https://romefrontend.dev/docs/project-config/
+    https://romefrontend.dev/#project-configuration
   - project/.editorconfig: Sets editor formatting and indentation options. Documentation:
     https://editorconfig.org/
 
@@ -29,7 +29,7 @@
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:
-     https://romefrontend.dev/docs/editor-integration/
+     https://romefrontend.dev/#editor-integration
 
   2. Try a command
      rome check is used to validate your code, verify formatting, and check for lint errors. Run
@@ -114,13 +114,13 @@ unknownVariable;
  Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   - project/.config/rome.rjson: Your project configuration. Documentation:
-    https://romefrontend.dev/docs/project-config/
+    https://romefrontend.dev/#project-configuration
 
  What next? ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   1. Setup an editor extension
      Get live errors as you type and format when you save. Learn more:
-     https://romefrontend.dev/docs/editor-integration/
+     https://romefrontend.dev/#editor-integration
 
   2. Try a command
      rome check is used to validate your code, verify formatting, and check for lint errors. Run

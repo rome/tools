@@ -10,7 +10,7 @@
  <strong>Files created</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dashed; text-decoration-line: underline;">rome.rjson</span></strong>: Your project configuration. Documentation:
-    <a href="https://romefrontend.dev/docs/project-config/">https://romefrontend.dev/docs/project-config/</a>
+    <a href="https://romefrontend.dev/#project-configuration">https://romefrontend.dev/#project-configuration</a>
   <span style="opacity: 0.8;">- </span><strong><span style="text-decoration-style: dashed; text-decoration-line: underline;">.editorconfig</span></strong>: Sets editor formatting and indentation options.
     Documentation: <a href="https://editorconfig.org/">https://editorconfig.org/</a>
 
@@ -18,7 +18,7 @@
 
   <span style="opacity: 0.8;">1. </span><strong>Setup an editor extension</strong>
      Get live errors as you type and format when you save. Learn more:
-     <a href="https://romefrontend.dev/docs/editor-integration/">https://romefrontend.dev/docs/editor-integration/</a>
+     <a href="https://romefrontend.dev/#editor-integration">https://romefrontend.dev/#editor-integration</a>
 
   <span style="opacity: 0.8;">2. </span><strong>Try a command</strong>
      <i>rome check</i> is used to validate your code, verify formatting, and
