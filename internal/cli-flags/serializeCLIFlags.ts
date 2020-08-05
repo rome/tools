@@ -55,6 +55,17 @@ function isObjectTarget(
 	return typeof target !== "string";
 }
 
+// Used to determine if we should output a -- to disambiguate raw CLI args
+function hasConfusingArgs(args: Array<string>): boolean {
+	for (const arg of args) {
+		if (arg[0] === "-") {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 export function serializeCLIFlags(
 	{
 		args,
@@ -98,6 +109,46 @@ export function serializeCLIFlags(
 		}
 	}
 
+	function printArgs() {
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+
+			let isTarget = false;
+			if (isObjectTarget(target) && target.type === "arg" && i === target.key) {
+				isTarget = true;
+			}
+			if (
+				isObjectTarget(target) &&
+				target.type === "arg-range" &&
+				target.from === i
+			) {
+				isTarget = true;
+			}
+
+			if (isTarget) {
+				setStartColumn();
+			}
+
+			code += `${arg} `;
+
+			let isEndTarget = isTarget;
+
+			// We are the end target if we're within the from-to range or we're greater than from with no to
+			if (
+				isObjectTarget(target) &&
+				target.type === "arg-range" &&
+				i > target.from &&
+				(target.to === undefined || target.to <= i)
+			) {
+				isEndTarget = true;
+			}
+
+			if (isEndTarget) {
+				setEndColumn();
+			}
+		}
+	}
+
 	// Only output cwd if it's the target
 	if (cwd !== undefined && target === "cwd") {
 		push(cwd.join(), true);
@@ -110,43 +161,10 @@ export function serializeCLIFlags(
 		push(`${commandName} `, target === "command");
 	}
 
-	// Add args
-	for (let i = 0; i < args.length; i++) {
-		const arg = args[i];
+	const confusingArgs = hasConfusingArgs(args);
 
-		let isTarget = false;
-		if (isObjectTarget(target) && target.type === "arg" && i === target.key) {
-			isTarget = true;
-		}
-		if (
-			isObjectTarget(target) &&
-			target.type === "arg-range" &&
-			target.from === i
-		) {
-			isTarget = true;
-		}
-
-		if (isTarget) {
-			setStartColumn();
-		}
-
-		code += `${arg} `;
-
-		let isEndTarget = isTarget;
-
-		// We are the end target if we're within the from-to range or we're greater than from with no to
-		if (
-			isObjectTarget(target) &&
-			target.type === "arg-range" &&
-			i > target.from &&
-			(target.to === undefined || target.to <= i)
-		) {
-			isEndTarget = true;
-		}
-
-		if (isEndTarget) {
-			setEndColumn();
-		}
+	if (!confusingArgs) {
+		printArgs();
 	}
 
 	// Add flags
@@ -196,6 +214,12 @@ export function serializeCLIFlags(
 		if (isTarget) {
 			setEndColumn();
 		}
+	}
+
+	// Disambiguate raw arguments that look like flags
+	if (confusingArgs) {
+		code += "-- ";
+		printArgs();
 	}
 
 	if (startColumn === ob1Number0Neg1 || endColumn === ob1Number0Neg1) {

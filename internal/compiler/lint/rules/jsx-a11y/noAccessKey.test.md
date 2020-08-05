@@ -42,7 +42,7 @@ undefined
   ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
     actions across applications.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <input·accessKey={key}·/>
   + <input·/>

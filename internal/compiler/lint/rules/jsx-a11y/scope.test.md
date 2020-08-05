@@ -18,7 +18,7 @@
   ℹ Using the scope attribute incorrectly on tables makes them difficult to navigate using the
     keyboard.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <div·scope={scope}·/>
   + <div·/>
@@ -50,7 +50,7 @@
   ℹ Using the scope attribute incorrectly on tables makes them difficult to navigate using the
     keyboard.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - <div·scope="col"·/>
   + <div·/>

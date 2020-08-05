@@ -17,7 +17,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <div></div>
     ^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <div>
     2   │ - </div>
@@ -49,7 +49,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <Component></Component>
     ^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Component>
     2   │ - </Component>
@@ -81,7 +81,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     <Foo.bar></Foo.bar>
     ^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <Foo.bar>
     2   │ - </Foo.bar>

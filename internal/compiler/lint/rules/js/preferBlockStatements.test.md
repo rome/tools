@@ -15,7 +15,7 @@
     if (x) x;
     ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - if·(x)·x;
       1 │ + if·(x)·{
@@ -51,7 +51,7 @@ if (x) {
   > 3 │ } else y;
       │ ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1 1 │   if·(x)·{
     2 2 │   → x;
@@ -90,7 +90,7 @@ if (x) {
   > 3 │ } else if (y) y;
       │        ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - if·(y)·y;
       1 │ + if·(y)·{
@@ -125,7 +125,7 @@ if (x) {
     for (;;);
     ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - for·(;;);
       1 │ + for·(;;)·{
@@ -157,7 +157,7 @@ while (true) {
     for (p in obj);
     ^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - for·(p·in·obj);
       1 │ + for·(p·in·obj)·{
@@ -189,7 +189,7 @@ for (p in obj) {
     for (x of xs);
     ^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - for·(x·of·xs);
       1 │ + for·(x·of·xs)·{
@@ -221,7 +221,7 @@ for (x of xs) {
     do; while (x);
     ^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - do;
     2   │ - while·(x);
@@ -254,7 +254,7 @@ do {
     while (x);
     ^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - while·(x);
       1 │ + while·(x)·{

@@ -16,7 +16,7 @@
     <div />
     ^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <div·/>
       1 │ + <div>

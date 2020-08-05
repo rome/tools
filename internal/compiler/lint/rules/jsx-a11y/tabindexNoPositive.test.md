@@ -18,7 +18,7 @@
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <span·tabIndex="5">
       1 │ + <span>
@@ -53,7 +53,7 @@
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <span·tabIndex={5}>
       1 │ + <span>
@@ -88,7 +88,7 @@
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - <span·tabIndex={"5"}>
       1 │ + <span>

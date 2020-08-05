@@ -1,6 +1,6 @@
 <section>
 
-<!-- GENERATED:START(hash:8cb63cfa44c2c976570991319738898b0339908a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
+<!-- GENERATED:START(hash:07631a12e2ec218508178887bce2cd5e94c5654b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
 **Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
@@ -11,12 +11,10 @@
 
 **Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
 
-**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md). **Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/).
+**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md).
 
 **Rome** is [MIT licensed](LICENSE) and moderated under the [Contributor Covenant Code of Conduct](github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
 <!-- GENERATED:END(id:main) -->
-
-{% include docs/cli-screenshots/intro.md %}
 
 <ul class="home-actions">
 	<li>
@@ -45,23 +43,23 @@
 
 ## History
 
-> The history of Rome starts when I created the project 6to5, that would later become Babel. A JavaScript transpiler that converted ES6 to ES5.
->
-> In early 2015, we renamed 6to5 to [Babel](https://babeljs.io). The name change was motivated by the desire to turn the project into something more general that could be used to develop other tooling on top of. I left the project and those plans never materialized.
->
-> Rome is the spiritual successor of that idea, except rather than exposing a large public API for other tools to use, we are building them all in one place, batteries included.
->
-> I built Rome in private over the course of the last few years while working at Facebook, largely during my personal time. The project was open sourced at the beginning of 2020 and continues as a community project.
+**Rome** was started by [Sebastian McKenzie](https://twitter.com/sebmck), the author of [Babel](https://babeljs.io/) and [Yarn](https://yarnpkg.com/):
 
-— [Sebastian McKenzie](https://twitter.com/sebmck), author of **Babel** and **Rome**. [Read more](https://twitter.com/sebmck/status/1063574500938117120).
-
-**Rome** has a logo of a Roman arch, one of the most influential patterns in architecture. It symbolizes a strong foundation, allowing you to build large projects without worrying and struggling with tooling.
+> #### Inception
+>
+> The original project goal of Babel was to expand beyond compilation and be a more general base for other JavaScript tools. All language tooling generally has the same constraints and similar responsibilities, so it seemed silly that every tool was rolling their own configuration format, caching, parallelization model, parsing and more. These plans never materialized after I left the project, but the idea still stuck.
+>
+> Rome is the spiritual successor of that idea, except rather than exposing a large public API for other tools to be built on, we are building them all in one place, with batteries included. We support frontend languages other than JavaScript too, those that can benefit the most from tight integration.
+>
+> #### Development
+>
+> Development began in January 2018 while I was employed at Facebook. It was developed as a side project until 2019 when I was able to work on it full-time. I have since left Facebook, and Rome was open sourced in February 2020, where it continues to be driven entirely as a community project.
 
 ## Development Status
 
 **Rome is currently only supported as a [linter](#linting) for JavaScript and TypeScript.** We are actively working on support for other languages.
 
-Once our usage as a linter has matured we will work on releasing the other parts of Rome and expand beyond linting. Significant implementation has already been completed for other functionality such as bundling and testing.
+Once our usage as a linter has matured we will work on releasing the other parts of Rome and expand beyond linting. **Significant implementation has already been completed for other functionality such as bundling and testing.**
 
 ### Language Support
 

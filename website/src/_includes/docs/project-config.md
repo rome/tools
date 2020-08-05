@@ -34,7 +34,9 @@ rome config set name "project-name"
 
 #### `extends`
 
-TODO
+Inherit from another file and merge configuration. If you would only like to share partial configuration then extract it into a separate config that is used instead.
+
+If the file refers to a `package.json` file then the `rome` property is used.
 
 ```bash
 rome config set-directory extends "some-other-file"
@@ -42,7 +44,7 @@ rome config set-directory extends "some-other-file"
 
 #### `root`
 
-By default, Rome will search parent directories for other projects to initialize. TODO
+By default, Rome supports [nested projects](#nested-projects) and will search parent directories for other projects to initialize. Sometimes this isn't what you want and can cause unexpected problems. This can be solved by explicitly setting the `root` flag which tells Rome that it should ignore any parent directories.
 
 ```bash
 rome config enable root
@@ -103,7 +105,9 @@ Alternatively, your project config can be included in a `rome` field inside of `
 
 ### Nested Projects
 
-TODO
+Nested projects are a first-class feature and can be used to customize configuration for different parts of your codebase. Multiple projects can be loaded inside of a single Rome process.
+
+When running any command or operation on a file, we refer to the project it is a part of when considering any configuration rather than what directory it was ran from.
 
 ### Path Patterns
 
@@ -115,7 +119,12 @@ We support the following syntax:
 
 ##### Wildcards
 
- - `*` matches any number of any characters including none in a directory.
+`*` matches any number of any characters including none in a directory. This can be used in any filename position. ie.
+
+```
+*.js
+App*Page.ts
+```
 
 ##### Matching Directories
 
@@ -123,7 +132,7 @@ A pattern that matches a directory will also match every file inside of it. eg. 
 
 ##### Negations
 
-Sometimes you want to add exceptions to a pattern. For example, you have a folder you want to ignore but there is a file inside of that you don't want to match. You can do this by prefixing it with `!`. For example:
+Sometimes you want to add exceptions to a rule. For example, you have a folder you want to ignore but there is a file inside of that you don't want to match. You can do this by prefixing it with `!`. For example:
 
 ```text
 scripts
@@ -142,4 +151,4 @@ cats/babies/orion
 cats/babies/nev
 ```
 
-And you only wanted to ignore the folder `babies` that contained `juniper`. If you wrote just `babies` then it would match both directories. However, you can prefix it with `/babies` and it will only match the folder at the base.
+And you only wanted to ignore the folder `babies` that contains `juniper`. If you wrote just `babies` then it would match both directories. However, if you prefix it with a black slash, as in `/babies`, then it will only match the folder at the base.

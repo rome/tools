@@ -15,7 +15,7 @@
     const foo = `bar`
                 ^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - `bar`
   + "bar"
@@ -44,7 +44,7 @@ const foo = "bar";
     const foo = `bar `
                 ^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - `bar·`
   + "bar·"

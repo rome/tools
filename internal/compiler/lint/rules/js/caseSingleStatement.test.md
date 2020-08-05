@@ -21,7 +21,7 @@
       │ ^^^^^^^^
     6 │ }
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - case·false:
       1 │ + case·false:·{

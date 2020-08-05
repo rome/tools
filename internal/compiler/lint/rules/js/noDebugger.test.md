@@ -15,7 +15,7 @@
     debugger;
     ^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - debugger;
 

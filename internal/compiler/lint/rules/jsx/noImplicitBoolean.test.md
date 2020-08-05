@@ -15,7 +15,7 @@
     <input disabled />
            ^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - disabled
   + disabled={true}

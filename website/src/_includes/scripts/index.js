@@ -569,7 +569,10 @@ docsearchInput.addEventListener(
 );
 
 //# Header scrolls to top
-const topAnchors = document.querySelectorAll(".logo, [href='#top']");
+let topAnchors = Array.from(document.querySelectorAll("[href='#top']"));
+if (location.pathname === "/") {
+	topAnchors = [...topAnchors, ...document.querySelectorAll(".logo")];
+}
 for (const elem of topAnchors) {
 	elem.addEventListener(
 		"click",

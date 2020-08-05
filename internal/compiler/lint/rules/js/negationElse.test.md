@@ -15,7 +15,7 @@
     if (!true) {consequent;} else {alternate;}
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - if·(!true)·{
     2   │ - → consequent;
@@ -54,7 +54,7 @@ if (true) {
     !true ? consequent : alternate
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
   - !true·?·consequent·:·alternate
   + true·?·alternate·:·consequent

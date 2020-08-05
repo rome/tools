@@ -298,7 +298,7 @@ export default class Path {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: markup`Recommended fix`,
+				text: markup`Safe fix`,
 			});
 
 			advice.push({

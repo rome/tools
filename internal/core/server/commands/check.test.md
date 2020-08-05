@@ -17,7 +17,7 @@
 
  project/index.js lint/pendingFixes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Pending formatting and recommended autofixes
+  ✖ Pending formatting and safe fixes
 
     1   │ - unknownVariable
       1 │ + unknownVariable;
@@ -28,7 +28,7 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-ℹ Fixes available. To apply recommended fixes and formatting run
+ℹ Fixes available. To apply safe fixes and formatting run
 $ rome check --apply
 ℹ To choose fix suggestions run
 $ rome check --review

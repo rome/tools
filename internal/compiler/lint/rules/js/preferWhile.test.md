@@ -18,7 +18,7 @@
   > 3 │ }
       │ ^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - for·(;·x.running;·)·{
       1 │ + while·(x.running)·{
@@ -53,7 +53,7 @@ while (x.running) {
   > 3 │ }
       │ ^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - for·(;;)·{
       1 │ + while·(true)·{

@@ -1,6 +1,7 @@
 import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
+import {pretty} from "@internal/pretty-format";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
 
@@ -125,7 +126,9 @@ export async function main() {
 		if (description) {
 			return description[1].trim();
 		} else {
-			throw new Error(`${path.join()} did not contain a description`);
+			throw new Error(
+				pretty`${path.join()} did not contain a description: ${content}`,
+			);
 		}
 	}
 

@@ -15,7 +15,7 @@
     let foo, bar;
     ^^^^^^^^^^^^^
 
-  ℹ Recommended fix
+  ℹ Safe fix
 
     1   │ - let·foo,·bar;
       1 │ + let·foo;

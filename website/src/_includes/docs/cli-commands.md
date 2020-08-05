@@ -21,7 +21,7 @@ See [Linting: Command Usage](#command-usage) for more usage information.
 
 - `--apply`
 
-TODO
+Apply formatting and [safe fixes](#safe-fixes).
 
 - `--changed <branch/commit>`
 
@@ -31,7 +31,7 @@ If the `branch/commit` is omitted then we default to the default branch, either 
 
 - `--format-only`
 
-TODO
+Reformat all files without applying any fixes.
 
 #### `rome config`
 
@@ -130,7 +130,7 @@ Produce a diff of changes between existing files and those included in the `id` 
 
 #### `rome recover dir`
 
-TODO
+Print the directory where files are stored.
 
 #### `rome recover clear`
 

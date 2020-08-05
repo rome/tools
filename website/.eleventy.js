@@ -54,12 +54,7 @@ module.exports = function(eleventyConfig) {
 		{
 			permalink: true,
 			permalinkSymbol: "",
-			slugify: (raw) => {
-				const [title, ...customHash] = raw.split("#");
-				if (customHash.length > 0) {
-					return customHash.join("#");
-				}
-
+			slugify: (title) => {
 				return encodeURIComponent(
 					String(title).trim().toLowerCase().replace(/\s+/g, "-"),
 				);
