@@ -172,7 +172,7 @@ function formatNull(): StaticMarkup {
 }
 
 function formatBoolean(val: boolean): StaticMarkup {
-	return val === true ? markup`true` : markup`false`;
+	return val ? markup`true` : markup`false`;
 }
 
 function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {

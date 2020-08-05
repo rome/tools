@@ -69,7 +69,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			super(opts, "parse/stringMarkup", {inTagHead: false});
 		}
 
-		tokenizeWithState(
+		protected tokenizeWithState(
 			index: Number0,
 			state: State,
 		):
@@ -166,11 +166,11 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			};
 		}
 
-		atTagEnd(): boolean {
+		private atTagEnd(): boolean {
 			return this.matchToken("Less") && this.lookahead().token.type === "Slash";
 		}
 
-		parseTag(
+		private parseTag(
 			headStart: Position,
 			parentTagName: undefined | MarkupTagName,
 		): MarkupParsedTag {
@@ -378,7 +378,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseChild(
+		private parseChild(
 			parentTagName: undefined | MarkupTagName,
 		): undefined | MarkupParsedChild {
 			const start = this.getPosition();
@@ -418,7 +418,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			}
 		}
 
-		parse(): MarkupParsedChildren {
+		public parse(): MarkupParsedChildren {
 			const children: MarkupParsedChildren = [];
 			while (!this.matchToken("EOF")) {
 				const child = this.parseChild(undefined);

@@ -3,13 +3,12 @@ import {parseCommit} from "@internal/commit-parser";
 import {readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {PUBLIC_PACKAGES, ROOT, reporter} from "./_utils";
-
+import {dedent} from "@internal/string-utils";
+import {consumeJSON} from "@internal/codec-json";
 import child = require("child_process");
 import fs = require("fs");
 import https = require("https");
 import http = require("http");
-import {dedent} from "@internal/string-utils";
-import {consumeJSON} from "@internal/codec-json";
 
 const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
 const LINE_DELIM = "<--ROME-LINE-->";
@@ -206,12 +205,7 @@ async function isNewVersion(version: string): Promise<boolean> {
 			},
 		);
 	});
-
-	if (res.statusCode !== 404) {
-		return false;
-	}
-
-	return true;
+	return res.statusCode === 404;
 }
 
 /**
@@ -290,18 +284,17 @@ function raiseError(message: string, keepAlive = false): void {
  * Update the package version based on a target release type
  *
  * @param releaseType - Target release type
+ * @param cwd
  * @returns - New version
  */
 function updateVersion(releaseType: string, cwd: AbsoluteFilePath): string {
-	const newVersion = child.spawnSync(
+	return child.spawnSync(
 		"npm",
 		["--no-git-tag-version", "--force", "version", releaseType],
 		{
 			cwd: cwd.join(),
 		},
 	).stdout.toString().trim();
-
-	return newVersion;
 }
 
 export async function main() {
@@ -340,7 +333,7 @@ export async function main() {
 	);
 
 	// Ensure the version is not yet taken
-	if (!isNewVersion(newVersion)) {
+	if (!(await isNewVersion(newVersion))) {
 		raiseError(
 			`Version <emphasis>${newVersion}</emphasis> already exists, reverting to <emphasis>${currentVersion}</emphasis>.`,
 			true,

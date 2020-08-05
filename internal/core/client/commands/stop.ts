@@ -29,7 +29,7 @@ export default createLocalCommand({
 				},
 				"server",
 			);
-			if (stop.type === "ERROR" && stop.fatal) {
+			if (stop.type === "CANCELLED") {
 				reporter.success(markup`Stopped server.`);
 			} else {
 				reporter.error(markup`Failed to stop server.`);

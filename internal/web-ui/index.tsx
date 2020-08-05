@@ -247,8 +247,6 @@ function ClientItem(
 		const lastResponse = lastRequest.response;
 		if (lastResponse.type === "SUCCESS") {
 			backgroundColor = "#2DC55E";
-		} else if (lastResponse.type === "ERROR") {
-			backgroundColor = "orange";
 		} else if (lastResponse.type === "DIAGNOSTICS") {
 			backgroundColor = "#F81118";
 		}

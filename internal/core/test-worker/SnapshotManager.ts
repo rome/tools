@@ -90,16 +90,17 @@ export default class SnapshotManager {
 		};
 	}
 
-	inlineSnapshotsUpdates: Array<InlineSnapshotUpdate>;
-	testPath: AbsoluteFilePath;
-	defaultSnapshotPath: AbsoluteFilePath;
-	snapshots: AbsoluteFilePathMap<Snapshot>;
-	fileLocker: FilePathLocker;
-	runner: TestWorkerRunner;
-	options: TestServerRunnerOptions;
-	snapshotCounts: SnapshotCounts;
+	public inlineSnapshotsUpdates: Array<InlineSnapshotUpdate>;
+	public snapshotCounts: SnapshotCounts;
 
-	normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
+	private testPath: AbsoluteFilePath;
+	private defaultSnapshotPath: AbsoluteFilePath;
+	private snapshots: AbsoluteFilePathMap<Snapshot>;
+	private fileLocker: FilePathLocker;
+	private runner: TestWorkerRunner;
+	private options: TestServerRunnerOptions;
+
+	public normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
 		if (filename === undefined) {
 			return this.defaultSnapshotPath;
 		}
@@ -113,11 +114,11 @@ export default class SnapshotManager {
 		}
 	}
 
-	async init() {
+	public async init() {
 		await this.loadSnapshot(this.defaultSnapshotPath);
 	}
 
-	async emitDiagnostic(metadata: DiagnosticDescription) {
+	private async emitDiagnostic(metadata: DiagnosticDescription) {
 		await this.runner.emitDiagnostic({
 			description: metadata,
 			location: {
@@ -126,7 +127,9 @@ export default class SnapshotManager {
 		});
 	}
 
-	async loadSnapshot(path: AbsoluteFilePath): Promise<undefined | Snapshot> {
+	private async loadSnapshot(
+		path: AbsoluteFilePath,
+	): Promise<undefined | Snapshot> {
 		if (!(await exists(path))) {
 			return;
 		}
@@ -213,8 +216,6 @@ export default class SnapshotManager {
 
 							break;
 						}
-
-						continue;
 					}
 				}
 				return snapshot;
@@ -222,7 +223,7 @@ export default class SnapshotManager {
 		);
 	}
 
-	buildSnapshot(entries: Iterable<SnapshotEntry>): Array<string> {
+	private buildSnapshot(entries: Iterable<SnapshotEntry>): Array<string> {
 		// Build the snapshot
 		let lines: Array<string> = [];
 
@@ -288,7 +289,7 @@ export default class SnapshotManager {
 		return lines;
 	}
 
-	async save() {
+	public async save() {
 		// If there's a focused test then we don't write or validate a snapshot
 		if (this.runner.hasFocusedTests) {
 			return;
@@ -333,7 +334,7 @@ export default class SnapshotManager {
 		}
 	}
 
-	testInlineSnapshot(
+	public testInlineSnapshot(
 		callFrame: ErrorFrame,
 		received: unknown,
 		expected?: InlineSnapshotUpdate["snapshot"],
@@ -379,7 +380,7 @@ export default class SnapshotManager {
 		return {status: "NO_MATCH"};
 	}
 
-	async get(
+	public async get(
 		testName: string,
 		entryName: string,
 		optionalFilename: undefined | string,
@@ -411,7 +412,7 @@ export default class SnapshotManager {
 		}
 	}
 
-	set(
+	public set(
 		{
 			testName,
 			entryName,

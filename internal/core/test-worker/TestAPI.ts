@@ -20,7 +20,7 @@ import {Event} from "@internal/events";
 import stringDiff from "@internal/string-diff";
 import {getErrorStructure} from "@internal/v8";
 import {prettyFormatToString} from "@internal/pretty-format";
-import {FileReference} from "../common/types/files";
+import {FileReference} from "@internal/core";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,
@@ -153,23 +153,24 @@ export default class TestAPI implements TestHelper {
 		this.advice = [];
 	}
 
-	startTime: number;
-	options: TestServerRunnerOptions;
-	file: FileReference;
-	emitDiagnostic: EmitDiagnostic;
+	public teardownEvent: Event<void, void>;
 
-	onTimeout: OnTimeout;
-	timeoutId: undefined | NodeJS.Timeout;
-	timeoutStart: undefined | number;
-	timeoutMax: undefined | number;
+	private startTime: number;
+	private options: TestServerRunnerOptions;
+	private file: FileReference;
+	private emitDiagnostic: EmitDiagnostic;
 
-	advice: Array<UserAdviceItem>;
-	teardownEvent: Event<void, void>;
-	testName: string;
-	snapshotCounter: number;
-	snapshotManager: SnapshotManager;
+	private onTimeout: OnTimeout;
+	private timeoutId: undefined | NodeJS.Timeout;
+	private timeoutStart: undefined | number;
+	private timeoutMax: undefined | number;
 
-	getAdvice(startAdvice: DiagnosticAdvice = []): DiagnosticAdvice {
+	private advice: Array<UserAdviceItem>;
+	private testName: string;
+	private snapshotCounter: number;
+	private snapshotManager: SnapshotManager;
+
+	public getAdvice(startAdvice: DiagnosticAdvice = []): DiagnosticAdvice {
 		const {advice} = this;
 
 		if (advice.length === 0) {
@@ -188,7 +189,7 @@ export default class TestAPI implements TestHelper {
 		];
 	}
 
-	buildMatchAdvice(
+	private buildMatchAdvice(
 		received: unknown,
 		expected: unknown,
 		{
@@ -256,19 +257,19 @@ export default class TestAPI implements TestHelper {
 	}
 
 	// We allow lazy construction of test advice when an error actually occurs
-	addToAdvice(item: UserAdviceItem): void {
+	public addToAdvice(item: UserAdviceItem): void {
 		this.advice.push(item);
 	}
 
-	clearAdvice() {
+	public clearAdvice() {
 		this.advice = [];
 	}
 
-	onTeardown(callback: AsyncVoidCallback): void {
+	public onTeardown(callback: AsyncVoidCallback): void {
 		this.teardownEvent.subscribe(callback);
 	}
 
-	clearTimeout(): void {
+	public clearTimeout(): void {
 		if (this.timeoutId !== undefined) {
 			clearTimeout(this.timeoutId);
 		}
@@ -277,7 +278,7 @@ export default class TestAPI implements TestHelper {
 		this.timeoutStart = undefined;
 	}
 
-	extendTimeout(time: number): void {
+	public extendTimeout(time: number): void {
 		const {timeoutMax, timeoutStart} = this;
 		if (timeoutMax === undefined || timeoutStart === undefined) {
 			throw new Error("No timeout set");
@@ -288,7 +289,7 @@ export default class TestAPI implements TestHelper {
 		this.setTimeout(newTime);
 	}
 
-	setTimeout(time: number): void {
+	public setTimeout(time: number): void {
 		this.clearTimeout();
 
 		this.timeoutStart = Date.now();
@@ -302,7 +303,7 @@ export default class TestAPI implements TestHelper {
 		);
 	}
 
-	checkTimeout(): void {
+	public checkTimeout(): void {
 		const {startTime, timeoutMax} = this;
 		if (timeoutMax === undefined) {
 			return;
@@ -314,7 +315,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	fail(
+	public fail(
 		message: string = "Test failure triggered by t.fail()",
 		advice: DiagnosticAdvice = [],
 		framesToShift: number = 0,
@@ -332,7 +333,10 @@ export default class TestAPI implements TestHelper {
 		throw createSingleDiagnosticError(diag);
 	}
 
-	truthy(value: unknown, message: string = "Expected value to be truthy"): void {
+	public truthy(
+		value: unknown,
+		message: string = "Expected value to be truthy",
+	): void {
 		if (Boolean(value) === false) {
 			this.fail(
 				message,
@@ -353,7 +357,10 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	falsy(value: unknown, message: string = "Expected value to be falsy"): void {
+	public falsy(
+		value: unknown,
+		message: string = "Expected value to be falsy",
+	): void {
 		if (Boolean(value) === true) {
 			this.fail(
 				message,
@@ -374,7 +381,10 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	true(value: unknown, message: string = "Expected value to be true"): void {
+	public true(
+		value: unknown,
+		message: string = "Expected value to be true",
+	): void {
 		if (value !== true) {
 			this.fail(
 				message,
@@ -395,7 +405,10 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	false(value: unknown, message: string = "Expected value to be false"): void {
+	public false(
+		value: unknown,
+		message: string = "Expected value to be false",
+	): void {
 		if (value !== false) {
 			this.fail(
 				message,
@@ -416,7 +429,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	is(
+	public is(
 		received: unknown,
 		expected: unknown,
 		message: string = "t.is() failed, using Object.is semantics",
@@ -436,7 +449,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	not(
+	public not(
 		received: unknown,
 		expected: unknown,
 		message: string = "t.not() failed, using !Object.is semantics",
@@ -456,7 +469,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	looksLike(
+	public looksLike(
 		received: unknown,
 		expected: unknown,
 		message: string = "t.looksLike() failed, using prettyFormat semantics",
@@ -469,7 +482,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	notLooksLike(
+	public notLooksLike(
 		received: unknown,
 		expected: unknown,
 		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
@@ -482,7 +495,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	throws(
+	public throws(
 		thrower: VoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throws() failed, callback did not throw an error",
@@ -509,7 +522,7 @@ export default class TestAPI implements TestHelper {
 		this.fail(message, undefined, 1);
 	}
 
-	async throwsAsync(
+	public async throwsAsync(
 		thrower: AsyncVoidCallback,
 		expected?: ExpectedError,
 		message: string = "t.throwsAsync() failed, callback did not throw an error",
@@ -535,7 +548,7 @@ export default class TestAPI implements TestHelper {
 		this.fail(message, undefined, 1);
 	}
 
-	notThrows(
+	public notThrows(
 		nonThrower: VoidCallback,
 		message: string = "t.notThrows() failed, callback threw an error",
 	): void {
@@ -552,7 +565,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	async notThrowsAsync(
+	public async notThrowsAsync(
 		nonThrower: AsyncVoidCallback,
 		message: string = "t.notThrowsAsync() failed, callback threw an error",
 	): Promise<void> {
@@ -569,7 +582,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	regex(
+	public regex(
 		contents: string,
 		regex: RegExp,
 		message: string = "t.regex() failed, using RegExp.test semantics",
@@ -604,7 +617,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	notRegex(
+	public notRegex(
 		contents: string,
 		regex: RegExp,
 		message: string = "t.notRegex() failed, using !RegExp.test semantics",
@@ -639,7 +652,7 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	inlineSnapshot(received: unknown, snapshot?: string | boolean | number) {
+	public inlineSnapshot(received: unknown, snapshot?: string | boolean | number) {
 		const callFrame = getErrorStructure(new Error()).frames[1];
 		const callError = getErrorStructure(new Error(), 1);
 
@@ -686,7 +699,7 @@ export default class TestAPI implements TestHelper {
 		});
 	}
 
-	snapshot(
+	public snapshot(
 		expected: unknown,
 		message?: string,
 		opts?: TestSnapshotOptions,
@@ -700,7 +713,7 @@ export default class TestAPI implements TestHelper {
 		});
 	}
 
-	namedSnapshot(
+	public namedSnapshot(
 		entryName: string,
 		expected: unknown,
 		message?: string,
@@ -714,7 +727,7 @@ export default class TestAPI implements TestHelper {
 		});
 	}
 
-	bufferSnapshot(
+	private bufferSnapshot(
 		{
 			entryName,
 			message,

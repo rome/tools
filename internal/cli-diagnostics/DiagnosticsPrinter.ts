@@ -165,27 +165,28 @@ export default class DiagnosticsPrinter extends Error {
 		this.onFooterPrintCallbacks = [];
 	}
 
-	options: DiagnosticsPrinterOptions;
-	reporter: Reporter;
-	processor: DiagnosticsProcessor;
-	onFooterPrintCallbacks: Array<{
+	public processor: DiagnosticsProcessor;
+	public flags: DiagnosticsPrinterFlags;
+
+	private options: DiagnosticsPrinterOptions;
+	private reporter: Reporter;
+	private onFooterPrintCallbacks: Array<{
 		callback: FooterPrintCallback;
 		after: boolean;
 	}>;
-	flags: DiagnosticsPrinterFlags;
-	cwd: AbsoluteFilePath;
-	fileReaders: Array<DiagnosticsFileReaders>;
-	hasTruncatedDiagnostics: boolean;
-	missingFileSources: UnknownFilePathSet;
-	fileSources: DiagnosticsPrinterFileSources;
-	fileMtimes: DiagnosticsPrinterFileMtimes;
+	private cwd: AbsoluteFilePath;
+	private fileReaders: Array<DiagnosticsFileReaders>;
+	private hasTruncatedDiagnostics: boolean;
+	private missingFileSources: UnknownFilePathSet;
+	private fileSources: DiagnosticsPrinterFileSources;
+	private fileMtimes: DiagnosticsPrinterFileMtimes;
 
-	displayedCount: number;
-	problemCount: number;
-	filteredCount: number;
-	truncatedCount: number;
+	private displayedCount: number;
+	private problemCount: number;
+	private filteredCount: number;
+	private truncatedCount: number;
 
-	createFilePath(filename: string): UnknownFilePath {
+	public createFilePath(filename: string): UnknownFilePath {
 		const {normalizePosition} = this.reporter.markupOptions;
 
 		if (normalizePosition === undefined) {
@@ -197,32 +198,18 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	throwIfAny() {
-		if (this.hasDiagnostics()) {
-			throw this;
-		}
-	}
-
-	hasDiagnostics(): boolean {
-		return this.processor.hasDiagnostics();
-	}
-
-	getDisplayedProblemsCount() {
+	private getDisplayedProblemsCount() {
 		return this.problemCount - this.filteredCount;
 	}
 
-	shouldTruncate(): boolean {
-		if (
+	private shouldTruncate(): boolean {
+		return (
 			!this.flags.showAllDiagnostics &&
 			this.displayedCount > this.flags.maxDiagnostics
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		);
 	}
 
-	shouldIgnore(diag: Diagnostic): boolean {
+	private shouldIgnore(diag: Diagnostic): boolean {
 		const {grep, inverseGrep} = this.flags;
 
 		// An empty grep pattern means show everything
@@ -242,7 +229,7 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	// Only highlight if we have a reporter stream enabled that isn't format: "none"
-	shouldHighlight(): boolean {
+	public shouldHighlight(): boolean {
 		for (const {stream} of this.reporter.getStreamHandles()) {
 			if (stream.format !== "none") {
 				return true;
@@ -251,7 +238,9 @@ export default class DiagnosticsPrinter extends Error {
 		return false;
 	}
 
-	async addFileSource(dep: ChangeFileDependency | ReferenceFileDependency) {
+	private async addFileSource(
+		dep: ChangeFileDependency | ReferenceFileDependency,
+	) {
 		const path = dep.path.assertAbsolute();
 
 		let mtime;
@@ -300,7 +289,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	getDependenciesFromDiagnostics(
+	private getDependenciesFromDiagnostics(
 		diagnostics: Diagnostics,
 	): Array<FileDependency> {
 		const deps: Array<FileDependency> = [];
@@ -370,11 +359,7 @@ export default class DiagnosticsPrinter extends Error {
 					for (const {filename, line, column, sourceText} of item.frames) {
 						if (filename !== undefined) {
 							const path = this.createFilePath(filename);
-							if (
-								filename !== undefined &&
-								line !== undefined &&
-								column !== undefined
-							) {
+							if (line !== undefined && column !== undefined) {
 								deps.push({
 									type: "reference",
 									path,
@@ -441,7 +426,7 @@ export default class DiagnosticsPrinter extends Error {
 		return Array.from(depsMap.values());
 	}
 
-	async fetchFileSources(diagnostics: Diagnostics) {
+	public async fetchFileSources(diagnostics: Diagnostics) {
 		for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
 			const {path} = dep;
 			if (!path.isAbsolute()) {
@@ -455,7 +440,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	async print() {
+	public async print() {
 		await this.wrapError(
 			"root",
 			async () => {
@@ -466,7 +451,7 @@ export default class DiagnosticsPrinter extends Error {
 		);
 	}
 
-	async wrapError(reason: string, callback: () => Promise<void>) {
+	private async wrapError(reason: string, callback: () => Promise<void>) {
 		const {reporter} = this;
 		try {
 			await callback();
@@ -486,7 +471,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	async printDiagnostics(diagnostics: Diagnostics) {
+	private async printDiagnostics(diagnostics: Diagnostics) {
 		const {reporter} = this;
 		const restoreRedirect = reporter.redirectOutToErr(true);
 
@@ -504,7 +489,7 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.redirectOutToErr(restoreRedirect);
 	}
 
-	getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {
+	public getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {
 		let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
 		for (const {
 			path,
@@ -523,7 +508,7 @@ export default class DiagnosticsPrinter extends Error {
 		return outdatedFiles;
 	}
 
-	printAuxiliaryDiagnostic(diag: Diagnostic) {
+	private printAuxiliaryDiagnostic(diag: Diagnostic) {
 		const {description: {message}, location: {start, filename}} = diag;
 
 		switch (this.flags.auxiliaryDiagnosticFormat) {
@@ -562,7 +547,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	printDiagnostic(diag: Diagnostic) {
+	public printDiagnostic(diag: Diagnostic) {
 		const {reporter} = this;
 		const {start, end, filename} = diag.location;
 		let advice = [...diag.description.advice];
@@ -713,7 +698,7 @@ export default class DiagnosticsPrinter extends Error {
 		});
 	}
 
-	filterDiagnostics(): Diagnostics {
+	private filterDiagnostics(): Diagnostics {
 		const diagnostics = this.processor.getDiagnostics();
 		const filteredDiagnostics: Diagnostics = [];
 
@@ -733,7 +718,7 @@ export default class DiagnosticsPrinter extends Error {
 		return filteredDiagnostics;
 	}
 
-	inject(title: StaticMarkup, printer: DiagnosticsPrinter) {
+	public inject(title: StaticMarkup, printer: DiagnosticsPrinter) {
 		this.processor.addDiagnostics(printer.processor.getDiagnostics());
 
 		const {onFooterPrintCallbacks} = printer;
@@ -759,15 +744,15 @@ export default class DiagnosticsPrinter extends Error {
 		);
 	}
 
-	onFooterPrint(callback: FooterPrintCallback, after: boolean = false) {
+	public onFooterPrint(callback: FooterPrintCallback, after: boolean = false) {
 		this.onFooterPrintCallbacks.push({callback, after});
 	}
 
-	hasProblems(): boolean {
+	public hasProblems(): boolean {
 		return this.problemCount > 0;
 	}
 
-	async footer() {
+	public async footer() {
 		await this.wrapError(
 			"footer",
 			async () => {
@@ -825,7 +810,7 @@ export default class DiagnosticsPrinter extends Error {
 		);
 	}
 
-	showBanner(banner: RawBanner) {
+	private showBanner(banner: RawBanner) {
 		for (const {stream} of this.reporter.getStreamHandles()) {
 			if (stream.format !== "ansi") {
 				continue;
@@ -968,7 +953,7 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	footerError() {
+	private footerError() {
 		const {reporter, filteredCount} = this;
 
 		const displayableProblems = this.getDisplayedProblemsCount();

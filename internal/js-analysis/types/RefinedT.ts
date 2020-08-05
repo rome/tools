@@ -17,11 +17,11 @@ export default class RefinedT extends T {
 		this.remove = remove;
 	}
 
-	static type = "RefinedT";
-	root: T;
-	remove: T;
+	public static type = "RefinedT";
+	private root: T;
+	private remove: T;
 
-	reduce(): T {
+	public reduce(): T {
 		const {root} = this;
 
 		const exploded = this.utils.explodeUnion(root);
@@ -43,10 +43,10 @@ export default class RefinedT extends T {
 				}
 			}
 
-			if (compatible === false) {
-				clean.push(type);
-			} else {
+			if (compatible) {
 				removed.push(type);
+			} else {
+				clean.push(type);
 			}
 		}
 

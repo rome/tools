@@ -14,10 +14,10 @@ export default class CommentsConsumer {
 		this.setComments(seedComments);
 	}
 
-	idToComment: Map<string, AnyComment>;
-	counter: number;
+	private idToComment: Map<string, AnyComment>;
+	private counter: number;
 
-	setComments(comments: Array<AnyComment>) {
+	public setComments(comments: Array<AnyComment>) {
 		this.idToComment.clear();
 
 		for (const comment of comments) {
@@ -25,7 +25,7 @@ export default class CommentsConsumer {
 		}
 	}
 
-	getCommentsFromIds(ids: undefined | Array<string>): Array<AnyComment> {
+	public getCommentsFromIds(ids: undefined | Array<string>): Array<AnyComment> {
 		if (ids === undefined) {
 			return [];
 		}
@@ -42,19 +42,11 @@ export default class CommentsConsumer {
 		return comments;
 	}
 
-	getIdsFromComments(comments: Array<AnyComment>): Array<string> {
-		return comments.map((comment) => comment.id);
-	}
-
-	getAllComments(): Array<AnyComment> {
-		return Array.from(this.idToComment.values());
-	}
-
-	getCommentFromId(id: string): undefined | AnyComment {
+	private getCommentFromId(id: string): undefined | AnyComment {
 		return this.idToComment.get(id);
 	}
 
-	assertGetCommentFromId(id: string): AnyComment {
+	public assertGetCommentFromId(id: string): AnyComment {
 		const comment = this.getCommentFromId(id);
 		if (comment === undefined) {
 			throw new Error(`No comment found for id ${id}`);
@@ -62,19 +54,15 @@ export default class CommentsConsumer {
 		return comment;
 	}
 
-	getNextId(): string {
+	private getNextId(): string {
 		return String(this.counter++);
 	}
 
-	updateComment(comment: AnyComment) {
+	public updateComment(comment: AnyComment) {
 		this.idToComment.set(comment.id, comment);
 	}
 
-	removeComment(id: string) {
-		this.idToComment.delete(id);
-	}
-
-	createComment(withoutId: AnyCommentOptionalId): AnyComment {
+	public createComment(withoutId: AnyCommentOptionalId): AnyComment {
 		const withId: AnyComment = {
 			...withoutId,
 			id: this.getNextId(),

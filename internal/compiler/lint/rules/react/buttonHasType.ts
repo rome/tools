@@ -40,10 +40,7 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 			: valueNode.value;
 
 	const {value} = tryStaticEvaluation(valueTarget, scope);
-	if (typeof value !== "string" || !BUTTON_TYPE_REGEX.test(value)) {
-		return true;
-	}
-	return false;
+	return typeof value !== "string" || !BUTTON_TYPE_REGEX.test(value);
 }
 
 export default createVisitor({

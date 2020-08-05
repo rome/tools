@@ -63,7 +63,7 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 			throw new Error("parts.length checked above");
 		}
 
-		if (matchPart(part) === false) {
+		if (!matchPart(part)) {
 			return false;
 		}
 	}
@@ -103,9 +103,7 @@ export default function match(
 		// If this is a root pattern, then remove all the starting path segments that match the cwd
 		for (const cwdSeg of cwdSegs) {
 			const pathSeg = pathSegs.shift();
-			if (cwdSeg === pathSeg) {
-				continue;
-			} else {
+			if (cwdSeg !== pathSeg) {
 				return false;
 			}
 		}

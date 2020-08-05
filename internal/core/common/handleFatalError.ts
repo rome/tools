@@ -6,12 +6,19 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 
-export default async function handleFatalError(
-	{error, source, reporter}: {
-		source: StaticMarkup;
-		error: Error;
-		reporter: Reporter;
-	},
+type HandleFatalErrorOptions = {
+	source: StaticMarkup;
+	error: Error;
+	reporter: Reporter;
+};
+
+export default function handleFatalError(opts: HandleFatalErrorOptions) {
+	// Swallow promise. Should never throw an error.
+	_handleFatalError(opts).then();
+}
+
+async function _handleFatalError(
+	{error, source, reporter}: HandleFatalErrorOptions,
 ) {
 	try {
 		const diagnostics = getOrDeriveDiagnosticsFromError(

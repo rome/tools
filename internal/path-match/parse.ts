@@ -29,7 +29,11 @@ const createPathMatchParser = createParser((ParserCore) =>
 			super(opts, "parse/patchMatch", {});
 		}
 
-		isWordCharacter(char: string, index: Number0, input: string): boolean {
+		private isWordCharacter(
+			char: string,
+			index: Number0,
+			input: string,
+		): boolean {
 			const prevChar = input[ob1Get0(index) - 1];
 			const nextChar = input[ob1Get0(index) + 1];
 
@@ -60,7 +64,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return true;
 		}
 
-		tokenize(index: Number0) {
+		protected tokenize(index: Number0) {
 			const char = this.getInputCharOnly(index);
 			const nextChar = this.getInputCharOnly(index, 1);
 
@@ -97,7 +101,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return this.finishValueToken("Word", value, end);
 		}
 
-		eatSeparators(): boolean {
+		private eatSeparators(): boolean {
 			let ate = false;
 			while (this.eatToken("Separator") !== undefined) {
 				ate = true;
@@ -106,7 +110,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 		}
 
 		//# Pattern parsing
-		parsePatternSegmentPart(): PatternPartNode {
+		private parsePatternSegmentPart(): PatternPartNode {
 			const startPos = this.getPosition();
 			const token = this.getToken();
 			this.nextToken();
@@ -133,7 +137,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseSegment(): PatternSegmentNode {
+		private parseSegment(): PatternSegmentNode {
 			const startPos = this.getPosition();
 			const parts: PatternParts = [];
 
@@ -171,7 +175,9 @@ const createPathMatchParser = createParser((ParserCore) =>
 			};
 		}
 
-		isWildcardOnlySegment(segment: undefined | PatternSegmentNode): boolean {
+		private isWildcardOnlySegment(
+			segment: undefined | PatternSegmentNode,
+		): boolean {
 			if (segment === undefined) {
 				return false;
 			}
@@ -189,7 +195,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 
 		// Normalize all path segments, removing empty segments and wildcards from the start and end
 		// These could also be parse errors but let's allow them
-		normalizePatternSegments(segments: PatternSegments): PatternSegments {
+		private normalizePatternSegments(segments: PatternSegments): PatternSegments {
 			const normalized: PatternSegments = [];
 
 			// Never normalize it if there's a single segment. This is to support writing a pattern that's just "*"
@@ -222,13 +228,13 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return normalized;
 		}
 
-		eatEOL() {
+		private eatEOL() {
 			while (this.eatToken("EOL")) {
 				// empty
 			}
 		}
 
-		parsePatternsFile(): Array<PathPattern> {
+		public parsePatternsFile(): Array<PathPattern> {
 			const patterns: Array<PathPattern> = [];
 
 			while (true) {
@@ -244,7 +250,7 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return patterns;
 		}
 
-		parsePattern(): PathPattern {
+		private parsePattern(): PathPattern {
 			const startPos = this.getPosition();
 			const segments: PatternSegments = [];
 			const negate = this.eatToken("Exclamation") !== undefined;
@@ -283,47 +289,11 @@ const createPathMatchParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseSinglePattern(): PathPattern {
+		public parseSinglePattern(): PathPattern {
 			const pattern = this.parsePattern();
 			this.eatEOL();
 			this.finalize();
 			return pattern;
-		}
-
-		//# Path parsing
-		parsePath(): Array<string> {
-			const segments: Array<string> = [];
-
-			this.eatSeparators();
-
-			while (!this.matchToken("EOF")) {
-				segments.push(this.parsePathSegment());
-			}
-
-			return segments;
-		}
-
-		parsePathSegment(): string {
-			let segment = "";
-
-			while (!this.eatSeparators() && !this.matchToken("EOF")) {
-				segment += this.normalizePathSegmentToken();
-			}
-
-			return segment;
-		}
-
-		normalizePathSegmentToken(): string {
-			const token = this.getToken();
-			this.nextToken();
-
-			if (token.type === "Word") {
-				return token.value;
-			} else {
-				throw this.unexpected({
-					description: descriptions.PATH_MATCH.INVALID_PATH_SEGMENT,
-				});
-			}
 		}
 	}
 );

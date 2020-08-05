@@ -12,7 +12,6 @@ import {
 import {LocalCommand, localCommands} from "./commands";
 import Client from "./Client";
 import {consumeUnknown} from "@internal/consume";
-import {BridgeError} from "@internal/events";
 import review from "./review";
 
 export type ClientRequestType = "local" | "server";
@@ -28,15 +27,15 @@ export default class ClientRequest {
 		this.query = query;
 	}
 
-	query: PartialServerQueryRequest;
-	type: ClientRequestType;
-	client: Client;
+	public query: PartialServerQueryRequest;
+	public type: ClientRequestType;
+	public client: Client;
 
-	fork(query: PartialServerQueryRequest): ClientRequest {
+	public fork(query: PartialServerQueryRequest): ClientRequest {
 		return new ClientRequest(this.client, this.type, query);
 	}
 
-	async init(): Promise<ServerQueryResponse> {
+	public async init(): Promise<ServerQueryResponse> {
 		const {requestFlags} = this.query;
 		if (requestFlags !== undefined && requestFlags.review) {
 			return await this.initReview();
@@ -45,11 +44,11 @@ export default class ClientRequest {
 		}
 	}
 
-	async initReview(): Promise<ServerQueryResponse> {
+	private async initReview(): Promise<ServerQueryResponse> {
 		return review(this);
 	}
 
-	async initCommand(): Promise<ServerQueryResponse> {
+	public async initCommand(): Promise<ServerQueryResponse> {
 		const localCommand = localCommands.get(this.query.commandName);
 
 		if (this.type === "server" || localCommand === undefined) {
@@ -59,7 +58,7 @@ export default class ClientRequest {
 		}
 	}
 
-	async initFromLocal(
+	private async initFromLocal(
 		// rome-ignore lint/ts/noExplicitAny
 		localCommand: LocalCommand<any>,
 	): Promise<ServerQueryResponse> {
@@ -83,13 +82,8 @@ export default class ClientRequest {
 			};
 		} else if (res === false) {
 			return {
-				type: "ERROR",
-				fatal: false,
-				// Local command would have printed something
-				handled: true,
-				name: "Error",
-				message: "Command was not successful",
-				stack: undefined,
+				type: "EXIT",
+				code: 1,
 				markers: [],
 			};
 		} else {
@@ -97,26 +91,14 @@ export default class ClientRequest {
 		}
 	}
 
-	async initFromServer(): Promise<ServerQueryResponse> {
+	private async initFromServer(): Promise<ServerQueryResponse> {
 		const {client} = this;
 
 		try {
 			const bridge = await client.findOrStartServer();
 			return await bridge.query.call(this.query);
 		} catch (err) {
-			if (err instanceof BridgeError) {
-				return {
-					type: "ERROR",
-					fatal: true,
-					handled: false,
-					name: "Error",
-					message: "Server died while processing command. Results may be incomplete.",
-					stack: undefined,
-					markers: [],
-				};
-			} else {
-				throw err;
-			}
+			throw err;
 		}
 	}
 }

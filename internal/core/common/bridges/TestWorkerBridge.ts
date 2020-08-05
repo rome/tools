@@ -38,7 +38,7 @@ export type TestWorkerRunTestOptions = {
 };
 
 export default class TestWorkerBridge extends Bridge {
-	inspectorDetails = this.createEvent<
+	public inspectorDetails = this.createEvent<
 		void,
 		{
 			inspectorUrl: undefined | string;
@@ -48,7 +48,7 @@ export default class TestWorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	prepareTest = this.createEvent<
+	public prepareTest = this.createEvent<
 		TestWorkerPrepareTestOptions,
 		TestWorkerPrepareTestResult
 	>({
@@ -56,17 +56,20 @@ export default class TestWorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	runTest = this.createEvent<TestWorkerRunTestOptions, TestWorkerFileResult>({
+	public runTest = this.createEvent<
+		TestWorkerRunTestOptions,
+		TestWorkerFileResult
+	>({
 		name: "runTest",
 		direction: "server->client",
 	});
 
-	testsFound = this.createEvent<Array<TestRef>, void>({
+	public testsFound = this.createEvent<Array<TestRef>, void>({
 		name: "onTestFounds",
 		direction: "server<-client",
 	});
 
-	testStart = this.createEvent<
+	public testStart = this.createEvent<
 		{
 			ref: TestRef;
 			timeout: undefined | number;
@@ -77,7 +80,7 @@ export default class TestWorkerBridge extends Bridge {
 		direction: "server<-client",
 	});
 
-	testDiagnostic = this.createEvent<
+	public testDiagnostic = this.createEvent<
 		{
 			diagnostic: Diagnostic;
 			origin: undefined | DiagnosticOrigin;
@@ -88,7 +91,7 @@ export default class TestWorkerBridge extends Bridge {
 		direction: "server<-client",
 	});
 
-	testFinish = this.createEvent<
+	public testFinish = this.createEvent<
 		{
 			success: boolean;
 			ref: TestRef;

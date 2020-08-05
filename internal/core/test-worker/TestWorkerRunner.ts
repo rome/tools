@@ -12,7 +12,6 @@ import {
 	DiagnosticLocation,
 	DiagnosticLogCategory,
 	catchDiagnostics,
-	createInternalDiagnostic,
 	createSingleDiagnosticError,
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
@@ -142,30 +141,31 @@ export default class TestWorkerRunner {
 		this.foundTests = new Map();
 	}
 
-	foundTests: Map<string, FoundTest>;
-	hasFocusedTests: boolean;
-	focusedTests: Array<FocusedTest>;
-	bridge: TestWorkerBridge;
-	projectDirectory: AbsoluteFilePath;
-	file: FileReference;
-	options: TestServerRunnerOptions;
-	snapshotManager: SnapshotManager;
-	opts: TestWorkerPrepareTestOptions;
-	locked: boolean;
-	consoleAdvice: Array<() => DiagnosticAdvice>;
-	hasDiagnostics: boolean;
+	public hasFocusedTests: boolean;
+	public hasDiagnostics: boolean;
+	public file: FileReference;
+	public projectDirectory: AbsoluteFilePath;
+	public options: TestServerRunnerOptions;
+
+	private foundTests: Map<string, FoundTest>;
+	private focusedTests: Array<FocusedTest>;
+	private bridge: TestWorkerBridge;
+	private snapshotManager: SnapshotManager;
+	private opts: TestWorkerPrepareTestOptions;
+	private locked: boolean;
+	private consoleAdvice: Array<() => DiagnosticAdvice>;
 
 	// Diagnostics that shouldn't result in console logs being output
-	pendingDiagnostics: Array<Diagnostic>;
+	private pendingDiagnostics: Array<Diagnostic>;
 
-	createTestRef(test: FoundTest): TestRef {
+	private createTestRef(test: FoundTest): TestRef {
 		return {
 			testName: test.name,
 			filename: this.file.real.join(),
 		};
 	}
 
-	createConsole(): Partial<Console> {
+	private createConsole(): Partial<Console> {
 		const addDiagnostic = (
 			category: DiagnosticLogCategory,
 			args: Array<unknown>,
@@ -249,7 +249,7 @@ export default class TestWorkerRunner {
 	}
 
 	//  Global variables to expose to tests
-	getEnvironment(): UnknownObject {
+	private getEnvironment(): UnknownObject {
 		const testOptions: GlobalTestOptions = {
 			dirname: this.file.real.getParent().join(),
 			register: (
@@ -268,7 +268,7 @@ export default class TestWorkerRunner {
 	}
 
 	// execute the test file and discover tests
-	async discoverTests() {
+	private async discoverTests() {
 		const {code} = this.opts;
 
 		try {
@@ -283,19 +283,21 @@ export default class TestWorkerRunner {
 					res.syntaxError.description.message,
 				)}`;
 
-				throw createSingleDiagnosticError(
-					createInternalDiagnostic({
+				throw createSingleDiagnosticError({
+					...res.syntaxError,
+					description: {
+						...res.syntaxError.description,
+						message,
+					},
+					location: {
+						...res.syntaxError.location,
+						filename: this.file.uid,
+					},
+					tags: {
 						...res.syntaxError,
-						description: {
-							...res.syntaxError.description,
-							message,
-						},
-						location: {
-							...res.syntaxError.location,
-							filename: this.file.uid,
-						},
-					}),
-				);
+						internal: true,
+					},
+				});
 			}
 		} catch (err) {
 			await this.emitError({
@@ -305,11 +307,11 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	lockTests() {
+	private lockTests() {
 		this.locked = true;
 	}
 
-	isFocusedTest({name, only}: TestOptions): boolean {
+	private isFocusedTest({name, only}: TestOptions): boolean {
 		const {filter} = this.options;
 		if (filter === undefined) {
 			return only === true;
@@ -318,7 +320,7 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	registerTest(
+	private registerTest(
 		callsiteError: Error,
 		options: TestOptions,
 		callback: TestCallback,
@@ -374,7 +376,7 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
+	public async emitDiagnostic(diag: Diagnostic, test?: FoundTest) {
 		let label = diag.label;
 		if (label === undefined && test !== undefined) {
 			label = markup`${test.name}`;
@@ -393,7 +395,9 @@ export default class TestWorkerRunner {
 		await this.bridge.testDiagnostic.call({diagnostic: diag, origin: undefined});
 	}
 
-	deriveDiagnosticFromErrorStructure(struct: StructuredError): Diagnostic {
+	private deriveDiagnosticFromErrorStructure(
+		struct: StructuredError,
+	): Diagnostic {
 		return deriveDiagnosticFromErrorStructure(
 			struct,
 			{
@@ -406,7 +410,7 @@ export default class TestWorkerRunner {
 		);
 	}
 
-	async emitError(
+	private async emitError(
 		opts: {
 			error: Error;
 			origin:
@@ -495,13 +499,19 @@ export default class TestWorkerRunner {
 		};
 
 		if (origin.type === "INTERNAL") {
-			diagnostic = createInternalDiagnostic(diagnostic);
+			diagnostic = {
+				...diagnostic,
+				tags: {
+					...diagnostic.tags,
+					internal: true,
+				},
+			};
 		}
 
 		await this.emitDiagnostic(diagnostic, test);
 	}
 
-	async teardownTest(test: FoundTest, api: TestAPI): Promise<boolean> {
+	private async teardownTest(test: FoundTest, api: TestAPI): Promise<boolean> {
 		api.clearTimeout();
 
 		try {
@@ -517,7 +527,7 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	async runTest(test: FoundTest) {
+	private async runTest(test: FoundTest) {
 		const {callback, name: testName} = test;
 
 		let onTimeout: OnTimeout = () => {
@@ -586,7 +596,9 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	async run(opts: TestWorkerRunTestOptions): Promise<TestWorkerFileResult> {
+	public async run(
+		opts: TestWorkerRunTestOptions,
+	): Promise<TestWorkerFileResult> {
 		const promises: Set<Promise<void>> = new Set();
 
 		const {foundTests} = this;
@@ -594,7 +606,7 @@ export default class TestWorkerRunner {
 		// Emit error about no found tests. If we already have diagnostics then there was an issue
 		// during initialization.
 		if (foundTests.size === 0 && !this.hasDiagnostics) {
-			this.emitDiagnostic({
+			await this.emitDiagnostic({
 				location: {
 					filename: this.file.uid,
 				},
@@ -666,7 +678,7 @@ export default class TestWorkerRunner {
 		};
 	}
 
-	async emitFoundTests() {
+	private async emitFoundTests() {
 		const tests: Array<TestRef> = [];
 
 		for (const testName of this.foundTests.keys()) {
@@ -679,7 +691,7 @@ export default class TestWorkerRunner {
 		await this.bridge.testsFound.call(tests);
 	}
 
-	async wrap(callback: () => Promise<void>): Promise<void> {
+	private async wrap(callback: () => Promise<void>): Promise<void> {
 		try {
 			const {diagnostics} = await catchDiagnostics(callback);
 
@@ -696,7 +708,7 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	async prepare(): Promise<TestWorkerPrepareTestResult> {
+	public async prepare(): Promise<TestWorkerPrepareTestResult> {
 		await this.wrap(async () => {
 			await this.snapshotManager.init();
 			await this.discoverTests();

@@ -17,10 +17,10 @@ export default class NotCallableE extends E {
 		this.callee = callee;
 	}
 
-	static type = "NotCallableE";
-	callee: T;
+	public static type = "NotCallableE";
+	private callee: T;
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		return {
 			description: descriptions.TYPE_CHECK.NOT_CALLABLE,
 			lowerTarget: this.callee,

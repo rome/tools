@@ -1,12 +1,13 @@
-import {Number0} from "@internal/ob1";
-import {JSONPropertyValue} from "@internal/codec-json";
-
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
+import {Number0} from "@internal/ob1";
+import {JSONPropertyValue} from "@internal/codec-json";
+
 export type LSPRequestMessage = {
 	/**
    * The request id.

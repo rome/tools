@@ -21,12 +21,12 @@ export default class FileAllocator {
 		this.logger = server.logger.namespace(markup`[FileAllocator]`);
 	}
 
-	server: Server;
-	locker: FilePathLocker;
-	fileToWorker: AbsoluteFilePathMap<number>;
-	logger: ReporterNamespace;
+	private server: Server;
+	private locker: FilePathLocker;
+	private fileToWorker: AbsoluteFilePathMap<number>;
+	private logger: ReporterNamespace;
 
-	init() {
+	public init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 			return this.handleDeleted(path);
 		});
@@ -36,19 +36,19 @@ export default class FileAllocator {
 		});
 	}
 
-	getAllOwnedFilenames(): Array<AbsoluteFilePath> {
+	public getAllOwnedFilenames(): Array<AbsoluteFilePath> {
 		return Array.from(this.fileToWorker.keys());
 	}
 
-	hasOwner(path: AbsoluteFilePath): boolean {
+	private hasOwner(path: AbsoluteFilePath): boolean {
 		return this.getOwnerId(path) !== undefined;
 	}
 
-	getOwnerId(path: AbsoluteFilePath): undefined | number {
+	private getOwnerId(path: AbsoluteFilePath): undefined | number {
 		return this.fileToWorker.get(path);
 	}
 
-	verifySize(path: AbsoluteFilePath, stats: Stats) {
+	public verifySize(path: AbsoluteFilePath, stats: Stats) {
 		const project = this.server.projectManager.assertProjectExisting(path);
 		const maxSize = project.config.files.maxSize;
 
@@ -59,7 +59,7 @@ export default class FileAllocator {
 		}
 	}
 
-	getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
+	private getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
 		const {workerManager} = this.server;
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -73,7 +73,9 @@ export default class FileAllocator {
 		return worker;
 	}
 
-	async getOrAssignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
+	public async getOrAssignOwner(
+		path: AbsoluteFilePath,
+	): Promise<WorkerContainer> {
 		const {workerManager} = this.server;
 
 		const workerId = this.getOwnerId(path);
@@ -85,7 +87,7 @@ export default class FileAllocator {
 		}
 	}
 
-	async evict(path: AbsoluteFilePath) {
+	public async evict(path: AbsoluteFilePath) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -102,7 +104,7 @@ export default class FileAllocator {
 		this.logger.info(markup`Evicted ${path}`);
 	}
 
-	async handleDeleted(path: AbsoluteFilePath) {
+	private async handleDeleted(path: AbsoluteFilePath) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -120,7 +122,7 @@ export default class FileAllocator {
 		this.server.workerManager.disown(workerId, stats);
 	}
 
-	async handleChange(
+	private async handleChange(
 		path: AbsoluteFilePath,
 		oldStats: undefined | Stats,
 		newStats: Stats,
@@ -156,7 +158,7 @@ export default class FileAllocator {
 		}
 	}
 
-	async assignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
+	private async assignOwner(path: AbsoluteFilePath): Promise<WorkerContainer> {
 		const {workerManager, memoryFs} = this.server;
 
 		const lock = await this.locker.getLock(path);

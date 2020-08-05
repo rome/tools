@@ -79,7 +79,7 @@ export const createSnapshotParser = createParser((ParserCore) =>
 			this.ignoreWhitespaceTokens = true;
 		}
 
-		tokenize(index: Number0) {
+		protected tokenize(index: Number0) {
 			const char = this.getInputCharOnly(index);
 
 			switch (char) {
@@ -156,7 +156,7 @@ export const createSnapshotParser = createParser((ParserCore) =>
 			return this.finishValueToken("TextLine", text, end);
 		}
 
-		parse(): Array<Node> {
+		public parse(): Array<Node> {
 			const nodes: Array<Node> = [];
 
 			while (!this.matchToken("EOF")) {

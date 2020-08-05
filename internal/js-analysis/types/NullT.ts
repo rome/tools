@@ -12,17 +12,17 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class NullT extends T {
-	static type = "NullT";
+	public static type = "NullT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new NullT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`null`;
 	}
 }

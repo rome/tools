@@ -23,5 +23,5 @@ export default async function worker() {
 		dedicated: true,
 	});
 	await worker.init();
-	bridge.handshake();
+	await bridge.handshake();
 }

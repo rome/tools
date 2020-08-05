@@ -12,5 +12,5 @@ export default class BridgeError extends Error {
 		this.bridge = bridge;
 	}
 
-	bridge: Bridge;
+	public bridge: Bridge;
 }

@@ -26,16 +26,16 @@ export default class TestWorker {
 		this.runners = new Map();
 	}
 
-	runners: Map<number, TestWorkerRunner>;
-	bridge: TestWorkerBridge;
+	private runners: Map<number, TestWorkerRunner>;
+	private bridge: TestWorkerBridge;
 
-	async init(flags: TestWorkerFlags) {
+	public async init(flags: TestWorkerFlags) {
 		inspector.open(flags.inspectorPort);
 
 		await this.bridge.handshake();
 	}
 
-	buildBridge(): TestWorkerBridge {
+	private buildBridge(): TestWorkerBridge {
 		const bridge = createBridgeFromParentProcess(
 			TestWorkerBridge,
 			{
@@ -77,7 +77,9 @@ export default class TestWorker {
 		return bridge;
 	}
 
-	async runTest(opts: TestWorkerRunTestOptions): Promise<TestWorkerFileResult> {
+	private async runTest(
+		opts: TestWorkerRunTestOptions,
+	): Promise<TestWorkerFileResult> {
 		const {id} = opts;
 		const runner = this.runners.get(id);
 		if (runner === undefined) {
@@ -87,7 +89,7 @@ export default class TestWorker {
 		}
 	}
 
-	async prepareTest(
+	private async prepareTest(
 		opts: TestWorkerPrepareTestOptions,
 	): Promise<TestWorkerPrepareTestResult> {
 		const runner = new TestWorkerRunner(opts, this.bridge);

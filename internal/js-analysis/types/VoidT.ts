@@ -12,17 +12,17 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class VoidT extends T {
-	static type = "VoidT";
+	public static type = "VoidT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new VoidT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`void`;
 	}
 }

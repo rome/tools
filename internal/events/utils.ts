@@ -6,7 +6,6 @@
  */
 
 import {EventSubscription, EventSubscriptions} from "./types";
-import {AsyncVoidCallback} from "@internal/typescript-helpers";
 
 export function mergeEventSubscriptions(
 	subs: EventSubscriptions,
@@ -20,30 +19,40 @@ export function mergeEventSubscriptions(
 	};
 }
 
-export type SubscriptionWrapperHelpers = {
+export function createEmptySubscription(): EventSubscription {
+	return {
+		async unsubscribe() {},
+	};
+}
+
+export interface SubscriptionWrapperHelpers extends EventSubscription {
 	add: (sub: EventSubscription) => void;
-	unsubscribe: AsyncVoidCallback;
-};
+}
+
 type SubscriptionWrapperCallback<Ret, Args extends Array<unknown>> = (
 	helper: SubscriptionWrapperHelpers,
 	...args: Args
 ) => Promise<Ret>;
+
+export function createSubscriptionHelper(): SubscriptionWrapperHelpers {
+	const subscriptions: EventSubscriptions = [];
+
+	return {
+		add(sub: EventSubscription) {
+			subscriptions.push(sub);
+		},
+		async unsubscribe() {
+			await mergeEventSubscriptions(subscriptions).unsubscribe();
+		},
+	};
+}
 
 // A safe way to wrap subscriptions and ensure they're properly closed on errors
 export function wrapSubscriptionConsumer<Ret, Args extends Array<unknown>>(
 	callback: SubscriptionWrapperCallback<Ret, Args>,
 ): (...args: Args) => Promise<Ret> {
 	return async function(...args: Args): Promise<Ret> {
-		const subscriptions: EventSubscriptions = [];
-
-		const helper: SubscriptionWrapperHelpers = {
-			add(sub: EventSubscription) {
-				subscriptions.push(sub);
-			},
-			async unsubscribe() {
-				await mergeEventSubscriptions(subscriptions).unsubscribe();
-			},
-		};
+		const helper = createSubscriptionHelper();
 
 		try {
 			return await callback(helper, ...args);

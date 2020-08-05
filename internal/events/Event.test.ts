@@ -18,7 +18,6 @@ test(
 		event.subscribe(foo);
 
 		t.true(event.hasSubscriptions());
-		t.is(foo, event.rootSubscription);
 
 		event.send("hello");
 		event.send("rome");
@@ -30,12 +29,14 @@ test(
 		event.send("ok");
 		await event.callOptional("ok");
 
-		// call and callSync do throw if there are no subscriptions
+		// send with a required param does throw
+		t.throws(() => {
+			event.send("ok", true);
+		});
+
+		// call does throw if there are no subscriptions
 		t.throwsAsync(async () => {
 			await event.call("error");
-		});
-		t.throws(() => {
-			event.callSync("error");
 		});
 
 		t.looksLike(fooCalls, ["hello", "rome"]);
@@ -109,61 +110,13 @@ test(
 );
 
 test(
-	"Event#callSync with promise subscription",
-	async (t) => {
-		const event = new Event<string, string>({name: "testEvent"});
-		const foo: Callback<string, string> = () => {
-			return "foo returns";
-		};
-		const bar: Callback<string, string> = () => {
-			return Promise.resolve("bar returns a promise");
-		};
-
-		event.subscribe(foo);
-		event.subscribe(bar);
-		const ret = await event.call("rome");
-
-		// callSync throws if any subscription returns a promise
-		t.throws(() => {
-			event.callSync("test");
-		});
-		t.is(ret, "foo returns");
-	},
-);
-
-test(
-	"Event#onError",
-	async (t) => {
-		const errors: Array<Error> = [];
-		const event = new Event<string, string>({
-			name: "testEvent",
-			onError: (err) => {
-				errors.push(err);
-			},
-		});
-
-		const testError = new Error("oops");
-
-		// this calls the error handler
-		event.onError(testError);
-
-		t.throws(() => {
-			event.callSync("no subscriptions");
-		});
-
-		t.is(errors[0], testError);
-		t.is(errors.length, 2);
-	},
-);
-
-test(
 	"Event#wait",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
 
 		const waitPromise = event.wait("wait arg");
 
-		const foo = event.callSync("wait for this");
+		const foo = await event.call("wait for this");
 		t.is(foo, "wait arg");
 
 		t.is(await waitPromise, "wait for this");

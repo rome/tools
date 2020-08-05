@@ -16,9 +16,6 @@ import {parseHTML} from "@internal/html-parser";
 // import source with ".ts"
 export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 
-// Used when filtering files
-export const JS_EXTENSIONS: Array<string> = [];
-
 export const htmlHandler: ExtensionHandler = {
 	ext: "html",
 	language: "html",

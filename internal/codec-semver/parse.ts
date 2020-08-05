@@ -44,11 +44,11 @@ const createSemverParser = createParser((ParserCore) =>
 			this.loose = loose === undefined ? false : loose;
 		}
 
-		loose: boolean;
-		mode: ParseMode;
+		private loose: boolean;
+		private mode: ParseMode;
 
 		// For some reason Flow will throw an error without the type casts...
-		tokenize(index: Number0): undefined | TokenValues<Tokens> {
+		protected tokenize(index: Number0): undefined | TokenValues<Tokens> {
 			const char = this.getInputCharOnly(index);
 			const nextChar = this.getInputCharOnly(index, 1);
 
@@ -124,13 +124,13 @@ const createSemverParser = createParser((ParserCore) =>
 		}
 
 		// Remove all subsequent space tokens
-		eatSpaceToken() {
+		private eatSpaceToken() {
 			while (this.eatToken("Space") !== undefined) {
 				// empty
 			}
 		}
 
-		parseVersionOrWildcard(): WildcardNode | VersionNode {
+		private parseVersionOrWildcard(): WildcardNode | VersionNode {
 			const startPos = this.getPosition();
 			const startToken = this.getToken();
 			const version = this.parseVersion();
@@ -152,7 +152,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return version;
 		}
 
-		parseVersion(): VersionNode {
+		private parseVersion(): VersionNode {
 			const startPos = this.getPosition();
 			const startToken = this.getToken();
 
@@ -220,7 +220,7 @@ const createSemverParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseVersionQualifierParts(): VersionPrereleaseParts {
+		private parseVersionQualifierParts(): VersionPrereleaseParts {
 			const parts: VersionPrereleaseParts = [];
 			do {
 				parts.push(this.parseVersionQualifierPart());
@@ -228,7 +228,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return parts;
 		}
 
-		parseVersionQualifierPart(): string | number {
+		private parseVersionQualifierPart(): string | number {
 			const parts: Array<string | number> = [];
 
 			do {
@@ -262,7 +262,7 @@ const createSemverParser = createParser((ParserCore) =>
 			}
 		}
 
-		isWildcardToken(token: TokenValues<Tokens>): boolean {
+		private isWildcardToken(token: TokenValues<Tokens>): boolean {
 			if (token.type === "Star") {
 				return true;
 			}
@@ -274,7 +274,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return false;
 		}
 
-		parseVersionNumber(): undefined | number {
+		private parseVersionNumber(): undefined | number {
 			const token = this.getToken();
 
 			if (token.type === "Number") {
@@ -299,7 +299,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseLogicalOr(left: RangeNode): LogicalOrNode {
+		private parseLogicalOr(left: RangeNode): LogicalOrNode {
 			this.nextToken();
 			this.eatSpaceToken();
 
@@ -312,7 +312,7 @@ const createSemverParser = createParser((ParserCore) =>
 			};
 		}
 
-		validateRangeSide(node: RangeNode): VersionNode | WildcardNode {
+		private validateRangeSide(node: RangeNode): VersionNode | WildcardNode {
 			// In loose mode, we allow ranges to be a bare wildcard instead of a version
 			// eg. * - 1.2.3
 			if (node.type === "WildcardVersion" || node.type === "AbsoluteVersion") {
@@ -329,7 +329,7 @@ const createSemverParser = createParser((ParserCore) =>
 			});
 		}
 
-		parseVersionRange(left: RangeNode): VersionRangeNode {
+		private parseVersionRange(left: RangeNode): VersionRangeNode {
 			this.nextToken();
 			this.eatSpaceToken();
 
@@ -343,13 +343,13 @@ const createSemverParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseWildcard(): WildcardNode {
+		private parseWildcard(): WildcardNode {
 			const startPos = this.getPosition();
 			this.nextToken();
 			return {type: "Wildcard", loc: this.finishLoc(startPos)};
 		}
 
-		parseAtomOperator(token: Tokens["Operator"]): ComparatorNode {
+		private parseAtomOperator(token: Tokens["Operator"]): ComparatorNode {
 			const startPos = this.getPosition();
 			this.nextToken();
 			this.eatSpaceToken();
@@ -364,7 +364,7 @@ const createSemverParser = createParser((ParserCore) =>
 			};
 		}
 
-		isVersionCharacter(token: TokenValues<Tokens>): boolean {
+		private isVersionCharacter(token: TokenValues<Tokens>): boolean {
 			if (this.loose && token.type === "Word") {
 				return token.value === "v";
 			}
@@ -372,7 +372,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return false;
 		}
 
-		parseAtomStartPipe() {
+		private parseAtomStartPipe() {
 			if (this.loose) {
 				// A bare pipe in an atom start position is treated the same as a wildcard...
 				// Why...? Because node-semver allows it lol
@@ -385,7 +385,7 @@ const createSemverParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseAtomStartWord(token: Tokens["Word"]) {
+		private parseAtomStartWord(token: Tokens["Word"]) {
 			if (this.isWildcardToken(token)) {
 				return this.parseWildcard();
 			} else if (this.isVersionCharacter(token)) {
@@ -397,7 +397,7 @@ const createSemverParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseAtom() {
+		private parseAtom() {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -423,7 +423,7 @@ const createSemverParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseLogicalAnd(left: RangeNode): LogicalAndNode {
+		private parseLogicalAnd(left: RangeNode): LogicalAndNode {
 			const right = this.parseExpression();
 
 			return {
@@ -438,7 +438,7 @@ const createSemverParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseExpression(): RangeNode {
+		private parseExpression(): RangeNode {
 			const left = this.parseAtom();
 			this.eatSpaceToken();
 
@@ -457,7 +457,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return left;
 		}
 
-		parseInitialRange(): RangeNode {
+		public parseInitialRange(): RangeNode {
 			// Allow spaces at the beginning, spaces at the end have been removed by the trimRight in the constructor
 			this.eatSpaceToken();
 
@@ -472,7 +472,7 @@ const createSemverParser = createParser((ParserCore) =>
 			return expr;
 		}
 
-		parseInitialVersion(): AbsoluteVersionNode {
+		public parseInitialVersion(): AbsoluteVersionNode {
 			const node = this.parseInitialRange();
 
 			// Verify the return value in version mode

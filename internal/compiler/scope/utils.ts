@@ -74,7 +74,6 @@ export function buildFunctionScope(
 // var are function scoped so we have separate traversal logic to inject them
 export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 	const {context} = scope.getRootScope();
-	scope.setHoistedVars();
 
 	context.reduce(
 		topNode,

@@ -48,16 +48,16 @@ export default class SourceMapGenerator {
 		this.materializeCallbacks = [];
 	}
 
-	file: string;
-	materializeCallbacks: Array<MaterializeCallback>;
-	sourceRoot: undefined | string;
-	sources: ArraySet;
-	names: ArraySet;
-	mappings: MappingList;
-	sourcesContents: Map<string, string>;
-	map: undefined | SourceMap;
+	public file: string;
+	private materializeCallbacks: Array<MaterializeCallback>;
+	private sourceRoot: undefined | string;
+	private sources: ArraySet;
+	private names: ArraySet;
+	private mappings: MappingList;
+	private sourcesContents: Map<string, string>;
+	private map: undefined | SourceMap;
 
-	assertUnlocked() {
+	private assertUnlocked() {
 		if (this.map !== undefined) {
 			throw new Error(
 				"Source map has already been materialized, serialize() should be your final call",
@@ -65,7 +65,7 @@ export default class SourceMapGenerator {
 		}
 	}
 
-	addMaterializer(fn: MaterializeCallback) {
+	public addMaterializer(fn: MaterializeCallback) {
 		this.materializeCallbacks.push(fn);
 	}
 
@@ -79,7 +79,7 @@ export default class SourceMapGenerator {
    *   - source: The original source file (relative to the sourceRoot).
    *   - name: An optional original token name for this mapping.
    */
-	addMapping(mapping: Mapping): void {
+	public addMapping(mapping: Mapping): void {
 		this.assertUnlocked();
 
 		const {name, source} = mapping;
@@ -112,7 +112,10 @@ export default class SourceMapGenerator {
 	/**
    * Set the source content for a source file.
    */
-	setSourceContent(source: string, sourceContent: undefined | string): void {
+	public setSourceContent(
+		source: string,
+		sourceContent: undefined | string,
+	): void {
 		this.assertUnlocked();
 
 		if (this.sourceRoot !== undefined) {
@@ -128,7 +131,7 @@ export default class SourceMapGenerator {
 		}
 	}
 
-	validatePosition(key: string, line: Number1, column: Number0): void {
+	private validatePosition(key: string, line: Number1, column: Number0): void {
 		if (ob1Get1(line) <= 0) {
 			throw new Error(`${key} line should be >= 1 but is ${line}`);
 		}
@@ -142,7 +145,7 @@ export default class SourceMapGenerator {
    * Serialize the accumulated mappings in to the stream of base 64 VLQs
    * specified by the source map format.
    */
-	serializeMappings(): string {
+	private serializeMappings(): string {
 		let previousGeneratedColumn: Number0 = ob1Number0;
 		let previousGeneratedLine: Number1 = ob1Number1;
 		let previousOriginalColumn: Number0 = ob1Number0;
@@ -207,7 +210,7 @@ export default class SourceMapGenerator {
 		return result;
 	}
 
-	generateSourcesContent(
+	private generateSourcesContent(
 		sources: Array<string>,
 		sourceRoot: undefined | string,
 	): Array<string> {
@@ -223,7 +226,7 @@ export default class SourceMapGenerator {
 		});
 	}
 
-	materialize() {
+	private materialize() {
 		for (const fn of this.materializeCallbacks) {
 			fn();
 		}
@@ -233,7 +236,7 @@ export default class SourceMapGenerator {
 	/**
    * Externalize the source map.
    */
-	serialize(): SourceMap {
+	public serialize(): SourceMap {
 		if (this.map !== undefined) {
 			return this.map;
 		}
@@ -253,14 +256,14 @@ export default class SourceMapGenerator {
 		return this.map;
 	}
 
-	toComment(): string {
+	public toComment(): string {
 		const jsonMap = this.toJSON();
 		const base64Map = new Buffer(jsonMap).toString("base64");
 		const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
 		return comment;
 	}
 
-	toConsumer(): SourceMapConsumer {
+	public toConsumer(): SourceMapConsumer {
 		return new SourceMapConsumer(
 			this.file,
 			() => {
@@ -281,12 +284,12 @@ export default class SourceMapGenerator {
 		);
 	}
 
-	getMappings(): Mappings {
+	private getMappings(): Mappings {
 		this.materialize();
 		return this.mappings.toArray();
 	}
 
-	toJSON(): string {
+	public toJSON(): string {
 		return JSON.stringify(this.serialize());
 	}
 }

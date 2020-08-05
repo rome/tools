@@ -93,7 +93,6 @@ const MAX_STORE_ENTRIES = 5;
 export default class RecoveryStore {
 	constructor(server: Server) {
 		this.server = server;
-		this.clearingPromise = undefined;
 		this.requestIdToStore = new Map();
 		this.evictableStoreIds = [];
 		this.blockSave = undefined;
@@ -102,24 +101,27 @@ export default class RecoveryStore {
 		this.recoveryDirectoryPath = server.userConfig.recoveryPath;
 	}
 
-	recoveryDirectoryPath: AbsoluteFilePath;
-	clearingPromise: undefined | Promise<void>;
-	requestIdToStore: Map<number, MemoryStore>;
-	blockSave: undefined | Promise<unknown>;
-	evictableStoreIds: Array<string>;
-	server: Server;
-	logger: ReporterNamespace;
-	shouldTruncate: boolean;
+	private recoveryDirectoryPath: AbsoluteFilePath;
+	private requestIdToStore: Map<number, MemoryStore>;
+	private blockSave: undefined | Promise<unknown>;
+	private evictableStoreIds: Array<string>;
+	private server: Server;
+	private logger: ReporterNamespace;
+	private shouldTruncate: boolean;
 
-	getStoreDirectoryPath(storeId: string): AbsoluteFilePath {
+	public getDirectory(): AbsoluteFilePath {
+		return this.recoveryDirectoryPath;
+	}
+
+	private getStoreDirectoryPath(storeId: string): AbsoluteFilePath {
 		return this.recoveryDirectoryPath.append(storeId);
 	}
 
-	getStoreIndexPath(storeId: string): AbsoluteFilePath {
+	private getStoreIndexPath(storeId: string): AbsoluteFilePath {
 		return this.getStoreDirectoryPath(storeId).append("index.json");
 	}
 
-	async readRecoveryDirectory(): Promise<AbsoluteFilePathSet> {
+	private async readRecoveryDirectory(): Promise<AbsoluteFilePathSet> {
 		const paths: Array<[AbsoluteFilePath, number]> = [];
 
 		for (const path of await readDirectory(this.recoveryDirectoryPath)) {
@@ -143,7 +145,7 @@ export default class RecoveryStore {
 		return new AbsoluteFilePathSet(paths.map(([path]) => path));
 	}
 
-	async init() {
+	public async init() {
 		await createDirectory(this.recoveryDirectoryPath);
 
 		// Register initial stores
@@ -159,7 +161,7 @@ export default class RecoveryStore {
 		await this.truncate();
 	}
 
-	async clear() {
+	public async clear() {
 		this.evictableStoreIds = [];
 		this.requestIdToStore.clear();
 
@@ -169,7 +171,7 @@ export default class RecoveryStore {
 	}
 
 	// Drop old stores if we are at max entries
-	async truncate() {
+	private async truncate() {
 		if (!this.shouldTruncate) {
 			return;
 		}
@@ -180,14 +182,14 @@ export default class RecoveryStore {
 		}
 	}
 
-	async drop(storeId: string, reason: string) {
+	private async drop(storeId: string, reason: string) {
 		this.logger.info(
 			markup`Dropping recovery store <emphasis>${storeId}</emphasis>. Reason: ${reason}`,
 		);
 		await removeDirectory(this.getStoreDirectoryPath(storeId));
 	}
 
-	async getAllStores(): Promise<{
+	public async getAllStores(): Promise<{
 		diagnostics: Diagnostics;
 		stores: Array<RecoveryDiskStore>;
 	}> {
@@ -209,7 +211,7 @@ export default class RecoveryStore {
 		return {stores, diagnostics};
 	}
 
-	async getStore(
+	public async getStore(
 		storeId: string,
 		location: DiagnosticLocation = {},
 	): Promise<RecoveryDiskStore> {
@@ -224,7 +226,9 @@ export default class RecoveryStore {
 		}
 	}
 
-	async maybeGetStore(storeId: string): Promise<undefined | RecoveryDiskStore> {
+	private async maybeGetStore(
+		storeId: string,
+	): Promise<undefined | RecoveryDiskStore> {
 		const indexPath = this.getStoreIndexPath(storeId);
 		if (!(await exists(indexPath))) {
 			return undefined;
@@ -254,7 +258,7 @@ export default class RecoveryStore {
 		};
 	}
 
-	async createRequestStore(req: ServerRequest): Promise<MemoryStore> {
+	private async createRequestStore(req: ServerRequest): Promise<MemoryStore> {
 		await this.truncate();
 		const timestamp = new Date().toISOString();
 		const storeId = `${Date.now()}-${req.query.commandName}-${req.id}`;
@@ -284,7 +288,7 @@ export default class RecoveryStore {
 		return store;
 	}
 
-	async save(req: ServerRequest, path: AbsoluteFilePath, content: Buffer) {
+	public async save(req: ServerRequest, path: AbsoluteFilePath, content: Buffer) {
 		if (this.blockSave !== undefined) {
 			await this.blockSave;
 		}
@@ -305,7 +309,7 @@ export default class RecoveryStore {
 	}
 
 	// Take the contents of the store and write the artifacts back to their original location
-	async apply(
+	public async apply(
 		req: ServerRequest,
 		storeId: string,
 		location: DiagnosticLocation = {},
@@ -355,7 +359,7 @@ export default class RecoveryStore {
 	}
 
 	// Commits the index file that we use to map the artifacts to original paths
-	async commit(req: ServerRequest) {
+	public async commit(req: ServerRequest) {
 		const store = this.requestIdToStore.get(req.id);
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
@@ -367,7 +371,7 @@ export default class RecoveryStore {
 	// Utility to write a list of files and wait for all refresh events to be emitted
 	// We optionally validate mtime of the existing file if specified
 	// The bar here for race conditions should be extremely high as we want to minimize bad writes
-	async writeFiles(
+	public async writeFiles(
 		files: AbsoluteFilePathMap<RecoverySaveFile>,
 		opts: WriteFilesOptions = {unsafeWrites: false},
 		events: WriteFilesEvents = DEFAULT_WRITE_FILES_EVENTS,
@@ -484,7 +488,9 @@ export default class RecoveryStore {
 							// We want writeFiles to only return once all the refreshFileEvent handlers have ran
 							// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
 							// This mitigates slow watch events
-							server.memoryFs.refreshPath(path, {}, "Server.writeFiles");
+							server.wrapFatalPromise(
+								server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
+							);
 						}
 					},
 				),

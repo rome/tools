@@ -36,13 +36,13 @@ export class Binding {
 		this.kind = opts.kind ?? defaultKind;
 	}
 
-	name: string;
-	kind: BindingKind;
-	scope: Scope;
-	node: AnyNode;
-	isExported: boolean;
+	public name: string;
+	public kind: BindingKind;
+	public scope: Scope;
+	public node: AnyNode;
+	public isExported: boolean;
 
-	setExported(isExported: boolean) {
+	public setExported(isExported: boolean) {
 		this.isExported = isExported;
 	}
 }
@@ -70,7 +70,7 @@ export class ConstBinding extends Binding {
 		this.value = value;
 	}
 
-	value: undefined | AnyNode;
+	public value: undefined | AnyNode;
 }
 
 export class LetBinding extends Binding {
@@ -91,7 +91,7 @@ export class ImportBinding extends Binding {
 		this.meta = meta;
 	}
 
-	meta: ImportBindingMeta;
+	public meta: ImportBindingMeta;
 }
 
 export class ArgumentsBinding extends Binding {
@@ -111,7 +111,6 @@ export type TypeBindingKind =
 	| "class"
 	| "interface"
 	| "alias"
-	| "parameter"
 	| "enum"
 	| "parameter"
 	| "mapped type";
@@ -126,7 +125,7 @@ export class TypeBinding extends ConstBinding {
 		this.typeKind = kind;
 	}
 
-	typeKind: TypeBindingKind;
+	public typeKind: TypeBindingKind;
 }
 
 export class ClassBinding extends Binding {

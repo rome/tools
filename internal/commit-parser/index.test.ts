@@ -1,6 +1,6 @@
 import {createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
-import {parseCommit} from ".";
+import {parseCommit} from "./index";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;

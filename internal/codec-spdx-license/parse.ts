@@ -74,10 +74,10 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			this.loose = opts.loose === true;
 		}
 
-		loose: boolean;
+		private loose: boolean;
 
 		// For some reason Flow will throw an error without the type casts...
-		tokenize(index: Number0) {
+		protected tokenize(index: Number0) {
 			const char = this.getInputCharOnly(index);
 
 			if (char === "+") {
@@ -109,7 +109,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseLicense(token: Tokens["Word"]): LicenseNode {
+		private parseLicense(token: Tokens["Word"]): LicenseNode {
 			const startPos = this.getPosition();
 			this.nextToken();
 
@@ -176,7 +176,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseExpression(): ExpressionNode {
+		private parseExpression(): ExpressionNode {
 			const startPos = this.getPosition();
 			const startToken = this.getToken();
 
@@ -243,7 +243,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			}
 		}
 
-		parse(): ExpressionNode {
+		public parse(): ExpressionNode {
 			const expr = this.parseExpression();
 			this.finalize();
 			return expr;

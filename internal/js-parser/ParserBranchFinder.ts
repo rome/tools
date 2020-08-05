@@ -29,19 +29,19 @@ export default class ParserBranchFinder<T> {
 		this.picked = false;
 	}
 
-	branch: undefined | ParserBranch<T>;
-	parser: JSParser;
-	picked: boolean;
+	private branch: undefined | ParserBranch<T>;
+	private parser: JSParser;
+	private picked: boolean;
 
-	hasOptimalBranch(): boolean {
+	public hasOptimalBranch(): boolean {
 		return this.branch !== undefined && this.branch.optimal;
 	}
 
-	hasBranch(): boolean {
+	public hasBranch(): boolean {
 		return this.branch !== undefined;
 	}
 
-	add(
+	public add(
 		callback: (parser: JSParser) => undefined | T,
 		opts: ParserBranchOptions = {},
 	): this {
@@ -147,7 +147,7 @@ export default class ParserBranchFinder<T> {
 		return this;
 	}
 
-	getBranch(): ParserBranch<T> {
+	private getBranch(): ParserBranch<T> {
 		if (this.branch === undefined) {
 			throw new Error("No branch");
 		} else {
@@ -155,7 +155,7 @@ export default class ParserBranchFinder<T> {
 		}
 	}
 
-	pickOptional(): undefined | T {
+	public pickOptional(): undefined | T {
 		if (this.hasBranch()) {
 			return this.pick();
 		} else {
@@ -163,7 +163,7 @@ export default class ParserBranchFinder<T> {
 		}
 	}
 
-	pick(): T {
+	public pick(): T {
 		if (this.picked) {
 			throw new Error("Already been picked");
 		}

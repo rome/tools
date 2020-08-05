@@ -55,19 +55,21 @@ export class TokenType<Label extends string = string> {
 		this.updateContext = undefined;
 	}
 
-	label: Label;
-	keyword: undefined | string;
-	beforeExpr: boolean;
-	startsExpr: boolean;
-	rightAssociative: boolean;
-	isLoop: boolean;
-	isAssign: boolean;
-	prefix: boolean;
-	postfix: boolean;
-	binop: undefined | number;
-	updateContext: undefined | ((parser: JSParser, prevType: TokenType) => void);
+	public label: Label;
+	public keyword: undefined | string;
+	public beforeExpr: boolean;
+	public startsExpr: boolean;
+	public rightAssociative: boolean;
+	public isLoop: boolean;
+	public isAssign: boolean;
+	public prefix: boolean;
+	public postfix: boolean;
+	public binop: undefined | number;
+	public updateContext:
+		| undefined
+		| ((parser: JSParser, prevType: TokenType) => void);
 
-	getBinop(): number {
+	public getBinop(): number {
 		const {binop} = this;
 		if (binop === undefined) {
 			throw new Error(`Token ${this.label} doesn't have a binop`);

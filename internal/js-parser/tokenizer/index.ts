@@ -136,8 +136,8 @@ export class RegExpTokenValue {
 		this.flags = flags;
 	}
 
-	pattern: string;
-	flags: Set<string>;
+	public pattern: string;
+	public flags: Set<string>;
 }
 
 export class NumberTokenValue {
@@ -146,8 +146,8 @@ export class NumberTokenValue {
 		this.format = format;
 	}
 
-	value: number;
-	format: JSNumericLiteral["format"];
+	public value: number;
+	public format: JSNumericLiteral["format"];
 }
 
 // ## Tokenizer
@@ -330,7 +330,7 @@ function pushComment(
 		parser.syntax.add("jsx");
 	}
 
-	if (parser.isLookahead === false) {
+	if (!parser.isLookahead) {
 		parser.registerComment(comment);
 	}
 
@@ -1685,7 +1685,7 @@ function readWord1(parser: JSParser): string {
 			}
 
 			const isValid = first ? isIdentifierStart : isIdentifierChar;
-			if (isValid(esc) === false) {
+			if (!isValid(esc)) {
 				parser.unexpectedDiagnostic({
 					index: parser.state.index,
 					description: descriptions.JS_PARSER.INVALID_UNICODE_ESCAPE,

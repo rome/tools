@@ -56,7 +56,7 @@ function compareOp(
 
 		case "^": {
 			// Make sure that the version isn't less than the range
-			if (compareOp(">=", version, range) === false) {
+			if (!compareOp(">=", version, range)) {
 				return false;
 			}
 
@@ -84,7 +84,7 @@ function compareOp(
 		case "~>":
 		case "~": {
 			// Make sure that the version isn't less than the range
-			if (compareOp(">=", version, range) === false) {
+			if (!compareOp(">=", version, range)) {
 				return false;
 			}
 
@@ -145,7 +145,7 @@ export function satisfiesFromAst(
 	range: RangeNode,
 ): boolean {
 	const res = satisfiesSub(version, range);
-	if (res === false) {
+	if (!res) {
 		return false;
 	}
 

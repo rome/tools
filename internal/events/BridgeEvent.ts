@@ -15,7 +15,7 @@ import {
 import Bridge from "./Bridge";
 import BridgeError from "./BridgeError";
 import Event from "./Event";
-import {VoidCallback} from "@internal/typescript-helpers";
+import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
 
 type CallOptions = {
 	timeout?: number;
@@ -60,30 +60,30 @@ export default class BridgeEvent<
 		this.direction = opts.direction;
 	}
 
-	bridge: Bridge;
-	direction: BridgeEventDirection;
-	requestCallbacks: Map<
+	public bridge: Bridge;
+	public direction: BridgeEventDirection;
+	public requestCallbacks: Map<
 		number,
 		{
 			param: Param;
 			completed: undefined | VoidCallback;
 			resolve: (data: Ret) => void;
-			reject: (err: Error) => void;
+			reject: ErrorCallback;
 		}
 	>;
 
-	clear() {
+	public clear() {
 		super.clear();
 		this.requestCallbacks.clear();
 	}
 
-	end(err: Error) {
+	public end(err: Error) {
 		for (const {reject} of this.requestCallbacks.values()) {
 			reject(err);
 		}
 	}
 
-	onSubscriptionChange() {
+	public onSubscriptionChange() {
 		validateDirection(
 			this,
 			[["server->client", "client"], ["server<-client", "server"]],
@@ -92,11 +92,11 @@ export default class BridgeEvent<
 		this.bridge.sendSubscriptions();
 	}
 
-	dispatchRequest(param: Param): Promise<Ret> {
+	public dispatchRequest(param: Param): Promise<Ret> {
 		return super.call(param);
 	}
 
-	dispatchResponse(
+	public dispatchResponse(
 		id: number,
 		data: BridgeSuccessResponseMessage | BridgeErrorResponseMessage,
 	): void {
@@ -126,11 +126,11 @@ export default class BridgeEvent<
 		}
 	}
 
-	hasSubscribers(): boolean {
+	public hasSubscribers(): boolean {
 		return this.bridge.listeners.has(this.name);
 	}
 
-	validateCanSend(): void {
+	private validateCanSend(): void {
 		validateDirection(
 			this,
 			[["server<-client", "client"], ["server->client", "server"]],
@@ -138,7 +138,7 @@ export default class BridgeEvent<
 		);
 	}
 
-	send(param: Param): void {
+	public send(param: Param): void {
 		if (!this.hasSubscribers()) {
 			// No point in sending over a subscription that doesn't have a listener
 			return;
@@ -154,71 +154,62 @@ export default class BridgeEvent<
 		});
 	}
 
-	async call(param: Param, opts: CallOptions = {}): Promise<Ret> {
+	public async call(param: Param, opts: CallOptions = {}): Promise<Ret> {
 		const {priority = false, timeout} = opts;
 		this.validateCanSend();
 
-		try {
-			return await new Promise((resolve, reject) => {
-				this.bridge.assertAlive();
+		return new Promise((resolve, reject) => {
+			this.bridge.assertAlive();
 
-				const id = this.bridge.getNextMessageId();
+			const id = this.bridge.getNextMessageId();
 
-				let completed;
-				if (timeout !== undefined) {
-					const timeoutId = setTimeout(
-						() => {
-							// Remove the request callback
-							this.requestCallbacks.delete(id);
+			let completed;
+			if (timeout !== undefined) {
+				const timeoutId = setTimeout(
+					() => {
+						// Remove the request callback
+						this.requestCallbacks.delete(id);
 
-							// Reject the promise
-							reject(
-								new BridgeError(
-									`Timeout of ${String(timeout)}ms for ${this.name}(${String(
-										JSON.stringify(param),
-									)}) event exceeded`,
-									this.bridge,
-								),
-							);
-						},
-						timeout,
-					);
-
-					// Cancel the timeout if the response returns before the timer
-					completed = () => {
-						clearTimeout(timeoutId);
-					};
-				}
-
-				this.requestCallbacks.set(
-					id,
-					{
-						param,
-						completed,
-						reject,
-						resolve,
+						// Reject the promise
+						reject(
+							new BridgeError(
+								`Timeout of ${String(timeout)}ms for ${this.name}(${String(
+									JSON.stringify(param),
+								)}) event exceeded`,
+								this.bridge,
+							),
+						);
 					},
+					timeout,
 				);
 
-				this.bridge.sendMessage({
-					id,
-					event: this.name,
+				// Cancel the timeout if the response returns before the timer
+				completed = () => {
+					clearTimeout(timeoutId);
+				};
+			}
+
+			this.requestCallbacks.set(
+				id,
+				{
 					param,
-					type: "request",
-					priority,
-				});
+					completed,
+					reject,
+					resolve,
+				},
+			);
+
+			this.bridge.sendMessage({
+				id,
+				event: this.name,
+				param,
+				type: "request",
+				priority,
 			});
-		} catch (err) {
-			this.onError(err);
-			throw err;
-		}
+		});
 	}
 
-	callSync(): never {
-		throw new Error(`callSync not allowed on BridgeEvent ${this.name}`);
-	}
-
-	callOptional(): never {
+	public callOptional(): never {
 		throw new Error(`callOptional not allowed on BridgeEvent ${this.name}`);
 	}
 }

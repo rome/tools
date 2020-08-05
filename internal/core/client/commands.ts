@@ -17,7 +17,7 @@ import lsp from "./commands/lsp";
 import {UnknownObject} from "@internal/typescript-helpers";
 import ClientRequest from "./ClientRequest";
 import {SharedCommand} from "../common/commands";
-import {ServerQueryResponse} from "../common/bridges/ServerBridge";
+import {ServerQueryResponse} from "@internal/core";
 
 export type LocalCommand<Flags extends UnknownObject> = SharedCommand<
 	ClientRequest,

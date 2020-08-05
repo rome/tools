@@ -5,13 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyComment,
-	AnyNode,
-	AnyNodes,
-	AnyRoot,
-	ConstJSSourceType,
-} from "@internal/ast";
+import {AnyNode, AnyNodes, AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
@@ -134,31 +128,31 @@ export default class CompilerContext {
 		this.visitorStates = new Map();
 	}
 
-	visitorStates: Map<AnyVisitor, AnyVisitorState>;
-	displayFilename: string;
-	filename: string;
-	mtime: undefined | number;
-	path: UnknownFilePath;
-	project: TransformProjectDefinition;
-	language: DiagnosticLanguage;
-	sourceTypeJS: undefined | ConstJSSourceType;
-	reducedRoot: boolean;
-	rootScope: RootScope;
-	ast: AnyRoot;
+	private visitorStates: Map<AnyVisitor, AnyVisitorState>;
+	public displayFilename: string;
+	public filename: string;
+	private mtime: undefined | number;
+	public path: UnknownFilePath;
+	public project: TransformProjectDefinition;
+	public language: DiagnosticLanguage;
+	private sourceTypeJS: undefined | ConstJSSourceType;
+	private reducedRoot: boolean;
+	public rootScope: RootScope;
+	private ast: AnyRoot;
 
-	comments: CommentsConsumer;
-	cacheDependencies: Set<string>;
-	records: Array<Record>;
+	public comments: CommentsConsumer;
+	private cacheDependencies: Set<string>;
+	public records: Array<Record>;
 
-	diagnostics: DiagnosticsProcessor;
-	suppressions: DiagnosticSuppressions;
-	visitSuppressions: boolean;
+	public diagnostics: DiagnosticsProcessor;
+	public suppressions: DiagnosticSuppressions;
+	private visitSuppressions: boolean;
 
-	frozen: boolean;
-	origin: undefined | DiagnosticOrigin;
-	options: CompilerOptions;
+	public frozen: boolean;
+	private origin: undefined | DiagnosticOrigin;
+	public options: CompilerOptions;
 
-	getVisitorState<State extends UnknownObject>(
+	public getVisitorState<State extends UnknownObject>(
 		visitor: Visitor<State>,
 	): VisitorState<State> {
 		let state = this.visitorStates.get(visitor);
@@ -169,7 +163,7 @@ export default class CompilerContext {
 		return (state as VisitorState<State>);
 	}
 
-	async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {
+	public async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
 				if (typeof visitor === "function") {
@@ -181,7 +175,7 @@ export default class CompilerContext {
 		);
 	}
 
-	checkOverlappingSuppressions() {
+	private checkOverlappingSuppressions() {
 		// Check for overlapping suppressions
 		const nonOverlapSuppressions = new Map();
 		for (const suppression of this.suppressions) {
@@ -208,11 +202,7 @@ export default class CompilerContext {
 		}
 	}
 
-	getComments(ids: undefined | Array<string>): Array<AnyComment> {
-		return this.comments.getCommentsFromIds(ids);
-	}
-
-	hasLocSuppression(
+	public hasLocSuppression(
 		loc: undefined | DiagnosticLocation,
 		category: DiagnosticCategory,
 	): boolean {
@@ -229,15 +219,15 @@ export default class CompilerContext {
 		return false;
 	}
 
-	getCacheDependencies(): Array<string> {
+	public getCacheDependencies(): Array<string> {
 		return Array.from(this.cacheDependencies);
 	}
 
-	addCacheDependency(filename: string) {
+	public addCacheDependency(filename: string) {
 		this.cacheDependencies.add(filename);
 	}
 
-	reduceRoot(
+	public reduceRoot(
 		visitors: AnyVisitor | AnyVisitors,
 		pathOpts?: PathOptions,
 	): AnyRoot {
@@ -269,7 +259,7 @@ export default class CompilerContext {
 		return node;
 	}
 
-	reduce(
+	public reduce(
 		ast: AnyNode,
 		visitors: AnyVisitor | AnyVisitors,
 		pathOpts?: PathOptions,
@@ -277,16 +267,18 @@ export default class CompilerContext {
 		return reduceNode(ast, visitors, this, pathOpts);
 	}
 
-	record(record: Record) {
+	public record(record: Record) {
 		this.records.push(record);
 	}
 
-	hasLintDecisions(): boolean {
+	public hasLintDecisions(): boolean {
 		const {lint} = this.options;
 		return lint !== undefined && lint.hasDecisions === true;
 	}
 
-	getLintDecisions(key: undefined | string): Array<LintCompilerOptionsDecision> {
+	public getLintDecisions(
+		key: undefined | string,
+	): Array<LintCompilerOptionsDecision> {
 		const {lint} = this.options;
 		if (lint === undefined) {
 			return [];
@@ -306,7 +298,7 @@ export default class CompilerContext {
 		return [...globalDecisions, ...(decisionsByPosition[key] || [])];
 	}
 
-	addLocDiagnostic(
+	public addLocDiagnostic(
 		loc: undefined | DiagnosticLocation,
 		description: DiagnosticDescription,
 		contextDiag: ContextDiagnostic = {},
@@ -396,7 +388,7 @@ export default class CompilerContext {
 		};
 	}
 
-	getLoc(node: DiagnosticTarget): undefined | SourceLocation {
+	public getLoc(node: DiagnosticTarget): undefined | SourceLocation {
 		if (node === undefined) {
 			return undefined;
 		}
@@ -408,7 +400,7 @@ export default class CompilerContext {
 		}
 	}
 
-	addNodeDiagnostic(
+	public addNodeDiagnostic(
 		node: DiagnosticTarget,
 		description: DiagnosticDescription,
 		diag: ContextDiagnostic = {},

@@ -11,9 +11,9 @@ import {StaticMarkup, markup} from "@internal/markup";
 import T from "./T";
 
 export default class OpenT extends T {
-	static type = "OpenT";
+	public static type = "OpenT";
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		const type = this.utils.reduce(this);
 		if (type === this) {
 			return markup`open`;
@@ -22,7 +22,7 @@ export default class OpenT extends T {
 		}
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		const node = this.graph.find(this);
 		if (node === undefined) {
 			return new UnknownT(this.scope, this.originNode);

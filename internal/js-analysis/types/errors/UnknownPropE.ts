@@ -33,15 +33,15 @@ export default class UnknownPropE extends E {
 		this.property = opts.property;
 	}
 
-	static type = "UnknownPropE";
-	allProps: Array<string>;
-	thisKeys: Array<string>;
-	protoKeys: Array<string>;
-	property: T;
-	object: T;
-	key: string;
+	public static type = "UnknownPropE";
+	private allProps: Array<string>;
+	private thisKeys: Array<string>;
+	private protoKeys: Array<string>;
+	private property: T;
+	private object: T;
+	private key: string;
 
-	sortProps(props: Array<string>): Array<string> {
+	public sortProps(props: Array<string>): Array<string> {
 		if (props.length === 0) {
 			return props;
 		}
@@ -51,7 +51,7 @@ export default class UnknownPropE extends E {
 		return sortedProps;
 	}
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		return {
 			description: descriptions.TYPE_CHECK.UNKNOWN_PROP(this.key, this.allProps),
 			lowerTarget: this.property,

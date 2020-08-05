@@ -29,12 +29,12 @@ export default class ObjT extends T {
 		this.proto = opts.proto;
 	}
 
-	static type = "ObjT";
-	calls: Array<T>;
-	props: Array<T>;
-	proto: undefined | T;
+	public static type = "ObjT";
+	public calls: Array<T>;
+	public props: Array<T>;
+	public proto: undefined | T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		if (this.constructor !== ObjT) {
 			throw new Error(
 				"Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass",
@@ -48,7 +48,7 @@ export default class ObjT extends T {
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -65,7 +65,7 @@ export default class ObjT extends T {
 		);
 	}
 
-	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
+	public compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		if (!(otherType instanceof ObjT)) {
 			return false;
 		}
@@ -108,7 +108,7 @@ export default class ObjT extends T {
 		return true;
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		if (this.props.length === 0) {
 			return markup`{}`;
 		} else {

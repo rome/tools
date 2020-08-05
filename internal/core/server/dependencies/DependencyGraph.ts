@@ -7,7 +7,11 @@
 
 import Server from "../Server";
 import {SourceLocation} from "@internal/parser-core";
-import {BundleBuddyStats} from "../../common/types/bundler";
+import {
+	AnalyzeModuleType,
+	BundleBuddyStats,
+	ServerRequest,
+} from "@internal/core";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {ResolverOptions} from "../fs/Resolver";
 import WorkerQueue from "../WorkerQueue";
@@ -15,15 +19,14 @@ import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {Locker} from "../../common/utils/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
-import {Event} from "@internal/events";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
-import {ServerRequest} from "@internal/core";
+
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createUnknownFilePath,
 } from "@internal/path";
-import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
+
 import {markup} from "@internal/markup";
 import {
 	FileNotFound,
@@ -90,23 +93,20 @@ export default class DependencyGraph {
 		this.server = request.server;
 		this.nodes = new AbsoluteFilePathMap();
 		this.resolverOpts = resolverOpts;
-
 		this.locker = new Locker();
-		this.closeEvent = new Event({name: "DependencyGraph.closeEvent"});
 	}
 
-	request: ServerRequest;
-	resolverOpts: ResolverOptions;
-	server: Server;
-	nodes: AbsoluteFilePathMap<DependencyNode>;
-	locker: Locker<string>;
-	closeEvent: Event<void, void>;
+	private request: ServerRequest;
+	private resolverOpts: ResolverOptions;
+	private server: Server;
+	private nodes: AbsoluteFilePathMap<DependencyNode>;
+	private locker: Locker<string>;
 
-	close() {
-		this.closeEvent.send();
+	public getNodes(): Iterable<DependencyNode> {
+		return this.nodes.values();
 	}
 
-	isExternal(path: AbsoluteFilePath, source: string): boolean {
+	private isExternal(path: AbsoluteFilePath, source: string): boolean {
 		const project = this.server.projectManager.assertProjectExisting(path);
 		return (
 			project.config.bundler.externals.includes(source) ||
@@ -114,7 +114,7 @@ export default class DependencyGraph {
 		);
 	}
 
-	getBundleBuddyStats(entries: Array<AbsoluteFilePath>): BundleBuddyStats {
+	public getBundleBuddyStats(entries: Array<AbsoluteFilePath>): BundleBuddyStats {
 		const stats: BundleBuddyStats = [];
 
 		for (const node of this.nodes.values()) {
@@ -140,12 +140,13 @@ export default class DependencyGraph {
 		return stats;
 	}
 
-	deleteNode(path: AbsoluteFilePath) {
+	public deleteNode(path: AbsoluteFilePath) {
 		this.nodes.delete(path);
 	}
 
-	addNode(path: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
+	private addNode(path: AbsoluteFilePath, res: WorkerAnalyzeDependencyResult) {
 		const module = new DependencyNode(
+			this.server,
 			this,
 			this.server.projectManager.getFileReference(path),
 			res,
@@ -154,11 +155,11 @@ export default class DependencyGraph {
 		return module;
 	}
 
-	maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
+	public maybeGetNode(path: AbsoluteFilePath): undefined | DependencyNode {
 		return this.nodes.get(path);
 	}
 
-	getNode(path: AbsoluteFilePath): DependencyNode {
+	public getNode(path: AbsoluteFilePath): DependencyNode {
 		const mod = this.maybeGetNode(path);
 		if (mod === undefined) {
 			throw new FileNotFound(path, "No dependency node found");
@@ -166,7 +167,7 @@ export default class DependencyGraph {
 		return mod;
 	}
 
-	async seed(
+	public async seed(
 		{
 			paths,
 			diagnosticsProcessor,
@@ -252,7 +253,7 @@ export default class DependencyGraph {
 		}
 	}
 
-	validate(
+	public validate(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	): boolean {
@@ -263,7 +264,7 @@ export default class DependencyGraph {
 		);
 	}
 
-	validateTransitive(
+	private validateTransitive(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
 	) {
@@ -275,7 +276,7 @@ export default class DependencyGraph {
 		}
 	}
 
-	async resolve(
+	private async resolve(
 		path: AbsoluteFilePath,
 		opts: {
 			all: boolean;

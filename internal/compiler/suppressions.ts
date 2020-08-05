@@ -15,7 +15,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import CompilerContext from "./lib/CompilerContext";
-import {signals} from ".";
+import * as signals from "./signals";
 import {AnyVisitor} from "./types";
 import {createVisitor} from "./utils";
 

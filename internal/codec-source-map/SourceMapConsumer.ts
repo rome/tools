@@ -37,23 +37,23 @@ export default class SourceMapConsumer {
 		this.mappings = undefined;
 	}
 
-	file: string;
-	_getMappings: GetMappings;
-	mappings: undefined | ParsedMappings;
+	private file: string;
+	private _getMappings: GetMappings;
+	private mappings: undefined | ParsedMappings;
 
-	static charIsMappingSeparator(str: string, index: number): boolean {
+	private static charIsMappingSeparator(str: string, index: number): boolean {
 		const c = str.charAt(index);
 		return c === ";" || c === ",";
 	}
 
-	static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
+	public static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
 		return new SourceMapConsumer(
 			sourceMap.file,
 			() => SourceMapConsumer.parseMappings(sourceMap),
 		);
 	}
 
-	static fromJSONLazy(
+	public static fromJSONLazy(
 		file: string,
 		getSourceMap: () => SourceMap,
 	): SourceMapConsumer {
@@ -63,7 +63,7 @@ export default class SourceMapConsumer {
 		);
 	}
 
-	static parseMappings(sourceMap: SourceMap): ParsedMappings {
+	private static parseMappings(sourceMap: SourceMap): ParsedMappings {
 		const rawStr: string = sourceMap.mappings;
 		const map: ParsedMappings = new Map();
 
@@ -172,11 +172,11 @@ export default class SourceMapConsumer {
 		return map;
 	}
 
-	clearCache() {
+	public clearCache() {
 		this.mappings = undefined;
 	}
 
-	getMappings(): ParsedMappings {
+	private getMappings(): ParsedMappings {
 		if (this.mappings === undefined) {
 			const mappings = this._getMappings();
 			this.mappings = mappings;
@@ -186,7 +186,7 @@ export default class SourceMapConsumer {
 		}
 	}
 
-	approxOriginalPositionFor(
+	public approxOriginalPositionFor(
 		line: Number1,
 		column: Number0,
 	): undefined | ResolvedLocation {
@@ -194,7 +194,6 @@ export default class SourceMapConsumer {
 			const mapping = this.exactOriginalPositionFor(line, column);
 			if (mapping === undefined) {
 				column = ob1Dec(column);
-				continue;
 			} else {
 				return mapping;
 			}
@@ -203,7 +202,7 @@ export default class SourceMapConsumer {
 		return undefined;
 	}
 
-	exactOriginalPositionFor(
+	public exactOriginalPositionFor(
 		line: Number1,
 		column: Number0,
 	): undefined | ResolvedLocation {

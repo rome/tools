@@ -34,7 +34,7 @@ function isCorrectValue(
 		}
 		case "token": {
 			if (attribute.values) {
-				const result = attribute.values.some((token) => {
+				return attribute.values.some((token) => {
 					if (typeof token === "boolean") {
 						if (typeof value === "string") {
 							return value === "true" || value === "false";
@@ -45,7 +45,6 @@ function isCorrectValue(
 						? value === token
 						: `${value}` === token;
 				});
-				return result;
 			}
 			return false;
 		}

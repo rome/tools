@@ -27,15 +27,15 @@ export default class NumericLiteralT extends ObjT {
 		this.value = value;
 	}
 
-	static type = "NumericLiteralT";
+	public static type = "NumericLiteralT";
 
-	value: number;
+	public value: number;
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {value: this.value};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -43,11 +43,11 @@ export default class NumericLiteralT extends ObjT {
 		return new NumericLiteralT(scope, originNode, Number(data.value));
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`${String(this.value)}`;
 	}
 
-	compatibleWith(type: T): boolean {
+	public compatibleWith(type: T): boolean {
 		return (
 			type instanceof NumericT ||
 			(type instanceof NumericLiteralT && type.value === this.value)

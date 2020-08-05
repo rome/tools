@@ -79,7 +79,7 @@ async function run(
 			processor.addDiagnostics(res.diagnostics);
 
 			const diagnostics = processor.getDiagnostics();
-			const diagnosticsHTML = await printDiagnosticsToString({
+			return await printDiagnosticsToString({
 				diagnostics,
 				suppressions: [],
 				format: "html",
@@ -88,7 +88,6 @@ async function run(
 					columns: ob1Coerce1(75),
 				},
 			});
-			return diagnosticsHTML;
 		},
 	);
 

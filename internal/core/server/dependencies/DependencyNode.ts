@@ -19,14 +19,16 @@ import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {getFileHandlerFromPath} from "../../common/file-handlers/index";
-import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
 	AnalyzeDependency,
 	AnalyzeExportLocal,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
+	Server,
+	getFileHandlerFromPath,
 } from "@internal/core";
+import {ExtensionHandler} from "../../common/file-handlers/types";
+
 import {FileReference} from "@internal/core/common/types/files";
 
 type ResolvedImportFound = {
@@ -82,13 +84,15 @@ type ResolveImportsResult = {
 
 export default class DependencyNode {
 	constructor(
+		server: Server,
 		graph: DependencyGraph,
 		ref: FileReference,
 		res: WorkerAnalyzeDependencyResult,
 	) {
+		this.server = server;
 		this.graph = graph;
 
-		this.project = graph.server.projectManager.assertProjectExisting(ref.real);
+		this.project = server.projectManager.assertProjectExisting(ref.real);
 		this.uid = ref.uid;
 		this.path = ref.real;
 		this.ref = ref;
@@ -105,44 +109,37 @@ export default class DependencyNode {
 		this.handler = handler;
 	}
 
-	analyze: WorkerAnalyzeDependencyResult;
-	graph: DependencyGraph;
-	relativeToAbsolutePath: Map<string, AbsoluteFilePath>;
-	absoluteToAnalyzeDependency: AbsoluteFilePathMap<DependencyNodeDependency>;
-	type: AnalyzeModuleType;
-	project: ProjectDefinition;
-	path: AbsoluteFilePath;
-	uid: string;
-	ref: FileReference;
-	all: boolean;
-	usedAsync: boolean;
-	handler: undefined | ExtensionHandler;
-	resolveImportsCache: undefined | ResolveImportsResult;
+	public uid: string;
+	public type: AnalyzeModuleType;
+	public all: boolean;
+	public path: AbsoluteFilePath;
+	public ref: FileReference;
+	public analyze: WorkerAnalyzeDependencyResult;
+	public handler: undefined | ExtensionHandler;
+	public usedAsync: boolean;
+	public relativeToAbsolutePath: Map<string, AbsoluteFilePath>;
 
-	getMtime(): number {
-		return this.graph.server.memoryFs.getMtime(this.path);
+	private server: Server;
+	private graph: DependencyGraph;
+	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<DependencyNodeDependency>;
+	private project: ProjectDefinition;
+	private resolveImportsCache: undefined | ResolveImportsResult;
+
+	public getMtime(): number {
+		return this.server.memoryFs.getMtime(this.path);
 	}
 
-	setUsedAsync(usedAsync: boolean) {
+	public setUsedAsync(usedAsync: boolean) {
 		this.usedAsync = usedAsync;
 	}
 
-	setAll(all: boolean) {
+	public setAll(all: boolean) {
 		this.all = all;
 	}
 
-	hasEscapedExports(): boolean {
-		for (const exp of this.analyze.exports) {
-			if (exp.type === "local" && exp.name === "*") {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	getDependents(): Array<DependencyNode> {
+	public getDependents(): Array<DependencyNode> {
 		const dependents: Array<DependencyNode> = [];
-		for (const node of this.graph.nodes.values()) {
+		for (const node of this.graph.getNodes()) {
 			if (node.absoluteToAnalyzeDependency.has(this.path)) {
 				dependents.push(node);
 			}
@@ -150,7 +147,7 @@ export default class DependencyNode {
 		return dependents;
 	}
 
-	addDependency(
+	public addDependency(
 		relative: string,
 		absolute: AbsoluteFilePath,
 		dep: AnalyzeDependency,
@@ -165,7 +162,7 @@ export default class DependencyNode {
 		);
 	}
 
-	getDependencyInfoFromAbsolute(
+	public getDependencyInfoFromAbsolute(
 		path: AbsoluteFilePath,
 	): DependencyNodeDependency {
 		const dep = this.absoluteToAnalyzeDependency.get(path);
@@ -175,7 +172,7 @@ export default class DependencyNode {
 		return dep;
 	}
 
-	getNodeFromRelativeDependency(relative: string): DependencyNode {
+	public getNodeFromRelativeDependency(relative: string): DependencyNode {
 		const absolute = this.relativeToAbsolutePath.get(relative);
 		if (absolute === undefined) {
 			throw new Error(`Expected dependency ${relative} in ${this.path}`);
@@ -183,42 +180,17 @@ export default class DependencyNode {
 		return this.graph.getNode(absolute);
 	}
 
-	getAbsoluteDependencies(): Array<AbsoluteFilePath> {
+	public getAbsoluteDependencies(): Array<AbsoluteFilePath> {
 		return Array.from(this.relativeToAbsolutePath.values());
 	}
 
-	getTransitiveDependencies(): Array<DependencyNode> {
-		let queue: Array<DependencyNode> = [this];
-
-		const nodes: Set<DependencyNode> = new Set();
-
-		while (queue.length > 0) {
-			const node = queue.shift();
-			if (node === undefined) {
-				throw new Error("Already validated queue.length");
-			}
-
-			nodes.add(node);
-
-			for (const absolute of node.getAbsoluteDependencies()) {
-				const node = this.graph.getNode(absolute);
-
-				if (!nodes.has(node)) {
-					queue.push(node);
-				}
-			}
-		}
-
-		return Array.from(nodes);
-	}
-
-	getDependencyOrder(): DependencyOrder {
+	public getDependencyOrder(): DependencyOrder {
 		const orderer = new DependencyOrderer(this.graph);
 		return orderer.order(this.path);
 	}
 
 	// Get a list of all DependencyNodes where exports could be resolved. eg. `export *`
-	getExportedModules(
+	private getExportedModules(
 		chain: Set<DependencyNode> = new Set(),
 	): Set<DependencyNode> {
 		if (chain.has(this)) {
@@ -239,7 +211,7 @@ export default class DependencyNode {
 		return chain;
 	}
 
-	getExportedNames(
+	private getExportedNames(
 		kind: ConstJSImportModuleKind,
 		seen: Set<DependencyNode> = new Set(),
 	): Set<string> {
@@ -294,7 +266,7 @@ export default class DependencyNode {
 		return names;
 	}
 
-	buildDiagnosticForUnknownExport(
+	private buildDiagnosticForUnknownExport(
 		kind: ConstJSImportModuleKind,
 		resolved: ResolvedImportNotFound,
 	): Diagnostic {
@@ -355,7 +327,7 @@ export default class DependencyNode {
 		};
 	}
 
-	resolveImports(): ResolveImportsResult {
+	public resolveImports(): ResolveImportsResult {
 		const cached = this.resolveImportsCache;
 		if (cached !== undefined) {
 			return cached;
@@ -414,7 +386,7 @@ export default class DependencyNode {
 		return result;
 	}
 
-	resolveImport(
+	public resolveImport(
 		name: string,
 		loc: undefined | SourceLocation,
 		ignoreDefault: boolean = false,

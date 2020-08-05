@@ -24,8 +24,8 @@ export function parseCLIFlagsFromProcess<T>(
 		"cwd" | "programName" | "args" | "reporter"
 	>,
 ): ParserInterface<T> {
-	let programName = "";
-	let args: Array<string> = [];
+	let programName: string;
+	let args: Array<string>;
 
 	if (opts.args === undefined) {
 		programName = process.argv[1];

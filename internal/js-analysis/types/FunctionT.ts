@@ -41,14 +41,14 @@ export default class FunctionT extends ObjT {
 		this.body = opts.body;
 	}
 
-	static type = "FunctionT";
+	public static type = "FunctionT";
 
-	params: Array<T>;
-	rest: undefined | T;
-	returns: T;
-	body: undefined | T;
+	private params: Array<T>;
+	private rest: undefined | T;
+	public returns: T;
+	private body: undefined | T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			params: this.params.map((type) => addType(type)),
 			rest: this.rest ? addType(this.rest) : undefined,
@@ -59,7 +59,7 @@ export default class FunctionT extends ObjT {
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -79,13 +79,13 @@ export default class FunctionT extends ObjT {
 		);
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`(${this.params.map((param) => builder.humanize(param)).join(
 			", ",
 		)}) => ${builder.humanize(this.returns)}`;
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		// No body, just a type signature
 		const {body} = this;
 		if (body === undefined) {

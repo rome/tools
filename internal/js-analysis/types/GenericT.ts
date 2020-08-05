@@ -25,19 +25,19 @@ export default class GenericT extends T {
 		this.type = type;
 	}
 
-	name: string;
-	type: T;
+	private name: string;
+	private type: T;
 
-	static type = "GenericT";
+	public static type = "GenericT";
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			name: this.name,
 			type: addType(this.type),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -51,11 +51,11 @@ export default class GenericT extends T {
 		);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`${this.name}`;
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		const type = this.utils.reduce(this.type);
 		if (type instanceof ClassT) {
 			return new InstanceT(this.scope, this.originNode, this.type, []);

@@ -19,10 +19,6 @@ export type AnyTSTypeElement =
 
 export type AnyTSModuleReference = AnyTSEntityName | n.TSExternalModuleReference;
 
-export type AnyTSFunctionOrConstructorType =
-	| n.TSFunctionType
-	| n.TSConstructorType;
-
 export type JSObjectProperties = Array<
 	n.JSObjectProperty | n.JSObjectMethod | n.JSSpreadProperty
 >;
@@ -79,7 +75,6 @@ export type AnyJSAuxiliary =
 	| n.JSImportSpecifier
 	| n.JSImportDefaultSpecifier
 	| n.JSImportNamespaceSpecifier
-	| n.JSExportLocalSpecifier
 	| n.JSExportNamespaceSpecifier
 	| n.JSDirective
 	| n.JSInterpreterDirective
@@ -253,7 +248,6 @@ export type AnyTSLiteralTypeAnnotation =
 export type AnyTSKeywordTypeAnnotation =
 	| n.TSAnyKeywordTypeAnnotation
 	| n.TSBooleanKeywordTypeAnnotation
-	| n.TSNumberKeywordTypeAnnotation
 	| n.TSStringKeywordTypeAnnotation
 	| n.TSBigIntKeywordTypeAnnotation
 	| n.TSNeverKeywordTypeAnnotation

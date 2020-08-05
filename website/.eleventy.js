@@ -174,7 +174,7 @@ module.exports = function(eleventyConfig) {
 		"htmlmin",
 		function(content, outputPath) {
 			if (isProduction && outputPath.endsWith(".html")) {
-				let minified = htmlmin.minify(
+				return htmlmin.minify(
 					content,
 					{
 						useShortDoctype: true,
@@ -182,7 +182,6 @@ module.exports = function(eleventyConfig) {
 						collapseWhitespace: true,
 					},
 				);
-				return minified;
 			}
 
 			return content;

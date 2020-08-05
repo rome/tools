@@ -1486,7 +1486,6 @@ type ExpressionContext =
 	| "if test"
 	| "conditional consequent"
 	| "conditional alternate"
-	| "class private property value"
 	| "statement expression"
 	| "class private property value"
 	| "optional member expression property"
@@ -3630,7 +3629,7 @@ export function checkReservedWord(
 		});
 	}
 
-	let isReserved = false;
+	let isReserved: boolean;
 	if (parser.inScope("STRICT")) {
 		if (isBinding) {
 			isReserved = isStrictBindReservedWord(word, parser.inModule);

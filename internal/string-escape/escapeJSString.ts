@@ -172,7 +172,6 @@ export default function escapeJSString(
 		const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
 		const escaped = `\\${modifier}${code}`;
 		result += escaped;
-		continue;
 	}
 
 	return `${quote}${result}${quote}`;

@@ -9,7 +9,7 @@ import {Manifest, ManifestDefinition} from "@internal/codec-js-manifest";
 import Server from "../Server";
 import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
 import {ProjectDefinition, createDefaultProjectConfig} from "@internal/project";
-import {FileReference} from "../../common/types/files";
+import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
@@ -304,11 +304,11 @@ export default class Resolver {
 		this.server = server;
 	}
 
-	server: Server;
+	private server: Server;
 
-	init() {}
+	public init() {}
 
-	async findProjectFromQuery(query: ResolverRemoteQuery) {
+	private async findProjectFromQuery(query: ResolverRemoteQuery) {
 		// If we were passed an absolute path then we should find and add the project it belongs to
 		if (query.source.isAbsolute()) {
 			await this.server.projectManager.findProject(
@@ -323,7 +323,7 @@ export default class Resolver {
 		}
 	}
 
-	async resolveEntryAssert(
+	public async resolveEntryAssert(
 		query: ResolverRemoteQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
@@ -332,7 +332,7 @@ export default class Resolver {
 	}
 
 	// I found myself wanting only `ref.path` a lot so this is just a helper method
-	async resolveEntryAssertPath(
+	public async resolveEntryAssertPath(
 		query: ResolverRemoteQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<AbsoluteFilePath> {
@@ -340,12 +340,14 @@ export default class Resolver {
 		return res.path;
 	}
 
-	async resolveEntry(query: ResolverRemoteQuery): Promise<ResolverQueryResponse> {
+	public async resolveEntry(
+		query: ResolverRemoteQuery,
+	): Promise<ResolverQueryResponse> {
 		await this.findProjectFromQuery(query);
 		return this.resolveRemote({...query, entry: true});
 	}
 
-	async resolveAssert(
+	public async resolveAssert(
 		query: ResolverRemoteQuery,
 		origQuerySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
@@ -353,11 +355,17 @@ export default class Resolver {
 		if (resolved.type === "FOUND") {
 			return resolved;
 		} else {
-			throw resolverSuggest(this, query, resolved, origQuerySource);
+			throw resolverSuggest({
+				resolver: this,
+				server: this.server,
+				query,
+				resolved,
+				origQuerySource,
+			});
 		}
 	}
 
-	async resolveRemote(
+	private async resolveRemote(
 		query: ResolverRemoteQuery,
 	): Promise<ResolverQueryResponse> {
 		const {origin, source} = query;
@@ -441,7 +449,7 @@ export default class Resolver {
 		});
 	}
 
-	resolveLocal(query: ResolverLocalQuery): ResolverQueryResponse {
+	public resolveLocal(query: ResolverLocalQuery): ResolverQueryResponse {
 		// Do some basic checks to determine if this is an absolute or relative path
 		if (isPathLike(query.source)) {
 			return this.resolvePath(query);
@@ -458,7 +466,7 @@ export default class Resolver {
 		return resolved;
 	}
 
-	*getFilenameVariants(
+	private *getFilenameVariants(
 		query: ResolverLocalQuery,
 		path: UnknownFilePath,
 	): Iterable<FilenameVariant> {
@@ -474,7 +482,7 @@ export default class Resolver {
 		}
 	}
 
-	*_getFilenameVariants(
+	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
 		path: UnknownFilePath,
 		callees: Array<ResolverQueryResponseFoundType>,
@@ -532,7 +540,7 @@ export default class Resolver {
 				yield* this._getFilenameVariants(
 					query,
 					path.changeBasename(
-						`${path.getExtensionlessBasename()}@${String(i)}x${path.memoizedExtension}`,
+						`${path.getExtensionlessBasename()}@${String(i)}x${path.getExtensions()}`,
 					),
 					[...callees, "implicitScale"],
 				);
@@ -540,7 +548,7 @@ export default class Resolver {
 		}
 	}
 
-	finishResolverQueryResponse(
+	private finishResolverQueryResponse(
 		path: AbsoluteFilePath,
 		types: Array<ResolverQueryResponseFoundType> = [],
 	): ResolverQueryResponse {
@@ -552,7 +560,7 @@ export default class Resolver {
 		};
 	}
 
-	getOriginDirectory(query: ResolverLocalQuery): AbsoluteFilePath {
+	public getOriginDirectory(query: ResolverLocalQuery): AbsoluteFilePath {
 		const {memoryFs} = this.server;
 		const {origin} = query;
 
@@ -563,7 +571,7 @@ export default class Resolver {
 		}
 	}
 
-	resolvePath(
+	private resolvePath(
 		query: ResolverLocalQuery,
 		checkVariants: boolean = true,
 		types?: Array<ResolverQueryResponseFoundType>,
@@ -659,7 +667,7 @@ export default class Resolver {
 		return QUERY_RESPONSE_MISSING;
 	}
 
-	resolvePackageDirectory(
+	private resolvePackageDirectory(
 		query: ResolverLocalQuery,
 		moduleName: string,
 	): undefined | ManifestDefinition {
@@ -682,7 +690,7 @@ export default class Resolver {
 		return undefined;
 	}
 
-	resolvePackage(
+	private resolvePackage(
 		query: ResolverLocalQuery,
 		moduleName: string,
 		moduleNameParts: Array<string>,
@@ -691,7 +699,7 @@ export default class Resolver {
 		return this.resolveManifest(query, manifestDef, moduleNameParts);
 	}
 
-	resolveManifest(
+	private resolveManifest(
 		query: ResolverLocalQuery,
 		manifestDef: undefined | ManifestDefinition,
 		moduleNameParts: Array<string>,
@@ -743,7 +751,7 @@ export default class Resolver {
 		);
 	}
 
-	resolveMock(
+	private resolveMock(
 		query: ResolverLocalQuery,
 		project: ProjectDefinition | undefined,
 		parentDirectories: Array<AbsoluteFilePath>,
@@ -776,7 +784,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	splitModuleName(path: UnknownFilePath): [string, Array<string>] {
+	private splitModuleName(path: UnknownFilePath): [string, Array<string>] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();
@@ -789,7 +797,7 @@ export default class Resolver {
 		return [moduleName, moduleNameParts];
 	}
 
-	resolveModule(query: ResolverLocalQuery): ResolverQueryResponse {
+	private resolveModule(query: ResolverLocalQuery): ResolverQueryResponse {
 		const {origin, source} = query;
 
 		// Get project for the origin

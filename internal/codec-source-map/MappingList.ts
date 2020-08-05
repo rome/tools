@@ -50,16 +50,16 @@ export default class MappingList {
 		};
 	}
 
-	array: Array<Mapping>;
-	sorted: boolean;
+	private array: Array<Mapping>;
+	private sorted: boolean;
 
 	// Serves as infimum
-	last: Mapping;
+	private last: Mapping;
 
 	/**
    * Add the given source mapping.
    */
-	add(mapping: Mapping) {
+	public add(mapping: Mapping) {
 		if (generatedPositionAfter(this.last, mapping)) {
 			this.last = mapping;
 			this.array.push(mapping);
@@ -78,8 +78,8 @@ export default class MappingList {
    * an immutable borrow. If you want to take ownership, you must make your own
    * copy.
    */
-	toArray(): Array<Mapping> {
-		if (this.sorted === false) {
+	public toArray(): Array<Mapping> {
+		if (!this.sorted) {
 			this.array.sort(compareByGeneratedPositionsInflated);
 			this.sorted = true;
 		}

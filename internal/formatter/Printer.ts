@@ -47,7 +47,7 @@ class Box<T> {
 		this.value = value;
 	}
 
-	value: T;
+	public value: T;
 }
 
 function forkState(parent: State, callback: (state: State) => void): void {

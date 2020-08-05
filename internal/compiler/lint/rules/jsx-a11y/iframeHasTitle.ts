@@ -22,10 +22,7 @@ function validTitle(node: JSXElement) {
 					expression.type !== "JSBooleanLiteral"
 				);
 			} else if (attr.value.type === "JSStringLiteral") {
-				if (!attr.value.value) {
-					return false;
-				}
-				return true;
+				return attr.value.value !== "";
 			}
 			return false;
 		}

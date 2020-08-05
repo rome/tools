@@ -45,14 +45,14 @@ export class ModuleSignatureManager {
 		this.exportNamesToTypeId = new Map();
 	}
 
-	filename: string;
-	getModuleSignature: GetModuleSignature;
-	topScope: Scope;
-	exportNamesToTypeId: Map<string, string>;
-	openTypes: Map<string, OpenT>;
-	graph: ModuleSignature;
+	public filename: string;
+	private getModuleSignature: GetModuleSignature;
+	private topScope: Scope;
+	private exportNamesToTypeId: Map<string, string>;
+	private openTypes: Map<string, OpenT>;
+	private graph: ModuleSignature;
 
-	addAll(manager: ModuleSignatureManager) {
+	private addAll(manager: ModuleSignatureManager) {
 		for (const [name, id] of manager.exportNamesToTypeId) {
 			if (name === "default") {
 				// ignore `default`
@@ -69,7 +69,7 @@ export class ModuleSignatureManager {
 		}
 	}
 
-	async init() {
+	public async init() {
 		const {graph, openTypes} = this;
 
 		// Create initial open types for all the nodes in this graph
@@ -165,7 +165,7 @@ export class ModuleSignatureManager {
 		}
 	}
 
-	link(importedName: string, type: ImportT): void {
+	public link(importedName: string, type: ImportT): void {
 		const graph = this.graph;
 
 		// Get type id for this export
@@ -221,33 +221,33 @@ export default class Evaluator {
 		this.evaluatingType = undefined;
 	}
 
-	evaluatingType: undefined | string;
-	filename: string;
-	nodeToType: Map<AnyNode, T>;
-	hub: Hub;
-	intrinsics: Intrinsics;
-	exports: Array<Export>;
-	imports: Array<{
+	public evaluatingType: undefined | string;
+	public filename: string;
+	private nodeToType: Map<AnyNode, T>;
+	public hub: Hub;
+	public intrinsics: Intrinsics;
+	public exports: Array<Export>;
+	public imports: Array<{
 		relative: string;
 		importedName: undefined | string;
 		source: string;
 		type: ImportT;
 	}>;
-	topScope: Scope;
-	graph: Graph<T>;
+	private topScope: Scope;
+	public graph: Graph<T>;
 
-	initModuleSignature(
+	public initModuleSignature(
 		graph: ModuleSignature,
 		getModuleSignature: GetModuleSignature,
 	): ModuleSignatureManager {
 		return new ModuleSignatureManager(graph, getModuleSignature, this.topScope);
 	}
 
-	seed(ast: AnyNode) {
+	public seed(ast: AnyNode) {
 		return this.evaluate(ast, this.topScope);
 	}
 
-	evaluate(node: undefined | AnyNode, scope: Scope): T {
+	public evaluate(node: undefined | AnyNode, scope: Scope): T {
 		if (node === undefined) {
 			throw new Error("Expected node but received undefined");
 		}
@@ -268,7 +268,7 @@ export default class Evaluator {
 		}
 	}
 
-	getTypeFromEvaluatedNode(node: AnyNode): T {
+	public getTypeFromEvaluatedNode(node: AnyNode): T {
 		const type = this.nodeToType.get(node);
 		if (type === undefined) {
 			throw new Error(
@@ -279,7 +279,7 @@ export default class Evaluator {
 		}
 	}
 
-	addExport(name: string, type: T) {
+	public addExport(name: string, type: T) {
 		this.exports.push({
 			type: "local",
 			name,
@@ -287,14 +287,14 @@ export default class Evaluator {
 		});
 	}
 
-	addExportAll(source: string) {
+	public addExportAll(source: string) {
 		this.exports.push({
 			type: "all",
 			source,
 		});
 	}
 
-	addImport(
+	public addImport(
 		t: ImportT,
 		opts: {
 			importedName: undefined | string;

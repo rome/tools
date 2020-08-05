@@ -38,14 +38,14 @@ export default class Logger extends Reporter {
 		);
 	}
 
-	conditionalStream: ReporterConditionalStream;
-	loggerType: string;
+	private conditionalStream: ReporterConditionalStream;
+	private loggerType: string;
 
-	updateStream() {
+	public updateStream() {
 		this.conditionalStream.update();
 	}
 
-	getMessagePrefix(): AnyMarkup {
+	protected getMessagePrefix(): AnyMarkup {
 		const inner = `${this.loggerType} ${process.pid}`;
 		const timestamp = new Date().toISOString();
 		return markup`<dim>[${timestamp}] [${inner}]</dim> `;

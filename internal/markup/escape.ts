@@ -181,7 +181,6 @@ export function readMarkup(item: AnyMarkup): string {
 			out += readMarkup(part);
 		} else {
 			out += escapeMarkup(String(part));
-			continue;
 		}
 	}
 	readCache.set(item, out);

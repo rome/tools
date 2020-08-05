@@ -9,7 +9,7 @@ import {test} from "rome";
 import CompilerContext from "./lib/CompilerContext";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
-import {signals} from ".";
+import * as signals from "./signals";
 import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
 
 function extractSuppressionsFromSource(

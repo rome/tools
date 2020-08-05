@@ -10,7 +10,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {JSONFileReference} from "../common/types/files";
+import {BundlerConfig, JSONFileReference, LAG_INTERVAL} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticDescription,
@@ -32,7 +32,7 @@ import {
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions} from "./fs/Resolver";
-import {BundlerConfig} from "../common/types/bundler";
+
 import ServerBridge, {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -90,7 +90,6 @@ import {
 	getFilesFromArgs,
 	watchFilesFromArgs,
 } from "./fs/glob";
-import {LAG_INTERVAL} from "../common/constants";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -123,7 +122,7 @@ export class ServerRequestInvalid extends DiagnosticsError {
 		this.showHelp = showHelp;
 	}
 
-	showHelp: boolean;
+	public showHelp: boolean;
 }
 
 function hash(val: JSONObject): string {
@@ -165,38 +164,41 @@ export default class ServerRequest {
 
 		this.markerEvent = new Event({
 			name: "ServerRequest.marker",
-			onError: this.server.onFatalErrorBound,
+		});
+		this.cancelEvent = new Event({
+			name: "ServerRequest.cancel",
 		});
 		this.endEvent = new Event({
 			name: "ServerRequest.end",
-			onError: this.server.onFatalErrorBound,
 			serial: true,
 		});
 
 		this.client.requestsInFlight.add(this);
 	}
 
-	id: number;
-	start: number;
-	client: ServerClient;
-	query: ServerQueryRequest;
-	server: Server;
-	bridge: ServerBridge;
-	reporter: Reporter;
-	markerEvent: Event<ServerMarker, void>;
-	endEvent: Event<ServerQueryResponse, void>;
-	normalizedCommandFlags: NormalizedCommandFlags;
-	markers: Array<ServerMarker>;
-	cancelled: boolean;
-	toredown: boolean;
-	files: AbsoluteFilePathMap<RecoverySaveFile>;
-	logger: ReporterNamespace;
+	public id: number;
+	public query: ServerQueryRequest;
+	public bridge: ServerBridge;
+	public client: ServerClient;
+	public logger: ReporterNamespace;
+	public server: Server;
+	public reporter: Reporter;
+	public endEvent: Event<ServerQueryResponse, void>;
+	public cancelEvent: Event<void, void>;
+	public markerEvent: Event<ServerMarker, void>;
 
-	queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
+	private start: number;
+	private normalizedCommandFlags: NormalizedCommandFlags;
+	private markers: Array<ServerMarker>;
+	private cancelled: boolean;
+	private toredown: boolean;
+	private files: AbsoluteFilePathMap<RecoverySaveFile>;
+
+	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
 		this.files.set(path, opts);
 	}
 
-	async flushFiles(): Promise<number> {
+	public async flushFiles(): Promise<number> {
 		const {files} = this;
 		const {server} = this;
 		const {logger} = server;
@@ -265,7 +267,7 @@ export default class ServerRequest {
 		return totalFiles;
 	}
 
-	updateRequestFlags(flags: Partial<ClientRequestFlags>) {
+	public updateRequestFlags(flags: Partial<ClientRequestFlags>) {
 		this.query = {
 			...this.query,
 			requestFlags: {
@@ -275,7 +277,7 @@ export default class ServerRequest {
 		};
 	}
 
-	async init() {
+	public async init() {
 		if (this.query.requestFlags.collectMarkers) {
 			this.markerEvent.subscribe((marker) => {
 				this.markers.push(marker);
@@ -285,13 +287,14 @@ export default class ServerRequest {
 		await this.server.handleRequestStart(this);
 	}
 
-	checkCancelled() {
+	public checkCancelled() {
 		if (this.cancelled) {
 			throw new ServerRequestCancelled();
 		}
 	}
 
-	async cancel(): Promise<void> {
+	public async cancel(): Promise<void> {
+		await this.cancelEvent.callOptional();
 		this.cancelled = true;
 		await this.teardown({
 			type: "CANCELLED",
@@ -299,7 +302,7 @@ export default class ServerRequest {
 		});
 	}
 
-	async teardown(
+	public async teardown(
 		res: ServerQueryResponse,
 	): Promise<undefined | ServerQueryResponse> {
 		if (this.toredown) {
@@ -379,15 +382,15 @@ export default class ServerRequest {
 
 		await this.endEvent.callOptional(res);
 		this.reporter.teardown();
-		this.server.handleRequestEnd(this);
+		await this.server.handleRequestEnd(this);
 		return res;
 	}
 
-	setNormalizedCommandFlags(normalized: NormalizedCommandFlags) {
+	public setNormalizedCommandFlags(normalized: NormalizedCommandFlags) {
 		this.normalizedCommandFlags = normalized;
 	}
 
-	async resolveEntryAssertPathArg(
+	public async resolveEntryAssertPathArg(
 		index: number,
 		max: boolean = true,
 	): Promise<AbsoluteFilePath> {
@@ -403,7 +406,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async assertClientCwdProject(): Promise<ProjectDefinition> {
+	public async assertClientCwdProject(): Promise<ProjectDefinition> {
 		const location = this.getDiagnosticLocationForClientCwd();
 		return this.server.projectManager.assertProject(
 			this.client.flags.cwd,
@@ -411,19 +414,19 @@ export default class ServerRequest {
 		);
 	}
 
-	async getVCSClient(): Promise<VCSClient> {
+	public async getVCSClient(): Promise<VCSClient> {
 		return this.server.projectManager.getVCSClient(
 			await this.assertClientCwdProject(),
 		);
 	}
 
-	async maybeGetVCSClient(): Promise<undefined | VCSClient> {
+	public async maybeGetVCSClient(): Promise<undefined | VCSClient> {
 		return this.server.projectManager.maybeGetVCSClient(
 			await this.assertClientCwdProject(),
 		);
 	}
 
-	async printDiagnostics(
+	public async printDiagnostics(
 		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
 			diagnostics: Diagnostics;
 			suppressions?: DiagnosticSuppressions;
@@ -444,7 +447,7 @@ export default class ServerRequest {
 		});
 	}
 
-	createDiagnosticsProcessor(
+	public createDiagnosticsProcessor(
 		opts: DiagnosticsProcessorOptions = {},
 	): DiagnosticsProcessor {
 		return new DiagnosticsProcessor({
@@ -453,7 +456,7 @@ export default class ServerRequest {
 		});
 	}
 
-	createDiagnosticsPrinter(
+	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
 	): DiagnosticsPrinter {
 		processor.unshiftOrigin({
@@ -471,7 +474,7 @@ export default class ServerRequest {
 		});
 	}
 
-	getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
+	private getDiagnosticsPrinterFlags(): DiagnosticsPrinterFlags {
 		const {requestFlags} = this.query;
 		return {
 			auxiliaryDiagnosticFormat: requestFlags.auxiliaryDiagnosticFormat,
@@ -484,7 +487,7 @@ export default class ServerRequest {
 		};
 	}
 
-	expectArgumentLength(min: number, max: number = min) {
+	public expectArgumentLength(min: number, max: number = min) {
 		const {args} = this.query;
 		let message;
 
@@ -521,7 +524,7 @@ export default class ServerRequest {
 		}
 	}
 
-	throwDiagnosticFlagError(
+	public throwDiagnosticFlagError(
 		{
 			description,
 			target = "none",
@@ -559,7 +562,7 @@ export default class ServerRequest {
 		);
 	}
 
-	getDiagnosticLocationForClientCwd(): DiagnosticLocation {
+	public getDiagnosticLocationForClientCwd(): DiagnosticLocation {
 		const cwd = this.client.flags.cwd.join();
 		return {
 			sourceText: cwd,
@@ -575,7 +578,7 @@ export default class ServerRequest {
 		};
 	}
 
-	getDiagnosticLocationFromFlags(
+	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
 	): RequiredProps<DiagnosticLocation, "sourceText"> {
 		const {query} = this;
@@ -614,7 +617,7 @@ export default class ServerRequest {
 		);
 	}
 
-	getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, "origin"> {
+	public getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, "origin"> {
 		const {requestFlags} = this.query;
 		return {
 			origin: this.client.flags.cwd,
@@ -624,7 +627,7 @@ export default class ServerRequest {
 		};
 	}
 
-	getBundlerConfigFromFlags(
+	public getBundlerConfigFromFlags(
 		resolverOpts: Partial<ResolverOptions> = {},
 	): BundlerConfig {
 		return {
@@ -634,7 +637,7 @@ export default class ServerRequest {
 		};
 	}
 
-	normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
+	private normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
 		const {projectManager} = this.server;
 
 		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
@@ -646,7 +649,7 @@ export default class ServerRequest {
 		};
 	}
 
-	startMarker(
+	private startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
 		this.logger.info(markup`Started marker: ${opts.label}`);
@@ -656,7 +659,7 @@ export default class ServerRequest {
 		};
 	}
 
-	endMarker(startMarker: ServerUnfinishedMarker): ServerMarker {
+	private endMarker(startMarker: ServerUnfinishedMarker): ServerMarker {
 		const endMarker: ServerMarker = {
 			...startMarker,
 			end: Date.now(),
@@ -666,7 +669,7 @@ export default class ServerRequest {
 		return endMarker;
 	}
 
-	async wrapRequestDiagnostic<T>(
+	private async wrapRequestDiagnostic<T>(
 		method: string,
 		path: AbsoluteFilePath,
 		factory: (bridge: WorkerBridge, ref: JSONFileReference) => Promise<T>,
@@ -743,7 +746,7 @@ export default class ServerRequest {
 		}
 	}
 
-	async requestWorkerUpdateBuffer(
+	public async requestWorkerUpdateBuffer(
 		path: AbsoluteFilePath,
 		content: string,
 	): Promise<void> {
@@ -761,7 +764,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerPatchBuffer(
+	public async requestWorkerPatchBuffer(
 		path: AbsoluteFilePath,
 		patches: Array<WorkerBufferPatch>,
 	): Promise<string> {
@@ -780,7 +783,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
+	public async requestWorkerClearBuffer(path: AbsoluteFilePath): Promise<void> {
 		this.checkCancelled();
 
 		await this.wrapRequestDiagnostic(
@@ -795,7 +798,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerParse(
+	public async requestWorkerParse(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,
 	): Promise<AnyRoot> {
@@ -808,7 +811,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerUpdateInlineSnapshots(
+	public async requestWorkerUpdateInlineSnapshots(
 		path: AbsoluteFilePath,
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
@@ -824,7 +827,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerLint(
+	public async requestWorkerLint(
 		path: AbsoluteFilePath,
 		optionsWithoutModSigs: Omit<WorkerLintOptions, "prefetchedModuleSignatures">,
 	): Promise<WorkerLintResult> {
@@ -869,7 +872,7 @@ export default class ServerRequest {
 		return res;
 	}
 
-	async requestWorkerFormat(
+	public async requestWorkerFormat(
 		path: AbsoluteFilePath,
 		options: FormatterOptions,
 		parseOptions: WorkerParseOptions,
@@ -883,7 +886,7 @@ export default class ServerRequest {
 		);
 	}
 
-	async requestWorkerCompile(
+	public async requestWorkerCompile(
 		path: AbsoluteFilePath,
 		stage: TransformStageName,
 		options: WorkerCompilerOptions,
@@ -941,7 +944,7 @@ export default class ServerRequest {
 		return res;
 	}
 
-	async requestWorkerAnalyzeDependencies(
+	public async requestWorkerAnalyzeDependencies(
 		path: AbsoluteFilePath,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerAnalyzeDependencyResult> {
@@ -975,7 +978,7 @@ export default class ServerRequest {
 		};
 	}
 
-	async requestWorkerModuleSignature(
+	public async requestWorkerModuleSignature(
 		path: AbsoluteFilePath,
 		parseOptions: WorkerParseOptions,
 	): Promise<ModuleSignature> {
@@ -1002,7 +1005,7 @@ export default class ServerRequest {
 		return res;
 	}
 
-	async maybePrefetchModuleSignatures(
+	private async maybePrefetchModuleSignatures(
 		path: AbsoluteFilePath,
 	): Promise<PrefetchedModuleSignatures> {
 		this.checkCancelled();
@@ -1011,7 +1014,7 @@ export default class ServerRequest {
 
 		const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
 		const project = await projectManager.assertProject(path);
-		if (project.config.typeCheck.enabled === false) {
+		if (!project.config.typeCheck.enabled) {
 			return prefetchedModuleSignatures;
 		}
 
@@ -1086,14 +1089,14 @@ export default class ServerRequest {
 		return prefetchedModuleSignatures;
 	}
 
-	watchFilesFromArgs(
+	public watchFilesFromArgs(
 		opts: GetFilesOptions,
 		callback: WatchFilesCallback,
 	): Promise<EventSubscription> {
 		return watchFilesFromArgs(this, opts, callback);
 	}
 
-	getFilesFromArgs(
+	public getFilesFromArgs(
 		opts?: GetFilesOptions,
 		flushCallback?: GetFilesFlushCallback,
 	): Promise<AbsoluteFilePathSet> {

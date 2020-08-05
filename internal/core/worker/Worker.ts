@@ -20,7 +20,7 @@ import {Profiler} from "@internal/v8";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {hydrateJSONProjectConfig} from "@internal/project";
-import {Diagnostics, DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -119,18 +119,19 @@ export default class Worker {
 		}
 	}
 
-	userConfig: UserConfig;
-	bridge: WorkerBridge;
-	api: WorkerAPI;
-	logger: Logger;
-	virtualModules: VirtualModules;
-	partialManifests: Map<number, WorkerPartialManifest>;
-	projects: Map<number, TransformProjectDefinition>;
-	astCache: AbsoluteFilePathMap<ParseResult>;
-	moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
-	buffers: AbsoluteFilePathMap<string>;
+	public userConfig: UserConfig;
+	public api: WorkerAPI;
+	public logger: Logger;
 
-	getPartialManifest(id: number): WorkerPartialManifest {
+	private bridge: WorkerBridge;
+	private virtualModules: VirtualModules;
+	private partialManifests: Map<number, WorkerPartialManifest>;
+	private projects: Map<number, TransformProjectDefinition>;
+	private astCache: AbsoluteFilePathMap<ParseResult>;
+	private moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
+	private buffers: AbsoluteFilePathMap<string>;
+
+	private getPartialManifest(id: number): WorkerPartialManifest {
 		const manifest = this.partialManifests.get(id);
 		if (manifest === undefined) {
 			throw new Error(`Requested manifest ${id} but we don't have it`);
@@ -138,7 +139,7 @@ export default class Worker {
 		return manifest;
 	}
 
-	end() {
+	private end() {
 		// This will only actually be called when a Worker is created inside of the Server
 		// Clear internal maps for memory, in case the Worker instance sticks around
 		this.astCache.clear();
@@ -146,7 +147,7 @@ export default class Worker {
 		this.moduleSignatureCache.clear();
 	}
 
-	async init() {
+	public async init() {
 		this.virtualModules.init();
 
 		const bridge: WorkerBridge = this.bridge;
@@ -272,26 +273,26 @@ export default class Worker {
 		});
 	}
 
-	clearBuffer({real}: FileReference) {
+	public clearBuffer({real}: FileReference) {
 		this.logger.info(markup`Cleared ${real} buffer`);
 		this.buffers.delete(real);
 		this.evict(real);
 	}
 
-	updateBuffer(ref: FileReference, content: string) {
+	public updateBuffer(ref: FileReference, content: string) {
 		this.logger.info(markup`Updated ${ref.real} buffer`);
 		this.buffers.set(ref.real, content);
 		this.evict(ref.real);
 	}
 
-	getFileBuffers() {
+	private getFileBuffers() {
 		return Array.from(
 			this.buffers,
 			([path, content]) => ({filename: path.join(), content}),
 		);
 	}
 
-	patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
+	private patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
 		this.logger.info(markup`Patched ${ref.real} buffer`);
 		let buffer = this.buffers.get(ref.real);
 		if (buffer === undefined) {
@@ -311,7 +312,7 @@ export default class Worker {
 		return buffer;
 	}
 
-	async getTypeCheckProvider(
+	public async getTypeCheckProvider(
 		projectId: number,
 		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
@@ -383,11 +384,7 @@ export default class Worker {
 		};
 	}
 
-	populateDiagnosticsMtime(diagnostics: Diagnostics): Diagnostics {
-		return diagnostics;
-	}
-
-	async readFile(path: AbsoluteFilePath): Promise<string> {
+	public async readFile(path: AbsoluteFilePath): Promise<string> {
 		try {
 			const buffer = this.buffers.get(path);
 			if (buffer !== undefined) {
@@ -409,7 +406,7 @@ export default class Worker {
 		}
 	}
 
-	async parse(
+	public async parse(
 		ref: FileReference,
 		options: WorkerParseOptions,
 	): Promise<ParseResult> {
@@ -531,7 +528,7 @@ export default class Worker {
 	// Get the file mtime to warn about outdated diagnostics
 	// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
 	// explicitly do not match the file system
-	async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
+	public async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
 		if (this.buffers.has(path) || this.virtualModules.isVirtualPath(path)) {
 			return undefined;
 		} else {
@@ -540,7 +537,7 @@ export default class Worker {
 		}
 	}
 
-	getProject(id: number): TransformProjectDefinition {
+	public getProject(id: number): TransformProjectDefinition {
 		const config = this.projects.get(id);
 		if (config === undefined) {
 			throw new Error(
@@ -550,13 +547,13 @@ export default class Worker {
 		return config;
 	}
 
-	evict(path: AbsoluteFilePath) {
+	private evict(path: AbsoluteFilePath) {
 		this.logger.info(markup`Evicted ${path}`);
 		this.astCache.delete(path);
 		this.moduleSignatureCache.delete(path);
 	}
 
-	updateManifests(manifests: WorkerPartialManifests) {
+	private updateManifests(manifests: WorkerPartialManifests) {
 		for (const {id, manifest} of manifests) {
 			if (manifest === undefined) {
 				this.partialManifests.delete(id);
@@ -566,7 +563,7 @@ export default class Worker {
 		}
 	}
 
-	updateProjects(projects: WorkerProjects) {
+	public updateProjects(projects: WorkerProjects) {
 		for (const {config, directory, id} of projects) {
 			if (config === undefined) {
 				this.projects.delete(id);

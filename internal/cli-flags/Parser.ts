@@ -133,25 +133,25 @@ export default class Parser<T> {
 		this.currentCommand = undefined;
 	}
 
-	reporter: Reporter;
-	opts: ParserOptions<T>;
-	incorrectCaseFlags: Set<string>;
-	shorthandFlags: Set<string>;
-	flags: Map<string, FlagValue>;
-	defaultFlags: Map<string, unknown>;
-	declaredFlags: Map<string, ArgDeclaration>;
-	flagToArgIndex: Map<string, number>;
-	flagToArgOffset: number;
-	currentCommand: undefined | string;
-	ranCommand: undefined | AnyCommandOptions;
-	commands: Map<string, AnyCommandOptions>;
-	args: Array<string>;
+	private reporter: Reporter;
+	private opts: ParserOptions<T>;
+	private incorrectCaseFlags: Set<string>;
+	private shorthandFlags: Set<string>;
+	private flags: Map<string, FlagValue>;
+	private defaultFlags: Map<string, unknown>;
+	private declaredFlags: Map<string, ArgDeclaration>;
+	private flagToArgIndex: Map<string, number>;
+	private flagToArgOffset: number;
+	private currentCommand: undefined | string;
+	private ranCommand: undefined | AnyCommandOptions;
+	private commands: Map<string, AnyCommandOptions>;
+	public args: Array<string>;
 
-	looksLikeFlag(flag: undefined | string): boolean {
+	private looksLikeFlag(flag: undefined | string): boolean {
 		return flag?.[0] === "-";
 	}
 
-	toCamelCase(name: string): string {
+	private toCamelCase(name: string): string {
 		const camelName = toCamelCase(name);
 
 		// Don't allow passing in straight camelcased names
@@ -162,7 +162,7 @@ export default class Parser<T> {
 		return camelName;
 	}
 
-	setFlag(key: string, value: string | boolean) {
+	private setFlag(key: string, value: string | boolean) {
 		let newValue: FlagValue = value;
 		const existing = this.flags.get(key);
 		if (existing !== undefined) {
@@ -175,7 +175,7 @@ export default class Parser<T> {
 		this.flags.set(key, newValue);
 	}
 
-	consumeRawArgs(rawArgs: Array<string>) {
+	private consumeRawArgs(rawArgs: Array<string>) {
 		while (rawArgs.length > 0) {
 			const arg: string = String(rawArgs.shift());
 
@@ -225,7 +225,7 @@ export default class Parser<T> {
 		}
 	}
 
-	getFlagsConsumer(): FlagsConsumer {
+	private getFlagsConsumer(): FlagsConsumer {
 		const defaultFlags: Dict<FlagValue> = {};
 
 		const flags: Dict<FlagValue> = {};
@@ -324,11 +324,7 @@ export default class Parser<T> {
 		return {flags: consumer, defaultFlags, rawFlags: flags};
 	}
 
-	hasArg(name: string): boolean {
-		return this.flags.has(name) && this.flags.get(name) !== undefined;
-	}
-
-	declareArgument(decl: ArgDeclaration) {
+	private declareArgument(decl: ArgDeclaration) {
 		// Commands may have colliding flags, this is only a problem in help mode, so make it unique
 		const key =
 			decl.command === undefined ? decl.name : `${decl.command}.${decl.name}`;
@@ -343,11 +339,11 @@ export default class Parser<T> {
 		this.defaultFlags.set(key, decl.definition.default);
 	}
 
-	getInterface(): ParserInterface<T> {
+	public getInterface(): ParserInterface<T> {
 		return new ParserInterface(this);
 	}
 
-	async maybeDefineCommandFlags(
+	private async maybeDefineCommandFlags(
 		command: AnyCommandOptions,
 		consumer: Consumer,
 	): Promise<undefined | JSONObject> {
@@ -364,7 +360,10 @@ export default class Parser<T> {
 		return await this.defineCommandFlags(command, consumer);
 	}
 
-	checkBadFlags(consumer: Consumer, definedCommand: undefined | DefinedCommand) {
+	private checkBadFlags(
+		consumer: Consumer,
+		definedCommand: undefined | DefinedCommand,
+	) {
 		// Ignore flags from command and root parser options
 		const ignoreFlags: Array<string> = [
 			...((definedCommand !== undefined && definedCommand.command.ignoreFlags) || []),
@@ -391,7 +390,7 @@ export default class Parser<T> {
 		consumer.enforceUsedProperties("flag", false);
 	}
 
-	async writeShellCompletions(
+	private async writeShellCompletions(
 		shell: SupportedCompletionShells,
 		directory: AbsoluteFilePath = HOME_PATH,
 	) {
@@ -473,13 +472,13 @@ export default class Parser<T> {
 		this.exit(0);
 	}
 
-	async logShellCompletions(shell: SupportedCompletionShells) {
+	private async logShellCompletions(shell: SupportedCompletionShells) {
 		const res = await this.generateShellCompletions(shell);
 		this.reporter.logRaw(res);
 		this.exit(0);
 	}
 
-	async init(): Promise<T> {
+	public async init(): Promise<T> {
 		const flagsConsumer = this.getFlagsConsumer();
 		const {flags} = flagsConsumer;
 
@@ -585,7 +584,7 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	buildOptionsHelp(keys: Array<string>): Array<AnyMarkups> {
+	private buildOptionsHelp(keys: Array<string>): Array<AnyMarkups> {
 		const optionOutput: Array<{
 			argName: string;
 			arg: StaticMarkup;
@@ -670,7 +669,7 @@ export default class Parser<T> {
 		]);
 	}
 
-	async showUsageHelp(
+	private async showUsageHelp(
 		description?: StaticMarkup,
 		usage: string = "[flags]",
 		prefix?: string,
@@ -698,7 +697,7 @@ export default class Parser<T> {
 		);
 	}
 
-	async showFocusedCommandHelp(command: AnyCommandOptions) {
+	private async showFocusedCommandHelp(command: AnyCommandOptions) {
 		const {reporter} = this;
 		const {name, usage, description, examples} = command;
 
@@ -733,7 +732,7 @@ export default class Parser<T> {
 		);
 	}
 
-	async showGlobalFlags() {
+	private async showGlobalFlags() {
 		const {reporter} = this;
 		await reporter.section(
 			markup`Global Flags`,
@@ -751,7 +750,7 @@ export default class Parser<T> {
 		);
 	}
 
-	async generateShellCompletions(
+	private async generateShellCompletions(
 		shell: SupportedCompletionShells,
 	): Promise<string> {
 		// Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
@@ -775,7 +774,7 @@ export default class Parser<T> {
 		}
 	}
 
-	genFishCompletions(prg: string): string {
+	private genFishCompletions(prg: string): string {
 		let script = "";
 		const scriptPre = `complete -c ${prg}`;
 
@@ -799,7 +798,7 @@ export default class Parser<T> {
 		return script;
 	}
 
-	genBashCompletions(prg: string): string {
+	private genBashCompletions(prg: string): string {
 		let romeCmds = "";
 		let commandFuncs = "";
 		let globalFlags = "";
@@ -895,7 +894,9 @@ export default class Parser<T> {
     `;
 	}
 
-	async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
+	public async showHelp(
+		command: undefined | AnyCommandOptions = this.ranCommand,
+	) {
 		if (command !== undefined) {
 			await this.showFocusedCommandHelp(command);
 			return;
@@ -973,7 +974,7 @@ export default class Parser<T> {
 		await this.showHelpExamples(examples);
 	}
 
-	async showHelpExamples(examples?: Examples, prefix?: string) {
+	private async showHelpExamples(examples?: Examples, prefix?: string) {
 		const {programName} = this.opts;
 		const {reporter} = this;
 
@@ -1006,7 +1007,7 @@ export default class Parser<T> {
 		);
 	}
 
-	commandRequired(
+	private commandRequired(
 		foundCommand: boolean,
 		{defaultFlags, rawFlags}: FlagsConsumer,
 	) {
@@ -1082,7 +1083,7 @@ export default class Parser<T> {
 		throw new DiagnosticsError("Unknown command", [diag]);
 	}
 
-	getSerializeOptions(): Pick<
+	private getSerializeOptions(): Pick<
 		SerializeCLIOptions,
 		| "programName"
 		| "commandName"
@@ -1101,7 +1102,7 @@ export default class Parser<T> {
 		};
 	}
 
-	addCommand(opts: AnyCommandOptions) {
+	public addCommand(opts: AnyCommandOptions) {
 		if (this.currentCommand !== undefined) {
 			throw new Error("Nested commands aren't allowed");
 		}
@@ -1109,7 +1110,7 @@ export default class Parser<T> {
 		this.commands.set(opts.name, opts);
 	}
 
-	async defineCommandFlags(
+	private async defineCommandFlags(
 		command: AnyCommandOptions,
 		consumer: Consumer,
 	): Promise<JSONObject> {
@@ -1125,7 +1126,7 @@ export default class Parser<T> {
 		return flags;
 	}
 
-	exit(code: number) {
+	private exit(code: number) {
 		if (!this.opts.noProcessExit) {
 			process.exit(code);
 		}
@@ -1137,21 +1138,21 @@ export class ParserInterface<T> {
 		this.parser = parser;
 	}
 
-	parser: Parser<T>;
+	private parser: Parser<T>;
 
-	init(): Promise<T> {
+	public init(): Promise<T> {
 		return this.parser.init();
 	}
 
-	showHelp(): Promise<void> {
+	public showHelp(): Promise<void> {
 		return this.parser.showHelp();
 	}
 
-	getArgs(): Array<string> {
+	public getArgs(): Array<string> {
 		return this.parser.args;
 	}
 
-	command(opts: AnyCommandOptions) {
+	public command(opts: AnyCommandOptions) {
 		this.parser.addCommand(opts);
 	}
 }

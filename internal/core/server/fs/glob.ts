@@ -522,11 +522,11 @@ export class Globber {
 		this.ignoresByProject = new Map();
 	}
 
-	ignoresByProject: Map<ProjectDefinition, PathPatterns>;
-	server: Server;
-	opts: GlobOptions;
+	private ignoresByProject: Map<ProjectDefinition, PathPatterns>;
+	private server: Server;
+	private opts: GlobOptions;
 
-	getIgnore(path: AbsoluteFilePath): PathPatterns {
+	private getIgnore(path: AbsoluteFilePath): PathPatterns {
 		const {configCategory, overrideIgnore} = this.opts;
 		const project = this.server.projectManager.findLoadedProject(path);
 
@@ -548,7 +548,7 @@ export class Globber {
 		}
 	}
 
-	glob(cwd: AbsoluteFilePath): AbsoluteFilePathSet {
+	public glob(cwd: AbsoluteFilePath): AbsoluteFilePathSet {
 		const {extensions, test} = this.opts;
 		const {server} = this;
 		const {memoryFs} = server;
@@ -568,7 +568,7 @@ export class Globber {
 			}
 
 			// Add if a matching file
-			if (memoryFs.files.has(path) && ignoreMatched === "NO_MATCH") {
+			if (memoryFs.isFile(path) && ignoreMatched === "NO_MATCH") {
 				if (test !== undefined && !test(path)) {
 					continue;
 				}
@@ -593,10 +593,8 @@ export class Globber {
 
 			// Crawl if we're a directory
 			// NOTE: We still continue crawling on implicit matches
-			const listing = memoryFs.directoryListings.get(path);
-			if (listing !== undefined) {
-				queue = queue.concat(Array.from(listing.values()));
-				continue;
+			if (memoryFs.isDirectory(path)) {
+				queue = queue.concat(Array.from(memoryFs.readdir(path)));
 			}
 
 			// TODO maybe throw? not a file or directory, doesn't exist!

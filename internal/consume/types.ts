@@ -14,8 +14,6 @@ import Consumer from "./Consumer";
 import {UnknownFilePath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
-export type ConsumeComments = Array<string>;
-
 export type ConsumeKey = number | string;
 
 export type ConsumePath = Array<ConsumeKey>;

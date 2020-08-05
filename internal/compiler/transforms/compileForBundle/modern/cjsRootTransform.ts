@@ -20,11 +20,11 @@ export default createVisitor({
 			const mappings = new Map();
 
 			// make all variables private
-			for (const [name] of path.scope.bindings) {
+			for (const [name] of path.scope.getOwnBindings()) {
 				mappings.set(name, getPrivateName(name, moduleId));
 			}
 
-			if (scope.hasBinding("exports") === false) {
+			if (!scope.hasBinding("exports")) {
 				mappings.set("exports", getPrefixedNamespace(moduleId));
 			}
 

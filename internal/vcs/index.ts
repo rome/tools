@@ -32,9 +32,9 @@ export class VCSClient {
 		this.root = root;
 	}
 
-	root: AbsoluteFilePath;
+	private root: AbsoluteFilePath;
 
-	async exec(
+	public async exec(
 		command: string,
 		args: Array<string>,
 	): Promise<{
@@ -42,7 +42,14 @@ export class VCSClient {
 		exitCode: number;
 	}> {
 		return new Promise((resolve, reject) => {
-			const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
+			const proc = childProcess.spawn(
+				command,
+				args,
+				{
+					cwd: this.root.join(),
+					timeout: TIMEOUT,
+				},
+			);
 			let stderr = "";
 			let stdout = "";
 
@@ -92,15 +99,15 @@ export class VCSClient {
 		});
 	}
 
-	getDefaultBranch(): Promise<string> {
+	public getDefaultBranch(): Promise<string> {
 		throw new Error("unimplemented");
 	}
 
-	getModifiedFiles(branch: string): Promise<Array<string>> {
+	public getModifiedFiles(branch: string): Promise<Array<string>> {
 		throw new Error("unimplemented");
 	}
 
-	getUncommittedFiles(): Promise<Array<string>> {
+	public getUncommittedFiles(): Promise<Array<string>> {
 		throw new Error("unimplemented");
 	}
 }
@@ -110,7 +117,7 @@ class GitVCSClient extends VCSClient {
 		super(root);
 	}
 
-	async getDefaultBranch(): Promise<string> {
+	public async getDefaultBranch(): Promise<string> {
 		const {exitCode} = await this.exec(
 			"git",
 			["show-ref", "--verify", "--quiet", "refs/heads/main"],
@@ -118,12 +125,12 @@ class GitVCSClient extends VCSClient {
 		return exitCode === 0 ? "main" : "master";
 	}
 
-	async getUncommittedFiles(): Promise<Array<string>> {
+	public async getUncommittedFiles(): Promise<Array<string>> {
 		const {stdout} = await this.exec("git", ["status", "--short"]);
 		return extractFileList(stdout);
 	}
 
-	async getModifiedFiles(branch: string): Promise<Array<string>> {
+	public async getModifiedFiles(branch: string): Promise<Array<string>> {
 		const {stdout} = await this.exec("git", ["diff", "--name-status", branch]);
 		return extractFileList(stdout);
 	}

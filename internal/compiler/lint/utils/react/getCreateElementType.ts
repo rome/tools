@@ -1,5 +1,5 @@
 import {AnyNode} from "@internal/ast";
-import {isCreateElement} from ".";
+import isCreateElement from "./isCreateElement";
 import {tryStaticEvaluation} from "@internal/js-ast-utils";
 import {Scope} from "@internal/compiler";
 

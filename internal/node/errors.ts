@@ -10,7 +10,6 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticsError,
-	createInternalDiagnostic,
 	createSingleDiagnosticError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
@@ -160,14 +159,17 @@ export function convertPossibleNodeErrorToDiagnostic(
 		}
 	}
 
-	const diag: Diagnostic = createInternalDiagnostic({
+	const diag: Diagnostic = {
 		description: {
 			category,
 			message,
 			advice,
 		},
 		location,
-	});
+		tags: {
+			internal: true,
+		},
+	};
 
 	// Create diagnostic error
 	const diagErr: NodeSystemError = createSingleDiagnosticError(diag);

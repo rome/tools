@@ -24,5 +24,5 @@ export default async function testWorker() {
 	const flags: TestWorkerFlags = await parser.init();
 
 	const worker = new TestWorker();
-	worker.init(flags);
+	await worker.init(flags);
 }

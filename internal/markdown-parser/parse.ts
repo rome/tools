@@ -44,7 +44,7 @@ export const createMarkdownParser = createParser((
 			this.ignoreWhitespaceTokens = false;
 		}
 
-		consumeHeading(index: Number0) {
+		private consumeHeading(index: Number0) {
 			const [value, end] = this.readInputFrom(
 				index,
 				(char1) => {
@@ -58,7 +58,7 @@ export const createMarkdownParser = createParser((
 			return this.finishValueToken("HeadingLevel", value.length, end);
 		}
 
-		consumeBlock(blockChar: string, index: Number0, currentChar: string) {
+		private consumeBlock(blockChar: string, index: Number0, currentChar: string) {
 			const nextChar = this.getInputCharOnly(index, 1);
 			const nextNextChar = this.getInputCharOnly(index, 2);
 			if (hasThematicBreak([currentChar, nextChar, nextNextChar].join(""))) {
@@ -74,7 +74,7 @@ export const createMarkdownParser = createParser((
 			return undefined;
 		}
 
-		tokenizeWithState(index: Number0, state: State) {
+		protected tokenizeWithState(index: Number0, state: State) {
 			const char = this.getInputCharOnly(index);
 			const escaped = isEscaped(index, this.input);
 			if (!escaped) {
@@ -204,7 +204,7 @@ export const createMarkdownParser = createParser((
 			};
 		}
 
-		parseHeading(): MarkdownHeadingBlock {
+		private parseHeading(): MarkdownHeadingBlock {
 			const start = this.getPosition();
 			const token = this.getToken();
 			if (token.type === "HeadingLevel") {
@@ -226,7 +226,7 @@ export const createMarkdownParser = createParser((
 			});
 		}
 
-		parseText(): MarkdownText {
+		private parseText(): MarkdownText {
 			const token = this.expectToken("Text");
 			const pos = this.getPosition();
 			return this.finishNode(
@@ -238,7 +238,7 @@ export const createMarkdownParser = createParser((
 			);
 		}
 
-		parseParagraph(isList?: boolean): MarkdownParagraph {
+		private parseParagraph(isList?: boolean): MarkdownParagraph {
 			const start = this.getPosition();
 			const children: Array<AnyMarkdownInlineNode> = [];
 			while (
@@ -292,7 +292,7 @@ export const createMarkdownParser = createParser((
 			);
 		}
 
-		parseBreak(): MarkdownDividerBlock {
+		private parseBreak(): MarkdownDividerBlock {
 			const token = this.expectToken("Break");
 			const start = this.getPosition();
 
@@ -305,7 +305,7 @@ export const createMarkdownParser = createParser((
 			);
 		}
 
-		parseItem(): MarkdownListItem {
+		private parseItem(): MarkdownListItem {
 			const token = this.expectToken("ListItem");
 			const pos = this.getPosition();
 			const children: Array<MarkdownListChildren> = [];
@@ -330,13 +330,13 @@ export const createMarkdownParser = createParser((
 			);
 		}
 
-		parseListBlock(): MarkdownListBlock {
+		private parseListBlock(): MarkdownListBlock {
 			const pos = this.getPosition();
 			const children: Array<MarkdownListItem> = [];
 			const currentToken = this.getToken();
 			let ordered = false;
 			if (currentToken.type === "ListItem") {
-				if (currentToken.numeric === true) {
+				if (currentToken.numeric) {
 					ordered = true;
 				}
 			}
@@ -354,7 +354,7 @@ export const createMarkdownParser = createParser((
 				},
 			);
 		}
-		parseBlock(): undefined | AnyMarkdownNode {
+		private parseBlock(): undefined | AnyMarkdownNode {
 			const token = this.getToken();
 			switch (token.type) {
 				case "NewLine": {
@@ -382,7 +382,7 @@ export const createMarkdownParser = createParser((
 			}
 		}
 
-		parse(): MarkdownRoot {
+		public parse(): MarkdownRoot {
 			const start = this.getPosition();
 			const body: Array<AnyMarkdownNode> = [];
 

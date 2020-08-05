@@ -306,11 +306,6 @@ function Request(
 		responseElem = <Ommission>
 			TODO PRINT DIAGNOSTICS HERE
 		</Ommission>;
-	} else if (response.type === "ERROR") {
-		backgroundColor = "orange";
-		responseElem = <div>
-			TODO PRODUCE ERROR
-		</div>;
 	}
 
 	return <div className={css`

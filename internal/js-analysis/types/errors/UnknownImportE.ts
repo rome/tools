@@ -26,12 +26,12 @@ export default class UnknownImportE extends E {
 		this.source = opts.source;
 	}
 
-	static type = "UnknownImportE";
-	importedName: string;
-	source: string;
-	possibleNames: Array<string>;
+	public static type = "UnknownImportE";
+	private importedName: string;
+	private source: string;
+	private possibleNames: Array<string>;
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		return {
 			description: descriptions.TYPE_CHECK.UNKNOWN_IMPORT(
 				this.importedName,

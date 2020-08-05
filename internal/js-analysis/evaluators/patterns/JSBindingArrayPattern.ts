@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	JSBindingArrayPattern,
-	jsBindingArrayPattern,
-} from "@internal/ast";
+import {AnyNode, jsBindingArrayPattern} from "@internal/ast";
 
 export default function JSBindingArrayPattern(node: AnyNode, scope: Scope) {
 	node = jsBindingArrayPattern.assert(node);

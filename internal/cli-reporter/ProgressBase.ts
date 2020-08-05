@@ -44,28 +44,28 @@ export default class ProgressBase implements ReporterProgress {
 		this.opts = mergeObjects(DEFAULT_PROGRESS_OPTIONS, opts);
 	}
 
-	reporter: Reporter;
-	opts: ReporterProgressOptions;
+	protected reporter: Reporter;
+	protected opts: ReporterProgressOptions;
 
-	current: number;
-	total: undefined | number;
+	protected current: number;
+	protected total: undefined | number;
 
-	text: undefined | AnyMarkup;
-	textIdCounter: number;
-	textIdStack: Array<string>;
-	textStack: AnyMarkups;
-	textIds: Set<string>;
+	protected text: undefined | AnyMarkup;
+	protected textIdCounter: number;
+	protected textIdStack: Array<string>;
+	protected textStack: AnyMarkups;
+	protected textIds: Set<string>;
 
-	title: undefined | string;
+	protected title: undefined | string;
 
-	approximateETA: undefined | number;
-	approximateTotal: boolean;
+	protected approximateETA: undefined | number;
+	protected approximateTotal: boolean;
 
-	pausedStart: undefined | number;
-	pausedElapsed: number;
-	paused: boolean;
+	protected pausedStart: undefined | number;
+	protected pausedElapsed: number;
+	protected paused: boolean;
 
-	setCurrent(current: number) {
+	public setCurrent(current: number) {
 		this.current = current;
 		this.queueRender();
 
@@ -79,7 +79,7 @@ export default class ProgressBase implements ReporterProgress {
 		}
 	}
 
-	getText(): undefined | string {
+	public getText(): undefined | string {
 		const {text} = this;
 		if (text === undefined || isEmptyMarkup(text)) {
 			return undefined;
@@ -88,22 +88,22 @@ export default class ProgressBase implements ReporterProgress {
 		}
 	}
 
-	setText(text: AnyMarkup) {
+	public setText(text: AnyMarkup) {
 		this.text = text;
 		this.queueRender();
 	}
 
-	setApproximateETA(duration: number) {
+	public setApproximateETA(duration: number) {
 		this.approximateETA = duration;
 	}
 
-	setTotal(total: number, approximate: boolean = false) {
+	public setTotal(total: number, approximate: boolean = false) {
 		this.total = total;
 		this.approximateTotal = approximate;
 		this.queueRender();
 	}
 
-	pushText(text: AnyMarkup, id?: string): string {
+	public pushText(text: AnyMarkup, id?: string): string {
 		if (id === undefined) {
 			id = String(this.textIdCounter++);
 		}
@@ -117,7 +117,7 @@ export default class ProgressBase implements ReporterProgress {
 		return id;
 	}
 
-	popText(id: string) {
+	public popText(id: string) {
 		// Find
 		const {textStack, textIdStack} = this;
 		const index = textIdStack.indexOf(id);
@@ -135,11 +135,11 @@ export default class ProgressBase implements ReporterProgress {
 		this.setText(last ?? markup``);
 	}
 
-	tick() {
+	public tick() {
 		this.setCurrent(this.current + 1);
 	}
 
-	resume() {
+	public resume() {
 		if (!this.paused || this.pausedStart === undefined) {
 			return;
 		}
@@ -150,7 +150,7 @@ export default class ProgressBase implements ReporterProgress {
 		this.render();
 	}
 
-	pause() {
+	public pause() {
 		if (this.paused) {
 			return;
 		}
@@ -160,11 +160,11 @@ export default class ProgressBase implements ReporterProgress {
 		this.render();
 	}
 
-	queueRender() {
+	protected queueRender() {
 		this.render();
 	}
 
-	end() {}
+	public end() {}
 
-	render() {}
+	public render() {}
 }

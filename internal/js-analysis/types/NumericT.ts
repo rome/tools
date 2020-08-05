@@ -26,21 +26,21 @@ export default class NumericT extends ObjT {
 		);
 	}
 
-	static type = "NumericT";
+	public static type = "NumericT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new NumericT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`number`;
 	}
 
-	compatibleWith(type: T): boolean {
+	public compatibleWith(type: T): boolean {
 		// a numeric literal can flow into a generic number
 		return type instanceof NumericT || type instanceof NumericLiteralT;
 	}

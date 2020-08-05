@@ -26,21 +26,21 @@ export default class StringT extends ObjT {
 		);
 	}
 
-	static type = "StringT";
+	public static type = "StringT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new StringT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`string`;
 	}
 
-	compatibleWith(type: T) {
+	public compatibleWith(type: T) {
 		// a string literal can flow into a generic string
 		return type instanceof StringT || type instanceof StringLiteralT;
 	}

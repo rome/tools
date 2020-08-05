@@ -29,10 +29,10 @@ export class TokContext {
 		this.override = override;
 	}
 
-	token: string;
-	isExpr: boolean;
-	preserveSpace: boolean;
-	override: undefined | TokContextOverride;
+	public token: string;
+	public isExpr: boolean;
+	public preserveSpace: boolean;
+	public override: undefined | TokContextOverride;
 }
 
 export const types: Dict<TokContext> = {

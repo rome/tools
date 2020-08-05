@@ -374,7 +374,7 @@ function parseJSXElementAt(
 	let closingName: undefined | JSXElement["name"];
 
 	// Parse children for unclosed elements
-	if (openingDef.selfClosing === false) {
+	if (!openingDef.selfClosing) {
 		contents: while (true) {
 			switch (parser.state.tokenType) {
 				case tt.jsxTagStart: {

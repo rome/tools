@@ -15,11 +15,11 @@ export default class SideEffectT extends T {
 		this.actualType = actualType;
 	}
 
-	static type = "SideEffectT";
+	public static type = "SideEffectT";
 
-	actualType: T;
+	private actualType: T;
 
-	reduce(): T {
+	public reduce(): T {
 		return this.utils.reduce(this.actualType);
 	}
 }

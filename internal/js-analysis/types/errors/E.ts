@@ -19,21 +19,21 @@ export type ErrorDefinition = {
 };
 
 export default class E extends T {
-	static type = "E";
+	public static type = "E";
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new AnyT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return this.getError().description.message;
 	}
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		throw new Error("unimplemented");
 	}
 
-	compatibleWith(): boolean {
+	public compatibleWith(): boolean {
 		return false;
 	}
 }

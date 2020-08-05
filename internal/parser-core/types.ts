@@ -11,8 +11,7 @@ import {
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 } from "@internal/diagnostics";
-import {ParserCore} from ".";
-import {ParserCoreState} from "./ParserCore";
+import {default as ParserCore, ParserCoreState} from "./ParserCore";
 
 export type AnyParserCore = ParserCore<TokensShape, ParserCoreState>;
 

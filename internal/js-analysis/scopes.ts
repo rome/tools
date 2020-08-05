@@ -48,13 +48,13 @@ export class Scope {
 		this.bindings = new Map();
 	}
 
-	hub: Hub;
-	intrinsics: Intrinsics;
-	evaluator: Evaluator;
-	parentScope: undefined | Scope;
-	bindings: Map<string, Binding>;
+	public hub: Hub;
+	public intrinsics: Intrinsics;
+	public evaluator: Evaluator;
+	private parentScope: undefined | Scope;
+	private bindings: Map<string, Binding>;
 
-	getBinding(name: string): undefined | T {
+	public getBinding(name: string): undefined | T {
 		let scope: undefined | Scope = this;
 		while (scope) {
 			const binding = scope.bindings.get(name);
@@ -66,7 +66,7 @@ export class Scope {
 		return undefined;
 	}
 
-	getBindingAssert(name: string): T {
+	public getBindingAssert(name: string): T {
 		const binding = this.getBinding(name);
 		if (binding === undefined) {
 			throw new Error(`Expected binding ${name}`);
@@ -74,7 +74,7 @@ export class Scope {
 		return binding;
 	}
 
-	query(paths: Array<string>): T {
+	public query(paths: Array<string>): T {
 		let initial = this.getBinding(paths[0]);
 		if (initial === undefined) {
 			throw new Error(
@@ -97,7 +97,7 @@ export class Scope {
 		return initial;
 	}
 
-	declareBinding(name: string, originNode: AnyNode) {
+	public declareBinding(name: string, originNode: AnyNode) {
 		if (name === undefined) {
 			throw new Error("Expected name");
 		}
@@ -110,7 +110,7 @@ export class Scope {
 		);
 	}
 
-	addBinding(name: string, type: T) {
+	public addBinding(name: string, type: T) {
 		if (name === undefined) {
 			throw new Error("Expected name");
 		}
@@ -133,7 +133,7 @@ export class Scope {
 		);
 	}
 
-	getBindingNames(): Array<string> {
+	public getBindingNames(): Array<string> {
 		const names: Set<string> = new Set(
 			this.parentScope ? this.parentScope.getBindingNames() : [],
 		);
@@ -145,11 +145,11 @@ export class Scope {
 		return Array.from(names);
 	}
 
-	getOwnBindingNames(): Array<string> {
+	public getOwnBindingNames(): Array<string> {
 		return Array.from(this.bindings.keys());
 	}
 
-	createUnion(types: Array<T>, originNode?: AnyNode): T {
+	public createUnion(types: Array<T>, originNode?: AnyNode): T {
 		if (types.length === 0) {
 			return new UnknownT(this, originNode);
 		} else if (types.length === 1) {
@@ -159,11 +159,11 @@ export class Scope {
 		}
 	}
 
-	fork() {
+	public fork() {
 		return new Scope({evaluator: this.evaluator, parentScope: this});
 	}
 
-	find<S extends Scope>(klass: Class<S>): S {
+	public find<S extends Scope>(klass: Class<S>): S {
 		const scope = this.findOptional(klass);
 		if (scope === undefined) {
 			throw new Error("Failed to find class");
@@ -172,7 +172,7 @@ export class Scope {
 		}
 	}
 
-	findOptional<S extends Scope>(klass: Class<S>): undefined | S {
+	public findOptional<S extends Scope>(klass: Class<S>): undefined | S {
 		let scope: undefined | Scope = this;
 
 		do {
@@ -186,11 +186,11 @@ export class Scope {
 		return undefined;
 	}
 
-	refine(): Scope {
+	public refine(): Scope {
 		return new RefineScope({evaluator: this.evaluator, parentScope: this});
 	}
 
-	evaluate(node: undefined | AnyNode): T {
+	public evaluate(node: undefined | AnyNode): T {
 		return this.evaluator.evaluate(node, this);
 	}
 }
@@ -210,7 +210,7 @@ export class ClassScope extends Scope {
 		this.meta = meta;
 	}
 
-	meta: ClassScopeMeta;
+	public meta: ClassScopeMeta;
 }
 
 //#
@@ -220,7 +220,7 @@ export class ThisScope extends Scope {
 		this.context = context;
 	}
 
-	context: T;
+	public context: T;
 }
 
 //#
@@ -235,5 +235,5 @@ export class FunctionScope extends ThisScope {
 		this.meta = meta;
 	}
 
-	meta: FunctionScopeMeta;
+	public meta: FunctionScopeMeta;
 }

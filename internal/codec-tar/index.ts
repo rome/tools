@@ -173,10 +173,10 @@ export class TarWriter {
 		this.stream = stream;
 	}
 
-	stream: stream.Writable;
-	finalized: boolean;
+	private stream: stream.Writable;
+	private finalized: boolean;
 
-	static normalizeHeader(partial: PartialHeader, size: number): Header {
+	private static normalizeHeader(partial: PartialHeader, size: number): Header {
 		let mode = partial.mode;
 		if (mode === undefined) {
 			if (partial.type === "directory") {
@@ -202,14 +202,14 @@ export class TarWriter {
 		};
 	}
 
-	overflow(size: number) {
+	private overflow(size: number) {
 		size &= 511;
 		if (size > 0) {
 			this.stream.write(END_OF_TAR.slice(0, 512 - size));
 		}
 	}
 
-	append(rawHeader: PartialHeader, rawBuffer: string | Buffer) {
+	public append(rawHeader: PartialHeader, rawBuffer: string | Buffer) {
 		if (this.finalized) {
 			throw new Error("Already finalized file");
 		}
@@ -223,7 +223,7 @@ export class TarWriter {
 		this.overflow(header.size);
 	}
 
-	finalize(): Promise<void> {
+	public finalize(): Promise<void> {
 		this.finalized = true;
 
 		return new Promise((resolve, reject) => {

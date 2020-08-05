@@ -128,7 +128,7 @@ async function _getFixtures(
 
 	// Get the contents of all the files
 	const fileContents: Map<string, FixtureFile> = new Map();
-	for (const path of filenames) {
+	for (const path of files) {
 		fileContents.set(
 			path.getBasename(),
 			{

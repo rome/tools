@@ -53,21 +53,21 @@ export default class Progress extends ProgressBase {
 		this.initName(opts.name);
 	}
 
-	closed: boolean;
-	delay: number;
-	renderTimer: undefined | NodeJS.Timeout;
-	firstRenderLineSnapshot: undefined | ReporterStreamLineSnapshot;
+	private closed: boolean;
+	private delay: number;
+	private renderTimer: undefined | NodeJS.Timeout;
+	private firstRenderLineSnapshot: undefined | ReporterStreamLineSnapshot;
 
-	streamToBouncerStart: Map<ReporterStream, number>;
-	bouncerTimer: undefined | NodeJS.Timeout;
+	private streamToBouncerStart: Map<ReporterStream, number>;
+	private bouncerTimer: undefined | NodeJS.Timeout;
 
-	onEnd: undefined | (VoidCallback);
-	renderEvery: number;
-	startTime: number;
-	lastRenderCurrent: number;
-	lastRenderTime: number;
+	private onEnd: undefined | (VoidCallback);
+	private renderEvery: number;
+	private startTime: number;
+	private lastRenderCurrent: number;
+	private lastRenderTime: number;
 
-	initName(name: undefined | string) {
+	private initName(name: undefined | string) {
 		if (name === undefined) {
 			return;
 		}
@@ -75,11 +75,11 @@ export default class Progress extends ProgressBase {
 		// TODO fetch approximate total and eta based on `name`
 	}
 
-	getElapsedTime(): number {
+	private getElapsedTime(): number {
 		return Date.now() - this.startTime - this.pausedElapsed;
 	}
 
-	getBouncerPosition(stream: ReporterStream): number {
+	private getBouncerPosition(stream: ReporterStream): number {
 		const start = this.streamToBouncerStart.get(stream);
 		if (start === undefined) {
 			return 0;
@@ -88,7 +88,7 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
-	startBouncer() {
+	private startBouncer() {
 		const queueTick = () => {
 			this.bouncerTimer = setTimeout(tick, BOUNCER_INTERVAL);
 		};
@@ -102,7 +102,7 @@ export default class Progress extends ProgressBase {
 			const elapsedTime = this.getElapsedTime();
 			const elapsedFrames = Math.round(elapsedTime / BOUNCER_INTERVAL);
 
-			for (const {stream} of this.reporter.streamHandles) {
+			for (const {stream} of this.reporter.getStreamHandles()) {
 				if (
 					!streamUtils.isANSICursorStream(stream) ||
 					stream.features.columns === undefined
@@ -132,7 +132,7 @@ export default class Progress extends ProgressBase {
 		queueTick();
 	}
 
-	setCurrent(current: number) {
+	public setCurrent(current: number) {
 		if (this.closed) {
 			return;
 		}
@@ -144,13 +144,13 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
-	setTotal(total: number, approximate: boolean = false) {
+	public setTotal(total: number, approximate: boolean = false) {
 		super.setTotal(total, approximate);
 		this.renderEvery = Math.round(total / 100);
 		this.endBouncer();
 	}
 
-	setText(text: AnyMarkup) {
+	public setText(text: AnyMarkup) {
 		if (this.closed) {
 			return;
 		}
@@ -158,7 +158,7 @@ export default class Progress extends ProgressBase {
 		super.setText(text);
 	}
 
-	queueRender(delay: number = this.delay) {
+	protected queueRender(delay: number = this.delay) {
 		if (this.closed) {
 			// Progress bar has been removed
 			return;
@@ -177,21 +177,21 @@ export default class Progress extends ProgressBase {
 		);
 	}
 
-	endBouncer() {
+	private endBouncer() {
 		if (this.bouncerTimer !== undefined) {
 			clearTimeout(this.bouncerTimer);
 		}
 		this.bouncerTimer = undefined;
 	}
 
-	endRender() {
+	private endRender() {
 		if (this.renderTimer !== undefined) {
 			clearTimeout(this.renderTimer);
 		}
 		this.renderTimer = undefined;
 	}
 
-	end() {
+	public end() {
 		this.closed = true;
 		this.endBouncer();
 		this.endRender();
@@ -209,7 +209,7 @@ export default class Progress extends ProgressBase {
 
 	// Ensure that we update the progress bar after a certain amount of ticks
 	// This allows us to use the progress bar for sync work where the event loop is always blocked
-	isRenderDue(): boolean {
+	private isRenderDue(): boolean {
 		const isDue: boolean =
 			this.current > this.lastRenderCurrent + this.renderEvery;
 		if (isDue) {
@@ -222,7 +222,7 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
-	isBoldCharacter(i: number, ranges: BoldRanges): boolean {
+	private isBoldCharacter(i: number, ranges: BoldRanges): boolean {
 		for (const [start, end] of ranges) {
 			if (start >= i && end <= i) {
 				return true;
@@ -232,7 +232,7 @@ export default class Progress extends ProgressBase {
 		return false;
 	}
 
-	splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
+	private splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
 		return splitChars(str).map((char, i) => {
 			if (this.isBoldCharacter(i, boldRanges)) {
 				return [i, formatAnsi.bold(char)];
@@ -242,7 +242,7 @@ export default class Progress extends ProgressBase {
 		});
 	}
 
-	buildProgressBouncer(stream: ReporterStream, bar: SplitBar): string {
+	private buildProgressBouncer(stream: ReporterStream, bar: SplitBar): string {
 		let start = this.getBouncerPosition(stream);
 		let fullBar = "";
 		for (const [i, char] of bar) {
@@ -261,7 +261,7 @@ export default class Progress extends ProgressBase {
 		return fullBar;
 	}
 
-	buildProgressBar(
+	private buildProgressBar(
 		stream: ReporterStream,
 		columns: Number1,
 		bar: SplitBar,
@@ -285,7 +285,7 @@ export default class Progress extends ProgressBase {
 		return fullBar;
 	}
 
-	buildBar(stream: ReporterStream, columns: Number1) {
+	private buildBar(stream: ReporterStream, columns: Number1) {
 		const {total, current, title} = this;
 
 		// Text ranges that we should make bold
@@ -381,7 +381,7 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
-	render() {
+	public render() {
 		if (this.closed) {
 			return;
 		}

@@ -16,11 +16,11 @@ export default class Profiler {
 		this.memorySamples = [];
 	}
 
-	session: undefined | inspector.Session;
-	memoryInterval: undefined | NodeJS.Timeout;
-	memorySamples: MemorySamples;
+	private session: undefined | inspector.Session;
+	private memoryInterval: undefined | NodeJS.Timeout;
+	private memorySamples: MemorySamples;
 
-	async startProfiling(samplingInterval: number): Promise<void> {
+	public async startProfiling(samplingInterval: number): Promise<void> {
 		this.session = new inspector.Session();
 		this.session.connect();
 
@@ -45,7 +45,7 @@ export default class Profiler {
 		]);
 	}
 
-	async sendCommand(method: string, params?: Object): Promise<void> {
+	private async sendCommand(method: string, params?: Object): Promise<void> {
 		const {session} = this;
 		if (session === undefined) {
 			return Promise.reject(new Error("No current profiler session"));
@@ -66,7 +66,7 @@ export default class Profiler {
 		}
 	}
 
-	destroy() {
+	private destroy() {
 		const {session} = this;
 		if (session !== undefined) {
 			if (this.memoryInterval !== undefined) {
@@ -77,7 +77,7 @@ export default class Profiler {
 		}
 	}
 
-	async stopProfiling(): Promise<Profile> {
+	public async stopProfiling(): Promise<Profile> {
 		const {session} = this;
 		if (session === undefined) {
 			return Promise.reject(new Error("No current profiler session"));

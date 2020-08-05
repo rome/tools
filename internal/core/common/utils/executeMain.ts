@@ -14,7 +14,6 @@ import vm = require("vm");
 
 import {
 	Diagnostic,
-	createInternalDiagnostic,
 	descriptions,
 	truncateSourceText,
 } from "@internal/diagnostics";
@@ -88,7 +87,7 @@ export default async function executeMain(
 				line: ob1Coerce1(line),
 			};
 
-			const syntaxError: Diagnostic = createInternalDiagnostic({
+			const syntaxError: Diagnostic = {
 				description: descriptions.V8.SYNTAX_ERROR(err.message),
 				location: {
 					start: pos,
@@ -96,7 +95,10 @@ export default async function executeMain(
 					filename,
 					sourceText: truncateSourceText(code, pos, pos),
 				},
-			});
+				tags: {
+					internal: true,
+				},
+			};
 			return {syntaxError, exitCode: undefined};
 		}
 

@@ -29,13 +29,13 @@ class ENotExhaustive extends E {
 		this.extraenous = extraenous;
 	}
 
-	target: T;
-	only: T;
-	extraenous: Array<T>;
+	private target: T;
+	private only: T;
+	public extraenous: Array<T>;
 
-	static type = "ENotExhaustive";
+	public static type = "ENotExhaustive";
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		return {
 			description: descriptions.TYPE_CHECK.NOT_EXHAUSTIVE(
 				this.utils.humanize(this.only),
@@ -53,19 +53,19 @@ export default class ExhaustiveT extends T {
 		this.only = only;
 	}
 
-	target: T;
-	only: T;
+	private target: T;
+	private only: T;
 
-	static type = "ExhaustiveT";
+	public static type = "ExhaustiveT";
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			target: addType(this.target),
 			only: addType(this.only),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -79,7 +79,7 @@ export default class ExhaustiveT extends T {
 		);
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		const target = this.utils.reduce(this.target);
 		const only = this.utils.reduce(this.only);
 		if (target instanceof AnyT || only instanceof AnyT) {
@@ -99,7 +99,7 @@ export default class ExhaustiveT extends T {
 				}
 			}
 
-			if (compatible === false) {
+			if (!compatible) {
 				extraneous.push(possible);
 			}
 		}
@@ -117,7 +117,7 @@ export default class ExhaustiveT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
 			this.target,
 		)}`;

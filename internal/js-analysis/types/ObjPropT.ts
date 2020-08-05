@@ -24,18 +24,18 @@ export default class ObjPropT extends T {
 		this.value = value;
 	}
 
-	static type = "ObjPropT";
-	key: string;
-	value: T;
+	public static type = "ObjPropT";
+	public key: string;
+	public value: T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			key: this.key,
 			value: addType(this.value),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -49,7 +49,7 @@ export default class ObjPropT extends T {
 		);
 	}
 
-	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
+	public compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		if (otherType instanceof ObjPropT && otherType.key === this.key) {
 			return this.utils.checkCompability(this.value, otherType.value);
 		} else {
@@ -57,7 +57,7 @@ export default class ObjPropT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		return markup`${this.key}: ${builder.humanize(this.value)}`;
 	}
 }

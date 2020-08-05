@@ -24,7 +24,7 @@ import {
 import {ProjectConfigJSON} from "@internal/project";
 import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
 import {JSONFileReference} from "../types/files";
-import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
+import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
 import {FileNotFound} from "@internal/core/common/FileNotFound";
 import {createAbsoluteFilePath} from "@internal/path";
@@ -142,17 +142,17 @@ export type WorkerUpdateInlineSnapshotResult = {
 };
 
 export default class WorkerBridge extends Bridge {
-	log = this.createEvent<string, void>({
+	public log = this.createEvent<string, void>({
 		name: "log",
 		direction: "server<-client",
 	});
 
-	fatalError = this.createEvent<BridgeErrorResponseDetails, void>({
+	public fatalError = this.createEvent<BridgeErrorResponseDetails, void>({
 		name: "fatalError",
 		direction: "server<-client",
 	});
 
-	updateProjects = this.createEvent<
+	public updateProjects = this.createEvent<
 		{
 			projects: WorkerProjects;
 		},
@@ -162,7 +162,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	updateManifests = this.createEvent<
+	public updateManifests = this.createEvent<
 		{
 			manifests: WorkerPartialManifests;
 		},
@@ -172,22 +172,22 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	profilingStart = this.createEvent<ProfilingStartData, void>({
+	public profilingStart = this.createEvent<ProfilingStartData, void>({
 		name: "profiling.start",
 		direction: "server->client",
 	});
 
-	profilingStop = this.createEvent<void, Profile>({
+	public profilingStop = this.createEvent<void, Profile>({
 		name: "profiling.stop",
 		direction: "server->client",
 	});
 
-	status = this.createEvent<void, WorkerStatus>({
+	public status = this.createEvent<void, WorkerStatus>({
 		name: "status",
 		direction: "server->client",
 	});
 
-	evict = this.createEvent<
+	public evict = this.createEvent<
 		{
 			filename: string;
 		},
@@ -197,7 +197,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	format = this.createEvent<
+	public format = this.createEvent<
 		{
 			ref: JSONFileReference;
 			options: FormatterOptions;
@@ -209,7 +209,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	moduleSignatureJS = this.createEvent<
+	public moduleSignatureJS = this.createEvent<
 		{
 			ref: JSONFileReference;
 			parseOptions: WorkerParseOptions;
@@ -220,7 +220,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	analyzeDependencies = this.createEvent<
+	public analyzeDependencies = this.createEvent<
 		{
 			ref: JSONFileReference;
 			parseOptions: WorkerParseOptions;
@@ -231,7 +231,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	lint = this.createEvent<
+	public lint = this.createEvent<
 		{
 			ref: JSONFileReference;
 			options: WorkerLintOptions;
@@ -240,7 +240,7 @@ export default class WorkerBridge extends Bridge {
 		WorkerLintResult
 	>({name: "lint", direction: "server->client"});
 
-	updateInlineSnapshots = this.createEvent<
+	public updateInlineSnapshots = this.createEvent<
 		{
 			ref: JSONFileReference;
 			updates: InlineSnapshotUpdates;
@@ -249,7 +249,7 @@ export default class WorkerBridge extends Bridge {
 		WorkerUpdateInlineSnapshotResult
 	>({name: "updateInlineSnapshots", direction: "server->client"});
 
-	compile = this.createEvent<
+	public compile = this.createEvent<
 		{
 			ref: JSONFileReference;
 			stage: TransformStageName;
@@ -259,7 +259,7 @@ export default class WorkerBridge extends Bridge {
 		CompileResult
 	>({name: "compile", direction: "server->client"});
 
-	parse = this.createEvent<
+	public parse = this.createEvent<
 		{
 			ref: JSONFileReference;
 			options: WorkerParseOptions;
@@ -268,7 +268,7 @@ export default class WorkerBridge extends Bridge {
 		AnyRoot
 	>({name: "parse", direction: "server->client"});
 
-	getFileBuffers = this.createEvent<
+	public getFileBuffers = this.createEvent<
 		void,
 		Array<{
 			filename: string;
@@ -279,7 +279,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	updateBuffer = this.createEvent<
+	public updateBuffer = this.createEvent<
 		{
 			ref: JSONFileReference;
 			content: string;
@@ -290,7 +290,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	patchBuffer = this.createEvent<
+	public patchBuffer = this.createEvent<
 		{
 			ref: JSONFileReference;
 			patches: Array<WorkerBufferPatch>;
@@ -301,7 +301,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	clearBuffer = this.createEvent<
+	public clearBuffer = this.createEvent<
 		{
 			ref: JSONFileReference;
 		},
@@ -311,7 +311,7 @@ export default class WorkerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	init() {
+	public init() {
 		this.addErrorTransport(
 			"FileNotFound",
 			{

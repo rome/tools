@@ -1,4 +1,4 @@
-import {ParserCore, ParserWithRequiredPath} from ".";
+import {default as ParserCore, ParserWithRequiredPath} from "./ParserCore";
 import {ParserOptions, Position, SourceLocation} from "./types";
 import {Class} from "@internal/typescript-helpers";
 import {catchDiagnosticsSync} from "@internal/diagnostics";

@@ -15,9 +15,9 @@ export default function JSClassPropertyMeta(
 ): Token {
 	const tokens: Array<Token> = [];
 
-	if (!builder.options.typeAnnotations) {
+	if (builder.options.typeAnnotations) {
 		if (node.accessibility) {
-			tokens.push(node.accessibility);
+			tokens.push(node.accessibility, space);
 		}
 
 		if (node.readonly) {

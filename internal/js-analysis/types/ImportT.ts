@@ -39,22 +39,22 @@ export default class ImportT extends T {
 		);
 	}
 
-	static type = "ImportT";
-	importedName: undefined | string;
-	absolute: undefined | string;
-	resolvedType: undefined | T;
-	relative: string;
-	source: string;
+	public static type = "ImportT";
+	private importedName: undefined | string;
+	private absolute: undefined | string;
+	private resolvedType: undefined | T;
+	private relative: string;
+	private source: string;
 
-	setAbsolute(absolute: undefined | string) {
+	public setAbsolute(absolute: undefined | string) {
 		this.absolute = absolute;
 	}
 
-	setResolvedType(resolvedType: T) {
+	public setResolvedType(resolvedType: T) {
 		this.resolvedType = resolvedType;
 	}
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {
 			importedName: this.importedName,
 			relative: this.relative,
@@ -62,7 +62,7 @@ export default class ImportT extends T {
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -78,7 +78,7 @@ export default class ImportT extends T {
 		);
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		let object;
 		if (this.resolvedType !== undefined) {
 			object = builder.humanize(this.resolvedType);
@@ -95,7 +95,7 @@ export default class ImportT extends T {
 		}
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		if (this.resolvedType === undefined) {
 			return this;
 		} else {

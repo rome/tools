@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSAwaitExpression, jsAwaitExpression} from "@internal/ast";
+import {AnyNode, jsAwaitExpression} from "@internal/ast";
 
 export default function JSAwaitExpression(node: AnyNode, scope: Scope) {
 	node = jsAwaitExpression.assert(node);

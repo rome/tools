@@ -7,7 +7,6 @@
 
 import Server from "../Server";
 import {
-	Manifest,
 	ManifestDefinition,
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
@@ -33,7 +32,7 @@ import {
 	readFileText,
 	watch,
 } from "@internal/fs";
-import {getFileHandlerFromPath} from "../../common/file-handlers/index";
+import {getFileHandlerFromPath} from "@internal/core";
 import crypto = require("crypto");
 import {FileNotFound} from "@internal/core/common/FileNotFound";
 import {markup} from "@internal/markup";
@@ -115,95 +114,6 @@ export type Stats = {
 
 export type WatcherClose = VoidCallback;
 
-async function createWatcher(
-	memoryFs: MemoryFileSystem,
-	diagnostics: DiagnosticsProcessor,
-	projectDirectory: AbsoluteFilePath,
-): Promise<WatcherClose> {
-	const {logger} = memoryFs.server;
-	const projectDirectoryMarkup = markup`<emphasis>${projectDirectory}</emphasis>`;
-
-	// Create activity spinners for all connected reporters
-	const activity = memoryFs.server.connectedReporters.progress({
-		initDelay: 1_000,
-		title: markup`Adding project ${projectDirectoryMarkup}`,
-	});
-
-	const watchers: AbsoluteFilePathMap<FSWatcher> = new AbsoluteFilePathMap();
-
-	try {
-		function onFoundDirectory(directoryPath: AbsoluteFilePath) {
-			if (watchers.has(directoryPath)) {
-				return;
-			}
-
-			let recursive = true;
-
-			if (process.platform === "linux") {
-				// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
-				recursive = false;
-			} else if (!directoryPath.equal(projectDirectory)) {
-				// If we're on any other platform then only watch the root project directory
-				return;
-			}
-
-			const watcher = watch(
-				directoryPath,
-				{recursive, persistent: false},
-				(eventType, filename) => {
-					memoryFs.logger.info(
-						markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
-							filename,
-						)}`,
-					);
-
-					if (filename === null) {
-						// TODO not sure how we want to handle this?
-						return;
-					}
-
-					const path = directoryPath.resolve(filename);
-					memoryFs.refreshPath(
-						path,
-						{onFoundDirectory},
-						"Processing fs.watch changes",
-					);
-				},
-			);
-			watchers.set(directoryPath, watcher);
-		}
-
-		// No need to call watch() on the projectDirectory since it will call us
-
-		// Perform an initial crawl
-		const start = Date.now();
-		const stats = await memoryFs.hardStat(projectDirectory);
-		await memoryFs.addDirectory(
-			projectDirectory,
-			stats,
-			{
-				diagnostics,
-				onFoundDirectory,
-				reason: "initial",
-			},
-		);
-		const took = Date.now() - start;
-		logger.info(
-			markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
-				memoryFs.countFiles(projectDirectory),
-			)}</number> files. Took <duration>${String(took)}</duration>`,
-		);
-	} finally {
-		activity.end();
-	}
-
-	return () => {
-		for (const watcher of watchers.values()) {
-			watcher.close();
-		}
-	};
-}
-
 export default class MemoryFileSystem {
 	constructor(server: Server) {
 		this.server = server;
@@ -220,33 +130,16 @@ export default class MemoryFileSystem {
 
 		this.changedFileEvent = new Event({
 			name: "MemoryFileSystem.changedFile",
-			onError: server.onFatalErrorBound,
 		});
 		this.deletedFileEvent = new Event({
 			name: "MemoryFileSystem.deletedFile",
-			onError: server.onFatalErrorBound,
 		});
 		this.newFileEvent = new Event({
 			name: "MemoryFileSystem.newFileEvent",
-			onError: server.onFatalErrorBound,
 		});
 	}
 
-	manifestCounter: number;
-	server: Server;
-	directoryListings: AbsoluteFilePathMap<AbsoluteFilePathMap<AbsoluteFilePath>>;
-	directories: AbsoluteFilePathMap<Stats>;
-	files: AbsoluteFilePathMap<Stats>;
-	manifests: AbsoluteFilePathMap<ManifestDefinition>;
-	logger: ReporterNamespace;
-
-	watchers: AbsoluteFilePathMap<{
-		path: AbsoluteFilePath;
-		close: WatcherClose;
-	}>;
-	watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
-
-	changedFileEvent: Event<
+	public changedFileEvent: Event<
 		{
 			path: AbsoluteFilePath;
 			oldStats: undefined | Stats;
@@ -254,18 +147,32 @@ export default class MemoryFileSystem {
 		},
 		void
 	>;
-	deletedFileEvent: Event<AbsoluteFilePath, void>;
-	newFileEvent: Event<AbsoluteFilePath, void>;
+	public deletedFileEvent: Event<AbsoluteFilePath, void>;
+	public newFileEvent: Event<AbsoluteFilePath, void>;
+
+	private manifestCounter: number;
+	private server: Server;
+	private directoryListings: AbsoluteFilePathMap<AbsoluteFilePathMap<AbsoluteFilePath>>;
+	private directories: AbsoluteFilePathMap<Stats>;
+	private files: AbsoluteFilePathMap<Stats>;
+	private manifests: AbsoluteFilePathMap<ManifestDefinition>;
+	private logger: ReporterNamespace;
+
+	private watchers: AbsoluteFilePathMap<{
+		path: AbsoluteFilePath;
+		close: WatcherClose;
+	}>;
+	private watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
 
 	// Used to maintain fake mtimes for file buffers
-	buffers: AbsoluteFilePathMap<Stats>;
+	private buffers: AbsoluteFilePathMap<Stats>;
 
-	async init() {
+	public async init() {
 		await this.injectVirtualModules();
 	}
 
 	// Inject virtual modules so they are discoverable
-	async injectVirtualModules() {
+	private async injectVirtualModules() {
 		const files = this.server.virtualModules.getStatMap();
 
 		for (const [path, {stats, content}] of files) {
@@ -287,11 +194,11 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	hasBuffer(path: AbsoluteFilePath): boolean {
+	public hasBuffer(path: AbsoluteFilePath): boolean {
 		return this.buffers.has(path);
 	}
 
-	addBuffer(path: AbsoluteFilePath, content: string) {
+	public addBuffer(path: AbsoluteFilePath, content: string) {
 		this.buffers.set(
 			path,
 			{
@@ -302,11 +209,100 @@ export default class MemoryFileSystem {
 		);
 	}
 
-	clearBuffer(path: AbsoluteFilePath) {
+	public clearBuffer(path: AbsoluteFilePath) {
 		this.buffers.delete(path);
 	}
 
-	unwatch(dirPath: AbsoluteFilePath) {
+	private async createWatcher(
+		diagnostics: DiagnosticsProcessor,
+		projectDirectory: AbsoluteFilePath,
+	): Promise<WatcherClose> {
+		const {server} = this;
+		const {logger} = server;
+		const projectDirectoryMarkup = markup`<emphasis>${projectDirectory}</emphasis>`;
+
+		// Create activity spinners for all connected reporters
+		const activity = this.server.connectedReporters.progress({
+			initDelay: 1_000,
+			title: markup`Adding project ${projectDirectoryMarkup}`,
+		});
+
+		const watchers: AbsoluteFilePathMap<FSWatcher> = new AbsoluteFilePathMap();
+
+		try {
+			const onFoundDirectory = (directoryPath: AbsoluteFilePath) => {
+				if (watchers.has(directoryPath)) {
+					return;
+				}
+
+				let recursive = true;
+
+				if (process.platform === "linux") {
+					// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
+					recursive = false;
+				} else if (!directoryPath.equal(projectDirectory)) {
+					// If we're on any other platform then only watch the root project directory
+					return;
+				}
+
+				const watcher = watch(
+					directoryPath,
+					{recursive, persistent: false},
+					(eventType, filename) => {
+						this.logger.info(
+							markup`Raw fs.watch event in <emphasis>${directoryPath}</emphasis> type ${eventType} for ${String(
+								filename,
+							)}`,
+						);
+
+						if (filename === null) {
+							// TODO not sure how we want to handle this?
+							return;
+						}
+
+						const path = directoryPath.resolve(filename);
+						this.refreshPath(
+							path,
+							{onFoundDirectory},
+							"Processing fs.watch changes",
+						);
+					},
+				);
+				watchers.set(directoryPath, watcher);
+			};
+
+			// No need to call watch() on the projectDirectory since it will call us
+
+			// Perform an initial crawl
+			const start = Date.now();
+			const stats = await this.hardStat(projectDirectory);
+			await this.addDirectory(
+				projectDirectory,
+				stats,
+				{
+					diagnostics,
+					onFoundDirectory,
+					reason: "initial",
+				},
+			);
+			const took = Date.now() - start;
+			logger.info(
+				markup`[MemoryFileSystem] Finished initial crawl for <emphasis>${projectDirectory}</emphasis>. Added <number>${String(
+					this.countFiles(projectDirectory),
+				)}</number> files. Took <duration>${String(took)}</duration>`,
+			);
+		} finally {
+			activity.end();
+		}
+
+		return () => {
+			for (const watcher of watchers.values()) {
+				watcher.close();
+			}
+		};
+	}
+
+	public unwatch(dirPath: AbsoluteFilePath) {
 		const watcher = this.watchers.get(dirPath);
 		if (watcher === undefined) {
 			return;
@@ -334,13 +330,13 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	unwatchAll() {
+	public unwatchAll() {
 		for (const {close} of this.watchers.values()) {
 			close();
 		}
 	}
 
-	readdir(path: AbsoluteFilePath): Iterable<AbsoluteFilePath> {
+	public readdir(path: AbsoluteFilePath): Iterable<AbsoluteFilePath> {
 		const listing = this.directoryListings.get(path);
 		if (listing === undefined) {
 			return [];
@@ -349,34 +345,23 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	isDirectory(path: AbsoluteFilePath): boolean {
+	public isDirectory(path: AbsoluteFilePath): boolean {
 		return this.directories.has(path);
 	}
 
-	isFile(path: AbsoluteFilePath): boolean {
+	public isFile(path: AbsoluteFilePath): boolean {
 		return this.files.has(path);
 	}
 
-	getFiles(): Array<Stats> {
-		return Array.from(this.files.values());
-	}
-
-	getManifestDefinition(
+	public getManifestDefinition(
 		dirname: AbsoluteFilePath,
 	): undefined | ManifestDefinition {
 		return this.manifests.get(dirname);
 	}
 
-	getManifest(dirname: AbsoluteFilePath): undefined | Manifest {
-		const def = this.getManifestDefinition(dirname);
-		if (def === undefined) {
-			return undefined;
-		} else {
-			return def.manifest;
-		}
-	}
-
-	getOwnedManifest(path: AbsoluteFilePath): undefined | ManifestDefinition {
+	public getOwnedManifest(
+		path: AbsoluteFilePath,
+	): undefined | ManifestDefinition {
 		for (const dir of path.getChain()) {
 			const def = this.server.memoryFs.getManifestDefinition(dir);
 			if (def !== undefined) {
@@ -386,14 +371,14 @@ export default class MemoryFileSystem {
 		return undefined;
 	}
 
-	getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
+	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
 		return {
 			path: def.path.join(),
 			type: def.manifest.type,
 		};
 	}
 
-	addFileToDirectoryListing(path: AbsoluteFilePath): void {
+	private addFileToDirectoryListing(path: AbsoluteFilePath): void {
 		const dirname = path.getParent();
 		let listing = this.directoryListings.get(dirname);
 		if (listing === undefined) {
@@ -403,7 +388,7 @@ export default class MemoryFileSystem {
 		listing.set(path, path);
 	}
 
-	async handleDeletion(path: AbsoluteFilePath): Promise<void> {
+	private async handleDeletion(path: AbsoluteFilePath): Promise<void> {
 		// If a directory then evict all children
 		const directoryInfo = this.directories.get(path);
 		if (directoryInfo !== undefined) {
@@ -444,7 +429,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	handleDeletedManifest(path: AbsoluteFilePath): void {
+	private handleDeletedManifest(path: AbsoluteFilePath): void {
 		const directory = path.getParent();
 		const def = this.manifests.get(directory);
 		if (def !== undefined) {
@@ -452,7 +437,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async waitIfInitializingWatch(
+	public async waitIfInitializingWatch(
 		projectDirectoryPath: AbsoluteFilePath,
 	): Promise<void> {
 		// Defer if we're initializing a parent directory
@@ -471,7 +456,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async watch(projectDirectory: AbsoluteFilePath): Promise<void> {
+	public async watch(projectDirectory: AbsoluteFilePath): Promise<void> {
 		const directoryLink = markup`<emphasis>${projectDirectory}</emphasis>`;
 
 		// Defer if we're already currently initializing this project
@@ -520,7 +505,7 @@ export default class MemoryFileSystem {
 		});
 
 		this.logger.info(markup`Watching ${directoryLink}`);
-		const promise = createWatcher(this, diagnostics, projectDirectory);
+		const promise = this.createWatcher(diagnostics, projectDirectory);
 		this.watchPromises.set(projectDirectory, promise);
 
 		const watcherClose = await promise;
@@ -537,7 +522,7 @@ export default class MemoryFileSystem {
 	}
 
 	// Query actual file system for stats
-	async hardStat(path: AbsoluteFilePath): Promise<Stats> {
+	private async hardStat(path: AbsoluteFilePath): Promise<Stats> {
 		const stats = await lstat(path);
 
 		let type: StatsType = "unknown";
@@ -554,7 +539,7 @@ export default class MemoryFileSystem {
 		};
 	}
 
-	maybeGetMtime(path: AbsoluteFilePath): undefined | number {
+	public maybeGetMtime(path: AbsoluteFilePath): undefined | number {
 		const stats = this.buffers.get(path) || this.files.get(path);
 		if (stats === undefined) {
 			return undefined;
@@ -563,7 +548,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	getMtime(path: AbsoluteFilePath): number {
+	public getMtime(path: AbsoluteFilePath): number {
 		const mtime = this.maybeGetMtime(path);
 		if (mtime === undefined) {
 			throw new FileNotFound(path, "Not found in memory file system");
@@ -572,11 +557,11 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	getFileStats(path: AbsoluteFilePath): undefined | Stats {
+	public getFileStats(path: AbsoluteFilePath): undefined | Stats {
 		return this.files.get(path);
 	}
 
-	getFileStatsAssert(path: AbsoluteFilePath): Stats {
+	public getFileStatsAssert(path: AbsoluteFilePath): Stats {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
 			throw new FileNotFound(path, "Not found in memory file system");
@@ -584,7 +569,7 @@ export default class MemoryFileSystem {
 		return stats;
 	}
 
-	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
+	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
 		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return false;
@@ -607,12 +592,12 @@ export default class MemoryFileSystem {
 		return false;
 	}
 
-	isInsideProject(path: AbsoluteFilePath): boolean {
+	private isInsideProject(path: AbsoluteFilePath): boolean {
 		return path.getSegments().includes("node_modules") === false;
 	}
 
 	// This is a wrapper around _declareManifest as it can produce diagnostics
-	async declareManifest(opts: DeclareManifestOpts): Promise<void> {
+	private async declareManifest(opts: DeclareManifestOpts): Promise<void> {
 		const {diagnostics} = await catchDiagnostics(() => {
 			return this.declareManifestWithPossibleDiagnosticsThrow(opts);
 		});
@@ -622,7 +607,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async declareManifestWithPossibleDiagnosticsThrow(
+	private async declareManifestWithPossibleDiagnosticsThrow(
 		{
 			path,
 			diagnostics,
@@ -684,30 +669,13 @@ export default class MemoryFileSystem {
 
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
-			worker.bridge.updateManifests.call({
+			worker.bridge.updateManifests.send({
 				manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
 			});
 		}
 	}
 
-	getAllFilesInDirectory(directory: AbsoluteFilePath): Array<AbsoluteFilePath> {
-		let files: Array<AbsoluteFilePath> = [];
-
-		const listing = this.directoryListings.get(directory);
-		if (listing !== undefined) {
-			for (const file of listing.keys()) {
-				if (this.files.has(file)) {
-					files.push(file);
-				} else {
-					files = files.concat(this.getAllFilesInDirectory(file));
-				}
-			}
-		}
-
-		return files;
-	}
-
-	countFiles(directory: AbsoluteFilePath): number {
+	private countFiles(directory: AbsoluteFilePath): number {
 		let count: number = 0;
 
 		const listing = this.directoryListings.get(directory);
@@ -721,12 +689,12 @@ export default class MemoryFileSystem {
 		return count;
 	}
 
-	hasStatsChanged(path: AbsoluteFilePath, newStats: Stats): boolean {
+	private hasStatsChanged(path: AbsoluteFilePath, newStats: Stats): boolean {
 		const oldStats = this.directories.get(path) || this.files.get(path);
 		return oldStats === undefined || newStats.mtime !== oldStats.mtime;
 	}
 
-	async addDirectory(
+	private async addDirectory(
 		directoryPath: AbsoluteFilePath,
 		stats: Stats,
 		opts: CrawlOptions,
@@ -786,7 +754,7 @@ export default class MemoryFileSystem {
 		return true;
 	}
 
-	exists(path: AbsoluteFilePath): undefined | boolean {
+	public exists(path: AbsoluteFilePath): undefined | boolean {
 		// if we have this in our cache then the file exists
 		if (this.files.has(path) || this.directories.has(path)) {
 			return true;
@@ -808,7 +776,7 @@ export default class MemoryFileSystem {
 		return undefined;
 	}
 
-	async existsHard(path: AbsoluteFilePath): Promise<boolean> {
+	public async existsHard(path: AbsoluteFilePath): Promise<boolean> {
 		const resolvedExistence: undefined | boolean = this.exists(path);
 		if (resolvedExistence === undefined) {
 			return exists(path);
@@ -817,7 +785,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async refreshPath(
+	public async refreshPath(
 		path: AbsoluteFilePath,
 		customCrawlOpts: Partial<CrawlOptions> = {},
 		originMessage: string = "maybeRefreshFile",
@@ -860,7 +828,7 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	async addFile(
+	private async addFile(
 		path: AbsoluteFilePath,
 		stats: Stats,
 		opts: CrawlOptions,
@@ -925,7 +893,10 @@ export default class MemoryFileSystem {
 		return true;
 	}
 
-	glob(cwd: AbsoluteFilePath, opts: GlobOptions = {}): AbsoluteFilePathSet {
+	public glob(
+		cwd: AbsoluteFilePath,
+		opts: GlobOptions = {},
+	): AbsoluteFilePathSet {
 		return new Globber(opts, this.server).glob(cwd);
 	}
 }

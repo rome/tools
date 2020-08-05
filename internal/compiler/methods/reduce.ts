@@ -386,7 +386,6 @@ function _reduceSignal(
 					}
 				} else {
 					// not sure what this is...
-					continue;
 				}
 			}
 		}

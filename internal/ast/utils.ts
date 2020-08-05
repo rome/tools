@@ -58,8 +58,7 @@ export function createQuickBuilder<
 	opts: CreateBuilderOptions<Node>,
 ): QuickBuilder<Node, Node[QuickKey]> {
 	declareBuilder(type, opts);
-
-	return new QuickBuilder(type, opts.visitorKeys, quickKey);
+	return new QuickBuilder(type, quickKey);
 }
 
 export function createBuilder<Node extends AnyNode>(
@@ -67,20 +66,17 @@ export function createBuilder<Node extends AnyNode>(
 	opts: CreateBuilderOptions<Node>,
 ): Builder<Node> {
 	declareBuilder(type, opts);
-
-	return new Builder(type, opts.visitorKeys);
+	return new Builder(type);
 }
 
 class Builder<Node extends AnyNode> {
-	constructor(type: string, visitorKeys: VisitorKeys<Node>) {
+	constructor(type: string) {
 		this.type = type;
-		this.visitorKeys = visitorKeys;
 	}
 
-	type: string;
-	visitorKeys: VisitorKeys<Node>;
+	private type: string;
 
-	create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
+	public create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
 		// @ts-ignore
 		return Object.freeze({
 			loc: inheritNode === undefined ? undefined : inheritLoc(inheritNode),
@@ -89,7 +85,7 @@ class Builder<Node extends AnyNode> {
 		});
 	}
 
-	assert(res: undefined | AnyNodes): Node {
+	public assert(res: undefined | AnyNodes): Node {
 		if (res === undefined) {
 			throw new Error(`Expected ${this.type} Node but got undefined`);
 		}
@@ -106,18 +102,18 @@ class Builder<Node extends AnyNode> {
 }
 
 class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-	constructor(
-		type: string,
-		visitorKeys: VisitorKeys<Node>,
-		quickKey: keyof Node,
-	) {
-		super(type, visitorKeys);
+	constructor(type: string, quickKey: keyof Node) {
+		super(type);
 		this.quickKey = quickKey;
 	}
 
-	quickKey: keyof Node;
+	private quickKey: keyof Node;
 
-	quick(arg: Arg, opts?: Partial<Omit<Node, "type">>, inheritNode?: Node): Node {
+	public quick(
+		arg: Arg,
+		opts?: Partial<Omit<Node, "type">>,
+		inheritNode?: Node,
+	): Node {
 		const node = ({
 			...opts,
 			[this.quickKey]: arg,

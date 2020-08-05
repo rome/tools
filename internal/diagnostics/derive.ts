@@ -11,6 +11,7 @@ import {
 	DiagnosticAdviceStacktrace,
 	DiagnosticDescription,
 	DiagnosticOrigin,
+	DiagnosticTags,
 	Diagnostics,
 } from "./types";
 import {
@@ -119,7 +120,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
 	}
 
-	if (opts.includeHeaderInAdvice === true) {
+	if (opts.includeHeaderInAdvice) {
 		advice.push({
 			type: "log",
 			category: "none",
@@ -143,7 +144,7 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	if (opts.skipFrame === false) {
+	if (!opts.skipFrame) {
 		if (location.start !== undefined && location.end !== undefined) {
 			advice.push({
 				type: "frame",
@@ -181,6 +182,7 @@ export function deriveRootAdviceFromDiagnostic(
 export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
+	tags?: DiagnosticTags;
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
@@ -231,6 +233,7 @@ export function deriveDiagnosticFromErrorStructure(
 			sourceText: targetCode,
 		},
 		label: opts.label,
+		tags: opts.tags,
 	};
 }
 
@@ -371,15 +374,5 @@ export function addOriginsToDiagnostic(
 	return {
 		...diag,
 		origins: newOrigins,
-	};
-}
-
-export function createInternalDiagnostic(diag: Diagnostic): Diagnostic {
-	return {
-		...diag,
-		tags: {
-			...diag.tags,
-			internal: true,
-		},
 	};
 }

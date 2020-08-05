@@ -44,13 +44,13 @@ export default class Builder {
 		this.language = undefined;
 	}
 
-	language: undefined | DiagnosticLanguage;
-	options: BuilderOptions;
-	comments: CommentsConsumer;
-	printedComments: Set<string>;
-	printStack: Array<AnyNode>;
+	private language: undefined | DiagnosticLanguage;
+	public options: BuilderOptions;
+	private comments: CommentsConsumer;
+	private printedComments: Set<string>;
+	private printStack: Array<AnyNode>;
 
-	getLanguage(): DiagnosticLanguage {
+	private getLanguage(): DiagnosticLanguage {
 		const {language} = this;
 		if (language === undefined) {
 			throw new Error(
@@ -60,7 +60,7 @@ export default class Builder {
 		return language;
 	}
 
-	tokenize(node: undefined | AnyNode, parent: AnyNode): Token {
+	public tokenize(node: undefined | AnyNode, parent: AnyNode): Token {
 		if (node === undefined) {
 			return "";
 		}
@@ -151,7 +151,7 @@ export default class Builder {
 		return concat(tokens);
 	}
 
-	tokenizeStatementList(nodes: Array<AnyNode>, parent: AnyNode): Token {
+	public tokenizeStatementList(nodes: Array<AnyNode>, parent: AnyNode): Token {
 		if (nodes.length === 0) {
 			return "";
 		}
@@ -185,7 +185,7 @@ export default class Builder {
 		return join(hardline, tokens);
 	}
 
-	tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
+	public tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
 		const innerComments = this.getComments("innerComments", node);
 		if (innerComments === undefined) {
 			return "";
@@ -203,7 +203,7 @@ export default class Builder {
 			: join(hardline, tokens);
 	}
 
-	getComments(
+	private getComments(
 		kind: "leadingComments" | "trailingComments" | "innerComments",
 		node: AnyNode,
 		all: boolean = false,
@@ -226,7 +226,7 @@ export default class Builder {
 		}
 	}
 
-	getLinesBetween(a: AnyNode, b: AnyNode): number {
+	public getLinesBetween(a: AnyNode, b: AnyNode): number {
 		if (a.loc === undefined || b.loc === undefined) {
 			return 0;
 		}
