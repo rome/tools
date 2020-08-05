@@ -42,7 +42,7 @@ export default createServerCommand<Flags>({
 			apply: consumer.get(
 				"apply",
 				{
-					description: markup`recommended autofixes and formatting is applied`,
+					description: markup`apply safe fixes and formatting`,
 				},
 			).asBoolean(false),
 			formatOnly: consumer.get(

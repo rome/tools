@@ -56,7 +56,7 @@ export type CompileRequest = TransformRequest & {
 };
 
 export type LintRequest = TransformRequest & {
-	applyRecommendedFixes: boolean;
+	applySafeFixes: boolean;
 };
 
 export type TransformProjectDefinition = {

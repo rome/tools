@@ -89,7 +89,7 @@ function createDiagnosticsPrinter(
 
 			if (hasPendingFixes) {
 				reporter.info(
-					markup`Fixes available. To apply recommended fixes and formatting run`,
+					markup`Fixes available. To apply safe fixes and formatting run`,
 				);
 				reporter.command("rome check --apply");
 				reporter.info(markup`To choose fix suggestions run`);
@@ -178,7 +178,7 @@ class LintRunner {
 			hasDecisions,
 		} = this.options;
 		const shouldSave = this.linter.shouldSave();
-		const shouldApplyFixes = !this.linter.shouldOnlyFormat();
+		const applySafeFixes = !this.linter.shouldOnlyFormat();
 
 		const queue: WorkerQueue<void> = new WorkerQueue(server);
 
@@ -222,7 +222,7 @@ class LintRunner {
 						path,
 						{
 							save: shouldSave,
-							applyRecommendedFixes: shouldApplyFixes,
+							applySafeFixes: applySafeFixes,
 							compilerOptions,
 						},
 					)

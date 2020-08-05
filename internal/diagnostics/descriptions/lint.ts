@@ -1093,7 +1093,7 @@ export const lint = createDiagnosticsCategory({
 		formatted: string,
 	) => ({
 		category: "lint/pendingFixes",
-		message: markup`Pending formatting and recommended autofixes`,
+		message: markup`Pending formatting and safe fixes`,
 		advice: [
 			{
 				type: "diff",

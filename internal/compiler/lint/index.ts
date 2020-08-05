@@ -21,17 +21,17 @@ export type LintResult = {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, project, applyRecommendedFixes, options} = req;
+	const {ast, project, applySafeFixes, options} = req;
 
-	const query = Cache.buildQuery(req, {applyRecommendedFixes});
+	const query = Cache.buildQuery(req, {applySafeFixes});
 	const cached = lintCache.get(query);
 	if (cached) {
 		return cached;
 	}
 
-	// Perform autofixes
+	// Perform fixes
 	let formatAst = ast;
-	if (applyRecommendedFixes) {
+	if (applySafeFixes) {
 		const formatContext = new CompilerContext({
 			ref: req.ref,
 			options,

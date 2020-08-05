@@ -75,7 +75,7 @@ async function testLintExpect(
 			return await worker.api.lint(
 				ref,
 				{
-					applyRecommendedFixes: true,
+					applySafeFixes: true,
 					prefetchedModuleSignatures: {},
 					save: true,
 				},
