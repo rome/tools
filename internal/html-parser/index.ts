@@ -86,7 +86,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			this.ignoreWhitespaceTokens = true;
 		}
 
-		tokenizeWithState(
+		protected tokenizeWithState(
 			index: Number0,
 			state: State,
 		):
@@ -210,7 +210,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			};
 		}
 
-		parseIdentifier(): HTMLIdentifier {
+		private parseIdentifier(): HTMLIdentifier {
 			const start = this.getPosition();
 			const token = this.expectToken("Identifier");
 			return this.finishNode(
@@ -222,7 +222,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseString(): HTMLString {
+		private parseString(): HTMLString {
 			const start = this.getPosition();
 			const value = this.expectToken("String").value;
 			return this.finishNode(
@@ -234,7 +234,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseAttribute(): HTMLAttribute {
+		private parseAttribute(): HTMLAttribute {
 			const start = this.getPosition();
 			const name = this.parseIdentifier();
 			this.expectToken("Equals");
@@ -249,7 +249,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseTag(): HTMLElement {
+		private parseTag(): HTMLElement {
 			const headStart = this.getPosition();
 			this.expectToken("TagStartOpen");
 
@@ -342,7 +342,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseComment(): undefined {
+		private parseComment(): undefined {
 			const start = this.getPosition();
 			const token = this.expectToken("Comment");
 
@@ -356,7 +356,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			return undefined;
 		}
 
-		parseText(): HTMLText {
+		private parseText(): HTMLText {
 			const start = this.getPosition();
 			const token = this.expectToken("Text");
 
@@ -410,7 +410,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseChild(): undefined | AnyHTMLChildNode {
+		private parseChild(): undefined | AnyHTMLChildNode {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -439,7 +439,7 @@ const createHTMLParser = createParser((ParserCore, ParserWithRequiredPath) =>
 			}
 		}
 
-		parse(): HTMLRoot {
+		public parse(): HTMLRoot {
 			const start = this.getPosition();
 			const body: Array<AnyHTMLChildNode> = [];
 

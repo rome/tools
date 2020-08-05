@@ -1,7 +1,11 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isEmptyTemplateLiteral} from "@internal/js-ast-utils";
-import {ARIAProperty, ARIAPropertyDefinition, ariaPropsMap,} from "@internal/compiler/lint/utils/aria";
+import {
+	ARIAProperty,
+	ARIAPropertyDefinition,
+	ariaPropsMap,
+} from "@internal/compiler/lint/utils/aria";
 
 function isCorrectValue(
 	attribute: ARIAPropertyDefinition,

@@ -5,13 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerAnalyzeDependencyResult, WorkerCompileResult, WorkerLintResult,} from "../common/bridges/WorkerBridge";
+import {
+	WorkerAnalyzeDependencyResult,
+	WorkerCompileResult,
+	WorkerLintResult,
+} from "../common/bridges/WorkerBridge";
 import {ModuleSignature} from "@internal/js-analysis";
 import Server from "./Server";
 import {ProjectDefinition} from "@internal/project";
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {createDirectory, readDirectory, readFileText, removeDirectory, removeFile, writeFile,} from "@internal/fs";
+import {
+	createDirectory,
+	readDirectory,
+	readFileText,
+	removeDirectory,
+	removeFile,
+	writeFile,
+} from "@internal/fs";
 import {stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
 import {AnyMarkups, markup} from "@internal/markup";
@@ -77,16 +88,21 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 	}
 
-	disabled: boolean;
-	loadedEntries: AbsoluteFilePathMap<CacheEntry>;
-	server: Server;
-	cachePath: AbsoluteFilePath;
+	public disabled: boolean;
 
-	runningWritePromise: undefined | Promise<void>;
-	pendingWrites: AbsoluteFilePathMap<CacheEntry>;
-	pendingWriteTimer: undefined | NodeJS.Timeout;
+	private loadedEntries: AbsoluteFilePathMap<CacheEntry>;
+	private server: Server;
+	private cachePath: AbsoluteFilePath;
 
-	async init() {
+	private runningWritePromise: undefined | Promise<void>;
+	private pendingWrites: AbsoluteFilePathMap<CacheEntry>;
+	private pendingWriteTimer: undefined | NodeJS.Timeout;
+
+	public getDirectory(): AbsoluteFilePath {
+		return this.cachePath;
+	}
+
+	public async init() {
 		this.server.memoryFs.deletedFileEvent.subscribe((filename) => {
 			return this.server.cache.handleDeleted(filename);
 		});
@@ -104,7 +120,7 @@ export default class Cache {
 		});
 	}
 
-	async clear() {
+	public async clear() {
 		// Remove contents but not the directory itself
 		for (const path of await readDirectory(this.cachePath)) {
 			await removeDirectory(path);
@@ -115,7 +131,7 @@ export default class Cache {
 		this.pendingWrites.clear();
 	}
 
-	async writePending(reason: "queue" | "end") {
+	private async writePending(reason: "queue" | "end") {
 		// Clear timer since we're now running
 		const {pendingWriteTimer} = this;
 		if (pendingWriteTimer !== undefined) {
@@ -141,7 +157,7 @@ export default class Cache {
 		}
 	}
 
-	addPendingWrite(path: AbsoluteFilePath, entry: CacheEntry) {
+	private addPendingWrite(path: AbsoluteFilePath, entry: CacheEntry) {
 		this.pendingWrites.set(path, entry);
 
 		// Set a write timer
@@ -163,7 +179,7 @@ export default class Cache {
 		);
 	}
 
-	async createEmptyEntry(path: AbsoluteFilePath): Promise<CacheEntry> {
+	private async createEmptyEntry(path: AbsoluteFilePath): Promise<CacheEntry> {
 		const {projectManager, memoryFs} = this.server;
 
 		const project: ProjectDefinition = await projectManager.assertProject(path);
@@ -186,20 +202,20 @@ export default class Cache {
 		};
 	}
 
-	getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {
+	private getCacheFilename(path: AbsoluteFilePath): AbsoluteFilePath {
 		const uid = this.server.projectManager.getUid(path, true);
 		// We add a single underscore to prevent the extension from being registered
 		return this.cachePath.append(`${uid}_`);
 	}
 
-	async handleDeleted(path: AbsoluteFilePath) {
+	private async handleDeleted(path: AbsoluteFilePath) {
 		// Handle the file not existing
 		const cacheFilename = this.getCacheFilename(path);
 		await removeFile(cacheFilename);
 		this.loadedEntries.delete(path);
 	}
 
-	async get(path: AbsoluteFilePath): Promise<CacheEntry> {
+	public async get(path: AbsoluteFilePath): Promise<CacheEntry> {
 		const emptyEntry = await this.createEmptyEntry(path);
 
 		// If we have a loaded memory entry, make sure it's valid compared to the default entry (file changes etc)
@@ -221,7 +237,7 @@ export default class Cache {
 		return entry;
 	}
 
-	async checkPossibleDiskCacheEntry(
+	private async checkPossibleDiskCacheEntry(
 		cacheFilename: AbsoluteFilePath,
 		emptyEntry: CacheEntry,
 	): Promise<CacheEntry> {
@@ -248,7 +264,7 @@ export default class Cache {
 		}
 	}
 
-	async update(
+	public async update(
 		path: AbsoluteFilePath,
 		partialEntryCallback:
 			| Partial<CacheEntry>

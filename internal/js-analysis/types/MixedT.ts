@@ -12,21 +12,21 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class MixedT extends T {
-	static type = "MixedT";
+	public static type = "MixedT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new MixedT(scope, originNode);
 	}
 
-	compatibleWith(): boolean {
+	public compatibleWith(): boolean {
 		return false;
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`mixed`;
 	}
 }

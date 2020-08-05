@@ -41,12 +41,12 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		this.name = "DiagnosticsError";
 	}
 
-	_memoMessage: string | undefined;
-	_message: string;
+	private _memoMessage: string | undefined;
+	private _message: string;
 
 	// Lazily instantiate this. If we ever catchDiagnostics we wont even care about the `message`
 	// so this avoids having to print it to a string
-	get message(): string {
+	public get message(): string {
 		if (this._memoMessage !== undefined) {
 			return this._memoMessage;
 		}
@@ -83,8 +83,8 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 		return message;
 	}
 
-	diagnostics: Diagnostics;
-	suppressions: DiagnosticSuppressions;
+	public diagnostics: Diagnostics;
+	public suppressions: DiagnosticSuppressions;
 }
 
 export function createSingleDiagnosticError(

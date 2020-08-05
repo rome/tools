@@ -14,8 +14,8 @@ import {
 	DiagnosticsProcessor,
 	derivePositionlessKeyFromDiagnostic,
 } from "@internal/diagnostics";
-import {ServerQueryResponse} from "@internal/core";
-import {ClientRequestFlags} from "@internal/core";
+import {ClientRequestFlags, ServerQueryResponse} from "@internal/core";
+
 import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 import {markup} from "@internal/markup";

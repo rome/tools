@@ -23,24 +23,13 @@ export default class ArraySet {
 		this.set = new Map();
 	}
 
-	array: Array<string>;
-	set: Map<string, number>;
-
-	/**
-   * Static method for creating ArraySet instances from 'an existing array.
-   */
-	static fromArray(array: Array<string>, allowDuplicates: boolean): ArraySet {
-		const set = new ArraySet();
-		for (const item of array) {
-			set.add(item, allowDuplicates);
-		}
-		return set;
-	}
+	private array: Array<string>;
+	private set: Map<string, number>;
 
 	/**
    * Add the given string to this set.
    */
-	add(str: string, allowDuplicates?: boolean): void {
+	public add(str: string, allowDuplicates?: boolean): void {
 		const isDuplicate = this.has(str);
 		const idx = this.array.length;
 
@@ -56,14 +45,14 @@ export default class ArraySet {
 	/**
    * Is the given string a member of this set?
    */
-	has(str: string): boolean {
+	private has(str: string): boolean {
 		return this.set.has(str);
 	}
 
 	/**
    * What is the index of the given string in the array?
    */
-	indexOf(str: string): number {
+	public indexOf(str: string): number {
 		const idx = this.set.get(str);
 		if (idx === undefined || idx < 0) {
 			throw new Error(`${str} is not in the set`);
@@ -72,22 +61,11 @@ export default class ArraySet {
 	}
 
 	/**
-   * What is the element at the given index?
-   */
-	at(idx: number): string {
-		if (idx >= 0 && idx < this.array.length) {
-			return this.array[idx];
-		} else {
-			throw new Error(`No element indexed by ${idx}`);
-		}
-	}
-
-	/**
    * Returns the array representation of this set (which has the proper indices
    * indicated by indexOf). Note that this is a copy of the internal array used
    * for storing the members so that no one can mess with internal state.
    */
-	toArray(): Array<string> {
+	public toArray(): Array<string> {
 		return this.array.slice();
 	}
 }

@@ -1,6 +1,7 @@
 import {Scope} from "@internal/compiler";
 import {AnyNode} from "@internal/ast";
-import {getCreateElementProp, isCreateElement} from ".";
+import getCreateElementProp from "./getCreateElementProp";
+import isCreateElement from "./isCreateElement";
 
 export default function getCreateElementChildren(
 	node: AnyNode,

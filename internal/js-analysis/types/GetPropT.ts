@@ -30,19 +30,19 @@ export default class GetPropT extends T {
 		this.property = property;
 	}
 
-	static type = "GetPropT";
+	public static type = "GetPropT";
 
-	object: T;
-	property: T;
+	private object: T;
+	private property: T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			object: addType(this.object),
 			property: addType(this.property),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -56,7 +56,7 @@ export default class GetPropT extends T {
 		);
 	}
 
-	lookup(
+	private lookup(
 		object: T,
 		property: T,
 		opts: {
@@ -140,7 +140,7 @@ export default class GetPropT extends T {
 		}
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		return this.lookup(this.object, this.property);
 	}
 }

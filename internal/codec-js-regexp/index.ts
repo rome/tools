@@ -147,18 +147,18 @@ export const createRegExpParser = createParser((ParserCore) =>
 			this.unicode = opts.unicode;
 		}
 
-		diagnostics: Diagnostics;
-		unicode: boolean;
+		private diagnostics: Diagnostics;
+		private unicode: boolean;
 
-		addDiagnostic(opts: ParserUnexpectedOptions): void {
+		public addDiagnostic(opts: ParserUnexpectedOptions): void {
 			this.diagnostics.push(this.createDiagnostic(opts));
 		}
 
-		unexpected(): never {
+		public unexpected(): never {
 			throw new Error("No throwing");
 		}
 
-		tokenize(index: Number0): TokenValues<Tokens> {
+		protected tokenize(index: Number0): TokenValues<Tokens> {
 			const char = this.getInputCharOnly(index);
 
 			if (char === "\\") {
@@ -495,7 +495,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			);
 		}
 
-		getGroupModifiers(): undefined | GroupModifiers {
+		private getGroupModifiers(): undefined | GroupModifiers {
 			const token = this.getToken();
 
 			if (token.type === "Character") {
@@ -594,12 +594,12 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		matchOperator(op: string): boolean {
+		private matchOperator(op: string): boolean {
 			const token = this.getToken();
 			return token.type === "Operator" && token.value === op;
 		}
 
-		eatOperator(op: string): boolean {
+		private eatOperator(op: string): boolean {
 			if (this.matchOperator(op)) {
 				this.nextToken();
 				return true;
@@ -608,7 +608,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseGroupCapture(): JSRegExpGroupCapture | JSRegExpGroupNonCapture {
+		private parseGroupCapture(): JSRegExpGroupCapture | JSRegExpGroupNonCapture {
 			const start = this.getPosition();
 			this.nextToken();
 
@@ -644,7 +644,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseCharSet(): JSRegExpCharSet {
+		private parseCharSet(): JSRegExpCharSet {
 			const start = this.getPosition();
 			this.nextToken();
 
@@ -671,7 +671,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			};
 		}
 
-		getCharacterFromToken(token: TokenValues<Tokens>): string {
+		private getCharacterFromToken(token: TokenValues<Tokens>): string {
 			switch (token.type) {
 				case "Character":
 				case "Operator":
@@ -687,7 +687,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseCharacter(): AnyJSRegExpEscapedCharacter {
+		private parseCharacter(): AnyJSRegExpEscapedCharacter {
 			const token = this.getToken();
 
 			if (token.type === "Character") {
@@ -798,7 +798,9 @@ export const createRegExpParser = createParser((ParserCore) =>
 			};
 		}
 
-		parseCharacterOrRange(): AnyJSRegExpEscapedCharacter | JSRegExpCharSetRange {
+		private parseCharacterOrRange():
+			| AnyJSRegExpEscapedCharacter
+			| JSRegExpCharSetRange {
 			const startPos = this.getPosition();
 			let start = this.parseCharacter();
 
@@ -845,7 +847,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return start;
 		}
 
-		parseDigits(): undefined | number {
+		private parseDigits(): undefined | number {
 			let digits = "";
 			let token = this.getToken();
 			while (token.type === "Character" && isDigit(token.value)) {
@@ -860,7 +862,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseQuantifier():
+		private parseQuantifier():
 			| undefined
 			| {
 					min: number;
@@ -939,7 +941,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseBodyItem(): undefined | AnyJSRegExpBodyItem {
+		private parseBodyItem(): undefined | AnyJSRegExpBodyItem {
 			const start = this.getPosition();
 
 			const prefix = this.parseBodyItemPrefix();
@@ -971,7 +973,9 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return target;
 		}
 
-		parseOperator(token: Tokens["Operator"]): undefined | AnyJSRegExpBodyItem {
+		private parseOperator(
+			token: Tokens["Operator"],
+		): undefined | AnyJSRegExpBodyItem {
 			switch (token.value) {
 				case "$": {
 					this.nextToken();
@@ -1051,7 +1055,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseBodyItemPrefix(): undefined | AnyJSRegExpBodyItem {
+		private parseBodyItemPrefix(): undefined | AnyJSRegExpBodyItem {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -1073,7 +1077,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseExpression(
+		private parseExpression(
 			whileCallback?: () => boolean,
 		): JSRegExpSubExpression | JSRegExpAlternation {
 			const alternations: Array<{
@@ -1150,7 +1154,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return expression;
 		}
 
-		parse(): {
+		public parse(): {
 			expression: AnyJSRegExpExpression;
 			diagnostics: Diagnostics;
 		} {

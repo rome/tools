@@ -114,27 +114,27 @@ export default class ParserCore<
 		};
 	}
 
-	comments: CommentsConsumer;
-	indexTracker: PositionTracker;
-	diagnosticCategory: DiagnosticCategory;
-	tokenizing: boolean;
-	nextTokenIndex: Number0;
-	state: State;
-	prevToken: TokenValues<Tokens>;
-	currentToken: TokenValues<Tokens>;
-	eofToken: EOFToken;
-	ignoreWhitespaceTokens: boolean;
+	public comments: CommentsConsumer;
+	protected indexTracker: PositionTracker;
+	private diagnosticCategory: DiagnosticCategory;
+	private tokenizing: boolean;
+	private nextTokenIndex: Number0;
+	public state: State;
+	private prevToken: TokenValues<Tokens>;
+	private currentToken: TokenValues<Tokens>;
+	private eofToken: EOFToken;
+	protected ignoreWhitespaceTokens: boolean;
 
-	path: undefined | UnknownFilePath;
-	filename: undefined | string;
-	mtime: undefined | number;
-	input: string;
-	sourceText: string;
-	length: Number0;
-	currLine: Number1;
-	currColumn: Number0;
+	public path: undefined | UnknownFilePath;
+	public filename: undefined | string;
+	public input: string;
+	protected mtime: undefined | number;
+	private sourceText: string;
+	public length: Number0;
+	private currLine: Number1;
+	private currColumn: Number0;
 
-	static createInitialState(): ParserCoreState {
+	public static createInitialState(): ParserCoreState {
 		return {
 			corrupt: false,
 			trailingComments: [],
@@ -147,7 +147,7 @@ export default class ParserCore<
 		};
 	}
 
-	getPathAssert(): UnknownFilePath {
+	protected getPathAssert(): UnknownFilePath {
 		const {path} = this;
 		if (path === undefined) {
 			throw new Error("Path expected but none was passed to this Parser");
@@ -156,7 +156,7 @@ export default class ParserCore<
 		}
 	}
 
-	getFilenameAssert(): string {
+	protected getFilenameAssert(): string {
 		const {filename} = this;
 		if (filename === undefined) {
 			throw new Error("Filename expected but none was passed to this Parser");
@@ -166,7 +166,7 @@ export default class ParserCore<
 	}
 
 	// Run the tokenizer over all tokens
-	tokenizeAll(): Array<TokenValues<Tokens>> {
+	public tokenizeAll(): Array<TokenValues<Tokens>> {
 		const tokens: Array<TokenValues<Tokens>> = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
@@ -192,12 +192,12 @@ export default class ParserCore<
 	}
 
 	// Tokenize method that must be implemented by subclasses
-	tokenize(index: Number0): undefined | TokenValues<Tokens> {
+	protected tokenize(index: Number0): undefined | TokenValues<Tokens> {
 		throw new Error("Unimplemented");
 	}
 
 	// Alternate tokenize method to allow that allows the use of state
-	tokenizeWithState(
+	protected tokenizeWithState(
 		index: Number0,
 		state: State,
 	):
@@ -214,7 +214,7 @@ export default class ParserCore<
 		}
 	}
 
-	_tokenizeWithState(
+	private _tokenizeWithState(
 		index: Number0,
 		state: State,
 	):
@@ -237,7 +237,7 @@ export default class ParserCore<
 	}
 
 	// Get the current token
-	getToken(): TokenValues<Tokens> {
+	protected getToken(): TokenValues<Tokens> {
 		const {currentToken} = this;
 		if (currentToken === SOF_TOKEN) {
 			return this.nextToken();
@@ -246,11 +246,11 @@ export default class ParserCore<
 		}
 	}
 
-	getPrevToken(): TokenValues<Tokens> {
+	private getPrevToken(): TokenValues<Tokens> {
 		return this.prevToken;
 	}
 
-	save(): ParserSnapshot<Tokens, State> {
+	protected save(): ParserSnapshot<Tokens, State> {
 		return {
 			nextTokenIndex: this.nextTokenIndex,
 			currentToken: this.currentToken,
@@ -259,7 +259,7 @@ export default class ParserCore<
 		};
 	}
 
-	restore(snapshot: ParserSnapshot<Tokens, State>) {
+	protected restore(snapshot: ParserSnapshot<Tokens, State>) {
 		this.nextTokenIndex = snapshot.nextTokenIndex;
 		this.currentToken = snapshot.currentToken;
 		this.prevToken = snapshot.prevToken;
@@ -267,7 +267,7 @@ export default class ParserCore<
 	}
 
 	// Advance to the next token, returning the new one
-	nextToken(): TokenValues<Tokens> {
+	protected nextToken(): TokenValues<Tokens> {
 		if (this.isEOF(this.nextTokenIndex)) {
 			this.currentToken = this.eofToken;
 			return this.eofToken;
@@ -303,12 +303,12 @@ export default class ParserCore<
 	}
 
 	// Get the start index of the current token
-	getIndex(): Number0 {
+	public getIndex(): Number0 {
 		return this.currentToken.start;
 	}
 
 	// Get the position of the current token
-	getPosition(): Position {
+	protected getPosition(): Position {
 		const index = this.getIndex();
 		const cached = this.indexTracker.cachedPositions.get(index);
 		if (cached !== undefined) {
@@ -324,17 +324,17 @@ export default class ParserCore<
 	}
 
 	// Get the end position of the previous token
-	getLastEndPosition(): Position {
+	protected getLastEndPosition(): Position {
 		return this.getPositionFromIndex(this.prevToken.end);
 	}
 
 	// Return the token that's after this current token without advancing to it
-	lookaheadToken(index?: Number0): TokenValues<Tokens> {
+	protected lookaheadToken(index?: Number0): TokenValues<Tokens> {
 		return this.lookahead(index).token;
 	}
 
 	// Return the token and state that's after the current token without advancing to it
-	lookahead(
+	protected lookahead(
 		index: Number0 = this.nextTokenIndex,
 	): {
 		token: TokenValues<Tokens>;
@@ -367,15 +367,18 @@ export default class ParserCore<
 		return nextToken;
 	}
 
-	getPositionFromIndex(index: Number0): Position {
+	public getPositionFromIndex(index: Number0): Position {
 		return this.indexTracker.getPositionFromIndex(index);
 	}
 
-	getIndexFromPosition(pos: Position, filename: undefined | string): Number0 {
+	public getIndexFromPosition(
+		pos: Position,
+		filename: undefined | string,
+	): Number0 {
 		return this.indexTracker.getIndexFromPosition(pos, filename);
 	}
 
-	createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
+	protected createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
 		let {description} = opts;
 		const location = this.getDiagnosticLocation(opts);
@@ -408,15 +411,15 @@ export default class ParserCore<
 	}
 
 	// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-	unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
+	public unexpected(opts: ParserUnexpectedOptions = {}): DiagnosticsError {
 		return createSingleDiagnosticError(this.createDiagnostic(opts));
 	}
 
-	unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
+	protected unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
 		this.addDiagnostic(this.createDiagnostic(opts));
 	}
 
-	getDiagnosticLocation(
+	protected getDiagnosticLocation(
 		opts: Omit<ParserUnexpectedOptions, "description"> = {},
 	): RequiredProps<DiagnosticLocation, "start" | "end"> {
 		let {start, end, token} = opts;
@@ -482,7 +485,7 @@ export default class ParserCore<
 	}
 
 	//# Token utility methods
-	assertNoSpace(): void {
+	public assertNoSpace(): void {
 		if (this.currentToken.start !== this.prevToken.end) {
 			throw this.unexpected({
 				description: descriptions.PARSER_CORE.EXPECTED_SPACE,
@@ -491,7 +494,7 @@ export default class ParserCore<
 	}
 
 	// If the current token is the specified type then return the next token, otherwise return null
-	eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
+	protected eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
 		if (this.matchToken(type)) {
 			return this.nextToken();
 		} else {
@@ -499,22 +502,22 @@ export default class ParserCore<
 		}
 	}
 
-	didEatToken(type: keyof Tokens): boolean {
+	private didEatToken(type: keyof Tokens): boolean {
 		return this.eatToken(type) !== undefined;
 	}
 
 	// Check if we're at the end of the input
-	isEOF(index: Number0): boolean {
+	protected isEOF(index: Number0): boolean {
 		return ob1Get0(index) >= this.input.length;
 	}
 
 	// Check if the current token matches the input type
-	matchToken(type: keyof Tokens): boolean {
+	protected matchToken(type: keyof Tokens): boolean {
 		return this.getToken().type === type;
 	}
 
 	// Get the current token and assert that it's of the specified type, the token stream will also be advanced
-	expectToken<Type extends keyof Tokens>(
+	protected expectToken<Type extends keyof Tokens>(
 		type: Type,
 		_metadata?: DiagnosticDescription,
 	): Tokens[Type] {
@@ -535,7 +538,7 @@ export default class ParserCore<
 		}
 	}
 
-	getInputRange(
+	protected getInputRange(
 		start: Number0,
 		count: number,
 		startOffset?: number,
@@ -548,11 +551,11 @@ export default class ParserCore<
 		return [this.input.slice(startIndex, endIndex), ob1Coerce0(endIndex + 1)];
 	}
 
-	getInputCharOnly(index: Number0, offset?: number): string {
+	protected getInputCharOnly(index: Number0, offset?: number): string {
 		return this.getInputChar(index, offset)[0];
 	}
 
-	getInputChar(index: Number0, offset?: number): [string, Number0] {
+	protected getInputChar(index: Number0, offset?: number): [string, Number0] {
 		const {input} = this;
 
 		// Allow passing in an `offset` to avoid callsites having to do `ob1Add` themselves
@@ -569,7 +572,7 @@ export default class ParserCore<
 	}
 
 	// Read from the input starting at the specified index, until the callback returns false
-	readInputFrom(
+	protected readInputFrom(
 		index: Number0,
 		callback?: (char: string, index: Number0, input: string) => boolean,
 	): [string, Number0, boolean] {
@@ -596,21 +599,21 @@ export default class ParserCore<
 	}
 
 	// Get the string between the specified range
-	getRawInput(start: Number0, end: Number0): string {
+	public getRawInput(start: Number0, end: Number0): string {
 		return this.input.slice(ob1Get0(start), ob1Get0(end));
 	}
 
-	getInputStartIndex(node: undefined | NodeBase): Number0 {
+	public getInputStartIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
 		return this.getIndexFromPosition(loc.start, loc.filename);
 	}
 
-	getInputEndIndex(node: undefined | NodeBase): Number0 {
+	public getInputEndIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
 		return this.getIndexFromPosition(loc.end, loc.filename);
 	}
 
-	getLoc(node: undefined | NodeBase): SourceLocation {
+	public getLoc(node: undefined | NodeBase): SourceLocation {
 		if (node === undefined || node.loc === undefined) {
 			throw new Error("Tried to fetch node loc start but none found");
 		} else {
@@ -620,7 +623,7 @@ export default class ParserCore<
 
 	//# Token finalization
 
-	finishToken<Type extends string>(
+	protected finishToken<Type extends string>(
 		type: Type,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
 	): SimpleToken<Type> {
@@ -631,7 +634,7 @@ export default class ParserCore<
 		};
 	}
 
-	finishValueToken<Type extends string, Value>(
+	protected finishValueToken<Type extends string, Value>(
 		type: Type,
 		value: Value,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
@@ -644,7 +647,7 @@ export default class ParserCore<
 		};
 	}
 
-	finishComplexToken<Type extends string, Data>(
+	protected finishComplexToken<Type extends string, Data>(
 		type: Type,
 		data: Data,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
@@ -659,18 +662,18 @@ export default class ParserCore<
 
 	//# SourceLocation finalization
 
-	finishLocFromToken(token: TokenBase): SourceLocation {
+	protected finishLocFromToken(token: TokenBase): SourceLocation {
 		return this.finishLocAt(
 			this.getPositionFromIndex(token.start),
 			this.getPositionFromIndex(token.end),
 		);
 	}
 
-	finishLoc(start: Position): SourceLocation {
+	public finishLoc(start: Position): SourceLocation {
 		return this.finishLocAt(start, this.getLastEndPosition());
 	}
 
-	finishLocAt(start: Position, end: Position): SourceLocation {
+	public finishLocAt(start: Position, end: Position): SourceLocation {
 		return {
 			filename: this.filename,
 			start,
@@ -680,21 +683,24 @@ export default class ParserCore<
 
 	//# Node finalization
 
-	finalizeNode<T extends AnyNode>(node: T): T {
+	public finalizeNode<T extends AnyNode>(node: T): T {
 		// @ts-ignore
 		attachComments(this, node);
 		return node;
 	}
 
 	// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
-	finishNodeWithStarts<T extends AnyNode>(starts: Array<Position>, node: T): T {
+	public finishNodeWithStarts<T extends AnyNode>(
+		starts: Array<Position>,
+		node: T,
+	): T {
 		for (const start of starts) {
 			node = this.finishNode(start, node);
 		}
 		return node;
 	}
 
-	finishNode<T extends AnyNode>(
+	public finishNode<T extends AnyNode>(
 		start: Position,
 		node: T,
 	): T & {
@@ -703,7 +709,7 @@ export default class ParserCore<
 		return this.finishNodeAt(start, this.getLastEndPosition(), node);
 	}
 
-	finishNodeAt<T extends AnyNode>(
+	public finishNodeAt<T extends AnyNode>(
 		start: Position,
 		end: Position,
 		node: T,
@@ -720,7 +726,7 @@ export default class ParserCore<
 		return this.finalizeNode(newNode);
 	}
 
-	finishRoot<T extends object>(node: T): T & RootBase {
+	public finishRoot<T extends object>(node: T): T & RootBase {
 		return {
 			...node,
 			corrupt: this.state.corrupt,
@@ -731,7 +737,7 @@ export default class ParserCore<
 		};
 	}
 
-	finalize(): void {
+	protected finalize(): void {
 		if (!this.eatToken("EOF")) {
 			throw this.unexpected({
 				description: descriptions.PARSER_CORE.EXPECTED_EOF,
@@ -741,7 +747,7 @@ export default class ParserCore<
 
 	//# Diagnostics
 
-	getDiagnostics(): Diagnostics {
+	public getDiagnostics(): Diagnostics {
 		const collector = new DiagnosticsProcessor({
 			origins: [
 				{
@@ -759,21 +765,21 @@ export default class ParserCore<
 		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
 	}
 
-	addDiagnostic(diag: Diagnostic) {
+	public addDiagnostic(diag: Diagnostic) {
 		this.state.diagnostics.push(diag);
 	}
 
-	addDiagnosticFilter(diag: DiagnosticFilter) {
+	public addDiagnosticFilter(diag: DiagnosticFilter) {
 		this.state.diagnosticFilters.push(diag);
 	}
 
-	addCompleteDiagnostic(diags: Diagnostics) {
+	protected addCompleteDiagnostic(diags: Diagnostics) {
 		this.state.diagnostics = [...this.state.diagnostics, ...diags];
 	}
 
 	//# Comments
 
-	registerComment(comment: AnyComment) {
+	public registerComment(comment: AnyComment) {
 		this.state.comments.push(comment);
 		this.state.trailingComments.push(comment);
 		this.state.leadingComments.push(comment);
@@ -794,8 +800,8 @@ export class ParserWithRequiredPath<
 		this.path = this.getPathAssert();
 	}
 
-	path: UnknownFilePath;
-	filename: string;
+	public path: UnknownFilePath;
+	public filename: string;
 }
 
 const SOF_TOKEN: SOFToken = {

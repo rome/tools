@@ -13,6 +13,8 @@ export type AsyncVoidCallback<Args extends Array<unknown> = []> = (
 	...args: Args
 ) => void | undefined | Promise<void | undefined>;
 
+export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
+
 // rome-ignore lint/ts/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
 	new (

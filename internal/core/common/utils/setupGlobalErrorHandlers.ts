@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {VoidCallback} from "@internal/typescript-helpers";
+import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
 
 export default function setupGlobalErrorHandlers(
-	callback: (err: Error) => void,
+	callback: ErrorCallback,
 ): VoidCallback {
 	const onUncaughtException: NodeJS.UncaughtExceptionListener = (err: Error) => {
 		callback(err);

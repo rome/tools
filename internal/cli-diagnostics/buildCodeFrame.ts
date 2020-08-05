@@ -304,7 +304,15 @@ export default function buildCodeFrame(
 		if (line !== undefined) {
 			const text = line[0].slice(ob1Get0(start.column), ob1Get0(end.column));
 			if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
-				markerMessage = markup``;
+				for (const selection of formattedLines) {
+					if (
+						selection !== undefined &&
+						selection.marker !== undefined &&
+						selection.marker.message === markerMessage
+					) {
+						selection.marker.message = markup``;
+					}
+				}
 			}
 		}
 	}

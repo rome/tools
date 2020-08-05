@@ -8,7 +8,6 @@
 import {
 	AnyMarkup,
 	MarkupLineWrapMode,
-	MarkupParsedAttributes,
 	MarkupParsedChild,
 	MarkupParsedChildren,
 	MarkupParsedTag,
@@ -179,32 +178,32 @@ export default class Grid {
 		this.indentColumns = indentColumns;
 	}
 
-	indentColumns: Columns;
-	tabSize: number;
+	private indentColumns: Columns;
+	private tabSize: number;
 
-	features: TerminalFeatures;
-	lineWrapMode: MarkupLineWrapMode;
-	options: GridOptions;
-	lines: Array<GridLine>;
-	cursor: Cursor;
-	width: Number1;
-	viewportWidth: undefined | Number1;
+	public features: TerminalFeatures;
+	private lineWrapMode: MarkupLineWrapMode;
+	public options: GridOptions;
+	private lines: Array<GridLine>;
+	public cursor: Cursor;
+	private width: Number1;
+	public viewportWidth: undefined | Number1;
 
 	// This tracks information about how much of the original source we have printed
 	// We use this to point to and highlight certain sections. ie. drawPointer
-	sourceCursor: {
+	private sourceCursor: {
 		currentLineText: string;
 		currentLine: Number1;
 		currentColumn: Number1;
 	};
 
-	lineStartMeta: {
+	private lineStartMeta: {
 		softWrapped: boolean;
 		indentationCount: number;
 		sourceColumn: Number1;
 	};
 
-	debugState(): object {
+	private debugState(): object {
 		return {
 			cursor: this.cursor,
 			width: this.width,
@@ -222,7 +221,7 @@ export default class Grid {
 		};
 	}
 
-	alignRight() {
+	private alignRight() {
 		const viewportWidth = ob1Get(this.viewportWidth);
 		if (viewportWidth === undefined) {
 			return;
@@ -268,7 +267,7 @@ export default class Grid {
 		});
 	}
 
-	doesOverflowViewport(column: Number1): boolean {
+	private doesOverflowViewport(column: Number1): boolean {
 		return (
 			this.lineWrapMode !== "none" &&
 			this.viewportWidth !== undefined &&
@@ -276,11 +275,11 @@ export default class Grid {
 		);
 	}
 
-	getHeight(): Number1 {
+	private getHeight(): Number1 {
 		return ob1Coerce1(this.lines.length);
 	}
 
-	getLine(line: Number1): GridLine {
+	private getLine(line: Number1): GridLine {
 		const lineIndex = ob1Get1(line) - 1;
 		for (let i = lineIndex; i >= 0 && this.lines[i] === undefined; i--) {
 			this.clearLine(ob1Coerce1(i + 1));
@@ -288,19 +287,19 @@ export default class Grid {
 		return this.lines[lineIndex];
 	}
 
-	clearLine(line: Number1) {
+	private clearLine(line: Number1) {
 		this.lines[ob1Get1(line) - 1] = {ranges: [], columns: []};
 	}
 
-	getLineWidth(line: Number1): Number1 {
+	private getLineWidth(line: Number1): Number1 {
 		return ob1Coerce1(this.getLine(line).columns.length);
 	}
 
-	getWidth(): Number1 {
+	public getWidth(): Number1 {
 		return this.width;
 	}
 
-	getSize(): {
+	private getSize(): {
 		width: Number1;
 		height: Number1;
 	} {
@@ -310,11 +309,11 @@ export default class Grid {
 		};
 	}
 
-	getCursor(): Cursor {
+	private getCursor(): Cursor {
 		return {...this.cursor};
 	}
 
-	getLines(format: GridOutputFormat): Array<string> {
+	public getLines(format: GridOutputFormat): Array<string> {
 		switch (format) {
 			case "ansi":
 				return this.getFormattedAnsiLines();
@@ -327,7 +326,7 @@ export default class Grid {
 		}
 	}
 
-	getTrimmedLines(): Array<GridLine> {
+	private getTrimmedLines(): Array<GridLine> {
 		const lines = [...this.lines];
 
 		// Remove empty columns
@@ -339,13 +338,13 @@ export default class Grid {
 		return lines;
 	}
 
-	getUnformattedLines(): Array<string> {
+	private getUnformattedLines(): Array<string> {
 		return this.lines.map(({columns}) => {
 			return joinColumns(columns).trimRight();
 		});
 	}
 
-	getFormattedLines(
+	private getFormattedLines(
 		opts: {
 			normalizeText: (text: string) => string;
 			formatTag: (tag: MarkupParsedTag, inner: string) => string;
@@ -395,7 +394,7 @@ export default class Grid {
 		return lines;
 	}
 
-	getFormattedHtmlLines(): Array<string> {
+	private getFormattedHtmlLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => escapeXHTMLEntities(text),
 			formatTag: (tag, inner) => htmlFormatText(tag, inner),
@@ -403,7 +402,7 @@ export default class Grid {
 		});
 	}
 
-	getFormattedAnsiLines(): Array<string> {
+	private getFormattedAnsiLines(): Array<string> {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
 			formatTag: (tag, inner) => {
@@ -414,7 +413,7 @@ export default class Grid {
 	}
 
 	// Fill current cursor line with spaces until the column
-	fillCursor(cursor: Cursor) {
+	private fillCursor(cursor: Cursor) {
 		const line = this.getLine(cursor.line);
 		const colIndex = ob1Get1(cursor.column) - 1;
 
@@ -435,7 +434,7 @@ export default class Grid {
 		}
 	}
 
-	moveCursor(cursor: Cursor) {
+	private moveCursor(cursor: Cursor) {
 		if (cursor.line !== this.cursor.line) {
 			this.lineStartMeta.softWrapped = false;
 			this.lineStartMeta.indentationCount = 0;
@@ -445,7 +444,7 @@ export default class Grid {
 		this.cursor = cursor;
 	}
 
-	moveCursorRight(columns: Number1 = ob1Number1) {
+	private moveCursorRight(columns: Number1 = ob1Number1) {
 		const newColumns = ob1Add(this.cursor.column, columns);
 
 		// Perform character line wrap
@@ -485,33 +484,19 @@ export default class Grid {
 		}
 	}
 
-	userNewline() {
+	private userNewline() {
 		this.newline();
 		this.writeToCursor(this.cursor, "");
 	}
 
-	newline() {
+	private newline() {
 		this.moveCursor({
 			line: ob1Inc(this.getHeight()),
 			column: ob1Number1,
 		});
 	}
 
-	moveCursorStart() {
-		this.moveCursor({
-			line: this.cursor.line,
-			column: ob1Number1,
-		});
-	}
-
-	moveCursorDown(lines: Number1 = ob1Number1) {
-		this.moveCursor({
-			line: ob1Add(this.cursor.line, lines),
-			column: this.cursor.column,
-		});
-	}
-
-	writeToCursor(cursor: Cursor, char: Column) {
+	private writeToCursor(cursor: Cursor, char: Column) {
 		this.fillCursor(cursor);
 
 		const line = this.getLine(cursor.line);
@@ -530,7 +515,7 @@ export default class Grid {
 	}
 
 	// Build up columns with as many tabs as we can and then spaces
-	getSpaces(count: number): Columns {
+	private getSpaces(count: number): Columns {
 		let columns: Columns = [];
 		if (count === 0) {
 			return columns;
@@ -549,19 +534,19 @@ export default class Grid {
 		return columns;
 	}
 
-	drawSpaces(count: number) {
+	private drawSpaces(count: number) {
 		for (const char of this.getSpaces(count)) {
 			this.drawChar(char);
 		}
 	}
 
-	drawIndent() {
+	private drawIndent() {
 		for (const char of this.indentColumns) {
 			this.drawChar(char);
 		}
 	}
 
-	userChar(char: Column) {
+	private userChar(char: Column) {
 		if (char === "\t") {
 			this.drawIndent();
 		} else if (char === "\n") {
@@ -571,12 +556,12 @@ export default class Grid {
 		}
 	}
 
-	drawChar(char: Column) {
+	private drawChar(char: Column) {
 		this.writeToCursor(this.cursor, char);
 		this.moveCursorRight();
 	}
 
-	drawText(tag: MarkupParsedText, ancestry: Ancestry) {
+	private drawText(tag: MarkupParsedText, ancestry: Ancestry) {
 		this.writeText(tag.value, ancestry, tag.source);
 
 		if (!tag.source && tag.sourceValue !== undefined) {
@@ -586,7 +571,7 @@ export default class Grid {
 		}
 	}
 
-	moveSourceCursor(char: string) {
+	private moveSourceCursor(char: string) {
 		if (char === "\n") {
 			this.sourceCursor.currentLineText = "";
 			this.sourceCursor.currentColumn = ob1Number1;
@@ -597,25 +582,7 @@ export default class Grid {
 		}
 	}
 
-	isInsidePointer(): boolean {
-		const {sourceCursor} = this;
-		const {pointer} = this.options.view;
-
-		if (pointer === undefined) {
-			return false;
-		}
-
-		if (sourceCursor.currentLine !== pointer.line) {
-			return false;
-		}
-
-		return (
-			sourceCursor.currentColumn >= pointer.columnStart &&
-			sourceCursor.currentColumn <= pointer.columnEnd
-		);
-	}
-
-	writeText(text: string, ancestry: Ancestry, source: boolean) {
+	public writeText(text: string, ancestry: Ancestry, source: boolean) {
 		if (text === "") {
 			return;
 		}
@@ -686,7 +653,12 @@ export default class Grid {
 		this.addCursorRange(start, end, ancestry);
 	}
 
-	setRange(lineNo: Number1, start: Number1, end: Number1, ancestry: Ancestry) {
+	private setRange(
+		lineNo: Number1,
+		start: Number1,
+		end: Number1,
+		ancestry: Ancestry,
+	) {
 		if (start === end) {
 			// Nothing to format. Empty tag.
 			return;
@@ -724,7 +696,7 @@ export default class Grid {
 		});
 	}
 
-	addCursorRange(start: Cursor, end: Cursor, ancestry: Ancestry) {
+	private addCursorRange(start: Cursor, end: Cursor, ancestry: Ancestry) {
 		if (ancestry.length === 0) {
 			// No point storing a range without ancestry
 			return;
@@ -757,7 +729,7 @@ export default class Grid {
 		}
 	}
 
-	drawListTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+	private drawListTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		let items: Array<MarkupParsedTag> = [];
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "li") {
@@ -805,7 +777,7 @@ export default class Grid {
 		}
 	}
 
-	drawPointer(): boolean {
+	private drawPointer(): boolean {
 		const {pointer} = this.options.view;
 		const {sourceCursor, lineStartMeta, cursor} = this;
 		if (pointer === undefined) {
@@ -871,7 +843,7 @@ export default class Grid {
 		return true;
 	}
 
-	parse(
+	public parse(
 		sub: undefined | string | AnyMarkup,
 		offsetPosition: undefined | Position,
 	): MarkupParsedChildren {
@@ -884,17 +856,7 @@ export default class Grid {
 		);
 	}
 
-	parseAttribute(
-		attributes: MarkupParsedAttributes,
-		key: string,
-	): MarkupParsedChildren {
-		return this.parse(
-			attributes.get(key).asStringOrVoid(),
-			attributes.get(key).getDiagnosticLocation("inner-value").start,
-		);
-	}
-
-	getViewLinePrefixes(
+	private getViewLinePrefixes(
 		children: Array<MarkupParsedTag>,
 		ancestry: Ancestry,
 	): {
@@ -997,7 +959,7 @@ export default class Grid {
 		};
 	}
 
-	getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
+	private getViewPointer({attributes, children}: MarkupParsedTag): GridPointer {
 		return {
 			char: this.parse(
 				attributes.get("char").asString(""),
@@ -1010,7 +972,7 @@ export default class Grid {
 		};
 	}
 
-	drawViewTag(
+	private drawViewTag(
 		tag: MarkupParsedTag,
 		ancestry: Ancestry,
 		shrinkViewport?: Number1,
@@ -1120,7 +1082,7 @@ export default class Grid {
 		this.newline();
 	}
 
-	drawTableTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+	private drawTableTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		const rows: Rows = [];
 
 		for (const child of tag.children) {
@@ -1208,7 +1170,7 @@ export default class Grid {
 		}
 	}
 
-	drawIndentTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+	private drawIndentTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		// Optimization for nested indents
 		let levels = 1;
 		let children: MarkupParsedChildren = tag.children;
@@ -1233,13 +1195,13 @@ export default class Grid {
 	}
 
 	// Sometimes we derive a Grid from a tag that accepts an align attribute
-	maybeAlign(tag: MarkupParsedTag) {
+	private maybeAlign(tag: MarkupParsedTag) {
 		if (tag.attributes.get("align").asStringOrVoid() === "right") {
 			this.alignRight();
 		}
 	}
 
-	drawGrid(grid: Grid) {
+	private drawGrid(grid: Grid) {
 		const lines = grid.getTrimmedLines();
 		const cursor = this.getCursor();
 
@@ -1271,7 +1233,7 @@ export default class Grid {
 		}
 	}
 
-	drawTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+	private drawTag(tag: MarkupParsedTag, ancestry: Ancestry) {
 		const hook = hooks.get(tag.name);
 
 		const subAncestry: Ancestry = [...ancestry, tag];
@@ -1313,7 +1275,7 @@ export default class Grid {
 		}
 	}
 
-	drawChild(child: MarkupParsedChild, ancestry: Ancestry) {
+	private drawChild(child: MarkupParsedChild, ancestry: Ancestry) {
 		if (child.type === "Text") {
 			this.drawText(child, ancestry);
 		} else {
@@ -1321,13 +1283,15 @@ export default class Grid {
 		}
 	}
 
-	drawChildren(children: MarkupParsedChildren, ancestry: Ancestry) {
+	public drawChildren(children: MarkupParsedChildren, ancestry: Ancestry) {
 		for (const child of children) {
 			this.drawChild(child, ancestry);
 		}
 	}
 
-	normalizeChildren(children: MarkupParsedChildren): MarkupParsedChildren {
+	private normalizeChildren(
+		children: MarkupParsedChildren,
+	): MarkupParsedChildren {
 		let newChildren: MarkupParsedChildren = [];
 
 		for (const child of children) {
@@ -1337,7 +1301,7 @@ export default class Grid {
 		return newChildren;
 	}
 
-	normalizeChild(child: MarkupParsedChild): MarkupParsedChildren {
+	private normalizeChild(child: MarkupParsedChild): MarkupParsedChildren {
 		if (child.type === "Text") {
 			let {value} = child;
 

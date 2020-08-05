@@ -19,9 +19,12 @@ function hasImgAltText(node: JSXElement): boolean {
 	if (attr === undefined) {
 		return false;
 	}
-	return ((attr.value &&
+	return (
+		(attr.value &&
 		attr.value.type === "JSStringLiteral" &&
-		attr.value.value === "") || hasJSXAttribute(node, "alt"));
+		attr.value.value === "") ||
+		hasJSXAttribute(node, "alt")
+	);
 }
 
 function hasObjectAltText(node: JSXElement): boolean {
@@ -56,9 +59,11 @@ function hasTypeImage(node: JSXElement): boolean {
 	if (attr === undefined) {
 		return false;
 	}
-	return (attr.value !== undefined &&
+	return (
+		attr.value !== undefined &&
 		attr.value.type === "JSStringLiteral" &&
-		attr.value.value === "image");
+		attr.value.value === "image"
+	);
 }
 
 export default createVisitor({

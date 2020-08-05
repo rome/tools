@@ -137,24 +137,24 @@ export default class ProjectManager {
 		this.localPathToRemote = new AbsoluteFilePathMap();
 	}
 
-	server: Server;
+	private server: Server;
 
-	uidToFilename: Map<string, AbsoluteFilePath>;
-	filenameToUid: AbsoluteFilePathMap<string>;
+	private uidToFilename: Map<string, AbsoluteFilePath>;
+	private filenameToUid: AbsoluteFilePathMap<string>;
 
-	remoteToLocalPath: UnknownFilePathMap<AbsoluteFilePath>;
-	localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
+	private remoteToLocalPath: UnknownFilePathMap<AbsoluteFilePath>;
+	private localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
-	projectLoadingLocks: FilePathLocker;
+	private projectLoadingLocks: FilePathLocker;
 
-	projects: Map<number, ProjectDefinition>;
-	projectDirectoryToProject: AbsoluteFilePathMap<ProjectDefinition>;
-	projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
-	projectIdCounter: number;
+	private projects: Map<number, ProjectDefinition>;
+	private projectDirectoryToProject: AbsoluteFilePathMap<ProjectDefinition>;
+	private projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
+	private projectIdCounter: number;
 
-	async init() {
-		this.injectVirtualModules();
+	public async init() {
+		await this.injectVirtualModules();
 
 		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
 			this.handleDeleted(path);
@@ -177,8 +177,8 @@ export default class ProjectManager {
 
 	// Add a default project for virtual modules
 	// This will automatically be sent to workers
-	async injectVirtualModules() {
-		const projectDirectory = this.server.virtualModules.nullAbsolute;
+	private async injectVirtualModules() {
+		const projectDirectory = this.server.virtualModules.getMockDirectory();
 
 		const projectConfig: ProjectConfig = {
 			...createDefaultProjectConfig(),
@@ -192,7 +192,7 @@ export default class ProjectManager {
 		});
 	}
 
-	handleDeleted(path: AbsoluteFilePath) {
+	private handleDeleted(path: AbsoluteFilePath) {
 		const filename = path.join();
 
 		this.projectConfigDependenciesToIds.delete(path);
@@ -205,15 +205,15 @@ export default class ProjectManager {
 		}
 	}
 
-	getRemoteFromLocalPath(path: AbsoluteFilePath): undefined | URLFilePath {
+	public getRemoteFromLocalPath(path: AbsoluteFilePath): undefined | URLFilePath {
 		return this.localPathToRemote.get(path);
 	}
 
-	getFilePathFromUid(uid: string): undefined | AbsoluteFilePath {
+	public getFilePathFromUid(uid: string): undefined | AbsoluteFilePath {
 		return this.uidToFilename.get(uid);
 	}
 
-	getFilePathFromUidOrAbsolute(
+	public getFilePathFromUidOrAbsolute(
 		uid: undefined | string,
 	): undefined | AbsoluteFilePath {
 		if (uid === undefined) {
@@ -233,7 +233,7 @@ export default class ProjectManager {
 		return undefined;
 	}
 
-	normalizeFilenamesToFilePaths(
+	public normalizeFilenamesToFilePaths(
 		filenames: Iterable<undefined | string>,
 	): {
 		absolutes: AbsoluteFilePathSet;
@@ -260,7 +260,7 @@ export default class ProjectManager {
 		return {absolutes, others};
 	}
 
-	setUid(path: AbsoluteFilePath, uid: string) {
+	private setUid(path: AbsoluteFilePath, uid: string) {
 		const filename = path.join();
 
 		// Verify we didn't already generate this uid for another file
@@ -275,7 +275,7 @@ export default class ProjectManager {
 		this.filenameToUid.set(path, uid);
 	}
 
-	getUid(path: AbsoluteFilePath, allowMissing: boolean = false): string {
+	public getUid(path: AbsoluteFilePath, allowMissing: boolean = false): string {
 		// We maintain a map of file paths to UIDs
 		// We clear the UID when a path is deleted.
 		// If getUid is called on a file that doesn't exist then we'll populate it and it will exist forever.
@@ -335,7 +335,7 @@ export default class ProjectManager {
 		return uid;
 	}
 
-	getFileReference(path: AbsoluteFilePath): FileReference {
+	public getFileReference(path: AbsoluteFilePath): FileReference {
 		const project = this.assertProjectExisting(path);
 		const uid = this.getUid(path);
 		const pkg = this.server.memoryFs.getOwnedManifest(path);
@@ -349,7 +349,10 @@ export default class ProjectManager {
 		};
 	}
 
-	getURLFileReference(local: AbsoluteFilePath, url: URLFilePath): FileReference {
+	public getURLFileReference(
+		local: AbsoluteFilePath,
+		url: URLFilePath,
+	): FileReference {
 		if (!this.remoteToLocalPath.has(url)) {
 			this.remoteToLocalPath.set(url, local);
 			this.localPathToRemote.set(local, url);
@@ -358,7 +361,7 @@ export default class ProjectManager {
 		return this.getFileReference(local);
 	}
 
-	getTransportFileReference(path: AbsoluteFilePath): JSONFileReference {
+	public getTransportFileReference(path: AbsoluteFilePath): JSONFileReference {
 		const ref = this.getFileReference(path);
 		return {
 			...ref,
@@ -367,7 +370,9 @@ export default class ProjectManager {
 		};
 	}
 
-	async maybeEvictPossibleConfig(path: AbsoluteFilePath): Promise<boolean> {
+	public async maybeEvictPossibleConfig(
+		path: AbsoluteFilePath,
+	): Promise<boolean> {
 		// TODO not sure if this case handles new manifests?
 		// check if this filename is a rome config dependency
 		const projectIds = this.projectConfigDependenciesToIds.get(path);
@@ -411,7 +416,7 @@ export default class ProjectManager {
 		return true;
 	}
 
-	async evictProject(project: ProjectDefinition) {
+	public async evictProject(project: ProjectDefinition) {
 		const evictProjectId = project.id;
 
 		// Remove the config locs from our internal map that belong to this project
@@ -468,11 +473,14 @@ export default class ProjectManager {
 		this.server.memoryFs.unwatch(project.directory);
 	}
 
-	getProjects(): Array<ProjectDefinition> {
+	public getProjects(): Array<ProjectDefinition> {
 		return Array.from(this.projects.values());
 	}
 
-	addDependencyToProjectId(path: AbsoluteFilePath, projectId: number): void {
+	private addDependencyToProjectId(
+		path: AbsoluteFilePath,
+		projectId: number,
+	): void {
 		const ids = this.projectConfigDependenciesToIds.get(path);
 
 		if (ids === undefined) {
@@ -482,7 +490,7 @@ export default class ProjectManager {
 		}
 	}
 
-	findProjectConfigConsumer(
+	public findProjectConfigConsumer(
 		def: ProjectDefinition,
 		test: (consumer: Consumer) => undefined | false | Consumer,
 	): ProjectConfigSource {
@@ -498,7 +506,7 @@ export default class ProjectManager {
 		return {value: undefined, consumer: meta.consumer};
 	}
 
-	async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
+	public async getVCSClient(project: ProjectDefinition): Promise<VCSClient> {
 		const client = await this.maybeGetVCSClient(project);
 
 		if (client === undefined) {
@@ -529,13 +537,13 @@ export default class ProjectManager {
 		}
 	}
 
-	async maybeGetVCSClient(
+	public async maybeGetVCSClient(
 		project: ProjectDefinition,
 	): Promise<undefined | VCSClient> {
 		return await getVCSClient(project.config.vcs.root);
 	}
 
-	addDiskProject(
+	public addDiskProject(
 		opts: {
 			projectDirectory: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
@@ -565,7 +573,7 @@ export default class ProjectManager {
 		);
 	}
 
-	async declareProject(
+	private async declareProject(
 		{
 			projectDirectory,
 			meta,
@@ -615,10 +623,10 @@ export default class ProjectManager {
 		}
 
 		// Notify other pieces of our creation
-		this.server.workerManager.onNewProject(project);
+		await this.server.workerManager.onNewProject(project);
 	}
 
-	declareManifest(
+	public declareManifest(
 		project: ProjectDefinition,
 		isProjectPackage: boolean,
 		def: ManifestDefinition,
@@ -662,7 +670,7 @@ export default class ProjectManager {
 		}
 	}
 
-	async notifyWorkersOfProjects(
+	public async notifyWorkersOfProjects(
 		workers: Array<WorkerContainer>,
 		projects?: Array<ProjectDefinition>,
 	): Promise<void> {
@@ -703,7 +711,7 @@ export default class ProjectManager {
 		await Promise.all(promises);
 	}
 
-	async assertProject(
+	public async assertProject(
 		path: AbsoluteFilePath,
 		location?: DiagnosticLocation,
 	): Promise<ProjectDefinition> {
@@ -727,12 +735,12 @@ export default class ProjectManager {
 		}
 	}
 
-	hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
+	private hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
 		return this.projectDirectoryToProject.has(path);
 	}
 
 	// Convenience method to get the project config and pass it to the file handler class
-	getHandlerWithProject(path: AbsoluteFilePath): GetFileHandlerResult {
+	public getHandlerWithProject(path: AbsoluteFilePath): GetFileHandlerResult {
 		const project = this.findLoadedProject(path);
 		if (project === undefined) {
 			return {ext: "", handler: undefined};
@@ -741,16 +749,9 @@ export default class ProjectManager {
 		}
 	}
 
-	getHierarchyFromFilename(path: AbsoluteFilePath): Array<ProjectDefinition> {
-		const project = this.findLoadedProject(path);
-		if (project === undefined) {
-			return [];
-		} else {
-			return this.getHierarchyFromProject(project);
-		}
-	}
-
-	getHierarchyFromProject(project: ProjectDefinition): Array<ProjectDefinition> {
+	public getHierarchyFromProject(
+		project: ProjectDefinition,
+	): Array<ProjectDefinition> {
 		const projects: Array<ProjectDefinition> = [];
 
 		let currProject: undefined | ProjectDefinition = project;
@@ -768,7 +769,7 @@ export default class ProjectManager {
 		return projects;
 	}
 
-	assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
+	public assertProjectExisting(path: AbsoluteFilePath): ProjectDefinition {
 		const project = this.findLoadedProject(path);
 		if (project === undefined) {
 			throw new Error(
@@ -781,11 +782,15 @@ export default class ProjectManager {
 		return project;
 	}
 
-	getProjectFromPath(path: AbsoluteFilePath): undefined | ProjectDefinition {
+	public getProjectFromPath(
+		path: AbsoluteFilePath,
+	): undefined | ProjectDefinition {
 		return this.projectDirectoryToProject.get(path);
 	}
 
-	findLoadedProject(path: AbsoluteFilePath): undefined | ProjectDefinition {
+	public findLoadedProject(
+		path: AbsoluteFilePath,
+	): undefined | ProjectDefinition {
 		for (const dir of path.getChain()) {
 			const project = this.projectDirectoryToProject.get(dir);
 			if (project !== undefined) {
@@ -797,7 +802,7 @@ export default class ProjectManager {
 	}
 
 	// Attempt to find a project on the real disk and seed it into the memory file system
-	async findProject(
+	public async findProject(
 		cwd: AbsoluteFilePath,
 	): Promise<undefined | ProjectDefinition> {
 		// Check if we have an existing project
@@ -876,7 +881,7 @@ export default class ProjectManager {
 	}
 
 	// Refuse to load project path or root as valid project directories
-	isBannedProjectPath(projectFolder: AbsoluteFilePath): boolean {
+	public isBannedProjectPath(projectFolder: AbsoluteFilePath): boolean {
 		return (
 			projectFolder.isRoot() ||
 			PROJECT_CONFIG_SENSITIVE_DIRECTORIES.has(projectFolder)
@@ -884,7 +889,7 @@ export default class ProjectManager {
 	}
 
 	// Create a diagnostic if the project folder is sensitive
-	isLoadingBannedProjectPath(
+	private isLoadingBannedProjectPath(
 		projectFolder: AbsoluteFilePath,
 		configPath: AbsoluteFilePath,
 		diagnostics: DiagnosticsProcessor,
@@ -904,7 +909,7 @@ export default class ProjectManager {
 		}
 	}
 
-	checkPathForIncorrectConfig(
+	public checkPathForIncorrectConfig(
 		path: AbsoluteFilePath,
 		diagnostics: DiagnosticsProcessor,
 	) {

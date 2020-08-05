@@ -12,21 +12,21 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class AnyT extends T {
-	static type = "AnyT";
+	public static type = "AnyT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: AnyNode): T {
+	public static hydrate(scope: Scope, originNode: AnyNode): T {
 		return new AnyT(scope, originNode);
 	}
 
-	compatibleWith(): boolean {
+	public compatibleWith(): boolean {
 		return true;
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`any`;
 	}
 }

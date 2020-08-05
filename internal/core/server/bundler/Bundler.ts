@@ -45,18 +45,19 @@ export default class Bundler {
 		this.graph = new DependencyGraph(req, config.resolver);
 	}
 
-	graph: DependencyGraph;
-	server: Server;
-	request: ServerRequest;
-	reporter: Reporter;
-	entries: Array<AbsoluteFilePath>;
-	config: BundlerConfig;
+	public config: BundlerConfig;
 
-	static createFromServerRequest(req: ServerRequest): Bundler {
+	private graph: DependencyGraph;
+	private server: Server;
+	private request: ServerRequest;
+	private reporter: Reporter;
+	private entries: Array<AbsoluteFilePath>;
+
+	public static createFromServerRequest(req: ServerRequest): Bundler {
 		return new Bundler(req, req.getBundlerConfigFromFlags());
 	}
 
-	async getResolvedEntry(
+	public async getResolvedEntry(
 		unresolvedEntry: string,
 	): Promise<BundlerEntryResoluton> {
 		const {cwd} = this.config;
@@ -92,7 +93,7 @@ export default class Bundler {
 		return {manifestDef, resolvedEntry};
 	}
 
-	createBundleRequest(
+	private createBundleRequest(
 		resolvedEntry: AbsoluteFilePath,
 		options: BundleOptions,
 		reporter: Reporter,
@@ -104,7 +105,10 @@ export default class Bundler {
 
 		this.entries.push(resolvedEntry);
 		return new BundleRequest({
+			request: this.request,
 			bundler: this,
+			graph: this.graph,
+			server: this.server,
 			mode,
 			resolvedEntry,
 			options,
@@ -112,7 +116,7 @@ export default class Bundler {
 		});
 	}
 
-	async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
+	public async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
 		const bundleRequest = this.createBundleRequest(path, {}, this.reporter);
 		await bundleRequest.stepAnalyze();
 		bundleRequest.diagnostics.maybeThrowDiagnosticsError();
@@ -120,7 +124,7 @@ export default class Bundler {
 	}
 
 	// This will take multiple entry points and do some magic to make them more efficient to build in parallel
-	async bundleMultiple(
+	public async bundleMultiple(
 		entries: Array<AbsoluteFilePath>,
 		options: BundleOptions = {},
 	): Promise<Map<AbsoluteFilePath, BundleResult>> {
@@ -192,7 +196,9 @@ export default class Bundler {
 		return map;
 	}
 
-	async bundleManifest({resolvedEntry, manifestDef}: BundlerEntryResoluton) {
+	public async bundleManifest(
+		{resolvedEntry, manifestDef}: BundlerEntryResoluton,
+	) {
 		let bundles: Array<BundleResultBundle> = [];
 		const files: BundlerFiles = new Map();
 
@@ -262,7 +268,7 @@ export default class Bundler {
 		};
 	}
 
-	async deriveManifest(
+	private async deriveManifest(
 		manifestDef: ManifestDefinition,
 		entryBundle: BundleResultBundle,
 		createBundle: (
@@ -356,7 +362,7 @@ export default class Bundler {
 		return newManifest;
 	}
 
-	async bundle(
+	public async bundle(
 		resolvedEntry: AbsoluteFilePath,
 		options: BundleOptions = {},
 		reporter: Reporter = this.reporter,

@@ -5,9 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest, WebBridge} from "@internal/core";
+import {
+	BundlerConfig,
+	ClientFlagsJSON,
+	PLATFORMS,
+	Server,
+	ServerRequest,
+	WebBridge,
+} from "@internal/core";
 import Bundler from "../bundler/Bundler";
-import {WebSocketInterface} from "@internal/codec-websocket";
 import http = require("http");
 import {Reporter} from "@internal/cli-reporter";
 import {
@@ -15,12 +21,11 @@ import {
 	ServerQueryResponse,
 } from "../../common/bridges/ServerBridge";
 import {ServerMarker} from "../Server";
-import {ClientFlagsJSON} from "@internal/core";
+
 import WebRequest, {stripBundleSuffix} from "./WebRequest";
-import {BundlerConfig} from "@internal/core";
+
 import {AbsoluteFilePath} from "@internal/path";
-import {PLATFORMS} from "@internal/core";
-import {HmrServerMessage} from "./hmr";
+
 import {ConsumableUrl} from "@internal/codec-url";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
@@ -59,12 +64,17 @@ export class WebServer {
 		this.clientRequestHistory = new Map();
 		this.clientHistory = new Map();
 
-		this.deviceWebsockets = new Set();
-		this.frontendWebsocketBridges = new Set();
+		this.websocketBridges = new Set();
 
 		this.httpServer = http.createServer((req, res) => {
-			const webRequest = new WebRequest(this, req, res);
-			webRequest.dispatch();
+			const webRequest = new WebRequest({
+				req,
+				res,
+				server: this.server,
+				serverRequest: this.serverRequest,
+				webServer: this,
+			});
+			server.wrapFatalPromise(webRequest.dispatch());
 		});
 
 		server.clientStartEvent.subscribe((client) => {
@@ -151,38 +161,49 @@ export class WebServer {
 		});
 	}
 
-	bundlerCache: Map<string, Bundler>;
+	public reporter: Reporter;
 
-	savingRequests: boolean;
-	clientRequestHistory: Map<number, WebServerRequest>;
-	clientHistory: Map<number, WebServerClient>;
+	private bundlerCache: Map<string, Bundler>;
 
-	deviceWebsockets: Set<WebSocketInterface>;
-	frontendWebsocketBridges: Set<WebBridge>;
+	private savingRequests: boolean;
+	private clientRequestHistory: Map<number, WebServerRequest>;
+	private clientHistory: Map<number, WebServerClient>;
 
-	reporter: Reporter;
-	serverRequest: ServerRequest;
-	server: Server;
-	httpServer: http.Server;
+	private websocketBridges: Set<WebBridge>;
 
-	sendRequests(bridge: WebBridge) {
+	private serverRequest: ServerRequest;
+	private server: Server;
+	private httpServer: http.Server;
+
+	public onWebsocketBridge(req: http.IncomingMessage, bridge: WebBridge) {
+		this.websocketBridges.add(bridge);
+
+		req.socket.on(
+			"close",
+			() => {
+				this.websocketBridges.delete(bridge);
+			},
+		);
+	}
+
+	public sendRequests(bridge: WebBridge) {
 		bridge.requests.send({
 			requests: Array.from(this.clientRequestHistory.values()),
 			clients: Array.from(this.clientHistory.values()),
 		});
 	}
 
-	refreshRequests() {
-		for (const bridge of this.frontendWebsocketBridges) {
+	private refreshRequests() {
+		for (const bridge of this.websocketBridges) {
 			this.sendRequests(bridge);
 		}
 	}
 
-	close() {
+	public close() {
 		this.httpServer.close();
 	}
 
-	listen(port: number) {
+	public listen(port: number) {
 		this.httpServer.listen(port);
 
 		this.reporter.clearScreen();
@@ -195,7 +216,7 @@ export class WebServer {
 		);
 	}
 
-	async pathnameToAbsolutePath(
+	public async pathnameToAbsolutePath(
 		pathname: string,
 	): Promise<undefined | AbsoluteFilePath> {
 		const project = await this.serverRequest.assertClientCwdProject();
@@ -209,14 +230,7 @@ export class WebServer {
 		}
 	}
 
-	sendToAllDeviceWebsockets(msg: HmrServerMessage) {
-		const text = JSON.stringify(msg);
-		for (const socket of this.deviceWebsockets) {
-			socket.send(text);
-		}
-	}
-
-	async getBundler(
+	public async getBundler(
 		url: ConsumableUrl,
 	): Promise<{
 		bundler: Bundler;

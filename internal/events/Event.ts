@@ -9,14 +9,6 @@ import {EventOptions, EventSubscription} from "./types";
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
-function noPromise<Ret>(ret: Ret | Promise<Ret>): Ret {
-	if (ret instanceof Promise) {
-		throw new Error("Subscription returned promise for a callSync");
-	} else {
-		return ret;
-	}
-}
-
 export default class Event<Param, Ret = void> {
 	constructor(opts: EventOptions) {
 		this.subscriptions = new Set();
@@ -25,40 +17,36 @@ export default class Event<Param, Ret = void> {
 		this.options = opts;
 	}
 
-	name: string;
-	options: EventOptions;
+	public name: string;
+	private options: EventOptions;
 
-	rootSubscription: undefined | Callback<Param, Ret>;
-	subscriptions: Set<Callback<Param, Ret>>;
+	private rootSubscription: undefined | Callback<Param, Ret>;
+	private subscriptions: Set<Callback<Param, Ret>>;
 
-	onSubscriptionChange() {
+	public onSubscriptionChange() {
 		// Hook for BridgeEvent
 	}
 
-	onError(err: Error) {
-		const {onError} = this.options;
-		if (onError !== undefined) {
-			onError(err);
-		}
-	}
-
-	clear() {
+	public clear() {
 		this.subscriptions.clear();
 		this.rootSubscription = undefined;
 	}
 
-	hasSubscribers(): boolean {
+	public hasSubscribers(): boolean {
 		return this.hasSubscriptions();
 	}
 
-	hasSubscriptions(): boolean {
+	public hasSubscriptions(): boolean {
 		return this.rootSubscription !== undefined;
 	}
 
 	// Dispatch the event without caring about the return values
-	send(param: Param) {
+	public send(param: Param, required: boolean = false) {
 		const {rootSubscription} = this;
 		if (rootSubscription === undefined) {
+			if (required) {
+				throw new Error(`No subscription for event ${this.name}`);
+			}
 			return;
 		}
 
@@ -69,53 +57,30 @@ export default class Event<Param, Ret = void> {
 		}
 	}
 
-	callSync(param: Param): Ret {
-		try {
-			const {rootSubscription, subscriptions} = this;
-			if (rootSubscription === undefined) {
-				throw new Error(`No subscription for event ${this.name}`);
-			}
-
-			const ret = noPromise(rootSubscription(param));
-			for (const callback of subscriptions) {
-				noPromise(callback(param));
-			}
-			return ret;
-		} catch (err) {
-			this.onError(err);
-			throw err;
-		}
-	}
-
-	async call(param: Param): Promise<Ret> {
+	public async call(param: Param): Promise<Ret> {
 		const {rootSubscription, subscriptions} = this;
 		if (rootSubscription === undefined) {
 			throw new Error(`No subscription for event ${this.name}`);
 		}
 
-		try {
-			if (this.options.serial === true) {
-				const ret = await rootSubscription(param);
-				for (const callback of subscriptions) {
-					await callback(param);
-				}
-				return ret;
-			} else {
-				const res = await Promise.all([
-					rootSubscription(param),
-					...Array.from(subscriptions, (callback) => callback(param)),
-				]);
-
-				// Return the root subscription value
-				return res[0];
+		if (this.options.serial === true) {
+			const ret = await rootSubscription(param);
+			for (const callback of subscriptions) {
+				await callback(param);
 			}
-		} catch (err) {
-			this.onError(err);
-			throw err;
+			return ret;
+		} else {
+			const res = await Promise.all([
+				rootSubscription(param),
+				...Array.from(subscriptions, (callback) => callback(param)),
+			]);
+
+			// Return the root subscription value
+			return res[0];
 		}
 	}
 
-	wait(val: Ret, timeout?: number): Promise<Param> {
+	public wait(val: Ret, timeout?: number): Promise<Param> {
 		return new Promise((resolve, reject) => {
 			let timeoutId: undefined | NodeJS.Timeout;
 			let timedOut = false;
@@ -124,16 +89,21 @@ export default class Event<Param, Ret = void> {
 				timeoutId = setTimeout(
 					() => {
 						timedOut = true;
-						listener.unsubscribe();
-						reject(
-							new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
-						);
+						listener.unsubscribe().then(() => {
+							reject(
+								new Error(
+									`Timed out after waiting ${timeout}ms for ${this.name}`,
+								),
+							);
+						}).catch((err) => {
+							reject(err);
+						});
 					},
 					timeout,
 				);
 			}
 
-			const listener = this.subscribe((param) => {
+			const listener = this.subscribe(async (param) => {
 				if (timedOut) {
 					return val;
 				}
@@ -142,14 +112,14 @@ export default class Event<Param, Ret = void> {
 					clearTimeout(timeoutId);
 				}
 
-				listener.unsubscribe();
+				await listener.unsubscribe();
 				resolve(param);
 				return val;
 			});
 		});
 	}
 
-	async callOptional(param: Param): Promise<undefined | Ret> {
+	public async callOptional(param: Param): Promise<undefined | Ret> {
 		if (this.rootSubscription === undefined) {
 			return undefined;
 		} else {
@@ -157,7 +127,7 @@ export default class Event<Param, Ret = void> {
 		}
 	}
 
-	subscribe(
+	public subscribe(
 		callback: Callback<Param, Ret>,
 		makeRoot?: boolean,
 	): EventSubscription {
@@ -187,7 +157,7 @@ export default class Event<Param, Ret = void> {
 		};
 	}
 
-	unsubscribe(callback: Callback<Param, Ret>) {
+	private unsubscribe(callback: Callback<Param, Ret>) {
 		if (this.subscriptions.has(callback)) {
 			this.subscriptions.delete(callback);
 			this.onSubscriptionChange();

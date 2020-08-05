@@ -16,11 +16,11 @@ export default class BlockT extends T {
 		this.body = body;
 	}
 
-	static type = "BlockT";
+	public static type = "BlockT";
 
-	body: Array<T>;
+	private body: Array<T>;
 
-	reduce(): T {
+	public reduce(): T {
 		const body = [];
 		let changed = false;
 
@@ -39,7 +39,7 @@ export default class BlockT extends T {
 		}
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`{}`;
 	}
 }

@@ -1,5 +1,5 @@
 import {Path} from "@internal/compiler";
-import {doesNodeMatchReactPattern} from ".";
+import doesNodeMatchReactPattern from "./doesNodeMatchReactPattern";
 
 function checkClassComponentAncestry({node, scope}: Path): boolean {
 	return (

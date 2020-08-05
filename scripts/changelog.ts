@@ -2,7 +2,7 @@ import {markup} from "@internal/markup";
 import {parseCommit} from "@internal/commit-parser";
 import {readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
-import {PUBLIC_PACKAGES, reporter, ROOT} from "./_utils";
+import {PUBLIC_PACKAGES, ROOT, reporter} from "./_utils";
 import {dedent} from "@internal/string-utils";
 import {consumeJSON} from "@internal/codec-json";
 import child = require("child_process");
@@ -333,7 +333,7 @@ export async function main() {
 	);
 
 	// Ensure the version is not yet taken
-	if (!await isNewVersion(newVersion)) {
+	if (!(await isNewVersion(newVersion))) {
 		raiseError(
 			`Version <emphasis>${newVersion}</emphasis> already exists, reverting to <emphasis>${currentVersion}</emphasis>.`,
 			true,

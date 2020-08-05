@@ -38,10 +38,14 @@ export default class VirtualModules {
 		this.statMap = new AbsoluteFilePathMap();
 	}
 
-	nullAbsolute: AbsoluteFilePath;
-	statMap: VirtualModuleStatMap;
+	private nullAbsolute: AbsoluteFilePath;
+	private statMap: VirtualModuleStatMap;
 
-	init() {
+	public getMockDirectory(): AbsoluteFilePath {
+		return this.nullAbsolute;
+	}
+
+	public init() {
 		const {statMap} = this;
 
 		for (const [moduleName, files] of modules) {
@@ -97,16 +101,18 @@ export default class VirtualModules {
 		}
 	}
 
-	getStatMap(): VirtualModuleStatMap {
+	public getStatMap(): VirtualModuleStatMap {
 		return this.statMap;
 	}
 
-	isVirtualPath(path: AbsoluteFilePath): boolean {
+	public isVirtualPath(path: AbsoluteFilePath): boolean {
 		const segments = path.getRawSegments();
 		return segments[0] === "" && segments[1] === "\0";
 	}
 
-	getPossibleVirtualFileContents(path: AbsoluteFilePath): undefined | string {
+	public getPossibleVirtualFileContents(
+		path: AbsoluteFilePath,
+	): undefined | string {
 		if (this.isVirtualPath(path)) {
 			const entry = this.statMap.get(path);
 			if (entry === undefined) {
@@ -119,7 +125,9 @@ export default class VirtualModules {
 		return undefined;
 	}
 
-	resolvePossibleVirtualModuleName(name: string): undefined | AbsoluteFilePath {
+	public resolvePossibleVirtualModuleName(
+		name: string,
+	): undefined | AbsoluteFilePath {
 		if (modules.has(name)) {
 			return this.nullAbsolute.append(name);
 		} else {

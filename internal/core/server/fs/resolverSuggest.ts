@@ -20,14 +20,17 @@ import {
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
 import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
-import {PLATFORMS} from "@internal/core";
+import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 
 export default function resolverSuggest(
-	resolver: Resolver,
-	query: ResolverRemoteQuery,
-	resolved: ResolverQueryResponseNotFound,
-	origQuerySource?: ResolverQuerySource,
+	{resolver, query, resolved, origQuerySource, server}: {
+		resolver: Resolver;
+		server: Server;
+		query: ResolverRemoteQuery;
+		resolved: ResolverQueryResponseNotFound;
+		origQuerySource?: ResolverQuerySource;
+	},
 ): Error {
 	let errMsg = "";
 	if (resolved.type === "UNSUPPORTED") {
@@ -148,7 +151,7 @@ export default function resolverSuggest(
 
 		// Suggestions based on similarity to paths and packages on disk
 		if (!skipSimilaritySuggestions) {
-			const suggestions = getSuggestions(resolver, localQuery);
+			const suggestions = getSuggestions(server, resolver, localQuery);
 			if (suggestions.size > 0) {
 				const originDirectory = resolver.getOriginDirectory(localQuery);
 
@@ -202,8 +205,7 @@ export default function resolverSuggest(
 		// Hint if this was an entry resolve and the cwd wasn't a project
 		if (
 			query.entry === true &&
-			resolver.server.projectManager.findLoadedProject(localQuery.origin) ===
-			undefined
+			server.projectManager.findLoadedProject(localQuery.origin) === undefined
 		) {
 			advice.push({
 				type: "log",
@@ -233,6 +235,7 @@ export default function resolverSuggest(
 type Suggestions = Map<string, string>;
 
 function getPathSuggestions(
+	server: Server,
 	resolver: Resolver,
 	query: ResolverLocalQuery,
 ): Suggestions {
@@ -241,7 +244,12 @@ function getPathSuggestions(
 	const suggestions: Suggestions = new Map();
 
 	// Try normal resolved
-	tryPathSuggestions(resolver, suggestions, originDirectory.resolve(source));
+	tryPathSuggestions({
+		server,
+		resolver,
+		suggestions,
+		path: originDirectory.resolve(source),
+	});
 
 	// Remove . and .. entries from beginning
 	const sourceParts = [...source.getSegments()];
@@ -252,7 +260,12 @@ function getPathSuggestions(
 	// Try parent directories of the origin
 
 	for (const path of originDirectory.getChain()) {
-		tryPathSuggestions(resolver, suggestions, path.append(...sourceParts));
+		tryPathSuggestions({
+			server,
+			resolver,
+			suggestions,
+			path: path.append(...sourceParts),
+		});
 	}
 
 	return suggestions;
@@ -261,11 +274,14 @@ function getPathSuggestions(
 const MIN_SIMILARITY = 0.8;
 
 function tryPathSuggestions(
-	resolver: Resolver,
-	suggestions: Suggestions,
-	path: AbsoluteFilePath,
+	{server, resolver, suggestions, path}: {
+		server: Server;
+		resolver: Resolver;
+		suggestions: Suggestions;
+		path: AbsoluteFilePath;
+	},
 ) {
-	const {memoryFs} = resolver.server;
+	const {memoryFs} = server;
 
 	const segments = path.getSegments();
 	const chain = path.getChain();
@@ -308,29 +324,28 @@ function tryPathSuggestions(
 			);
 
 			for (const rating of ratings) {
-				tryPathSuggestions(
+				tryPathSuggestions({
+					server,
 					resolver,
 					suggestions,
-					createUnknownFilePath(rating.target).append(...segments.slice(1)).assertAbsolute(),
-				);
+					path: createUnknownFilePath(rating.target).append(
+						...segments.slice(1),
+					).assertAbsolute(),
+				});
 			}
 		}
 	}
 }
 
 function getPackageSuggestions(
-	resolver: Resolver,
+	server: Server,
 	query: ResolverLocalQuery,
 ): Suggestions {
 	const possibleGlobalPackages: Map<string, string> = new Map();
 
-	const mainProject = resolver.server.projectManager.findLoadedProject(
-		query.origin,
-	);
+	const mainProject = server.projectManager.findLoadedProject(query.origin);
 	if (mainProject !== undefined) {
-		const projects = resolver.server.projectManager.getHierarchyFromProject(
-			mainProject,
-		);
+		const projects = server.projectManager.getHierarchyFromProject(mainProject);
 
 		for (const project of projects) {
 			for (const [name, value] of project.packages) {
@@ -358,17 +373,18 @@ function getPackageSuggestions(
 }
 
 function getSuggestions(
+	server: Server,
 	resolver: Resolver,
 	query: ResolverLocalQuery,
 ): Suggestions {
 	if (query.entry === true) {
 		return new Map([
-			...getPathSuggestions(resolver, query),
-			...getPackageSuggestions(resolver, query),
+			...getPathSuggestions(server, resolver, query),
+			...getPackageSuggestions(server, query),
 		]);
 	} else if (isPathLike(query.source)) {
-		return getPathSuggestions(resolver, query);
+		return getPathSuggestions(server, resolver, query);
 	} else {
-		return getPackageSuggestions(resolver, query);
+		return getPackageSuggestions(server, query);
 	}
 }

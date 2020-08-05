@@ -42,19 +42,19 @@ export default class InstanceT extends ObjT {
 		this.target = target;
 	}
 
-	typeParameters: Array<T>;
-	target: T;
+	private typeParameters: Array<T>;
+	private target: T;
 
-	static type = "InstanceT";
+	public static type = "InstanceT";
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			target: addType(this.target),
 			params: this.typeParameters.map((type) => addType(type)),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -68,7 +68,7 @@ export default class InstanceT extends ObjT {
 		);
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		const name = builder.humanize(this.target);
 		const typeParams = this.typeParameters;
 		if (typeParams.length === 0) {
@@ -80,7 +80,7 @@ export default class InstanceT extends ObjT {
 		}
 	}
 
-	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
+	public compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		return (
 			otherType instanceof InstanceT &&
 			this.utils.checkCompability(this.target, otherType.target)

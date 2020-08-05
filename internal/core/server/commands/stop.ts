@@ -19,6 +19,6 @@ export default createServerCommand({
 		return {};
 	},
 	async callback({server}: ServerRequest) {
-		server.end();
+		await server.end();
 	},
 });

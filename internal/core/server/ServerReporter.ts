@@ -9,7 +9,6 @@ import {
 	Reporter,
 	ReporterProgress,
 	ReporterProgressOptions,
-	mergeProgresses,
 } from "@internal/cli-reporter";
 import Server from "./Server";
 
@@ -21,23 +20,9 @@ export default class ServerReporter extends Reporter {
 		this.server = server;
 	}
 
-	server: Server;
+	private server: Server;
 
-	// This is so all progress bars are renderer on each client. If we just use this.progressLocal then
-	// while it would work, we would be doing all the rendering work on the server
-	// The CLI also needs to know all the activeElements so it can properly draw and clear lines
-	// We also create a progress bar for all connected LSP clients
-	progress(opts?: ReporterProgressOptions): ReporterProgress {
-		const progresses: Array<ReporterProgress> = [];
-
-		for (const client of this.server.connectedClients) {
-			progresses.push(client.reporter.progress(opts));
-		}
-
-		for (const server of this.server.connectedLSPServers) {
-			progresses.push(server.createProgress(opts));
-		}
-
-		return mergeProgresses(progresses);
+	public progress(opts?: ReporterProgressOptions): ReporterProgress {
+		return this.server.createConnectedProgress(opts);
 	}
 }

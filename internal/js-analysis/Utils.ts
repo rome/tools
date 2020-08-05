@@ -25,11 +25,11 @@ export class HumanBuilder {
 		this.aliases = new Map();
 	}
 
-	stack: Set<T>;
-	aliases: Map<T, StaticMarkup>;
-	usedAliases: Set<string>;
+	private stack: Set<T>;
+	private aliases: Map<T, StaticMarkup>;
+	public usedAliases: Set<string>;
 
-	isRecursive(t: T): boolean {
+	private isRecursive(t: T): boolean {
 		if (t.human !== undefined) {
 			return false;
 		}
@@ -45,7 +45,7 @@ export class HumanBuilder {
 		return false;
 	}
 
-	humanize(type: T): StaticMarkup {
+	public humanize(type: T): StaticMarkup {
 		// Check if we already have a human form for this type
 		if (type.human !== undefined) {
 			return type.human;
@@ -94,14 +94,14 @@ export default class Utils {
 		this.debug = false;
 	}
 
-	compatibilityDepth: number;
-	reduceCatchers: Set<Set<T>>;
-	reduceCache: Map<T, T>;
-	reduceStack: Set<T>;
-	debug: boolean;
-	hub: Hub;
+	private compatibilityDepth: number;
+	private reduceCatchers: Set<Set<T>>;
+	private reduceCache: Map<T, T>;
+	private reduceStack: Set<T>;
+	private debug: boolean;
+	private hub: Hub;
 
-	inspect(t: T, safe: boolean = false): string {
+	public inspect(t: T, safe: boolean = false): string {
 		const prevDebug = this.debug;
 		this.debug = true;
 
@@ -137,21 +137,21 @@ export default class Utils {
 		return info;
 	}
 
-	assertClosed() {
+	private assertClosed() {
 		if (!this.debug) {
 			this.hub.assertClosed();
 		}
 	}
 
-	explodeUnion(type: T): Array<T> {
+	public explodeUnion(type: T): Array<T> {
 		return Array.from(new Set(this.reduce(type).explodeUnion()));
 	}
 
-	isCompatibleWith(a: T, b: T): boolean {
+	public isCompatibleWith(a: T, b: T): boolean {
 		return this.checkCompability(a, b).type === "compatible";
 	}
 
-	checkCompability(a: T, b: T): TypeCompatibilityReturn {
+	public checkCompability(a: T, b: T): TypeCompatibilityReturn {
 		this.assertClosed();
 
 		const lower = this.reduce(a);
@@ -219,13 +219,13 @@ export default class Utils {
 		return res;
 	}
 
-	humanize(type: T): StaticMarkup {
+	public humanize(type: T): StaticMarkup {
 		this.assertClosed();
 
 		return new HumanBuilder().humanize(type);
 	}
 
-	reduce(type: T): T {
+	public reduce(type: T): T {
 		//
 		this.assertClosed();
 
@@ -279,7 +279,7 @@ export default class Utils {
 		}
 	}
 
-	reduceCatch(
+	public reduceCatch(
 		type: T,
 	): {
 		final: T;

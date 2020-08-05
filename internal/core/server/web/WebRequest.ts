@@ -30,17 +30,21 @@ export function stripBundleSuffix(pathname: string): string {
 
 export default class WebRequest {
 	constructor(
-		webServer: WebServer,
-		req: http.IncomingMessage,
-		res: http.ServerResponse,
+		{req, res, server, serverRequest, webServer}: {
+			webServer: WebServer;
+			server: Server;
+			serverRequest: ServerRequest;
+			req: http.IncomingMessage;
+			res: http.ServerResponse;
+		},
 	) {
 		this.req = req;
 		this.res = res;
 		this.webServer = webServer;
 		this.reporter = new Reporter();
 		this.reporterStream = this.reporter.attachCaptureStream("markup");
-		this.server = webServer.server;
-		this.serverRequest = webServer.serverRequest;
+		this.server = server;
+		this.serverRequest = serverRequest;
 
 		const reqUrl = req.url;
 		if (reqUrl === undefined) {
@@ -49,18 +53,18 @@ export default class WebRequest {
 		this.url = consumeUrl(reqUrl);
 	}
 
-	reporter: Reporter;
-	reporterStream: ReporterCaptureStream;
-	webServer: WebServer;
-	server: Server;
-	serverRequest: ServerRequest;
+	private reporter: Reporter;
+	private reporterStream: ReporterCaptureStream;
+	private webServer: WebServer;
+	private server: Server;
+	private serverRequest: ServerRequest;
 
-	url: ConsumableUrl;
+	private url: ConsumableUrl;
 
-	req: http.IncomingMessage;
-	res: http.ServerResponse;
+	private req: http.IncomingMessage;
+	private res: http.ServerResponse;
 
-	loadRawBody(): Promise<string> {
+	private loadRawBody(): Promise<string> {
 		const {req} = this;
 
 		req.setEncoding("utf8");
@@ -83,7 +87,7 @@ export default class WebRequest {
 		});
 	}
 
-	async dispatch(): Promise<void> {
+	public async dispatch(): Promise<void> {
 		const {req, res} = this;
 
 		try {
@@ -156,7 +160,7 @@ export default class WebRequest {
 		}
 	}
 
-	async dispatchWithBody(body: string): Promise<void> {
+	private async dispatchWithBody(body: string): Promise<void> {
 		const {res} = this;
 		const pathname = this.url.path.asString();
 		body;
@@ -199,7 +203,7 @@ export default class WebRequest {
 		}
 	}
 
-	async handleWildcard(pathname: string) {
+	private async handleWildcard(pathname: string) {
 		const {req, res} = this;
 
 		// Check for *.bundle
@@ -224,7 +228,7 @@ export default class WebRequest {
 		res.end("Not found");
 	}
 
-	async handlePossibleStatic(
+	private async handlePossibleStatic(
 		pathname: string,
 		project: ProjectDefinition,
 	): Promise<boolean> {
@@ -245,7 +249,7 @@ export default class WebRequest {
 		return false;
 	}
 
-	async handleFrontendScript() {
+	private async handleFrontendScript() {
 		const {res} = this;
 		res.writeHead(200, {"Content-Type": "application/javascript"});
 
@@ -267,7 +271,7 @@ export default class WebRequest {
 		res.end(bundle.entry.js.content);
 	}
 
-	negotiateWebsocket() {
+	private negotiateWebsocket() {
 		const {req} = this;
 
 		const digest = createKey(String(req.headers["sec-websocket-key"]));
@@ -285,11 +289,11 @@ export default class WebRequest {
 		req.socket.write(headers.join("\r\n"));
 	}
 
-	async handleFrontendWebsocket() {
+	private async handleFrontendWebsocket() {
 		const {req} = this;
 		this.negotiateWebsocket();
 
-		const socket = new WebSocketInterface("server", req.socket);
+		const socket = new WebSocketInterface({type: "server", socket: req.socket});
 		const bridge = createBridgeFromWebSocketInterface(
 			WebBridge,
 			socket,
@@ -297,14 +301,7 @@ export default class WebRequest {
 				type: "client",
 			},
 		);
-		this.webServer.frontendWebsocketBridges.add(bridge);
-
-		req.socket.on(
-			"close",
-			() => {
-				this.webServer.frontendWebsocketBridges.delete(bridge);
-			},
-		);
+		this.webServer.onWebsocketBridge(req, bridge);
 
 		await bridge.handshake();
 
@@ -315,7 +312,7 @@ export default class WebRequest {
 		await waitForever;
 	}
 
-	async handleBundleRequest() {
+	private async handleBundleRequest() {
 		const {res} = this;
 
 		const {bundler, path} = await this.webServer.getBundler(this.url);

@@ -24,7 +24,7 @@ export class ImportRecord extends Record {
 		this.data = data;
 	}
 
-	data: AnalyzeDependency;
+	public data: AnalyzeDependency;
 }
 
 export class ExportRecord extends Record {
@@ -33,7 +33,7 @@ export class ExportRecord extends Record {
 		this.data = data;
 	}
 
-	data: AnyAnalyzeExport;
+	public data: AnyAnalyzeExport;
 }
 
 // Whenever we encounter a reference to CJS module or exports
@@ -43,7 +43,7 @@ export class EscapedCJSRefRecord extends Record {
 		this.node = node;
 	}
 
-	node: AnyNode;
+	public node: AnyNode;
 }
 
 // Whenever we encounter a exports or module.exports assignment
@@ -53,7 +53,7 @@ export class CJSExportRecord extends Record {
 		this.node = node;
 	}
 
-	node: AnyNode;
+	public node: AnyNode;
 }
 
 export class CJSVarRefRecord extends Record {
@@ -62,7 +62,7 @@ export class CJSVarRefRecord extends Record {
 		this.node = node;
 	}
 
-	node: JSReferenceIdentifier;
+	public node: JSReferenceIdentifier;
 }
 
 export class ESExportRecord extends Record {
@@ -72,8 +72,8 @@ export class ESExportRecord extends Record {
 		this.kind = kind;
 	}
 
-	node: AnyNode;
-	kind: ConstJSExportModuleKind;
+	public node: AnyNode;
+	public kind: ConstJSExportModuleKind;
 }
 
 // Whenever we encounter a top level await
@@ -83,7 +83,7 @@ export class TopLevelAwaitRecord extends Record {
 		this.loc = loc;
 	}
 
-	loc: SourceLocation;
+	public loc: SourceLocation;
 }
 
 // Whenever we encounter the first reference to an import
@@ -94,6 +94,6 @@ export class ImportUsageRecord extends Record {
 		this.data = data;
 	}
 
-	isTop: boolean;
-	data: AnalyzeDependencyImportUsageItem;
+	public isTop: boolean;
+	public data: AnalyzeDependencyImportUsageItem;
 }

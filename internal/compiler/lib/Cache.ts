@@ -22,9 +22,9 @@ export default class Cache<Result> {
 		this.cache = new WeakMap();
 	}
 
-	cache: WeakMap<AnyRoot, Map<string, Result>>;
+	private cache: WeakMap<AnyRoot, Map<string, Result>>;
 
-	static buildQuery(
+	public static buildQuery(
 		req: TransformRequest,
 		additionalOptions?: JSONObject,
 	): CacheQuery {
@@ -55,7 +55,7 @@ export default class Cache<Result> {
 		};
 	}
 
-	get(query: CacheQuery): undefined | Result {
+	public get(query: CacheQuery): undefined | Result {
 		const astCache = this.cache.get(query.ast);
 		if (astCache) {
 			return astCache.get(query.key);
@@ -64,7 +64,7 @@ export default class Cache<Result> {
 		}
 	}
 
-	set(query: CacheQuery, value: Result) {
+	public set(query: CacheQuery, value: Result) {
 		let astCache = this.cache.get(query.ast);
 		if (astCache === undefined) {
 			astCache = new Map();

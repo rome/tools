@@ -36,11 +36,11 @@ export default class LSPProgress extends ReporterProgressBase {
 		});
 	}
 
-	lastRenderKey: string;
-	token: number;
-	transport: LSPTransport;
+	private lastRenderKey: string;
+	private token: number;
+	private transport: LSPTransport;
 
-	render() {
+	public render() {
 		const total = this.total === undefined ? 0 : this.total;
 		const percentage = Math.floor(100 / total * this.current);
 
@@ -67,7 +67,7 @@ export default class LSPProgress extends ReporterProgressBase {
 		});
 	}
 
-	end() {
+	public end() {
 		this.transport.write({
 			type: "$/progress",
 			params: {

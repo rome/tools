@@ -18,16 +18,16 @@ export default class UnionT extends T {
 		this.types = [...new Set(types)];
 	}
 
-	static type = "UnionT";
-	types: Array<T>;
+	public static type = "UnionT";
+	private types: Array<T>;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			types: this.types.map((type) => addType(type)),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -40,7 +40,7 @@ export default class UnionT extends T {
 		);
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		const uniqTypes = [];
 		const types = this.explodeUnion();
 
@@ -67,7 +67,7 @@ export default class UnionT extends T {
 		}
 	}
 
-	explodeUnion(): Array<T> {
+	public explodeUnion(): Array<T> {
 		let types: Array<T> = [];
 		const visited: Set<T> = new Set([this]);
 
@@ -85,7 +85,7 @@ export default class UnionT extends T {
 		return types;
 	}
 
-	compatibleWith(otherType: T) {
+	public compatibleWith(otherType: T) {
 		const ourTypes = this.utils.explodeUnion(this);
 
 		// fast path to check if a union contains a type
@@ -119,7 +119,7 @@ export default class UnionT extends T {
 		}
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		return concatMarkup(
 			this.types.map((type) => builder.humanize(type)),
 			markup` | `,

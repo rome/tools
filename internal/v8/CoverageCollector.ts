@@ -44,7 +44,7 @@ export default class CoverageCollector {
 		this.sourceMaps = new Map();
 	}
 
-	sourceMaps: Map<
+	private sourceMaps: Map<
 		string,
 		{
 			code: string;
@@ -53,7 +53,7 @@ export default class CoverageCollector {
 		}
 	>;
 
-	addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
+	public addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
 		this.sourceMaps.set(
 			filename,
 			{
@@ -64,7 +64,7 @@ export default class CoverageCollector {
 		);
 	}
 
-	addCoverage(entries: Array<inspector.Profiler.ScriptCoverage>) {
+	public addCoverage(entries: Array<inspector.Profiler.ScriptCoverage>) {
 		for (const entry of entries) {
 			const filename = urlToFilename(entry.url);
 
@@ -93,7 +93,7 @@ export default class CoverageCollector {
 		}
 	}
 
-	generate(): Array<CoverageFile> {
+	public generate(): Array<CoverageFile> {
 		const insertedLocs: Map<string, CoverageLocationRange> = new Map();
 		const locs: Array<CoverageLocationRange> = [];
 

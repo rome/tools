@@ -14,7 +14,6 @@ import {
 	Diagnostics,
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
-import {naturalCompare} from "@internal/string-utils";
 import {DiagnosticsError} from "./errors";
 import {DiagnosticCategoryPrefix} from "./categories";
 import {descriptions} from "./descriptions";
@@ -22,7 +21,6 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import {comparePositions} from "@internal/parser-core";
 
 type UniquePart =
 	| "filename"
@@ -44,6 +42,7 @@ export type DiagnosticsProcessorOptions = {
 	origins?: Array<DiagnosticOrigin>;
 	markupOptions?: MarkupFormatNormalizeOptions;
 	normalizeOptions?: DiagnosticsNormalizerOptions;
+	sourceMaps?: SourceMapConsumerCollection;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
@@ -59,12 +58,11 @@ export default class DiagnosticsProcessor {
 		this.includedKeys = new Set();
 		this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
 		this.throwAfter = undefined;
-		this.locked = false;
 		this.origins = options.origins === undefined ? [] : [...options.origins];
 		this.allowedUnusedSuppressionPrefixes = new Set();
 		this.usedSuppressions = new Set();
 		this.suppressions = new Set();
-		this.sourceMaps = new SourceMapConsumerCollection();
+		this.sourceMaps = options.sourceMaps ?? new SourceMapConsumerCollection();
 		this.normalizer = new DiagnosticsNormalizer(
 			options.normalizeOptions,
 			options.markupOptions,
@@ -75,22 +73,28 @@ export default class DiagnosticsProcessor {
 		this.cachedDiagnostics = undefined;
 	}
 
-	locked: boolean;
-	normalizer: DiagnosticsNormalizer;
-	sourceMaps: SourceMapConsumerCollection;
-	unique: UniqueRules;
-	includedKeys: Set<string>;
-	diagnostics: Set<Diagnostic>;
-	filters: Array<DiagnosticFilterWithTest>;
-	allowedUnusedSuppressionPrefixes: Set<string>;
-	usedSuppressions: Set<DiagnosticSuppression>;
-	suppressions: Set<DiagnosticSuppression>;
-	options: DiagnosticsProcessorOptions;
-	throwAfter: undefined | number;
-	origins: Array<DiagnosticOrigin>;
-	cachedDiagnostics: undefined | Diagnostics;
+	public normalizer: DiagnosticsNormalizer;
 
-	static createImmediateThrower(
+	private sourceMaps: SourceMapConsumerCollection;
+	private unique: UniqueRules;
+	private includedKeys: Set<string>;
+	private diagnostics: Set<Diagnostic>;
+	private filters: Array<DiagnosticFilterWithTest>;
+	private allowedUnusedSuppressionPrefixes: Set<string>;
+	private usedSuppressions: Set<DiagnosticSuppression>;
+	private suppressions: Set<DiagnosticSuppression>;
+	private options: DiagnosticsProcessorOptions;
+	private throwAfter: undefined | number;
+	private origins: Array<DiagnosticOrigin>;
+	private cachedDiagnostics: undefined | Diagnostics;
+
+	private assertEmpty() {
+		if (this.hasDiagnostics()) {
+			throw new Error("Expected no diagnostics for this operation");
+		}
+	}
+
+	public static createImmediateThrower(
 		origins: Array<DiagnosticOrigin>,
 	): DiagnosticsProcessor {
 		const diagnostics = new DiagnosticsProcessor({
@@ -102,19 +106,15 @@ export default class DiagnosticsProcessor {
 		return diagnostics;
 	}
 
-	lock() {
-		this.locked = true;
-	}
-
-	unshiftOrigin(origin: DiagnosticOrigin) {
+	public unshiftOrigin(origin: DiagnosticOrigin) {
 		this.origins.unshift(origin);
 	}
 
-	setThrowAfter(num: undefined | number) {
+	public setThrowAfter(num: undefined | number) {
 		this.throwAfter = num;
 	}
 
-	maybeThrowDiagnosticsError() {
+	public maybeThrowDiagnosticsError() {
 		if (this.hasDiagnostics()) {
 			throw new DiagnosticsError(
 				"Thrown by DiagnosticsProcessor",
@@ -123,39 +123,33 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	hasDiagnostics(): boolean {
+	public hasDiagnostics(): boolean {
 		return this.getDiagnostics().length > 0;
 	}
 
-	assertEmpty() {
-		if (this.hasDiagnostics()) {
-			throw new Error("Expected no diagnostics for this operation");
-		}
-	}
-
-	addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
+	public addAllowedUnusedSuppressionPrefix(prefix: DiagnosticCategoryPrefix) {
 		this.assertEmpty();
 		this.allowedUnusedSuppressionPrefixes.add(prefix);
 	}
 
-	addSuppressions(suppressions: DiagnosticSuppressions) {
+	public addSuppressions(suppressions: DiagnosticSuppressions) {
 		this.cachedDiagnostics = undefined;
 		for (const suppression of suppressions) {
 			this.suppressions.add(suppression);
 		}
 	}
 
-	addFilters(filters: Array<DiagnosticFilterWithTest>) {
+	public addFilters(filters: Array<DiagnosticFilterWithTest>) {
 		this.cachedDiagnostics = undefined;
 		this.filters = this.filters.concat(filters);
 	}
 
-	addFilter(filter: DiagnosticFilterWithTest) {
+	public addFilter(filter: DiagnosticFilterWithTest) {
 		this.cachedDiagnostics = undefined;
 		this.filters.push(filter);
 	}
 
-	doesMatchFilter(diag: Diagnostic): boolean {
+	private doesMatchFilter(diag: Diagnostic): boolean {
 		for (const suppression of this.suppressions) {
 			if (
 				matchesSuppression(
@@ -218,7 +212,7 @@ export default class DiagnosticsProcessor {
 		return false;
 	}
 
-	buildDedupeKeys(diag: Diagnostic): Array<string> {
+	private buildDedupeKeys(diag: Diagnostic): Array<string> {
 		if (diag.tags && diag.tags.unique) {
 			return [];
 		}
@@ -266,22 +260,25 @@ export default class DiagnosticsProcessor {
 		return keys;
 	}
 
-	addDiagnosticAssert(diag: Diagnostic, origin?: DiagnosticOrigin): Diagnostic {
+	public addDiagnosticAssert(
+		diag: Diagnostic,
+		origin?: DiagnosticOrigin,
+	): Diagnostic {
 		return this.addDiagnostics([diag], origin, true)[0];
 	}
 
-	addDiagnostic(
+	public addDiagnostic(
 		diag: Diagnostic,
 		origin?: DiagnosticOrigin,
 	): undefined | Diagnostic {
 		return this.addDiagnostics([diag], origin)[0];
 	}
 
-	deleteDiagnostic(diag: Diagnostic) {
+	public deleteDiagnostic(diag: Diagnostic) {
 		this.diagnostics.delete(diag);
 	}
 
-	addDiagnostics(
+	public addDiagnostics(
 		diags: Diagnostics,
 		origin?: DiagnosticOrigin,
 		force?: boolean,
@@ -291,12 +288,6 @@ export default class DiagnosticsProcessor {
 		}
 
 		this.cachedDiagnostics = undefined;
-
-		if (this.locked) {
-			throw new Error(
-				"DiagnosticsProcessor is locked and cannot accept anymore diagnostics",
-			);
-		}
 
 		const {max} = this.options;
 		const added: Diagnostics = [];
@@ -357,7 +348,7 @@ export default class DiagnosticsProcessor {
 		return added;
 	}
 
-	getDiagnosticsByFilename(): DiagnosticsByFilename {
+	public getDiagnosticsByFilename(): DiagnosticsByFilename {
 		const byFilename: DiagnosticsByFilename = new Map();
 
 		for (const diag of this.getDiagnostics()) {
@@ -374,7 +365,7 @@ export default class DiagnosticsProcessor {
 		return byFilename;
 	}
 
-	getDiagnostics(): Diagnostics {
+	public getDiagnostics(): Diagnostics {
 		const {cachedDiagnostics} = this;
 		if (cachedDiagnostics !== undefined) {
 			return cachedDiagnostics;
@@ -404,38 +395,5 @@ export default class DiagnosticsProcessor {
 		this.cachedDiagnostics = diagnostics;
 
 		return diagnostics;
-	}
-
-	getSortedDiagnostics(): Diagnostics {
-		const diagnosticsByFilename = this.getDiagnosticsByFilename();
-
-		// Get all filenames and sort them
-		const filenames: Array<undefined | string> = Array.from(
-			diagnosticsByFilename.keys(),
-		).sort((a, b) => {
-			if (a === undefined || b === undefined) {
-				return 0;
-			} else {
-				return naturalCompare(a, b);
-			}
-		});
-
-		let sortedDiagnostics: Diagnostics = [];
-
-		for (const filename of filenames) {
-			const fileDiagnostics = diagnosticsByFilename.get(filename);
-			if (fileDiagnostics === undefined) {
-				throw new Error("We use keys() so should be present");
-			}
-
-			// Sort all file diagnostics by location start index
-			const sortedFileDiagnostics = fileDiagnostics.sort((a, b) => {
-				return comparePositions(a.location.start, b.location.start);
-			});
-
-			sortedDiagnostics = [...sortedDiagnostics, ...sortedFileDiagnostics];
-		}
-
-		return sortedDiagnostics;
 	}
 }

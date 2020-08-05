@@ -505,7 +505,7 @@ export default async function cli() {
 				});
 			}
 
-			client.subscribeLogs(
+			await client.subscribeLogs(
 				cliFlags.logWorkers === true,
 				(chunk) => {
 					if (fileout === undefined) {
@@ -558,15 +558,6 @@ export default async function cli() {
 	}
 
 	switch (res.type) {
-		case "ERROR": {
-			if (!res.handled) {
-				console.error("Unhandled CLI query error");
-				console.error(res.stack);
-			}
-			process.exit(1);
-			break;
-		}
-
 		case "EXIT": {
 			process.exit(res.code);
 			break;

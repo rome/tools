@@ -1,7 +1,7 @@
 import {Scope} from "@internal/compiler";
 import {AnyNode} from "@internal/ast";
 import {EvalResult} from "@internal/js-ast-utils/tryStaticEvaluation";
-import {getCreateElementProp} from ".";
+import getCreateElementProp from "./getCreateElementProp";
 import {tryStaticEvaluation} from "@internal/js-ast-utils";
 
 export default function analyzeCreateElementProp(

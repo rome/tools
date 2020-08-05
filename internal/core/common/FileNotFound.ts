@@ -17,9 +17,9 @@ export class FileNotFound extends Error {
 		this.path = path;
 	}
 
-	path: AbsoluteFilePath;
+	public path: AbsoluteFilePath;
 
-	static async maybeAllowMissing<T>(
+	public static async maybeAllowMissing<T>(
 		allow: undefined | boolean,
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
@@ -34,7 +34,7 @@ export class FileNotFound extends Error {
 		}
 	}
 
-	static async allowMissing<T>(
+	public static async allowMissing<T>(
 		path: AbsoluteFilePath,
 		factory: () => T | Promise<T>,
 	): Promise<MissingFileReturn<T>> {

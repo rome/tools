@@ -47,15 +47,6 @@ export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
 	files: Dict<RecoverySaveFile>;
 };
 
-export type ServerQueryResponseError = ServerQueryResponseBase & {
-	type: "ERROR";
-	fatal: boolean;
-	handled: boolean;
-	name: string;
-	message: string;
-	stack: undefined | string;
-};
-
 export type ServerQueryResponseDiagnostics = ServerQueryResponseBase & {
 	type: "DIAGNOSTICS";
 	hasDiagnostics: boolean;
@@ -81,7 +72,6 @@ export type ServerQueryResponseExit = ServerQueryResponseBase & {
 export type ServerQueryResponse =
 	| ServerQueryResponseInvalid
 	| ServerQueryResponseSuccess
-	| ServerQueryResponseError
 	| ServerQueryResponseCancelled
 	| ServerQueryResponseDiagnostics
 	| ServerQueryResponseExit;
@@ -101,22 +91,22 @@ export type ServerBridgeInfo = {
 };
 
 export default class ServerBridge extends Bridge {
-	getClientInfo = this.createEvent<void, ServerBridgeInfo>({
+	public getClientInfo = this.createEvent<void, ServerBridgeInfo>({
 		name: "getClientInfo",
 		direction: "server->client",
 	});
 
-	write = this.createEvent<[string, boolean], void>({
+	public write = this.createEvent<[string, boolean], void>({
 		name: "write",
 		direction: "server->client",
 	});
 
-	enableWorkerLogs = this.createEvent<void, void>({
+	public enableWorkerLogs = this.createEvent<void, void>({
 		name: "enableWorkerLogs",
 		direction: "server<-client",
 	});
 
-	log = this.createEvent<
+	public log = this.createEvent<
 		{
 			origin: "server" | "worker";
 			chunk: string;
@@ -127,52 +117,55 @@ export default class ServerBridge extends Bridge {
 		direction: "server->client",
 	});
 
-	updateFeatures = this.createEvent<TerminalFeatures, void>({
+	public updateFeatures = this.createEvent<TerminalFeatures, void>({
 		name: "updateFeatures",
 		direction: "server<-client",
 	});
 
-	query = this.createEvent<PartialServerQueryRequest, ServerQueryResponse>({
+	public query = this.createEvent<
+		PartialServerQueryRequest,
+		ServerQueryResponse
+	>({
 		name: "query",
 		direction: "server<-client",
 	});
 
-	cancelQuery = this.createEvent<string, void>({
+	public cancelQuery = this.createEvent<string, void>({
 		name: "cancel",
 		direction: "server<-client",
 	});
 
-	profilingGetWorkers = this.createEvent<void, Array<number>>({
+	public profilingGetWorkers = this.createEvent<void, Array<number>>({
 		name: "profiling.getWorkers",
 		direction: "server<-client",
 	});
 
-	profilingStart = this.createEvent<ProfilingStartData, void>({
+	public profilingStart = this.createEvent<ProfilingStartData, void>({
 		name: "profiling.start",
 		direction: "server<-client",
 	});
 
-	profilingStop = this.createEvent<void, Profile>({
+	public profilingStop = this.createEvent<void, Profile>({
 		name: "profiling.stop",
 		direction: "server<-client",
 	});
 
-	profilingStopWorker = this.createEvent<number, Profile>({
+	public profilingStopWorker = this.createEvent<number, Profile>({
 		name: "profile.stopWorker",
 		direction: "server<-client",
 	});
 
-	lspFromClientBuffer = this.createEvent<string, void>({
+	public lspFromClientBuffer = this.createEvent<string, void>({
 		name: "lspFromClientBuffer",
 		direction: "server<-client",
 	});
 
-	lspFromServerBuffer = this.createEvent<string, void>({
+	public lspFromServerBuffer = this.createEvent<string, void>({
 		name: "lspFromServerBuffer",
 		direction: "server->client",
 	});
 
-	endServer = this.createEvent<void, void>({
+	public endServer = this.createEvent<void, void>({
 		name: "endServer",
 		direction: "server<-client",
 	});

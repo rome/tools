@@ -22,7 +22,6 @@ export type BridgeOptions = BridgeCreatorOptions & {
 
 export type EventOptions = {
 	name: string;
-	onError?: (err: Error) => void;
 	unique?: boolean;
 	serial?: boolean;
 };

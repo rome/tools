@@ -36,26 +36,26 @@ export default class VisitorState<State extends UnknownObject>
 		this.currentPathToken = undefined;
 	}
 
-	stack: Array<StackItem<State>>;
-	currentIndex: number;
-	pushQueue: undefined | State;
-	currentPathToken: undefined | PathToken;
+	private stack: Array<StackItem<State>>;
+	private currentIndex: number;
+	private pushQueue: undefined | State;
+	private currentPathToken: undefined | PathToken;
 
-	setCurrentPath(path: Path) {
+	public setCurrentPath(path: Path) {
 		this.currentPathToken = path.token;
 	}
 
-	owns(): boolean {
+	public owns(): boolean {
 		return (
 			this.has() && this.stack[this.currentIndex][1] === this.currentPathToken
 		);
 	}
 
-	has() {
+	private has() {
 		return this.currentIndex >= 0;
 	}
 
-	getIndex(find?: FindState<State>): number {
+	private getIndex(find?: FindState<State>): number {
 		let index = this.currentIndex;
 
 		if (find !== undefined) {
@@ -69,7 +69,7 @@ export default class VisitorState<State extends UnknownObject>
 		return index;
 	}
 
-	getOptional(find?: FindState<State>): undefined | State {
+	public getOptional(find?: FindState<State>): undefined | State {
 		const index = this.getIndex(find);
 		if (index === -1) {
 			throw new Error("VisitorState: Could not find stack");
@@ -78,7 +78,7 @@ export default class VisitorState<State extends UnknownObject>
 		}
 	}
 
-	get(find?: FindState<State>): State {
+	public get(find?: FindState<State>): State {
 		if (!this.has()) {
 			throw new Error(
 				"VisitorState.get: Nothing on the stack. Did you mean to use getOptional?",
@@ -93,16 +93,16 @@ export default class VisitorState<State extends UnknownObject>
 		return this.stack[index][0];
 	}
 
-	reset(state: State) {
+	public reset(state: State) {
 		this.pushQueue = state;
 	}
 
-	pop() {
+	public pop() {
 		this.currentIndex--;
 		this.stack.pop();
 	}
 
-	checkPushed(): boolean {
+	public checkPushed(): boolean {
 		const {pushQueue: queueState} = this;
 		if (queueState === undefined) {
 			return false;
@@ -118,7 +118,10 @@ export default class VisitorState<State extends UnknownObject>
 		}
 	}
 
-	set(partial: SetStateCallback<State>, opts: SetStateOptions<State> = {}) {
+	public set(
+		partial: SetStateCallback<State>,
+		opts: SetStateOptions<State> = {},
+	) {
 		if (!this.has()) {
 			if (opts.required) {
 				throw new Error("VisitorState.set: Nothing on the stack");

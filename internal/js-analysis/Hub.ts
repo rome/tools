@@ -35,13 +35,13 @@ export default class Hub {
 		this.status = statuses.OPEN;
 	}
 
-	status: HubStatus;
-	evaluator: Evaluator;
-	graph: Graph<T>;
-	context: CompilerContext;
-	utils: Utils;
+	public status: HubStatus;
+	public evaluator: Evaluator;
+	public graph: Graph<T>;
+	public context: CompilerContext;
+	public utils: Utils;
 
-	close() {
+	public close() {
 		this.status = statuses.CLOSING;
 
 		for (const [node] of this.graph.nodesByValue) {
@@ -51,19 +51,19 @@ export default class Hub {
 		this.status = statuses.CLOSED;
 	}
 
-	isClosing(): boolean {
+	private isClosing(): boolean {
 		return this.status === statuses.CLOSING;
 	}
 
-	isOpen(): boolean {
+	private isOpen(): boolean {
 		return this.isClosing() || this.status === statuses.OPEN;
 	}
 
-	isClosed(): boolean {
+	private isClosed(): boolean {
 		return this.isClosing() || this.status === statuses.CLOSED;
 	}
 
-	assertOpen() {
+	public assertOpen() {
 		if (this.isClosed() && !this.isClosing()) {
 			throw new Error(
 				"This method can only be called when the graph has been open",
@@ -71,7 +71,7 @@ export default class Hub {
 		}
 	}
 
-	assertClosed() {
+	public assertClosed() {
 		if (this.isOpen() && !this.isClosing()) {
 			throw new Error(
 				"This method can only be called when the graph has been closed",

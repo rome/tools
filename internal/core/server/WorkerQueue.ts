@@ -31,15 +31,15 @@ export default class WorkerQueue<M> {
 		this.maxPer = maxPer;
 	}
 
-	server: Server;
-	maxPer: number;
-	runningWorkers: Array<Promise<void>>;
-	callbacks: Array<Callback<M>>;
-	workers: Map<WorkerContainer, WorkerQueueItem<M>>;
-	open: boolean;
+	private server: Server;
+	private maxPer: number;
+	private runningWorkers: Array<Promise<void>>;
+	private callbacks: Array<Callback<M>>;
+	private workers: Map<WorkerContainer, WorkerQueueItem<M>>;
+	private open: boolean;
 
 	// Prematurely fetch the owners so we don't waterfall worker creation
-	async prepare(paths: Iterable<AbsoluteFilePath>) {
+	public async prepare(paths: Iterable<AbsoluteFilePath>) {
 		await Promise.all(
 			Array.from(
 				paths,
@@ -50,7 +50,11 @@ export default class WorkerQueue<M> {
 		);
 	}
 
-	async pushQueue(path: AbsoluteFilePath, metadata: M, wait: boolean = false) {
+	public async pushQueue(
+		path: AbsoluteFilePath,
+		metadata: M,
+		wait: boolean = false,
+	) {
 		if (!this.open) {
 			throw new Error("WorkerQueue has already closed");
 		}
@@ -96,11 +100,11 @@ export default class WorkerQueue<M> {
 		}
 	}
 
-	addCallback(callback: Callback<M>) {
+	public addCallback(callback: Callback<M>) {
 		this.callbacks.push(callback);
 	}
 
-	async processWorker(worker: WorkerQueueItem<M>) {
+	private async processWorker(worker: WorkerQueueItem<M>) {
 		worker.running = true;
 
 		const {queue} = worker;
@@ -132,7 +136,7 @@ export default class WorkerQueue<M> {
 		worker.running = false;
 	}
 
-	async spin() {
+	public async spin() {
 		while (
 			// Keep consuming all the promises until we're exhausted
 			this.runningWorkers.length >

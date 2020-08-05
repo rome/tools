@@ -57,25 +57,27 @@ export class LSPTransport {
 		this.requestEvent = new Event({name: "request"});
 		this.notificationEvent = new Event({name: "notification"});
 		this.writeEvent = new Event({name: "write"});
+		this.errorEvent = new Event({name: "error"});
 	}
 
-	nextHeaders: undefined | Headers;
-	status: Status;
-	buffer: string;
-	bufferLength: number;
-	reporter: Reporter;
+	private nextHeaders: undefined | Headers;
+	private status: Status;
+	private buffer: string;
+	private bufferLength: number;
+	private reporter: Reporter;
 
-	notificationEvent: Event<MessageEvent, void>;
-	requestEvent: Event<MessageEvent, JSONPropertyValue>;
-	writeEvent: Event<string, void>;
+	public notificationEvent: Event<MessageEvent, void>;
+	public errorEvent: Event<Error, void>;
+	public requestEvent: Event<MessageEvent, JSONPropertyValue>;
+	public writeEvent: Event<string, void>;
 
-	write(res: JSONObject) {
+	public write(res: JSONObject) {
 		const json = JSON.stringify(res);
 		const out = `Content-Length: ${Buffer.byteLength(json)}${HEADERS_END}${json}`;
 		this.writeEvent.send(out);
 	}
 
-	normalizeMessage(content: string): undefined | Consumer {
+	private normalizeMessage(content: string): undefined | Consumer {
 		try {
 			const data = JSON.parse(content);
 			const consumer = consumeUnknown(data, "lsp/parse");
@@ -90,7 +92,7 @@ export class LSPTransport {
 		}
 	}
 
-	async onMessage(headers: Headers, content: string) {
+	private async onMessage(headers: Headers, content: string) {
 		const consumer = this.normalizeMessage(content);
 		if (consumer === undefined) {
 			return;
@@ -131,16 +133,16 @@ export class LSPTransport {
 		}
 	}
 
-	log(message: AnyMarkup) {
+	private log(message: AnyMarkup) {
 		this.reporter.info(markup` ${message}`);
 	}
 
-	setStatus(status: Status) {
+	private setStatus(status: Status) {
 		this.status = status;
 		this.log(markup`Status: ${status}`);
 	}
 
-	process() {
+	private process() {
 		switch (this.status) {
 			case "IDLE": {
 				if (this.bufferLength > 0) {
@@ -175,7 +177,9 @@ export class LSPTransport {
 				}
 				if (this.bufferLength >= headers.expectedLength) {
 					const content = this.buffer.slice(0, headers.expectedLength);
-					this.onMessage(headers, content);
+					this.onMessage(headers, content).catch((err) => {
+						this.errorEvent.send(err, true);
+					});
 					this.log(markup`Received message content: ${content}`);
 
 					// Reset headers and trim content
@@ -192,7 +196,7 @@ export class LSPTransport {
 		}
 	}
 
-	append(data: string) {
+	public append(data: string) {
 		this.buffer += data;
 		this.bufferLength += Buffer.byteLength(data);
 		this.process();

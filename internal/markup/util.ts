@@ -120,6 +120,5 @@ export function formatGrammarNumber(
 export function formatNumber(attributes: MarkupParsedAttributes, value: string) {
 	const num = Number(value);
 	const human = humanizeNumber(num);
-	const humanWithApprox = formatApprox(attributes, human);
-	return humanWithApprox;
+	return formatApprox(attributes, human);
 }

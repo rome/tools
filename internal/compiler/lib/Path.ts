@@ -129,21 +129,20 @@ export default class Path {
 		this.token = token ?? {type: "PATH_TOKEN"};
 	}
 
-	context: CompilerContext;
-	node: AnyNode;
-	parent: AnyNode;
-	scope: Scope;
-	opts: PathOptions;
-	isMock: boolean;
+	public context: CompilerContext;
+	public node: AnyNode;
+	public parent: AnyNode;
+	public scope: Scope;
+	public ancestryPaths: Array<Path>;
+	public parentPath: Path;
+	public token: PathToken;
+	public opts: PathOptions;
 
-	token: PathToken;
-	ancestryPaths: Array<Path>;
-	parentPath: Path;
+	private isMock: boolean;
+	private nodeKey: undefined | string;
+	private listKey: undefined | number;
 
-	nodeKey: undefined | string;
-	listKey: undefined | number;
-
-	findAncestry(callback: (path: Path) => boolean): undefined | Path {
+	public findAncestry(callback: (path: Path) => boolean): undefined | Path {
 		for (const path of this.ancestryPaths) {
 			if (callback(path)) {
 				return path;
@@ -152,7 +151,7 @@ export default class Path {
 		return undefined;
 	}
 
-	getChildPath(key: string): Path {
+	public getChildPath(key: string): Path {
 		// rome-ignore lint/ts/noExplicitAny
 		const node = (this.node as any)[key];
 		if (node === undefined) {
@@ -172,7 +171,7 @@ export default class Path {
 		);
 	}
 
-	getChildPaths(key: string): Array<Path> {
+	public getChildPaths(key: string): Array<Path> {
 		// rome-ignore lint/ts/noExplicitAny
 		const nodes = (this.node as any)[key];
 
@@ -202,7 +201,7 @@ export default class Path {
 		});
 	}
 
-	getPathKeys(): Array<string> {
+	public getPathKeys(): Array<string> {
 		const parts = [];
 
 		let path: undefined | Path = this;
@@ -219,18 +218,18 @@ export default class Path {
 		return parts.reverse();
 	}
 
-	fork(newNode: AnyNode): Path {
+	public fork(newNode: AnyNode): Path {
 		return new Path(newNode, this.context, this.getPathOptions(), this.token);
 	}
 
-	getPathOptions(): PathOptions {
+	private getPathOptions(): PathOptions {
 		return {
 			...this.opts,
 			parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
 		};
 	}
 
-	traverse(name: string, callback: (path: Path) => void) {
+	public traverse(name: string, callback: (path: Path) => void) {
 		this.reduceNode({
 			name,
 			enter(path) {
@@ -240,7 +239,7 @@ export default class Path {
 		});
 	}
 
-	reduceNode(
+	public reduceNode(
 		visitors: AnyVisitor | AnyVisitors,
 		opts?: Partial<PathOptions>,
 	): AnyNodes {
@@ -252,7 +251,7 @@ export default class Path {
 		);
 	}
 
-	reduceSignal(
+	public reduceSignal(
 		visitors: AnyVisitor | AnyVisitors,
 		opts?: Partial<PathOptions>,
 	): ExitSignal {
@@ -264,7 +263,7 @@ export default class Path {
 		);
 	}
 
-	addFixableDiagnostic(
+	public addFixableDiagnostic(
 		nodes: {
 			target?: AnyNode | Array<AnyNode>;
 			fixed?: ExitSignal;

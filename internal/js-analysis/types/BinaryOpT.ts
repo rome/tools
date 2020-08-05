@@ -34,20 +34,20 @@ export default class BinaryOpT extends T {
 		this.right = right;
 	}
 
-	static type = "BinaryOpT";
+	public static type = "BinaryOpT";
 
-	operator: string;
-	left: T;
-	right: T;
+	private operator: string;
+	private left: T;
+	private right: T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			left: addType(this.left),
 			right: addType(this.right),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -62,7 +62,7 @@ export default class BinaryOpT extends T {
 		);
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		const left = this.utils.reduce(this.left);
 		const right = this.utils.reduce(this.right);
 		const {scope, originNode, operator} = this;

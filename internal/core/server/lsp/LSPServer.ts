@@ -60,18 +60,23 @@ export default class LSPServer {
 		transport.requestEvent.subscribe(({method, params}) => {
 			return this.handleRequest(method, params);
 		});
+
+		transport.errorEvent.subscribe((err) => {
+			request.server.onFatalError(err);
+		});
 	}
 
-	request: ServerRequest;
-	client: ServerClient;
-	server: Server;
-	transport: LSPTransport;
+	public transport: LSPTransport;
 
-	fileBuffers: AbsoluteFilePathSet;
-	lintSessionsPending: AbsoluteFilePathSet;
-	lintSessions: AbsoluteFilePathMap<ServerRequest>;
+	private request: ServerRequest;
+	private client: ServerClient;
+	private server: Server;
 
-	logMessage(path: AbsoluteFilePath, message: string) {
+	private fileBuffers: AbsoluteFilePathSet;
+	private lintSessionsPending: AbsoluteFilePathSet;
+	private lintSessions: AbsoluteFilePathMap<ServerRequest>;
+
+	private logMessage(path: AbsoluteFilePath, message: string) {
 		this.server.logger.info(markup`[LSPServer] ${message}`);
 		this.transport.write({
 			method: "window/logMessage",
@@ -82,7 +87,7 @@ export default class LSPServer {
 		});
 	}
 
-	logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostics = []) {
+	private logDiagnostics(path: AbsoluteFilePath, diagnostics: Diagnostics = []) {
 		if (diagnostics.length === 0) {
 			return;
 		}
@@ -99,7 +104,7 @@ export default class LSPServer {
 		this.logMessage(path, lines.join("\n"));
 	}
 
-	createFakeServerRequest(
+	private createFakeServerRequest(
 		commandName: string,
 		args: Array<string> = [],
 	): ServerRequest {
@@ -119,20 +124,20 @@ export default class LSPServer {
 		});
 	}
 
-	unwatchProject(path: AbsoluteFilePath) {
+	private unwatchProject(path: AbsoluteFilePath) {
 		// TODO maybe unset all buffers?
 		const req = this.lintSessions.get(path);
 		if (req !== undefined) {
-			req.teardown(EMPTY_SUCCESS_RESPONSE);
+			this.server.wrapFatalPromise(req.teardown(EMPTY_SUCCESS_RESPONSE));
 			this.lintSessions.delete(path);
 		}
 	}
 
-	createProgress(opts?: ReporterProgressOptions): ReporterProgress {
+	public createProgress(opts?: ReporterProgressOptions): ReporterProgress {
 		return new LSPProgress(this.transport, this.request.reporter, opts);
 	}
 
-	async initProject(path: AbsoluteFilePath) {
+	private async initProject(path: AbsoluteFilePath) {
 		if (this.lintSessions.has(path) || this.lintSessionsPending.has(path)) {
 			return;
 		}
@@ -151,10 +156,10 @@ export default class LSPServer {
 		await req.init();
 
 		// This is not awaited so it doesn't delay the initialize response
-		this.watchProject(path, req);
+		this.server.wrapFatalPromise(this.watchProject(path, req));
 	}
 
-	async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
+	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
 		const linter = new Linter(
 			req,
 			{
@@ -208,7 +213,7 @@ export default class LSPServer {
 		this.logMessage(path, `Watching ${path.join()} at ${date.toTimeString()}`);
 	}
 
-	async shutdown() {
+	private async shutdown() {
 		// Unwatch projects
 		for (const path of this.lintSessions.keys()) {
 			this.unwatchProject(path);
@@ -222,7 +227,7 @@ export default class LSPServer {
 		this.fileBuffers.clear();
 	}
 
-	async sendClientRequest(
+	public async sendClientRequest(
 		req: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
 		return this.server.handleRequest(
@@ -234,7 +239,7 @@ export default class LSPServer {
 		);
 	}
 
-	async handleRequest(
+	private async handleRequest(
 		method: string,
 		params: Consumer,
 	): Promise<JSONPropertyValue> {
@@ -295,7 +300,7 @@ export default class LSPServer {
 			}
 
 			case "shutdown": {
-				this.shutdown();
+				await this.shutdown();
 				break;
 			}
 		}
@@ -303,7 +308,10 @@ export default class LSPServer {
 		return null;
 	}
 
-	async handleNotification(method: string, params: Consumer): Promise<void> {
+	private async handleNotification(
+		method: string,
+		params: Consumer,
+	): Promise<void> {
 		switch (method) {
 			case "workspace/didChangeWorkspaceDirectories": {
 				for (const elem of params.get("added").asIterable()) {

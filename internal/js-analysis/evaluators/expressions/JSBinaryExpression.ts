@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSBinaryExpression, jsBinaryExpression} from "@internal/ast";
+import {AnyNode, jsBinaryExpression} from "@internal/ast";
 import Evaluator from "../../Evaluator";
 import NumericT from "../../types/NumericT";
 import ExhaustiveT from "../../types/ExhaustiveT";

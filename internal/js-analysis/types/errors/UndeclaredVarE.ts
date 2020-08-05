@@ -16,10 +16,10 @@ export default class UndeclaredVarE extends E {
 		this.name = name;
 	}
 
-	static type = "UndeclaredVarE";
-	name: string;
+	public static type = "UndeclaredVarE";
+	private name: string;
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		const possibleNames = this.scope.getBindingNames();
 		return {
 			description: descriptions.TYPE_CHECK.UNDECLARED_VARIABLE(

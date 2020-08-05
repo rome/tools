@@ -17,14 +17,14 @@ export default class OpaqueT extends T {
 		this.name = name;
 	}
 
-	static type = "OpaqueT";
-	name: string;
+	public static type = "OpaqueT";
+	private name: string;
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {name: this.name};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -32,11 +32,11 @@ export default class OpaqueT extends T {
 		return new OpaqueT(scope, originNode, String(data.name));
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`opaque ${this.name}`;
 	}
 
-	compatibleWith(otherType: T): boolean {
+	public compatibleWith(otherType: T): boolean {
 		return otherType === this;
 	}
 }

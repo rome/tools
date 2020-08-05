@@ -19,7 +19,7 @@ export const dir = createServerCommand({
 		return {};
 	},
 	async callback(req: ServerRequest): Promise<void> {
-		req.reporter.log(markup`${req.server.cache.cachePath}`);
+		req.reporter.log(markup`${req.server.cache.getDirectory()}`);
 	},
 });
 
@@ -34,7 +34,7 @@ export const clear = createServerCommand({
 	async callback(req: ServerRequest): Promise<void> {
 		await req.server.cache.clear();
 		req.reporter.success(
-			markup`Cleared cache at <emphasis>${req.server.cache.cachePath}</emphasis>`,
+			markup`Cleared cache at <emphasis>${req.server.cache.getDirectory()}</emphasis>`,
 		);
 	},
 });

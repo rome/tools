@@ -1,12 +1,11 @@
 import {AnyCSSToken, AnyCSSValue, CSSParserOptions, Tokens} from "./types";
 import {
-	ParserOptions,
 	ValueToken,
 	createParser,
 	isDigit,
 	isHexDigit,
 } from "@internal/parser-core";
-import {DiagnosticCategory, descriptions} from "@internal/diagnostics";
+import {descriptions} from "@internal/diagnostics";
 import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {
 	Symbols,
@@ -30,19 +29,12 @@ import {
 
 export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 	class CSSParser extends ParserWithRequiredPath<Tokens> {
-		consumeDiagnosticCategory: DiagnosticCategory;
-		options: ParserOptions;
-
 		constructor(opts: CSSParserOptions) {
 			super(opts, "parse/css", {});
-
-			this.consumeDiagnosticCategory =
-				opts.consumeDiagnosticCategory || "parse/css";
 			this.ignoreWhitespaceTokens = false;
-			this.options = opts;
 		}
 
-		getNewlineLength(index: Number0): number {
+		private getNewlineLength(index: Number0): number {
 			if (
 				this.getInputCharOnly(index) === Symbols.CarriageReturn &&
 				this.getInputCharOnly(index, 1) === Symbols.LineFeed
@@ -53,7 +45,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return 1;
 		}
 
-		consumeBadURL(index: Number0): Number0 {
+		private consumeBadURL(index: Number0): Number0 {
 			while (!this.isEOF(index)) {
 				if (this.getInputCharOnly(index) === ")") {
 					return ob1Inc(index);
@@ -73,7 +65,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return index;
 		}
 
-		consumeEscaped(index: Number0): [string, Number0] {
+		private consumeEscaped(index: Number0): [string, Number0] {
 			let value = "";
 			index = ob1Add(index, 2);
 			const lastChar = this.getInputCharOnly(index, -1);
@@ -113,7 +105,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return [value, index];
 		}
 
-		consumeName(index: Number0): [string, Number0] {
+		private consumeName(index: Number0): [string, Number0] {
 			let value = "";
 
 			while (!this.isEOF(index)) {
@@ -139,7 +131,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return [value, index];
 		}
 
-		consumeNumber(index: Number0): [Number0, number, string] {
+		private consumeNumber(index: Number0): [Number0, number, string] {
 			const char = this.getInputCharOnly(index);
 			let value = "";
 			let type = "integer";
@@ -203,7 +195,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return [index, parseFloat(value), type];
 		}
 
-		consumeIdentLikeToken(
+		private consumeIdentLikeToken(
 			index: Number0,
 		): Tokens["Function"] | Tokens["Ident"] | Tokens["URL"] | Tokens["BadURL"] {
 			const [name, newIndex] = this.consumeName(index);
@@ -245,7 +237,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return this.finishValueToken("Ident", value, index);
 		}
 
-		consumeStringToken(
+		private consumeStringToken(
 			index: Number0,
 			endChar?: string,
 		): Tokens["String"] | Tokens["BadString"] {
@@ -291,7 +283,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return this.finishValueToken("String", value, index);
 		}
 
-		consumeNumberToken(
+		private consumeNumberToken(
 			index: Number0,
 		): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
 			const [newIndex, numberValue, numberType] = this.consumeNumber(index);
@@ -334,7 +326,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		consumeURLToken(index: Number0): Tokens["URL"] | Tokens["BadURL"] {
+		private consumeURLToken(index: Number0): Tokens["URL"] | Tokens["BadURL"] {
 			let value = "";
 
 			while (isWhitespace(this.getInputCharOnly(index))) {
@@ -412,7 +404,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			throw new Error("Unrecoverable state due to bad URL");
 		}
 
-		tokenize(index: Number0): AnyCSSToken {
+		protected tokenize(index: Number0): AnyCSSToken {
 			const char = this.getInputCharOnly(index);
 
 			if (char === "/" && this.getInputCharOnly(index, 1) === "*") {
@@ -608,7 +600,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return this.finishValueToken("Delim", char);
 		}
 
-		parse(): CSSRoot {
+		public parse(): CSSRoot {
 			const start = this.getPosition();
 			const rules = this.parseRules(true);
 
@@ -623,7 +615,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseRules(
+		private parseRules(
 			topLevel = false,
 			endingTokenType?: keyof Tokens,
 		): Array<CSSAtRule | CSSRule> {
@@ -668,7 +660,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return rules;
 		}
 
-		parseRule(): CSSRule | undefined {
+		private parseRule(): CSSRule | undefined {
 			const start = this.getPosition();
 			const prelude: Array<AnyCSSValue> = [];
 			while (!this.matchToken("EOF")) {
@@ -693,7 +685,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return undefined;
 		}
 
-		parseAtRule(): CSSAtRule {
+		private parseAtRule(): CSSAtRule {
 			const start = this.getPosition();
 			const token = this.expectToken("AtKeyword");
 			const prelude: Array<AnyCSSValue> = [];
@@ -727,7 +719,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseSimpleBlock(): CSSBlock | undefined {
+		private parseSimpleBlock(): CSSBlock | undefined {
 			const start = this.getPosition();
 			const startingToken = this.getToken();
 			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
@@ -765,7 +757,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseDeclartionBlock(): CSSBlock | undefined {
+		private parseDeclartionBlock(): CSSBlock | undefined {
 			const start = this.getPosition();
 			const startingToken = this.getToken();
 			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
@@ -790,7 +782,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseComplexBlock(): CSSBlock | undefined {
+		private parseComplexBlock(): CSSBlock | undefined {
 			const start = this.getPosition();
 			const startingToken = this.getToken();
 			const startingTokenValue = this.getBlockStartTokenValue(startingToken);
@@ -815,7 +807,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseComponentValue(): AnyCSSValue | undefined {
+		private parseComponentValue(): AnyCSSValue | undefined {
 			if (this.matchToken("Whitespace")) {
 				this.nextToken();
 				return undefined;
@@ -900,7 +892,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseFunction(): CSSFunction {
+		private parseFunction(): CSSFunction {
 			const start = this.getPosition();
 			const token = this.expectToken("Function");
 			const name = token.value;
@@ -931,7 +923,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			);
 		}
 
-		parseDeclarations(
+		private parseDeclarations(
 			endingTokenType?: keyof Tokens,
 		): Array<CSSAtRule | CSSDeclaration> {
 			const declarations: Array<CSSAtRule | CSSDeclaration> = [];
@@ -968,7 +960,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return declarations;
 		}
 
-		parseDeclaration(): CSSDeclaration | undefined {
+		private parseDeclaration(): CSSDeclaration | undefined {
 			while (!this.matchToken("Semi")) {
 				const currentToken = this.getToken();
 				if (currentToken.type !== "Ident") {
@@ -1026,7 +1018,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			return undefined;
 		}
 
-		getBlockStartTokenValue(token: AnyCSSToken): string | undefined {
+		private getBlockStartTokenValue(token: AnyCSSToken): string | undefined {
 			switch (token.type) {
 				case "LeftCurlyBracket":
 					return "{";
@@ -1043,7 +1035,7 @@ export const createCSSParser = createParser((_, ParserWithRequiredPath) =>
 			}
 		}
 
-		getBlockEndTokenType(token: AnyCSSToken): keyof Tokens | undefined {
+		private getBlockEndTokenType(token: AnyCSSToken): keyof Tokens | undefined {
 			switch (token.type) {
 				case "LeftCurlyBracket":
 					return "RightCurlyBracket";

@@ -26,10 +26,12 @@ export default createVisitor({
 				}
 
 				const {node} = path;
-				return node.type === "JSVariableDeclarator" &&
+				return (
+					node.type === "JSVariableDeclarator" &&
 					node.init !== undefined &&
 					node.init.type === "JSArrowFunctionExpression" &&
-					node.init.body.type === "JSXElement";
+					node.init.body.type === "JSXElement"
+				);
 			});
 
 			if (hasJSX) {

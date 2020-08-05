@@ -44,7 +44,6 @@ export default class WorkerManager {
 
 		this.workerStartEvent = new Event({
 			name: "WorkerManager.workerStart",
-			onError: server.onFatalErrorBound,
 		});
 		this.selfWorker = true;
 		this.locker = new Locker();
@@ -54,25 +53,24 @@ export default class WorkerManager {
 		this.logger = server.logger.namespace(markup`[WorkerManager]`);
 	}
 
-	server: Server;
-	locker: Locker<number>;
-	logger: ReporterNamespace;
+	public workerStartEvent: Event<WorkerBridge, void>;
+	public locker: Locker<number>;
 
-	selfWorker: boolean;
-	workerStartEvent: Event<WorkerBridge, void>;
-
-	workers: Map<number, WorkerContainer>;
+	private server: Server;
+	private logger: ReporterNamespace;
+	private selfWorker: boolean;
+	private workers: Map<number, WorkerContainer>;
 
 	// We use an idCounter rather than using workers.size due to race conditions
 	// If we use workers.size to generate the next id, then by the time we insert it
 	// into the map between async operations, it could already be filled!
-	idCounter: number;
+	private idCounter: number;
 
-	getNextWorkerId(): number {
+	private getNextWorkerId(): number {
 		return this.idCounter++;
 	}
 
-	getWorkerAssert(id: number): WorkerContainer {
+	public getWorkerAssert(id: number): WorkerContainer {
 		const worker = this.workers.get(id);
 		if (worker === undefined) {
 			throw new Error("Expected worker");
@@ -80,12 +78,12 @@ export default class WorkerManager {
 		return worker;
 	}
 
-	getWorkers(): Array<WorkerContainer> {
+	public getWorkers(): Array<WorkerContainer> {
 		return Array.from(this.workers.values());
 	}
 
 	// Get worker count, excluding ghost workers
-	getWorkerCount(): number {
+	private getWorkerCount(): number {
 		let count = 0;
 		for (const worker of this.workers.values()) {
 			if (worker.ghost === false) {
@@ -96,14 +94,11 @@ export default class WorkerManager {
 	}
 
 	// Get all the workers that live in external processes
-	getExternalWorkers(): Array<WorkerContainer> {
+	public getExternalWorkers(): Array<WorkerContainer> {
 		return this.getWorkers().filter((worker) => worker.process !== undefined);
 	}
 
-	// Safe way to ensure all workers get properly killed if we need to kill the main process
-	killWorkers() {}
-
-	end() {
+	public end() {
 		// Shutdown all workers, no need to clean up any internal data structures since they will never be used
 		for (const {process, bridge} of this.workers.values()) {
 			bridge.end();
@@ -114,7 +109,7 @@ export default class WorkerManager {
 		}
 	}
 
-	getLowestByteCountWorker(): WorkerContainer {
+	private getLowestByteCountWorker(): WorkerContainer {
 		// Find the worker with the lowest byteCount value
 		let smallestWorker;
 		let byteCount;
@@ -136,7 +131,7 @@ export default class WorkerManager {
 		}
 	}
 
-	async init(): Promise<void> {
+	public async init(): Promise<void> {
 		// Create the worker
 		const bridge = createBridgeFromLocal(WorkerBridge, {});
 		const worker = new Worker({
@@ -170,7 +165,7 @@ export default class WorkerManager {
 		this.workerStartEvent.send(bridge);
 	}
 
-	async replaceOwnWorker() {
+	private async replaceOwnWorker() {
 		const lock = this.locker.getNewLock(0);
 
 		try {
@@ -221,21 +216,21 @@ export default class WorkerManager {
 		}
 	}
 
-	async onNewProject(newProject: ProjectDefinition) {
+	public async onNewProject(newProject: ProjectDefinition) {
 		await this.server.projectManager.notifyWorkersOfProjects(
 			this.getWorkers(),
 			[newProject],
 		);
 	}
 
-	async workerHandshake(worker: WorkerContainer) {
+	private async workerHandshake(worker: WorkerContainer) {
 		const {bridge} = worker;
 		await bridge.handshake({timeout: 3_000});
 		await this.server.projectManager.notifyWorkersOfProjects([worker]);
 		worker.ready = true;
 	}
 
-	async spawnWorker(
+	private async spawnWorker(
 		workerId: number,
 		isGhost: boolean = false,
 	): Promise<WorkerContainer> {
@@ -247,7 +242,7 @@ export default class WorkerManager {
 		}
 	}
 
-	async _spawnWorker(
+	private async _spawnWorker(
 		workerId: number,
 		isGhost: boolean,
 	): Promise<WorkerContainer> {
@@ -335,8 +330,9 @@ export default class WorkerManager {
 		await this.workerHandshake(worker);
 
 		// If a worker is spawned while we're profiling then make sure it's profiling too
-		if (this.server.profiling !== undefined) {
-			await bridge.profilingStart.call(this.server.profiling);
+		const profileData = this.server.getRunningProfilingData();
+		if (profileData !== undefined) {
+			await bridge.profilingStart.call(profileData);
 		}
 
 		this.workerStartEvent.send(bridge);
@@ -350,19 +346,19 @@ export default class WorkerManager {
 		return worker;
 	}
 
-	own(workerId: number, stats: Stats) {
+	public own(workerId: number, stats: Stats) {
 		const worker = this.getWorkerAssert(workerId);
 		worker.byteCount += stats.size;
 		worker.fileCount++;
 	}
 
-	disown(workerId: number, stats: Stats) {
+	public disown(workerId: number, stats: Stats) {
 		const worker = this.getWorkerAssert(workerId);
 		worker.byteCount -= stats.size;
 		worker.fileCount--;
 	}
 
-	async getNextWorker(path: AbsoluteFilePath): Promise<WorkerContainer> {
+	public async getNextWorker(path: AbsoluteFilePath): Promise<WorkerContainer> {
 		const {logger, memoryFs, fileAllocator} = this.server;
 
 		// Get stats first

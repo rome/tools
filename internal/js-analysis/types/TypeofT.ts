@@ -24,10 +24,10 @@ export default class TypeofT extends T {
 		this.obj = obj;
 	}
 
-	static type = "TypeofT";
-	obj: T;
+	public static type = "TypeofT";
+	private obj: T;
 
-	reduce(): T {
+	public reduce(): T {
 		const types = this.utils.explodeUnion(this.obj);
 
 		const possibleTypes = [];

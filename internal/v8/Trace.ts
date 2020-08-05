@@ -12,22 +12,20 @@ import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from "@internal/ob1";
 
 export default class Trace {
 	constructor() {
-		this.tid = 0;
 		this.eventId = 0;
 		this.events = [];
 	}
 
-	events: Array<TraceEvent>;
-	tid: number;
-	eventId: number;
+	private events: Array<TraceEvent>;
+	private eventId: number;
 
-	getEventId(): number {
+	private getEventId(): number {
 		const id = this.eventId;
 		this.eventId++;
 		return id;
 	}
 
-	decodeProfileSourceMap(profile: Profile) {
+	private decodeProfileSourceMap(profile: Profile) {
 		// This method mutates the profile for performance/ergonomics
 		// Nothing else should be relying on this so it doesn't really matter
 		for (const node of profile.cpuProfile.nodes) {
@@ -51,7 +49,7 @@ export default class Trace {
 		}
 	}
 
-	addProfile(name: string, profile: Profile) {
+	public addProfile(name: string, profile: Profile) {
 		this.decodeProfileSourceMap(profile);
 
 		const {startTime, endTime} = profile.cpuProfile;
@@ -119,7 +117,7 @@ export default class Trace {
 		}
 	}
 
-	build() {
+	public build() {
 		return this.events;
 	}
 }

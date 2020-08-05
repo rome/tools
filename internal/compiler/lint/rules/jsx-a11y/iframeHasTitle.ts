@@ -23,7 +23,6 @@ function validTitle(node: JSXElement) {
 				);
 			} else if (attr.value.type === "JSStringLiteral") {
 				return attr.value.value !== "";
-
 			}
 			return false;
 		}

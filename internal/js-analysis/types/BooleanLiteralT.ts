@@ -17,15 +17,15 @@ export default class BooleanLiteralT extends T {
 		this.value = value;
 	}
 
-	static type = "BooleanLiteralT";
+	public static type = "BooleanLiteralT";
 
-	value: boolean;
+	private value: boolean;
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {value: this.value};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -33,7 +33,7 @@ export default class BooleanLiteralT extends T {
 		return new BooleanLiteralT(scope, originNode, Boolean(data.value));
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		if (this.value) {
 			return markup`true`;
 		} else {
@@ -41,7 +41,7 @@ export default class BooleanLiteralT extends T {
 		}
 	}
 
-	compatibleWith(type: T): boolean {
+	public compatibleWith(type: T): boolean {
 		return type instanceof BooleanLiteralT && type.value === this.value;
 	}
 }

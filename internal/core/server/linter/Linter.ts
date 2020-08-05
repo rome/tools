@@ -145,23 +145,27 @@ class LintRunner {
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
 	}
 
-	hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
-	compilerDiagnosticsCache: AbsoluteFilePathMap<{
+	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
+	private compilerDiagnosticsCache: AbsoluteFilePathMap<{
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
 	}>;
-	linter: Linter;
-	events: WatchEvents;
-	server: Server;
-	request: ServerRequest;
-	graph: DependencyGraph;
-	options: LinterOptions;
+	private linter: Linter;
+	private events: WatchEvents;
+	private server: Server;
+	private request: ServerRequest;
+	private graph: DependencyGraph;
+	private options: LinterOptions;
 
-	clearCompilerDiagnosticsForPath(path: AbsoluteFilePath) {
+	public hasCompilerDiagnostics(path: AbsoluteFilePath): boolean {
+		return this.compilerDiagnosticsCache.has(path);
+	}
+
+	private clearCompilerDiagnosticsForPath(path: AbsoluteFilePath) {
 		this.compilerDiagnosticsCache.set(path, {suppressions: [], diagnostics: []});
 	}
 
-	async runLint(
+	private async runLint(
 		{paths}: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 	): Promise<{
@@ -257,7 +261,7 @@ class LintRunner {
 		return {savedCount};
 	}
 
-	async runGraph(
+	private async runGraph(
 		event: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 	): Promise<AbsoluteFilePathSet> {
@@ -354,7 +358,7 @@ class LintRunner {
 		return validatedDependencyPaths;
 	}
 
-	computeChanges(
+	private computeChanges(
 		{paths: evictedPaths}: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 		validatedDependencyPaths: AbsoluteFilePathSet,
@@ -426,7 +430,7 @@ class LintRunner {
 		return changes;
 	}
 
-	async run(
+	public async run(
 		event: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 	): Promise<WatchResults> {
@@ -454,21 +458,21 @@ export default class Linter {
 		this.options = opts;
 	}
 
-	request: ServerRequest;
-	options: LinterOptions;
+	public request: ServerRequest;
+	public options: LinterOptions;
 
-	shouldOnlyFormat(): boolean {
+	public shouldOnlyFormat(): boolean {
 		const {formatOnly} = this.options;
 		const {review} = this.request.query.requestFlags;
 		return formatOnly || review;
 	}
 
-	shouldSave(): boolean {
+	public shouldSave(): boolean {
 		const {apply, hasDecisions} = this.options;
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	getFileArgOptions(): GetFilesOptions {
+	private getFileArgOptions(): GetFilesOptions {
 		return {
 			args: this.options.args,
 			noun: "lint",
@@ -479,7 +483,7 @@ export default class Linter {
 		};
 	}
 
-	createDiagnosticsProcessor(
+	private createDiagnosticsProcessor(
 		evictedPaths: AbsoluteFilePathSet,
 		runner?: LintRunner,
 	): DiagnosticsProcessor {
@@ -504,7 +508,7 @@ export default class Linter {
 				return (
 					absolute === undefined ||
 					evictedPaths.has(absolute) ||
-					(runner !== undefined && runner.compilerDiagnosticsCache.has(absolute))
+					(runner !== undefined && runner.hasCompilerDiagnostics(absolute))
 				);
 			},
 		});
@@ -512,7 +516,7 @@ export default class Linter {
 		return processor;
 	}
 
-	async watch(events: WatchEvents): Promise<EventSubscription> {
+	public async watch(events: WatchEvents): Promise<EventSubscription> {
 		const graph = new DependencyGraph(
 			this.request,
 			this.request.getResolverOptionsFromFlags(),
@@ -530,7 +534,7 @@ export default class Linter {
 		);
 	}
 
-	async runWatch() {
+	public async runWatch() {
 		const {request} = this;
 		const {reporter} = request;
 
@@ -574,7 +578,7 @@ export default class Linter {
 		await request.endEvent.wait();
 	}
 
-	async runSingle(): Promise<{
+	public async runSingle(): Promise<{
 		printer: DiagnosticsPrinter;
 		savedCount: number;
 	}> {
@@ -622,7 +626,7 @@ export default class Linter {
 		return {printer, savedCount};
 	}
 
-	async throwSingle() {
+	public async throwSingle() {
 		const {printer} = await this.runSingle();
 		throw printer;
 	}

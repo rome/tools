@@ -115,8 +115,6 @@ async function testLintExpect(
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
 
-
-
 	const snapshotName = t.snapshot(
 		await printDiagnosticsToString({
 			diagnostics,

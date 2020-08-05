@@ -13,21 +13,21 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class EmptyT extends T {
-	static type = "EmptyT";
+	public static type = "EmptyT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new EmptyT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`empty`;
 	}
 
-	compatibleWith(otherType: T): boolean {
+	public compatibleWith(otherType: T): boolean {
 		return otherType instanceof EmptyT || otherType instanceof VoidT;
 	}
 }

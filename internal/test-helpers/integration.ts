@@ -1,6 +1,8 @@
 import {TestHelper} from "rome";
 import {
 	Client,
+	ClientFlags,
+	FileReference,
 	Server,
 	ServerBridge,
 	Worker,
@@ -15,7 +17,7 @@ import {
 	createRelativeFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
-import {ClientFlags} from "@internal/core";
+
 import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {
 	createDirectory,
@@ -38,7 +40,7 @@ import {
 	serializeJSONProjectConfig,
 } from "@internal/project";
 import {createBridgeFromLocal} from "@internal/events";
-import {FileReference} from "@internal/core";
+
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {
@@ -408,16 +410,14 @@ export function createIntegrationTest(
 
 			// Capture client logs
 			let logs = "";
-			client.bridgeAttachedEvent.subscribe(async () => {
-				await client.subscribeLogs(
-					true,
-					(chunk) => {
-						logs += joinMarkupLines(
-							markupToPlainText(convertToMarkupFromRandomString(chunk)),
-						);
-					},
-				);
-			});
+			await client.subscribeLogs(
+				true,
+				(chunk) => {
+					logs += joinMarkupLines(
+						markupToPlainText(convertToMarkupFromRandomString(chunk)),
+					);
+				},
+			);
 
 			t.addToAdvice({
 				type: "log",

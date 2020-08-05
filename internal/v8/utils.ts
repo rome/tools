@@ -6,9 +6,11 @@
  */
 
 export function hrTime(): number {
-	const hrtime = process.hrtime(); // [seconds, nanoseconds]
-	const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
-	return ts;
+	// [seconds, nanoseconds]
+	const hrtime = process.hrtime();
+
+	// microseconds
+	return hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000);
 }
 
 const FILE_PROTOCOL = "file://";

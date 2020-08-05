@@ -608,7 +608,9 @@ function parseClassPropertyMeta(
 	const key = parseObjectPropertyKey(parser);
 
 	if (
-		key.type === "JSStaticPropertyKey" && opts.static && key.value.type === "JSIdentifier" &&
+		key.type === "JSStaticPropertyKey" &&
+		opts.static &&
+		key.value.type === "JSIdentifier" &&
 		key.value.name === "prototype"
 	) {
 		parser.unexpectedDiagnostic({

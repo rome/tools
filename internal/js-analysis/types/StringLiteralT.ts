@@ -26,14 +26,14 @@ export default class StringLiteralT extends ObjT {
 		this.value = value;
 	}
 
-	static type = "StringLiteralT";
-	value: string;
+	public static type = "StringLiteralT";
+	public value: string;
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {value: this.value};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -41,12 +41,12 @@ export default class StringLiteralT extends ObjT {
 		return new StringLiteralT(scope, originNode, String(data.value));
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		let str: string = JSON.stringify(this.value);
 		return markup`${str}`;
 	}
 
-	compatibleWith(type: T): boolean {
+	public compatibleWith(type: T): boolean {
 		return type instanceof StringLiteralT && type.value === this.value;
 	}
 }

@@ -13,21 +13,21 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class BooleanT extends T {
-	static type = "BooleanT";
+	public static type = "BooleanT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new BooleanT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`boolean`;
 	}
 
-	compatibleWith(type: T): boolean {
+	public compatibleWith(type: T): boolean {
 		// A boolean literal can flow into a generic boolean
 		return type instanceof BooleanT || type instanceof BooleanLiteralT;
 	}

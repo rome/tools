@@ -23,12 +23,12 @@ export class DiagnosticsDuplicateHelper {
 		this.locations = new Map();
 	}
 
-	category: DiagnosticCategory;
-	descriptionFactory: DescriptionFactory;
-	locations: Map<string, Array<undefined | DiagnosticLocation>>;
-	context: CompilerContext;
+	private category: DiagnosticCategory;
+	private descriptionFactory: DescriptionFactory;
+	private locations: Map<string, Array<undefined | DiagnosticLocation>>;
+	private context: CompilerContext;
 
-	addLocation(
+	public addLocation(
 		key: string,
 		location: undefined | DiagnosticLocation,
 	): {
@@ -50,7 +50,7 @@ export class DiagnosticsDuplicateHelper {
 		return {duplicate: locations.length > 1};
 	}
 
-	process() {
+	public process() {
 		for (const [key, locations] of this.locations) {
 			if (locations.length <= 1) {
 				continue;

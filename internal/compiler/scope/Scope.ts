@@ -49,34 +49,23 @@ export default class Scope {
 		this.node = node;
 		this.kind = kind;
 		this.bindings = new Map();
-		this.hasHoistedVars = false;
 		this.globals = new Set();
-
 		this.childScopeCache = new WeakMap();
 	}
 
-	childScopeCache: WeakMap<AnyNode, Scope>;
-	bindings: ScopeBindings;
-	rootScope: undefined | RootScope;
-	parentScope: undefined | Scope;
-	globals: Set<string>;
-	node: undefined | AnyNode;
-	kind: ScopeKind;
-	hasHoistedVars: boolean;
+	private childScopeCache: WeakMap<AnyNode, Scope>;
+	private bindings: ScopeBindings;
+	private rootScope: undefined | RootScope;
+	public parentScope: undefined | Scope;
+	protected globals: Set<string>;
+	public node: undefined | AnyNode;
+	public kind: ScopeKind;
 
-	setHoistedVars() {
-		this.hasHoistedVars = true;
-	}
-
-	hasBindings(): boolean {
-		return this.bindings.size > 0;
-	}
-
-	getOwnBindings(): ScopeBindings {
+	public getOwnBindings(): ScopeBindings {
 		return this.bindings;
 	}
 
-	getBindingNames(): Array<string> {
+	public getBindingNames(): Array<string> {
 		let bindingNames: Array<string> = [];
 
 		let scope: undefined | Scope = this;
@@ -88,23 +77,11 @@ export default class Scope {
 		return Array.from(new Set(bindingNames));
 	}
 
-	getOwnBindingNames(): Array<string> {
+	private getOwnBindingNames(): Array<string> {
 		return Array.from(this.bindings.keys());
 	}
 
-	findScope(kind: ScopeKind): undefined | Scope {
-		let scope: undefined | Scope = this;
-		while (scope !== undefined) {
-			if (scope.kind === kind) {
-				return scope;
-			} else {
-				scope = scope.parentScope;
-			}
-		}
-		return undefined;
-	}
-
-	getRootScope(): RootScope {
+	public getRootScope(): RootScope {
 		const {rootScope} = this;
 		if (rootScope === undefined) {
 			throw new Error("Expected rootScope");
@@ -112,7 +89,7 @@ export default class Scope {
 		return rootScope;
 	}
 
-	enterEvaluate(
+	public enterEvaluate(
 		node: undefined | AnyNode,
 		parent: AnyNode = MOCK_PARENT,
 		force: boolean = false,
@@ -141,7 +118,7 @@ export default class Scope {
 		return scope;
 	}
 
-	injectEvaluate(node: undefined | AnyNode, parent: AnyNode): void {
+	public injectEvaluate(node: undefined | AnyNode, parent: AnyNode): void {
 		if (node === undefined) {
 			return;
 		}
@@ -154,7 +131,7 @@ export default class Scope {
 		evaluator.inject(node, parent, this);
 	}
 
-	fork(kind: ScopeKind, node: undefined | AnyNode): Scope {
+	public fork(kind: ScopeKind, node: undefined | AnyNode): Scope {
 		const rootScope = this.getRootScope();
 		return new Scope({
 			kind,
@@ -165,7 +142,7 @@ export default class Scope {
 	}
 
 	// Debug utility for dumping scope information
-	dump(): string {
+	public dump(): string {
 		const lines = [];
 
 		lines.push(`# Scope ${this.kind}`);
@@ -199,20 +176,7 @@ export default class Scope {
 		return lines.join("\n");
 	}
 
-	dumpAncestry() {
-		const lines = [];
-		lines.push(this.dump());
-		if (this.parentScope !== undefined) {
-			lines.push(this.parentScope.dump());
-		}
-		return lines.join("\n");
-	}
-
-	getOwnBinding(name: string): undefined | Binding {
-		return this.bindings.get(name);
-	}
-
-	getBindingFromPath(path: Path): undefined | Binding {
+	public getBindingFromPath(path: Path): undefined | Binding {
 		const {node} = path;
 		if (isVariableIdentifier(node)) {
 			// TODO we can do some isInTypeAnnotation magic to get the proper "type" binding
@@ -222,7 +186,7 @@ export default class Scope {
 		}
 	}
 
-	getBinding(name: string): undefined | Binding {
+	public getBinding(name: string): undefined | Binding {
 		const binding = this.bindings.get(name);
 		if (binding !== undefined) {
 			return binding;
@@ -236,7 +200,7 @@ export default class Scope {
 		return undefined;
 	}
 
-	getBindingAssert(name: string): Binding {
+	public getBindingAssert(name: string): Binding {
 		const binding = this.getBinding(name);
 		if (binding === undefined) {
 			this.dump();
@@ -245,24 +209,24 @@ export default class Scope {
 		return binding;
 	}
 
-	addBinding(binding: Binding): Binding {
+	public addBinding(binding: Binding): Binding {
 		this.bindings.set(binding.name, binding);
 		return binding;
 	}
 
-	hasBinding(name: string): boolean {
+	public hasBinding(name: string): boolean {
 		return this.getBinding(name) !== undefined;
 	}
 
-	generateUid(name?: string): string {
+	public generateUid(name?: string): string {
 		return this.getRootScope().generateUid(name);
 	}
 
-	addGlobal(name: string) {
+	public addGlobal(name: string) {
 		this.globals.add(name);
 	}
 
-	isGlobal(name: string): boolean {
+	public isGlobal(name: string): boolean {
 		if (this.globals.has(name)) {
 			return true;
 		}
@@ -309,10 +273,10 @@ export class RootScope extends Scope {
 		]);
 	}
 
-	context: CompilerContext;
-	uids: Set<string>;
+	public context: CompilerContext;
+	private uids: Set<string>;
 
-	parseGlobalComments(ast: AnyRoot): Array<string> {
+	private parseGlobalComments(ast: AnyRoot): Array<string> {
 		const globals: Array<string> = [];
 
 		for (const {value} of ast.comments) {
@@ -359,11 +323,11 @@ export class RootScope extends Scope {
 		return globals;
 	}
 
-	getRootScope(): RootScope {
+	public getRootScope(): RootScope {
 		return this;
 	}
 
-	generateUid(name?: string): string {
+	public generateUid(name?: string): string {
 		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name ?? ""}`;
 
 		// Check for invalid names

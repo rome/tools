@@ -1,4 +1,5 @@
 @import "_variables";
+@import "_mixins";
 
 footer {
 	--pattern-color: #{$gray-3};
@@ -21,7 +22,7 @@ footer {
 	}
 
 	.scroll-to-top{
-		a{
+		a {
 			display: block;
 			margin: 14px 0;
 		}

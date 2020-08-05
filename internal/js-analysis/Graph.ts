@@ -16,10 +16,10 @@ export default class Graph<Value> {
 		this.nodesByValue = new Map();
 	}
 
-	nodes: Array<Node<Value>>;
-	nodesByValue: Map<Value, Node<Value>>;
+	public nodes: Array<Node<Value>>;
+	public nodesByValue: Map<Value, Node<Value>>;
 
-	addNode(value: Value): void {
+	public addNode(value: Value): void {
 		if (this.find(value)) {
 			return;
 		}
@@ -29,16 +29,16 @@ export default class Graph<Value> {
 		this.nodes.push(node);
 	}
 
-	find(value: Value): undefined | Node<Value> {
+	public find(value: Value): undefined | Node<Value> {
 		return this.nodesByValue.get(value);
 	}
 
-	hasConnections(value: Value) {
+	public hasConnections(value: Value) {
 		const node = this.nodesByValue.get(value);
 		return node !== undefined && (node?.lines).length > 0;
 	}
 
-	addLine(startValue: Value, endValue: Value) {
+	public addLine(startValue: Value, endValue: Value) {
 		const startNode = this.find(startValue);
 		const endNode = this.find(endValue);
 

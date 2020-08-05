@@ -33,7 +33,6 @@ export default class PositionTracker {
 		this.filename = filename;
 		this.input = input;
 
-		this.offsetPosition = offsetPosition;
 		this.latestPosition = offsetPosition;
 
 		this.positionsToIndex = new Map();
@@ -42,15 +41,17 @@ export default class PositionTracker {
 		this.cachedPositions = new Map();
 	}
 
-	filename: undefined | string;
-	input: string;
-	latestPosition: Position;
-	offsetPosition: Position;
-	cachedPositions: Map<Number0, Position>;
-	positionsToIndex: Map<string, Number0>;
-	getPosition: undefined | GetPosition;
+	private filename: undefined | string;
+	private input: string;
+	private latestPosition: Position;
+	public cachedPositions: Map<Number0, Position>;
+	private positionsToIndex: Map<string, Number0>;
+	private getPosition: undefined | GetPosition;
 
-	getIndexFromPosition(pos: Position, filename: undefined | string): Number0 {
+	public getIndexFromPosition(
+		pos: Position,
+		filename: undefined | string,
+	): Number0 {
 		if (filename !== this.filename) {
 			throw new Error(
 				pretty`PositionTracker filename mismatch. DiagnosticLocation filename ${filename} is different than the filename we're tracking of ${this.filename}. Position: ${pos}`,
@@ -64,7 +65,7 @@ export default class PositionTracker {
 		}
 	}
 
-	getPositionFromIndex(index: Number0): Position {
+	public getPositionFromIndex(index: Number0): Position {
 		const cached = this.cachedPositions.get(index);
 		if (cached !== undefined) {
 			return cached;
@@ -128,7 +129,7 @@ export default class PositionTracker {
 		return pos;
 	}
 
-	setPositionIndex(pos: Position, index: Number0) {
+	public setPositionIndex(pos: Position, index: Number0) {
 		this.positionsToIndex.set(derivePositionKey(pos), index);
 		this.cachedPositions.set(index, pos);
 	}

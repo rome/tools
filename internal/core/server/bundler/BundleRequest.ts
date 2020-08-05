@@ -31,6 +31,8 @@ import {Reporter} from "@internal/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
+import DependencyGraph from "../dependencies/DependencyGraph";
+import {Server, ServerRequest} from "@internal/core";
 
 export type BundleOptions = {
 	prefix?: string;
@@ -43,27 +45,36 @@ export default class BundleRequest {
 		{
 			bundler,
 			reporter,
+			graph,
+			request,
 			mode,
+			server,
 			resolvedEntry,
 			options,
 		}: {
 			bundler: Bundler;
+			request: ServerRequest;
+			graph: DependencyGraph;
 			reporter: Reporter;
 			mode: BundlerMode;
 			resolvedEntry: AbsoluteFilePath;
 			options: BundleOptions;
+			server: Server;
 		},
 	) {
 		this.options = options;
+		this.request = request;
 		this.reporter = reporter;
 		this.bundler = bundler;
+		this.graph = graph;
+		this.server = server;
 		this.cached = true;
 		this.mode = mode;
 
 		this.resolvedEntry = resolvedEntry;
-		this.resolvedEntryUid = bundler.server.projectManager.getUid(resolvedEntry);
+		this.resolvedEntryUid = server.projectManager.getUid(resolvedEntry);
 
-		this.diagnostics = bundler.request.createDiagnosticsProcessor({
+		this.diagnostics = request.createDiagnosticsProcessor({
 			origins: [
 				{
 					category: "bundler",
@@ -81,21 +92,24 @@ export default class BundleRequest {
 		});
 	}
 
-	options: BundleOptions;
-	cached: boolean;
-	reporter: Reporter;
-	bundler: Bundler;
-	resolvedEntry: AbsoluteFilePath;
-	resolvedEntryUid: string;
-	diagnostics: DiagnosticsProcessor;
-	assets: Map<string, Buffer>;
-	compiles: Map<string, CompileResult>;
-	sourceMap: SourceMapGenerator;
-	mode: BundlerMode;
+	public diagnostics: DiagnosticsProcessor;
 
-	async stepAnalyze(): Promise<DependencyOrder> {
-		const {graph} = this.bundler;
-		const {reporter} = this;
+	private request: ServerRequest;
+	private graph: DependencyGraph;
+	private server: Server;
+	private options: BundleOptions;
+	private cached: boolean;
+	private reporter: Reporter;
+	private bundler: Bundler;
+	private resolvedEntry: AbsoluteFilePath;
+	private resolvedEntryUid: string;
+	private assets: Map<string, Buffer>;
+	private compiles: Map<string, CompileResult>;
+	private sourceMap: SourceMapGenerator;
+	private mode: BundlerMode;
+
+	public async stepAnalyze(): Promise<DependencyOrder> {
+		const {reporter, graph} = this;
 
 		const analyzeProgress = reporter.progress({
 			name: `bundler:analyze:${this.resolvedEntryUid}`,
@@ -113,11 +127,11 @@ export default class BundleRequest {
 			analyzeProgress.end();
 		}
 
-		return this.bundler.graph.getNode(this.resolvedEntry).getDependencyOrder();
+		return graph.getNode(this.resolvedEntry).getDependencyOrder();
 	}
 
-	async stepCompile(paths: Array<AbsoluteFilePath>) {
-		const {server} = this.bundler;
+	private async stepCompile(paths: Array<AbsoluteFilePath>) {
+		const {server} = this;
 		const {reporter} = this;
 		this.diagnostics.setThrowAfter(undefined);
 
@@ -144,8 +158,8 @@ export default class BundleRequest {
 		compilingSpinner.end();
 	}
 
-	async compileJS(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
-		const {graph} = this.bundler;
+	public async compileJS(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
+		const {graph} = this;
 
 		const source = path.join();
 		const mod = graph.getNode(path);
@@ -183,7 +197,7 @@ export default class BundleRequest {
 			assetPath,
 		};
 
-		const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
+		const res: WorkerCompileResult = await this.request.requestWorkerCompile(
 			path,
 			"compileForBundle",
 			{
@@ -203,14 +217,13 @@ export default class BundleRequest {
 		return res;
 	}
 
-	stepCombine(
+	private stepCombine(
 		order: DependencyOrder,
 		forceSourceMaps: boolean,
 	): BundleRequestResult {
 		const {files} = order;
 		const {inlineSourceMap} = this.bundler.config;
-		const {graph} = this.bundler;
-		const {resolvedEntry, mode, sourceMap} = this;
+		const {resolvedEntry, mode, sourceMap, graph} = this;
 
 		// We allow deferring the generation of source maps. We don't do this by default as it's slower than generating them upfront
 		// which is what most callers need. But for things like tests, we want to lazily compute the source map only when diagnostics
@@ -381,11 +394,11 @@ export default class BundleRequest {
 		};
 	}
 
-	shouldAbort(): boolean {
+	private shouldAbort(): boolean {
 		return this.diagnostics.hasDiagnostics();
 	}
 
-	abort(): BundleRequestResult {
+	private abort(): BundleRequestResult {
 		return {
 			sourceMap: this.sourceMap,
 			content: "",
@@ -395,7 +408,7 @@ export default class BundleRequest {
 		};
 	}
 
-	async bundle(): Promise<BundleRequestResult> {
+	public async bundle(): Promise<BundleRequestResult> {
 		const order = await this.stepAnalyze();
 		if (this.shouldAbort()) {
 			return this.abort();

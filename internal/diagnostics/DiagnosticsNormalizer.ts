@@ -20,7 +20,6 @@ import {
 } from "@internal/markup";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {Position} from "@internal/parser-core";
 
 type NormalizeOptionsRequiredPosition = RequiredProps<
 	MarkupFormatNormalizeOptions,
@@ -50,18 +49,18 @@ export default class DiagnosticsNormalizer {
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
-	sourceMaps: undefined | SourceMapConsumerCollection;
+	private sourceMaps: undefined | SourceMapConsumerCollection;
 
-	options: DiagnosticsNormalizerOptions;
-	hasOptions: boolean;
+	private options: DiagnosticsNormalizerOptions;
+	private hasOptions: boolean;
 
-	markupOptions: NormalizeOptionsRequiredPosition;
-	hasMarkupOptions: boolean;
+	private markupOptions: NormalizeOptionsRequiredPosition;
+	private hasMarkupOptions: boolean;
 
-	inlineSourceText: Map<string, string>;
-	inlinedSourceTextFilenames: Set<string>;
+	private inlineSourceText: Map<string, string>;
+	private inlinedSourceTextFilenames: Set<string>;
 
-	createMarkupOptions(
+	private createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
 	): NormalizeOptionsRequiredPosition {
 		const {sourceMaps} = this;
@@ -102,11 +101,11 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	setInlineSourceText(filename: string, sourceText: string) {
+	public setInlineSourceText(filename: string, sourceText: string) {
 		this.inlineSourceText.set(filename, sourceText);
 	}
 
-	normalizeFilename(filename: undefined | string): undefined | string {
+	private normalizeFilename(filename: undefined | string): undefined | string {
 		const {markupOptions} = this;
 		if (markupOptions === undefined || filename === undefined) {
 			return filename;
@@ -120,7 +119,7 @@ export default class DiagnosticsNormalizer {
 		return normalizePosition(filename, undefined, undefined).filename;
 	}
 
-	normalizePositionValue<T>(value: T): undefined | T {
+	private normalizePositionValue<T>(value: T): undefined | T {
 		if (this.markupOptions !== undefined && this.markupOptions.stripPositions) {
 			return undefined;
 		} else {
@@ -128,34 +127,7 @@ export default class DiagnosticsNormalizer {
 		}
 	}
 
-	resolvePosition(
-		filename: string,
-		position: Position,
-	):
-		| undefined
-		| {
-				filename: string;
-				position: Position;
-			} {
-		const resolved = this.markupOptions.normalizePosition(
-			filename,
-			position.line,
-			position.column,
-		);
-		if (resolved === undefined) {
-			return undefined;
-		}
-
-		return {
-			filename: resolved.filename,
-			position: {
-				line: resolved.line ?? ob1Number1,
-				column: resolved.column ?? ob1Number0,
-			},
-		};
-	}
-
-	normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
+	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
 		if (sourceMaps === undefined) {
 			return location;
@@ -237,17 +209,17 @@ export default class DiagnosticsNormalizer {
 		};
 	}
 
-	normalizeMarkup(markup: StaticMarkup): StaticMarkup {
+	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
 		return normalizeMarkup(markup, this.markupOptions).text;
 	}
 
-	maybeNormalizeMarkup(
+	private maybeNormalizeMarkup(
 		markup: undefined | StaticMarkup,
 	): undefined | StaticMarkup {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
-	normalizeDiagnosticAdviceItem(
+	private normalizeDiagnosticAdviceItem(
 		item: DiagnosticAdviceItem,
 	): DiagnosticAdviceItem {
 		const {sourceMaps} = this;
@@ -326,7 +298,7 @@ export default class DiagnosticsNormalizer {
 		return item;
 	}
 
-	normalizeDiagnostic(diag: Diagnostic): Diagnostic {
+	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
 		const {sourceMaps} = this;
 
 		// Fast path for a common case

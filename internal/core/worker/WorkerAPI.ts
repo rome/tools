@@ -67,10 +67,10 @@ export default class WorkerAPI {
 		this.logger = worker.logger;
 	}
 
-	worker: Worker;
-	logger: Logger;
+	private worker: Worker;
+	private logger: Logger;
 
-	interceptDiagnostics<T extends {
+	private interceptDiagnostics<T extends {
 		diagnostics: Diagnostics;
 	}>(
 		val: T,
@@ -102,7 +102,10 @@ export default class WorkerAPI {
 		}
 	}
 
-	async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
+	public async moduleSignatureJS(
+		ref: FileReference,
+		parseOptions: WorkerParseOptions,
+	) {
 		const {ast, project} = await this.worker.parse(ref, parseOptions);
 
 		if (ast.type !== "JSRoot") {
@@ -124,7 +127,7 @@ export default class WorkerAPI {
 		});
 	}
 
-	async updateInlineSnapshots(
+	public async updateInlineSnapshots(
 		ref: FileReference,
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
@@ -223,7 +226,7 @@ export default class WorkerAPI {
 		return {diagnostics: diags, file};
 	}
 
-	async analyzeDependencies(
+	public async analyzeDependencies(
 		ref: FileReference,
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
@@ -266,7 +269,7 @@ export default class WorkerAPI {
 		return analyzeResult.value;
 	}
 
-	async workerCompilerOptionsToCompilerOptions(
+	private async workerCompilerOptionsToCompilerOptions(
 		ref: FileReference,
 		workerOptions: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
@@ -286,7 +289,7 @@ export default class WorkerAPI {
 		}
 	}
 
-	async compile(
+	public async compile(
 		ref: FileReference,
 		stage: TransformStageName,
 		options: WorkerCompilerOptions,
@@ -316,7 +319,10 @@ export default class WorkerAPI {
 		);
 	}
 
-	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<AnyRoot> {
+	public async parse(
+		ref: FileReference,
+		opts: WorkerParseOptions,
+	): Promise<AnyRoot> {
 		let {ast, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			{
@@ -329,7 +335,7 @@ export default class WorkerAPI {
 		return this.interceptDiagnostics(ast, {astModifiedFromSource});
 	}
 
-	async format(
+	public async format(
 		ref: FileReference,
 		formatOptions: FormatterOptions,
 		parseOptions: WorkerParseOptions,
@@ -347,7 +353,7 @@ export default class WorkerAPI {
 		}
 	}
 
-	async _format(
+	private async _format(
 		ref: FileReference,
 		formatOptions: FormatterOptions,
 		parseOptions: WorkerParseOptions,
@@ -391,7 +397,7 @@ export default class WorkerAPI {
 		);
 	}
 
-	async lint(
+	public async lint(
 		ref: FileReference,
 		options: WorkerLintOptions,
 		parseOptions: WorkerParseOptions,
@@ -502,7 +508,7 @@ export default class WorkerAPI {
 		};
 	}
 
-	async compilerLint(
+	private async compilerLint(
 		ref: FileReference,
 		options: WorkerLintOptions,
 		parseOptions: WorkerParseOptions,

@@ -33,14 +33,14 @@ export default class DependencyOrderer {
 		this.firstTopAwaitLocations = [];
 	}
 
-	firstTopAwaitLocations: FirstTopAwaitLocations;
-	orderedNodes: Set<DependencyNode>;
-	visitedNodes: Set<DependencyNode>;
-	possibleCyclePaths: Map<DependencyNode, Array<string>>;
-	diagnostics: Diagnostics;
-	graph: DependencyGraph;
+	private firstTopAwaitLocations: FirstTopAwaitLocations;
+	private orderedNodes: Set<DependencyNode>;
+	private visitedNodes: Set<DependencyNode>;
+	private possibleCyclePaths: Map<DependencyNode, Array<string>>;
+	private diagnostics: Diagnostics;
+	private graph: DependencyGraph;
 
-	handleAlreadyVisitedFile(
+	private handleAlreadyVisitedFile(
 		node: DependencyNode,
 		path: AbsoluteFilePath,
 		ancestry: Array<string>,
@@ -64,7 +64,7 @@ export default class DependencyOrderer {
 		}
 	}
 
-	addFile(path: AbsoluteFilePath, ancestry: Array<string>): void {
+	private addFile(path: AbsoluteFilePath, ancestry: Array<string>): void {
 		const node = this.graph.getNode(path);
 
 		if (this.visitedNodes.has(node)) {
@@ -95,7 +95,7 @@ export default class DependencyOrderer {
 
 	// We detect cycles by determining if there were any references to imports at the top level that
 	// are for a module that will be initialized before
-	detectCycles() {
+	private detectCycles() {
 		const flatOrder = Array.from(this.orderedNodes);
 
 		for (let i = 0; i < flatOrder.length; i++) {
@@ -125,7 +125,7 @@ export default class DependencyOrderer {
 		}
 	}
 
-	flagCycle(
+	private flagCycle(
 		node: DependencyNode,
 		dep: DependencyNode,
 		imp: AnalyzeDependencyImportUsageItem,
@@ -157,7 +157,7 @@ export default class DependencyOrderer {
 		});
 	}
 
-	order(path: AbsoluteFilePath): DependencyOrder {
+	public order(path: AbsoluteFilePath): DependencyOrder {
 		this.addFile(path, []);
 		this.detectCycles();
 		return {

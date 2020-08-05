@@ -10,10 +10,10 @@ import {
 	JSClassDeclaration,
 	JSFunctionDeclaration,
 	NodeBaseWithComments,
+	TSDeclareFunction,
 	TSInterfaceDeclaration,
 } from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {TSDeclareFunction} from "@internal/ast";
 
 export interface JSExportDefaultDeclaration extends NodeBaseWithComments {
 	readonly type: "JSExportDefaultDeclaration";

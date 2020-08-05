@@ -11,7 +11,7 @@ export const createCommitParser = createParser((ParserCore) =>
 			super(opts, "parse/commit", {});
 		}
 
-		tokenize(index: Number0): undefined | TokenValues<Tokens> {
+		protected tokenize(index: Number0): undefined | TokenValues<Tokens> {
 			const char = this.getInputCharOnly(index);
 			switch (char) {
 				case Symbols.Space:
@@ -42,7 +42,7 @@ export const createCommitParser = createParser((ParserCore) =>
 			}
 		}
 
-		parse(): CommitRoot {
+		public parse(): CommitRoot {
 			const start = this.getPosition();
 
 			let commitType = "";

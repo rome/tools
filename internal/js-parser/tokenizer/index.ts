@@ -136,8 +136,8 @@ export class RegExpTokenValue {
 		this.flags = flags;
 	}
 
-	pattern: string;
-	flags: Set<string>;
+	public pattern: string;
+	public flags: Set<string>;
 }
 
 export class NumberTokenValue {
@@ -146,8 +146,8 @@ export class NumberTokenValue {
 		this.format = format;
 	}
 
-	value: number;
-	format: JSNumericLiteral["format"];
+	public value: number;
+	public format: JSNumericLiteral["format"];
 }
 
 // ## Tokenizer

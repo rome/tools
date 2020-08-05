@@ -50,49 +50,49 @@ export default class T {
 		this.compatibilityCache = new Map();
 	}
 
-	static type = "T";
-	utils: Utils;
-	evaluator: Evaluator;
-	graph: Graph<T>;
-	scope: Scope;
-	hub: Hub;
+	public static type = "T";
+	protected utils: Utils;
+	protected evaluator: Evaluator;
+	protected graph: Graph<T>;
+	protected hub: Hub;
+	public scope: Scope;
 
-	compatibilityCache: Map<T, TypeCompatibilityReturn>;
+	public compatibilityCache: Map<T, TypeCompatibilityReturn>;
 
-	human: undefined | StaticMarkup;
-	id: string;
+	public human: undefined | StaticMarkup;
+	public id: string;
 
-	originNode: undefined | AnyNode;
-	originLoc: undefined | SourceLocation;
-	originEvaluator: undefined | string;
+	public originNode: undefined | AnyNode;
+	public originLoc: undefined | SourceLocation;
+	public originEvaluator: undefined | string;
 
-	getConstructor(): typeof T {
+	public getConstructor(): typeof T {
 		// @ts-ignore
 		return this.constructor;
 	}
 
-	setHuman(human: undefined | StaticMarkup) {
+	public setHuman(human: undefined | StaticMarkup) {
 		this.human = human;
 	}
 
-	shouldMatch(type: T) {
+	public shouldMatch(type: T) {
 		this.hub.assertOpen();
 		this.graph.addLine(this, type);
 	}
 
-	hasConnections(): boolean {
+	public hasConnections(): boolean {
 		return this.graph.hasConnections(this);
 	}
 
-	explodeUnion(): Array<T> {
+	public explodeUnion(): Array<T> {
 		return [this];
 	}
 
-	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
+	public compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		return otherType instanceof this.constructor;
 	}
 
-	clone() {
+	public clone() {
 		const idsToType: Map<string, T> = new Map();
 
 		const addType: SerialTypeFactory = (type: T) => {
@@ -123,7 +123,7 @@ export default class T {
 		);
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -132,17 +132,17 @@ export default class T {
 		throw new Error(`Unimplemented ${this.type}.hydrate`);
 	}
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		throw new Error(
 			`Unimplemented ${this.getConstructor().type}.prototype.serialize`,
 		);
 	}
 
-	reduce(): T {
+	public reduce(): T {
 		return this;
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		const reduced = this.utils.reduce(this);
 		if (reduced === this) {
 			throw new Error("unimplemented");
@@ -151,7 +151,7 @@ export default class T {
 		}
 	}
 
-	inspect() {
+	public inspect() {
 		return this.utils.inspect(this);
 	}
 }

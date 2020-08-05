@@ -18,16 +18,16 @@ export default class IntersectionT extends T {
 		this.types = types;
 	}
 
-	static type = "IntersectionT";
-	types: Array<T>;
+	public static type = "IntersectionT";
+	private types: Array<T>;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			types: this.types.map((type) => addType(type)),
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,
@@ -40,7 +40,7 @@ export default class IntersectionT extends T {
 		);
 	}
 
-	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
+	public compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		for (const type of this.types) {
 			const compatibility = this.utils.checkCompability(type, otherType);
 			if (compatibility.type === "incompatible") {
@@ -50,7 +50,7 @@ export default class IntersectionT extends T {
 		return true;
 	}
 
-	humanize(builder: HumanBuilder): StaticMarkup {
+	public humanize(builder: HumanBuilder): StaticMarkup {
 		return concatMarkup(
 			this.types.map((type) => builder.humanize(type)),
 			markup` & `,

@@ -96,22 +96,23 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	path: undefined | UnknownFilePath;
-	filename: undefined | string;
-	declared: boolean;
-	handleUnexpected: undefined | ConsumerHandleUnexpected;
-	onDefinition: undefined | ConsumerOnDefinition;
-	propertyMetadata: undefined | ConsumePropertyMetadata;
-	parent: undefined | Consumer;
-	value: unknown;
-	context: ConsumeContext;
-	keyPath: ConsumePath;
-	usedNames: Set<string>;
-	forkCache: Map<string, Consumer>;
-	hasHandledUnexpected: boolean;
-	forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
+	public path: undefined | UnknownFilePath;
+	public filename: undefined | string;
 
-	capture(): {
+	private declared: boolean;
+	private handleUnexpected: undefined | ConsumerHandleUnexpected;
+	private onDefinition: undefined | ConsumerOnDefinition;
+	private propertyMetadata: undefined | ConsumePropertyMetadata;
+	private parent: undefined | Consumer;
+	private value: unknown;
+	private context: ConsumeContext;
+	public keyPath: ConsumePath;
+	private usedNames: Set<string>;
+	private forkCache: Map<string, Consumer>;
+	private hasHandledUnexpected: boolean;
+	private forceDiagnosticTarget: undefined | ConsumeSourceLocationRequestTarget;
+
+	public capture(): {
 		consumer: Consumer;
 		definitions: Array<ConsumePropertyDefinition>;
 		diagnostics: Diagnostics;
@@ -134,7 +135,7 @@ export default class Consumer {
 		return {consumer, definitions, diagnostics};
 	}
 
-	async bufferDiagnostics<T>(
+	public async bufferDiagnostics<T>(
 		callback: (consumer: Consumer) => Promise<T> | T,
 	): Promise<T> {
 		const {diagnostics, consumer} = await this.capture();
@@ -146,11 +147,11 @@ export default class Consumer {
 	}
 
 	// Just for JSON.stringify debugging of Consumer instances
-	toJSON() {
+	public toJSON() {
 		return this.value;
 	}
 
-	handleThrownDiagnostics(callback: VoidCallback) {
+	public handleThrownDiagnostics(callback: VoidCallback) {
 		if (this.handleUnexpected === undefined) {
 			callback();
 		} else {
@@ -164,7 +165,7 @@ export default class Consumer {
 		}
 	}
 
-	declareDefinition(
+	public declareDefinition(
 		partialDef:
 			| Omit<ConsumePropertyStringDefinition, "objectPath" | "metadata">
 			| Omit<ConsumePropertyPrimitiveDefinition, "objectPath" | "metadata">
@@ -195,7 +196,7 @@ export default class Consumer {
 		this.onDefinition(def, this);
 	}
 
-	getDiagnosticLocation(
+	public getDiagnosticLocation(
 		target: ConsumeSourceLocationRequestTarget = "all",
 	): DiagnosticLocation {
 		const {forceDiagnosticTarget} = this;
@@ -219,7 +220,9 @@ export default class Consumer {
 		}
 	}
 
-	getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
+	public getLocation(
+		target?: ConsumeSourceLocationRequestTarget,
+	): SourceLocation {
 		const location = this.getDiagnosticLocation(target);
 		if (
 			location === undefined ||
@@ -240,7 +243,7 @@ export default class Consumer {
 		}
 	}
 
-	getLocationRange(
+	public getLocationRange(
 		startIndex: Number0,
 		endIndex: Number0 = startIndex,
 		target?: ConsumeSourceLocationRequestTarget,
@@ -270,18 +273,18 @@ export default class Consumer {
 		};
 	}
 
-	getKey(): Consumer {
+	public getKey(): Consumer {
 		return this.cloneConsumer({
 			forceDiagnosticTarget: "key",
 			value: this.getParentKey(),
 		});
 	}
 
-	getParentKey(): ConsumeKey {
+	public getParentKey(): ConsumeKey {
 		return this.keyPath[this.keyPath.length - 1];
 	}
 
-	hasChangedFromSource(): boolean {
+	public hasChangedFromSource(): boolean {
 		const {getOriginalValue} = this.context;
 		if (getOriginalValue === undefined) {
 			return false;
@@ -291,11 +294,11 @@ export default class Consumer {
 		return !this.wasInSource() || this.value !== originalValue;
 	}
 
-	wasInSource() {
+	public wasInSource() {
 		return this.getDiagnosticLocation() !== undefined;
 	}
 
-	getKeyPathString(path: ConsumePath = this.keyPath): string {
+	public getKeyPathString(path: ConsumePath = this.keyPath): string {
 		const {normalizeKey} = this.context;
 		let str = "";
 
@@ -334,7 +337,7 @@ export default class Consumer {
 		return str;
 	}
 
-	generateUnexpectedMessage(
+	private generateUnexpectedMessage(
 		msg: StaticMarkup,
 		opts: UnexpectedConsumerOptions,
 	): StaticMarkup {
@@ -361,7 +364,7 @@ export default class Consumer {
 		return msg;
 	}
 
-	unexpected(
+	public unexpected(
 		description: DiagnosticDescriptionOptional = descriptions.CONSUME.INVALID,
 		opts: UnexpectedConsumerOptions = {},
 	): DiagnosticsError {
@@ -454,7 +457,7 @@ export default class Consumer {
 	// Only dispatch a single error for the current consumer, and suppress any if we have a parent consumer with errors
 	// We do this since we could be producing redundant stale errors based on
 	// results we've normalized to allow us to continue
-	shouldDispatchUnexpected(): boolean {
+	private shouldDispatchUnexpected(): boolean {
 		if (this.hasHandledUnexpected) {
 			return false;
 		}
@@ -467,7 +470,7 @@ export default class Consumer {
 		return true;
 	}
 
-	cloneConsumer(opts: Partial<ConsumerOptions>): Consumer {
+	private cloneConsumer(opts: Partial<ConsumerOptions>): Consumer {
 		return new Consumer({
 			declared: this.declared,
 			usedNames: this.usedNames,
@@ -483,7 +486,7 @@ export default class Consumer {
 		});
 	}
 
-	copy(mix?: object) {
+	public copy(mix?: object) {
 		let value = this.value;
 
 		if (isPlainObject(value)) {
@@ -512,7 +515,7 @@ export default class Consumer {
 		return consumer;
 	}
 
-	fork(
+	private fork(
 		key: ConsumeKey,
 		value: unknown,
 		propertyMetadata?: ConsumePropertyMetadata,
@@ -538,7 +541,7 @@ export default class Consumer {
 		return forked;
 	}
 
-	_normalizeValueForSet(value: unknown): unknown {
+	private _normalizeValueForSet(value: unknown): unknown {
 		if (value instanceof Set) {
 			return Array.from(value);
 		}
@@ -554,7 +557,7 @@ export default class Consumer {
 		return value;
 	}
 
-	getValue(def?: unknown): unknown {
+	public getValue(def?: unknown): unknown {
 		if (this.exists()) {
 			return this.value;
 		} else {
@@ -562,7 +565,7 @@ export default class Consumer {
 		}
 	}
 
-	setValue(rawValue: unknown): this {
+	public setValue(rawValue: unknown): this {
 		const value = this._normalizeValueForSet(rawValue);
 		this.value = value;
 
@@ -591,35 +594,38 @@ export default class Consumer {
 		return this;
 	}
 
-	has(key: string): boolean {
+	public has(key: string): boolean {
 		const value = this.asOriginalUnknownObject();
 		return value[key] != null;
 	}
 
-	delete(key: string) {
+	public delete(key: string) {
 		this.get(key).setValue(undefined);
 	}
 
-	set(key: string, value: unknown) {
+	public set(key: string, value: unknown) {
 		this.get(key).setValue(value);
 	}
 
-	get(key: string, metadata?: ConsumePropertyMetadata): Consumer {
+	public get(key: string, metadata?: ConsumePropertyMetadata): Consumer {
 		const value = this.asOriginalUnknownObject();
 		this.markUsedProperty(key);
 		return this.fork(key, value[key], metadata);
 	}
 
-	getIndex(index: number): Consumer {
+	public getIndex(index: number): Consumer {
 		const arr = this.asPlainArray();
 		return this.fork(index, arr[index]);
 	}
 
-	markUsedProperty(name: string) {
+	public markUsedProperty(name: string) {
 		this.usedNames.add(name);
 	}
 
-	enforceUsedProperties(type: string = "property", recursive: boolean = true) {
+	public enforceUsedProperties(
+		type: string = "property",
+		recursive: boolean = true,
+	) {
 		if (!this.isObject()) {
 			return;
 		}
@@ -653,7 +659,7 @@ export default class Consumer {
 		}
 	}
 
-	asNumberString(def?: string): number {
+	public asNumberString(def?: string): number {
 		this.declareDefinition({
 			type: "number",
 			default: def,
@@ -670,7 +676,7 @@ export default class Consumer {
 		}
 	}
 
-	asNumberStringOrVoid(): undefined | number {
+	public asNumberStringOrVoid(): undefined | number {
 		this.declareDefinition({
 			type: "number",
 			default: undefined,
@@ -685,7 +691,7 @@ export default class Consumer {
 	}
 
 	// JSON
-	asJSONValue(): JSONValue {
+	public asJSONValue(): JSONValue {
 		const {value} = this;
 
 		switch (typeof value) {
@@ -711,7 +717,7 @@ export default class Consumer {
 		return "";
 	}
 
-	asJSONArray(): JSONArray {
+	public asJSONArray(): JSONArray {
 		const arr: JSONArray = [];
 		for (const value of this.asIterable()) {
 			arr.push(value.asJSONValue());
@@ -719,7 +725,7 @@ export default class Consumer {
 		return arr;
 	}
 
-	asJSONObject(): JSONObject {
+	public asJSONObject(): JSONObject {
 		const obj: JSONObject = {};
 		for (const [key, value] of this.asMap()) {
 			obj[key] = value.asJSONPropertyValue();
@@ -727,7 +733,7 @@ export default class Consumer {
 		return obj;
 	}
 
-	asJSONPropertyValue(): JSONPropertyValue {
+	public asJSONPropertyValue(): JSONPropertyValue {
 		if (this.exists()) {
 			return this.asJSONValue();
 		} else {
@@ -735,11 +741,11 @@ export default class Consumer {
 		}
 	}
 
-	exists() {
+	public exists() {
 		return this.value != null;
 	}
 
-	isObject(): boolean {
+	public isObject(): boolean {
 		const {value} = this;
 		return (
 			typeof value === "object" &&
@@ -748,7 +754,7 @@ export default class Consumer {
 		);
 	}
 
-	asUnknownObject(optional: boolean = false): UnknownObject {
+	public asUnknownObject(optional: boolean = false): UnknownObject {
 		this.declareDefinition({
 			type: "object",
 			default: undefined,
@@ -760,7 +766,7 @@ export default class Consumer {
 		};
 	}
 
-	asOriginalUnknownObject(optional: boolean = false): UnknownObject {
+	public asOriginalUnknownObject(optional: boolean = false): UnknownObject {
 		if (optional && !this.exists()) {
 			return {};
 		}
@@ -774,7 +780,7 @@ export default class Consumer {
 		return value;
 	}
 
-	asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
+	public asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
 		this.declareDefinition({
 			type: "object",
 			default: undefined,
@@ -792,7 +798,7 @@ export default class Consumer {
 		return map;
 	}
 
-	asPlainArray(optional: boolean = false): Array<unknown> {
+	public asPlainArray(optional: boolean = false): Array<unknown> {
 		this.declareDefinition({
 			type: "array",
 			default: undefined,
@@ -813,7 +819,7 @@ export default class Consumer {
 		return [...value];
 	}
 
-	asIterable(optional?: boolean): Iterable<Consumer> {
+	public asIterable(optional?: boolean): Iterable<Consumer> {
 		const arr = this.asPlainArray(optional);
 
 		return arr.map((val, index) => {
@@ -821,11 +827,11 @@ export default class Consumer {
 		});
 	}
 
-	asMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
+	public asMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
 		return Array.from(this.asIterable(), callback);
 	}
 
-	asImplicitMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
+	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);
 		} else if (this.exists()) {
@@ -835,7 +841,7 @@ export default class Consumer {
 		}
 	}
 
-	asDateOrVoid(): undefined | Date {
+	public asDateOrVoid(): undefined | Date {
 		this.declareDefinition({
 			type: "date",
 			default: undefined,
@@ -848,7 +854,7 @@ export default class Consumer {
 		}
 	}
 
-	asDate(def?: Date): Date {
+	public asDate(def?: Date): Date {
 		this.declareDefinition({
 			type: "date",
 			default: def,
@@ -862,7 +868,7 @@ export default class Consumer {
 		return value;
 	}
 
-	asBooleanOrVoid(): undefined | boolean {
+	public asBooleanOrVoid(): undefined | boolean {
 		this.declareDefinition({
 			type: "boolean",
 			default: undefined,
@@ -875,7 +881,7 @@ export default class Consumer {
 		}
 	}
 
-	asBoolean(def?: boolean): boolean {
+	public asBoolean(def?: boolean): boolean {
 		this.declareDefinition({
 			type: "boolean",
 			default: def,
@@ -889,7 +895,7 @@ export default class Consumer {
 		return value;
 	}
 
-	asStringOrVoid(): undefined | string {
+	public asStringOrVoid(): undefined | string {
 		this.declareDefinition({
 			type: "string",
 			default: undefined,
@@ -903,7 +909,7 @@ export default class Consumer {
 		}
 	}
 
-	asString(def?: string): string {
+	public asString(def?: string): string {
 		this.declareDefinition({
 			type: "string",
 			default: def,
@@ -918,7 +924,7 @@ export default class Consumer {
 		return value;
 	}
 
-	asStringSet<ValidValue extends string>(
+	public asStringSet<ValidValue extends string>(
 		validValues: Array<ValidValue>,
 		def?: ValidValue,
 	): ValidValue {
@@ -950,7 +956,7 @@ export default class Consumer {
 		}
 	}
 
-	asStringSetOrVoid<ValidValue extends string>(
+	public asStringSetOrVoid<ValidValue extends string>(
 		validValues: Array<ValidValue>,
 	): undefined | ValidValue {
 		this.declareDefinition({
@@ -967,7 +973,7 @@ export default class Consumer {
 		}
 	}
 
-	asBigIntOrVoid(): undefined | bigint {
+	public asBigIntOrVoid(): undefined | bigint {
 		this.declareDefinition({
 			type: "bigint",
 			default: undefined,
@@ -980,7 +986,7 @@ export default class Consumer {
 		}
 	}
 
-	asBigInt(def?: number | bigint): bigint {
+	public asBigInt(def?: number | bigint): bigint {
 		this.declareDefinition({
 			type: "bigint",
 			default: def,
@@ -1001,7 +1007,7 @@ export default class Consumer {
 		return BigInt("0");
 	}
 
-	_declareOptionalFilePath() {
+	private _declareOptionalFilePath() {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1012,7 +1018,7 @@ export default class Consumer {
 		);
 	}
 
-	asURLFilePath(def?: string): URLFilePath {
+	public asURLFilePath(def?: string): URLFilePath {
 		const path = this.asUnknownFilePath(def);
 		if (path.isURL()) {
 			return path.assertURL();
@@ -1022,7 +1028,7 @@ export default class Consumer {
 		}
 	}
 
-	asURLFilePathOrVoid(): undefined | URLFilePath {
+	public asURLFilePathOrVoid(): undefined | URLFilePath {
 		if (this.exists()) {
 			return this.asURLFilePath();
 		} else {
@@ -1031,7 +1037,7 @@ export default class Consumer {
 		}
 	}
 
-	asUnknownFilePath(def?: string): UnknownFilePath {
+	public asUnknownFilePath(def?: string): UnknownFilePath {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1044,7 +1050,7 @@ export default class Consumer {
 		return createUnknownFilePath(this.asString(def));
 	}
 
-	asUnknownFilePathOrVoid(): undefined | UnknownFilePath {
+	public asUnknownFilePathOrVoid(): undefined | UnknownFilePath {
 		if (this.exists()) {
 			return this.asUnknownFilePath();
 		} else {
@@ -1053,7 +1059,10 @@ export default class Consumer {
 		}
 	}
 
-	asAbsoluteFilePath(def?: string, cwd?: AbsoluteFilePath): AbsoluteFilePath {
+	public asAbsoluteFilePath(
+		def?: string,
+		cwd?: AbsoluteFilePath,
+	): AbsoluteFilePath {
 		const path = this.asUnknownFilePath(def);
 		if (path.isAbsolute()) {
 			return path.assertAbsolute();
@@ -1065,7 +1074,9 @@ export default class Consumer {
 		}
 	}
 
-	asAbsoluteFilePathOrVoid(cwd?: AbsoluteFilePath): undefined | AbsoluteFilePath {
+	public asAbsoluteFilePathOrVoid(
+		cwd?: AbsoluteFilePath,
+	): undefined | AbsoluteFilePath {
 		if (this.exists()) {
 			return this.asAbsoluteFilePath(undefined, cwd);
 		} else {
@@ -1074,7 +1085,7 @@ export default class Consumer {
 		}
 	}
 
-	asRelativeFilePath(def?: string): RelativeFilePath {
+	public asRelativeFilePath(def?: string): RelativeFilePath {
 		const path = this.asUnknownFilePath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
@@ -1084,7 +1095,7 @@ export default class Consumer {
 		}
 	}
 
-	asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
 		if (this.exists()) {
 			return this.asRelativeFilePath();
 		} else {
@@ -1093,7 +1104,7 @@ export default class Consumer {
 		}
 	}
 
-	asExplicitRelativeFilePath(def?: string): RelativeFilePath {
+	public asExplicitRelativeFilePath(def?: string): RelativeFilePath {
 		const path = this.asRelativeFilePath(def);
 
 		if (path.isExplicitRelative()) {
@@ -1104,7 +1115,7 @@ export default class Consumer {
 		}
 	}
 
-	asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
 		if (this.exists()) {
 			return this.asExplicitRelativeFilePath();
 		} else {
@@ -1113,7 +1124,7 @@ export default class Consumer {
 		}
 	}
 
-	asNumberOrVoid(): undefined | number {
+	public asNumberOrVoid(): undefined | number {
 		this.declareDefinition({
 			type: "number",
 			default: undefined,
@@ -1127,25 +1138,25 @@ export default class Consumer {
 		}
 	}
 
-	asZeroIndexedNumber(def?: number): Number0 {
+	public asZeroIndexedNumber(def?: number): Number0 {
 		return ob1Coerce0(this.asNumber(def));
 	}
 
-	asOneIndexedNumber(def?: number): Number1 {
+	public asOneIndexedNumber(def?: number): Number1 {
 		return ob1Coerce1(this.asNumber(def));
 	}
 
-	asZeroIndexedNumberOrVoid(): undefined | Number0 {
+	public asZeroIndexedNumberOrVoid(): undefined | Number0 {
 		const num = this.asNumberOrVoid();
 		return num === undefined ? undefined : ob1Coerce0(num);
 	}
 
-	asOneIndexedNumberOrVoid(): undefined | Number1 {
+	public asOneIndexedNumberOrVoid(): undefined | Number1 {
 		const num = this.asNumberOrVoid();
 		return num === undefined ? undefined : ob1Coerce1(num);
 	}
 
-	asNumber(def?: number): number {
+	public asNumber(def?: number): number {
 		this.declareDefinition({
 			type: "number",
 			default: def,
@@ -1160,7 +1171,7 @@ export default class Consumer {
 		return value;
 	}
 
-	asNumberInRange(
+	public asNumberInRange(
 		opts: {
 			min?: number;
 			max?: number;
@@ -1168,7 +1179,7 @@ export default class Consumer {
 		},
 	): number
 
-	asNumberInRange(
+	public asNumberInRange(
 		opts: {
 			min: Number0;
 			max?: Number0;
@@ -1176,7 +1187,7 @@ export default class Consumer {
 		},
 	): Number0
 
-	asNumberInRange(
+	public asNumberInRange(
 		opts: {
 			min: Number1;
 			max?: Number1;
@@ -1184,7 +1195,7 @@ export default class Consumer {
 		},
 	): Number1
 
-	asNumberInRange(
+	public asNumberInRange(
 		opts: {
 			min?: UnknownNumber;
 			max?: UnknownNumber;
@@ -1222,7 +1233,7 @@ export default class Consumer {
 		return num;
 	}
 
-	asNumberSet<ValidValue extends number>(
+	public asNumberSet<ValidValue extends number>(
 		validValues: Array<ValidValue>,
 		def?: ValidValue,
 	): ValidValue {
@@ -1254,7 +1265,7 @@ export default class Consumer {
 		}
 	}
 
-	asNumberSetOrVoid<ValidValue extends number>(
+	public asNumberSetOrVoid<ValidValue extends number>(
 		validValues: Array<ValidValue>,
 	): undefined | ValidValue {
 		this.declareDefinition({
@@ -1271,12 +1282,12 @@ export default class Consumer {
 		}
 	}
 
-	asUnknown(): unknown {
+	public asUnknown(): unknown {
 		return this.value;
 	}
 
 	// rome-ignore lint/ts/noExplicitAny
-	asAny(): any {
+	public asAny(): any {
 		return this.value;
 	}
 }

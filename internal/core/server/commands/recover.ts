@@ -233,7 +233,7 @@ export const clear = createServerCommand({
 		req.expectArgumentLength(0);
 		await req.server.recoveryStore.clear();
 		req.reporter.success(
-			markup`Cleared recovery store at <emphasis>${req.server.recoveryStore.recoveryDirectoryPath}</emphasis>`,
+			markup`Cleared recovery store at <emphasis>${req.server.recoveryStore.getDirectory()}</emphasis>`,
 		);
 	},
 });
@@ -248,6 +248,6 @@ export const dir = createServerCommand({
 	},
 	async callback(req: ServerRequest) {
 		req.expectArgumentLength(0);
-		req.reporter.log(markup`${req.server.recoveryStore.recoveryDirectoryPath}`);
+		req.reporter.log(markup`${req.server.recoveryStore.getDirectory()}`);
 	},
 });

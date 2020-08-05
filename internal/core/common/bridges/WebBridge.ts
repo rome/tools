@@ -9,7 +9,7 @@ import {Bridge} from "@internal/events";
 import {WebServerClient, WebServerRequest} from "../../server/web";
 
 export default class WebBridge extends Bridge {
-	requests = this.createEvent<
+	public requests = this.createEvent<
 		{
 			requests: Array<WebServerRequest>;
 			clients: Array<WebServerClient>;

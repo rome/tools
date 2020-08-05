@@ -14,25 +14,25 @@ export default class SourceMapConsumerCollection {
 		this.maps = new Map();
 	}
 
-	maps: Map<string, SourceMapConsumer>;
+	private maps: Map<string, SourceMapConsumer>;
 
-	hasAny(): boolean {
+	public hasAny(): boolean {
 		return this.maps.size > 0;
 	}
 
-	has(file: undefined | string): boolean {
+	public has(file: undefined | string): boolean {
 		return file !== undefined && this.maps.has(file);
 	}
 
-	add(file: string, map: SourceMapConsumer) {
+	public add(file: string, map: SourceMapConsumer) {
 		this.maps.set(file, map);
 	}
 
-	get(file: string): undefined | SourceMapConsumer {
+	private get(file: string): undefined | SourceMapConsumer {
 		return this.maps.get(file);
 	}
 
-	normalizeResolved(
+	private normalizeResolved(
 		source: string,
 		line: Number1,
 		column: Number0,
@@ -51,7 +51,7 @@ export default class SourceMapConsumerCollection {
 		}
 	}
 
-	assertApproxOriginalPositionFor(
+	public assertApproxOriginalPositionFor(
 		file: string,
 		line: Number1,
 		column: Number0,
@@ -64,7 +64,7 @@ export default class SourceMapConsumerCollection {
 		);
 	}
 
-	assertExactOriginalPositionFor(
+	public assertExactOriginalPositionFor(
 		file: string,
 		line: Number1,
 		column: Number0,
@@ -77,7 +77,7 @@ export default class SourceMapConsumerCollection {
 		);
 	}
 
-	approxOriginalPositionFor(
+	public approxOriginalPositionFor(
 		file: string,
 		line: Number1,
 		column: Number0,
@@ -90,7 +90,7 @@ export default class SourceMapConsumerCollection {
 		}
 	}
 
-	exactOriginalPositionFor(
+	public exactOriginalPositionFor(
 		file: string,
 		line: Number1,
 		column: Number0,

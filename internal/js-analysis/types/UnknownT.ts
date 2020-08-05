@@ -12,21 +12,21 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class UnknownT extends T {
-	static type = "UnknownT";
+	public static type = "UnknownT";
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {};
 	}
 
-	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+	public static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new UnknownT(scope, originNode);
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`unknown`;
 	}
 
-	compatibleWith(): boolean {
+	public compatibleWith(): boolean {
 		return false;
 	}
 }

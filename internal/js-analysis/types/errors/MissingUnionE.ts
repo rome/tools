@@ -25,12 +25,12 @@ export default class MissingUnionE extends E {
 		this.missing = missing;
 	}
 
-	static type = "MissingUnionE";
-	target: T;
-	union: T;
-	missing: Array<T>;
+	public static type = "MissingUnionE";
+	private target: T;
+	public union: T;
+	private missing: Array<T>;
 
-	getError(): ErrorDefinition {
+	public getError(): ErrorDefinition {
 		return {
 			description: descriptions.TYPE_CHECK.MISSING_CONDITION(
 				this.missing.map((type) => this.utils.humanize(type)),

@@ -81,14 +81,14 @@ export default class ClassT extends ObjT {
 		this._extends = opts.extends;
 	}
 
-	static type = "ClassT";
+	public static type = "ClassT";
 
-	_statics: Array<T>;
-	_instances: Array<T>;
-	_extends: undefined | T;
-	_constructor: undefined | T;
+	private _statics: Array<T>;
+	private _instances: Array<T>;
+	private _extends: undefined | T;
+	private _constructor: undefined | T;
 
-	serialize(addType: SerialTypeFactory): HydrateData {
+	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
 			constructor: this._constructor === undefined
 				? undefined
@@ -99,7 +99,7 @@ export default class ClassT extends ObjT {
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: AnyNode,
 		data: HydrateData,

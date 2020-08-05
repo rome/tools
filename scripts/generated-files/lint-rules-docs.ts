@@ -9,7 +9,7 @@ import {markupToHtml} from "@internal/cli-layout";
 import {createUnknownFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {ob1Coerce1} from "@internal/ob1";
-import {modifyGeneratedFile, ROOT} from "../_utils";
+import {ROOT, modifyGeneratedFile} from "../_utils";
 
 const {worker, performFileOperation} = createMockWorker();
 

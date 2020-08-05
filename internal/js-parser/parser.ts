@@ -11,10 +11,8 @@ import {
 	ConstJSSourceType,
 	JSIdentifier,
 	JSRoot,
-	JSStringLiteral,
 } from "@internal/ast";
 import {
-	ParserCoreState,
 	ParserOptionsWithRequiredPath,
 	ParserUnexpectedOptions,
 	Position,
@@ -116,21 +114,21 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.syntax = new Set(options.syntax);
 		}
 
-		options: JSParserOptions;
-		sourceType: ConstJSSourceType;
-		syntax: Set<ConstJSProgramSyntax>;
-		isTrackingTokens: boolean;
-		inModule: boolean;
-		isLookahead: boolean;
-		parenthesized: Set<string>;
+		public options: JSParserOptions;
+		public sourceType: ConstJSSourceType;
+		public syntax: Set<ConstJSProgramSyntax>;
+		private isTrackingTokens: boolean;
+		public inModule: boolean;
+		public isLookahead: boolean;
+		private parenthesized: Set<string>;
 
-		resetTokenizerLine() {
+		public resetTokenizerLine() {
 			this.state.lineStartIndex = this.state.index;
 			this.state.lineStart = true;
 			this.state.indentLevel = ob1Number0;
 		}
 
-		getScope(type: ScopeType) {
+		private getScope(type: ScopeType) {
 			let scope = this.state.scopes[type];
 			if (scope === undefined) {
 				scope = [];
@@ -139,37 +137,37 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return scope;
 		}
 
-		getLastScope(type: ScopeType): unknown {
+		public getLastScope(type: ScopeType): unknown {
 			const scope = this.getScope(type);
 			return scope[scope.length - 1];
 		}
 
-		pushScope(type: ScopeType, value?: unknown) {
+		public pushScope(type: ScopeType, value?: unknown) {
 			this.getScope(type).push(value);
 		}
 
-		popScope(type: ScopeType) {
+		public popScope(type: ScopeType) {
 			this.getScope(type).pop();
 		}
 
-		inScope(type: ScopeType): boolean {
+		public inScope(type: ScopeType): boolean {
 			return this.hasScope(type) && this.getLastScope(type) !== false;
 		}
 
-		hasScope(type: ScopeType): boolean {
+		public hasScope(type: ScopeType): boolean {
 			const scope = this.state.scopes[type];
 			return scope !== undefined && scope.length > 0;
 		}
 
-		addParenthesized(node: AnyNode) {
+		public addParenthesized(node: AnyNode) {
 			this.parenthesized.add(derivePositionKey(this.getLoc(node).start));
 		}
 
-		isParenthesized(node: AnyNode): boolean {
+		public isParenthesized(node: AnyNode): boolean {
 			return this.parenthesized.has(derivePositionKey(this.getLoc(node).start));
 		}
 
-		setState(newState: State) {
+		public setState(newState: State) {
 			// Verify that this new state doesn't exceed any previous maxDiagnostic cap
 			// maxDiagnostics will be at -1 when it's own limit has been exceeded, in
 			// this case, we are likely replacing the State with another that's valid
@@ -185,20 +183,15 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state = newState;
 		}
 
-		// Overrides ParserCore#getCommentsState
-		getCommentsState(): ParserCoreState {
-			return this.state;
-		}
-
-		atEOF(): boolean {
+		public atEOF(): boolean {
 			return this.match(tt.eof);
 		}
 
-		createBranch<T>(): ParserBranchFinder<T> {
+		public createBranch<T>(): ParserBranchFinder<T> {
 			return new ParserBranchFinder(this);
 		}
 
-		tryBranch<T>(fn: (parser: JSParser) => T): undefined | T {
+		public tryBranch<T>(fn: (parser: JSParser) => T): undefined | T {
 			const branch = new ParserBranchFinder<T>(this);
 			branch.add(fn, {maxNewDiagnostics: 0});
 			if (branch.hasBranch()) {
@@ -208,7 +201,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		createUnknownIdentifier(
+		public createUnknownIdentifier(
 			reason: string,
 			start: Position = this.getPosition(),
 			end: Position = this.getLastEndPosition(),
@@ -221,20 +214,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			};
 		}
 
-		createUnknownStringLiteral(
-			reason: string,
-			start: Position = this.getPosition(),
-			end: Position = this.getLastEndPosition(),
-		): JSStringLiteral {
-			this.state.corrupt = true;
-			return {
-				type: "JSStringLiteral",
-				value: "INVALID_PLACEHOLDER",
-				loc: this.finishLocAt(start, end),
-			};
-		}
-
-		assertNoSpace(
+		public assertNoSpace(
 			_metadata: Omit<DiagnosticDescription, "category"> = descriptions.JS_PARSER.UNEXPECTED_SPACE,
 		): void {
 			const {state} = this;
@@ -248,11 +228,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		shouldCreateToken() {
+		public shouldCreateToken() {
 			return this.isTrackingTokens && !this.isLookahead;
 		}
 
-		createToken(state: State): Token {
+		private createToken(state: State): Token {
 			const token: Token = {
 				type: state.tokenType,
 				loc: {
@@ -265,7 +245,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return token;
 		}
 
-		pushToken(token: Token) {
+		public pushToken(token: Token) {
 			const lastToken = this.state.tokens[this.state.tokens.length - 1];
 			if (lastToken !== undefined) {
 				if (comparePositions(token.loc.start, lastToken.loc.end) === -1) {
@@ -278,7 +258,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.state.tokens.push(token);
 		}
 
-		unexpectedDiagnostic(opts: ParserUnexpectedOptions): void {
+		public unexpectedDiagnostic(opts: ParserUnexpectedOptions): void {
 			if (this.isLookahead) {
 				return;
 			}
@@ -296,15 +276,15 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			super.unexpectedDiagnostic(opts);
 		}
 
-		shouldTokenizeJSX(): boolean {
+		public shouldTokenizeJSX(): boolean {
 			return !this.isSyntaxEnabled("ts") || this.isSyntaxEnabled("jsx");
 		}
 
-		isSyntaxEnabled(syntax: ConstJSProgramSyntax): boolean {
+		public isSyntaxEnabled(syntax: ConstJSProgramSyntax): boolean {
 			return this.syntax.has(syntax);
 		}
 
-		expectSyntaxEnabled(syntax: ConstJSProgramSyntax) {
+		public expectSyntaxEnabled(syntax: ConstJSProgramSyntax) {
 			if (!this.isSyntaxEnabled(syntax)) {
 				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_ENABLE_SYNTAX(syntax),
@@ -312,11 +292,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		isRelational(op: "<" | ">"): boolean {
+		public isRelational(op: "<" | ">"): boolean {
 			return this.match(tt.relational) && this.state.tokenValue === op;
 		}
 
-		expectRelational(op: "<" | ">"): boolean {
+		public expectRelational(op: "<" | ">"): boolean {
 			if (this.eatRelational(op)) {
 				return true;
 			} else {
@@ -327,12 +307,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		isLookaheadRelational(op: "<" | ">"): boolean {
-			const l = this.lookaheadState();
-			return l.tokenType === tt.relational && l.tokenValue === op;
-		}
-
-		banUnicodeEscape(index: undefined | Number0, name: string) {
+		public banUnicodeEscape(index: undefined | Number0, name: string) {
 			if (index !== undefined) {
 				this.unexpectedDiagnostic({
 					index,
@@ -342,7 +317,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// eat() for relational operators.
-		eatRelational(op: "<" | ">"): boolean {
+		private eatRelational(op: "<" | ">"): boolean {
 			if (this.isRelational(op)) {
 				this.next();
 				return true;
@@ -352,7 +327,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Tests whether parsed token is a contextual keyword.
-		isContextual(name: string): boolean {
+		public isContextual(name: string): boolean {
 			return (
 				this.match(tt.name) &&
 				this.state.tokenValue === name &&
@@ -360,7 +335,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			);
 		}
 
-		isLookaheadContextual(name: string): boolean {
+		public isLookaheadContextual(name: string): boolean {
 			const l = this.lookaheadState();
 			return (
 				l.tokenType === tt.name &&
@@ -370,7 +345,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Consumes contextual keyword if possible.
-		eatContextual(name: string): boolean {
+		public eatContextual(name: string): boolean {
 			if (this.isContextual(name)) {
 				this.next();
 				return true;
@@ -380,7 +355,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Asserts that following token is given contextual keyword.
-		expectContextual(
+		public expectContextual(
 			name: string,
 			_metadata: OptionalProps<DiagnosticDescription, "category"> = descriptions.JS_PARSER.EXPECTED_KEYWORD(
 				name,
@@ -397,7 +372,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Test whether a semicolon can be inserted at the current position.
-		canInsertSemicolon(): boolean {
+		public canInsertSemicolon(): boolean {
 			return (
 				this.match(tt.eof) ||
 				this.match(tt.braceR) ||
@@ -405,7 +380,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			);
 		}
 
-		hasPrecedingLineBreak(): boolean {
+		public hasPrecedingLineBreak(): boolean {
 			return lineBreak.test(
 				this.getRawInput(
 					this.getIndexFromPosition(this.state.lastEndPos, this.filename),
@@ -414,13 +389,13 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			);
 		}
 
-		isLineTerminator(): boolean {
+		public isLineTerminator(): boolean {
 			return this.eat(tt.semi) || this.canInsertSemicolon();
 		}
 
 		// Consume a semicolon, or, failing that, see if we are allowed to
 		// pretend that there is a semicolon at this position.
-		semicolon(): void {
+		public semicolon(): void {
 			if (!this.isLineTerminator()) {
 				this.unexpectedDiagnostic({
 					description: descriptions.JS_PARSER.EXPECTED_SEMI_OR_LINE_TERMINATOR,
@@ -430,7 +405,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		// Expect a token of a given type. If found, consume it, otherwise,
 		// raise an unexpected token error at given pos.
-		expect(type: TokenType, pos?: Position): boolean {
+		public expect(type: TokenType, pos?: Position): boolean {
 			if (this.eat(type)) {
 				return true;
 			} else {
@@ -439,7 +414,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		expectOpening(
+		public expectOpening(
 			open: TokenType,
 			close: TokenType,
 			name: string,
@@ -456,7 +431,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			};
 		}
 
-		expectClosing(context: OpeningContext) {
+		public expectClosing(context: OpeningContext) {
 			if (this.match(context.close)) {
 				this.next();
 				return true;
@@ -483,7 +458,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		// Raise an unexpected token error. Can take the expected token type
 		// instead of a message string.
-		unexpectedToken(pos?: Position, tokenType?: TokenType) {
+		public unexpectedToken(pos?: Position, tokenType?: TokenType) {
 			let expectedToken: undefined | string;
 			let possibleShiftMistake: boolean = false;
 
@@ -506,17 +481,17 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			});
 		}
 
-		unexpected(): never {
+		public unexpected(): never {
 			throw new Error(
 				"js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead",
 			);
 		}
 
-		tokenize(): never {
+		protected tokenize(): never {
 			throw new Error("js-parser does not use the parser-core tokenizer");
 		}
 
-		cloneNode<T extends AnyNode>(node: T): T {
+		public cloneNode<T extends AnyNode>(node: T): T {
 			if (
 				node.leadingComments === undefined &&
 				node.trailingComments === undefined &&
@@ -537,14 +512,17 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Reset the start location of node to the start location of locationNode
-		resetStartLocationFromNode(node: AnyNode, locationNode: AnyNode): void {
+		public resetStartLocationFromNode(
+			node: AnyNode,
+			locationNode: AnyNode,
+		): void {
 			node.loc = {
 				...this.getLoc(node),
 				start: this.getLoc(locationNode).start,
 			};
 		}
 
-		next(): void {
+		public next(): void {
 			if (this.shouldCreateToken()) {
 				this.createToken(this.state);
 			}
@@ -556,7 +534,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			nextToken(this);
 		}
 
-		eat(type: TokenType): boolean {
+		public eat(type: TokenType): boolean {
 			if (this.match(type)) {
 				this.next();
 				return true;
@@ -565,11 +543,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return false;
 		}
 
-		match(type: TokenType): boolean {
+		public match(type: TokenType): boolean {
 			return this.state.tokenType === type;
 		}
 
-		lookaheadState(): State {
+		public lookaheadState(): State {
 			const old = this.state;
 			this.state = this.cloneState(true);
 
@@ -582,7 +560,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return curr;
 		}
 
-		cloneState(skipArrays: boolean = false): State {
+		public cloneState(skipArrays: boolean = false): State {
 			const state: State = {...this.state};
 
 			for (const key in state) {
@@ -609,22 +587,22 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// Overrides ParserCore#getPosition
-		getPosition(): Position {
+		public getPosition(): Position {
 			return this.state.startPos;
 		}
 
 		// Overrides ParserCore#getIndex
-		getIndex(): Number0 {
+		public getIndex(): Number0 {
 			return this.state.startIndex;
 		}
 
 		// Overrides ParserCore#getLastEndPosition
-		getLastEndPosition(): Position {
+		public getLastEndPosition(): Position {
 			return this.state.lastEndPos;
 		}
 
 		// Private method to actually generate a Position
-		getPositionFromState(): Position {
+		public getPositionFromState(): Position {
 			const {state} = this;
 			const pos: Position = {
 				line: state.curLine,
@@ -634,7 +612,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			return pos;
 		}
 
-		parse(): JSRoot {
+		public parse(): JSRoot {
 			if (this.inModule) {
 				this.pushScope("ASYNC", true);
 				this.pushScope("STRICT", true);

@@ -9,15 +9,14 @@ import {
 	ServerBridge,
 	ServerQueryRequest,
 	ServerQueryResponse,
+	VERSION,
 } from "@internal/core";
 import {
 	DiagnosticOrigin,
 	Diagnostics,
 	DiagnosticsProcessor,
-	createInternalDiagnostic,
-	deriveDiagnosticFromError,
 	descriptions,
-	getDiagnosticsFromError,
+	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
@@ -39,7 +38,12 @@ import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
 import Cache from "./Cache";
-import {Reporter} from "@internal/cli-reporter";
+import {
+	Reporter,
+	ReporterProgress,
+	ReporterProgressOptions,
+	mergeProgresses,
+} from "@internal/cli-reporter";
 import {Profiler} from "@internal/v8";
 import {
 	PartialServerQueryRequest,
@@ -50,7 +54,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {VERSION} from "@internal/core";
+
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig, loadUserConfig} from "../common/userConfig";
 import {
@@ -58,7 +62,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
-import {Dict, mergeObjects} from "@internal/typescript-helpers";
+import {Dict, ErrorCallback, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
@@ -195,22 +199,18 @@ export default class Server {
 
 		this.clientStartEvent = new Event({
 			name: "Server.clientStart",
-			onError: this.onFatalErrorBound,
 		});
 
 		this.requestStartEvent = new Event({
 			name: "Server.requestStart",
-			onError: this.onFatalErrorBound,
 		});
 
 		this.refreshFileEvent = new Event({
 			name: "Server.refreshFile",
-			onError: this.onFatalErrorBound,
 		});
 
 		this.endEvent = new Event({
 			name: "Server.end",
-			onError: this.onFatalErrorBound,
 			serial: true,
 		});
 
@@ -269,57 +269,62 @@ export default class Server {
 		);
 	}
 
-	userConfig: UserConfig;
+	public userConfig: UserConfig;
+	public onFatalErrorBound: ErrorCallback;
+	public options: ServerOptions;
 
-	requestStartEvent: Event<ServerRequest, void>;
-	clientStartEvent: Event<ServerClient, void>;
-	endEvent: Event<void, void>;
+	// Public events
+	public requestStartEvent: Event<ServerRequest, void>;
+	public clientStartEvent: Event<ServerClient, void>;
+	public endEvent: Event<void, void>;
 
 	// Event for when a file needs to be "refreshed". This could include:
 	// - Deleted
 	// - Created
 	// - Modified
 	// - Buffer updated
-	refreshFileEvent: Event<AbsoluteFilePath, void>;
+	public refreshFileEvent: Event<AbsoluteFilePath, void>;
 
-	onFatalErrorBound: (err: Error) => void;
-
-	requestRunningCounter: number;
-	terminateWhenIdle: boolean;
-
-	clientIdCounter: number;
-
-	profiling: undefined | ProfilingStartData;
-	options: ServerOptions;
-
-	recoveryStore: RecoveryStore;
-	memoryFs: MemoryFileSystem;
-	virtualModules: VirtualModules;
-	resolver: Resolver;
-	projectManager: ProjectManager;
-	workerManager: WorkerManager;
-	fileAllocator: FileAllocator;
-	cache: Cache;
-	connectedReporters: ServerReporter;
-	logger: Logger;
-	requestFileLocker: FilePathLocker;
+	// Public modules
+	public recoveryStore: RecoveryStore;
+	public memoryFs: MemoryFileSystem;
+	public virtualModules: VirtualModules;
+	public resolver: Resolver;
+	public projectManager: ProjectManager;
+	public workerManager: WorkerManager;
+	public fileAllocator: FileAllocator;
+	public cache: Cache;
+	public connectedReporters: ServerReporter;
+	public logger: Logger;
+	public requestFileLocker: FilePathLocker;
 
 	// Before we receive our first connected client we will buffer our server init logs
 	// These should be relatively cheap to process since we don't do a lot
-	logInitBuffer: string;
+	private logInitBuffer: string;
 
-	connectedClients: Set<ServerClient>;
-	connectedLSPServers: Set<LSPServer>;
-	connectedClientsListeningForLogs: Set<ServerClient>;
+	private requestRunningCounter: number;
+	private terminateWhenIdle: boolean;
+	private clientIdCounter: number;
+	private profiling: undefined | ProfilingStartData;
+
+	private connectedClients: Set<ServerClient>;
+	private connectedLSPServers: Set<LSPServer>;
+	private connectedClientsListeningForLogs: Set<ServerClient>;
+
+	// Used when starting up child processes and indicates whether they should start profiling
+	// on init
+	public getRunningProfilingData(): undefined | ProfilingStartData {
+		return this.profiling;
+	}
 
 	// Derive a concatenated reporter from the logger and all connected clients
 	// This should only be used synchronously as the streams will not stay in sync
 	// Used for very important log messages
-	getImportantReporter(): Reporter {
+	public getImportantReporter(): Reporter {
 		return Reporter.concat([this.logger, this.connectedReporters]);
 	}
 
-	emitServerLog(chunk: string) {
+	private emitServerLog(chunk: string) {
 		if (this.clientIdCounter === 0) {
 			this.logInitBuffer += chunk;
 		}
@@ -332,15 +337,40 @@ export default class Server {
 		}
 	}
 
-	onFatalError(error: Error, source: StaticMarkup = markup`server`) {
+	public onFatalError(error: Error, source: StaticMarkup = markup`server`) {
 		// Ensure workers are properly ended as they could be hanging
 		this.workerManager.end();
 
+		// NB: This will call process.exit. If we want to expose this for other use-cases then we will probably want to
+		// make this customizable
 		handleFatalError({error, source, reporter: this.getImportantReporter()});
 	}
 
+	// This is so all progress bars are renderer on each client. If we just use this.progressLocal then
+	// while it would work, we would be doing all the rendering work on the server
+	// The CLI also needs to know all the activeElements so it can properly draw and clear lines
+	// We also create a progress bar for all connected LSP clients
+	// Refer to ServerReporter
+	public createConnectedProgress(opts?: ReporterProgressOptions) {
+		const progresses: Array<ReporterProgress> = [];
+
+		for (const client of this.connectedClients) {
+			progresses.push(client.reporter.progress(opts));
+		}
+
+		for (const server of this.connectedLSPServers) {
+			progresses.push(server.createProgress(opts));
+		}
+
+		return mergeProgresses(progresses);
+	}
+
+	public wrapFatalPromise(promise: Promise<unknown>) {
+		promise.catch(this.onFatalErrorBound);
+	}
+
 	// rome-ignore lint/ts/noExplicitAny
-	wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
+	public wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
 		return (((...args: Array<any>): any => {
 			try {
 				const res = callback(...args);
@@ -354,7 +384,7 @@ export default class Server {
 		}) as T);
 	}
 
-	async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
+	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
 		this.connectedReporters.error(
 			markup`Generated diagnostics without a current request`,
 		);
@@ -370,7 +400,7 @@ export default class Server {
 		});
 	}
 
-	createDiagnosticsPrinterFileReaders(): DiagnosticsFileReaders {
+	public createDiagnosticsPrinterFileReaders(): DiagnosticsFileReaders {
 		return {
 			read: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
@@ -396,7 +426,7 @@ export default class Server {
 		};
 	}
 
-	createDiagnosticsProcessor(
+	public createDiagnosticsProcessor(
 		opts: DiagnosticsProcessorOptions = {},
 	): DiagnosticsProcessor {
 		return new DiagnosticsProcessor({
@@ -405,12 +435,12 @@ export default class Server {
 		});
 	}
 
-	createDisconnectedDiagnosticsProcessor(
+	public createDisconnectedDiagnosticsProcessor(
 		origins: Array<DiagnosticOrigin>,
 	): DiagnosticsProcessor {
 		return this.createDiagnosticsProcessor({
 			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.handleDisconnectedDiagnostics(diagnostics);
+				this.wrapFatalPromise(this.handleDisconnectedDiagnostics(diagnostics));
 			},
 			origins: [
 				...origins,
@@ -422,7 +452,7 @@ export default class Server {
 		});
 	}
 
-	maybeSetupGlobalErrorHandlers() {
+	private maybeSetupGlobalErrorHandlers() {
 		if (!this.options.globalErrorHandlers) {
 			return;
 		}
@@ -436,7 +466,7 @@ export default class Server {
 		});
 	}
 
-	async init() {
+	public async init() {
 		this.maybeSetupGlobalErrorHandlers();
 		await this.recoveryStore.init();
 		await this.virtualModules.init();
@@ -448,7 +478,7 @@ export default class Server {
 		await this.workerManager.init();
 	}
 
-	async end() {
+	public async end() {
 		this.logger.info(markup`[Server] Teardown triggered`);
 
 		// Unwatch all project directories
@@ -474,7 +504,15 @@ export default class Server {
 		}
 	}
 
-	async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {
+	public onLSPServer(req: ServerRequest, lsp: LSPServer) {
+		this.connectedLSPServers.add(lsp);
+
+		req.endEvent.subscribe(() => {
+			this.connectedLSPServers.delete(lsp);
+		});
+	}
+
+	public async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
@@ -578,7 +616,7 @@ export default class Server {
 		return client;
 	}
 
-	async createClient(bridge: ServerBridge): Promise<ServerClient> {
+	private async createClient(bridge: ServerBridge): Promise<ServerClient> {
 		const {
 			flags: rawFlags,
 			streamState,
@@ -683,7 +721,7 @@ export default class Server {
 		return client;
 	}
 
-	async handleRequestStart(req: ServerRequest) {
+	public async handleRequestStart(req: ServerRequest) {
 		req.logger.info(markup`Start ${prettyFormat(req.query)}`);
 
 		// Hook used by the web server to track and collect server requests
@@ -698,17 +736,17 @@ export default class Server {
 		}
 	}
 
-	handleRequestEnd(req: ServerRequest) {
+	public async handleRequestEnd(req: ServerRequest) {
 		this.requestRunningCounter--;
 		req.logger.info(markup`Request end`);
 
 		// If we're waiting to terminate ourselves when idle, then do so when there's no running requests
 		if (this.terminateWhenIdle && this.requestRunningCounter === 0) {
-			this.end();
+			await this.end();
 		}
 	}
 
-	async handleRequest(
+	public async handleRequest(
 		client: ServerClient,
 		partialQuery: PartialServerQueryRequest,
 	): Promise<ServerQueryResponse> {
@@ -754,24 +792,15 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			// Unhandled error
-			await req.teardown({
-				type: "ERROR",
-				fatal: false,
-				handled: false,
-				name: err.name,
-				message: err.message,
-				stack: err.stack,
-				markers: [],
-			});
-			throw err;
+			await this.onFatalErrorBound(err);
+			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies
-			bridgeEndEvent.unsubscribe();
+			await bridgeEndEvent.unsubscribe();
 		}
 	}
 
-	async dispatchBenchmarkRequest(
+	private async dispatchBenchmarkRequest(
 		req: ServerRequest,
 		bridgeEndPromise: Promise<void>,
 	): Promise<ServerQueryResponse> {
@@ -822,7 +851,7 @@ export default class Server {
 		return result;
 	}
 
-	async dispatchRequest(
+	private async dispatchRequest(
 		req: ServerRequest,
 		bridgeEndPromise: Promise<void>,
 		origins: Array<string>,
@@ -903,22 +932,9 @@ export default class Server {
 				throw new Error(`Unknown command ${String(query.commandName)}`);
 			}
 		} catch (err) {
-			let diagnostics: undefined | Diagnostics = await this.handleRequestError(
-				req,
-				err,
-			);
+			let diagnostics: Diagnostics = await this.handleRequestError(req, err);
 
-			if (diagnostics === undefined) {
-				return {
-					type: "ERROR",
-					fatal: false,
-					handled: true,
-					name: err.name,
-					message: err.message,
-					stack: err.stack,
-					markers: [],
-				};
-			} else if (err instanceof ServerRequestCancelled) {
+			if (err instanceof ServerRequestCancelled) {
 				return {
 					type: "CANCELLED",
 					markers: [],
@@ -942,16 +958,35 @@ export default class Server {
 		}
 	}
 
-	async handleRequestError(
+	private async handleRequestError(
 		req: ServerRequest,
 		rawErr: Error,
-	): Promise<undefined | Diagnostics> {
-		let err = rawErr;
+	): Promise<Diagnostics> {
+		if (!req.bridge.alive) {
+			// Doesn't matter
+			return [];
+		}
 
-		// If we can derive diagnostics from the error then create a diagnostics printer
-		const diagnostics = getDiagnosticsFromError(err);
-		if (diagnostics !== undefined) {
-			const printer = req.createDiagnosticsPrinter(
+		let err = rawErr;
+		let printer: DiagnosticsPrinter;
+
+		if (err instanceof DiagnosticsPrinter) {
+			printer = err;
+		} else {
+			// If we can derive diagnostics from the error then create a diagnostics printer
+			const diagnostics = getOrDeriveDiagnosticsFromError(
+				err,
+				{
+					description: {
+						category: "internalError/request",
+					},
+					tags: {
+						internal: true,
+					},
+				},
+			);
+
+			printer = req.createDiagnosticsPrinter(
 				req.createDiagnosticsProcessor({
 					origins: [
 						{
@@ -961,67 +996,33 @@ export default class Server {
 					],
 				}),
 			);
+
 			printer.processor.addDiagnostics(diagnostics);
-			err = printer;
 		}
 
-		// Print it!
-		if (err instanceof DiagnosticsPrinter) {
-			const printer = err;
-
-			// Only print when the bridge is alive and we aren't in review mode
-			// When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
-			// We will always print invalid request errors
-			let shouldPrint = true;
-			if (req.query.requestFlags.review) {
-				shouldPrint = false;
-			}
-			if (rawErr instanceof ServerRequestInvalid) {
-				shouldPrint = true;
-			}
-			if (!req.bridge.alive) {
-				shouldPrint = false;
-			}
-
-			if (shouldPrint) {
-				await printer.print();
-
-				// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
-				if (!(rawErr instanceof ServerRequestInvalid)) {
-					await printer.footer();
-				}
-			}
-
-			return printer.processor.getDiagnostics();
+		// Only print when the bridge is alive and we aren't in review mode
+		// When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
+		// We will always print invalid request errors
+		let shouldPrint = true;
+		if (req.query.requestFlags.review) {
+			shouldPrint = false;
 		}
-
+		if (rawErr instanceof ServerRequestInvalid) {
+			shouldPrint = true;
+		}
 		if (!req.bridge.alive) {
-			return undefined;
+			shouldPrint = false;
 		}
 
-		const printer = req.createDiagnosticsPrinter(
-			req.createDiagnosticsProcessor({
-				origins: [
-					{
-						category: "internal",
-						message: "Error captured and converted into a diagnostic",
-					},
-				],
-			}),
-		);
-		const errorDiag = deriveDiagnosticFromError(
-			err,
-			{
-				description: {
-					category: "internalError/request",
-				},
-			},
-		);
-		printer.processor.addDiagnostic(createInternalDiagnostic(errorDiag));
-		await printer.print();
+		if (shouldPrint) {
+			await printer.print();
 
-		// We could probably return printer.getDiagnostics() but we just want to print to the console
-		// We will still want to send the `error` property
-		return undefined;
+			// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+			if (!(rawErr instanceof ServerRequestInvalid)) {
+				await printer.footer();
+			}
+		}
+
+		return printer.processor.getDiagnostics();
 	}
 }

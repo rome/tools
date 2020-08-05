@@ -38,7 +38,6 @@ import {
 } from "@internal/v8";
 import fork from "../../common/utils/fork";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
-import {AbsoluteFilePath} from "@internal/path";
 import {ob1Coerce0To1} from "@internal/ob1";
 import {
 	CoverageDirectory,
@@ -78,7 +77,7 @@ class BridgeDiagnosticsError extends DiagnosticsError {
 		this.bridge = bridge;
 	}
 
-	bridge: Bridge;
+	public bridge: Bridge;
 }
 
 function grammarNumberTests(num: number): StaticMarkup {
@@ -121,7 +120,6 @@ export default class TestServerRunner {
 		this.reporter = opts.request.reporter;
 		this.server = opts.request.server;
 		this.logger = this.server.logger.namespace(markup`[TestServerRunner]`);
-		this.cwd = opts.request.client.flags.cwd;
 		this.request = opts.request;
 		this.options = opts.options;
 
@@ -146,6 +144,7 @@ export default class TestServerRunner {
 		this.runningTests = new Map();
 		this.testFileCounter = 0;
 
+		this.sourceMaps = new SourceMapConsumerCollection();
 		this.printer = opts.request.createDiagnosticsPrinter(
 			this.request.createDiagnosticsProcessor({
 				origins: [
@@ -154,10 +153,10 @@ export default class TestServerRunner {
 						message: "Run initiated",
 					},
 				],
+				sourceMaps: this.sourceMaps,
 			}),
 		);
 		this.printer.processor.addDiagnostics(opts.addDiagnostics);
-		this.sourceMaps = this.printer.processor.sourceMaps;
 
 		// Add source maps
 		if (this.options.sourceMaps) {
@@ -169,22 +168,21 @@ export default class TestServerRunner {
 		}
 	}
 
-	coverageCollector: CoverageCollector;
-	sourceMaps: SourceMapConsumerCollection;
-	options: TestServerRunnerOptions;
-	request: ServerRequest;
-	reporter: Reporter;
-	logger: ReporterNamespace;
-	sources: TestSources;
-	workers: undefined | TestWorkerContainers;
-	server: Server;
-	cwd: AbsoluteFilePath;
-	printer: DiagnosticsPrinter;
-	sourcesQueue: Array<TestSource>;
-	testFileCounter: number;
-	ignoreBridgeEndError: Set<Bridge>;
+	private coverageCollector: CoverageCollector;
+	private sourceMaps: SourceMapConsumerCollection;
+	private options: TestServerRunnerOptions;
+	private request: ServerRequest;
+	private reporter: Reporter;
+	private logger: ReporterNamespace;
+	private sources: TestSources;
+	private workers: undefined | TestWorkerContainers;
+	private server: Server;
+	private printer: DiagnosticsPrinter;
+	private sourcesQueue: Array<TestSource>;
+	private testFileCounter: number;
+	private ignoreBridgeEndError: Set<Bridge>;
 
-	runningTests: Map<
+	private runningTests: Map<
 		string,
 		{
 			ref: TestRef;
@@ -192,7 +190,7 @@ export default class TestServerRunner {
 		}
 	>;
 
-	progress: {
+	private progress: {
 		totalTests: number;
 		startedTests: number;
 		finishedTests: number;
@@ -202,9 +200,9 @@ export default class TestServerRunner {
 		createdSnapshots: number;
 	};
 
-	focusedTests: Array<FocusedTest>;
+	private focusedTests: Array<FocusedTest>;
 
-	async processTestResult(
+	private async processTestResult(
 		ref: FileReference,
 		{inlineSnapshotUpdates, snapshotCounts}: TestWorkerFileResult,
 	): Promise<void> {
@@ -256,7 +254,7 @@ export default class TestServerRunner {
 		}
 	}
 
-	async prepareWorker(
+	private async prepareWorker(
 		{bridge, process, inspector}: TestWorkerContainer,
 		progress: ReporterProgress,
 	): Promise<() => Promise<void>> {
@@ -360,7 +358,7 @@ export default class TestServerRunner {
 		};
 	}
 
-	handlePossibleBridgeError(err: Error) {
+	private handlePossibleBridgeError(err: Error) {
 		let diagnostics = getDiagnosticsFromError(err);
 		let bridge: undefined | Bridge;
 
@@ -391,7 +389,9 @@ export default class TestServerRunner {
 		}
 	}
 
-	async spawnWorker(flags: TestWorkerFlags): Promise<TestWorkerContainer> {
+	private async spawnWorker(
+		flags: TestWorkerFlags,
+	): Promise<TestWorkerContainer> {
 		const proc = fork(
 			"test-worker",
 			{
@@ -475,7 +475,7 @@ export default class TestServerRunner {
 		};
 	}
 
-	async setupWorkers(): Promise<TestWorkerContainers> {
+	private async setupWorkers(): Promise<TestWorkerContainers> {
 		// TODO some smarter logic. we may not need all these workers
 		const containerPromises: Array<Promise<TestWorkerContainer>> = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
@@ -492,7 +492,9 @@ export default class TestServerRunner {
 			container.bridge.monitorHeartbeat(
 				5_000,
 				async () => {
-					this.handleWorkerTimeout("10 seconds", container);
+					this.server.wrapFatalPromise(
+						this.handleWorkerTimeout("10 seconds", container),
+					);
 				},
 			);
 		}
@@ -500,7 +502,7 @@ export default class TestServerRunner {
 		return containers;
 	}
 
-	async init() {
+	public async init() {
 		this.workers = await this.setupWorkers();
 
 		const workerContainers: TestWorkerContainers = this.getWorkers();
@@ -527,7 +529,7 @@ export default class TestServerRunner {
 		this.throwPrinter();
 	}
 
-	async handleWorkerTimeout(
+	private async handleWorkerTimeout(
 		duration: string,
 		container: TestWorkerContainer,
 	): Promise<void> {
@@ -559,7 +561,7 @@ export default class TestServerRunner {
 		});
 	}
 
-	async _handleWorkerTimeout(
+	private async _handleWorkerTimeout(
 		duration: string,
 		{bridge, inspector}: TestWorkerContainer,
 	): Promise<void> {
@@ -635,7 +637,7 @@ export default class TestServerRunner {
 		);
 	}
 
-	getWorkers(): TestWorkerContainers {
+	private getWorkers(): TestWorkerContainers {
 		if (this.workers === undefined) {
 			throw new Error("TestServerRunner.init has not been called yet");
 		} else {
@@ -643,11 +645,11 @@ export default class TestServerRunner {
 		}
 	}
 
-	refToKey(ref: TestRef): string {
+	private refToKey(ref: TestRef): string {
 		return `${ref.filename}: ${ref.testName}`;
 	}
 
-	getTotalTests(): number {
+	private getTotalTests(): number {
 		if (this.focusedTests.length > 0) {
 			return this.focusedTests.length;
 		} else {
@@ -655,7 +657,7 @@ export default class TestServerRunner {
 		}
 	}
 
-	onTestStart(
+	private onTestStart(
 		container: TestWorkerContainer,
 		ref: TestRef,
 		timeoutMs: undefined | number,
@@ -667,7 +669,9 @@ export default class TestServerRunner {
 			timeout = setTimeout(
 				() => {
 					// TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-					this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container);
+					this.server.wrapFatalPromise(
+						this.handleWorkerTimeout(`${String(timeoutMs)}ms`, container),
+					);
 				},
 				timeoutMs,
 			);
@@ -684,12 +688,12 @@ export default class TestServerRunner {
 		);
 	}
 
-	onTestFound(data: TestRef) {
+	private onTestFound(data: TestRef) {
 		data;
 		this.progress.totalTests++;
 	}
 
-	onTestFinished(ref: TestRef) {
+	private onTestFinished(ref: TestRef) {
 		const key = this.refToKey(ref);
 		const running = this.runningTests.get(key);
 		if (running === undefined) {
@@ -705,7 +709,7 @@ export default class TestServerRunner {
 		this.progress.finishedTests++;
 	}
 
-	setupRunProgress(): TestProgress {
+	private setupRunProgress(): TestProgress {
 		const workers = this.getWorkers();
 
 		const progress = this.request.reporter.progress({
@@ -796,7 +800,7 @@ export default class TestServerRunner {
 		};
 	}
 
-	printCoverageReport(isError: boolean) {
+	private printCoverageReport(isError: boolean) {
 		const {reporter, server, coverageCollector} = this;
 
 		if (isError && this.options.showAllCoverage) {
@@ -956,16 +960,7 @@ export default class TestServerRunner {
 		reporter.hr();
 	}
 
-	getSourceCode(filename: string): undefined | string {
-		const testSource = this.sources.get(filename);
-		if (testSource === undefined) {
-			return undefined;
-		} else {
-			return testSource.code;
-		}
-	}
-
-	printFocusedTestWarning(reporter: Reporter) {
+	private printFocusedTestWarning(reporter: Reporter) {
 		const {focusedTests} = this;
 		if (focusedTests.length === 0) {
 			return;
@@ -1000,7 +995,7 @@ export default class TestServerRunner {
 		);
 	}
 
-	printSnapshotCounts(reporter: Reporter) {
+	private printSnapshotCounts(reporter: Reporter) {
 		const {
 			createdSnapshots,
 			deletedSnapshots,
@@ -1043,7 +1038,7 @@ export default class TestServerRunner {
 		reporter.success(concatMarkup(parts, markup`, `));
 	}
 
-	throwPrinter() {
+	private throwPrinter() {
 		const {printer} = this;
 
 		printer.onFooterPrint(async (reporter, isError) => {

@@ -21,11 +21,11 @@ export default class RefineTypeofT extends T {
 		this.fallback = fallback;
 	}
 
-	static type = "RefineTypeofT";
-	str: T;
-	fallback: T;
+	public static type = "RefineTypeofT";
+	private str: T;
+	private fallback: T;
 
-	reduce(): T {
+	public reduce(): T {
 		const {fallback, utils} = this;
 		const str = utils.reduce(this.str);
 

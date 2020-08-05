@@ -31,25 +31,25 @@ export default class Intrinsics {
 		this.RegExp = this.createOpenT("RegExp");
 	}
 
-	scope: Scope;
-	intrinsicByName: Map<string, T>;
+	private scope: Scope;
+	private intrinsicByName: Map<string, T>;
 
-	String: T;
-	StringPrototype: T;
+	public String: T;
+	public StringPrototype: T;
 
-	Object: T;
-	ObjectPrototype: T;
+	public Object: T;
+	public ObjectPrototype: T;
 
-	Array: T;
-	ArrayPrototype: T;
+	public Array: T;
+	public ArrayPrototype: T;
 
-	RegExp: T;
-	RegExpPrototype: T;
+	public RegExp: T;
+	public RegExpPrototype: T;
 
-	Number: T;
-	NumberPrototype: T;
+	public Number: T;
+	public NumberPrototype: T;
 
-	get(name: string): T {
+	public get(name: string): T {
 		const t = this.intrinsicByName.get(name);
 		if (t === undefined) {
 			throw new Error(`No intrinsic found for ${name}`);
@@ -57,13 +57,13 @@ export default class Intrinsics {
 		return t;
 	}
 
-	createOpenT(name: string) {
+	private createOpenT(name: string) {
 		const t = new OpenIntrinsicT(this.scope, undefined, name);
 		this.intrinsicByName.set(name, t);
 		return t;
 	}
 
-	link() {
+	public link() {
 		this.String.shouldMatch(this.scope.query(["String"]));
 		this.StringPrototype.shouldMatch(this.scope.query(["String", "prototype"]));
 

@@ -5,7 +5,6 @@ import {
 	SimpleToken,
 	ValueToken,
 } from "@internal/parser-core";
-import {DiagnosticCategory} from "@internal/diagnostics";
 import {
 	CSSBlock,
 	CSSDimension,
@@ -19,9 +18,7 @@ import {
 export interface CSSParserOptions extends Omit<
 	ParserOptionsWithRequiredPath,
 	"ignoreWhitespaceTokens"
-> {
-	consumeDiagnosticCategory?: DiagnosticCategory;
-}
+> {}
 
 export interface DimensionData {
 	numberType: string;

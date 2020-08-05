@@ -26,12 +26,12 @@ export default class CallT extends T {
 		this.args = args;
 	}
 
-	static type = "CallT";
+	public static type = "CallT";
 
-	callee: T;
-	args: Array<T>;
+	private callee: T;
+	public args: Array<T>;
 
-	reduce(): T {
+	public reduce(): T {
 		let callee = this.utils.reduce(this.callee);
 		if (callee instanceof ObjT && callee.calls.length) {
 			callee = this.utils.reduce(callee.calls[0]);

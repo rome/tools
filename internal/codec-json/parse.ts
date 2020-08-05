@@ -82,8 +82,6 @@ function isRJSONStringValueChar(
 	input: string,
 ): boolean {
 	return !(char === '"' && !isEscaped(index, input));
-
-
 }
 
 // Turn a path into a string key we can use
@@ -131,7 +129,6 @@ export const createJSONParser = createParser((ParserCore) =>
 				{},
 			);
 
-			this.options = opts;
 			this.ignoreWhitespaceTokens = true;
 
 			this.hasExtensions =
@@ -146,18 +143,17 @@ export const createJSONParser = createParser((ParserCore) =>
 					: opts.consumeDiagnosticCategory;
 		}
 
-		pathToComments: RJSONCommentMap;
-		hasExtensions: boolean;
-		pathKeys: ConsumePath;
-		paths: Map<string, PathInfo>;
-		options: JSONParserOptions;
-		consumeDiagnosticCategory: DiagnosticCategory;
+		public pathToComments: RJSONCommentMap;
+		public hasExtensions: boolean;
+		private pathKeys: ConsumePath;
+		private paths: Map<string, PathInfo>;
+		private consumeDiagnosticCategory: DiagnosticCategory;
 
-		getPathInfo(path: ConsumePath): undefined | PathInfo {
+		private getPathInfo(path: ConsumePath): undefined | PathInfo {
 			return this.paths.get(path.join("."));
 		}
 
-		setComments(pathComments: PathComments) {
+		private setComments(pathComments: PathComments) {
 			const key = this.pathKeys.join(".");
 
 			const existing = this.pathToComments.get(key);
@@ -174,12 +170,12 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		setPath(info: PathInfo) {
+		private setPath(info: PathInfo) {
 			this.paths.set(this.pathKeys.join("."), info);
 			this.pathKeys.pop();
 		}
 
-		tokenize(index: Number0) {
+		protected tokenize(index: Number0) {
 			const char = this.getInputCharOnly(index);
 			const nextChar = this.getInputCharOnly(index, 1);
 
@@ -325,7 +321,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseObject(firstKeyStart?: Position, firstKey?: string): JSONObject {
+		private parseObject(firstKeyStart?: Position, firstKey?: string): JSONObject {
 			const obj: JSONObject = {};
 
 			let innerComments: Comments = [];
@@ -461,7 +457,7 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		// Remove underscores from 'a string, this is used for numeric separators eg. 100_000
-		removeUnderscores(index: Number0, raw: string): string {
+		private removeUnderscores(index: Number0, raw: string): string {
 			let str = "";
 
 			for (let i = 0; i < raw.length; i++) {
@@ -483,7 +479,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			return str;
 		}
 
-		eatComments(): Comments {
+		private eatComments(): Comments {
 			const comments: Comments = [];
 
 			while (true) {
@@ -516,7 +512,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			return comments;
 		}
 
-		parseArray(): Array<JSONValue> {
+		private parseArray(): Array<JSONValue> {
 			this.expectToken("BracketOpen");
 
 			const arr = [];
@@ -587,7 +583,7 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		// Check if the current token is a property separator and eat it if necessary
-		eatPropertySeparator(): boolean {
+		private eatPropertySeparator(): boolean {
 			const token = this.getToken();
 
 			// Implicit commas are only allowed in rjson
@@ -622,7 +618,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseWord(isStart: boolean): JSONValue {
+		private parseWord(isStart: boolean): JSONValue {
 			const start = this.getPosition();
 			const token = this.expectToken("Word");
 
@@ -657,7 +653,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			});
 		}
 
-		parseNumber(): number {
+		private parseNumber(): number {
 			const isNegative = this.eatToken("Minus") !== undefined;
 
 			// Get a string of the current number that we'll parse later
@@ -712,7 +708,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			return num;
 		}
 
-		parsePropertyKey() {
+		private parsePropertyKey() {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -736,7 +732,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseString(isStart: boolean): string | JSONObject {
+		private parseString(isStart: boolean): string | JSONObject {
 			const start = this.getPosition();
 			const token = this.expectToken("String");
 
@@ -753,7 +749,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseExpression(isStart: boolean = false): JSONValue {
+		private parseExpression(isStart: boolean = false): JSONValue {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -780,7 +776,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseEntry(): JSONValue {
+		private parseEntry(): JSONValue {
 			if (this.matchToken("EOF")) {
 				if (this.hasExtensions) {
 					// If we're in RJSON mode then an empty input is an implicit object
@@ -795,7 +791,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			}
 		}
 
-		parse(): JSONParserResult {
+		public parse(): JSONParserResult {
 			let expectSyntaxError = false;
 
 			if (!this.hasExtensions) {
@@ -851,7 +847,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			return res;
 		}
 
-		_parse(): JSONParserResult {
+		private _parse(): JSONParserResult {
 			const leadingComments = this.eatComments();
 
 			const expr = this.parseEntry();

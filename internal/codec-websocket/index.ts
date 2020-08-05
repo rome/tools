@@ -25,10 +25,16 @@ export function createKey(key: string): string {
 	return crypto.createHash("sha1").update(`${key}${GUID}`).digest("base64");
 }
 
-type WebSocketType = "client" | "server";
+export type WebSocketType = "client" | "server";
+
+export type WebSocketInterfaceOptions = {
+	type: WebSocketType;
+	socket: net.Socket;
+	reporter?: Reporter;
+};
 
 export class WebSocketInterface {
-	constructor(type: WebSocketType, socket: net.Socket, reporter?: Reporter) {
+	constructor({type, socket, reporter}: WebSocketInterfaceOptions) {
 		// When a frame is set here then any additional continuation frames payloads will be appended
 		this.unfinishedFrame = undefined;
 
@@ -70,18 +76,18 @@ export class WebSocketInterface {
 		);
 	}
 
-	alive: boolean;
-	type: WebSocketType;
-	incompleteFrame: undefined | Frame;
-	unfinishedFrame: undefined | Frame;
-	socket: net.Socket;
-	reporter: undefined | Reporter;
+	private alive: boolean;
+	private type: WebSocketType;
+	private incompleteFrame: undefined | Frame;
+	private unfinishedFrame: undefined | Frame;
+	public socket: net.Socket;
+	private reporter: undefined | Reporter;
 
-	completeFrameEvent: Event<Frame, void>;
-	errorEvent: Event<Error, void>;
-	endEvent: Event<void, void>;
+	public completeFrameEvent: Event<Frame, void>;
+	public errorEvent: Event<Error, void>;
+	public endEvent: Event<void, void>;
 
-	end() {
+	public end() {
 		if (!this.alive) {
 			return;
 		}
@@ -91,7 +97,7 @@ export class WebSocketInterface {
 		this.socket.end();
 	}
 
-	send(buff: string | Buffer) {
+	private send(buff: string | Buffer) {
 		if (typeof buff === "string") {
 			this.sendFrame({
 				opcode: OPCODES.TEXT,
@@ -109,11 +115,11 @@ export class WebSocketInterface {
 		}
 	}
 
-	sendJSON(val: unknown) {
+	public sendJSON(val: unknown) {
 		this.send(String(JSON.stringify(val)));
 	}
 
-	sendFrame(frameOpts: BuildFrameOpts) {
+	private sendFrame(frameOpts: BuildFrameOpts) {
 		if (this.reporter !== undefined) {
 			this.reporter.info(
 				markup`Sending frame ${prettyFormat({
@@ -126,7 +132,7 @@ export class WebSocketInterface {
 		this.socket.write(buildFrame(frameOpts, this.type === "client"));
 	}
 
-	completeFrame(frame: Frame): void {
+	private completeFrame(frame: Frame): void {
 		// If we have an unfinished frame then only allow continuations
 		const {unfinishedFrame} = this;
 		if (unfinishedFrame !== undefined) {
@@ -192,7 +198,7 @@ export class WebSocketInterface {
 		}
 	}
 
-	addBufferToIncompleteFrame(incompleteFrame: Frame, buff: Buffer) {
+	private addBufferToIncompleteFrame(incompleteFrame: Frame, buff: Buffer) {
 		incompleteFrame.payload = Buffer.concat([
 			incompleteFrame.payload,
 			unmaskPayload(buff, incompleteFrame.mask, incompleteFrame.payload.length),
@@ -204,7 +210,7 @@ export class WebSocketInterface {
 		}
 	}
 
-	addBuffer(buff: Buffer): void {
+	private addBuffer(buff: Buffer): void {
 		// Check if we're still waiting for the rest of a payload
 		const {incompleteFrame} = this;
 		if (incompleteFrame !== undefined) {
@@ -268,7 +274,7 @@ export async function createClient(rawUrl: string): Promise<WebSocketInterface> 
 					return;
 				}
 
-				const client = new WebSocketInterface("client", socket);
+				const client = new WebSocketInterface({type: "client", socket});
 				//client.addBuffer(head);
 				head;
 				resolve(client);

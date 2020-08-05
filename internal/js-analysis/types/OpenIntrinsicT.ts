@@ -18,17 +18,17 @@ export default class OpenIntrinsicT extends OpenT {
 		this.name = name;
 	}
 
-	static type = "OpenIntrinsicT";
+	public static type = "OpenIntrinsicT";
 
-	name: string;
+	private name: string;
 
-	serialize(): HydrateData {
+	public serialize(): HydrateData {
 		return {
 			name: this.name,
 		};
 	}
 
-	static hydrate(
+	public static hydrate(
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		data: HydrateData,
@@ -36,7 +36,7 @@ export default class OpenIntrinsicT extends OpenT {
 		return scope.intrinsics.get(String(data.name));
 	}
 
-	humanize(): StaticMarkup {
+	public humanize(): StaticMarkup {
 		return markup`open intrinsic`;
 	}
 }

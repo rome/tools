@@ -1,5 +1,5 @@
 import {AnyNode, JSObjectProperty} from "@internal/ast";
-import {isCreateElement} from ".";
+import isCreateElement from "./isCreateElement";
 import {Scope} from "@internal/compiler";
 
 export default function getCreateElementProp(

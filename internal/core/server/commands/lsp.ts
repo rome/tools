@@ -26,11 +26,7 @@ export default createServerCommand({
 		reporter.redirectOutToErr(true);
 
 		const lsp = new LSPServer(req);
-		server.connectedLSPServers.add(lsp);
-
-		bridge.endEvent.subscribe(() => {
-			server.connectedLSPServers.delete(lsp);
-		});
+		server.onLSPServer(req, lsp);
 
 		const {transport} = lsp;
 
@@ -42,6 +38,6 @@ export default createServerCommand({
 			bridge.lspFromServerBuffer.send(msg);
 		});
 
-		await bridge.endEvent.wait();
+		await req.endEvent.wait();
 	},
 });

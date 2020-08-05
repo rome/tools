@@ -8,6 +8,7 @@
 import {WebSocketInterface} from "@internal/codec-websocket";
 import {JSONValue, consumeJSON} from "@internal/codec-json";
 import {Consumer} from "@internal/consume";
+import {ErrorCallback} from "@internal/typescript-helpers";
 
 type InspectorSubscription = {
 	once: boolean;
@@ -33,23 +34,23 @@ export default class InspectorClient {
 		this.init();
 	}
 
-	alive: boolean;
-	id: number;
-	callbacks: Map<
+	public alive: boolean;
+	private id: number;
+	private callbacks: Map<
 		number,
 		{
 			resolve: (params: Consumer) => void;
-			reject: (err: Error) => void;
+			reject: ErrorCallback;
 		}
 	>;
-	subscriptions: Map<string, Set<InspectorSubscription>>;
-	socket: WebSocketInterface;
+	private subscriptions: Map<string, Set<InspectorSubscription>>;
+	private socket: WebSocketInterface;
 
-	end() {
+	public end() {
 		this.socket.end();
 	}
 
-	init() {
+	private init() {
 		const {socket} = this;
 
 		socket.errorEvent.subscribe((err) => {
@@ -108,7 +109,7 @@ export default class InspectorClient {
 		});
 	}
 
-	subscribe(method: string, sub: InspectorSubscription) {
+	private subscribe(method: string, sub: InspectorSubscription) {
 		let subs = this.subscriptions.get(method);
 		if (subs === undefined) {
 			subs = new Set();
@@ -117,13 +118,13 @@ export default class InspectorClient {
 		subs.add(sub);
 	}
 
-	assertAlive() {
+	private assertAlive() {
 		if (!this.alive) {
 			throw new Error("InspectorClient has no active socket");
 		}
 	}
 
-	async wait(method: string): Promise<Consumer> {
+	public async wait(method: string): Promise<Consumer> {
 		return new Promise((resolve) => {
 			this.assertAlive();
 			this.subscribe(
@@ -136,7 +137,7 @@ export default class InspectorClient {
 		});
 	}
 
-	call(method: string, params?: JSONValue): Promise<Consumer> {
+	public call(method: string, params?: JSONValue): Promise<Consumer> {
 		const id = ++this.id;
 
 		return new Promise((resolve, reject) => {
