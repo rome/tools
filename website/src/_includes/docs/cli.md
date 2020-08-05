@@ -116,7 +116,7 @@ Defaults to `Rage-TIMESTAMP.tgz`.
 
 ##### `--review`
 
-TODO
+See [reviewing](#reviewing).
 
 ##### `--timing`
 
@@ -124,7 +124,7 @@ Output basic timing information on command completion.
 
 ##### `--watch`
 
-TODO
+For commands that support it, rerun and update on file changes.
 
 ### Commands
 

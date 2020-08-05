@@ -26,7 +26,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The filename should be </span><span style="color: DodgerBlue;"><strong>test.ts</strong></span><span style="color: DodgerBlue;"> or the function name should be </span><span style="color: DodgerBlue;"><strong>foo</strong></span><span style="color: DodgerBlue;">.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Recommended fix</span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
 </code></pre>{% endraw %}
 
