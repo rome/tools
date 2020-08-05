@@ -14,6 +14,8 @@ window.addEventListener(
 			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
 				toggleMobileSidebar();
 			}
+
+			toc.checkNavigationCollapse();
 		});
 	},
 );
@@ -286,6 +288,9 @@ class TableOfContents {
 	checkNavigationCollapse(hasActive) {
 		// Only collapse navigation if we scroll over 300px
 		let isCollapsed = hasActive && this.getScrollY() >= 500;
+		if (isMobile) {
+			isCollapsed = false;
+		}
 		if (isCollapsed && this.isNavCollapsed === isCollapsed) {
 			return;
 		}
