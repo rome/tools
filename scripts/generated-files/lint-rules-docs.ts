@@ -52,7 +52,7 @@ async function run(
 			const res = await worker.api.lint(
 				ref,
 				{
-					applyRecommendedFixes: true,
+					applySafeFixes: true,
 					prefetchedModuleSignatures: {},
 					save: true,
 				},
