@@ -81,46 +81,48 @@
 						<input type="text" id="docsearch" class="docsearch" placeholder="Search" />
 					</div>
 
-					<div class="site-navigation-container">
-						<nav aria-labelledby="site-navigation" class="menu site-navigation">
-							<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
-							<ul>
-								<li>
-									<a href="/blog">Blog</a>
-								</li>
-								<li>
-									<a href="/credits">Credits</a>
-								</li>
-								<li>
-									<a href="/changelog">Changelog</a>
-								</li>
-							</ul>
-						</nav>
+					<div class="sidebar-scroller">
+						<div class="site-navigation-container">
+							<nav aria-labelledby="site-navigation" class="menu site-navigation">
+								<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+								<ul>
+									<li>
+										<a href="/blog">Blog</a>
+									</li>
+									<li>
+										<a href="/credits">Credits</a>
+									</li>
+									<li>
+										<a href="/changelog">Changelog</a>
+									</li>
+								</ul>
+							</nav>
 
-						<nav aria-labelledby="quick-links" class="menu site-navigation">
-							<h2 id="quick-links">Quick Links</h2>
-							<ul>
-								<li>
-									<a href="/#linting">Linting</a>
-								</li>
-								<li>
-									<a href="/docs/lint/rules">Lint Rules</a>
-								</li>
-								<li>
-									<a href="/#cli">CLI</a>
-								</li>
-								<li>
-									<a href="/#project-config">Project Configuration</a>
-								</li>
-							</ul>
+							<nav aria-labelledby="quick-links" class="menu site-navigation">
+								<h2 id="quick-links">Quick Links</h2>
+								<ul>
+									<li>
+										<a href="/#linting">Linting</a>
+									</li>
+									<li>
+										<a href="/docs/lint/rules">Lint Rules</a>
+									</li>
+									<li>
+										<a href="/#cli">CLI</a>
+									</li>
+									<li>
+										<a href="/#project-config">Project Configuration</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+
+						<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
+							<h2 id="site-navigation-documentation">Table of Contents</h2>
+
+							{{ content | toc | safe }}
 						</nav>
 					</div>
-
-					<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
-						<h2 id="site-navigation-documentation">Table of Contents</h2>
-
-						{{ content | toc | safe }}
-					</nav>
 
 					<div class="color-scheme-switch-container">
 						<div class="color-scheme-switch">
