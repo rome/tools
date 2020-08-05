@@ -90,16 +90,23 @@ function createTagMap(
 
 /**
  * Generates changelog markdown from a map of tags
+ *
  * @param tagMap - Map of version names to commits within them
  * @returns - Markdown string
  */
 function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
-	function renderItems(items: Array<Commit>, title: string) {
-		return items.length > 0
-			? `## ${title}\n\n${items.map((commit) =>
-					`- ${commit.subject ? commit.subject.trim() : ""}`
-				).join("\n")}\n`
-			: "";
+	function renderItems(items: Array<Commit>, title: string, expandable = false) {
+		let result = `## ${title}\n\n`;
+		if (expandable) {
+			result += "<details><summary>Click to expand</summary>\n\n";
+		}
+		result += items.map((commit) =>
+			`- ${commit.subject ? commit.subject.trim() : "_no subject provided_"}`
+		).join("\n");
+		if (expandable) {
+			result += "</details>";
+		}
+		return items.length > 0 ? result : "";
 	}
 
 	const list = Object.keys(tagMap).map((tag) => {
@@ -109,21 +116,23 @@ function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
 		const breaking = commits.filter(({meta}) => meta?.breaking);
 		const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
 		return dedent`
+
 			## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
-			${renderItems(features, "Features")}
-			${renderItems(fixes, "Bug fixes")}
-			${renderItems(breaking, "BREAKING CHANGES")}
-			${renderItems(misc, "Miscellaneous")}
+
+${renderItems(features, "Features")}
+${renderItems(fixes, "Bug fixes")}
+${renderItems(breaking, "BREAKING CHANGES")}
+${renderItems(misc, "Miscellaneous", true)}
 		`;
 	}).join("\n");
 
 	return dedent`
-		# Changelog
+# Changelog
 
-		All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-		${list}
-		\n\n\n\n\n
-		<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+${list}
+<br><br><br><br>
+<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
 	`;
 }
 
