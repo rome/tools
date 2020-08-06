@@ -413,7 +413,7 @@ export async function watchFilesFromArgs(
 
 		// Flush again if there were paths emitting while running
 		if (pendingPaths.size > 0) {
-			await flush();
+			await _flush();
 		}
 	}
 
