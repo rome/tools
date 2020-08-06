@@ -24,7 +24,7 @@ rome init
 
 This will create a `rome.rjson` that contains your project config. This will also lint, autofix, and format all the files in the directory.
 
-Refer to [Project Configuration](#project-config) for configuration options.
+Refer to [Project Configuration](#project-configuration) for configuration options.
 
 > Note: The `.rjson` extension. [RJSON](#rome-json) is a superset of JSON that supports more-concise syntax and features such as comments.
 
