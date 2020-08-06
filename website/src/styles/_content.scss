@@ -94,6 +94,21 @@
 		padding-top: 0;
 	}
 
+	figure {
+		img {
+			max-width: 100%;
+			display: block;
+			margin: 0 auto;
+		}
+
+		figcaption {
+			text-align: center;
+			font-style: italic;
+			margin-top: $unit;
+		}
+	}
+
+
 	p, ul, ol, pre, h4, h5 {
 		margin-top: 1em;
 		margin-bottom: 1.5em;

@@ -291,3 +291,9 @@ pre[class*=language-] {
 		margin-right: -32px;
 	}
 }
+
+@media (prefers-reduced-motion) {
+	* {
+		transition: none !important;
+	}
+}
