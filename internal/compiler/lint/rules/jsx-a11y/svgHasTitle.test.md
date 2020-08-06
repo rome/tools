@@ -35,11 +35,44 @@
 ### `1`
 
 ```
-✔ No known problems!
+
+ lint/jsx-a11y/svgHasTitle/reject/2/file.tsx:1 lint/jsx-a11y/svgHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide title when using svg
+
+  > 1 │ <svg>
+      │ ^^^^^
+  > 2 │         <title></title>
+  > 3 │         <circle />
+  > 4 │     </svg>
+      │ ^^^^^^^^^^
+
+  ℹ For accessibility purposes, SVGs should have a title.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `1: formatted`
+
+```
+<svg>
+	<title />
+	<circle />
+</svg>;
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
 
 ```
 <svg>
@@ -60,14 +93,14 @@
 
 ```
 
-### `2`
+### `3`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `2: formatted`
+### `3: formatted`
 
 ```
 <svg>

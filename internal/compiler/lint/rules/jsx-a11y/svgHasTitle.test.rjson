@@ -1,6 +1,10 @@
 filename: "file.tsx"
 invalid: [
 	"<svg>foo</svg>"
+    "<svg>
+        <title></title>
+        <circle />
+    </svg>"
 ]
 valid: [
 	"<svg>
