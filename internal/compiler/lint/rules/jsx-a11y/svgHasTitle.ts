@@ -1,7 +1,7 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-import {isJSXElement, cleanJSXText} from "@internal/js-ast-utils";
-import {JSXElement, jsStringLiteral} from "@internal/ast";
+import {cleanJSXText, isJSXElement} from "@internal/js-ast-utils";
+import {JSXElement} from "@internal/ast";
 
 const SVG_SHAPES = [
 	"circle",
@@ -15,12 +15,15 @@ const SVG_SHAPES = [
 const SVG_GROUP = "g";
 
 function hasSvgTitle(node: JSXElement): boolean {
-	if(!node.children) {
+	if (!node.children) {
 		return false;
 	}
 	const title = (node.children.find((child) => isJSXElement(child, "title")) as JSXElement);
 
-	return title ? title.children[0]?.type === "JSXText" && !!cleanJSXText(title.children[0].value) : false
+	return title
+		? title.children[0]?.type === "JSXText" &&
+			!!cleanJSXText(title.children[0].value)
+		: false;
 }
 
 function processChild(node: JSXElement): boolean {
