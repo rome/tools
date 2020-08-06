@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:86ceb4398f2bba411a252b81eeb16577ecc17b96,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:3128d0f07e8ff7734e9ebd5cae28530a68364168,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section class="rules">
 
 ## JavaScript
@@ -388,14 +388,14 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/ts/noExplicitAny">noExplicitAny</a>
 <a class="header-anchor" href="#noExplicitAny"></a>
 </h3>
-MISSING DOCUMENTATION
+it bans the use of `any`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="preferInterfaces">
 <a href="/docs/lint/rules/ts/preferInterfaces">preferInterfaces</a>
 <a class="header-anchor" href="#preferInterfaces"></a>
 </h3>
-MISSING DOCUMENTATION
+it suggests the use of `interface` over `type`
 </div>
 </section>
 <section class="rules">
@@ -406,7 +406,7 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/jsx-a11y/altText">altText</a>
 <a class="header-anchor" href="#altText"></a>
 </h3>
-MISSING DOCUMENTATION
+enforce alternative text
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="anchorHasContent">
@@ -462,7 +462,7 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/jsx-a11y/htmlHasLang">htmlHasLang</a>
 <a class="header-anchor" href="#htmlHasLang"></a>
 </h3>
-MISSING DOCUMENTATION
+the `lang` attribute is mandatory
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="iframeHasTitle">
@@ -483,7 +483,7 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/jsx-a11y/lang">lang</a>
 <a class="header-anchor" href="#lang"></a>
 </h3>
-MISSING DOCUMENTATION
+check if `lang` attribute is valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="mediaHasCaption">
@@ -511,7 +511,7 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/jsx-a11y/noAutofocus">noAutofocus</a>
 <a class="header-anchor" href="#noAutofocus"></a>
 </h3>
-MISSING DOCUMENTATION
+discourage the usage of `autoFocus`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
@@ -539,7 +539,7 @@ MISSING DOCUMENTATION
 <a href="/docs/lint/rules/jsx-a11y/noOnChange">noOnChange</a>
 <a class="header-anchor" href="#noOnChange"></a>
 </h3>
-MISSING DOCUMENTATION
+discourage the usage of `onChange`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
