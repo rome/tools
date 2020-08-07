@@ -43,6 +43,7 @@ export default createServerCommand<Flags>({
 	async callback(req: ServerRequest, flags: Flags) {
 		const {server, client, reporter} = req;
 		const {cwd} = client.flags;
+		req.expectArgumentLength(0);
 
 		// Check for sensitive directory
 		if (server.projectManager.isBannedProjectPath(cwd)) {
@@ -51,6 +52,18 @@ export default createServerCommand<Flags>({
 				location: req.getDiagnosticLocationFromFlags("cwd"),
 			};
 			throw createSingleDiagnosticError(diagnostic);
+		}
+
+		// Don't allow if we're already in a project
+		const existingProject = await server.projectManager.findProject(cwd);
+		if (existingProject !== undefined) {
+			reporter.error(
+				markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
+			);
+			reporter.info(
+				markup`Use <code>rome config</code> to update an existing config`,
+			);
+			return;
 		}
 
 		// Check for no or dirty repo
@@ -71,18 +84,6 @@ export default createServerCommand<Flags>({
 					});
 				}
 			}
-		}
-
-		// Don't allow if we're already in a project
-		const existingProject = await server.projectManager.findProject(cwd);
-		if (existingProject !== undefined) {
-			reporter.error(
-				markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
-			);
-			reporter.info(
-				markup`Use <code>rome config</code> to update an existing config`,
-			);
-			return;
 		}
 
 		reporter.heading(markup`Welcome to Rome! Let's get you started...`);
@@ -114,7 +115,7 @@ export default createServerCommand<Flags>({
 				outer: [
 					{
 						type: "LineComment",
-						value: "For configuration documentation see http://romefrontend.dev/#project-configuration",
+						value: " For configuration documentation see http://romefrontend.dev/#project-configuration",
 					},
 				],
 			},
