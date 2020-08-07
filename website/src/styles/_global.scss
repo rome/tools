@@ -33,8 +33,9 @@ code {
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	-moz-tab-size: 2;
 	tab-size: 2;
-	background-color: rgba(0, 0, 0, 0.08);
-	padding: 0 5px;
+	background-color: var(--inline-code-background-color);
+	padding: 2px 5px;
+	border-radius: 2px;
 }
 
 pre code {
