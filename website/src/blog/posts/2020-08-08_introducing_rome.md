@@ -13,7 +13,7 @@ layout: layouts/blog.liquid
 
 We're excited to announce the first release and general availability of the **Rome** linter for JavaScript and TypeScript.
 
-This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](#development-status), for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
@@ -59,7 +59,7 @@ In an ode to the [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus
 
 Even though I wasn't involved in Babel, I still maintained a presence in the developer tooling ecosystem. I eventually went on to develop other tools like [Yarn](https://yarnpkg.com/) and be involved in projects like [Prepack](https://prepack.io/) and [Flipper](https://fbflipper.com/). This work continued to develop the ideas that would eventually become Rome and shaped my philosophy on developer experience. A focus on excellent errors, clean user interface, and minimal configuration.
 
-{% include figure.liquid, width: 500, src: "/img/blog/introducing-rome-post-babel-logos.png", description: "The logo of Yarn, Prepack, and Flipper" %}
+{% include figure.liquid, width: 500, src: "/img/blog/introducing-rome-post-babel-logos.png", description: "The logos of Yarn, Prepack, and Flipper" %}
 
 The original idea behind Babel had always stuck. What sort of capabilities would be possible if a tool did more than one thing? This sort of philosophy has always seemed alien in the JavaScript ecosystem where micropackages and arbitrary separation of concerns are the norms. These tools being independent has never provided the sort of user autonomy and efficiency that most skeptics of [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tools proclaim.
 
