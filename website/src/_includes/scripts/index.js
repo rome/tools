@@ -409,7 +409,7 @@ class Manager {
 			return;
 		}
 
-		if (this.scrollToHeading(href, true)) {
+		if (this.scrollToHeading(href)) {
 			event.preventDefault();
 		}
 	}
