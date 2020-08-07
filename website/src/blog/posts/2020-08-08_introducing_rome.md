@@ -63,7 +63,7 @@ The original idea behind Babel had always stuck. What sort of capabilities would
 
 Language tooling maintainers spend so much time working on the same things. Processing source code, whether it's in a transpiler like Babel, linting it in ESLint, or bundling it in Webpack, is fundamentally the same problem with overlapping responsibilities and technical implementation.
 
-A linter in the JavaScript ecosystem is exactly the same as a compiler. You put code in, then errors and compiled comes out. What the compiled code is varies. In the case of a linter, the compiled code is formatted source code with automatic fixes applied. The more powerful your compilation infrastructure, the more theoretically powerful your linter could be. These commonalities extend to pretty much anything that involves language processing. We can build more powerful tools using a shared base that is easily adaptable.
+A linter in the JavaScript ecosystem is exactly the same as a compiler. They both consume code, then produce compiled code and errors. What the compiled code is varies. In the case of a linter, the compiled code is formatted source code with automatic fixes applied. The more powerful your compilation infrastructure, the more theoretically powerful your linter could be. These commonalities extend to pretty much anything that involves language processing. We can build more powerful tools using a shared base that is easily adaptable.
 
 ### Development
 
