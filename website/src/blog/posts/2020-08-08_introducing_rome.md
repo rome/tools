@@ -11,15 +11,15 @@ permalink: /blog/2020/08/08/introducing-rome.html
 layout: layouts/blog.liquid
 ---
 
-I'm excited to announce the first release and general availability of **Rome**, a linter, compiler, bundler, and [more](/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+We're excited to announce the first release and general availability of **Rome**, a linter, compiler, bundler, and [more](/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase. It is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 <!-- DESCRIPTION_END -->
 
-Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team) and a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md) to ensure transparency around project decisions and direction. Building a sustainable project was important to me, so I'm excited about the progress we've already made.
+Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team) and a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md) to ensure transparency around project decisions and direction.
 
-**Development is currently focused on supporting and stabilizing linting**. Linting is an excellent low-risk way for us to mature and validate various parts of Rome like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively easy to adopt. This also allows a more methodical approach to development.
+**Development is currently focused on supporting and stabilizing linting**. Linting is an excellent low-risk way for us to mature and validate various parts of Rome like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively easy to adopt.
 
 {% include docs/cli-screenshots/check.md %}
 
