@@ -69,4 +69,6 @@ A linter in the JavaScript ecosystem is exactly the same as a compiler. You put 
 
 Rome is the spiritual successor of that idea, except rather than exposing a large public API for other tools to be built on, we are building them all in one place, with batteries included. We support frontend languages other than JavaScript too, those that can benefit the most from tight integration.
 
-I had always maintained private repos where I would experiment with ideas, but the original code that would become Rome was started at the beginning of 2017 while I was working for Facebook in my free time. I continued iterating and experimenting on the idea and building out all the different pieces, until 2019, when I was given the opportunity to work on and explore using it at Facebook full-time. I eventually left Facebook and the project became open source in February 2020 where I would continue it as an independent community-driven project.
+I had always maintained private repos where I would experiment with ideas, but the original code that would become Rome was started at the beginning of 2017 while I was working for Facebook in my free time. I continued iterating and experimenting on the idea and building out all the different pieces, until 2019, when I was given the opportunity to work on and explore using it at Facebook full-time.
+
+I eventually left Facebook and the project became open source in February 2020 where I would continue it as an independent community-driven project.
