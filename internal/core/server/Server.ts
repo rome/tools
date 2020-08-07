@@ -612,6 +612,7 @@ export default class Server {
 		bridge.endServer.subscribe(async () => this.end());
 
 		await this.clientStartEvent.callOptional(client);
+		await bridge.serverReady.call();
 
 		return client;
 	}

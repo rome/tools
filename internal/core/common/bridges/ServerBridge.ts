@@ -96,6 +96,11 @@ export default class ServerBridge extends Bridge {
 		direction: "server->client",
 	});
 
+	public serverReady = this.createEvent<void, void>({
+		name: "serverReady",
+		direction: "server->client",
+	});
+
 	public write = this.createEvent<[string, boolean], void>({
 		name: "write",
 		direction: "server->client",
