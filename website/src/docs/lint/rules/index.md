@@ -11,9 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:3128d0f07e8ff7734e9ebd5cae28530a68364168,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-<section class="rules">
-
+<!-- GENERATED:START(hash:4226e3b54785b3226e4934e9e556762bcdfb0d37,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 ## JavaScript
 <div class="rule">
 <h3 data-toc-exclude id="camelCase">
@@ -379,8 +377,6 @@ MISSING DOCUMENTATION
 </h3>
 MISSING DOCUMENTATION
 </div>
-</section>
-<section class="rules">
 
 ## TypeScript
 <div class="rule">
@@ -397,8 +393,6 @@ it bans the use of `any`
 </h3>
 it suggests the use of `interface` over `type`
 </div>
-</section>
-<section class="rules">
 
 ## JSX Accessibility
 <div class="rule">
@@ -576,8 +570,6 @@ MISSING DOCUMENTATION
 </h3>
 MISSING DOCUMENTATION
 </div>
-</section>
-<section class="rules">
 
 ## React
 <div class="rule">
@@ -741,5 +733,4 @@ MISSING DOCUMENTATION
 </h3>
 MISSING DOCUMENTATION
 </div>
-</section>
 <!-- GENERATED:END(id:main) -->

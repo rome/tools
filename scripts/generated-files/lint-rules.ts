@@ -158,7 +158,6 @@ export async function main() {
 			const lines = [];
 
 			for (const rootCategory of categoryDocsOrder) {
-				lines.push(`<section class="rules">`);
 				lines.push("");
 				lines.push(`## ${categoryDocsAliases[rootCategory]}`);
 
@@ -178,7 +177,6 @@ export async function main() {
 					lines.push(description);
 					lines.push("</div>");
 				}
-				lines.push("</section>");
 			}
 
 			lines.push("");
