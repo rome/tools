@@ -148,7 +148,10 @@
 	}
 
 	h1, h2, h3, h4, h5 {
-		&:hover .header-anchor{
+		outline: none;
+
+		&:hover .header-anchor,
+		&:focus .header-anchor{
 			@extend .not-sr-only;
 		}
 	}
