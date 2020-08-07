@@ -23,7 +23,6 @@ window.addEventListener(
 //# Table of Contents
 const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
-const tocList = document.querySelector(".toc");
 
 /** @type {HTMLElement}*/
 const siteNavigation = document.querySelector(".site-navigation-container");
