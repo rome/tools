@@ -14,8 +14,6 @@ window.addEventListener(
 			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
 				toggleMobileSidebar();
 			}
-
-			manager.checkActive();
 		});
 	},
 );
