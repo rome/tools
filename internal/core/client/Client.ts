@@ -616,6 +616,7 @@ export default class Client {
 				flags: this.getClientJSONFlags(),
 			}),
 			bridge.handshake(),
+			bridge.serverReady.wait(),
 		]);
 
 		await this.bridgeAttachedEvent.callOptional(status);
