@@ -1,5 +1,4 @@
 // @ts-check
-
 //# Responsive width
 let isMobile = false;
 window.addEventListener(
@@ -449,27 +448,15 @@ class Manager {
 			this.scrollToHeading(window.location.hash);
 		}
 
-		window.addEventListener(
-			"scroll",
-			this.refresh.bind(this),
-			{passive: true},
-		);
-		window.addEventListener(
-			"resize",
-			this.refresh.bind(this),
-			{passive: true},
-		);
+		window.addEventListener("scroll", this.refresh.bind(this), {passive: true});
+		window.addEventListener("resize", this.refresh.bind(this), {passive: true});
 		window.addEventListener(
 			"resize",
 			this.calculateHeadingsPositions.bind(this),
 			{passive: true},
 		);
 
-		document.addEventListener(
-			"click",
-			this.handleGlobalClick.bind(this),
-			false,
-		);
+		document.addEventListener("click", this.handleGlobalClick.bind(this), false);
 	}
 }
 
