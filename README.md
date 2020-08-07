@@ -4,7 +4,7 @@
 
 <!-- This intro is synced with the website via the `./rome run scripts/generate-files/website-intro` script. Make sure you run it after modifying anything between these comments. -->
 <!-- INTRO START -->
-**Rome** is a linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
+**Rome** is a JavaScript, TypeScript, HTML, Markdown, and CSS linter, compiler, bundler, and [more](https://romefrontend.dev/#development-status).
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 

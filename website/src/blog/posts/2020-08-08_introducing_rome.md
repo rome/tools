@@ -11,7 +11,7 @@ permalink: /blog/2020/08/08/introducing-rome.html
 layout: layouts/blog.liquid
 ---
 
-We're excited to announce the first release and general availability of **Rome**, a linter, compiler, bundler, and [more](/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+We're excited to announce the first release and general availability of **Rome**: a JavaScript, TypeScript, HTML, Markdown, and CSS linter, compiler, bundler, and [more](/#development-status). We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase. It is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
