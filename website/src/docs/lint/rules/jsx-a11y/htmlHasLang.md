@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/htmlHasLang
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: the `lang` attribute is mandatory
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/htmlHasLang
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # jsx-a11y/htmlHasLang
 
-MISSING DOCUMENTATION
+This rule make sure that the `html` tag has the `lang` attribute.
 
 <!-- GENERATED:START(hash:a934171412c5faba4aca8942bc9b150ec5e9fe66,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

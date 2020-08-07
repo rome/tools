@@ -1,7 +1,7 @@
 ---
 title: Lint Rule ts/noExplicitAny
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: it bans the use of `any`
 eleventyNavigation:
 	key: lint-rules/ts/noExplicitAny
 	parent: lint-rules
@@ -10,4 +10,6 @@ eleventyNavigation:
 
 # ts/noExplicitAny
 
-MISSING DOCUMENTATION
+Using the `any` type defeats the purpose of using TypeScript. 
+
+When `any` is used, all compiler type checks around that value are ignored.

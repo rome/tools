@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/noAutofocus
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: discourage the usage of `autoFocus`
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noAutofocus
 	parent: lint-rules
@@ -10,7 +10,17 @@ eleventyNavigation:
 
 # jsx-a11y/noAutofocus
 
-MISSING DOCUMENTATION
+It discourages the usage to the attribute `autoFocus` on elements. This practice could cause issues for
+ sighted and non-sighted users.
+
+# Accessibility guidelines
+
+General best practice (reference resources)
+
+### Resources
+
+- [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
+- [The accessibility of HTML 5 autofocus](https://www.brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
 
 <!-- GENERATED:START(hash:8275f6449bd0c79f5e6ab69880dc39c9a89e1c11,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

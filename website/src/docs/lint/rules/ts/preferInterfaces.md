@@ -1,7 +1,7 @@
 ---
 title: Lint Rule ts/preferInterfaces
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: it suggests the use of `interface` over `type`
 eleventyNavigation:
 	key: lint-rules/ts/preferInterfaces
 	parent: lint-rules
@@ -10,4 +10,4 @@ eleventyNavigation:
 
 # ts/preferInterfaces
 
-MISSING DOCUMENTATION
+It promotes the use of `interface` over `type`.
