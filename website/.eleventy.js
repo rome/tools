@@ -199,7 +199,12 @@ module.exports = function(eleventyConfig) {
 		function(value) {
 			return new Date(value).toLocaleDateString(
 				undefined,
-				{year: "numeric", month: "long", day: "numeric"},
+				{
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+					timeZone: "America/Los_Angeles",
+				},
 			);
 		},
 	);

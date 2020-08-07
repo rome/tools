@@ -11,7 +11,9 @@ permalink: /blog/2020/08/08/introducing-rome.html
 layout: layouts/blog.liquid
 ---
 
-We're excited to announce the first release and general availability of **Rome**: a JavaScript, TypeScript, HTML, Markdown, and CSS linter, compiler, bundler, and [more](/#development-status). We aim to unify the entire frontend development toolchain.
+We're excited to announce the first release and general availability of the **Rome** linter for JavaScript and TypeScript.
+
+This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](#development-status), for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
@@ -19,19 +21,19 @@ Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslin
 
 <!-- DESCRIPTION_END -->
 
-Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team), a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md), and a [code of conduct](https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
+Linting is an excellent low-risk way for us to mature and validate shared functionality like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively straight forward and safe to adopt.
 
-**Development is currently focused on supporting and stabilizing linting**. Linting is an excellent low-risk way for us to mature and validate various parts of Rome like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively straight forward to adopt.
+We believe that Rome is one of the best linters available for JavaScript. With excellent errors including recommendations and suggestions, terminal interface, and the ability to automatically fix most issues, we believe it stands alone despite our large scope.
 
 {% include docs/cli-screenshots/check.md %}
 
-We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to build and develop Rome itself!  Once Rome's usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
+Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team), a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md), and a [code of conduct](https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
 
-You can read more about Rome, including how to get started, in our [documentation](/). If you would like to get involved, check out our [contributing instructions](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md).
+We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to build and develop Rome itself! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
+
+You can read more about Rome, including how to get started, in our [documentation](/). If you would like to get involved, check out our [contributing instructions](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md). If you are interested in reading more about the history and rationale for the project, you can continue reading below.
 
 &mdash; [Sebastian McKenzie](https://twitter.com/sebmck)
-
-{% include action-links.liquid %}
 
 ## History
 
