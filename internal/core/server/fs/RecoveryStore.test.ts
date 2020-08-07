@@ -23,7 +23,10 @@ test(
 			t.true((await server.recoveryStore.getAllStores()).stores.length === 1);
 
 			// Run `recover apply`
-			await client.query({commandName: "recover pop", requestFlags: {silent: true}});
+			await client.query({
+				commandName: "recover pop",
+				silent: true,
+			});
 
 			// Verify that it's been reverted
 			t.is(await readFile("index.js"), BAD_FILE);
