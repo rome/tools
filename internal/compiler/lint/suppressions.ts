@@ -102,32 +102,35 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 	}
 
 	// Find the best node to attach comments to. This is generally the node with the largest range per line.
-	return context.reduceRoot({
-		name: "suppressionVisitor",
-		enter(path) {
-			const {node} = path;
+	return context.reduceRoot(
+		{
+			name: "suppressionVisitor",
+			enter(path) {
+				const {node} = path;
 
-			// Don't allow attaching suppression comments to a comment or program...
-			if (
-				node.type === "CommentBlock" ||
-				node.type === "CommentLine" ||
-				node.type === "JSRoot"
-			) {
-				return signals.retain;
-			}
+				// Don't allow attaching suppression comments to a comment or program...
+				if (
+					node.type === "CommentBlock" ||
+					node.type === "CommentLine" ||
+					node.type === "JSRoot"
+				) {
+					return signals.retain;
+				}
 
-			const line = getStartLine(node);
-			if (line === undefined || visitedLines.has(line)) {
-				return signals.retain;
-			}
+				const line = getStartLine(node);
+				if (line === undefined || visitedLines.has(line)) {
+					return signals.retain;
+				}
 
-			const decisions = context.getLintDecisions(String(ob1Get1(line)));
-			if (decisions.length === 0) {
-				return signals.retain;
-			}
+				const decisions = context.getLintDecisions(String(ob1Get1(line)));
+				if (decisions.length === 0) {
+					return signals.retain;
+				}
 
-			visitedLines.add(line);
-			return signals.replace(addComment(path, node, decisions));
+				visitedLines.add(line);
+				return signals.replace(addComment(path, node, decisions));
+			},
 		},
-	});
+		ast,
+	);
 }
