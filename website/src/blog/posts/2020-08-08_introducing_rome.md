@@ -13,7 +13,7 @@ layout: layouts/blog.liquid
 
 I'm excited to announce the first release and general availability of **Rome**, a linter, compiler, bundler, and [more](/#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
-Rome is a [monolothic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase. It is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
+Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase. It is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 <!-- DESCRIPTION_END -->
 
@@ -55,7 +55,7 @@ Even though I wasn't involved in Babel, I still maintained a presence in the dev
 
 {% include figure.liquid, width: 500, src: "/img/blog/introducing-rome-post-babel-logos.png", description: "The logo of Yarn, Prepack, and Flipper" %}
 
-The original idea behind Babel had always stuck. What sort of capabilities would be possible if a tool did more than one thing? This sort of philosophy has always seemed alien in the JavaScript ecosystem where micropackages and arbitrary separation of concerns are the norms. These tools being independent has never provided the sort of user autonomy and efficiency that most skeptics of [monolothic](https://en.wikipedia.org/wiki/Monolithic_application) tools proclaim.
+The original idea behind Babel had always stuck. What sort of capabilities would be possible if a tool did more than one thing? This sort of philosophy has always seemed alien in the JavaScript ecosystem where micropackages and arbitrary separation of concerns are the norms. These tools being independent has never provided the sort of user autonomy and efficiency that most skeptics of [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tools proclaim.
 
 Language tooling maintainers spend so much time working on the same things. Processing source code, whether it's in a transpiler like Babel, linting it in ESLint, or bundling it in Webpack, is fundamentally the same problem with overlapping responsibilities and technical implementation. The distinction between responsibilities is arbitrary and there have been repeated failed attempts to close this divide with [shared standards](https://github.com/estree/estree) that have been fragmented by different priorities of different projects.
 
