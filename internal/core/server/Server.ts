@@ -716,6 +716,9 @@ export default class Server {
 			for (const req of client.requestsInFlight) {
 				req.cancel();
 			}
+
+			// Teardown reporter
+			client.reporter.teardown();
 		});
 
 		return client;

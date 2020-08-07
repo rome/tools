@@ -144,7 +144,7 @@ export default class ServerRequest {
 		this.query = query;
 		this.server = server;
 		this.bridge = client.bridge;
-		this.reporter = query.silent ? new Reporter() : client.reporter;
+		this.reporter = query.silent ? new Reporter() : client.reporter.fork();
 		this.client = client;
 
 		this.start = Date.now();
@@ -381,7 +381,6 @@ export default class ServerRequest {
 		};
 
 		await this.endEvent.callOptional(res);
-		this.reporter.teardown();
 		await this.server.handleRequestEnd(this);
 		return res;
 	}

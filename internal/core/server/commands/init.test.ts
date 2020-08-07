@@ -36,6 +36,20 @@ test(
 	),
 );
 
+test(
+	"should bail if a project already exists",
+	createIntegrationTest(
+		{
+			disableProjectConfig: true,
+			files: {},
+		},
+		async (t, {client}) => {
+			await client.query({commandName: "init", commandFlags: {allowDirty: true}});
+			await client.query({commandName: "init", commandFlags: {allowDirty: true}});
+		},
+	),
+);
+
 /*test(
 	"should not allow project creation outside a repository",
 	createIntegrationTest(
