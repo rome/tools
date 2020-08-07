@@ -15,7 +15,7 @@ window.addEventListener(
 				toggleMobileSidebar();
 			}
 
-			toc.checkNavigationCollapse();
+			manager.checkActive();
 		});
 	},
 );
@@ -23,7 +23,6 @@ window.addEventListener(
 //# Table of Contents
 const originalTitle = document.title;
 const headerMobile = document.querySelector(".header-mobile");
-const tocList = document.querySelector(".toc");
 
 /** @type {HTMLElement}*/
 const siteNavigation = document.querySelector(".site-navigation-container");
@@ -57,7 +56,7 @@ const headingElements = tocLinks.map((link) => {
  * @property {number} end
  */
 
-class TableOfContents {
+class Manager {
 	constructor() {
 		/** @type {Array<CalculatedHeading>}*/
 		this.headingsCalculated = [];
@@ -88,7 +87,7 @@ class TableOfContents {
 		if (target.hasAttribute("href")) {
 			const hash = target.getAttribute("href");
 			window.location.hash = hash;
-			this.scrollToHeading(hash, true);
+			this.scrollToHeading(hash);
 
 			if (isMobile) {
 				toggleMobileSidebar();
@@ -135,7 +134,7 @@ class TableOfContents {
 	 */
 	calculateHeading(i, stack) {
 		const {heading, link} = headingElements[i];
-		const id = `#${heading.getAttribute("id")}`;
+		const id = heading.getAttribute("id");
 
 		// Extract the level from the H tag
 		const level = Number(heading.tagName[1]);
@@ -202,10 +201,12 @@ class TableOfContents {
 	}
 
 	/**
+	 * Check if a heading is currently in view
+	 *
 	 * @param {number} i
 	 * @returns {boolean}
 	 */
-	isActive(i) {
+	isVisibleHeading(i) {
 		const {start, end} = this.headingsCalculated[i];
 		const scrollY = this.getScrollY();
 		return scrollY >= start && scrollY <= end;
@@ -215,7 +216,7 @@ class TableOfContents {
 	 * @param {number} i
 	 * @param {boolean} activating
 	 */
-	toggleActive(i, activating) {
+	toggleActiveHeading(i, activating) {
 		const {link, titles} = this.headingsCalculated[i];
 
 		if (activating) {
@@ -234,19 +235,29 @@ class TableOfContents {
 		}
 	}
 
+	/**
+	 * Computing the heading positions is expensive so we only do it when we absolutely have to.
+	 */
 	ensureCalculatedHeadings() {
 		if (!this.hasInitializedHeadings) {
 			this.calculateHeadingsPositions();
 		}
 	}
 
-	checkActive() {
+	/**
+	 * Triggered on window resize and scroll. This needs to be very fast, avoiding DOM inspection completely by caching
+	 * and then validating.
+	 *
+	 * This checks if we should collapse the navigation, and what heading to highlight in the table of contents
+	 */
+
+	refresh() {
 		if (this.lastActiveHeading !== undefined) {
-			if (this.isActive(this.lastActiveHeading)) {
+			if (this.isVisibleHeading(this.lastActiveHeading)) {
 				this.checkNavigationCollapse(true);
 				return;
 			} else {
-				this.toggleActive(this.lastActiveHeading, false);
+				this.toggleActiveHeading(this.lastActiveHeading, false);
 				this.lastActiveHeading = undefined;
 			}
 		}
@@ -256,10 +267,10 @@ class TableOfContents {
 		let hasActive = false;
 
 		for (let i = 0; i < this.headingsCalculated.length; i++) {
-			if (this.isActive(i)) {
+			if (this.isVisibleHeading(i)) {
 				// Set the heading as active
 				this.lastActiveHeading = i;
-				this.toggleActive(i, true);
+				this.toggleActiveHeading(i, true);
 				hasActive = true;
 
 				// Make sure TOC link is visible
@@ -302,25 +313,27 @@ class TableOfContents {
 			this.navHeight = siteNavigation.clientHeight;
 		}
 
+		// If the sidebar isn't scrollable then there's no need to collapse it
+		if (sidebarScroller.scrollHeight <= sidebarScroller.clientHeight) {
+			isCollapsed = false;
+		}
+
 		if (isCollapsed) {
 			siteNavigation.style.height = "0px";
-
-			if (sidebarScroller.scrollTop > this.navHeight) {
-				siteNavigation.style.display = "none";
-			}
 		} else {
-			siteNavigation.style.removeProperty("display");
 			siteNavigation.style.height = `${this.navHeight}px`;
 		}
 	}
 
 	/**
 	 * @param {string} hash
-	 * @param {boolean} smooth
 	 * @returns {boolean}
 	 */
-	scrollToHeading(hash, smooth) {
-		const heading = document.getElementById(hash.replace(/^(#)/, ""));
+	scrollToHeading(hash) {
+		// Allow passing in raw link href
+		const id = hash.replace(/^(#)/, "");
+
+		const heading = document.getElementById(id);
 		if (!heading) {
 			return false;
 		}
@@ -329,12 +342,8 @@ class TableOfContents {
 		heading.focus();
 
 		this.ensureCalculatedHeadings();
-		window.scrollTo({
-			top: this.getHeadingTop(heading),
-			left: 0,
-			behavior: smooth ? "smooth" : undefined,
-		});
-		this.checkActive();
+		window.scrollTo(0, this.getHeadingTop(heading));
+
 		return true;
 	}
 
@@ -349,7 +358,7 @@ class TableOfContents {
 
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
-		this.scrollToHeading(hash, true);
+		this.scrollToHeading(hash);
 		navigator.clipboard.writeText(window.location.href);
 
 		// Only another copied text can appear here so delete it if it exists
@@ -407,61 +416,55 @@ class TableOfContents {
 		}
 	}
 
-	attach() {
-		this.checkActive();
-
-		if (window.location.hash !== "") {
-			this.scrollToHeading(window.location.hash, false);
+	/**
+	 * @param {MouseEvent} event
+	 */
+	handleGlobalClick(event) {
+		const {target} = event;
+		if (!(target instanceof HTMLElement)) {
+			return;
 		}
 
-		tocList.addEventListener("click", this.handleTOCClick.bind(this), false);
+		if (event.ctrlKey || event.metaKey) {
+			return;
+		}
+
+		if (target.matches(".header-anchor")) {
+			this.handleHeadingAnchorClick(event, target);
+		}
+
+		if (target.matches(".toc")) {
+			this.handleTOCClick(event);
+		} else if (target.matches("a")) {
+			this.handleAnchorClick(event, target);
+		}
+	}
+
+	attach() {
+		this.refresh();
+
+		if (window.location.hash !== "") {
+			this.scrollToHeading(window.location.hash);
+		}
+
+		window.addEventListener("scroll", this.refresh.bind(this), {passive: true});
+		window.addEventListener("resize", this.refresh.bind(this), {passive: true});
 		window.addEventListener(
 			"resize",
 			this.calculateHeadingsPositions.bind(this),
-			{capture: false, passive: true},
-		);
-		window.addEventListener(
-			"scroll",
-			this.checkActive.bind(this),
-			{capture: false, passive: true},
-		);
-		window.addEventListener(
-			"resize",
-			this.checkActive.bind(this),
-			{capture: false, passive: true},
+			{passive: true},
 		);
 
-		document.addEventListener(
-			"click",
-			(event) => {
-				const {target} = event;
-				if (!(target instanceof HTMLElement)) {
-					return;
-				}
-
-				if (event.ctrlKey || event.metaKey) {
-					return;
-				}
-
-				if (target.matches(".header-anchor")) {
-					this.handleHeadingAnchorClick(event, target);
-				}
-
-				if (target.matches("a")) {
-					this.handleAnchorClick(event, target);
-				}
-			},
-			false,
-		);
+		document.addEventListener("click", this.handleGlobalClick.bind(this), false);
 	}
 }
 
-const toc = new TableOfContents();
+const manager = new Manager();
 
 window.addEventListener(
 	"DOMContentLoaded",
 	() => {
-		toc.attach();
+		manager.attach();
 	},
 );
 
@@ -591,11 +594,8 @@ for (const elem of topAnchors) {
 			if (window.scrollY > 0) {
 				e.preventDefault();
 
-				window.scrollTo({
-					top: 0,
-					left: 0,
-					behavior: "smooth",
-				});
+				sidebarScroller.scrollTop = 0;
+				window.scrollTo(0, 0);
 
 				// Remove the hash
 				history.pushState(

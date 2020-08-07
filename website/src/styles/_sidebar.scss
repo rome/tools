@@ -79,11 +79,8 @@
 
 	.sidebar-scroller {
 		overflow: auto;
-		border-top: 1px solid var(--soft-border-color);
-	}
-
-	.toc-menu {
 		height: 100%;
+		border-top: 1px solid var(--soft-border-color);
 	}
 }
 

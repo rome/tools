@@ -4,6 +4,7 @@ const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
 const markdownIt = require("markdown-it");
 const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
+const markdownItImageSize = require("markdown-it-imsize");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
@@ -48,6 +49,8 @@ module.exports = function(eleventyConfig) {
 	});
 
 	md.use(markdownItHeaderSections);
+
+	md.use(markdownItImageSize);
 
 	md.use(
 		markdownItAnchor,
@@ -185,11 +188,23 @@ module.exports = function(eleventyConfig) {
 	);
 
 	eleventyConfig.addFilter(
+		"blogSummary",
+		(val) => {
+			return val.split("<!-- DESCRIPTION_END -->")[0];
+		},
+	);
+
+	eleventyConfig.addFilter(
 		"dateFormat",
 		function(value) {
 			return new Date(value).toLocaleDateString(
 				undefined,
-				{year: "numeric", month: "long", day: "numeric"},
+				{
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+					timeZone: "America/Los_Angeles",
+				},
 			);
 		},
 	);

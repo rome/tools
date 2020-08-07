@@ -38,11 +38,13 @@
 				"terser",
 				"clean-css",
 				"html-minifier",
-				"node-sass"
+				"node-sass",
+				"markdown-it-imsize"
 			]
 		}
 	},
 	"dependencies": {
-		"markdown-it-header-sections": "^1.0.0"
+		"markdown-it-header-sections": "^1.0.0",
+		"markdown-it-imsize": "^2.0.1"
 	}
 }
