@@ -229,7 +229,7 @@ export default class CompilerContext {
 
 	public reduceRoot(
 		visitors: AnyVisitor | AnyVisitors,
-		pathOpts?: PathOptions,
+		ast: AnyRoot = this.ast,
 	): AnyRoot {
 		if (this.reducedRoot) {
 			throw new Error("reduceRoot has already been called");
@@ -237,7 +237,7 @@ export default class CompilerContext {
 
 		const node = assertSingleNode(
 			reduceNode(
-				this.ast,
+				ast,
 				[
 					createSuppressionsVisitor(),
 					...helperVisitors,
@@ -245,7 +245,6 @@ export default class CompilerContext {
 					...(Array.isArray(visitors) ? visitors : [visitors]),
 				],
 				this,
-				pathOpts,
 			),
 		);
 		if (!isRoot(node)) {
