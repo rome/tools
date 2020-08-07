@@ -55,8 +55,6 @@ There would have been no way to provide backward compatibility, and with expecta
 
 In an ode to the [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus), if all components of an object are replaced, is it the same object? There is far less confusion and friction to release something entirely new than drastically change something that's already in widespread usage. I had since moved on from the project, and so any evolution would not have been possible, and would have required complete vision alignment.
 
-### Post-Babel
-
 Even though I wasn't involved in Babel, I still maintained a presence in the developer tooling ecosystem. I eventually went on to develop other tools like [Yarn](https://yarnpkg.com/) and be involved in projects like [Prepack](https://prepack.io/) and [Flipper](https://fbflipper.com/). This work continued to develop the ideas that would eventually become Rome and shaped my philosophy on developer experience. A focus on excellent errors, clean user interface, and minimal configuration.
 
 {% include figure.liquid, width: 500, src: "/img/blog/introducing-rome-post-babel-logos.png", description: "The logos of Yarn, Prepack, and Flipper" %}
@@ -66,8 +64,6 @@ The original idea behind Babel had always stuck. What sort of capabilities would
 Language tooling maintainers spend so much time working on the same things. Processing source code, whether it's in a transpiler like Babel, linting it in ESLint, or bundling it in Webpack, is fundamentally the same problem with overlapping responsibilities and technical implementation.
 
 A linter in the JavaScript ecosystem is exactly the same as a compiler. They both consume code, then produce compiled code and errors. What the compiled code is varies. In the case of a linter, the compiled code is formatted source code with automatic fixes applied. The more powerful your compilation infrastructure, the more theoretically powerful your linter could be. These commonalities extend to pretty much anything that involves language processing. We can build more powerful tools using a shared base that is easily adaptable.
-
-### Development
 
 Rome is the spiritual successor of that idea, except rather than exposing a large public API for other tools to be built on, we are building them all in one place, with batteries included. We support frontend languages other than JavaScript too, those that can benefit the most from tight integration.
 
