@@ -10,7 +10,10 @@ eleventyNavigation:
 
 # js/doubleEquals
 
-MISSING DOCUMENTATION
+* It is general bad practise to use ``==`` for comparison instead of ``===``
+* Double operators will triger implicit type coersion and are thus not prefered.
+* Using strict equality operators is good practice.
+* Eg. Use ``===`` or ``!==`` instead of ``==`` of ``!=``
 
 <!-- GENERATED:START(hash:80f16cb3ab76f9046016be8e44eedb18221cc939,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

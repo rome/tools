@@ -10,7 +10,9 @@ eleventyNavigation:
 
 # js/emptyBlocks
 
-MISSING DOCUMENTATION
+* This rule checks that no blocks are left empty.
+* It checks for functions all the way to if/else statements.
+* No blocks should be left empty, for more information read [this](https://eslint.org/docs/rules/no-empty)
 
 <!-- GENERATED:START(hash:70faf58a6208a1aea90b15b8c2b6145fb48ac72a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
