@@ -13,13 +13,13 @@ layout: layouts/blog.liquid
 
 We're excited to announce the first beta release and general availability of the **Rome** linter for JavaScript and TypeScript.
 
-This is just the beginning. Rome is not only linter, but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+This is the beginning of an entire suite of tools. Rome is not only linter, but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
 Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
-We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to build and develop Rome itself! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
+We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to [build and develop Rome itself](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md)! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
 
 <!-- DESCRIPTION_END -->
 
