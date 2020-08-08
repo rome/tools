@@ -1288,6 +1288,7 @@ export default class ServerRequest {
 				onSearchNoMatch: async (path) => {
 					if (!opts.ignoreArgumentMisses) {
 						const location = argToLocation.get(path) ?? {};
+						await this.server.projectManager.assertProject(path, location);
 						await globUnmatched(this, opts, path, location);
 					}
 				},
