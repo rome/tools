@@ -15,7 +15,7 @@
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Meaningful alternative text on elements helps users relying on screen</span>
     <span style="color: DodgerBlue;">readers to understand content&apos;s purpose within a page.</span>
 
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">src/App.jsx:12:13</span> <strong>lint/js/undeclaredVariables</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">src/App.jsx:12:13</span> <strong>lint/js/noUndeclaredVariables</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>logo2</strong></span><span style="color: Tomato;"> variable is undeclared</span>
 

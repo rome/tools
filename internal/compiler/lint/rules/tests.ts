@@ -8,29 +8,9 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:dd4177c86d28579c6c314e79881c4638ca445cf0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:babd1cd44f25e80e01e82725991444d8e2891d47,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
-import preferClosingNonVoid from "./html/preferClosingNonVoid.test.rjson";
-// @ts-ignore
-import caseSingleStatement from "./js/caseSingleStatement.test.rjson";
-// @ts-ignore
-import confusingLanguage from "./js/confusingLanguage.test.rjson";
-// @ts-ignore
-import defaultExportSameBasename from "./js/defaultExportSameBasename.test.rjson";
-// @ts-ignore
-import doubleEquals from "./js/doubleEquals.test.rjson";
-// @ts-ignore
-import duplicateImportSource from "./js/duplicateImportSource.test.rjson";
-// @ts-ignore
-import emptyBlocks from "./js/emptyBlocks.test.rjson";
-// @ts-ignore
-import emptyMatches from "./js/emptyMatches.test.rjson";
-// @ts-ignore
-import getterReturn from "./js/getterReturn.test.rjson";
-// @ts-ignore
-import importDefaultBasename from "./js/importDefaultBasename.test.rjson";
-// @ts-ignore
-import negationElse from "./js/negationElse.test.rjson";
+import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
 import noArguments from "./js/noArguments.test.rjson";
 // @ts-ignore
@@ -44,11 +24,15 @@ import noCompareNegZero from "./js/noCompareNegZero.test.rjson";
 // @ts-ignore
 import noCondAssign from "./js/noCondAssign.test.rjson";
 // @ts-ignore
+import noConfusingLanguage from "./js/noConfusingLanguage.test.rjson";
+// @ts-ignore
 import noDebugger from "./js/noDebugger.test.rjson";
 // @ts-ignore
 import noDelete from "./js/noDelete.test.rjson";
 // @ts-ignore
 import noDeleteVars from "./js/noDeleteVars.test.rjson";
+// @ts-ignore
+import noDoubleEquals from "./js/noDoubleEquals.test.rjson";
 // @ts-ignore
 import noDupeArgs from "./js/noDupeArgs.test.rjson";
 // @ts-ignore
@@ -56,13 +40,21 @@ import noDuplicateCase from "./js/noDuplicateCase.test.rjson";
 // @ts-ignore
 import noDuplicateGroupNamesInRegularExpressions from "./js/noDuplicateGroupNamesInRegularExpressions.test.rjson";
 // @ts-ignore
+import noDuplicateImportSource from "./js/noDuplicateImportSource.test.rjson";
+// @ts-ignore
 import noDuplicateKeys from "./js/noDuplicateKeys.test.rjson";
 // @ts-ignore
+import noEmptyBlocks from "./js/noEmptyBlocks.test.rjson";
+// @ts-ignore
 import noEmptyCharacterClass from "./js/noEmptyCharacterClass.test.rjson";
+// @ts-ignore
+import noEmptyMatches from "./js/noEmptyMatches.test.rjson";
 // @ts-ignore
 import noExtraBooleanCast from "./js/noExtraBooleanCast.test.rjson";
 // @ts-ignore
 import noFunctionAssign from "./js/noFunctionAssign.test.rjson";
+// @ts-ignore
+import noGetterReturn from "./js/noGetterReturn.test.rjson";
 // @ts-ignore
 import noImportAssign from "./js/noImportAssign.test.rjson";
 // @ts-ignore
@@ -70,9 +62,13 @@ import noLabelVar from "./js/noLabelVar.test.rjson";
 // @ts-ignore
 import noMultipleSpacesInRegularExpressionLiterals from "./js/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
 // @ts-ignore
+import noNegationElse from "./js/noNegationElse.test.rjson";
+// @ts-ignore
 import noNestedTernary from "./js/noNestedTernary.test.rjson";
 // @ts-ignore
 import noPosixInRegularExpression from "./js/noPosixInRegularExpression.test.rjson";
+// @ts-ignore
+import noRestrictedGlobals from "./js/noRestrictedGlobals.test.rjson";
 // @ts-ignore
 import noSetterReturn from "./js/noSetterReturn.test.rjson";
 // @ts-ignore
@@ -80,9 +76,17 @@ import noShadowRestrictedNames from "./js/noShadowRestrictedNames.test.rjson";
 // @ts-ignore
 import noShorthandArrayType from "./js/noShorthandArrayType.test.rjson";
 // @ts-ignore
+import noShoutyConstants from "./js/noShoutyConstants.test.rjson";
+// @ts-ignore
+import noSparseArray from "./js/noSparseArray.test.rjson";
+// @ts-ignore
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString.test.rjson";
 // @ts-ignore
+import noUndeclaredVariables from "./js/noUndeclaredVariables.test.rjson";
+// @ts-ignore
 import noUnsafeFinally from "./js/noUnsafeFinally.test.rjson";
+// @ts-ignore
+import noUnsafeNegation from "./js/noUnsafeNegation.test.rjson";
 // @ts-ignore
 import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral.test.rjson";
 // @ts-ignore
@@ -90,59 +94,33 @@ import noUnusedVariables from "./js/noUnusedVariables.test.rjson";
 // @ts-ignore
 import noVar from "./js/noVar.test.rjson";
 // @ts-ignore
-import preferBlockStatements from "./js/preferBlockStatements.test.rjson";
+import useBlockStatements from "./js/useBlockStatements.test.rjson";
 // @ts-ignore
-import preferFunctionDeclarations from "./js/preferFunctionDeclarations.test.rjson";
+import useDefaultExportBasename from "./js/useDefaultExportBasename.test.rjson";
 // @ts-ignore
-import preferTemplate from "./js/preferTemplate.test.rjson";
+import useDefaultImportBasename from "./js/useDefaultImportBasename.test.rjson";
 // @ts-ignore
-import preferWhile from "./js/preferWhile.test.rjson";
+import useFunctionDeclarations from "./js/useFunctionDeclarations.test.rjson";
 // @ts-ignore
-import restrictedGlobals from "./js/restrictedGlobals.test.rjson";
+import useSingleCaseStatement from "./js/useSingleCaseStatement.test.rjson";
 // @ts-ignore
-import shoutyConstants from "./js/shoutyConstants.test.rjson";
+import useSingleVarDeclarator from "./js/useSingleVarDeclarator.test.rjson";
 // @ts-ignore
-import singleVarDeclarator from "./js/singleVarDeclarator.test.rjson";
+import useSortedSpecifiers from "./js/useSortedSpecifiers.test.rjson";
 // @ts-ignore
-import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers.test.rjson";
+import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
-import sparseArray from "./js/sparseArray.test.rjson";
-// @ts-ignore
-import unsafeNegation from "./js/unsafeNegation.test.rjson";
-// @ts-ignore
-import altText from "./jsx-a11y/altText.test.rjson";
-// @ts-ignore
-import anchorHasContent from "./jsx-a11y/anchorHasContent.test.rjson";
-// @ts-ignore
-import anchorIsValid from "./jsx-a11y/anchorIsValid.test.rjson";
-// @ts-ignore
-import ariaProps from "./jsx-a11y/ariaProps.test.rjson";
-// @ts-ignore
-import ariaProptypes from "./jsx-a11y/ariaProptypes.test.rjson";
-// @ts-ignore
-import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements.test.rjson";
-// @ts-ignore
-import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents.test.rjson";
-// @ts-ignore
-import headingHasContent from "./jsx-a11y/headingHasContent.test.rjson";
-// @ts-ignore
-import htmlHasLang from "./jsx-a11y/htmlHasLang.test.rjson";
-// @ts-ignore
-import iframeHasTitle from "./jsx-a11y/iframeHasTitle.test.rjson";
-// @ts-ignore
-import imgRedundantAlt from "./jsx-a11y/imgRedundantAlt.test.rjson";
-// @ts-ignore
-import lang from "./jsx-a11y/lang.test.rjson";
-// @ts-ignore
-import mediaHasCaption from "./jsx-a11y/mediaHasCaption.test.rjson";
-// @ts-ignore
-import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents.test.rjson";
+import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
+// @ts-ignore
+import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
 import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
+// @ts-ignore
+import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
 import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
@@ -150,15 +128,39 @@ import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.r
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
+import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex.test.rjson";
+// @ts-ignore
+import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
+// @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
-import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps.test.rjson";
+import useAltText from "./jsx-a11y/useAltText.test.rjson";
 // @ts-ignore
-import scope from "./jsx-a11y/scope.test.rjson";
+import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
-import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive.test.rjson";
+import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
+// @ts-ignore
+import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
+// @ts-ignore
+import useAriaProptypes from "./jsx-a11y/useAriaProptypes.test.rjson";
+// @ts-ignore
+import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
+// @ts-ignore
+import useHtmlLang from "./jsx-a11y/useHtmlLang.test.rjson";
+// @ts-ignore
+import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
+// @ts-ignore
+import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
+// @ts-ignore
+import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
+// @ts-ignore
+import useMediaCaption from "./jsx-a11y/useMediaCaption.test.rjson";
+// @ts-ignore
+import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
+// @ts-ignore
+import useValidLang from "./jsx-a11y/useValidLang.test.rjson";
 // @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
@@ -166,17 +168,11 @@ import noDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
 // @ts-ignore
 import noImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
 // @ts-ignore
-import pascalCase from "./jsx/pascalCase.test.rjson";
+import noPropSpreading from "./jsx/noPropSpreading.test.rjson";
 // @ts-ignore
-import preferSelfClosingElements from "./jsx/preferSelfClosingElements.test.rjson";
+import usePascalCase from "./jsx/usePascalCase.test.rjson";
 // @ts-ignore
-import propsNoSpreading from "./jsx/propsNoSpreading.test.rjson";
-// @ts-ignore
-import buttonHasType from "./react/buttonHasType.test.rjson";
-// @ts-ignore
-import jsxFragments from "./react/jsxFragments.test.rjson";
-// @ts-ignore
-import jsxKey from "./react/jsxKey.test.rjson";
+import useSelfClosingElements from "./jsx/useSelfClosingElements.test.rjson";
 // @ts-ignore
 import noAccessStateInSetState from "./react/noAccessStateInSetState.test.rjson";
 // @ts-ignore
@@ -208,101 +204,105 @@ import noUnsafe from "./react/noUnsafe.test.rjson";
 // @ts-ignore
 import noUselessFragment from "./react/noUselessFragment.test.rjson";
 // @ts-ignore
+import noVoidElementsWithChildren from "./react/noVoidElementsWithChildren.test.rjson";
+// @ts-ignore
 import noWillUpdateSetState from "./react/noWillUpdateSetState.test.rjson";
 // @ts-ignore
-import requireRenderReturn from "./react/requireRenderReturn.test.rjson";
+import useButtonType from "./react/useButtonType.test.rjson";
 // @ts-ignore
-import sortComp from "./react/sortComp.test.rjson";
+import useFragmentSyntax from "./react/useFragmentSyntax.test.rjson";
 // @ts-ignore
-import stylePropObject from "./react/stylePropObject.test.rjson";
+import useKey from "./react/useKey.test.rjson";
 // @ts-ignore
-import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren.test.rjson";
+import useRenderReturn from "./react/useRenderReturn.test.rjson";
+// @ts-ignore
+import useSortComp from "./react/useSortComp.test.rjson";
+// @ts-ignore
+import useStylePropObject from "./react/useStylePropObject.test.rjson";
 
 export const tests: Tests = {
-	"html/preferClosingNonVoid": preferClosingNonVoid,
-	"js/caseSingleStatement": caseSingleStatement,
-	"js/confusingLanguage": confusingLanguage,
-	"js/defaultExportSameBasename": defaultExportSameBasename,
-	"js/doubleEquals": doubleEquals,
-	"js/duplicateImportSource": duplicateImportSource,
-	"js/emptyBlocks": emptyBlocks,
-	"js/emptyMatches": emptyMatches,
-	"js/getterReturn": getterReturn,
-	"js/importDefaultBasename": importDefaultBasename,
-	"js/negationElse": negationElse,
+	"html/useClosingNonVoid": useClosingNonVoid,
 	"js/noArguments": noArguments,
 	"js/noAsyncPromiseExecutor": noAsyncPromiseExecutor,
 	"js/noCatchAssign": noCatchAssign,
 	"js/noCommaOperator": noCommaOperator,
 	"js/noCompareNegZero": noCompareNegZero,
 	"js/noCondAssign": noCondAssign,
+	"js/noConfusingLanguage": noConfusingLanguage,
 	"js/noDebugger": noDebugger,
 	"js/noDelete": noDelete,
 	"js/noDeleteVars": noDeleteVars,
+	"js/noDoubleEquals": noDoubleEquals,
 	"js/noDupeArgs": noDupeArgs,
 	"js/noDuplicateCase": noDuplicateCase,
 	"js/noDuplicateGroupNamesInRegularExpressions": noDuplicateGroupNamesInRegularExpressions,
+	"js/noDuplicateImportSource": noDuplicateImportSource,
 	"js/noDuplicateKeys": noDuplicateKeys,
+	"js/noEmptyBlocks": noEmptyBlocks,
 	"js/noEmptyCharacterClass": noEmptyCharacterClass,
+	"js/noEmptyMatches": noEmptyMatches,
 	"js/noExtraBooleanCast": noExtraBooleanCast,
 	"js/noFunctionAssign": noFunctionAssign,
+	"js/noGetterReturn": noGetterReturn,
 	"js/noImportAssign": noImportAssign,
 	"js/noLabelVar": noLabelVar,
 	"js/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
+	"js/noNegationElse": noNegationElse,
 	"js/noNestedTernary": noNestedTernary,
 	"js/noPosixInRegularExpression": noPosixInRegularExpression,
+	"js/noRestrictedGlobals": noRestrictedGlobals,
 	"js/noSetterReturn": noSetterReturn,
 	"js/noShadowRestrictedNames": noShadowRestrictedNames,
 	"js/noShorthandArrayType": noShorthandArrayType,
+	"js/noShoutyConstants": noShoutyConstants,
+	"js/noSparseArray": noSparseArray,
 	"js/noTemplateCurlyInString": noTemplateCurlyInString,
+	"js/noUndeclaredVariables": noUndeclaredVariables,
 	"js/noUnsafeFinally": noUnsafeFinally,
+	"js/noUnsafeNegation": noUnsafeNegation,
 	"js/noUnusedTemplateLiteral": noUnusedTemplateLiteral,
 	"js/noUnusedVariables": noUnusedVariables,
 	"js/noVar": noVar,
-	"js/preferBlockStatements": preferBlockStatements,
-	"js/preferFunctionDeclarations": preferFunctionDeclarations,
-	"js/preferTemplate": preferTemplate,
-	"js/preferWhile": preferWhile,
-	"js/restrictedGlobals": restrictedGlobals,
-	"js/shoutyConstants": shoutyConstants,
-	"js/singleVarDeclarator": singleVarDeclarator,
-	"js/sortImportExportSpecifiers": sortImportExportSpecifiers,
-	"js/sparseArray": sparseArray,
-	"js/unsafeNegation": unsafeNegation,
-	"jsx-a11y/altText": altText,
-	"jsx-a11y/anchorHasContent": anchorHasContent,
-	"jsx-a11y/anchorIsValid": anchorIsValid,
-	"jsx-a11y/ariaProps": ariaProps,
-	"jsx-a11y/ariaProptypes": ariaProptypes,
-	"jsx-a11y/ariaUnsupportedElements": ariaUnsupportedElements,
-	"jsx-a11y/clickEventsHaveKeyEvents": clickEventsHaveKeyEvents,
-	"jsx-a11y/headingHasContent": headingHasContent,
-	"jsx-a11y/htmlHasLang": htmlHasLang,
-	"jsx-a11y/iframeHasTitle": iframeHasTitle,
-	"jsx-a11y/imgRedundantAlt": imgRedundantAlt,
-	"jsx-a11y/lang": lang,
-	"jsx-a11y/mediaHasCaption": mediaHasCaption,
-	"jsx-a11y/mouseEventsHaveKeyEvents": mouseEventsHaveKeyEvents,
+	"js/useBlockStatements": useBlockStatements,
+	"js/useDefaultExportBasename": useDefaultExportBasename,
+	"js/useDefaultImportBasename": useDefaultImportBasename,
+	"js/useFunctionDeclarations": useFunctionDeclarations,
+	"js/useSingleCaseStatement": useSingleCaseStatement,
+	"js/useSingleVarDeclarator": useSingleVarDeclarator,
+	"js/useSortedSpecifiers": useSortedSpecifiers,
+	"js/useTemplate": useTemplate,
+	"js/useWhile": useWhile,
 	"jsx-a11y/noAccessKey": noAccessKey,
+	"jsx-a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"jsx-a11y/noAutofocus": noAutofocus,
 	"jsx-a11y/noDistractingElements": noDistractingElements,
+	"jsx-a11y/noHeaderScope": noHeaderScope,
 	"jsx-a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
 	"jsx-a11y/noOnChange": noOnChange,
+	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,
+	"jsx-a11y/noRedundantAlt": noRedundantAlt,
 	"jsx-a11y/noRedundantRoles": noRedundantRoles,
 	"jsx-a11y/noTargetBlank": noTargetBlank,
-	"jsx-a11y/roleHasRequiredAriaProps": roleHasRequiredAriaProps,
-	"jsx-a11y/scope": scope,
-	"jsx-a11y/tabindexNoPositive": tabindexNoPositive,
+	"jsx-a11y/useAltText": useAltText,
+	"jsx-a11y/useAnchorContent": useAnchorContent,
+	"jsx-a11y/useAriaProps": useAriaProps,
+	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,
+	"jsx-a11y/useAriaProptypes": useAriaProptypes,
+	"jsx-a11y/useHeadingContent": useHeadingContent,
+	"jsx-a11y/useHtmlLang": useHtmlLang,
+	"jsx-a11y/useIframeTitle": useIframeTitle,
+	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,
+	"jsx-a11y/useKeyWithMouseEvents": useKeyWithMouseEvents,
+	"jsx-a11y/useMediaCaption": useMediaCaption,
+	"jsx-a11y/useValidAnchor": useValidAnchor,
+	"jsx-a11y/useValidLang": useValidLang,
 	"jsx/noCommentText": noCommentText,
 	"jsx/noDuplicateProps": noDuplicateProps,
 	"jsx/noImplicitBoolean": noImplicitBoolean,
-	"jsx/pascalCase": pascalCase,
-	"jsx/preferSelfClosingElements": preferSelfClosingElements,
-	"jsx/propsNoSpreading": propsNoSpreading,
-	"react/buttonHasType": buttonHasType,
-	"react/jsxFragments": jsxFragments,
-	"react/jsxKey": jsxKey,
+	"jsx/noPropSpreading": noPropSpreading,
+	"jsx/usePascalCase": usePascalCase,
+	"jsx/useSelfClosingElements": useSelfClosingElements,
 	"react/noAccessStateInSetState": noAccessStateInSetState,
 	"react/noArrayIndexKey": noArrayIndexKey,
 	"react/noChildrenProp": noChildrenProp,
@@ -318,10 +318,13 @@ export const tests: Tests = {
 	"react/noThisInSFC": noThisInSFC,
 	"react/noUnsafe": noUnsafe,
 	"react/noUselessFragment": noUselessFragment,
+	"react/noVoidElementsWithChildren": noVoidElementsWithChildren,
 	"react/noWillUpdateSetState": noWillUpdateSetState,
-	"react/requireRenderReturn": requireRenderReturn,
-	"react/sortComp": sortComp,
-	"react/stylePropObject": stylePropObject,
-	"react/voidDomElementsNoChildren": voidDomElementsNoChildren,
+	"react/useButtonType": useButtonType,
+	"react/useFragmentSyntax": useFragmentSyntax,
+	"react/useKey": useKey,
+	"react/useRenderReturn": useRenderReturn,
+	"react/useSortComp": useSortComp,
+	"react/useStylePropObject": useStylePropObject,
 };
 /* GENERATED:END(id:main) */

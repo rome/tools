@@ -8,10 +8,10 @@
 
 ```javascript
 Array [
-	"Apply fix: lint/js/preferBlockStatements"
-	"Add suppression comment: lint/js/preferBlockStatements"
-	"Apply suggested fix: lint/js/doubleEquals"
-	"Add suppression comment: lint/js/doubleEquals"
+	"Apply fix: lint/js/useBlockStatements"
+	"Add suppression comment: lint/js/useBlockStatements"
+	"Apply suggested fix: lint/js/noDoubleEquals"
+	"Add suppression comment: lint/js/noDoubleEquals"
 	"Rome: Fix All"
 ]
 ```
