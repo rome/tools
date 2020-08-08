@@ -16,7 +16,7 @@ import {
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 } from "@internal/project";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
-import {Event} from "@internal/events";
+import {EventQueue} from "@internal/events";
 import {consumeJSON} from "@internal/codec-json";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
 import {
@@ -100,6 +100,7 @@ type DeclareManifestOpts = {
 
 type CrawlOptions = {
 	reason: "watch" | "initial";
+	watcherId?: number;
 	diagnostics: DiagnosticsProcessor;
 	onFoundDirectory?: (path: AbsoluteFilePath) => void;
 	tick?: (path: AbsoluteFilePath) => void;
@@ -115,43 +116,42 @@ export type Stats = {
 
 export type WatcherClose = VoidCallback;
 
+export type ChangedFileEventItem = {
+	path: AbsoluteFilePath;
+	oldStats: undefined | Stats;
+	newStats: Stats;
+};
+
 export default class MemoryFileSystem {
 	constructor(server: Server) {
 		this.server = server;
 
-		this.watchPromises = new AbsoluteFilePathMap();
 		this.directoryListings = new AbsoluteFilePathMap();
 		this.directories = new AbsoluteFilePathMap();
 		this.files = new AbsoluteFilePathMap();
-		this.manifests = new AbsoluteFilePathMap();
-		this.watchers = new AbsoluteFilePathMap();
 		this.buffers = new AbsoluteFilePathMap();
+
 		this.manifestCounter = 0;
+		this.manifests = new AbsoluteFilePathMap();
+
 		this.logger = server.logger.namespace(markup`[MemoryFileSystem]`);
 
-		this.changedFileEvent = new Event({
-			name: "MemoryFileSystem.changedFile",
-		});
-		this.deletedFileEvent = new Event({
-			name: "MemoryFileSystem.deletedFile",
-		});
-		this.newFileEvent = new Event({
-			name: "MemoryFileSystem.newFileEvent",
-		});
+		this.watcherCounter = 0;
+		this.watchPromises = new AbsoluteFilePathMap();
+		this.watchers = new AbsoluteFilePathMap();
+		this.activeWatcherIds = new Set();
+
+		this.changedFileEvent = new EventQueue();
+		this.deletedFileEvent = new EventQueue();
+		this.newFileEvent = new EventQueue();
 	}
 
-	public changedFileEvent: Event<
-		{
-			path: AbsoluteFilePath;
-			oldStats: undefined | Stats;
-			newStats: Stats;
-		},
-		void
-	>;
-	public deletedFileEvent: Event<AbsoluteFilePath, void>;
-	public newFileEvent: Event<AbsoluteFilePath, void>;
+	public changedFileEvent: EventQueue<ChangedFileEventItem>;
+	public deletedFileEvent: EventQueue<AbsoluteFilePath>;
+	public newFileEvent: EventQueue<AbsoluteFilePath>;
 
 	private manifestCounter: number;
+	private watcherCounter: number;
 	private server: Server;
 	private directoryListings: AbsoluteFilePathMap<AbsoluteFilePathMap<AbsoluteFilePath>>;
 	private directories: AbsoluteFilePathMap<Stats>;
@@ -163,10 +163,15 @@ export default class MemoryFileSystem {
 		path: AbsoluteFilePath;
 		close: WatcherClose;
 	}>;
+	private activeWatcherIds: Set<number>;
 	private watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
 
 	// Used to maintain fake mtimes for file buffers
 	private buffers: AbsoluteFilePathMap<Stats>;
+
+	isActiveWatcherId(id: undefined | number): boolean {
+		return id === undefined || this.activeWatcherIds.has(id);
+	}
 
 	public async init() {
 		await this.injectVirtualModules();
@@ -195,6 +200,15 @@ export default class MemoryFileSystem {
 		}
 	}
 
+	public async flushFileEvents() {
+		const {server} = this;
+		await server.refreshFileEvent.flush();
+		await this.newFileEvent.flush();
+		await this.changedFileEvent.flush();
+		await this.deletedFileEvent.flush();
+		await server.projectManager.evictingProjectLock.waitLockDrained();
+	}
+
 	public hasBuffer(path: AbsoluteFilePath): boolean {
 		return this.buffers.has(path);
 	}
@@ -217,6 +231,7 @@ export default class MemoryFileSystem {
 	private async createWatcher(
 		diagnostics: DiagnosticsProcessor,
 		projectDirectory: AbsoluteFilePath,
+		id: number,
 	): Promise<WatcherClose> {
 		const {server} = this;
 		const {logger} = server;
@@ -229,6 +244,7 @@ export default class MemoryFileSystem {
 		});
 
 		const watchers: AbsoluteFilePathMap<FSWatcher> = new AbsoluteFilePathMap();
+		this.activeWatcherIds.add(id);
 
 		try {
 			const onFoundDirectory = (directoryPath: AbsoluteFilePath) => {
@@ -297,6 +313,7 @@ export default class MemoryFileSystem {
 		}
 
 		return () => {
+			this.activeWatcherIds.delete(id);
 			for (const watcher of watchers.values()) {
 				watcher.close();
 			}
@@ -413,8 +430,10 @@ export default class MemoryFileSystem {
 		// Wait for any subscribers that might need the file's stats
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
-			await this.deletedFileEvent.call(path);
-			this.server.refreshFileEvent.send(path);
+			await Promise.all([
+				this.deletedFileEvent.push(path),
+				this.server.refreshFileEvent.push(path),
+			]);
 		}
 
 		// Remove from 'all possible caches
@@ -510,7 +529,8 @@ export default class MemoryFileSystem {
 		});
 
 		this.logger.info(markup`Watching ${directoryLink}`);
-		const promise = this.createWatcher(diagnostics, projectDirectory);
+		const id = this.watcherCounter++;
+		const promise = this.createWatcher(diagnostics, projectDirectory, id);
 		this.watchPromises.set(projectDirectory, promise);
 
 		const watcherClose = await promise;
@@ -729,6 +749,11 @@ export default class MemoryFileSystem {
 
 		// Declare the file
 		const declareItem = async (path: AbsoluteFilePath) => {
+			// Watcher could have been closed by an event
+			if (!this.isActiveWatcherId(opts.watcherId)) {
+				return;
+			}
+
 			const stats = await this.hardStat(path);
 			if (stats.type === "file") {
 				await this.addFile(path, stats, opts);
@@ -866,9 +891,19 @@ export default class MemoryFileSystem {
 		const oldStats = this.getFileStats(path);
 		if (oldStats !== undefined && opts.reason === "watch") {
 			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
-			await this.server.refreshFileEvent.callOptional(path);
-			await this.changedFileEvent.callOptional({path, oldStats, newStats: stats});
+
+			await Promise.all([
+				this.server.refreshFileEvent.push(path),
+				this.changedFileEvent.push({path, oldStats, newStats: stats}),
+			]);
+
+			// Watcher could have been closed by an event
+			if (!this.isActiveWatcherId(opts.watcherId)) {
+				return false;
+			}
 		}
+
+		this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
 
 		// Add project if this is a config
 		if (
@@ -892,7 +927,7 @@ export default class MemoryFileSystem {
 		}
 
 		if (isNew) {
-			await this.newFileEvent.callOptional(path);
+			await this.newFileEvent.push(path);
 		}
 
 		return true;

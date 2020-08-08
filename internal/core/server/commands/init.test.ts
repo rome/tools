@@ -1,7 +1,7 @@
 import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
 
-test.only(
+test(
 	"should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",
 	createIntegrationTest(
 		{

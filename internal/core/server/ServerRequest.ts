@@ -398,7 +398,11 @@ export default class ServerRequest {
 
 		this.toredown = true;
 		this.client.requestsInFlight.delete(this);
+
 		this.logger.info(markup`Response type: ${String(res?.type)}`);
+		if (res.type === "DIAGNOSTICS") {
+			this.logDiagnostics(res.diagnostics);
+		}
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
@@ -784,6 +788,12 @@ export default class ServerRequest {
 		factory: (bridge: WorkerBridge, ref: JSONFileReference) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
+		// Wait on any evicting projects in case it will change the FileReference
+		const {evictingProjectLock} = this.server.projectManager;
+		if (evictingProjectLock.hasLock()) {
+			await this.server.projectManager.evictingProjectLock.waitLockDrained();
+		}
+
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtime(path);
@@ -867,7 +877,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.updateBuffer.call({ref, content});
 				this.server.memoryFs.addBuffer(path, content);
-				await this.server.refreshFileEvent.call(path);
+				await this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
 		);
@@ -885,7 +895,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				const buffer = await bridge.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
-				this.server.refreshFileEvent.send(path);
+				this.server.refreshFileEvent.push(path);
 				return buffer;
 			},
 			{noRetry: true},
@@ -901,7 +911,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
-				this.server.refreshFileEvent.send(path);
+				this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
 		);
@@ -1369,7 +1379,6 @@ export default class ServerRequest {
 				markers: [],
 			};
 		} else {
-			this.logDiagnostics(diagnostics);
 			return {
 				type: "DIAGNOSTICS",
 				files: {},

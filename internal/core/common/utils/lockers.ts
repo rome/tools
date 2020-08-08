@@ -79,13 +79,9 @@ class LockerNormalized<RawKey, MapKey> {
 	}
 
 	public async waitLockDrained(key: RawKey): Promise<void> {
-		if (this.hasLock(key)) {
+		while (this.hasLock(key)) {
 			const lock = await this.getLock(key);
 			lock.release();
-
-			if (this.hasLock(key)) {
-				return this.waitLockDrained(key);
-			}
 		}
 	}
 

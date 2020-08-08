@@ -184,11 +184,9 @@ class GlobberWatcher {
 
 		this.callback = callback;
 		this.args = args;
-
-		this.pendingPaths = new AbsoluteFilePathSet();
-		this.flushTimeout = undefined;
-		this.initial = true;
 		this.flushLock = new SingleLocker();
+
+		this.batchPaths = undefined;
 	}
 
 	private globber: Globber;
@@ -196,11 +194,9 @@ class GlobberWatcher {
 	private server: Server;
 	private memoryFs: MemoryFileSystem;
 
+	private batchPaths: undefined | AbsoluteFilePathSet;
 	private callback: WatchFilesCallback;
 	private flushLock: SingleLocker;
-	private flushTimeout: undefined | NodeJS.Timeout;
-	private pendingPaths: AbsoluteFilePathSet;
-	private initial: boolean;
 
 	isDependentPath(path: AbsoluteFilePath): boolean {
 		for (const arg of this.args) {
@@ -211,50 +207,39 @@ class GlobberWatcher {
 		return false;
 	}
 
-	pushPossiblePath(path: AbsoluteFilePath) {
-		if (this.isDependentPath(path)) {
-			const paths = this.globber.search(path);
-			for (const path of paths) {
-				this.pendingPaths.add(path);
-				this.queueFlush();
+	async flushPaths(paths: Array<AbsoluteFilePath>) {
+		let pendingPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+		for (const path of paths) {
+			if (this.isDependentPath(path)) {
+				const paths = this.globber.search(path);
+				for (const path of paths) {
+					if (this.batchPaths === undefined) {
+						pendingPaths.add(path);
+					} else {
+						this.batchPaths.add(path);
+					}
+				}
 			}
+		}
+		if (pendingPaths.size > 0) {
+			await this.flush(pendingPaths);
 		}
 	}
 
-	async flush() {
-		// Clear timeout
-		if (this.flushTimeout !== undefined) {
-			clearTimeout(this.flushTimeout);
-			this.flushTimeout = undefined;
-		}
-
-		const {initial} = this;
-
-		const paths = this.pendingPaths;
-		if (paths.size === 0 && !initial) {
-			return;
-		}
-
-		this.pendingPaths = new AbsoluteFilePathSet();
-
-		//
+	async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
 		const lock = await this.flushLock.getLock();
-
 		try {
+			// We could be evicting a project as the result of a modification made inside of the watch callback
+			// Ensure it's complete before we decide to flush
+			await this.server.projectManager.evictingProjectLock.waitLockDrained();
+
+			if (paths.size === 0 && !initial) {
+				return;
+			}
+
 			await this.callback({paths, initial});
 		} finally {
 			lock.release();
-		}
-	}
-
-	queueFlush() {
-		// Don't queue a flush if we are initializing
-		if (this.initial) {
-			return;
-		}
-
-		if (this.flushTimeout === undefined) {
-			this.flushTimeout = setTimeout(() => this.flush(), 100);
 		}
 	}
 
@@ -264,14 +249,14 @@ class GlobberWatcher {
 
 		// Emitted when a file appears for the first time
 		subscriptions.push(
-			memoryFs.newFileEvent.subscribe((path) => {
-				this.pushPossiblePath(path);
+			memoryFs.newFileEvent.subscribe((paths) => {
+				this.flushPaths(paths);
 			}),
 		);
 
 		subscriptions.push(
-			server.refreshFileEvent.subscribe((path) => {
-				this.pushPossiblePath(path);
+			server.refreshFileEvent.subscribe((paths) => {
+				this.flushPaths(paths);
 			}),
 		);
 
@@ -283,6 +268,8 @@ class GlobberWatcher {
 		const subs = this.setupEvents();
 
 		const promises: Array<Promise<unknown>> = [];
+		const batchPaths = new AbsoluteFilePathSet();
+		this.batchPaths = batchPaths;
 
 		// Determine what arguments are not available in the memory file system
 		for (const arg of this.args) {
@@ -290,24 +277,19 @@ class GlobberWatcher {
 			if (memoryFs.exists(arg) === undefined) {
 				promises.push(this.server.projectManager.findProject(arg));
 			} else {
-				this.pushPossiblePath(arg);
+				this.flushPaths([arg]);
 			}
 		}
 
 		await Promise.all(promises);
-		await this.flush();
-		this.initial = false;
+		this.batchPaths = undefined;
+		await this.flush(batchPaths, true);
 
 		return mergeEventSubscriptions([
 			...subs,
 			{
 				unsubscribe: async () => {
-					// We could be evicting a project as the result of a modification made inside of the watch callback
-					// Ensure it's complete before we decide to flush
-					await this.server.projectManager.evictingProjectLock.waitLockDrained();
-
-					// Do one final flush before we stop
-					await this.flush();
+					await this.flushLock.waitLockDrained();
 				},
 			},
 		]);

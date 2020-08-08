@@ -36,11 +36,11 @@ test(
 	},
 );
 
-test("can parse gist patterns", async (t) => {
-	t.snapshot(
-		parseDependencyPattern(
-			consumeUnknown("gist:123456", "parse/json"),
-			false,
-		),
-	);
-});
+test(
+	"can parse gist patterns",
+	async (t) => {
+		t.snapshot(
+			parseDependencyPattern(consumeUnknown("gist:123456", "parse/json"), false),
+		);
+	},
+);

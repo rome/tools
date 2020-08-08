@@ -289,7 +289,9 @@ export default class RecoveryStore {
 
 		const path = this.getStoreDirectoryPath(store.storeId);
 		await createDirectory(path);
-		this.logger.info(markup`Created store ${store.storeId} at ${path}`);
+		this.logger.info(
+			markup`Created store <emphasis>${store.storeId}</emphasis> at <emphasis>${path}</emphasis>`,
+		);
 
 		// Only consider a request up for eviction when the request has finished
 		req.endEvent.subscribe(async () => {
@@ -317,7 +319,9 @@ export default class RecoveryStore {
 
 		const storePath = this.getStoreDirectoryPath(store.storeId).append(fileId);
 		await writeFile(storePath, content);
-		this.logger.info(markup`Save file from ${path} to ${storePath}`);
+		this.logger.info(
+			markup`Save file from <emphasis>${path}</emphasis> to <emphasis>${storePath}</emphasis>`,
+		);
 	}
 
 	// Take the contents of the store and write the artifacts back to their original location
@@ -376,7 +380,9 @@ export default class RecoveryStore {
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
 			await writeFile(indexPath, stringifyJSON(store.index));
-			this.logger.info(markup`Committed store index to ${indexPath}`);
+			this.logger.info(
+				markup`Committed store index to <emphasis>${indexPath}</emphasis>`,
+			);
 		}
 	}
 
@@ -412,23 +418,23 @@ export default class RecoveryStore {
 		// Files successfully written
 		let fileCount = 0;
 
-		let registerFile: (path: AbsoluteFilePath) => void = (
-			path: AbsoluteFilePath,
-		) => {
+		let registerFile: (paths: Array<AbsoluteFilePath>) => void = (paths) => {
 			throw new Error("Function should have been replaced");
 		};
 
 		// refreshFileEvent doesn't resolve
 		const waitRefresh = new Promise((resolve) => {
-			registerFile = (path) => {
-				if (!paths.has(path)) {
-					return;
-				}
+			registerFile = (refreshedPaths) => {
+				for (const path of refreshedPaths) {
+					if (!paths.has(path)) {
+						continue;
+					}
 
-				events.onFileDone(path);
-				paths.delete(path);
-				if (paths.size === 0) {
-					resolve();
+					events.onFileDone(path);
+					paths.delete(path);
+					if (paths.size === 0) {
+						resolve();
+					}
 				}
 			};
 
@@ -455,7 +461,7 @@ export default class RecoveryStore {
 									await fd.writeFile(content);
 									fileCount++;
 								} catch (err) {
-									registerFile(path);
+									registerFile([path]);
 
 									if (err.code === "EEXIST") {
 										events.unexpectedExists(path);
@@ -472,7 +478,7 @@ export default class RecoveryStore {
 									// First verify the mtime
 									const stats = await fd.stat();
 									if (stats.mtimeMs !== mtime) {
-										registerFile(path);
+										registerFile([path]);
 										events.unexpectedModified(path, mtime, stats.mtimeMs);
 										return;
 									}
@@ -483,7 +489,7 @@ export default class RecoveryStore {
 									await fd.write(content, 0);
 									fileCount++;
 								} catch (err) {
-									registerFile(path);
+									registerFile([path]);
 									if (err.code === "ENOENT") {
 										events.expectedExists(path);
 									} else {
@@ -533,6 +539,7 @@ export default class RecoveryStore {
 			for (const teardown of teardowns) {
 				await teardown();
 			}
+			await this.server.memoryFs.flushFileEvents();
 		}
 
 		return fileCount;

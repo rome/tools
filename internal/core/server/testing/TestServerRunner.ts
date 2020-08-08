@@ -70,8 +70,6 @@ import {
 import {FileReference} from "@internal/core/common/types/files";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {VoidCallback} from "@internal/typescript-helpers";
-import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
-import handleFatalError from "@internal/core/common/handleFatalError";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -168,14 +166,6 @@ export default class TestServerRunner {
 				this.sourceMaps.add(filename, consumer);
 			}
 		}
-
-		setupGlobalErrorHandlers((error) => {
-			handleFatalError({
-				error,
-				source: markup`test worker`,
-				reporter: Reporter.fromProcess(),
-			});
-		});
 	}
 
 	private coverageCollector: CoverageCollector;

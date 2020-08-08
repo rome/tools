@@ -107,7 +107,7 @@ const GIST_PREFIX = "gist:";
 type GistPattern = {
 	type: "gist";
 	id: string;
-}
+};
 
 function parseGist(pattern: string): GistPattern {
 	return {

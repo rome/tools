@@ -48,6 +48,7 @@ test(
 			await h.writeFile("module/package.json", '{"name": "bar"}');
 
 			const afterProject = await h.server.projectManager.assertProject(h.cwd);
+			t.true(beforeProject !== afterProject);
 			t.is(afterProject.packages.size, 1);
 			t.true(afterProject.packages.has("bar"));
 		},

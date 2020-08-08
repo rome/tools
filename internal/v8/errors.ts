@@ -90,8 +90,12 @@ export function getErrorStructure(
 }
 
 export function getDiagnosticLocationFromErrorFrame(
-	frame: ErrorFrame,
+	frame: undefined | ErrorFrame,
 ): DiagnosticLocation {
+	if (frame === undefined) {
+		return {};
+	}
+
 	const pos: Position = {
 		line: frame.lineNumber ?? ob1Number1,
 		column: frame.columnNumber ?? ob1Number0,

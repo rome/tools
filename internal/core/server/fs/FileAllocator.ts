@@ -6,11 +6,11 @@
  */
 
 import {Server} from "@internal/core";
-import {Stats} from "./MemoryFileSystem";
+import {ChangedFileEventItem, Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {AnyMarkup, markup} from "@internal/markup";
+import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 
 export default class FileAllocator {
@@ -27,12 +27,12 @@ export default class FileAllocator {
 	private logger: ReporterNamespace;
 
 	public init() {
-		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
-			return this.handleDeleted(path);
+		this.server.memoryFs.deletedFileEvent.subscribe((paths) => {
+			return this.handleDeleted(paths);
 		});
 
-		this.server.memoryFs.changedFileEvent.subscribe(({path, oldStats, newStats}) => {
-			return this.handleChange(path, oldStats, newStats);
+		this.server.memoryFs.changedFileEvent.subscribe((events) => {
+			return this.handleChange(events);
 		});
 	}
 
@@ -104,62 +104,71 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.logger.info(markup`Evicted ${path} due to ${reason}`);
+		this.logger.info(
+			markup`Evicted <emphasis>${path}</emphasis> due to <emphasis>${reason}</emphasis>`,
+		);
 	}
 
-	private async handleDeleted(path: AbsoluteFilePath) {
-		// Find owner
-		const workerId = this.getOwnerId(path);
-		if (workerId === undefined) {
-			return;
-		}
-
-		// Evict file from 'worker cache
-		await this.evict(path, markup`file deleted`);
-
-		// Disown it from 'our internal map
-		this.fileToWorker.delete(path);
-
-		// Remove the total size from 'this worker so it'll be assigned next
-		const stats = this.server.memoryFs.getFileStatsAssert(path);
-		this.server.workerManager.disown(workerId, stats);
-	}
-
-	private async handleChange(
-		path: AbsoluteFilePath,
-		oldStats: undefined | Stats,
-		newStats: Stats,
-	) {
-		const {workerManager} = this.server;
-
-		if (await this.server.projectManager.maybeEvictProjects(path)) {
-			this.logger.info(markup`Evicted projects belonging to dependency ${path}`);
-		}
-
-		// Send update to worker owner
-		if (this.hasOwner(path)) {
-			// Get the worker
+	private async handleDeleted(paths: Array<AbsoluteFilePath>) {
+		for (const path of paths) {
+			// Find owner
 			const workerId = this.getOwnerId(path);
 			if (workerId === undefined) {
-				throw new Error(`Expected worker id for ${path.join()}`);
+				continue;
 			}
 
-			// Evict the file from 'cache
-			await this.evict(path, markup`file change`);
+			// Evict file from 'worker cache
+			await this.evict(path, markup`file deleted`);
 
-			// Verify that this file doesn't exceed any size limit
-			this.verifySize(path, newStats);
+			// Disown it from 'our internal map
+			this.fileToWorker.delete(path);
 
-			// Add on the new size, and remove the old
-			if (oldStats === undefined) {
-				throw new Error(
-					"File already has an owner so expected to have old stats but had none",
-				);
+			// Remove the total size from 'this worker so it'll be assigned next
+			const stats = this.server.memoryFs.getFileStatsAssert(path);
+			this.server.workerManager.disown(workerId, stats);
+		}
+	}
+
+	private async handleChange(events: Array<ChangedFileEventItem>) {
+		const {workerManager} = this.server;
+
+		for (const {path, oldStats, newStats} of events) {
+			// Send update to worker owner
+			if (this.hasOwner(path)) {
+				// Get the worker
+				const workerId = this.getOwnerId(path);
+				if (workerId === undefined) {
+					throw new Error(`Expected worker id for ${path.join()}`);
+				}
+
+				// Evict the file from cache
+				await this.evict(path, markup`file change`);
+
+				// Verify that this file doesn't exceed any size limit
+				this.verifySize(path, newStats);
+
+				// Add on the new size, and remove the old
+				if (oldStats === undefined) {
+					throw new Error(
+						"File already has an owner so expected to have old stats but had none",
+					);
+				}
+				workerManager.disown(workerId, oldStats);
+				workerManager.own(workerId, newStats);
+			} else {
+				this.logger.info(markup`No owner for eviction ${path}`);
 			}
-			workerManager.disown(workerId, oldStats);
-			workerManager.own(workerId, newStats);
-		} else {
-			this.logger.info(markup`No owner for eviction ${path}`);
+		}
+
+		const paths = events.map((event) => event.path);
+		if (await this.server.projectManager.maybeEvictProjects(paths)) {
+			const displayPaths = concatMarkup(
+				paths.map((path) => markup`<emphasis>${path}</emphasis>`),
+				markup`, `,
+			);
+			this.logger.info(
+				markup`Evicted projects belonging to dependencies ${displayPaths}`,
+			);
 		}
 	}
 
