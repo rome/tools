@@ -115,10 +115,10 @@ This is used to generate new lint rules and boilperlate.
 
 The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/romefrontend/rome/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
 
-For example, to create a rule in the `js` category called `camelCase` run:
+For example, to create a rule in the `js` category called `useCamelCase` run:
 
 ```bash
-./rome run scripts/lint-create-rule js/camelCase
+./rome run scripts/lint-create-rule js/useCamelCase
 ```
 
 The created files will be listed in the console output. See those files for inline comments on what to insert. Use other lint rules as a reference.

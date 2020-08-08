@@ -144,13 +144,13 @@ Diagnostics can be suppressed with a `rome-ignore` comment, followed by the diag
 In **JavaScript** this can be a line comment:
 
 ```javascript
-// rome-ignore lint/js/camelCase
+// rome-ignore lint/js/useCamelCase
 ```
 
 In **JavaScript** and **CSS** it can be a block comment:
 
 ```javascript
-/* rome-ignore lint/js/camelCase */
+/* rome-ignore lint/js/useCamelCase */
 ```
 
 And in **Markdown** and **HTML**:
@@ -168,7 +168,7 @@ If a suppression comment does not match suppress at least one diagnostic for eve
 You can suppress multiple categories by separating them with a space.
 
 ```javascript
-// rome-ignore lint/js/camelCase lint/js/noExplicitAny
+// rome-ignore lint/js/useCamelCase lint/js/noExplicitAny
 ```
 
 ##### Explanation

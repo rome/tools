@@ -1,5 +1,4 @@
 import {createMockWorker} from "@internal/test-helpers";
-import {tests} from "@internal/compiler/lint/rules/tests";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
@@ -8,6 +7,7 @@ import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
 import {createUnknownFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
+import {tests} from "@internal/compiler/lint/rules/tests";
 import {ob1Coerce1} from "@internal/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
