@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:dd4177c86d28579c6c314e79881c4638ca445cf0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3e58a07168fc447fd610cddefcdb28e9e60ccc69,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import preferClosingNonVoid from "./html/preferClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -160,6 +160,8 @@ import scope from "./jsx-a11y/scope.test.rjson";
 // @ts-ignore
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive.test.rjson";
 // @ts-ignore
+import fileExtension from "./jsx/fileExtension.test.rjson";
+// @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
 import noDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
@@ -294,6 +296,7 @@ export const tests: Tests = {
 	"jsx-a11y/roleHasRequiredAriaProps": roleHasRequiredAriaProps,
 	"jsx-a11y/scope": scope,
 	"jsx-a11y/tabindexNoPositive": tabindexNoPositive,
+	"jsx/fileExtension": fileExtension,
 	"jsx/noCommentText": noCommentText,
 	"jsx/noDuplicateProps": noDuplicateProps,
 	"jsx/noImplicitBoolean": noImplicitBoolean,

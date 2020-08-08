@@ -3,14 +3,19 @@ import {CompilerContext, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 
-const JSX_FILE_EXTENSIONS = [".jsx", ".tsx"];
+const JSX_FILE_EXTENSIONS = ["jsx", "tsx"];
 
 function isJSXNode(node: AnyNode): boolean {
 	return node.type === "JSXFragment" || node.type === "JSXElement";
 }
 
 function isJSXFile(context: CompilerContext): boolean {
-	return JSX_FILE_EXTENSIONS.includes(context.path.getExtensions());
+	for (const ext of JSX_FILE_EXTENSIONS) {
+		if (context.path.hasEndExtension(ext)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 export default createVisitor({

@@ -1,0 +1,64 @@
+[
+	{
+		filename: "test.js"
+		invalid: [
+			"
+				// @jsx
+				<div></div>"
+			"
+				// @jsx
+				<></>"
+			"
+				// @jsx
+				<Fragment></Fragment>"
+			"
+				// @jsx
+				<React.Fragment></React.Fragment>
+			"
+	]
+		valid: [
+			"'<div></div>'"
+	]
+}
+	{
+		filename: "test.jsx"
+		valid: [
+			"
+				// @jsx
+				<div></div>
+			"
+			"
+				// @jsx
+				<></>
+			"
+			"
+				// @jsx
+				<Fragment></Fragment>
+			"
+			"
+				// @jsx
+				<React.Fragment></React.Fragment>
+			"
+	]
+}
+	{
+		filename: "test.tsx"
+		valid: [
+			"
+				// @jsx
+				<div></div>"
+			"
+				// @jsx
+				<></>
+			"
+			"
+				// @jsx
+				<Fragment></Fragment>
+			"
+			"
+				// @jsx
+				<React.Fragment></React.Fragment>
+			"
+	]
+}
+]
