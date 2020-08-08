@@ -15,6 +15,7 @@ import {
 	PLATFORMS,
 	USER_CONFIG_DIRECTORY,
 	VERSION,
+	REQUIRED_NODE_VERSION_RANGE,
 	localCommands,
 	serverCommands,
 } from "@internal/core";
@@ -36,6 +37,8 @@ import {
 } from "@internal/markup";
 import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
+import {satisfiesSemver} from "@internal/codec-semver";
+import {Reporter} from "@internal/cli-reporter";
 
 type CLIFlags = {
 	logs: boolean;
@@ -54,6 +57,14 @@ type CLIFlags = {
 
 export default async function cli() {
 	setProcessTitle("cli");
+
+	// Verify correct Node version
+	if (!satisfiesSemver(process.version, REQUIRED_NODE_VERSION_RANGE, {loose: true})) {
+		const reporter = Reporter.fromProcess();
+		reporter.error(markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`)
+		process.exit(1);
+	}
+
 	const p = parseCLIFlagsFromProcess({
 		programName: getEnvVar("ROME_DEV").type === "ENABLED" ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
