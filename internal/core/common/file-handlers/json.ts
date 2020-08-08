@@ -19,6 +19,9 @@ import {
 } from "./types";
 import {parseJS} from "@internal/js-parser";
 
+// Format these with spaces since npm uses them otherwise it's extremely annoying
+const SPACE_WHITELIST = ["package.json", "package-lock.json"];
+
 export const jsonHandler: ExtensionHandler = {
 	ext: "json",
 	language: "json",
@@ -57,7 +60,13 @@ export const jsonHandler: ExtensionHandler = {
 			if (hasExtensions) {
 				formatted = stringifyRJSONFromConsumer({consumer, comments}) + "\n";
 			} else {
-				formatted = String(stringifyJSON(consumer.asUnknown())) + "\n";
+				formatted =
+					String(
+						stringifyJSON(
+							consumer.asUnknown(),
+							SPACE_WHITELIST.includes(real.getBasename()),
+						),
+					) + "\n";
 			}
 		}
 

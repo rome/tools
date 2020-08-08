@@ -1,6 +1,6 @@
 {
-	"name": "@internal/core",
-	"type": "module",
-	"private": true,
-	"main": "index.ts"
+  "name": "@internal/core",
+  "type": "module",
+  "private": true,
+  "main": "index.ts"
 }

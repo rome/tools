@@ -1,20 +1,20 @@
 {
-	"name": "rome",
-	"version": "10.0.2-beta",
-	"type": "module",
-	"license": "MIT",
-	"main": "index.ts",
-	"files": [
-		"LICENSE",
-		"README.md"
-	],
-	"bin": {
-		"rome": "bin/rome.ts"
-	},
-	"scripts": {
-		"postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romefrontend/rome/pull/198 for context.\""
-	},
-	"engines": {
-		"node": ">=12.10.0"
-	}
+  "name": "rome",
+  "version": "10.0.2-beta",
+  "type": "module",
+  "license": "MIT",
+  "main": "index.ts",
+  "files": [
+    "LICENSE",
+    "README.md"
+  ],
+  "bin": {
+    "rome": "bin/rome.ts"
+  },
+  "scripts": {
+    "postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romefrontend/rome/pull/198 for context.\""
+  },
+  "engines": {
+    "node": ">=12.10.0"
+  }
 }

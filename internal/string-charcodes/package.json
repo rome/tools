@@ -1,6 +1,6 @@
 {
-	"name": "@internal/string-charcodes",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
+  "name": "@internal/string-charcodes",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
 }

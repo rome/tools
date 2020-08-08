@@ -1,6 +1,6 @@
 {
-	"name": "@internal/cli-environment",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
+  "name": "@internal/cli-environment",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
 }

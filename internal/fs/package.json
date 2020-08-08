@@ -1,6 +1,6 @@
 {
-	"name": "@internal/fs",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
+  "name": "@internal/fs",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
 }

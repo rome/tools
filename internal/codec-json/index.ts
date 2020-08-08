@@ -81,6 +81,6 @@ export function stringifyRJSON(
 	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), comments);
 }
 
-export function stringifyJSON(value: unknown): string {
-	return JSON.stringify(value, null, "\t");
+export function stringifyJSON(value: unknown, spaces: boolean = false): string {
+	return JSON.stringify(value, null, spaces ? "  " : "\t");
 }

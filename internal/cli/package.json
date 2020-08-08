@@ -1,9 +1,9 @@
 {
-	"name": "@internal/cli",
-	"private": true,
-	"type": "module",
-	"main": "index.ts",
-	"bin": {
-		"rome": "bin/rome.ts"
-	}
+  "name": "@internal/cli",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "bin": {
+    "rome": "bin/rome.ts"
+  }
 }

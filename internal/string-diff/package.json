@@ -1,6 +1,6 @@
 {
-	"name": "@internal/string-diff",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
+  "name": "@internal/string-diff",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
 }

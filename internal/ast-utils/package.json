@@ -1,6 +1,6 @@
 {
-	"name": "@internal/ast-utils",
-	"private": true,
-	"type": "module",
-	"main": "index.ts"
+  "name": "@internal/ast-utils",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
 }
