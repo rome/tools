@@ -170,7 +170,7 @@ export default createServerCommand<Flags>({
 
 					const globals: Array<string> = [];
 					for (const diag of printer.processor.getDiagnostics()) {
-						if (diag.description.category === "lint/js/undeclaredVariables") {
+						if (diag.description.category === "lint/js/noUndeclaredVariables") {
 							if (diag.meta && diag.meta.identifierName) {
 								globals.push(diag.meta.identifierName);
 							}

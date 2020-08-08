@@ -1,5 +1,4 @@
 import {createMockWorker} from "@internal/test-helpers";
-import {tests} from "@internal/compiler/lint/rules/tests";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
@@ -95,6 +94,7 @@ async function run(
 }
 
 export async function main() {
+	const {tests} = await require("@internal/compiler/lint/rules/tests");
 	for (const ruleName in tests) {
 		const rawCases = tests[ruleName];
 		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];

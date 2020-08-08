@@ -1,99 +1,89 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/* GENERATED:START(hash:0849be850a4d3b94d875c9d26fb089677707fa1d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
-import preferClosingNonVoid from "./html/preferClosingNonVoid";
-import camelCase from "./js/camelCase";
-import caseSingleStatement from "./js/caseSingleStatement";
-import confusingLanguage from "./js/confusingLanguage";
-import defaultExportSameBasename from "./js/defaultExportSameBasename";
-import doubleEquals from "./js/doubleEquals";
-import duplicateImportSource from "./js/duplicateImportSource";
-import emptyBlocks from "./js/emptyBlocks";
-import emptyMatches from "./js/emptyMatches";
-import getterReturn from "./js/getterReturn";
-import importDefaultBasename from "./js/importDefaultBasename";
-import negationElse from "./js/negationElse";
+/* GENERATED:START(hash:c40abf78aaaa45b3b02718ad600e0a7178dcb864,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
 import noCatchAssign from "./js/noCatchAssign";
 import noCommaOperator from "./js/noCommaOperator";
 import noCompareNegZero from "./js/noCompareNegZero";
 import noCondAssign from "./js/noCondAssign";
+import noConfusingLanguage from "./js/noConfusingLanguage";
 import noDebugger from "./js/noDebugger";
 import noDelete from "./js/noDelete";
 import noDeleteVars from "./js/noDeleteVars";
+import noDoubleEquals from "./js/noDoubleEquals";
 import noDupeArgs from "./js/noDupeArgs";
 import noDuplicateCase from "./js/noDuplicateCase";
 import noDuplicateGroupNamesInRegularExpressions from "./js/noDuplicateGroupNamesInRegularExpressions";
+import noDuplicateImportSource from "./js/noDuplicateImportSource";
 import noDuplicateKeys from "./js/noDuplicateKeys";
+import noEmptyBlocks from "./js/noEmptyBlocks";
 import noEmptyCharacterClass from "./js/noEmptyCharacterClass";
+import noEmptyMatches from "./js/noEmptyMatches";
 import noExtraBooleanCast from "./js/noExtraBooleanCast";
 import noFunctionAssign from "./js/noFunctionAssign";
+import noGetterReturn from "./js/noGetterReturn";
 import noImportAssign from "./js/noImportAssign";
 import noLabelVar from "./js/noLabelVar";
 import noMultipleSpacesInRegularExpressionLiterals from "./js/noMultipleSpacesInRegularExpressionLiterals";
+import noNegationElse from "./js/noNegationElse";
 import noNestedTernary from "./js/noNestedTernary";
 import noPosixInRegularExpression from "./js/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./js/noReferenceToNonExistingGroup";
+import noRestrictedGlobals from "./js/noRestrictedGlobals";
 import noSetterReturn from "./js/noSetterReturn";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
 import noShorthandArrayType from "./js/noShorthandArrayType";
+import noShoutyConstants from "./js/noShoutyConstants";
+import noSparseArray from "./js/noSparseArray";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
+import noUndeclaredVariables from "./js/noUndeclaredVariables";
 import noUnsafeFinally from "./js/noUnsafeFinally";
+import noUnsafeNegation from "./js/noUnsafeNegation";
 import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
 import noUnusedVariables from "./js/noUnusedVariables";
 import noVar from "./js/noVar";
-import preferBlockStatements from "./js/preferBlockStatements";
-import preferFunctionDeclarations from "./js/preferFunctionDeclarations";
-import preferTemplate from "./js/preferTemplate";
-import preferWhile from "./js/preferWhile";
-import restrictedGlobals from "./js/restrictedGlobals";
-import shoutyConstants from "./js/shoutyConstants";
-import singleVarDeclarator from "./js/singleVarDeclarator";
-import sortImportExportSpecifiers from "./js/sortImportExportSpecifiers";
-import sparseArray from "./js/sparseArray";
-import undeclaredVariables from "./js/undeclaredVariables";
-import unsafeNegation from "./js/unsafeNegation";
-import altText from "./jsx-a11y/altText";
-import anchorHasContent from "./jsx-a11y/anchorHasContent";
-import anchorIsValid from "./jsx-a11y/anchorIsValid";
-import ariaProps from "./jsx-a11y/ariaProps";
-import ariaProptypes from "./jsx-a11y/ariaProptypes";
-import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
-import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
-import headingHasContent from "./jsx-a11y/headingHasContent";
-import htmlHasLang from "./jsx-a11y/htmlHasLang";
-import iframeHasTitle from "./jsx-a11y/iframeHasTitle";
-import imgRedundantAlt from "./jsx-a11y/imgRedundantAlt";
-import lang from "./jsx-a11y/lang";
-import mediaHasCaption from "./jsx-a11y/mediaHasCaption";
-import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents";
+import useBlockStatements from "./js/useBlockStatements";
+import useCamelCase from "./js/useCamelCase";
+import useDefaultExportBasename from "./js/useDefaultExportBasename";
+import useDefaultImportBasename from "./js/useDefaultImportBasename";
+import useFunctionDeclarations from "./js/useFunctionDeclarations";
+import useSingleCaseStatement from "./js/useSingleCaseStatement";
+import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
+import useSortedSpecifiers from "./js/useSortedSpecifiers";
+import useTemplate from "./js/useTemplate";
+import useWhile from "./js/useWhile";
 import noAccessKey from "./jsx-a11y/noAccessKey";
+import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
+import noHeaderScope from "./jsx-a11y/noHeaderScope";
 import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
 import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
 import noOnChange from "./jsx-a11y/noOnChange";
+import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
+import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
-import roleHasRequiredAriaProps from "./jsx-a11y/roleHasRequiredAriaProps";
-import scope from "./jsx-a11y/scope";
-import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
-import fileExtension from "./jsx/fileExtension";
+import useAltText from "./jsx-a11y/useAltText";
+import useAnchorContent from "./jsx-a11y/useAnchorContent";
+import useAriaProps from "./jsx-a11y/useAriaProps";
+import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
+import useAriaProptypes from "./jsx-a11y/useAriaProptypes";
+import useHeadingContent from "./jsx-a11y/useHeadingContent";
+import useHtmlLang from "./jsx-a11y/useHtmlLang";
+import useIframeTitle from "./jsx-a11y/useIframeTitle";
+import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
+import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
+import useMediaCaption from "./jsx-a11y/useMediaCaption";
+import useValidAnchor from "./jsx-a11y/useValidAnchor";
+import useValidLang from "./jsx-a11y/useValidLang";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
 import noImplicitBoolean from "./jsx/noImplicitBoolean";
-import pascalCase from "./jsx/pascalCase";
-import preferSelfClosingElements from "./jsx/preferSelfClosingElements";
-import propsNoSpreading from "./jsx/propsNoSpreading";
-import buttonHasType from "./react/buttonHasType";
-import jsxFragments from "./react/jsxFragments";
-import jsxKey from "./react/jsxKey";
+import noPropSpreading from "./jsx/noPropSpreading";
+import useJSXFileExtension from "./jsx/useJSXFileExtension";
+import usePascalCase from "./jsx/usePascalCase";
+import useSelfClosingElements from "./jsx/useSelfClosingElements";
 import noAccessStateInSetState from "./react/noAccessStateInSetState";
 import noArrayIndexKey from "./react/noArrayIndexKey";
 import noChildrenProp from "./react/noChildrenProp";
@@ -109,104 +99,104 @@ import noStringRefs from "./react/noStringRefs";
 import noThisInSFC from "./react/noThisInSFC";
 import noUnsafe from "./react/noUnsafe";
 import noUselessFragment from "./react/noUselessFragment";
+import noVoidElementsWithChildren from "./react/noVoidElementsWithChildren";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
-import requireRenderReturn from "./react/requireRenderReturn";
-import sortComp from "./react/sortComp";
-import stylePropObject from "./react/stylePropObject";
-import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren";
+import useButtonType from "./react/useButtonType";
+import useFragmentSyntax from "./react/useFragmentSyntax";
+import useKey from "./react/useKey";
+import useRenderReturn from "./react/useRenderReturn";
+import useSortComp from "./react/useSortComp";
+import useStylePropObject from "./react/useStylePropObject";
 import noExplicitAny from "./ts/noExplicitAny";
-import preferInterfaces from "./ts/preferInterfaces";
+import useInterfaces from "./ts/useInterfaces";
 import {AnyVisitors} from "@internal/compiler";
 
 export const lintTransforms: AnyVisitors = [
-	preferClosingNonVoid,
-	camelCase,
-	caseSingleStatement,
-	confusingLanguage,
-	defaultExportSameBasename,
-	doubleEquals,
-	duplicateImportSource,
-	emptyBlocks,
-	emptyMatches,
-	getterReturn,
-	importDefaultBasename,
-	negationElse,
+	useClosingNonVoid,
 	noArguments,
 	noAsyncPromiseExecutor,
 	noCatchAssign,
 	noCommaOperator,
 	noCompareNegZero,
 	noCondAssign,
+	noConfusingLanguage,
 	noDebugger,
 	noDelete,
 	noDeleteVars,
+	noDoubleEquals,
 	noDupeArgs,
 	noDuplicateCase,
 	noDuplicateGroupNamesInRegularExpressions,
+	noDuplicateImportSource,
 	noDuplicateKeys,
+	noEmptyBlocks,
 	noEmptyCharacterClass,
+	noEmptyMatches,
 	noExtraBooleanCast,
 	noFunctionAssign,
+	noGetterReturn,
 	noImportAssign,
 	noLabelVar,
 	noMultipleSpacesInRegularExpressionLiterals,
+	noNegationElse,
 	noNestedTernary,
 	noPosixInRegularExpression,
 	noReferenceToNonExistingGroup,
+	noRestrictedGlobals,
 	noSetterReturn,
 	noShadowRestrictedNames,
 	noShorthandArrayType,
+	noShoutyConstants,
+	noSparseArray,
 	noTemplateCurlyInString,
+	noUndeclaredVariables,
 	noUnsafeFinally,
+	noUnsafeNegation,
 	noUnusedTemplateLiteral,
 	noUnusedVariables,
 	noVar,
-	preferBlockStatements,
-	preferFunctionDeclarations,
-	preferTemplate,
-	preferWhile,
-	restrictedGlobals,
-	shoutyConstants,
-	singleVarDeclarator,
-	sortImportExportSpecifiers,
-	sparseArray,
-	undeclaredVariables,
-	unsafeNegation,
-	altText,
-	anchorHasContent,
-	anchorIsValid,
-	ariaProps,
-	ariaProptypes,
-	ariaUnsupportedElements,
-	clickEventsHaveKeyEvents,
-	headingHasContent,
-	htmlHasLang,
-	iframeHasTitle,
-	imgRedundantAlt,
-	lang,
-	mediaHasCaption,
-	mouseEventsHaveKeyEvents,
+	useBlockStatements,
+	useCamelCase,
+	useDefaultExportBasename,
+	useDefaultImportBasename,
+	useFunctionDeclarations,
+	useSingleCaseStatement,
+	useSingleVarDeclarator,
+	useSortedSpecifiers,
+	useTemplate,
+	useWhile,
 	noAccessKey,
+	noAriaUnsupportedElements,
 	noAutofocus,
 	noDistractingElements,
+	noHeaderScope,
 	noNoninteractiveElementToInteractiveRole,
 	noNoninteractiveTabindex,
 	noOnChange,
+	noPositiveTabindex,
+	noRedundantAlt,
 	noRedundantRoles,
 	noTargetBlank,
-	roleHasRequiredAriaProps,
-	scope,
-	tabindexNoPositive,
-	fileExtension,
+	useAltText,
+	useAnchorContent,
+	useAriaProps,
+	useAriaPropsForRole,
+	useAriaProptypes,
+	useHeadingContent,
+	useHtmlLang,
+	useIframeTitle,
+	useKeyWithClickEvents,
+	useKeyWithMouseEvents,
+	useMediaCaption,
+	useValidAnchor,
+	useValidLang,
 	noCommentText,
 	noDuplicateProps,
 	noImplicitBoolean,
-	pascalCase,
-	preferSelfClosingElements,
-	propsNoSpreading,
-	buttonHasType,
-	jsxFragments,
-	jsxKey,
+	noPropSpreading,
+	useJSXFileExtension,
+	usePascalCase,
+	useSelfClosingElements,
 	noAccessStateInSetState,
 	noArrayIndexKey,
 	noChildrenProp,
@@ -222,12 +212,15 @@ export const lintTransforms: AnyVisitors = [
 	noThisInSFC,
 	noUnsafe,
 	noUselessFragment,
+	noVoidElementsWithChildren,
 	noWillUpdateSetState,
-	requireRenderReturn,
-	sortComp,
-	stylePropObject,
-	voidDomElementsNoChildren,
+	useButtonType,
+	useFragmentSyntax,
+	useKey,
+	useRenderReturn,
+	useSortComp,
+	useStylePropObject,
 	noExplicitAny,
-	preferInterfaces,
+	useInterfaces,
 ];
 /* GENERATED:END(id:main) */

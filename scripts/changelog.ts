@@ -306,7 +306,7 @@ function updateVersion(releaseType: string, cwd: AbsoluteFilePath): string {
 	).stdout.toString().trim();
 }
 
-export async function main() {
+export async function main(): Promise<void> {
 	// Cache the current version for reverting
 	const currentVersion = await getCurrentVersion();
 

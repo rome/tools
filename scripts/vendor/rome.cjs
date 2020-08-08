@@ -71871,8 +71871,8 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$js$sparseArray_ts$defa
 	};
 
 
-  // project-rome/@romefrontend/compiler/lint/rules/js/undeclaredVariables.ts
-const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVariables_ts$NODE_VARIABLES = [
+  // project-rome/@romefrontend/compiler/lint/rules/js/noUndeclaredVariables.ts
+const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUndeclaredVariables$NODE_VARIABLES = [
 		"require",
 		"__dirname",
 		"__filename",
@@ -71880,7 +71880,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVar
 		"exports",
 	];
 
-	const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVariables_ts$BROWSER_VARIABLES = [
+	const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$noUndeclaredVariables$BROWSER_VARIABLES = [
 		"fetch",
 		"document",
 		"window",
@@ -71928,7 +71928,7 @@ const ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVar
 		"Thenable",
 	];
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$js$undeclaredVariables_ts$default = {
-		name: "js/undeclaredVariables",
+		name: "js/noUndeclaredVariables",
 		enter(path) {
 			const {node, scope} = path;
 
@@ -78039,7 +78039,7 @@ const ___R$project$rome$$romefrontend$compiler$lint$rules$ts$noExplicitAny_ts$de
 	};
 
 
-  // project-rome/@romefrontend/compiler/lint/rules/ts/preferInterfaces.ts
+  // project-rome/@romefrontend/compiler/lint/rules/ts/useInterfaces.ts
 function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$ts$preferInterfaces_ts$extractObjects(
 		typeAlias,
 		scope,
@@ -78091,7 +78091,7 @@ function ___R$$priv$project$rome$$romefrontend$compiler$lint$rules$ts$preferInte
 		return {extends: _extends, members};
 	}
 	const ___R$project$rome$$romefrontend$compiler$lint$rules$ts$preferInterfaces_ts$default = {
-		name: "ts/preferInterfaces",
+		name: "ts/useInterfaces",
 		enter(path) {
 			const {node} = path;
 
@@ -101116,7 +101116,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 			],
 		}),
 		TS_PREFER_INTERFACES: {
-			category: "lint/ts/preferInterfaces",
+			category: "lint/ts/useInterfaces",
 			message: "Use an interface instead of an object type alias",
 		},
 		JSX_PROPS_NO_SPREADING: {
@@ -101782,7 +101782,7 @@ const ___R$project$rome$$romefrontend$diagnostics$descriptions$lint_ts$lint = __
 			],
 		}),
 		JS_UNDECLARED_VARIABLES: (name, bindingsInScope) => ({
-			category: "lint/js/undeclaredVariables",
+			category: "lint/js/noUndeclaredVariables",
 			message: ___R$project$rome$$romefrontend$cli$layout$escape_ts$markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 			advice: ___R$project$rome$$romefrontend$diagnostics$helpers_ts$buildSuggestionAdvice(
 				name,
