@@ -14,7 +14,7 @@ export default function Button(
 	props: {
 		className?: string;
 		children: React.ReactNode;
-		onClick: VoidCallback;
+		onClick: () => void;
 	},
 ) {
 	return <div onClick={props.onClick}
