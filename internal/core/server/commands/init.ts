@@ -147,7 +147,7 @@ export default createServerCommand<Flags>({
 				...config,
 				...partial,
 			};
-			await writeFile(configPath, stringifyRJSON(config, comments));
+			await writeFile(configPath, stringifyRJSON(config, comments) + "\n");
 		}
 
 		// Create initial project config
