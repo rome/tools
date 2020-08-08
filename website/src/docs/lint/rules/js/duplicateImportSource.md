@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # js/duplicateImportSource
 
-MISSING DOCUMENTATION
+This rule checks to avoid importing the same source more than once in the same file.
 
 <!-- GENERATED:START(hash:515781eebed073c637f741ef16780eb09a0448cf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

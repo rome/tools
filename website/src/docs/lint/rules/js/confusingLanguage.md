@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # js/confusingLanguage
 
-MISSING DOCUMENTATION
+Be careful not to use language that might be charged with motive.
 
 <!-- GENERATED:START(hash:c982488a5e77e12ec46707352f24b059935e9577,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
