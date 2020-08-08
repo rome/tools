@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:254c9c3d5a21e47aff510681f7885ba7f98971ff,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:224d5ad9b5562b098b85c228679fd99cf4d65b68,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -23,8 +23,6 @@ import noCommaOperator from "./js/noCommaOperator.test.rjson";
 import noCompareNegZero from "./js/noCompareNegZero.test.rjson";
 // @ts-ignore
 import noCondAssign from "./js/noCondAssign.test.rjson";
-// @ts-ignore
-import noConfusingLanguage from "./js/noConfusingLanguage.test.rjson";
 // @ts-ignore
 import noDebugger from "./js/noDebugger.test.rjson";
 // @ts-ignore
@@ -230,7 +228,6 @@ export const tests: Tests = {
 	"js/noCommaOperator": noCommaOperator,
 	"js/noCompareNegZero": noCompareNegZero,
 	"js/noCondAssign": noCondAssign,
-	"js/noConfusingLanguage": noConfusingLanguage,
 	"js/noDebugger": noDebugger,
 	"js/noDelete": noDelete,
 	"js/noDeleteVars": noDeleteVars,

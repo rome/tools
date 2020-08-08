@@ -7,33 +7,14 @@
 ### `0`
 
 ```
-
- lint/html/useClosingNonVoid/reject/1/filename.html:1 lint/html/useClosingNonVoid  FIXABLE  ━━━━━━━━
-
-  ✖ Non-void HTML elements cannot be self-closing. This is valid when using JSX, but not when
-    using HTML.
-
-    <div />
-    ^^^^
-
-  ℹ Safe fix
-
-    1   │ - <div·/>
-      1 │ + <div>
-      2 │ + </div>
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `0: formatted`
 
-```
-<div>
-</div>
-
+```javascript
+undefined
 ```
 
 ### `1`
@@ -45,10 +26,8 @@
 
 ### `1: formatted`
 
-```
-<div>
-</div>
-
+```javascript
+undefined
 ```
 
 ### `2`
@@ -60,11 +39,8 @@
 
 ### `2: formatted`
 
-```
-<div>
-	child
-</div>
-
+```javascript
+undefined
 ```
 
 ### `3`
@@ -76,21 +52,6 @@
 
 ### `3: formatted`
 
-```
-<input />
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-<input />
-
+```javascript
+undefined
 ```

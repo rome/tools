@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:3021a92cc87d64d5180f8610e5d2bb0633d52838,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:0492608aa7b9edbca9afb56a6efe22b03decde78,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -56,13 +56,6 @@ disallow comparing against `-0`
 	<a class="header-anchor" href="#noCondAssign"></a>
 </h3>
 disallow assignment operators in conditional expressions
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noConfusingLanguage">
-	<a href="/docs/lint/rules/js/noConfusingLanguage">noConfusingLanguage</a>
-	<a class="header-anchor" href="#noConfusingLanguage"></a>
-</h3>
-MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDebugger">

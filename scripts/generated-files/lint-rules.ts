@@ -34,7 +34,11 @@ export async function getLintDefs(): Promise<Array<LintDefinition>> {
 
 		const categoryFiles = await readDirectory(categoryPath);
 		for (const path of categoryFiles) {
-			if (path.hasEndExtension("ts") && !path.hasEndExtension("test.ts")) {
+			if (
+				path.getBasename()[0] !== "." &&
+				path.hasEndExtension("ts") &&
+				!path.hasEndExtension("test.ts")
+			) {
 				const basename = path.getExtensionlessBasename();
 				const ruleName = `${category}/${basename}`;
 

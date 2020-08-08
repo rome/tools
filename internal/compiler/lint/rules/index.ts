@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:c40abf78aaaa45b3b02718ad600e0a7178dcb864,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:4a7fd8905fc81b6b2b6ff90529b370c6f264dea4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -6,7 +6,6 @@ import noCatchAssign from "./js/noCatchAssign";
 import noCommaOperator from "./js/noCommaOperator";
 import noCompareNegZero from "./js/noCompareNegZero";
 import noCondAssign from "./js/noCondAssign";
-import noConfusingLanguage from "./js/noConfusingLanguage";
 import noDebugger from "./js/noDebugger";
 import noDelete from "./js/noDelete";
 import noDeleteVars from "./js/noDeleteVars";
@@ -119,7 +118,6 @@ export const lintTransforms: AnyVisitors = [
 	noCommaOperator,
 	noCompareNegZero,
 	noCondAssign,
-	noConfusingLanguage,
 	noDebugger,
 	noDelete,
 	noDeleteVars,

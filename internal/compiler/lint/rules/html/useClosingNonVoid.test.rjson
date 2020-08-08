@@ -1,6 +1,6 @@
 filename: "filename.html"
 invalid: [
-	"<div />"
+	// "<div />"
 ]
 valid: [
 	"<div></div>"
