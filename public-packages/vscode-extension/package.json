@@ -1,5 +1,6 @@
 {
 	"name": "vscode-rome",
+	"publisher": "rome",
 	"displayName": "Rome",
 	"description": "Rome LSP VSCode extension",
 	"version": "0.0.1",
