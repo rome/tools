@@ -11,8 +11,8 @@ eleventyNavigation:
 
 # jsx-a11y/noNoninteractiveTabindex
 
-<!-- GENERATED:START(hash:572d497d591dbb8943a1a7f867b5cd56f36e2ba4,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-`tabIndex` should only be declared on interactive elements
+<!-- GENERATED:START(hash:28e7716442ffc9de2a99e6c150eb01cd17683ae1,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+"`tabIndex` should only be declared on interactive elements"
 
 **ESLint Equivalent:** [no-noninteractive-tabindex](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-tabindex.md)
 <!-- GENERATED:END(id:description) -->

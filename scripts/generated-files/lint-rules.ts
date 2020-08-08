@@ -24,7 +24,6 @@ type LintDefinition = {
 };
 
 export async function getLintDefs(): Promise<Array<LintDefinition>> {
-
 	let defs: Array<LintDefinition> = [];
 
 	for (const categoryPath of await readDirectory(lintRulesFolder)) {
@@ -180,11 +179,13 @@ export async function main() {
 
 			for (const rootCategory of categoryDocsOrder) {
 				const {title, credits} = categoryDocsAliases[rootCategory];
-				lines.push(`<section>`);
+				lines.push("<section>");
 				lines.push(`<h2>${title}</h2>`);
 
 				if (credits !== undefined) {
-					lines.push(`<p>Rule semantics and descriptions taken from ${credits}. See individual rule docs for direct references.</p>`);
+					lines.push(
+						`<p>Rule semantics and descriptions taken from ${credits}. See individual rule docs for direct references.</p>`,
+					);
 				}
 
 				for (const {basename, ruleName, category, docs} of defs) {
@@ -208,7 +209,7 @@ export async function main() {
 				}
 			}
 
-			lines.push(`</section>`);
+			lines.push("</section>");
 
 			return {lines};
 		},

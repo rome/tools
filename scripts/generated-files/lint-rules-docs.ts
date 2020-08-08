@@ -10,7 +10,7 @@ import {createUnknownFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {ob1Coerce1} from "@internal/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
-import {getLintDefs, getDocRuleDescription} from "./lint-rules";
+import {getDocRuleDescription, getLintDefs} from "./lint-rules";
 import {readFileText} from "@internal/fs";
 
 const {worker, performFileOperation} = createMockWorker();
@@ -42,10 +42,12 @@ function highlightPre(filename: string, code: string): string {
 // Extract the description field from the docs frontmatter
 export function extractESLintRuleInfo(
 	content: string,
-): undefined | {
-	url: string;
-	name: string;
-} {
+):
+	| undefined
+	| {
+			url: string;
+			name: string;
+		} {
 	const match = content.match(/eslint-rule:(.*)(\n|\r\n)/);
 	if (match) {
 		const url = match[1].trim();
@@ -53,7 +55,7 @@ export function extractESLintRuleInfo(
 		return {
 			url,
 			name: url.split("/").pop()!.split(".")[0],
-		}
+		};
 	} else {
 		return undefined;
 	}
@@ -133,7 +135,9 @@ export async function main() {
 				const lines = [getDocRuleDescription(docs, content), ""];
 
 				if (eslintInfo !== undefined) {
-					lines.push(`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`);
+					lines.push(
+						`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`,
+					);
 				}
 
 				return {lines};

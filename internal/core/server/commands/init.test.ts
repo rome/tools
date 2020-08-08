@@ -11,7 +11,10 @@ test(
 			},
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "init", commandFlags: {apply: true, allowDirty: true}});
+			await client.query({
+				commandName: "init",
+				commandFlags: {apply: true, allowDirty: true},
+			});
 		},
 	),
 );

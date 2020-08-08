@@ -630,7 +630,12 @@ export default class Reporter implements ReporterNamespace {
 	public async steps(
 		callbacks: Array<{
 			message: AnyMarkup;
-			callback: () => Promise<void | {skipped: boolean}>;
+			callback: () => Promise<
+				| void
+				| {
+						skipped: boolean;
+					}
+			>;
 		}>,
 		clear: boolean = true,
 	) {

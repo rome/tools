@@ -1,6 +1,6 @@
 ---
 title: Introducing Rome
-description: Hello world! Welcome to Rome.
+description: A linter for JavaScript and TypeScript. The first in a suite of tools for bundling, compiling, testing, and more, for frontend languages.
 author_name: Sebastian McKenzie
 author_url: https://twitter.com/sebmck
 date: 2020-08-09

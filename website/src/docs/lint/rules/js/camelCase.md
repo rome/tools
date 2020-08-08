@@ -17,3 +17,23 @@ enforce camelcase naming convention
 
 **ESLint Equivalent:** [camelcase](https://eslint.org/docs/rules/camelcase)
 <!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:e56cc5d7029b96cc7d1357cacdc2d3e38d66d988,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+## Examples
+### Invalid
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">underscore_case</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><strong><span style="color: MediumSeaGreen;">✔ </span></strong><span style="color: MediumSeaGreen;">No known problems!</span>
+</code></pre>{% endraw %}
+
+---------------
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">_underscore_case</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><strong><span style="color: MediumSeaGreen;">✔ </span></strong><span style="color: MediumSeaGreen;">No known problems!</span>
+</code></pre>{% endraw %}
+
+---------------
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">obj</span><span class="token punctuation">.</span><span class="token variable">underscore_case</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><strong><span style="color: MediumSeaGreen;">✔ </span></strong><span style="color: MediumSeaGreen;">No known problems!</span>
+</code></pre>{% endraw %}
+<!-- GENERATED:END(id:examples) -->
