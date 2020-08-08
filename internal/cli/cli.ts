@@ -577,6 +577,7 @@ export default async function cli() {
 		}
 
 		case "CANCELLED": {
+			client.reporter.error(markup`Command cancelled: ${res.reason}`);
 			process.exit(0);
 			break;
 		}

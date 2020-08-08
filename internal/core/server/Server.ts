@@ -487,7 +487,7 @@ export default class Server {
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
-				await req.cancel();
+				await req.cancel("server ended");
 			}
 
 			// Kill socket
@@ -603,7 +603,7 @@ export default class Server {
 		bridge.cancelQuery.subscribe(async (token) => {
 			for (const req of client.requestsInFlight) {
 				if (req.query.cancelToken === token) {
-					await req.cancel();
+					await req.cancel("user requested");
 				}
 			}
 		});
@@ -714,7 +714,7 @@ export default class Server {
 
 			// Cancel any requests still in flight
 			for (const req of client.requestsInFlight) {
-				req.cancel();
+				req.cancel("bridge died");
 			}
 
 			// Teardown reporter

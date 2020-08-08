@@ -62,6 +62,7 @@ export type ServerQueryResponseInvalid = ServerQueryResponseBase & {
 
 export type ServerQueryResponseCancelled = ServerQueryResponseBase & {
 	type: "CANCELLED";
+	reason: string;
 };
 
 export type ServerQueryResponseExit = ServerQueryResponseBase & {

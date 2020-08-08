@@ -214,11 +214,15 @@ function hash(val: JSONObject): string {
 }
 
 export class ServerRequestCancelled extends Error {
-	constructor() {
+	constructor(reason: string) {
 		super(
 			"ServerRequest has been cancelled. This error is meant to be seen by Server",
 		);
+
+		this.reason = reason;
 	}
+
+	public reason: string;
 }
 
 export default class ServerRequest {
@@ -231,7 +235,7 @@ export default class ServerRequest {
 
 		this.start = Date.now();
 		this.id = requestIdCounter++;
-		this.cancelled = false;
+		this.cancelledReason = undefined;
 		this.toredown = false;
 		this.markers = [];
 		this.normalizedCommandFlags = {
@@ -272,7 +276,7 @@ export default class ServerRequest {
 	private start: number;
 	private normalizedCommandFlags: NormalizedCommandFlags;
 	private markers: Array<ServerMarker>;
-	private cancelled: boolean;
+	private cancelledReason: undefined | string;
 	private toredown: boolean;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
 
@@ -370,16 +374,17 @@ export default class ServerRequest {
 	}
 
 	public checkCancelled() {
-		if (this.cancelled) {
-			throw new ServerRequestCancelled();
+		if (this.cancelledReason !== undefined) {
+			throw new ServerRequestCancelled(this.cancelledReason);
 		}
 	}
 
-	public async cancel(): Promise<void> {
+	public async cancel(reason: string): Promise<void> {
 		await this.cancelEvent.callOptional();
-		this.cancelled = true;
+		this.cancelledReason = reason;
 		await this.teardown({
 			type: "CANCELLED",
+			reason,
 			markers: [],
 		});
 	}
@@ -1287,6 +1292,7 @@ export default class ServerRequest {
 			// Doesn't matter
 			return {
 				type: "CANCELLED",
+				reason: "dead",
 				markers: [],
 			};
 		}
@@ -1352,6 +1358,7 @@ export default class ServerRequest {
 		if (err instanceof ServerRequestCancelled) {
 			return {
 				type: "CANCELLED",
+				reason: err.reason,
 				markers: [],
 			};
 		} else if (err instanceof ServerRequestInvalid) {
