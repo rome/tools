@@ -214,7 +214,7 @@ module.exports = function(eleventyConfig) {
 		function(title) {
 			title = (title || "").trim();
 			if (title !== "") {
-				title += " — ";
+				title += " \u2014 ";
 			}
 			title += "Rome Frontend Toolchain";
 			return title;

@@ -13,9 +13,9 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
+	REQUIRED_NODE_VERSION_RANGE,
 	USER_CONFIG_DIRECTORY,
 	VERSION,
-	REQUIRED_NODE_VERSION_RANGE,
 	localCommands,
 	serverCommands,
 } from "@internal/core";
@@ -59,9 +59,17 @@ export default async function cli() {
 	setProcessTitle("cli");
 
 	// Verify correct Node version
-	if (!satisfiesSemver(process.version, REQUIRED_NODE_VERSION_RANGE, {loose: true})) {
+	if (
+		!satisfiesSemver(
+			process.version,
+			REQUIRED_NODE_VERSION_RANGE,
+			{loose: true},
+		)
+	) {
 		const reporter = Reporter.fromProcess();
-		reporter.error(markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`)
+		reporter.error(
+			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
+		);
 		process.exit(1);
 	}
 
