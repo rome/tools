@@ -210,6 +210,18 @@ module.exports = function(eleventyConfig) {
 	);
 
 	eleventyConfig.addFilter(
+		"titlify",
+		function(title) {
+			title = (title || "").trim();
+			if (title !== "") {
+				title += " — ";
+			}
+			title += "Rome Frontend Toolchain";
+			return title;
+		},
+	);
+
+	eleventyConfig.addFilter(
 		"kebabCase",
 		function(string) {
 			return string.toLowerCase().replace(/\s/g, "-");
