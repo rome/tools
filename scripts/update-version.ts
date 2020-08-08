@@ -1,4 +1,4 @@
-import {INTERNAL, ROOT, exec, reporter} from "./_utils";
+import {PUBLIC_PACKAGES, ROOT, exec, reporter} from "./_utils";
 import {AbsoluteFilePath} from "@internal/path";
 import https = require("https");
 import http = require("http");
@@ -11,7 +11,7 @@ async function runNPMVersion(
 	args: Array<string>,
 	cwd: AbsoluteFilePath,
 ): Promise<string> {
-	const res = await child.spawn(
+	const res = child.spawnSync(
 		"npm",
 		["--no-git-tag-version", "version", ...args],
 		{
@@ -19,8 +19,8 @@ async function runNPMVersion(
 		},
 	);
 
-	if (res.exitCode !== 0) {
-		reporter.error(markup`npm version stderr: ${res.stderr.toString()}`);
+	if (res.status !== 0) {
+		reporter.error(markup`npm version failed. stderr: ${res.stderr.toString()}, args: ${args.join()}, cwd: ${cwd.join()}`);
 		process.exit(1);
 	}
 
@@ -42,8 +42,8 @@ export async function main(args: Array<string>) {
 	// Ensure git isn"t dirty
 	const gitRes = child.spawnSync("git", ["diff", "--exit-code"]);
 	if (gitRes.status === 1) {
-		reporter.error(markup`Uncommitted changes`);
-		return 1;
+		//reporter.error(markup`Uncommitted changes`);
+		//return 1;
 	}
 
 	// Get current version so we can revert to it later if necessary
@@ -74,7 +74,7 @@ export async function main(args: Array<string>) {
 	}
 
 	// Update rome package
-	await runNPMVersion([version], INTERNAL.append("rome"));
+	await runNPMVersion([version], PUBLIC_PACKAGES.append("rome"));
 
 	// Create commit and tag
 	await exec("git", ["commit", "-am", `Release v${version}`]);
