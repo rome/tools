@@ -12,7 +12,6 @@ export type MissingFileReturn<T> =
 
 export class FileNotFound extends Error {
 	constructor(path: AbsoluteFilePath, message?: string) {
-		console.trace();
 		super(
 			message === undefined
 				? `${path.join()} not found`
