@@ -13,18 +13,16 @@ eleventyNavigation:
 
 This rules prevents void elements (AKA self-closing elements) from have children
 
-<!-- GENERATED:START(hash:c9a9abdd6895c807978e01ccbb89cf63a9a0c934,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-This rules prevent void elements from have children
-
+<!-- GENERATED:START(hash:fd477f50495a4e0b5ca81829effc098beeb80937,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [void-dom-elements-no-children](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8c96980ac7eaf1745e65d224d5f5ca64eba194f5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ce19e775e960f031b339bba6488f5c8e265cf734,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">br</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;dont-remove-class&apos;</span><span class="token punctuation">}</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token attr-name">br</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>br</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -44,7 +42,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token attr-name">img</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -64,7 +62,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">hr</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;invalid children&apos;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>hr</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -82,7 +80,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">area</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">area</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>area</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;">.</span>
 
@@ -101,7 +99,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;invalid children&apos;</span><span class="token punctuation">}</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token attr-name">img</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children, or</strong></span>
     <span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;">.</span>
@@ -124,7 +122,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">children</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -141,7 +139,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">dangerouslySetInnerHTML</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;">.</span>
 
@@ -160,7 +158,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -178,7 +176,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">children</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:22</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:22</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 
@@ -195,7 +193,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">dangerouslySetInnerHTML</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token function">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:22</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:22</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>dangerouslySetInnerHTML</strong></span><span style="color: Tomato;">.</span>
 
@@ -212,7 +210,7 @@ This rules prevent void elements from have children
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/voidDomElementsNoChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> is a void element tag and must not have </span><span style="color: Tomato;"><strong>children</strong></span><span style="color: Tomato;">.</span>
 

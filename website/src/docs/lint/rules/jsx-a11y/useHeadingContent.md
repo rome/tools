@@ -17,12 +17,12 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 **ESLint Equivalent:** [heading-has-content](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/heading-has-content.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3f70f4d400c7af22426baaf314425abd5ec7cab0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:05059076f7d348a5febb419a007a78b1e806b60c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/headingHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useHeadingContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -38,7 +38,7 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/headingHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useHeadingContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -54,7 +54,7 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span>&gt;&lt;<span class="token attr-name">div</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/headingHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useHeadingContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> elements.</span>
 

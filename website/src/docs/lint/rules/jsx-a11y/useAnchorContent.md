@@ -17,12 +17,12 @@ enforce that anchors have content and that the content is accessible to screen r
 **ESLint Equivalent:** [anchor-has-content](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-has-content.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ddf9ef9e24e89431d6381806fda8df1b280a2b59,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ecbd13c85746ffee2894f0f731ae60f81399ae7e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/jsx-a11y/anchorHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/jsx-a11y/useAnchorContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>anchor</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -38,7 +38,7 @@ enforce that anchors have content and that the content is accessible to screen r
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/jsx-a11y/anchorHasContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1</span> <strong>lint/jsx-a11y/useAnchorContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide screen reader accessible content when using </span><span style="color: Tomato;"><strong>anchor</strong></span><span style="color: Tomato;"> elements.</span>
 

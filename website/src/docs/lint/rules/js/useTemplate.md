@@ -17,12 +17,12 @@ require template literals instead of string concatenation
 **ESLint Equivalent:** [prefer-template](https://eslint.org/docs/rules/prefer-template)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:849114b39cba9eaa9c4d60514a2d692b52cabdd0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ffdf716c7c8ccc322a5d29e6673f6abb14395a77,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:31</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:31</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -40,7 +40,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -58,7 +58,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -76,7 +76,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:13</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -94,7 +94,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -106,7 +106,7 @@ require template literals instead of string concatenation
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">1</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">(2</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">+</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">&quot;foo&quot;)</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>+</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>&quot;</strong></span><span style="color: Tomato;">bar</span><span style="color: Tomato;"><strong>&quot;</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>`${</strong></span><span style="color: MediumSeaGreen;">1</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">(2</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">+</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">&quot;foo&quot;)</span><span style="color: MediumSeaGreen;"><strong>}</strong></span><span style="color: MediumSeaGreen;">bar</span><span style="color: MediumSeaGreen;"><strong>`</strong></span>
 
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -121,7 +121,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -139,7 +139,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">`</span><span class="token string">bar</span><span class="token punctuation">${</span><span class="token string">`</span><span class="token string">baz</span><span class="token punctuation">${</span><span class="token string">&apos;bat&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bam&apos;</span><span class="token punctuation">}</span><span class="token string">`</span><span class="token punctuation">}</span><span class="token string">`</span> <span class="token operator">+</span> <span class="token string">&apos;boo&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 
@@ -157,7 +157,7 @@ require template literals instead of string concatenation
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/preferTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
 

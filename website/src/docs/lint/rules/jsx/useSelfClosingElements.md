@@ -18,12 +18,12 @@ prevent extra closing tags for components without children
 **ESLint Equivalent:** [self-closing-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:712e879013a3408fffdcbc47e30b2205fcc0fe52,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:407bc4c05f4b8d535dd30253cc6e435ce622525b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/preferSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>
@@ -43,7 +43,7 @@ prevent extra closing tags for components without children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Component</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Component</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/preferSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>
@@ -63,7 +63,7 @@ prevent extra closing tags for components without children
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/preferSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>

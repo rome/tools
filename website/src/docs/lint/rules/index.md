@@ -11,87 +11,10 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:ef7e233aa45969aac8fd31ce08402d390deeb221,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:3021a92cc87d64d5180f8610e5d2bb0633d52838,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="camelCase">
-	<a href="/docs/lint/rules/js/camelCase">camelCase</a>
-	<a class="header-anchor" href="#camelCase"></a>
-</h3>
-enforce camelcase naming convention
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="caseSingleStatement">
-	<a href="/docs/lint/rules/js/caseSingleStatement">caseSingleStatement</a>
-	<a class="header-anchor" href="#caseSingleStatement"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="confusingLanguage">
-	<a href="/docs/lint/rules/js/confusingLanguage">confusingLanguage</a>
-	<a class="header-anchor" href="#confusingLanguage"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="defaultExportSameBasename">
-	<a href="/docs/lint/rules/js/defaultExportSameBasename">defaultExportSameBasename</a>
-	<a class="header-anchor" href="#defaultExportSameBasename"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="doubleEquals">
-	<a href="/docs/lint/rules/js/doubleEquals">doubleEquals</a>
-	<a class="header-anchor" href="#doubleEquals"></a>
-</h3>
-require the use of `===` and `!==`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="duplicateImportSource">
-	<a href="/docs/lint/rules/js/duplicateImportSource">duplicateImportSource</a>
-	<a class="header-anchor" href="#duplicateImportSource"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="emptyBlocks">
-	<a href="/docs/lint/rules/js/emptyBlocks">emptyBlocks</a>
-	<a class="header-anchor" href="#emptyBlocks"></a>
-</h3>
-disallow empty block statements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="emptyMatches">
-	<a href="/docs/lint/rules/js/emptyMatches">emptyMatches</a>
-	<a class="header-anchor" href="#emptyMatches"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="getterReturn">
-	<a href="/docs/lint/rules/js/getterReturn">getterReturn</a>
-	<a class="header-anchor" href="#getterReturn"></a>
-</h3>
-enforce `return` statements in getters
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="importDefaultBasename">
-	<a href="/docs/lint/rules/js/importDefaultBasename">importDefaultBasename</a>
-	<a class="header-anchor" href="#importDefaultBasename"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="negationElse">
-	<a href="/docs/lint/rules/js/negationElse">negationElse</a>
-	<a class="header-anchor" href="#negationElse"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/js/noArguments">noArguments</a>
@@ -135,6 +58,13 @@ disallow comparing against `-0`
 disallow assignment operators in conditional expressions
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noConfusingLanguage">
+	<a href="/docs/lint/rules/js/noConfusingLanguage">noConfusingLanguage</a>
+	<a class="header-anchor" href="#noConfusingLanguage"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDebugger">
 	<a href="/docs/lint/rules/js/noDebugger">noDebugger</a>
 	<a class="header-anchor" href="#noDebugger"></a>
@@ -154,6 +84,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#noDeleteVars"></a>
 </h3>
 disallow deleting variables
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noDoubleEquals">
+	<a href="/docs/lint/rules/js/noDoubleEquals">noDoubleEquals</a>
+	<a class="header-anchor" href="#noDoubleEquals"></a>
+</h3>
+require the use of `===` and `!==`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDupeArgs">
@@ -177,6 +114,13 @@ disallow duplicate case labels
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noDuplicateImportSource">
+	<a href="/docs/lint/rules/js/noDuplicateImportSource">noDuplicateImportSource</a>
+	<a class="header-anchor" href="#noDuplicateImportSource"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDuplicateKeys">
 	<a href="/docs/lint/rules/js/noDuplicateKeys">noDuplicateKeys</a>
 	<a class="header-anchor" href="#noDuplicateKeys"></a>
@@ -184,9 +128,23 @@ MISSING DOCUMENTATION
 disallow duplicate keys in object literals
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noEmptyBlocks">
+	<a href="/docs/lint/rules/js/noEmptyBlocks">noEmptyBlocks</a>
+	<a class="header-anchor" href="#noEmptyBlocks"></a>
+</h3>
+disallow empty block statements
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noEmptyCharacterClass">
 	<a href="/docs/lint/rules/js/noEmptyCharacterClass">noEmptyCharacterClass</a>
 	<a class="header-anchor" href="#noEmptyCharacterClass"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noEmptyMatches">
+	<a href="/docs/lint/rules/js/noEmptyMatches">noEmptyMatches</a>
+	<a class="header-anchor" href="#noEmptyMatches"></a>
 </h3>
 MISSING DOCUMENTATION
 </div>
@@ -203,6 +161,13 @@ disallow unnecessary boolean casts
 	<a class="header-anchor" href="#noFunctionAssign"></a>
 </h3>
 disallow reassigning `function` declarations
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noGetterReturn">
+	<a href="/docs/lint/rules/js/noGetterReturn">noGetterReturn</a>
+	<a class="header-anchor" href="#noGetterReturn"></a>
+</h3>
+enforce `return` statements in getters
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noImportAssign">
@@ -222,6 +187,13 @@ disallow labels that share a name with a variable
 <h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
 	<a href="/docs/lint/rules/js/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
 	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noNegationElse">
+	<a href="/docs/lint/rules/js/noNegationElse">noNegationElse</a>
+	<a class="header-anchor" href="#noNegationElse"></a>
 </h3>
 MISSING DOCUMENTATION
 </div>
@@ -247,6 +219,13 @@ MISSING DOCUMENTATION
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRestrictedGlobals">
+	<a href="/docs/lint/rules/js/noRestrictedGlobals">noRestrictedGlobals</a>
+	<a class="header-anchor" href="#noRestrictedGlobals"></a>
+</h3>
+disallow certain global variables
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSetterReturn">
 	<a href="/docs/lint/rules/js/noSetterReturn">noSetterReturn</a>
 	<a class="header-anchor" href="#noSetterReturn"></a>
@@ -268,6 +247,20 @@ disallow identifiers from shadowing restricted names
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noShoutyConstants">
+	<a href="/docs/lint/rules/js/noShoutyConstants">noShoutyConstants</a>
+	<a class="header-anchor" href="#noShoutyConstants"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noSparseArray">
+	<a href="/docs/lint/rules/js/noSparseArray">noSparseArray</a>
+	<a class="header-anchor" href="#noSparseArray"></a>
+</h3>
+disallow sparse arrays
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noTemplateCurlyInString">
 	<a href="/docs/lint/rules/js/noTemplateCurlyInString">noTemplateCurlyInString</a>
 	<a class="header-anchor" href="#noTemplateCurlyInString"></a>
@@ -275,11 +268,25 @@ MISSING DOCUMENTATION
 disallow template literal placeholder syntax in regular strings
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noUndeclaredVariables">
+	<a href="/docs/lint/rules/js/noUndeclaredVariables">noUndeclaredVariables</a>
+	<a class="header-anchor" href="#noUndeclaredVariables"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
 	<a href="/docs/lint/rules/js/noUnsafeFinally">noUnsafeFinally</a>
 	<a class="header-anchor" href="#noUnsafeFinally"></a>
 </h3>
 disallow control flow statements in `finally` blocks
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noUnsafeNegation">
+	<a href="/docs/lint/rules/js/noUnsafeNegation">noUnsafeNegation</a>
+	<a class="header-anchor" href="#noUnsafeNegation"></a>
+</h3>
+disallow negating the left operand of relational operators
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnusedTemplateLiteral">
@@ -303,81 +310,74 @@ disallow unused variables
 require `let` or `const` instead of `var`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferBlockStatements">
-	<a href="/docs/lint/rules/js/preferBlockStatements">preferBlockStatements</a>
-	<a class="header-anchor" href="#preferBlockStatements"></a>
+<h3 data-toc-exclude id="useBlockStatements">
+	<a href="/docs/lint/rules/js/useBlockStatements">useBlockStatements</a>
+	<a class="header-anchor" href="#useBlockStatements"></a>
 </h3>
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferFunctionDeclarations">
-	<a href="/docs/lint/rules/js/preferFunctionDeclarations">preferFunctionDeclarations</a>
-	<a class="header-anchor" href="#preferFunctionDeclarations"></a>
+<h3 data-toc-exclude id="useCamelCase">
+	<a href="/docs/lint/rules/js/useCamelCase">useCamelCase</a>
+	<a class="header-anchor" href="#useCamelCase"></a>
+</h3>
+enforce camelcase naming convention
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useDefaultExportBasename">
+	<a href="/docs/lint/rules/js/useDefaultExportBasename">useDefaultExportBasename</a>
+	<a class="header-anchor" href="#useDefaultExportBasename"></a>
 </h3>
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferTemplate">
-	<a href="/docs/lint/rules/js/preferTemplate">preferTemplate</a>
-	<a class="header-anchor" href="#preferTemplate"></a>
+<h3 data-toc-exclude id="useDefaultImportBasename">
+	<a href="/docs/lint/rules/js/useDefaultImportBasename">useDefaultImportBasename</a>
+	<a class="header-anchor" href="#useDefaultImportBasename"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useFunctionDeclarations">
+	<a href="/docs/lint/rules/js/useFunctionDeclarations">useFunctionDeclarations</a>
+	<a class="header-anchor" href="#useFunctionDeclarations"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useSingleCaseStatement">
+	<a href="/docs/lint/rules/js/useSingleCaseStatement">useSingleCaseStatement</a>
+	<a class="header-anchor" href="#useSingleCaseStatement"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useSingleVarDeclarator">
+	<a href="/docs/lint/rules/js/useSingleVarDeclarator">useSingleVarDeclarator</a>
+	<a class="header-anchor" href="#useSingleVarDeclarator"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useSortedSpecifiers">
+	<a href="/docs/lint/rules/js/useSortedSpecifiers">useSortedSpecifiers</a>
+	<a class="header-anchor" href="#useSortedSpecifiers"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useTemplate">
+	<a href="/docs/lint/rules/js/useTemplate">useTemplate</a>
+	<a class="header-anchor" href="#useTemplate"></a>
 </h3>
 require template literals instead of string concatenation
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferWhile">
-	<a href="/docs/lint/rules/js/preferWhile">preferWhile</a>
-	<a class="header-anchor" href="#preferWhile"></a>
+<h3 data-toc-exclude id="useWhile">
+	<a href="/docs/lint/rules/js/useWhile">useWhile</a>
+	<a class="header-anchor" href="#useWhile"></a>
 </h3>
 MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="restrictedGlobals">
-	<a href="/docs/lint/rules/js/restrictedGlobals">restrictedGlobals</a>
-	<a class="header-anchor" href="#restrictedGlobals"></a>
-</h3>
-disallow certain global variables
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="shoutyConstants">
-	<a href="/docs/lint/rules/js/shoutyConstants">shoutyConstants</a>
-	<a class="header-anchor" href="#shoutyConstants"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="singleVarDeclarator">
-	<a href="/docs/lint/rules/js/singleVarDeclarator">singleVarDeclarator</a>
-	<a class="header-anchor" href="#singleVarDeclarator"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="sortImportExportSpecifiers">
-	<a href="/docs/lint/rules/js/sortImportExportSpecifiers">sortImportExportSpecifiers</a>
-	<a class="header-anchor" href="#sortImportExportSpecifiers"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="sparseArray">
-	<a href="/docs/lint/rules/js/sparseArray">sparseArray</a>
-	<a class="header-anchor" href="#sparseArray"></a>
-</h3>
-disallow sparse arrays
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="undeclaredVariables">
-	<a href="/docs/lint/rules/js/undeclaredVariables">undeclaredVariables</a>
-	<a class="header-anchor" href="#undeclaredVariables"></a>
-</h3>
-disallow the use of undeclared variables
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="unsafeNegation">
-	<a href="/docs/lint/rules/js/unsafeNegation">unsafeNegation</a>
-	<a class="header-anchor" href="#unsafeNegation"></a>
-</h3>
-disallow negating the left operand of relational operators
 </div>
 <section>
 <h2>TypeScript</h2>
@@ -389,119 +389,28 @@ disallow negating the left operand of relational operators
 it bans the use of `any`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="preferInterfaces">
-	<a href="/docs/lint/rules/ts/preferInterfaces">preferInterfaces</a>
-	<a class="header-anchor" href="#preferInterfaces"></a>
+<h3 data-toc-exclude id="useInterfaces">
+	<a href="/docs/lint/rules/ts/useInterfaces">useInterfaces</a>
+	<a class="header-anchor" href="#useInterfaces"></a>
 </h3>
-it suggests the use of `interface` over `type`
+restrict file extensions that may contain JSX
 </div>
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="altText">
-	<a href="/docs/lint/rules/jsx-a11y/altText">altText</a>
-	<a class="header-anchor" href="#altText"></a>
-</h3>
-enforce alternative text
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="anchorHasContent">
-	<a href="/docs/lint/rules/jsx-a11y/anchorHasContent">anchorHasContent</a>
-	<a class="header-anchor" href="#anchorHasContent"></a>
-</h3>
-enforce that anchors have content and that the content is accessible to screen readers
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="anchorIsValid">
-	<a href="/docs/lint/rules/jsx-a11y/anchorIsValid">anchorIsValid</a>
-	<a class="header-anchor" href="#anchorIsValid"></a>
-</h3>
-enforce all anchors are valid, navigable elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="ariaProps">
-	<a href="/docs/lint/rules/jsx-a11y/ariaProps">ariaProps</a>
-	<a class="header-anchor" href="#ariaProps"></a>
-</h3>
-enforce all `aria-*` props are valid
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="ariaProptypes">
-	<a href="/docs/lint/rules/jsx-a11y/ariaProptypes">ariaProptypes</a>
-	<a class="header-anchor" href="#ariaProptypes"></a>
-</h3>
-enforce ARIA state and property values are valid
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="ariaUnsupportedElements">
-	<a href="/docs/lint/rules/jsx-a11y/ariaUnsupportedElements">ariaUnsupportedElements</a>
-	<a class="header-anchor" href="#ariaUnsupportedElements"></a>
-</h3>
-enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="clickEventsHaveKeyEvents">
-	<a href="/docs/lint/rules/jsx-a11y/clickEventsHaveKeyEvents">clickEventsHaveKeyEvents</a>
-	<a class="header-anchor" href="#clickEventsHaveKeyEvents"></a>
-</h3>
-enforce a clickable non-interactive element has at least one keyboard event listener.
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="headingHasContent">
-	<a href="/docs/lint/rules/jsx-a11y/headingHasContent">headingHasContent</a>
-	<a class="header-anchor" href="#headingHasContent"></a>
-</h3>
-enforce heading (`h1`, `h2`, etc) elements contain accessible content
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="htmlHasLang">
-	<a href="/docs/lint/rules/jsx-a11y/htmlHasLang">htmlHasLang</a>
-	<a class="header-anchor" href="#htmlHasLang"></a>
-</h3>
-the `lang` attribute is mandatory
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="iframeHasTitle">
-	<a href="/docs/lint/rules/jsx-a11y/iframeHasTitle">iframeHasTitle</a>
-	<a class="header-anchor" href="#iframeHasTitle"></a>
-</h3>
-enforce `iframe` elements have a title attribute
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="imgRedundantAlt">
-	<a href="/docs/lint/rules/jsx-a11y/imgRedundantAlt">imgRedundantAlt</a>
-	<a class="header-anchor" href="#imgRedundantAlt"></a>
-</h3>
-enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="lang">
-	<a href="/docs/lint/rules/jsx-a11y/lang">lang</a>
-	<a class="header-anchor" href="#lang"></a>
-</h3>
-check if `lang` attribute is valid
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="mediaHasCaption">
-	<a href="/docs/lint/rules/jsx-a11y/mediaHasCaption">mediaHasCaption</a>
-	<a class="header-anchor" href="#mediaHasCaption"></a>
-</h3>
-enforces that `audio` and `video` elements must have a `track` for captions
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="mouseEventsHaveKeyEvents">
-	<a href="/docs/lint/rules/jsx-a11y/mouseEventsHaveKeyEvents">mouseEventsHaveKeyEvents</a>
-	<a class="header-anchor" href="#mouseEventsHaveKeyEvents"></a>
-</h3>
-enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noAccessKey">
 	<a href="/docs/lint/rules/jsx-a11y/noAccessKey">noAccessKey</a>
 	<a class="header-anchor" href="#noAccessKey"></a>
 </h3>
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noAriaUnsupportedElements">
+	<a href="/docs/lint/rules/jsx-a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
+	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
+</h3>
+enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noAutofocus">
@@ -516,6 +425,13 @@ discourage the usage of `autoFocus`
 	<a class="header-anchor" href="#noDistractingElements"></a>
 </h3>
 enforce distracting elements are not used
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noHeaderScope">
+	<a href="/docs/lint/rules/jsx-a11y/noHeaderScope">noHeaderScope</a>
+	<a class="header-anchor" href="#noHeaderScope"></a>
+</h3>
+enforce scope prop is only used on `th` elements
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
@@ -539,6 +455,20 @@ non-interactive elements should not be assigned interactive roles
 discourage the usage of `onChange`
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/jsx-a11y/noPositiveTabindex">noPositiveTabindex</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+enforce tabIndex value is not greater than zero
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noRedundantAlt">
+	<a href="/docs/lint/rules/jsx-a11y/noRedundantAlt">noRedundantAlt</a>
+	<a class="header-anchor" href="#noRedundantAlt"></a>
+</h3>
+enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;picture&quot;, or &quot;photo&quot;
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noRedundantRoles">
 	<a href="/docs/lint/rules/jsx-a11y/noRedundantRoles">noRedundantRoles</a>
 	<a class="header-anchor" href="#noRedundantRoles"></a>
@@ -553,50 +483,99 @@ enforce explicit role property is not the same as implicit/default role property
 Prevent usage of unsafe `target=&quot;_blank&quot;`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="roleHasRequiredAriaProps">
-	<a href="/docs/lint/rules/jsx-a11y/roleHasRequiredAriaProps">roleHasRequiredAriaProps</a>
-	<a class="header-anchor" href="#roleHasRequiredAriaProps"></a>
+<h3 data-toc-exclude id="useAltText">
+	<a href="/docs/lint/rules/jsx-a11y/useAltText">useAltText</a>
+	<a class="header-anchor" href="#useAltText"></a>
+</h3>
+enforce alternative text
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/jsx-a11y/useAnchorContent">useAnchorContent</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+enforce that anchors have content and that the content is accessible to screen readers
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAriaProps">
+	<a href="/docs/lint/rules/jsx-a11y/useAriaProps">useAriaProps</a>
+	<a class="header-anchor" href="#useAriaProps"></a>
+</h3>
+enforce all `aria-*` props are valid
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAriaPropsForRole">
+	<a href="/docs/lint/rules/jsx-a11y/useAriaPropsForRole">useAriaPropsForRole</a>
+	<a class="header-anchor" href="#useAriaPropsForRole"></a>
 </h3>
 enforce that elements with ARIA roles must have all required attributes for that role
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="scope">
-	<a href="/docs/lint/rules/jsx-a11y/scope">scope</a>
-	<a class="header-anchor" href="#scope"></a>
+<h3 data-toc-exclude id="useAriaProptypes">
+	<a href="/docs/lint/rules/jsx-a11y/useAriaProptypes">useAriaProptypes</a>
+	<a class="header-anchor" href="#useAriaProptypes"></a>
 </h3>
-enforce scope prop is only used on `th` elements
+enforce ARIA state and property values are valid
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="tabindexNoPositive">
-	<a href="/docs/lint/rules/jsx-a11y/tabindexNoPositive">tabindexNoPositive</a>
-	<a class="header-anchor" href="#tabindexNoPositive"></a>
+<h3 data-toc-exclude id="useHeadingContent">
+	<a href="/docs/lint/rules/jsx-a11y/useHeadingContent">useHeadingContent</a>
+	<a class="header-anchor" href="#useHeadingContent"></a>
 </h3>
-enforce tabIndex value is not greater than zero
+enforce heading (`h1`, `h2`, etc) elements contain accessible content
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useHtmlLang">
+	<a href="/docs/lint/rules/jsx-a11y/useHtmlLang">useHtmlLang</a>
+	<a class="header-anchor" href="#useHtmlLang"></a>
+</h3>
+the `lang` attribute is mandatory
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useIframeTitle">
+	<a href="/docs/lint/rules/jsx-a11y/useIframeTitle">useIframeTitle</a>
+	<a class="header-anchor" href="#useIframeTitle"></a>
+</h3>
+enforce `iframe` elements have a title attribute
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithClickEvents">
+	<a href="/docs/lint/rules/jsx-a11y/useKeyWithClickEvents">useKeyWithClickEvents</a>
+	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
+</h3>
+enforce a clickable non-interactive element has at least one keyboard event listener.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/jsx-a11y/useKeyWithMouseEvents">useKeyWithMouseEvents</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useMediaCaption">
+	<a href="/docs/lint/rules/jsx-a11y/useMediaCaption">useMediaCaption</a>
+	<a class="header-anchor" href="#useMediaCaption"></a>
+</h3>
+enforces that `audio` and `video` elements must have a `track` for captions
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/jsx-a11y/useValidAnchor">useValidAnchor</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+enforce all anchors are valid, navigable elements
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidLang">
+	<a href="/docs/lint/rules/jsx-a11y/useValidLang">useValidLang</a>
+	<a class="header-anchor" href="#useValidLang"></a>
+</h3>
+check if `lang` attribute is valid
 </div>
 <section>
 <h2>React</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/yannickcr/eslint-plugin-react">eslint-plugin-react</a>. See individual rule docs for direct references.</p>
-<div class="rule">
-<h3 data-toc-exclude id="buttonHasType">
-	<a href="/docs/lint/rules/react/buttonHasType">buttonHasType</a>
-	<a class="header-anchor" href="#buttonHasType"></a>
-</h3>
-Enforces a `type` attribute for `button`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="jsxFragments">
-	<a href="/docs/lint/rules/react/jsxFragments">jsxFragments</a>
-	<a class="header-anchor" href="#jsxFragments"></a>
-</h3>
-This rule enforces the use of `&lt;&gt;...&lt;/&gt;`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="jsxKey">
-	<a href="/docs/lint/rules/react/jsxKey">jsxKey</a>
-	<a class="header-anchor" href="#jsxKey"></a>
-</h3>
-This rule detects a missing `key` prop
-</div>
 <div class="rule">
 <h3 data-toc-exclude id="noAccessStateInSetState">
 	<a href="/docs/lint/rules/react/noAccessStateInSetState">noAccessStateInSetState</a>
@@ -703,6 +682,13 @@ prevent usage of unsafe lifecycle methods
 disallow unnecessary fragments
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noVoidElementsWithChildren">
+	<a href="/docs/lint/rules/react/noVoidElementsWithChildren">noVoidElementsWithChildren</a>
+	<a class="header-anchor" href="#noVoidElementsWithChildren"></a>
+</h3>
+This rules prevent void elements from have children
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noWillUpdateSetState">
 	<a href="/docs/lint/rules/react/noWillUpdateSetState">noWillUpdateSetState</a>
 	<a class="header-anchor" href="#noWillUpdateSetState"></a>
@@ -710,32 +696,46 @@ disallow unnecessary fragments
 prevent usage of `setState` in `componentWillUpdate`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="requireRenderReturn">
-	<a href="/docs/lint/rules/react/requireRenderReturn">requireRenderReturn</a>
-	<a class="header-anchor" href="#requireRenderReturn"></a>
+<h3 data-toc-exclude id="useButtonType">
+	<a href="/docs/lint/rules/react/useButtonType">useButtonType</a>
+	<a class="header-anchor" href="#useButtonType"></a>
+</h3>
+Enforces a `type` attribute for `button`
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useFragmentSyntax">
+	<a href="/docs/lint/rules/react/useFragmentSyntax">useFragmentSyntax</a>
+	<a class="header-anchor" href="#useFragmentSyntax"></a>
+</h3>
+This rule enforces the use of `&lt;&gt;...&lt;/&gt;`
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKey">
+	<a href="/docs/lint/rules/react/useKey">useKey</a>
+	<a class="header-anchor" href="#useKey"></a>
+</h3>
+This rule detects a missing `key` prop
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useRenderReturn">
+	<a href="/docs/lint/rules/react/useRenderReturn">useRenderReturn</a>
+	<a class="header-anchor" href="#useRenderReturn"></a>
 </h3>
 This rule makes sure the render function is returning content
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="sortComp">
-	<a href="/docs/lint/rules/react/sortComp">sortComp</a>
-	<a class="header-anchor" href="#sortComp"></a>
+<h3 data-toc-exclude id="useSortComp">
+	<a href="/docs/lint/rules/react/useSortComp">useSortComp</a>
+	<a class="header-anchor" href="#useSortComp"></a>
 </h3>
 enforce component methods order
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="stylePropObject">
-	<a href="/docs/lint/rules/react/stylePropObject">stylePropObject</a>
-	<a class="header-anchor" href="#stylePropObject"></a>
+<h3 data-toc-exclude id="useStylePropObject">
+	<a href="/docs/lint/rules/react/useStylePropObject">useStylePropObject</a>
+	<a class="header-anchor" href="#useStylePropObject"></a>
 </h3>
 enforce style prop value is an object
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="voidDomElementsNoChildren">
-	<a href="/docs/lint/rules/react/voidDomElementsNoChildren">voidDomElementsNoChildren</a>
-	<a class="header-anchor" href="#voidDomElementsNoChildren"></a>
-</h3>
-This rules prevent void elements from have children
 </div>
 </section>
 <!-- GENERATED:END(id:main) -->

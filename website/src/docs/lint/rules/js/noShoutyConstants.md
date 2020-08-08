@@ -14,13 +14,13 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0b46c19436f36b964f71d9b5a1708808bef06b5e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:8e0d0afe072f95e7b9ec67909788b3ef445ce0c3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">;</span>
 <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">FOO</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/shoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noShoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
@@ -48,7 +48,7 @@ MISSING DOCUMENTATION
 	<span class="token keyword">return</span> <span class="token variable">FOO</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:3:8</span> <strong>lint/js/shoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:3:8</span> <strong>lint/js/noShoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
@@ -75,7 +75,7 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">,</span> <span class="token variable">BAR</span> <span class="token operator">=</span> <span class="token string">&quot;bar&quot;</span><span class="token punctuation">;</span>
 <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">FOO</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/shoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noShoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 

@@ -23,9 +23,7 @@ General best practice (reference resources)
 - [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
 - [The accessibility of HTML 5 autofocus](https://www.brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
 
-<!-- GENERATED:START(hash:134696d61b0da8ae9d2411e17885a2e74ae41002,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-discourage the usage of `autoFocus`
-
+<!-- GENERATED:START(hash:f1f0a43a550c358678f238a06775e505d6569006,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [no-autofocus](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-autofocus.md)
 <!-- GENERATED:END(id:description) -->
 

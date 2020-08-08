@@ -14,12 +14,12 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:989756c31b6bc82f6d5ae668177d845b7a042c68,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3cd13079e8419984df2600934cee3cb1da3260db,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">foo</span> <span class="token keyword">from</span> <span class="token string">&apos;./bar&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/importDefaultBasename</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useDefaultImportBasename</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use the basename </span><span style="color: Tomato;"><strong>bar</strong></span><span style="color: Tomato;">, or </span><span style="color: Tomato;"><strong>Bar</strong></span><span style="color: Tomato;"> when importing the default.</span>
 

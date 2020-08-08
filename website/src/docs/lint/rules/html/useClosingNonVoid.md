@@ -13,8 +13,8 @@ eleventyNavigation:
 
 Close empty HTML elements with an XHTML closing tag.
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:ef1b647e1682cc7944a4f430f17fcc0765432fb2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

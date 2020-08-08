@@ -24,9 +24,7 @@ of `onBlur`, which is more reliable using the keyboard.
 - [onChange Event Accessibility Issues](http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php)
 - [onChange Select Menu](http://www.themaninblue.com/writing/perspective/2004/10/19/)
 
-<!-- GENERATED:START(hash:a8eb1865f8936cc167b79c79a6faa904207749ad,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-discourage the usage of `onChange`
-
+<!-- GENERATED:START(hash:ee36f9cc2626b9aa23f446c3baf6834c10c0120a,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [no-onchange](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-onchange.md)
 <!-- GENERATED:END(id:description) -->
 

@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:515781eebed073c637f741ef16780eb09a0448cf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:735dc4b177245f40c920be99feeb4f9b4a936c19,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span>	<span class="token variable">foo</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
@@ -25,7 +25,7 @@ MISSING DOCUMENTATION
 	<span class="token variable">type</span><span class="token punctuation">:</span>	<span class="token string">&apos;foo&apos;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/duplicateImportSource</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noDuplicateImportSource</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This module has </span><span style="color: Tomato;"><strong>already been imported</strong></span><span style="color: Tomato;">.</span>
 

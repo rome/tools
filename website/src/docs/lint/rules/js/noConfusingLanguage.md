@@ -14,12 +14,12 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:c982488a5e77e12ec46707352f24b059935e9577,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:9075c1ba3f7a59211cac3a922e5cb367631f848f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">//	the	blacklist</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:5</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:5</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -38,7 +38,7 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">/*	the</span>
 <span class="token comment">blacklist	*/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -57,7 +57,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">blacklist</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -75,7 +75,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">BLACKLIST</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -93,7 +93,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">someBlacklist</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -111,7 +111,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">SOME_BLACKLIST</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:5</span> <strong>lint/js/confusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:5</span> <strong>lint/js/noConfusingLanguage</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -129,7 +129,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">payload</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token variable">blacklist</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/confusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noConfusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -147,7 +147,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">payload</span><span class="token punctuation">.</span><span class="token variable">blacklist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/confusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noConfusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 
@@ -165,7 +165,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">payload</span><span class="token punctuation">.</span><span class="token variable">blacklist</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/confusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noConfusingLanguage</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The word </span><span style="color: Tomato;"><strong>blacklist</strong></span><span style="color: Tomato;"> can be considered racially charged language.</span>
 

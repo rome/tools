@@ -17,12 +17,12 @@ enforce all `aria-*` props are valid
 **ESLint Equivalent:** [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:516e2df13f6ef8f0094ae02799e6976c0c60b834,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:aba79512c49f101c75245711cd6db4c5f15fe2d9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token attr-name">aria-labell</span><span class="token operator">=</span><span class="token string">&apos;&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:20</span> <strong>lint/jsx-a11y/ariaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:20</span> <strong>lint/jsx-a11y/useAriaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>aria-labell</strong></span><span style="color: Tomato;"> is an invalid ARIA attribute.</span>
 
@@ -42,7 +42,7 @@ enforce all `aria-*` props are valid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">aria-</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/ariaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/useAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>aria-</strong></span><span style="color: Tomato;"> is an invalid ARIA attribute.</span>
 
@@ -55,7 +55,7 @@ enforce all `aria-*` props are valid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">aria-labeledby</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/ariaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/useAriaProps</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>aria-labeledby</strong></span><span style="color: Tomato;"> is an invalid ARIA attribute.</span>
 
@@ -75,7 +75,7 @@ enforce all `aria-*` props are valid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">aria-skldjfaria-klajsd</span><span class="token operator">=</span><span class="token string">&apos;foobar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/ariaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.jsx:1:5</span> <strong>lint/jsx-a11y/useAriaProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>aria-skldjfaria-klajsd</strong></span><span style="color: Tomato;"> is an invalid ARIA attribute.</span>
 

@@ -17,7 +17,7 @@ enforce `return` statements in getters
 **ESLint Equivalent:** [getter-return](https://eslint.org/docs/rules/getter-return)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ac83222abf6b198e50f0435335d55d0c70ba1548,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:268b350a5f6b2af5cd286a410cc2c11160225ee3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
@@ -26,7 +26,7 @@ enforce `return` statements in getters
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/getterReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noGetterReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Return a value at the end of a getter method</strong></span><span style="color: Tomato;"> instead of empty block.</span>
 
@@ -51,7 +51,7 @@ enforce `return` statements in getters
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/getterReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noGetterReturn</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Return a value at the end of a getter method</strong></span><span style="color: Tomato;"> instead of empty block.</span>
 

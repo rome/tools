@@ -13,13 +13,11 @@ eleventyNavigation:
 
 This rule enforces methods and properties order. When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.
 
-<!-- GENERATED:START(hash:5561524e2b7df8782853a5f38a8e94109b2134d3,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-enforce component methods order
-
+<!-- GENERATED:START(hash:cb48f03eeaac6c20f8d21fe7bebd86070c0c51db,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:01e526f0a2d7ba3087422820d23ce346612dec30,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5b22ee3464a6e3f718f145f32b73d48ad6e1db38,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a lifecycle method to be placed before render</span>
@@ -30,7 +28,7 @@ enforce component methods order
 	<span class="token variable">displayName</span> <span class="token operator">=</span> <span class="token string">&apos;Hello&apos;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/useSortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>displayName</strong></span><span style="color: Tomato;">.</span>
 
@@ -57,7 +55,7 @@ enforce component methods order
 	<span class="token variable">onClick</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/useSortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;">.</span>
 
@@ -86,7 +84,7 @@ enforce component methods order
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:2</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:2</span> <strong>lint/react/useSortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>onClick</strong></span><span style="color: Tomato;">.</span>
 
@@ -115,7 +113,7 @@ enforce component methods order
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/sortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:1</span> <strong>lint/react/useSortComp</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>props</strong></span><span style="color: Tomato;"> should be placed after </span><span style="color: Tomato;"><strong>render</strong></span><span style="color: Tomato;">.</span>
 

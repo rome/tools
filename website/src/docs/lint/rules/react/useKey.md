@@ -13,18 +13,16 @@ eleventyNavigation:
 
 This rule detects a missing `key` prop in a element that requires it. Keys help React identify which items have changed, are added, or are removed.
 
-<!-- GENERATED:START(hash:c0901cdbe713fc5ec4ade4070b6ca66954409829,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-This rule detects a missing `key` prop
-
+<!-- GENERATED:START(hash:3c4a3e9ca4d3eaf40841dd6c833e863a95a7d275,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [jsx-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:c8a532d2d404d5d47f6107e977f110c1e6a453f4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3651704e32323addd9d0679a6a3021f7aeaaa6f9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token punctuation">[</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> &lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">]</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:11</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:11</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>array</strong></span><span style="color: Tomato;">.</span>
 
@@ -34,7 +32,7 @@ This rule detects a missing `key` prop
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
     <span style="color: DodgerBlue;">removed.</span>
 
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>array</strong></span><span style="color: Tomato;">.</span>
 
@@ -47,7 +45,7 @@ This rule detects a missing `key` prop
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:26</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:26</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -63,7 +61,7 @@ This rule detects a missing `key` prop
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:34</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:34</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -79,7 +77,7 @@ This rule detects a missing `key` prop
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:28</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -97,7 +95,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -117,7 +115,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -137,7 +135,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -157,7 +155,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -177,7 +175,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 
@@ -197,7 +195,7 @@ This rule detects a missing `key` prop
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>iterator</strong></span><span style="color: Tomato;">.</span>
 

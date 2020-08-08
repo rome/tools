@@ -132,7 +132,12 @@ export async function main() {
 				const content = await readFileText(docs);
 				const eslintInfo = extractESLintRuleInfo(content);
 
-				const lines = [getDocRuleDescription(docs, content), ""];
+				const lines = [];
+
+				const includeDefaultDescription = content.match(/\n# (.*?)([\n]+)<!--/);
+				if (includeDefaultDescription) {
+					lines.push(getDocRuleDescription(docs, content), "");
+				}
 
 				if (eslintInfo !== undefined) {
 					lines.push(

@@ -13,18 +13,16 @@ eleventyNavigation:
 
 This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-<!-- GENERATED:START(hash:0f6c88298a5df868af888da78da05fff0aa0fcf2,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-This rule enforces the use of `<>...</>`
-
+<!-- GENERATED:START(hash:36797dba66e02716c4c11ea750b570849c774db8,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fa70b72bc83a65828e04ac68671f3b6bab73fd7f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2f2c0f096d154f98140743af9108e3566ef9f624,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -50,7 +48,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -76,7 +74,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -102,7 +100,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -129,7 +127,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -155,7 +153,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:14</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -184,7 +182,7 @@ This rule enforces the use of `<>...</>`
 	<span class="token keyword">return</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -216,7 +214,7 @@ This rule enforces the use of `<>...</>`
 	<span class="token keyword">return</span> <span class="token variable">bar</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:11</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -247,7 +245,7 @@ This rule enforces the use of `<>...</>`
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:8</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -277,7 +275,7 @@ This rule enforces the use of `<>...</>`
 						<span class="token keyword">return</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;
 					<span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:13</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -305,7 +303,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
@@ -331,7 +329,7 @@ This rule enforces the use of `<>...</>`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/jsxFragments</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>

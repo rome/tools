@@ -17,12 +17,12 @@ disallow negating the left operand of relational operators
 **ESLint Equivalent:** [no-unsafe-negation](https://eslint.org/docs/rules/no-unsafe-negation)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e938eb979ec6bb81355c324528a5bc4f19f8e95c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2d5f49ab5a4ad0b49bde184146b678f8db38839b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token number">1</span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/unsafeNegation</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noUnsafeNegation</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The </span><span style="color: Tomato;"><strong>negation operator is used unsafely</strong></span><span style="color: Tomato;"> on the left side of this</span>
     <span style="color: Tomato;">binary expression.</span>

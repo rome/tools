@@ -13,18 +13,16 @@ eleventyNavigation:
 
 This rules enforces a `type` attribute for `button` elements and checks if it's value is "button", "submit" or "reset", based on the `button` [spec](https://www.w3.org/TR/html4/interact/forms.html#adef-type-BUTTON).
 
-<!-- GENERATED:START(hash:5e10445749a66b94fc3031eebd376b571f59e433,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-Enforces a `type` attribute for `button`
-
+<!-- GENERATED:START(hash:20f311752a1d6c45a8fcb082b069689afb1e15a5,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 **ESLint Equivalent:** [button-has-type](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/button-has-type.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:aeb631e7b5954c9d27362980060d8a373f845c9f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3e2713240ebc25ea5160f5db3660fbd077316c0e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">button</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/buttonHasType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useButtonType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop on </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -40,7 +38,7 @@ Enforces a `type` attribute for `button`
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">button</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/react/buttonHasType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/react/useButtonType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop on </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -56,7 +54,7 @@ Enforces a `type` attribute for `button`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;button&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">type</span><span class="token punctuation">:</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;child&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/buttonHasType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useButtonType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop on </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> elements.</span>
 
@@ -72,7 +70,7 @@ Enforces a `type` attribute for `button`
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;button&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">type</span><span class="token punctuation">:</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;child&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/buttonHasType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useButtonType</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop on </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> elements.</span>
 

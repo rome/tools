@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5629e4b3c4438c9430afada9a32b732430ffa884,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2b509f1b9eacd19bb7808ef11b0ef18638ce3968,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -24,7 +24,7 @@ MISSING DOCUMENTATION
 		<span class="token function">foo</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:3:1</span> <strong>lint/js/caseSingleStatement</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:3:1</span> <strong>lint/js/useSingleCaseStatement</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">A switch case should only have a single statement. If you want more,</span>
     <span style="color: Tomato;">then wrap it in a block.</span>
