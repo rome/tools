@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noCatchAssign
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow reassigning exceptions in `catch` clauses
+eslint-rule: https://eslint.org/docs/rules/no-ex-assign
 eleventyNavigation:
 	key: lint-rules/js/noCatchAssign
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noCatchAssign
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:55dff6f591d7ea7ce51f29a057dc19def1b503ee,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow reassigning exceptions in `catch` clauses
 
-<!-- GENERATED:START(hash:1565bb8588f1b022bcb91df7a2273505c5a5b5d5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-ex-assign](https://eslint.org/docs/rules/no-ex-assign)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:1565bb8588f1b022bcb91df7a2273505c5a5b5d5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">e</span><span class="token punctuation">;</span> <span class="token variable">e</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -112,4 +117,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">three</span> <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">e</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">something</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token variable">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

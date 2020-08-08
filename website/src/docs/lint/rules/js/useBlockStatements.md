@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/preferBlockStatements.md
----
-title: Lint Rule js/preferBlockStatements
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/preferBlockStatements
-	parent: lint-rules
-	title: js/preferBlockStatements
----
-
-# js/preferBlockStatements
-
-=======
 ---
 title: Lint Rule js/useBlockStatements
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/useBlockStatements
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/useBlockStatements.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6b26ccb5ec366cfb89e010b8a708b0bc3aa9d1e2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6b26ccb5ec366cfb89e010b8a708b0bc3aa9d1e2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">x</span><span class="token punctuation">)</span> <span class="token function">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -207,4 +194,4 @@ MISSING DOCUMENTATION
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

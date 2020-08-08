@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noDupeArgs
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow duplicate arguments in `function` definitions
+eslint-rule: https://eslint.org/docs/rules/no-dupe-args
 eleventyNavigation:
 	key: lint-rules/js/noDupeArgs
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noDupeArgs
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:d817854d5450f106152b96f288c9809f8460a95f,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow duplicate arguments in `function` definitions
 
-<!-- GENERATED:START(hash:027b548f7703de7453760770069bf6586d1fc46f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-dupe-args](https://eslint.org/docs/rules/no-dupe-args)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:027b548f7703de7453760770069bf6586d1fc46f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -73,4 +78,4 @@ MISSING DOCUMENTATION
 <span class="token keyword">function</span> <span class="token variable">bar</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

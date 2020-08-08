@@ -1,22 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/react/stylePropObject.md
----
-title: Lint Rule react/stylePropObject
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/react/stylePropObject
-	parent: lint-rules
-	title: react/stylePropObject
----
-
-# react/stylePropObject
-
-This rule enforces the value of `style` to be a object. React will ignore non-object style props, even valid JSON strings.
-=======
 ---
 title: Lint Rule react/useStylePropObject
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce style prop value is an object
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
 eleventyNavigation:
 	key: lint-rules/react/useStylePropObject
 	parent: lint-rules
@@ -25,10 +11,13 @@ eleventyNavigation:
 
 # react/useStylePropObject
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/react/useStylePropObject.md
+This rule enforces the value of `style` to be a object. React will ignore non-object style props, even valid JSON strings.
 
-<!-- GENERATED:START(hash:514cfe5849941754e1f184d53fc3ac90545765bc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e89cfe0c7e887b8306dc9ca7c32a4b9604f6765e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [style-prop-object](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:514cfe5849941754e1f184d53fc3ac90545765bc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -105,4 +94,4 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">color</span><span class="token punctuation">:</span> <span class="token string">&apos;red&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,22 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/react/buttonHasType.md
----
-title: Lint Rule react/buttonHasType
-layout: layouts/rule.liquid
-description: Enforces a `type` attribute for `button`
-eleventyNavigation:
-	key: lint-rules/react/buttonHasType
-	parent: lint-rules
-	title: react/buttonHasType
----
-
-# react/buttonHasType
-
-This rules enforces a `type` attribute for `button` elements and checks if it's value is "button", "submit" or "reset", based on the `button` [spec](https://www.w3.org/TR/html4/interact/forms.html#adef-type-BUTTON).
-=======
 ---
 title: Lint Rule react/useButtonType
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: Enforces a `type` attribute for `button`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/button-has-type.md
 eleventyNavigation:
 	key: lint-rules/react/useButtonType
 	parent: lint-rules
@@ -25,10 +11,13 @@ eleventyNavigation:
 
 # react/useButtonType
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/react/useButtonType.md
+This rules enforces a `type` attribute for `button` elements and checks if it's value is "button", "submit" or "reset", based on the `button` [spec](https://www.w3.org/TR/html4/interact/forms.html#adef-type-BUTTON).
 
-<!-- GENERATED:START(hash:3e2713240ebc25ea5160f5db3660fbd077316c0e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:20f311752a1d6c45a8fcb082b069689afb1e15a5,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [button-has-type](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/button-has-type.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:3e2713240ebc25ea5160f5db3660fbd077316c0e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">button</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;</code></pre>{% endraw %}
@@ -108,4 +97,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;button&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">type</span><span class="token punctuation">:</span> <span class="token string">&apos;button&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;child&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;button&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">type</span><span class="token punctuation">:</span> <span class="token string">&apos;submit&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;child&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;button&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">type</span><span class="token punctuation">:</span> <span class="token string">&apos;reset&apos;</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;child&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

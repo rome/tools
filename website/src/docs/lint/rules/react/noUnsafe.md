@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noUnsafe
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent usage of unsafe lifecycle methods
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md
 eleventyNavigation:
 	key: lint-rules/react/noUnsafe
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noUnsafe
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:a8517e3f3ecb9ca7249faf73c5910758b00bbb64,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent usage of unsafe lifecycle methods
 
-<!-- GENERATED:START(hash:6f1657bdf0555ea6bccaf610bc5ecb196c2faf0d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-unsafe](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:6f1657bdf0555ea6bccaf610bc5ecb196c2faf0d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -82,4 +87,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token variable">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

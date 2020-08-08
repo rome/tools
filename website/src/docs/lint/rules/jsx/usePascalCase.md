@@ -1,21 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx/pascalCase.md
----
-title: Lint Rule jsx/pascalCase
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/jsx/pascalCase
-	parent: lint-rules
-	title: jsx/pascalCase
----
-
-# jsx/pascalCase
-
-=======
 ---
 title: Lint Rule jsx/usePascalCase
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce PascalCase for user-defined JSX components
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md
 eleventyNavigation:
 	key: lint-rules/jsx/usePascalCase
 	parent: lint-rules
@@ -24,10 +11,13 @@ eleventyNavigation:
 
 # jsx/usePascalCase
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx/usePascalCase.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:996e1cea854c1870d7073415ad81c36aef9e6b5f,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce PascalCase for user-defined JSX components
 
-<!-- GENERATED:START(hash:2863916b0ad064bcbf3ea20e07efa5d9d660e770,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [jsx-pascal-case](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:2863916b0ad064bcbf3ea20e07efa5d9d660e770,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo_component</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -67,4 +57,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">foo</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">FooComponent</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

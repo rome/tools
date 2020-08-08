@@ -10,9 +10,11 @@ eleventyNavigation:
 
 # js/noShorthandArrayType
 
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f33d2aa01ac0206f54694dec0a9c88a2a8f35be5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f33d2aa01ac0206f54694dec0a9c88a2a8f35be5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">foo</span><span class="token operator">&gt;</span><span class="token punctuation">;</span>
@@ -32,4 +34,4 @@ MISSING DOCUMENTATION
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>Array&lt;</strong></span><span style="color: MediumSeaGreen;">bar</span><span style="color: MediumSeaGreen;"><strong>&gt;</strong></span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

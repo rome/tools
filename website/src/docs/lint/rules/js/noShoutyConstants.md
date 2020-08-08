@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/shoutyConstants.md
----
-title: Lint Rule js/shoutyConstants
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/shoutyConstants
-	parent: lint-rules
-	title: js/shoutyConstants
----
-
-# js/shoutyConstants
-
-=======
 ---
 title: Lint Rule js/noShoutyConstants
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/noShoutyConstants
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/noShoutyConstants.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8e0d0afe072f95e7b9ec67909788b3ef445ce0c3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:8e0d0afe072f95e7b9ec67909788b3ef445ce0c3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">;</span>
@@ -116,4 +103,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">f</span><span class="token punctuation">(</span><span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">FOO</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

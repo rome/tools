@@ -22,7 +22,13 @@ In order for Rome to find your files it needs a project configuration. To automa
 rome init
 ```
 
-This will create a `rome.rjson` that contains your project config. This will also lint, autofix, and format all the files in the directory.
+This will create a `.config` directory and place a `rome.rjson` inside of it that contains your project config.
+
+If you're putting Rome into an already established project and you'd like to automatically apply formatting and fixes, you can use:
+
+```bash
+rome init --apply
+```
 
 Refer to [Project Configuration](#project-configuration) for configuration options.
 

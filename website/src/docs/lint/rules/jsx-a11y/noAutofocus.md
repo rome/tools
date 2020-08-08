@@ -2,6 +2,7 @@
 title: Lint Rule jsx-a11y/noAutofocus
 layout: layouts/rule.liquid
 description: discourage the usage of `autoFocus`
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-autofocus.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noAutofocus
 	parent: lint-rules
@@ -22,7 +23,11 @@ General best practice (reference resources)
 - [WHATWG HTML Standard, The autofocus attribute](https://html.spec.whatwg.org/multipage/interaction.html#attr-fe-autofocus)
 - [The accessibility of HTML 5 autofocus](https://www.brucelawson.co.uk/2009/the-accessibility-of-html-5-autofocus/)
 
-<!-- GENERATED:START(hash:8275f6449bd0c79f5e6ab69880dc39c9a89e1c11,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f1f0a43a550c358678f238a06775e505d6569006,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [no-autofocus](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-autofocus.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:8275f6449bd0c79f5e6ab69880dc39c9a89e1c11,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">autoFocus</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -88,4 +93,4 @@ General best practice (reference resources)
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">autoFocus</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

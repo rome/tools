@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/noTargetBlank
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: Prevent usage of unsafe `target="_blank"`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noTargetBlank
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/noTargetBlank
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:bd6e02d4cb53d6ceeeb71257890fdd57e86eef05,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+Prevent usage of unsafe `target="_blank"`
 
-<!-- GENERATED:START(hash:17699ba55ae067916c4c6ca55f12c2f7fb87ee54,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [jsx-no-target-blank](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:17699ba55ae067916c4c6ca55f12c2f7fb87ee54,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
@@ -67,4 +72,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;relative/link&apos;</span> <span class="token attr-name">rel</span><span class="token operator">=</span><span class="token string">&apos;noreferrer&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;/absolute/link&apos;</span> <span class="token attr-name">rel</span><span class="token operator">=</span><span class="token string">&apos;noreferrer&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">dynamicLink</span><span class="token punctuation">}</span> <span class="token attr-name">rel</span><span class="token operator">=</span><span class="token string">&apos;noreferrer&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

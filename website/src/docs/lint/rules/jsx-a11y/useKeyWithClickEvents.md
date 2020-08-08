@@ -1,21 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx-a11y/clickEventsHaveKeyEvents.md
----
-title: Lint Rule jsx-a11y/clickEventsHaveKeyEvents
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/jsx-a11y/clickEventsHaveKeyEvents
-	parent: lint-rules
-	title: jsx-a11y/clickEventsHaveKeyEvents
----
-
-# jsx-a11y/clickEventsHaveKeyEvents
-
-=======
 ---
 title: Lint Rule jsx-a11y/useKeyWithClickEvents
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce a clickable non-interactive element has at least one keyboard event listener.
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/click-events-have-key-events.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/useKeyWithClickEvents
 	parent: lint-rules
@@ -24,10 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/useKeyWithClickEvents
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx-a11y/useKeyWithClickEvents.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:205609b44502cd0b3106ebb9358ab3a06c613eb3,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce a clickable non-interactive element has at least one keyboard event listener.
 
-<!-- GENERATED:START(hash:7676f72d0ef8a5041b089d276b54d621eedcf274,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [click-events-have-key-events](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/click-events-have-key-events.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:7676f72d0ef8a5041b089d276b54d621eedcf274,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -48,4 +38,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token attr-name">onKeyDown</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">handleKeyDown</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token attr-name">onKeyUp</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">handleKeyUp</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token attr-name">onKeyPress</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">handleKeyPress</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

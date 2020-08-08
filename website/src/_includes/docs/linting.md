@@ -65,7 +65,11 @@ rome check --review
 
 ### Rules
 
-We have support for over 100 rules, including the most common rules needed working with TypeScript and React. See the full [list of rules](/docs/lint/rules). All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
+We have support for over 100 rules, including the most common rules needed working with TypeScript and React.
+
+**See the full [list of rules](/docs/lint/rules).**
+
+All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
 
 ### Formatting
 

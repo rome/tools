@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/importDefaultBasename.md
----
-title: Lint Rule js/importDefaultBasename
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/importDefaultBasename
-	parent: lint-rules
-	title: js/importDefaultBasename
----
-
-# js/importDefaultBasename
-
-=======
 ---
 title: Lint Rule js/useDefaultImportBasename
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/useDefaultImportBasename
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/useDefaultImportBasename.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3cd13079e8419984df2600934cee3cb1da3260db,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3cd13079e8419984df2600934cee3cb1da3260db,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">foo</span> <span class="token keyword">from</span> <span class="token string">&apos;./bar&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -46,4 +33,4 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">foo</span> <span class="token keyword">from</span> <span class="token string">&apos;./foo&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

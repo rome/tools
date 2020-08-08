@@ -10,9 +10,11 @@ eleventyNavigation:
 
 # js/noDuplicateImportSource
 
-This rule checks to avoid importing the same source more than once in the same file.
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:735dc4b177245f40c920be99feeb4f9b4a936c19,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:735dc4b177245f40c920be99feeb4f9b4a936c19,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span>	<span class="token variable">foo</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
@@ -35,4 +37,4 @@ This rule checks to avoid importing the same source more than once in the same f
   <strong>  3</strong><strong> │ </strong><span class="token keyword">import</span>  <span class="token variable">type</span>  <span class="token punctuation">{</span><span class="token variable">fooType</span><span class="token punctuation">}</span>  <span class="token keyword">from</span>  <span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

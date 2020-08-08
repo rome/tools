@@ -713,7 +713,7 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/useSingleCaseStatement",
 		message: markup`A switch case should only have a single statement. If you want more, then wrap it in a block.`,
 	},
-	JS_NO_CONFUSING_LANGUAGE: (
+	/*JS_NO_CONFUSING_LANGUAGE: (
 		message: StaticMarkup,
 		suggestion: string,
 		advice: DiagnosticAdvice,
@@ -728,7 +728,7 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Consider using <emphasis>${suggestion}</emphasis> instead`,
 			},
 		],
-	}),
+	}),*/
 	JS_NO_DOUBLE_EQUALS: {
 		category: "lint/js/noDoubleEquals",
 		message: markup`Use <emphasis>===</emphasis> instead of <emphasis>==</emphasis>.`,

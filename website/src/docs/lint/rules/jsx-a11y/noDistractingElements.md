@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/noDistractingElements
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce distracting elements are not used
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-distracting-elements.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noDistractingElements
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/noDistractingElements
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:a7b38b5eb09839f5285348000ab4147d0401816d,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce distracting elements are not used
 
-<!-- GENERATED:START(hash:0fba8ff32e7cfee7eaa0b962494f0decd3557422,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-distracting-elements](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-distracting-elements.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:0fba8ff32e7cfee7eaa0b962494f0decd3557422,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">blink</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -46,4 +51,4 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/noRedundantRoles
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce explicit role property is not the same as implicit/default role property on element
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noRedundantRoles
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/noRedundantRoles
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:85c530787f81cc7dae296f80e7e10ff30572f8ac,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce explicit role property is not the same as implicit/default role property on element
 
-<!-- GENERATED:START(hash:1f58a4268d799ab326aa02a5011cb6b5814d3e69,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:1f58a4268d799ab326aa02a5011cb6b5814d3e69,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">article</span>&gt;</code></pre>{% endraw %}
@@ -642,4 +647,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;presentation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">article</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">Button</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

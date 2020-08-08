@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:babd1cd44f25e80e01e82725991444d8e2891d47,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:224d5ad9b5562b098b85c228679fd99cf4d65b68,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -23,8 +23,6 @@ import noCommaOperator from "./js/noCommaOperator.test.rjson";
 import noCompareNegZero from "./js/noCompareNegZero.test.rjson";
 // @ts-ignore
 import noCondAssign from "./js/noCondAssign.test.rjson";
-// @ts-ignore
-import noConfusingLanguage from "./js/noConfusingLanguage.test.rjson";
 // @ts-ignore
 import noDebugger from "./js/noDebugger.test.rjson";
 // @ts-ignore
@@ -170,6 +168,8 @@ import noImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
 // @ts-ignore
 import noPropSpreading from "./jsx/noPropSpreading.test.rjson";
 // @ts-ignore
+import useJSXFileExtension from "./jsx/useJSXFileExtension.test.rjson";
+// @ts-ignore
 import usePascalCase from "./jsx/usePascalCase.test.rjson";
 // @ts-ignore
 import useSelfClosingElements from "./jsx/useSelfClosingElements.test.rjson";
@@ -228,7 +228,6 @@ export const tests: Tests = {
 	"js/noCommaOperator": noCommaOperator,
 	"js/noCompareNegZero": noCompareNegZero,
 	"js/noCondAssign": noCondAssign,
-	"js/noConfusingLanguage": noConfusingLanguage,
 	"js/noDebugger": noDebugger,
 	"js/noDelete": noDelete,
 	"js/noDeleteVars": noDeleteVars,
@@ -301,6 +300,7 @@ export const tests: Tests = {
 	"jsx/noDuplicateProps": noDuplicateProps,
 	"jsx/noImplicitBoolean": noImplicitBoolean,
 	"jsx/noPropSpreading": noPropSpreading,
+	"jsx/useJSXFileExtension": useJSXFileExtension,
 	"jsx/usePascalCase": usePascalCase,
 	"jsx/useSelfClosingElements": useSelfClosingElements,
 	"react/noAccessStateInSetState": noAccessStateInSetState,

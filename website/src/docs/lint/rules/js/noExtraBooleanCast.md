@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noExtraBooleanCast
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow unnecessary boolean casts
+eslint-rule: https://eslint.org/docs/rules/no-extra-boolean-cast
 eleventyNavigation:
 	key: lint-rules/js/noExtraBooleanCast
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noExtraBooleanCast
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:5e912205fd815fbed9657dce1be77e8cef465d98,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow unnecessary boolean casts
 
-<!-- GENERATED:START(hash:1a975a50081af0e7bcb9023aef0b2534f94398cf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-extra-boolean-cast](https://eslint.org/docs/rules/no-extra-boolean-cast)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:1a975a50081af0e7bcb9023aef0b2534f94398cf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -81,4 +86,4 @@ MISSING DOCUMENTATION
     <span style="color: DodgerBlue;">be coerced to a boolean.</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

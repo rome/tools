@@ -1,22 +1,7 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx-a11y/lang.md
----
-title: Lint Rule jsx-a11y/lang
-layout: layouts/rule.liquid
-description: check if `lang` attribute is valid
-eleventyNavigation:
-	key: lint-rules/jsx-a11y/lang
-	parent: lint-rules
-	title: jsx-a11y/lang
----
-
-# jsx-a11y/lang
-
-This rule makes sure the value of `lang` attribute is valid.
-=======
 ---
 title: Lint Rule jsx-a11y/useValidLang
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: check if `lang` attribute is valid
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/useValidLang
 	parent: lint-rules
@@ -25,10 +10,13 @@ eleventyNavigation:
 
 # jsx-a11y/useValidLang
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx-a11y/useValidLang.md
+This rule makes sure the value of `lang` attribute is valid.
 
-<!-- GENERATED:START(hash:af2258197ea4f4e72733df7a984e8910aa5da990,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:af2258197ea4f4e72733df7a984e8910aa5da990,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
@@ -148,4 +136,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en-US&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;en&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">lang</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

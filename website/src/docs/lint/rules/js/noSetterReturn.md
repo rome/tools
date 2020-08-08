@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noSetterReturn
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow returning values from setters
+eslint-rule: https://eslint.org/docs/rules/no-setter-return
 eleventyNavigation:
 	key: lint-rules/js/noSetterReturn
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noSetterReturn
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:aa38e3c37e0fec6b7a2dd86f00f8f5a2618c59cb,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow returning values from setters
 
-<!-- GENERATED:START(hash:c664a625e1a9f3b3df51b425520bca803b7e08b9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-setter-return](https://eslint.org/docs/rules/no-setter-return)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:c664a625e1a9f3b3df51b425520bca803b7e08b9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
@@ -95,4 +100,4 @@ MISSING DOCUMENTATION
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

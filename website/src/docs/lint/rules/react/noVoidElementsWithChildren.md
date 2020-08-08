@@ -1,22 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/react/voidDomElementsNoChildren.md
----
-title: Lint Rule react/voidDomElementsNoChildren
-layout: layouts/rule.liquid
-description: This rules prevent void elements from have children
-eleventyNavigation:
-	key: lint-rules/react/voidDomElementsNoChildren
-	parent: lint-rules
-	title: react/voidDomElementsNoChildren
----
-
-# react/voidDomElementsNoChildren
-
-This rules prevents void elements (AKA self-closing elements) from have children
-=======
 ---
 title: Lint Rule react/noVoidElementsWithChildren
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rules prevent void elements from have children
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md
 eleventyNavigation:
 	key: lint-rules/react/noVoidElementsWithChildren
 	parent: lint-rules
@@ -25,10 +11,13 @@ eleventyNavigation:
 
 # react/noVoidElementsWithChildren
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/react/noVoidElementsWithChildren.md
+This rules prevents void elements (AKA self-closing elements) from have children
 
-<!-- GENERATED:START(hash:ce19e775e960f031b339bba6488f5c8e265cf734,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:fd477f50495a4e0b5ca81829effc098beeb80937,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [void-dom-elements-no-children](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:ce19e775e960f031b339bba6488f5c8e265cf734,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">br</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;dont-remove-class&apos;</span><span class="token punctuation">}</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token attr-name">br</span>&gt;</code></pre>{% endraw %}
@@ -245,4 +234,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token function">dangerouslySetInnerHTML</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token function">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

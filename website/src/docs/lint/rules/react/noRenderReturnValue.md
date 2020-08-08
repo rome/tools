@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noRenderReturnValue
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent usage of the return value of `React.render`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md
 eleventyNavigation:
 	key: lint-rules/react/noRenderReturnValue
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noRenderReturnValue
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:f916104505fb66bce7b178ae1a27f5a4be5118b9,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent usage of the return value of `React.render`
 
-<!-- GENERATED:START(hash:98d7fac1b6659249fe6c1aa56597bf3283e2b368,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-render-return-value](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:98d7fac1b6659249fe6c1aa56597bf3283e2b368,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -121,4 +126,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">render</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">ReactDOM</span><span class="token punctuation">.</span><span class="token variable">render</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> <span class="token variable">document</span><span class="token punctuation">.</span><span class="token variable">body</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

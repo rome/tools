@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/negationElse.md
----
-title: Lint Rule js/negationElse
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/negationElse
-	parent: lint-rules
-	title: js/negationElse
----
-
-# js/negationElse
-
-=======
 ---
 title: Lint Rule js/noNegationElse
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/noNegationElse
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/noNegationElse.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f5e97f5ee199e43138c312c8b5d9640c4c6342bf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f5e97f5ee199e43138c312c8b5d9640c4c6342bf,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token function">consequent</span><span class="token punctuation">;</span><span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token function">alternate</span><span class="token punctuation">;</span><span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -72,4 +59,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token function">consequent</span><span class="token punctuation">;</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token boolean">true</span> <span class="token punctuation">?</span> <span class="token variable">consequent</span> <span class="token punctuation">:</span> <span class="token variable">alternate</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

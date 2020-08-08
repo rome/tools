@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/emptyMatches.md
----
-title: Lint Rule js/emptyMatches
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/emptyMatches
-	parent: lint-rules
-	title: js/emptyMatches
----
-
-# js/emptyMatches
-
-=======
 ---
 title: Lint Rule js/noEmptyMatches
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/noEmptyMatches
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/noEmptyMatches.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:78e614268c81ae42272812f82e33fe85d6a30523,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:78e614268c81ae42272812f82e33fe85d6a30523,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token regex">/a*/</span></code></pre>{% endraw %}
@@ -64,4 +51,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token regex">/a*(abc)+[1,2,3]?/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">b</span> <span class="token operator">=</span> <span class="token regex">/a+(abc)*/</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

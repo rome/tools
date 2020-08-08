@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/noNoninteractiveTabindex
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: "`tabIndex` should only be declared on interactive elements"
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-tabindex.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noNoninteractiveTabindex
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/noNoninteractiveTabindex
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:28e7716442ffc9de2a99e6c150eb01cd17683ae1,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+"`tabIndex` should only be declared on interactive elements"
 
-<!-- GENERATED:START(hash:6a4fe5760b4a4620d752fa79c7cc0fbd33ec1693,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-noninteractive-tabindex](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-tabindex.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:6a4fe5760b4a4620d752fa79c7cc0fbd33ec1693,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
@@ -71,4 +76,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">}</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">button</span> <span class="token attr-name">tabindex</span><span class="token operator">=</span><span class="token string">&apos;-1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

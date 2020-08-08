@@ -10,9 +10,11 @@ eleventyNavigation:
 
 # js/noDuplicateGroupNamesInRegularExpressions
 
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:44a73039745a2bc55cce7007ca6acebdef363eb5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:44a73039745a2bc55cce7007ca6acebdef363eb5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day&gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span></code></pre>{% endraw %}
@@ -34,4 +36,4 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

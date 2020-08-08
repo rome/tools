@@ -1,22 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/react/requireRenderReturn.md
----
-title: Lint Rule react/requireRenderReturn
-layout: layouts/rule.liquid
-description: This rule makes sure the render function is returning content
-eleventyNavigation:
-	key: lint-rules/react/requireRenderReturn
-	parent: lint-rules
-	title: react/requireRenderReturn
----
-
-# react/requireRenderReturn
-
-This rule makes sure the render function is returning content.
-=======
 ---
 title: Lint Rule react/useRenderReturn
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rule makes sure the render function is returning content
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md
 eleventyNavigation:
 	key: lint-rules/react/useRenderReturn
 	parent: lint-rules
@@ -25,10 +11,13 @@ eleventyNavigation:
 
 # react/useRenderReturn
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/react/useRenderReturn.md
+This rule makes sure the render function is returning content.
 
-<!-- GENERATED:START(hash:4225a3d0bf21186fe860641018c62aec1cc88d07,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:47d2582223ebed44beddc17da0d83a41adffc7c9,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [require-render-return](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/require-render-return.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:4225a3d0bf21186fe860641018c62aec1cc88d07,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">React</span> <span class="token keyword">from</span> <span class="token string">&apos;react&apos;</span><span class="token punctuation">;</span>
@@ -215,4 +204,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Foo</span> <span class="token keyword">extends</span> <span class="token variable">Bar</span> <span class="token punctuation">{</span>
 	<span class="token variable">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noCondAssign
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow assignment operators in conditional expressions
+eslint-rule: https://eslint.org/docs/rules/no-cond-assign
 eleventyNavigation:
 	key: lint-rules/js/noCondAssign
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noCondAssign
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:48ce22b6b3962346ae19f3e6f8adf5e6fc44da85,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow assignment operators in conditional expressions
 
-<!-- GENERATED:START(hash:ba881b16eb706d833139ed7598785af7b1cd001d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-cond-assign](https://eslint.org/docs/rules/no-cond-assign)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:ba881b16eb706d833139ed7598785af7b1cd001d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token function">let</span> <span class="token function">i</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token function">i</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token function">i</span><span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -116,4 +121,4 @@ MISSING DOCUMENTATION
 	<span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token variable">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

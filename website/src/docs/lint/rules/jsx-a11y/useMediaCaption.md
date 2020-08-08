@@ -1,21 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx-a11y/mediaHasCaption.md
----
-title: Lint Rule jsx-a11y/mediaHasCaption
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/jsx-a11y/mediaHasCaption
-	parent: lint-rules
-	title: jsx-a11y/mediaHasCaption
----
-
-# jsx-a11y/mediaHasCaption
-
-=======
 ---
 title: Lint Rule jsx-a11y/useMediaCaption
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforces that `audio` and `video` elements must have a `track` for captions
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/media-has-caption.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/useMediaCaption
 	parent: lint-rules
@@ -24,10 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/useMediaCaption
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx-a11y/useMediaCaption.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:72046e7e1ff3ae410f0415b78503d0fe0f599bcf,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforces that `audio` and `video` elements must have a `track` for captions
 
-<!-- GENERATED:START(hash:edebc9b4f7efce3e0c127a0bd8be9e4d40f717ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [media-has-caption](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/media-has-caption.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:edebc9b4f7efce3e0c127a0bd8be9e4d40f717ac,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">audio</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -97,4 +87,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">audio</span>&gt;&lt;<span class="token attr-name">track</span> <span class="token attr-name">kind</span><span class="token operator">=</span><span class="token string">&apos;captions&apos;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">audio</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">video</span>&gt;&lt;<span class="token attr-name">track</span> <span class="token attr-name">kind</span><span class="token operator">=</span><span class="token string">&apos;captions&apos;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">video</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">video</span> <span class="token attr-name">muted</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">video</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

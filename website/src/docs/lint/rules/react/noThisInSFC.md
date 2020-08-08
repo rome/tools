@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noThisInSFC
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: report `this` being used in stateless components
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md
 eleventyNavigation:
 	key: lint-rules/react/noThisInSFC
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noThisInSFC
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:d168462932920b62d310a2b13a1518d6dd055fc6,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+report `this` being used in stateless components
 
-<!-- GENERATED:START(hash:2e611eeaea8ce642b29080b31320453871a32796,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-this-in-sfc](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:2e611eeaea8ce642b29080b31320453871a32796,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token operator">&lt;</span><span class="token regex">/div&gt;</span></code></pre>{% endraw %}
@@ -434,4 +439,4 @@ MISSING DOCUMENTATION
 		&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
 	<span class="token punctuation">)</span>
 <span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

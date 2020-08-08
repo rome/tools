@@ -1,23 +1,9 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx/preferSelfClosingElements.md
----
-title: Lint Rule jsx/preferSelfClosingElements
-layout: layouts/rule.liquid
-showHero: false
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-  key: lint-rules/jsx/preferSelfClosingElements
-  parent: lint-rules
-  title: jsx/preferSelfClosingElements
----
-
-# jsx/preferSelfClosingElements
-
-=======
 ---
 title: Lint Rule jsx/useSelfClosingElements
 layout: layouts/rule.liquid
 showHero: false
-description: MISSING DOCUMENTATION
+description: prevent extra closing tags for components without children
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md
 eleventyNavigation:
   key: lint-rules/jsx/useSelfClosingElements
   parent: lint-rules
@@ -26,10 +12,13 @@ eleventyNavigation:
 
 # jsx/useSelfClosingElements
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx/useSelfClosingElements.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:2d61c96d6ce5e69e530418585091f63efb76ed47,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent extra closing tags for components without children
 
-<!-- GENERATED:START(hash:407bc4c05f4b8d535dd30253cc6e435ce622525b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [self-closing-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:407bc4c05f4b8d535dd30253cc6e435ce622525b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
@@ -96,4 +85,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Component</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">Component</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noImportAssign
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow assigning to imported bindings
+eslint-rule: https://eslint.org/docs/rules/no-import-assign
 eleventyNavigation:
 	key: lint-rules/js/noImportAssign
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noImportAssign
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:dbff558a6a3f722c7582c4a0f9352a18982269bf,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow assigning to imported bindings
 
-<!-- GENERATED:START(hash:1dbd753563a2598640f18eb29d6e69b2b9d68431,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-import-assign](https://eslint.org/docs/rules/no-import-assign)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:1dbd753563a2598640f18eb29d6e69b2b9d68431,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">x</span> <span class="token keyword">from</span> <span class="token string">&apos;y&apos;</span><span class="token punctuation">;</span>
@@ -182,4 +187,4 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

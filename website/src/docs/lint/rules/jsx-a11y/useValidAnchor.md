@@ -1,21 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/jsx-a11y/anchorIsValid.md
----
-title: Lint Rule jsx-a11y/anchorIsValid
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/jsx-a11y/anchorIsValid
-	parent: lint-rules
-	title: jsx-a11y/anchorIsValid
----
-
-# jsx-a11y/anchorIsValid
-
-=======
 ---
 title: Lint Rule jsx-a11y/useValidAnchor
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce all anchors are valid, navigable elements
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/useValidAnchor
 	parent: lint-rules
@@ -24,10 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/useValidAnchor
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/jsx-a11y/useValidAnchor.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:d686bd489222ed8f4bb5fb2c49c6741730776927,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce all anchors are valid, navigable elements
 
-<!-- GENERATED:START(hash:c4486d57e6931530d590466dfe4736a32f9fe5e6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [anchor-is-valid](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:c4486d57e6931530d590466dfe4736a32f9fe5e6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;#&apos;</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -336,4 +326,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;/foo/bar&apos;</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">someValidPath</span><span class="token punctuation">}</span> <span class="token attr-name">onClick</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

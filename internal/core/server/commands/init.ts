@@ -22,6 +22,7 @@ import {
 } from "@internal/diagnostics";
 
 type Flags = {
+	apply: boolean;
 	allowDirty: boolean;
 };
 
@@ -32,6 +33,12 @@ export default createServerCommand<Flags>({
 	examples: [],
 	defineFlags(c) {
 		return {
+			apply: c.get(
+				"apply",
+				{
+					description: markup``,
+				},
+			).asBoolean(false),
 			allowDirty: c.get(
 				"allowDirty",
 				{
@@ -87,7 +94,7 @@ export default createServerCommand<Flags>({
 		}
 
 		// Check for no or dirty repo
-		if (!flags.allowDirty) {
+		if (flags.apply && !flags.allowDirty) {
 			const vcsClient = await getVCSClient(cwd);
 
 			if (vcsClient === undefined) {
@@ -111,8 +118,8 @@ export default createServerCommand<Flags>({
 		const configPath = cwd.append(PROJECT_CONFIG_DIRECTORY, "rome.rjson");
 
 		// Track some information about our project generation
-		let savedCheckFiles = 0;
-		let remainingCheckErrors = 0;
+		let savedCheckFiles: number | undefined = undefined;
+		let remainingCheckErrors: number | undefined = undefined;
 		const files: AbsoluteFilePathMap<StaticMarkup> = new AbsoluteFilePathMap();
 		files.set(
 			configPath,
@@ -159,6 +166,10 @@ export default createServerCommand<Flags>({
 			{
 				message: markup`Generating lint config and apply formatting`,
 				async callback() {
+					if (!flags.apply) {
+						return {skipped: true};
+					}
+
 					const linter = new Linter(
 						req,
 						{
@@ -169,6 +180,7 @@ export default createServerCommand<Flags>({
 					savedCheckFiles = savedCount;
 
 					const globals: Array<string> = [];
+					remainingCheckErrors = 0;
 					for (const diag of printer.processor.getDiagnostics()) {
 						if (diag.description.category === "lint/js/noUndeclaredVariables") {
 							if (diag.meta && diag.meta.identifierName) {
@@ -185,6 +197,8 @@ export default createServerCommand<Flags>({
 							},
 						});
 					}
+
+					return {skipped: false};
 				},
 			},
 			{
@@ -239,26 +253,28 @@ export default createServerCommand<Flags>({
 			},
 		]);
 
-		await reporter.section(
-			markup`Summary`,
-			async () => {
-				if (savedCheckFiles > 0) {
-					reporter.info(
-						markup`<emphasis>${savedCheckFiles}</emphasis> <grammarNumber plural="files" singular="file">${String(
-							savedCheckFiles,
-						)}</grammarNumber> saved`,
-					);
-				}
-				if (remainingCheckErrors === 0) {
-					reporter.success(markup`No problems found!`);
-				} else {
-					reporter.warn(
-						markup`<emphasis>${remainingCheckErrors}</emphasis> errors remaining. Run <code>rome check</code> to view.`,
-					);
-				}
-				reporter.br();
-			},
-		);
+		if (savedCheckFiles !== undefined && remainingCheckErrors !== undefined) {
+			await reporter.section(
+				markup`Summary`,
+				async () => {
+					if (savedCheckFiles !== undefined && savedCheckFiles > 0) {
+						reporter.info(
+							markup`<emphasis>${savedCheckFiles}</emphasis> <grammarNumber plural="files" singular="file">${String(
+								savedCheckFiles,
+							)}</grammarNumber> saved`,
+						);
+					}
+					if (remainingCheckErrors === 0) {
+						reporter.success(markup`No problems found!`);
+					} else {
+						reporter.warn(
+							markup`<emphasis>${remainingCheckErrors}</emphasis> errors remaining. Run <code>rome check</code> to view.`,
+						);
+					}
+					reporter.br();
+				},
+			);
+		}
 
 		await reporter.section(
 			markup`Files created`,

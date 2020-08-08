@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noRedundantShouldComponentUpdate
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: flag `shouldComponentUpdate` when extending `PureComponent`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-redundant-should-component-update.md
 eleventyNavigation:
 	key: lint-rules/react/noRedundantShouldComponentUpdate
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noRedundantShouldComponentUpdate
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:3f35110d68d0a52cf76dfbecb4b7f3c3aee16308,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+flag `shouldComponentUpdate` when extending `PureComponent`
 
-<!-- GENERATED:START(hash:eff2720ffe6c8a23a7b2005d653a2316c07613a1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-redundant-should-component-update](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-redundant-should-component-update.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:eff2720ffe6c8a23a7b2005d653a2316c07613a1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
@@ -63,4 +68,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">PureComponent</span> <span class="token punctuation">{</span>
 	<span class="token variable">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

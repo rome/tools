@@ -23,7 +23,7 @@ type LintDefinition = {
 	ruleName: string;
 };
 
-export async function main() {
+export async function getLintDefs(): Promise<Array<LintDefinition>> {
 	let defs: Array<LintDefinition> = [];
 
 	for (const categoryPath of await readDirectory(lintRulesFolder)) {
@@ -34,7 +34,11 @@ export async function main() {
 
 		const categoryFiles = await readDirectory(categoryPath);
 		for (const path of categoryFiles) {
-			if (path.hasEndExtension("ts") && !path.hasEndExtension("test.ts")) {
+			if (
+				path.getBasename()[0] !== "." &&
+				path.hasEndExtension("ts") &&
+				!path.hasEndExtension("test.ts")
+			) {
 				const basename = path.getExtensionlessBasename();
 				const ruleName = `${category}/${basename}`;
 
@@ -54,6 +58,27 @@ export async function main() {
 	defs = defs.sort((a, b) => {
 		return a.ruleName.localeCompare(b.ruleName);
 	});
+
+	return defs;
+}
+
+// Extract the description field from the docs frontmatter
+export function getDocRuleDescription(
+	path: AbsoluteFilePath,
+	content: string,
+): string {
+	const description = content.match(/description:(.*)(\n|\r\n)/);
+	if (description) {
+		return description[1].trim();
+	} else {
+		throw new Error(
+			pretty`${path.join()} did not contain a description: ${content}`,
+		);
+	}
+}
+
+export async function main() {
+	const defs = await getLintDefs();
 
 	// Generate compiler rules index
 	await modifyGeneratedFile(
@@ -119,27 +144,24 @@ export async function main() {
 		},
 	);
 
-	// Extract the description field from the docs frontmatter
-	function getDocRuleDescription(
-		path: AbsoluteFilePath,
-		content: string,
-	): string {
-		const description = content.match(/description:(.*)(\n|\r\n)/);
-		if (description) {
-			return description[1].trim();
-		} else {
-			throw new Error(
-				pretty`${path.join()} did not contain a description: ${content}`,
-			);
-		}
-	}
-
 	// Used to map lint category name to docs headings
 	const categoryDocsAliases = {
-		js: "JavaScript",
-		ts: "TypeScript",
-		"jsx-a11y": "JSX Accessibility",
-		react: "React",
+		js: {
+			title: "JavaScript",
+			credits: `<a href="https://eslint.org/">ESLint</a>`,
+		},
+		ts: {
+			title: "TypeScript",
+			credits: undefined,
+		},
+		"jsx-a11y": {
+			title: "JSX Accessibility",
+			credits: `<a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>`,
+		},
+		react: {
+			title: "React",
+			credits: `<a href="https://github.com/yannickcr/eslint-plugin-react">eslint-plugin-react</a>`,
+		},
 	};
 
 	// Order we want to display the categories
@@ -160,7 +182,15 @@ export async function main() {
 			const lines = [];
 
 			for (const rootCategory of categoryDocsOrder) {
-				lines.push(`## ${categoryDocsAliases[rootCategory]}`);
+				const {title, credits} = categoryDocsAliases[rootCategory];
+				lines.push("<section>");
+				lines.push(`<h2>${title}</h2>`);
+
+				if (credits !== undefined) {
+					lines.push(
+						`<p>Rule semantics and descriptions taken from ${credits}. See individual rule docs for direct references.</p>`,
+					);
+				}
 
 				for (const {basename, ruleName, category, docs} of defs) {
 					if (category !== rootCategory) {
@@ -181,9 +211,9 @@ export async function main() {
 					lines.push(escapeXHTMLEntities(description));
 					lines.push("</div>");
 				}
-			}
 
-			lines.push("");
+				lines.push("</section>");
+			}
 
 			return {lines};
 		},

@@ -1,21 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/sparseArray.md
----
-title: Lint Rule js/sparseArray
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/sparseArray
-	parent: lint-rules
-	title: js/sparseArray
----
-
-# js/sparseArray
-
-=======
 ---
 title: Lint Rule js/noSparseArray
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow sparse arrays
+eslint-rule: https://eslint.org/docs/rules/no-sparse-arrays
 eleventyNavigation:
 	key: lint-rules/js/noSparseArray
 	parent: lint-rules
@@ -24,10 +11,13 @@ eleventyNavigation:
 
 # js/noSparseArray
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/noSparseArray.md
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:e565fedda02f4fb171582e4596974e73eb0c83fd,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow sparse arrays
 
-<!-- GENERATED:START(hash:de96ae471bbc32ba9470fe071c43c3a3bdce3c5f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-sparse-arrays](https://eslint.org/docs/rules/no-sparse-arrays)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:de96ae471bbc32ba9470fe071c43c3a3bdce3c5f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
@@ -47,4 +37,4 @@ MISSING DOCUMENTATION
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>undefined</strong></span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

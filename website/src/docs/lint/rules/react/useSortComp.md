@@ -1,22 +1,8 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/react/sortComp.md
----
-title: Lint Rule react/sortComp
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/react/sortComp
-	parent: lint-rules
-	title: react/sortComp
----
-
-# react/sortComp
-
-This rule enforces methods and properties order. When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.
-=======
 ---
 title: Lint Rule react/useSortComp
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce component methods order
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
 eleventyNavigation:
 	key: lint-rules/react/useSortComp
 	parent: lint-rules
@@ -25,10 +11,13 @@ eleventyNavigation:
 
 # react/useSortComp
 
-MISSING DOCUMENTATION
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/react/useSortComp.md
+This rule enforces methods and properties order. When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.
 
-<!-- GENERATED:START(hash:5b22ee3464a6e3f718f145f32b73d48ad6e1db38,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:cb48f03eeaac6c20f8d21fe7bebd86070c0c51db,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:5b22ee3464a6e3f718f145f32b73d48ad6e1db38,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a lifecycle method to be placed before render</span>
@@ -325,4 +314,4 @@ MISSING DOCUMENTATION
     <span class="token keyword">return</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noUnusedVariables
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow unused variables
+eslint-rule: https://eslint.org/docs/rules/no-unused-vars
 eleventyNavigation:
 	key: lint-rules/js/noUnusedVariables
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noUnusedVariables
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:4ab38cdce1ed7ab05a6f370dccf8050b3092c442,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow unused variables
 
-<!-- GENERATED:START(hash:261161e50a68ab30e274a5b69ba8ee8cce09707f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:261161e50a68ab30e274a5b69ba8ee8cce09707f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -128,4 +133,4 @@ MISSING DOCUMENTATION
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">b</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

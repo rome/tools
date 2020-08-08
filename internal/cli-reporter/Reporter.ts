@@ -630,7 +630,12 @@ export default class Reporter implements ReporterNamespace {
 	public async steps(
 		callbacks: Array<{
 			message: AnyMarkup;
-			callback: () => Promise<void>;
+			callback: () => Promise<
+				| void
+				| {
+						skipped: boolean;
+					}
+			>;
 		}>,
 		clear: boolean = true,
 	) {
@@ -642,8 +647,10 @@ export default class Reporter implements ReporterNamespace {
 			try {
 				this.step(current, total, message);
 
-				await callback();
-				current++;
+				const res = await callback();
+				if (res === undefined || !res.skipped) {
+					current++;
+				}
 
 				if (clear) {
 					this.removeLine(lineSnapshot);

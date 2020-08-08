@@ -2,7 +2,7 @@ import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
 
 test(
-	"should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",
+	"--apply should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",
 	createIntegrationTest(
 		{
 			disableProjectConfig: true,
@@ -11,7 +11,10 @@ test(
 			},
 		},
 		async (t, {client}) => {
-			await client.query({commandName: "init", commandFlags: {allowDirty: true}});
+			await client.query({
+				commandName: "init",
+				commandFlags: {apply: true, allowDirty: true},
+			});
 		},
 	),
 );

@@ -1,33 +1,20 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/singleVarDeclarator.md
 ---
-title: Lint Rule js/singleVarDeclarator
+title: Lint Rule js/noSingleVarDeclarator
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: lint-rules/js/singleVarDeclarator
+	key: lint-rules/js/noSingleVarDeclarator
 	parent: lint-rules
-	title: js/singleVarDeclarator
+	title: js/noSingleVarDeclarator
 ---
 
-# js/singleVarDeclarator
+# js/noSingleVarDeclarator
 
-=======
----
-title: Lint Rule js/useSingleVarDeclarator
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/useSingleVarDeclarator
-	parent: lint-rules
-	title: js/useSingleVarDeclarator
----
-
-# js/useSingleVarDeclarator
-
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/useSingleVarDeclarator.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:05e2ea1fc5bb387f5f88f278c4ffe442ec6dd30f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:05e2ea1fc5bb387f5f88f278c4ffe442ec6dd30f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span><span class="token punctuation">,</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -48,4 +35,4 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token function">let</span> <span class="token function">i</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">x</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token function">i</span> <span class="token operator">&lt;</span> <span class="token function">arr</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">;</span> <span class="token function">i</span><span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

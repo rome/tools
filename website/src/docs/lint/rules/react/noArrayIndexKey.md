@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noArrayIndexKey
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent usage of Array index in keys
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md
 eleventyNavigation:
 	key: lint-rules/react/noArrayIndexKey
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noArrayIndexKey
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:4ecac919a362c76e6034d304e18d1486db600512,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent usage of Array index in keys
 
-<!-- GENERATED:START(hash:9fba3989bcd7bbb9536ca86e94dd04fb97dfb66a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:9fba3989bcd7bbb9536ca86e94dd04fb97dfb66a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
@@ -788,4 +793,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token variable">reduceRight</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token variable">concat</span><span class="token punctuation">(</span>&lt;<span class="token attr-name">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">thing</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
 <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

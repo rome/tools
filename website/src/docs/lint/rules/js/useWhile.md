@@ -1,17 +1,3 @@
-<<<<<<< HEAD:website/src/docs/lint/rules/js/preferWhile.md
----
-title: Lint Rule js/preferWhile
-layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
-eleventyNavigation:
-	key: lint-rules/js/preferWhile
-	parent: lint-rules
-	title: js/preferWhile
----
-
-# js/preferWhile
-
-=======
 ---
 title: Lint Rule js/useWhile
 layout: layouts/rule.liquid
@@ -24,10 +10,11 @@ eleventyNavigation:
 
 # js/useWhile
 
->>>>>>> feat: consolidate lint rule naming:website/src/docs/lint/rules/js/useWhile.md
+<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+<!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8f354e6aadf9681b631b3bb5fcc7e679193772ae,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:8f354e6aadf9681b631b3bb5fcc7e679193772ae,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> <span class="token function">x</span><span class="token punctuation">.</span><span class="token function">running</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -75,4 +62,4 @@ MISSING DOCUMENTATION
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>doSomething();
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

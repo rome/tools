@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noDuplicateCase
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow duplicate case labels
+eslint-rule: https://eslint.org/docs/rules/no-duplicate-case
 eleventyNavigation:
 	key: lint-rules/js/noDuplicateCase
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noDuplicateCase
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:1cad8cd63a412e8a4bd0ceed75e6888dc7e941c5,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow duplicate case labels
 
-<!-- GENERATED:START(hash:19b5bdc5f66d87eba7033014ffab88e26fda1592,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-duplicate-case](https://eslint.org/docs/rules/no-duplicate-case)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:19b5bdc5f66d87eba7033014ffab88e26fda1592,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
@@ -246,4 +251,4 @@ MISSING DOCUMENTATION
 	<span class="token keyword">default</span><span class="token punctuation">:</span>
 		<span class="token keyword">break</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->
