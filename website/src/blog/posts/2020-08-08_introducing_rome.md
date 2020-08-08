@@ -13,7 +13,7 @@ layout: layouts/blog.liquid
 
 We're excited to announce the first release and general availability of the **Rome** linter for JavaScript and TypeScript.
 
-This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
