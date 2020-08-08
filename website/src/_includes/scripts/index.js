@@ -14,8 +14,6 @@ window.addEventListener(
 			if (isMobileSidebarVisible && !isMobile && isMobileSidebarVisible) {
 				toggleMobileSidebar();
 			}
-
-			manager.checkActive();
 		});
 	},
 );
@@ -411,7 +409,7 @@ class Manager {
 			return;
 		}
 
-		if (this.scrollToHeading(href, true)) {
+		if (this.scrollToHeading(href)) {
 			event.preventDefault();
 		}
 	}
