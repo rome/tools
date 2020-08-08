@@ -27,8 +27,9 @@ import {
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
 import {AnyVisitor} from "../types";
+import {inheritLoc} from "@internal/js-ast-utils";
 
-// Can be used with referencial equality to determine if paths are derivatives of each other
+// Can be used with referential equality to determine if paths are derivatives of each other
 // Import for state retention which requires tracking ownership
 export type PathToken = {
 	type: "PATH_TOKEN";
@@ -438,6 +439,29 @@ export default class Path {
 
 		if (suppressed || fixed === undefined) {
 			return signals.replace(old);
+		}
+
+		// Inherit old location if necessary
+		if (fixed.type === "REPLACE") {
+			let value = fixed.value;
+			if (Array.isArray(value)) {
+				// For arrays the first one gets the loc
+				const [first, ...rest] = value;
+				if (first.loc === undefined) {
+					value = [
+						{
+							...first,
+							loc: inheritLoc(old),
+						},
+						...rest,
+					];
+				}
+			} else {
+				value = {
+					...value,
+					loc: inheritLoc(old),
+				};
+			}
 		}
 
 		return fixed;
