@@ -47,6 +47,6 @@ We plan on covering the following areas:
 | &mdash; JSX  | ✅ | ✅ | ✅ |
 | JSON | ✅ | ✅ | |
 | &mdash; [RJSON](#rome-json) | ✅ | ✅ | |
-| HTML | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |
-| CSS | ✅ | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |
-| Markdown | ✅ | ✅ | <span aria-label="Work in Progress">⌛</span> [#123](https://github.com/romefrontend/rome/issues/123) |
+| HTML [#983](https://github.com/romefrontend/rome/issues/983) | <span aria-label="Work in Progress">⌛</span> | <span aria-label="Work in Progress">⌛</span> | <span aria-label="Work in Progress">⌛</span> |
+| CSS [#984](https://github.com/romefrontend/rome/issues/984) | ✅ | <span aria-label="Work in Progress">⌛</span> | <span aria-label="Work in Progress">⌛</span> |
+| Markdown [#985](https://github.com/romefrontend/rome/issues/985) | <span aria-label="Work in Progress">⌛</span> | <span aria-label="Work in Progress">⌛</span> | <span aria-label="Work in Progress">⌛</span> |
