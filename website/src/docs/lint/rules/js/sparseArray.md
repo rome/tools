@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/sparseArray
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow sparse arrays
+eslint-rule: https://eslint.org/docs/rules/no-sparse-arrays
 eleventyNavigation:
 	key: lint-rules/js/sparseArray
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/sparseArray
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:e565fedda02f4fb171582e4596974e73eb0c83fd,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow sparse arrays
 
-<!-- GENERATED:START(hash:f85b9fb73eb6e8b3e17333808763c88ac3977f5b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-sparse-arrays](https://eslint.org/docs/rules/no-sparse-arrays)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:f85b9fb73eb6e8b3e17333808763c88ac3977f5b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
@@ -32,4 +37,4 @@ MISSING DOCUMENTATION
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>undefined</strong></span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

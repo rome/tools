@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/imgRedundantAlt
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce `img` alt prop does not contain the word "image", "picture", or "photo"
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/imgRedundantAlt
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/imgRedundantAlt
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:52a758e1c796e7a09d3d3b299d2739e51b698c9d,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
-<!-- GENERATED:START(hash:2084db9b34e10979b41c9803d69f5b178b30eccb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [img-redundant-alt](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:2084db9b34e10979b41c9803d69f5b178b30eccb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;photo content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -117,4 +122,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;alt&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">photo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

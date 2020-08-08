@@ -48,24 +48,27 @@
 			}
 		}
 
+		p {
+			padding: 0 $unit * 2;
+		}
+
 		.rule:first-child{
 			border-top: 1px solid var(--soft-border-color);
 		}
 
 		.rule {
 			padding: $unit $unit * 2;
-
 			@include mobile-only() {
 				padding: $unit $unit;
 			}
 
 			border-top: 1px solid var(--soft-border-color);
+
 			h3 {
 				font-size: 1.25em;
 				margin-top: 0;
 				border: 0;
 			}
-
 		}
 
 		.rule:nth-child(even) {

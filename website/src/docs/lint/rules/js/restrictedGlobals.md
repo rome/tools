@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/restrictedGlobals
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow certain global variables
+eslint-rule: https://eslint.org/docs/rules/no-restricted-globals
 eleventyNavigation:
 	key: lint-rules/js/restrictedGlobals
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/restrictedGlobals
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:481826b79c63d94e31193a209e6081ec995ae582,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow certain global variables
 
-<!-- GENERATED:START(hash:8fde604251ce5430aa8f172d029c15ac16411ac2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-restricted-globals](https://eslint.org/docs/rules/no-restricted-globals)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:8fde604251ce5430aa8f172d029c15ac16411ac2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -46,4 +51,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">info</span><span class="token punctuation">(</span><span class="token variable">event</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

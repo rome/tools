@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/sortComp
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce component methods order
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
 eleventyNavigation:
 	key: lint-rules/react/sortComp
 	parent: lint-rules
@@ -12,7 +13,13 @@ eleventyNavigation:
 
 This rule enforces methods and properties order. When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.
 
-<!-- GENERATED:START(hash:01e526f0a2d7ba3087422820d23ce346612dec30,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5561524e2b7df8782853a5f38a8e94109b2134d3,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce component methods order
+
+**ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:01e526f0a2d7ba3087422820d23ce346612dec30,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a lifecycle method to be placed before render</span>
@@ -309,4 +316,4 @@ This rule enforces methods and properties order. When creating React components 
     <span class="token keyword">return</span> <span class="token boolean">null</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

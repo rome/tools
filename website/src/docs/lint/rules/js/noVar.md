@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noVar
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: require `let` or `const` instead of `var`
+eslint-rule: https://eslint.org/docs/rules/no-var
 eleventyNavigation:
 	key: lint-rules/js/noVar
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noVar
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:011cdf7622213580aa078f6c2c0dcc4f2a66990e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+require `let` or `const` instead of `var`
 
-<!-- GENERATED:START(hash:fe7ed66be1bfb4fa37bc5b55fe3a85366ee8f751,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-var](https://eslint.org/docs/rules/no-var)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:fe7ed66be1bfb4fa37bc5b55fe3a85366ee8f751,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
@@ -29,4 +34,4 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use let or const instead.</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

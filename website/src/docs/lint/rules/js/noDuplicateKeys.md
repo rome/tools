@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noDuplicateKeys
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow duplicate keys in object literals
+eslint-rule: https://eslint.org/docs/rules/no-dupe-keys
 eleventyNavigation:
 	key: lint-rules/js/noDuplicateKeys
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noDuplicateKeys
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:1b69c57fd50f9c650f9cdbd1779e40a6c5960939,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow duplicate keys in object literals
 
-<!-- GENERATED:START(hash:d420d85752497fe667e0cd3c33079b23cf4665d7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-dupe-keys](https://eslint.org/docs/rules/no-dupe-keys)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:d420d85752497fe667e0cd3c33079b23cf4665d7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
@@ -34,4 +39,4 @@ MISSING DOCUMENTATION
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

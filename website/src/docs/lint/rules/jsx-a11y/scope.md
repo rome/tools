@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/scope
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce scope prop is only used on `th` elements
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/scope
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/scope
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:b113286eb753f72832a8afaa4a8cb9eb071838c3,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce scope prop is only used on `th` elements
 
-<!-- GENERATED:START(hash:9337c1bb7c57fa0b5b2be4c52e7dafbdb957f90c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [scope](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/scope.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:9337c1bb7c57fa0b5b2be4c52e7dafbdb957f90c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -57,4 +62,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">scope</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">th</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;col&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">th</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

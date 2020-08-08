@@ -2,6 +2,7 @@
 title: Lint Rule jsx-a11y/altText
 layout: layouts/rule.liquid
 description: enforce alternative text
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/altText
 	parent: lint-rules
@@ -10,10 +11,16 @@ eleventyNavigation:
 
 # jsx-a11y/altText
 
-Providing alternative text to images or areas help to rely on to screen 
+Providing alternative text to images or areas help to rely on to screen
 readers to understand the purpose and the context of the image.
 
-<!-- GENERATED:START(hash:21a7a92e0091f149a2c7459b52783be6c31a4500,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0188bde429e518886a6e4fa5c9e8854ae071378d,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce alternative text
+
+**ESLint Equivalent:** [alt-text](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/alt-text.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:21a7a92e0091f149a2c7459b52783be6c31a4500,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -221,4 +228,4 @@ readers to understand the purpose and the context of the image.
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;image&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;This is descriptive!&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;image&apos;</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;image&apos;</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&apos;id1&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

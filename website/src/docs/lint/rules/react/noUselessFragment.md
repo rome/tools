@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noUselessFragment
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow unnecessary fragments
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md
 eleventyNavigation:
 	key: lint-rules/react/noUselessFragment
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noUselessFragment
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:b6e099bff0712ef912ed4d2898880643f57b9614,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow unnecessary fragments
 
-<!-- GENERATED:START(hash:00664948b76338c6edebc05d8581497b89c62485,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:00664948b76338c6edebc05d8581497b89c62485,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -184,4 +189,4 @@ MISSING DOCUMENTATION
 	&lt;<span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token attr-name">SomeComponent</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span>&gt;<span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">value</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

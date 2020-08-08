@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/emptyBlocks
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow empty block statements
+eslint-rule: https://eslint.org/docs/rules/no-empty
 eleventyNavigation:
 	key: lint-rules/js/emptyBlocks
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/emptyBlocks
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:efb273c000cc876ea875410d0e3790f32f0ecebe,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow empty block statements
 
-<!-- GENERATED:START(hash:70faf58a6208a1aea90b15b8c2b6145fb48ac72a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-empty](https://eslint.org/docs/rules/no-empty)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:70faf58a6208a1aea90b15b8c2b6145fb48ac72a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -54,4 +59,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">// empty</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

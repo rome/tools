@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noDirectMutationState
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent direct mutation of `this.state`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md
 eleventyNavigation:
 	key: lint-rules/react/noDirectMutationState
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noDirectMutationState
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:1976d33619f47ca551904b3d832e0c002d9d88bf,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent direct mutation of `this.state`
 
-<!-- GENERATED:START(hash:babf843adcefbd9110e8524ec6ee90556268e94d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-direct-mutation-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:babf843adcefbd9110e8524ec6ee90556268e94d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -582,4 +587,4 @@ MISSING DOCUMENTATION
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

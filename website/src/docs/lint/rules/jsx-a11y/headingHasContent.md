@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/headingHasContent
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce heading (`h1`, `h2`, etc) elements contain accessible content
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/heading-has-content.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/headingHasContent
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/headingHasContent
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:b9b6d25c770d35c11da9d0a74c305c6dd60d7ecf,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce heading (`h1`, `h2`, etc) elements contain accessible content
 
-<!-- GENERATED:START(hash:3f70f4d400c7af22426baaf314425abd5ec7cab0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [heading-has-content](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/heading-has-content.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:3f70f4d400c7af22426baaf314425abd5ec7cab0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -65,4 +70,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span>&gt;&lt;<span class="token attr-name">TextWrapper</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;heading&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span>&gt;&lt;<span class="token attr-name">div</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;visible content&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

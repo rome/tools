@@ -8,9 +8,11 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:3e58a07168fc447fd610cddefcdb28e9e60ccc69,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:95730a40ea031459314334e569d3c92352c1b13c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import preferClosingNonVoid from "./html/preferClosingNonVoid.test.rjson";
+// @ts-ignore
+import camelCase from "./js/camelCase.test.rjson";
 // @ts-ignore
 import caseSingleStatement from "./js/caseSingleStatement.test.rjson";
 // @ts-ignore
@@ -222,6 +224,7 @@ import voidDomElementsNoChildren from "./react/voidDomElementsNoChildren.test.rj
 
 export const tests: Tests = {
 	"html/preferClosingNonVoid": preferClosingNonVoid,
+	"js/camelCase": camelCase,
 	"js/caseSingleStatement": caseSingleStatement,
 	"js/confusingLanguage": confusingLanguage,
 	"js/defaultExportSameBasename": defaultExportSameBasename,

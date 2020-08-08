@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noDidUpdateSetState
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: pevent usage of `setState` in `componentDidUpdate`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md
 eleventyNavigation:
 	key: lint-rules/react/noDidUpdateSetState
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noDidUpdateSetState
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:f3c7e1ef232eee4a70694ebd7a5d48936eeef345,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+pevent usage of `setState` in `componentDidUpdate`
 
-<!-- GENERATED:START(hash:6e34a6bcba8c6958858fd40faa47185a0458f5e6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-did-update-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:6e34a6bcba8c6958858fd40faa47185a0458f5e6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -142,4 +147,4 @@ MISSING DOCUMENTATION
 		<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token variable">undefined</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

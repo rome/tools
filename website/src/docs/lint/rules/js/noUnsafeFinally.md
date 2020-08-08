@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noUnsafeFinally
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow control flow statements in `finally` blocks
+eslint-rule: https://eslint.org/docs/rules/no-unsafe-finally
 eleventyNavigation:
 	key: lint-rules/js/noUnsafeFinally
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noUnsafeFinally
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:14db8e694f7ca033dc3fc28e3669f576bcc7be68,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow control flow statements in `finally` blocks
 
-<!-- GENERATED:START(hash:6b5d47ff602c62f3547f7bf4fc5fea0863233e04,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-unsafe-finally](https://eslint.org/docs/rules/no-unsafe-finally)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:6b5d47ff602c62f3547f7bf4fc5fea0863233e04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">greet1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -116,4 +121,4 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Do not use control flow statements inside finally clauses.</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

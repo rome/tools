@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/iframeHasTitle
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce `iframe` elements have a title attribute
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/iframe-has-title.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/iframeHasTitle
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/iframeHasTitle
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:b8d952babffe757e0c4c14c9bb33699ba79356b4,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce `iframe` elements have a title attribute
 
-<!-- GENERATED:START(hash:4e6a3b103abeb000b75cc9dd8fad51183608def4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [iframe-has-title](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/iframe-has-title.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:4e6a3b103abeb000b75cc9dd8fad51183608def4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">iframe</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -158,4 +163,4 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

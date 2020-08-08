@@ -10,6 +10,8 @@ import {createUnknownFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {ob1Coerce1} from "@internal/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
+import {getLintDefs, getDocRuleDescription} from "./lint-rules";
+import {readFileText} from "@internal/fs";
 
 const {worker, performFileOperation} = createMockWorker();
 
@@ -35,6 +37,26 @@ function highlightPre(filename: string, code: string): string {
 			),
 		),
 	);
+}
+
+// Extract the description field from the docs frontmatter
+export function extractESLintRuleInfo(
+	content: string,
+): undefined | {
+	url: string;
+	name: string;
+} {
+	const match = content.match(/eslint-rule:(.*)(\n|\r\n)/);
+	if (match) {
+		const url = match[1].trim();
+
+		return {
+			url,
+			name: url.split("/").pop()!.split(".")[0],
+		}
+	} else {
+		return undefined;
+	}
 }
 
 async function run(
@@ -95,6 +117,30 @@ async function run(
 }
 
 export async function main() {
+	const defs = await getLintDefs();
+
+	for (const {docs} of defs) {
+		await modifyGeneratedFile(
+			{
+				path: docs,
+				scriptName: "generated-files/lint-rules",
+				id: "description",
+			},
+			async () => {
+				const content = await readFileText(docs);
+				const eslintInfo = extractESLintRuleInfo(content);
+
+				const lines = [getDocRuleDescription(docs, content), ""];
+
+				if (eslintInfo !== undefined) {
+					lines.push(`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`);
+				}
+
+				return {lines};
+			},
+		);
+	}
+
 	for (const ruleName in tests) {
 		const rawCases = tests[ruleName];
 		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];
@@ -103,6 +149,7 @@ export async function main() {
 			{
 				path: ROOT.append(`website/src/docs/lint/rules/${ruleName}.md`),
 				scriptName: "generated-files/lint-rules-docs",
+				id: "examples",
 			},
 			async () => {
 				const lines = [];

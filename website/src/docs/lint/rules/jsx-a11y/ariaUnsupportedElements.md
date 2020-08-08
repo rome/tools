@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/ariaUnsupportedElements
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-unsupported-elements.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/ariaUnsupportedElements
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/ariaUnsupportedElements
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:55d6d38ab5c8f7b4fb7076d1c8db356e484db55a,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 
-<!-- GENERATED:START(hash:ff81b65a9b06dcd6c131e93302a2277eed885742,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [aria-unsupported-elements](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-unsupported-elements.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:ff81b65a9b06dcd6c131e93302a2277eed885742,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token attr-name">aria-hidden</span><span class="token operator">=</span><span class="token string">&apos;false&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -153,4 +158,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span> <span class="token attr-name">maria</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">script</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">script</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">style</span> <span class="token attr-name">parole</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">style</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

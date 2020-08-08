@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noDangerWithChildren
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md
 eleventyNavigation:
 	key: lint-rules/react/noDangerWithChildren
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noDangerWithChildren
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:f811d75e243845df59a3e99e8c147701a57057d4,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
-<!-- GENERATED:START(hash:e0ae8e712f050cfb0211c453156d4b18bc5f7e7c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-danger-with-children](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:e0ae8e712f050cfb0211c453156d4b18bc5f7e7c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;HTML&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span>&gt;children&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
@@ -397,4 +402,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;valid&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">&apos;children&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;valid&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token function">children</span><span class="token punctuation">:</span> <span class="token string">&apos;children&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;valid&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token function">children</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&apos;children&apos;</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -2,6 +2,7 @@
 title: Lint Rule react/jsxFragments
 layout: layouts/rule.liquid
 description: This rule enforces the use of `<>...</>`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md
 eleventyNavigation:
 	key: lint-rules/react/jsxFragments
 	parent: lint-rules
@@ -12,7 +13,13 @@ eleventyNavigation:
 
 This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
-<!-- GENERATED:START(hash:fa70b72bc83a65828e04ac68671f3b6bab73fd7f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0f6c88298a5df868af888da78da05fff0aa0fcf2,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+This rule enforces the use of `<>...</>`
+
+**ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:fa70b72bc83a65828e04ac68671f3b6bab73fd7f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Fragment</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token attr-name">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
@@ -366,4 +373,4 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token string">&apos;id&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token attr-name">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token string">&apos;id&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

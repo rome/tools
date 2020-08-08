@@ -11,3 +11,7 @@ eleventyNavigation:
 # ts/preferInterfaces
 
 It promotes the use of `interface` over `type`.
+
+<!-- GENERATED:START(hash:9a49841013c81561d6833e375c9f641de88fdd1f,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+it suggests the use of `interface` over `type`
+<!-- GENERATED:END(id:description) -->

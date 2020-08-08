@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/getterReturn
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce `return` statements in getters
+eslint-rule: https://eslint.org/docs/rules/getter-return
 eleventyNavigation:
 	key: lint-rules/js/getterReturn
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/getterReturn
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:aaa96530665f250abcad32cfc5d3bb343ec8fc5d,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce `return` statements in getters
 
-<!-- GENERATED:START(hash:ac83222abf6b198e50f0435335d55d0c70ba1548,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [getter-return](https://eslint.org/docs/rules/getter-return)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:ac83222abf6b198e50f0435335d55d0c70ba1548,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
@@ -69,4 +74,4 @@ MISSING DOCUMENTATION
 		<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;hello&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

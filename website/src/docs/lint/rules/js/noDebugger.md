@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noDebugger
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow the use of `debugger`
+eslint-rule: https://eslint.org/docs/rules/no-debugger
 eleventyNavigation:
 	key: lint-rules/js/noDebugger
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noDebugger
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:3907daf480d3f0eae86ba6bc2a886339f62699d3,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow the use of `debugger`
 
-<!-- GENERATED:START(hash:52d477da6933fdb483566ea334bad95cc4de6c6c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-debugger](https://eslint.org/docs/rules/no-debugger)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:52d477da6933fdb483566ea334bad95cc4de6c6c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -32,4 +37,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">test</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token keyword">debugger</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">test</span><span class="token punctuation">.</span><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

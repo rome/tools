@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/stylePropObject
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce style prop value is an object
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md
 eleventyNavigation:
 	key: lint-rules/react/stylePropObject
 	parent: lint-rules
@@ -12,7 +13,13 @@ eleventyNavigation:
 
 This rule enforces the value of `style` to be a object. React will ignore non-object style props, even valid JSON strings.
 
-<!-- GENERATED:START(hash:892c5ad91de97f443aa7b6b651970fdb809ecf9b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:9cd1d9e4761e2bc9e39e46eb5f542afea8962772,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce style prop value is an object
+
+**ESLint Equivalent:** [style-prop-object](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/style-prop-object.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:892c5ad91de97f443aa7b6b651970fdb809ecf9b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token boolean">true</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
@@ -89,4 +96,4 @@ This rule enforces the value of `style` to be a object. React will ignore non-ob
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">color</span><span class="token punctuation">:</span> <span class="token string">&apos;red&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

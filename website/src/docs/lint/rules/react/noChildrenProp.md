@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noChildrenProp
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent passing of children as props
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md
 eleventyNavigation:
 	key: lint-rules/react/noChildrenProp
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noChildrenProp
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:468db80ba3e79c90d80fc354fa88067bfb7f8b47,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent passing of children as props
 
-<!-- GENERATED:START(hash:e1bd7bcb2856da26e2c9cadd127a72f4137573a3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-children-prop](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:e1bd7bcb2856da26e2c9cadd127a72f4137573a3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">MyComponent</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">MyComponent</span>&gt;</code></pre>{% endraw %}
@@ -64,4 +69,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">MyComponent</span>&gt;&lt;<span class="token attr-name">AnotherComponent</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">MyComponent</span>  &gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;children&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;div&apos;</span><span class="token punctuation">,</span> <span class="token variable">child1</span><span class="token punctuation">,</span> <span class="token string">&apos;child2&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

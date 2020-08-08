@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/preferTemplate
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: require template literals instead of string concatenation
+eslint-rule: https://eslint.org/docs/rules/prefer-template
 eleventyNavigation:
 	key: lint-rules/js/preferTemplate
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/preferTemplate
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:8b698091c09367cb69c177095d0d4e0c8aa5dbb1,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+require template literals instead of string concatenation
 
-<!-- GENERATED:START(hash:849114b39cba9eaa9c4d60514a2d692b52cabdd0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [prefer-template](https://eslint.org/docs/rules/prefer-template)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:849114b39cba9eaa9c4d60514a2d692b52cabdd0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">;</span> <span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">+</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
@@ -168,4 +173,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

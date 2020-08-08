@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/roleHasRequiredAriaProps
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce that elements with ARIA roles must have all required attributes for that role
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/roleHasRequiredAriaProps
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/roleHasRequiredAriaProps
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:7ce20e6209471c1e062a6411563ec74286c91430,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce that elements with ARIA roles must have all required attributes for that role
 
-<!-- GENERATED:START(hash:2a945bfedb384b06a1b39366407fc7005825ee27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [role-has-required-aria-props](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:2a945bfedb384b06a1b39366407fc7005825ee27,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
@@ -447,4 +452,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

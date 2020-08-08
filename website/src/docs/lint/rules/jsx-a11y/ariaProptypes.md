@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/ariaProptypes
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce ARIA state and property values are valid
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-proptypes.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/ariaProptypes
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/ariaProptypes
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:eeedb9516ba140cc962e394af1ed184359f1805b,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce ARIA state and property values are valid
 
-<!-- GENERATED:START(hash:51c6e2765cc282862b00ed17cd8088750436d0af,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-proptypes.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:51c6e2765cc282862b00ed17cd8088750436d0af,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;test&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
@@ -145,4 +150,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&apos;id&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">aria-labelledby</span><span class="token operator">=</span><span class="token string">&apos;fooId barId&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">aria-details</span><span class="token operator">=</span><span class="token string">&apos;someid&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noShadowRestrictedNames
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow identifiers from shadowing restricted names
+eslint-rule: https://eslint.org/docs/rules/no-shadow-restricted-names
 eleventyNavigation:
 	key: lint-rules/js/noShadowRestrictedNames
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noShadowRestrictedNames
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:1245e3f2f132c0183f0a1a01845c052e1b76d7ff,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow identifiers from shadowing restricted names
 
-<!-- GENERATED:START(hash:44d887a7eecb7450e7569ab7a731e1cf1a283158,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:44d887a7eecb7450e7569ab7a731e1cf1a283158,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -92,4 +97,4 @@ MISSING DOCUMENTATION
     <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

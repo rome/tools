@@ -1,7 +1,8 @@
 ---
 title: Lint Rule react/noAccessStateInSetState
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: prevent using `this.state` within a `this.setState`
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md
 eleventyNavigation:
 	key: lint-rules/react/noAccessStateInSetState
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # react/noAccessStateInSetState
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:fc6d0ed1c8dc167c1a09808d00e056ee841d2059,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+prevent using `this.state` within a `this.setState`
 
-<!-- GENERATED:START(hash:777ad53bbdc7ec8c24057109863b28c085b2f788,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-access-state-in-setstate](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:777ad53bbdc7ec8c24057109863b28c085b2f788,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">MyComponent</span> <span class="token keyword">extends</span> <span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -231,4 +236,4 @@ MISSING DOCUMENTATION
 		<span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">setState</span><span class="token punctuation">(</span><span class="token variable">prevState</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">value</span><span class="token punctuation">:</span> <span class="token variable">prevState</span><span class="token punctuation">.</span><span class="token variable">value</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -2,6 +2,7 @@
 title: Lint Rule react/jsxKey
 layout: layouts/rule.liquid
 description: This rule detects a missing `key` prop
+eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md
 eleventyNavigation:
 	key: lint-rules/react/jsxKey
 	parent: lint-rules
@@ -12,7 +13,13 @@ eleventyNavigation:
 
 This rule detects a missing `key` prop in a element that requires it. Keys help React identify which items have changed, are added, or are removed.
 
-<!-- GENERATED:START(hash:c8a532d2d404d5d47f6107e977f110c1e6a453f4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c0901cdbe713fc5ec4ade4070b6ca66954409829,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+This rule detects a missing `key` prop
+
+**ESLint Equivalent:** [jsx-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:c8a532d2d404d5d47f6107e977f110c1e6a453f4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token punctuation">[</span>&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> &lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">]</span></code></pre>{% endraw %}
@@ -226,4 +233,4 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token variable">map</span><span class="token punctuation">(</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> &lt;<span class="token attr-name">div</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/tabindexNoPositive
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce tabIndex value is not greater than zero
+eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/tabindex-no-positive.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/tabindexNoPositive
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/tabindexNoPositive
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:3f7e6881b133b33804d9c1814858e7b1e06668d5,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce tabIndex value is not greater than zero
 
-<!-- GENERATED:START(hash:10e83ec301f76eff4de8534c5c8a42ec7d7fa3fa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [tabindex-no-positive](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/tabindex-no-positive.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:10e83ec301f76eff4de8534c5c8a42ec7d7fa3fa,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token string">&apos;5&apos;</span>&gt;foo&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
@@ -88,4 +93,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token string">&apos;0&apos;</span>&gt;baz&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">dynamic</span><span class="token punctuation">}</span>&gt;baz&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span> <span class="token attr-name">tabIndex</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span>&gt;baz&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

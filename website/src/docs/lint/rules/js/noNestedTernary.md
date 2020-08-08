@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noNestedTernary
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow nested ternary expressions
+eslint-rule: https://eslint.org/docs/rules/no-nested-ternary
 eleventyNavigation:
 	key: lint-rules/js/noNestedTernary
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/noNestedTernary
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:b51cb067c6275fd70c48b0d57e09a5e0b3d18a33,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow nested ternary expressions
 
-<!-- GENERATED:START(hash:b2a077b6a40dffcaa9f1390f56c925097c8b16a1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-nested-ternary](https://eslint.org/docs/rules/no-nested-ternary)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:b2a077b6a40dffcaa9f1390f56c925097c8b16a1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -73,4 +78,4 @@ MISSING DOCUMENTATION
 <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
 	<span class="token function">thing</span> <span class="token operator">=</span> <span class="token function">foobar</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

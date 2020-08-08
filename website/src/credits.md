@@ -376,6 +376,16 @@ Rome has a loose governance model that values core contributor autonomy. See [Go
 </ul>
 <!-- GENERATED:END(id:main) -->
 
+## Lint rules
+
+Some lint rule semantics and documentation inspired by and taken from the following projects:
+
+- [ESLint](https://eslint.org)
+- [eslint-plugin-jsx-a11y]( https://github.com/jsx-eslint/eslint-plugin-jsx-a11y)
+- [eslint-plugin-react](https://github.com/yannickcr/eslint-plugin-react)
+
+See individual [lint rule docs](/docs/lint/rules) for direct references.
+
 ## Forks
 
 Rome contains code forked from other projects. They have been transformed in some way, sometimes substantially rewritten, switched to use internal Rome libraries, added strong types, or simplified to our bare requirements.

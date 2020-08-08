@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/doubleEquals
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: require the use of `===` and `!==`
+eslint-rule: https://eslint.org/docs/rules/eqeqeq
 eleventyNavigation:
 	key: lint-rules/js/doubleEquals
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # js/doubleEquals
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:2b57f2ecfefec5bdcfc5d391cf5a86bc7f54d181,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+require the use of `===` and `!==`
 
-<!-- GENERATED:START(hash:80f16cb3ab76f9046016be8e44eedb18221cc939,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [eqeqeq](https://eslint.org/docs/rules/eqeqeq)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:80f16cb3ab76f9046016be8e44eedb18221cc939,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span></code></pre>{% endraw %}
@@ -39,4 +44,4 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token boolean">null</span> <span class="token operator">==</span> <span class="token variable">foo</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token boolean">null</span> <span class="token operator">!=</span> <span class="token variable">foo</span></code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->

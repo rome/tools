@@ -1,7 +1,8 @@
 ---
 title: Lint Rule jsx-a11y/noAccessKey
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
+eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noAccessKey
 	parent: lint-rules
@@ -10,9 +11,13 @@ eleventyNavigation:
 
 # jsx-a11y/noAccessKey
 
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:cf22957d9c98e2deeba712dd80a806bd49423e12,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
 
-<!-- GENERATED:START(hash:29a95e2aa1d053e0f494881fb521ea99cedc3ebb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+**ESLint Equivalent:** [no-access-key](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
+<!-- GENERATED:END(id:description) -->
+
+<!-- GENERATED:START(hash:29a95e2aa1d053e0f494881fb521ea99cedc3ebb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">accessKey</span><span class="token operator">=</span><span class="token string">&apos;key /&gt;</span></code></pre>{% endraw %}
@@ -50,4 +55,4 @@ MISSING DOCUMENTATION
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">accessKey</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-<!-- GENERATED:END(id:main) -->
+<!-- GENERATED:END(id:examples) -->
