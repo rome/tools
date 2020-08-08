@@ -20,7 +20,9 @@ async function runNPMVersion(
 	);
 
 	if (res.status !== 0) {
-		reporter.error(markup`npm version failed. stderr: ${res.stderr.toString()}, args: ${args.join()}, cwd: ${cwd.join()}`);
+		reporter.error(
+			markup`npm version failed. stderr: ${res.stderr.toString()}, args: ${args.join()}, cwd: ${cwd.join()}`,
+		);
 		process.exit(1);
 	}
 
