@@ -11,7 +11,11 @@ import {
 import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
 import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@internal/ob1";
 import {Position} from "@internal/parser-core";
-import {DiagnosticLocation, Diagnostics} from "@internal/diagnostics";
+import {
+	DiagnosticAdviceAction,
+	DiagnosticLocation,
+	Diagnostics,
+} from "@internal/diagnostics";
 import {Server} from "@internal/core";
 import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
 
@@ -155,25 +159,54 @@ export function diffTextEdits(
 	return edits;
 }
 
+export function getLSPRange(range: Consumer): LSPRange {
+	const start = range.get("start");
+	const end = range.get("end");
+
+	return {
+		start: {
+			line: start.get("line").asZeroIndexedNumber(),
+			character: start.get("character").asZeroIndexedNumber(),
+		},
+		end: {
+			line: end.get("line").asZeroIndexedNumber(),
+			character: end.get("character").asZeroIndexedNumber(),
+		},
+	};
+}
+
 export function getWorkerBufferPatches(
 	contentChanges: Consumer,
 ): Array<WorkerBufferPatch> {
 	return contentChanges.asMappedArray((change) => {
-		const start = change.get("range").get("start");
-		const end = change.get("range").get("end");
+		const range = getLSPRange(change.get("range"));
 
 		return {
 			text: change.get("text").asString(),
-			range: {
-				start: {
-					line: start.get("line").asZeroIndexedNumber(),
-					character: start.get("character").asZeroIndexedNumber(),
-				},
-				end: {
-					line: end.get("line").asZeroIndexedNumber(),
-					character: end.get("character").asZeroIndexedNumber(),
-				},
-			},
+			range,
 		};
 	});
+}
+
+export function getDecisionFromAdviceAction(
+	advice: DiagnosticAdviceAction,
+): string | undefined {
+	const decisions = (advice?.commandFlags)?.decisions;
+	if (Array.isArray(decisions)) {
+		return decisions[0];
+	}
+	return;
+}
+
+export function doRangesOverlap(a: LSPRange, b: LSPRange) {
+	if (a.start.line > b.end.line || b.start.line > a.end.line) {
+		return false;
+	}
+	if (a.start.line === b.end.line && a.start.character > b.end.character) {
+		return false;
+	}
+	if (b.start.line === a.end.line && b.start.character > a.end.character) {
+		return false;
+	}
+	return true;
 }

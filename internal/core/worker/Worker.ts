@@ -250,6 +250,10 @@ export default class Worker {
 			};
 		});
 
+		bridge.getBuffer.subscribe((payload) => {
+			return this.getBuffer(convertTransportFileReference(payload.ref));
+		});
+
 		bridge.updateBuffer.subscribe((payload) => {
 			return this.updateBuffer(
 				convertTransportFileReference(payload.ref),
@@ -271,6 +275,11 @@ export default class Worker {
 		bridge.getFileBuffers.subscribe(() => {
 			return this.getFileBuffers();
 		});
+	}
+
+	public getBuffer(ref: FileReference) {
+		this.logger.info(markup`Returned ${ref.real} buffer`);
+		return this.buffers.get(ref.real);
 	}
 
 	public clearBuffer({real}: FileReference) {
