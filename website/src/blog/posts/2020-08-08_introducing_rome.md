@@ -11,9 +11,9 @@ permalink: /blog/2020/08/08/introducing-rome.html
 layout: layouts/blog.liquid
 ---
 
-We're excited to announce the first release and general availability of the **Rome** linter for JavaScript and TypeScript.
+We're excited to announce the first beta release and general availability of the **Rome** linter for JavaScript and TypeScript.
 
-This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+This is just the beginning. Rome is not only linter, but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
@@ -23,7 +23,7 @@ Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslin
 
 Linting is an excellent low-risk way for us to mature and validate shared functionality like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively straight forward and safe to adopt.
 
-We believe that Rome is one of the best linters available for JavaScript. With excellent errors including recommendations and suggestions, terminal interface, and the ability to automatically fix most issues, we believe it stands alone despite our large scope.
+Even though this is a beta, we have support for over 100 rules, including the most common rules needed working with TypeScript and React. See the full [list of rules](/docs/lint/rules).
 
 {% include docs/cli-screenshots/check.md %}
 
