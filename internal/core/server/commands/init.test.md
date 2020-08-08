@@ -127,7 +127,7 @@ lint: {
 root: true
 
 # .editorconfig
-[{*.rjson, *.js}]
+[{*.js, *.rjson}]
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true

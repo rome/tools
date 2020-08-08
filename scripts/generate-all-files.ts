@@ -25,7 +25,13 @@ export async function main(args: Array<string>) {
 
 	reporter.info(markup`Generating files`);
 
-	for (const callback of [lintRules, virtualModulesMain, ast, websiteIntro, lintRulesDocs]) {
+	for (const callback of [
+		lintRules,
+		virtualModulesMain,
+		ast,
+		websiteIntro,
+		lintRulesDocs,
+	]) {
 		await callback();
 	}
 
