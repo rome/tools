@@ -9,7 +9,7 @@ import {VirtualModulesMap} from "./VirtualModules";
 
 export const modules: VirtualModulesMap = new Map();
 
-/* GENERATED:START(hash:4ed9eb85b02d1310ba393d994d859f8c03218041,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/virtual-modules` to update. */
+/* GENERATED:START(hash:62fae5f175b94703729e1cc6f8b17087fd7f0d3c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/virtual-modules` to update. */
 modules.set(
 	"rome",
 	new Map([
@@ -23,8 +23,8 @@ modules.set(
 		[
 			"package.json",
 			{
-				"mtime": 1_596_093_241_612.9512,
-				"content": '{\n\t"name": "@internal/virtual-rome",\n\t"type": "module",\n\t"private": true,\n\t"main": "index.ts"\n}\n',
+				"mtime": 1_596_913_605_922.6692,
+				"content": '{\n  "name": "@internal/virtual-rome",\n  "type": "module",\n  "private": true,\n  "main": "index.ts"\n}\n',
 			},
 		],
 		[
