@@ -277,7 +277,7 @@ class GlobberWatcher {
 			if (memoryFs.exists(arg) === undefined) {
 				promises.push(this.server.projectManager.findProject(arg));
 			} else {
-				this.flushPaths([arg]);
+				promises.push(this.flushPaths([arg]));
 			}
 		}
 

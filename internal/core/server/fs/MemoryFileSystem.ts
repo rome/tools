@@ -280,7 +280,7 @@ export default class MemoryFileSystem {
 						const path = directoryPath.resolve(filename);
 						this.refreshPath(
 							path,
-							{onFoundDirectory},
+							{onFoundDirectory, watcherId: id},
 							"Processing fs.watch changes",
 						);
 					},
@@ -820,6 +820,10 @@ export default class MemoryFileSystem {
 		customCrawlOpts: Partial<CrawlOptions> = {},
 		originMessage: string = "maybeRefreshFile",
 	) {
+		if (!this.isActiveWatcherId(customCrawlOpts.watcherId)) {
+			return;
+		}
+
 		const diagnostics = this.server.createDisconnectedDiagnosticsProcessor([
 			{
 				category: "memory-fs",
