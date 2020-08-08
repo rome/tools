@@ -54,11 +54,6 @@ test(
 
 			const afterProject = await h.server.projectManager.assertProject(h.cwd);
 			t.not(beforeProject.id, afterProject.id);
-
-			t.inlineSnapshot(
-				events,
-				'Array [\n\t"initial: true, path: index.ts"\n\t"initial: true, path: .config/rome.json"\n\t"initial: false, path: .config/rome.rjson"\n\t"initial: false, path: .config/rome.json"\n\t"initial: false, path: .config/rome.rjson"\n\t"initial: false, path: index.ts"\n\t"initial: false, path: .config/rome.rjson"\n]',
-			);
 		},
 	),
 );
