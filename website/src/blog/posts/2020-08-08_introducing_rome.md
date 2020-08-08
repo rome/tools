@@ -29,7 +29,7 @@ Linting is an excellent low-risk way for us to mature and validate shared functi
 
 Even though this is a beta, we have support for over 100 lint rules, including the most common rules needed when working with TypeScript and React. See the full [list of rules](/docs/lint/rules). You can expect a full featured experience, however may still encounter bugs. With most of the feature development out of the way we will be focusing primarily on stability.
 
-Most of our rules have been inspired by their ESLint equivalents, this required a complete rewrite to utilize Rome's API that differs extensively from existing tools. Without the amazing work of the ESLint team and community establishing these recommended patterns, we would not have been able to ship what we have.
+Most of our rules have been inspired by their ESLint equivalents. This required a complete rewrite to utilize Rome's API that differ extensively from existing tools. Without the amazing work of the ESLint team and community establishing these recommended patterns, we would not have been able to pull this off. Refer to the [lint rule docs](/docs/lint/rules) for direct references.
 
 Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team), a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md), and a [code of conduct](https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
 
