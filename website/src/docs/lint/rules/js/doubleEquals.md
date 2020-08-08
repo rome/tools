@@ -17,6 +17,9 @@ require the use of `===` and `!==`
 **ESLint Equivalent:** [eqeqeq](https://eslint.org/docs/rules/eqeqeq)
 <!-- GENERATED:END(id:description) -->
 
+It is generally bad practice to use `==` for comparison instead of `===`. Double operators will triger implicit [type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion) and are thus not prefered. Using strict equality operators is almost always best practice.
+
+For ergonomic reasons, this rule makes an exception for `== null` for comparing to both `null` and `undefined`.
 <!-- GENERATED:START(hash:80f16cb3ab76f9046016be8e44eedb18221cc939,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
