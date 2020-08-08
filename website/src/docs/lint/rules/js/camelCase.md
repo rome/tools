@@ -11,4 +11,7 @@ eleventyNavigation:
 
 # js/camelCase
 
-MISSING DOCUMENTATION
+* This rule checks for variable definitions and assignments.
+* The variable should be written in camel case.
+eg ``variableName``
+* For more details on the rule. Read the more on this [here](https://eslint.org/docs/rules/camelcase)
