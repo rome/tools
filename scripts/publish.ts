@@ -34,7 +34,7 @@ export async function main() {
 		await publishRegistry("https://registry.npmjs.org/");
 
 		reporter.heading(markup`Publishing to npm.pkg.github.com`);
-		await setName("@internal/rome");
+		await setName("@romefrontend/rome");
 		await publishRegistry("https://npm.pkg.github.com/");
 	} finally {
 		await removeDirectory(releaseFolder);
