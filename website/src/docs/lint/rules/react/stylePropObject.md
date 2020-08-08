@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/stylePropObject
 
-MISSING DOCUMENTATION
+This rule enforces the value of `style` to be a object. React will ignore non-object style props, even valid JSON strings.
 
 <!-- GENERATED:START(hash:892c5ad91de97f443aa7b6b651970fdb809ecf9b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

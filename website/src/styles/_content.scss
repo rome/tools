@@ -30,6 +30,12 @@
 		margin-left: 5px;
 	}
 
+	section > section {
+		table:last-child, pre:last-child, p:last-child {
+			margin-bottom: 0;
+		}
+	}
+
 	&.rules > section > section {
 		padding: 0 !important;
 
@@ -148,7 +154,10 @@
 	}
 
 	h1, h2, h3, h4, h5 {
-		&:hover .header-anchor{
+		outline: none;
+
+		&:hover .header-anchor,
+		&:focus .header-anchor{
 			@extend .not-sr-only;
 		}
 	}

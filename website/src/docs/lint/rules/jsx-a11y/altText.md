@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/altText
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: enforce alternative text
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/altText
 	parent: lint-rules
@@ -10,7 +10,8 @@ eleventyNavigation:
 
 # jsx-a11y/altText
 
-MISSING DOCUMENTATION
+Providing alternative text to images or areas help to rely on to screen 
+readers to understand the purpose and the context of the image.
 
 <!-- GENERATED:START(hash:21a7a92e0091f149a2c7459b52783be6c31a4500,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/htmlHasLang
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: the `lang` attribute is mandatory
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/htmlHasLang
 	parent: lint-rules
@@ -10,9 +10,9 @@ eleventyNavigation:
 
 # jsx-a11y/htmlHasLang
 
-MISSING DOCUMENTATION
+This rule make sure that the `html` tag has the `lang` attribute.
 
-<!-- GENERATED:START(hash:de6f8b1043345925752b551403ee640d81ff2cb5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a934171412c5faba4aca8942bc9b150ec5e9fe66,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">html</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
@@ -61,14 +61,11 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">&gt;</span>&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unknown start to an statement expression</span>
-
-    <span class="token operator">&gt;</span>&lt;<span class="token operator">/</span><span class="token attr-name">html</span>&gt;
-    <span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 

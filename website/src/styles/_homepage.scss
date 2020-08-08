@@ -12,6 +12,26 @@
 	color: black;
 	text-align: center;
 
+	h1 > div {
+		display: flex;
+		align-items: center;
+	}
+
+	.left, .right{
+		border-bottom: 3px solid var(--sub-text-color);
+
+		width: 100%;
+		opacity: 0.5;
+	}
+
+	.left{
+		margin-right: 32px;
+	}
+
+	.right{
+		margin-left: 32px;
+	}
+
 	@include pattern;
 
 	@media only screen and (min-width: 970px) {
@@ -29,8 +49,7 @@
 	}
 
 	h1 {
-		margin-bottom: 0.3em;
-		font-size: 2.3em;
+		font-size: 3em;
 	}
 
 	h2 {

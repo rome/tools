@@ -1,7 +1,7 @@
 <section>
 
-<!-- GENERATED:START(hash:40beeb5dfdadbfe9ff0e9d1a6b793259b0f8ba23,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
-**Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
+<!-- GENERATED:START(hash:e59cb3f61b0a6db5fd733e38a8eb7fd95fb8ce7b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
+**Rome** is a linter, compiler, bundler, and [more](#development-status) for JavaScript, TypeScript, HTML, Markdown, and CSS.
 
 **Rome** is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 

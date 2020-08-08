@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/lang
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: check if `lang` attribute is valid
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/lang
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # jsx-a11y/lang
 
-MISSING DOCUMENTATION
+This rule makes sure the value of `lang` attribute is valid.
 
 <!-- GENERATED:START(hash:56f54d62106b444342da246772586c0e33971cdd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

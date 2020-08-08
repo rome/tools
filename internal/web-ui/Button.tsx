@@ -6,7 +6,6 @@
  */
 
 import React = require("react");
-import { VoidCallback } from "@internal/typescript-helpers";
 
 const {css, cx} = require("emotion");
 

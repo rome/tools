@@ -1,7 +1,7 @@
 ---
 title: Lint Rule jsx-a11y/noOnChange
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: discourage the usage of `onChange`
 eleventyNavigation:
 	key: lint-rules/jsx-a11y/noOnChange
 	parent: lint-rules
@@ -10,7 +10,18 @@ eleventyNavigation:
 
 # jsx-a11y/noOnChange
 
-MISSING DOCUMENTATION
+It discourages the usage of the event handler `onChange` on input fields and it promotes the usage
+of `onBlur`, which is more reliable using the keyboard.
+
+
+## Accessibility guidelines
+
+- [WCAG 3.2.2](https://www.w3.org/WAI/WCAG21/Understanding/on-input)
+
+### Resources
+
+- [onChange Event Accessibility Issues](http://cita.disability.uiuc.edu/html-best-practices/auto/onchange.php)
+- [onChange Select Menu](http://www.themaninblue.com/writing/perspective/2004/10/19/)
 
 <!-- GENERATED:START(hash:765b474011f8c5556396840f7104be4cc91bf82b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

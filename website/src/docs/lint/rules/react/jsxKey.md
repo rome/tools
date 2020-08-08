@@ -1,7 +1,7 @@
 ---
 title: Lint Rule react/jsxKey
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rule detects a missing `key` prop
 eleventyNavigation:
 	key: lint-rules/react/jsxKey
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/jsxKey
 
-MISSING DOCUMENTATION
+This rule detects a missing `key` prop in a element that requires it. Keys help React identify which items have changed, are added, or are removed.
 
 <!-- GENERATED:START(hash:c8a532d2d404d5d47f6107e977f110c1e6a453f4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
