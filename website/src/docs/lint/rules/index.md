@@ -5,8 +5,8 @@ layout-type: split
 main-class: rules
 eleventyNavigation:
     key: lint-rules
-	parent: linting
-	title: Rules
+    parent: linting
+    title: Rules
 ---
 
 # Rules
