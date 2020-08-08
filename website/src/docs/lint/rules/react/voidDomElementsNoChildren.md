@@ -1,7 +1,7 @@
 ---
 title: Lint Rule react/voidDomElementsNoChildren
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rules prevent void elements from have children
 eleventyNavigation:
 	key: lint-rules/react/voidDomElementsNoChildren
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/voidDomElementsNoChildren
 
-MISSING DOCUMENTATION
+This rules prevents void elements (AKA self-closing elements) from have children
 
 <!-- GENERATED:START(hash:8c96980ac7eaf1745e65d224d5f5ca64eba194f5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

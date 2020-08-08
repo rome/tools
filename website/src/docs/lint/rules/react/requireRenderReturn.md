@@ -1,7 +1,7 @@
 ---
 title: Lint Rule react/requireRenderReturn
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rule makes sure the render function is returning content
 eleventyNavigation:
 	key: lint-rules/react/requireRenderReturn
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/requireRenderReturn
 
-MISSING DOCUMENTATION
+This rule makes sure the render function is returning content.
 
 <!-- GENERATED:START(hash:a0697fe913e6637f6bb55b9d608b2d36d1749657,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

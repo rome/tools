@@ -1,7 +1,7 @@
 ---
 title: Lint Rule react/buttonHasType
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: Enforces a `type` attribute for `button`
 eleventyNavigation:
 	key: lint-rules/react/buttonHasType
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/buttonHasType
 
-MISSING DOCUMENTATION
+This rules enforces a `type` attribute for `button` elements and checks if it's value is "button", "submit" or "reset", based on the `button` [spec](https://www.w3.org/TR/html4/interact/forms.html#adef-type-BUTTON).
 
 <!-- GENERATED:START(hash:aeb631e7b5954c9d27362980060d8a373f845c9f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

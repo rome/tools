@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/sortComp
 
-MISSING DOCUMENTATION
+This rule enforces methods and properties order. When creating React components it is more convenient to always follow the same organisation for method order to help you easily find lifecycle methods, event handlers, etc.
 
 <!-- GENERATED:START(hash:01e526f0a2d7ba3087422820d23ce346612dec30,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples

@@ -1,7 +1,7 @@
 ---
 title: Lint Rule react/jsxFragments
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: This rule enforces the use of `<>...</>`
 eleventyNavigation:
 	key: lint-rules/react/jsxFragments
 	parent: lint-rules
@@ -10,7 +10,7 @@ eleventyNavigation:
 
 # react/jsxFragments
 
-MISSING DOCUMENTATION
+This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
 <!-- GENERATED:START(hash:fa70b72bc83a65828e04ac68671f3b6bab73fd7f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
