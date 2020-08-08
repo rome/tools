@@ -122,11 +122,13 @@ export class WebSocketInterface {
 	private sendFrame(frameOpts: BuildFrameOpts) {
 		if (this.reporter !== undefined) {
 			this.reporter.info(
-				markup`Sending frame ${prettyFormat({
-					fin: frameOpts.fin,
-					opcode: frameOpts.opcode,
-					msg: frameOpts.data,
-				})}`,
+				markup`Sending frame ${() =>
+					prettyFormat({
+						fin: frameOpts.fin,
+						opcode: frameOpts.opcode,
+						msg: frameOpts.data.toString(),
+					})
+				}`,
 			);
 		}
 		this.socket.write(buildFrame(frameOpts, this.type === "client"));
@@ -179,11 +181,13 @@ export class WebSocketInterface {
 
 				if (this.reporter !== undefined) {
 					this.reporter.info(
-						markup`Received complete frame ${prettyFormat({
-							opcode: frame.opcode,
-							length: frame.payloadLength,
-							msg: frame.payload,
-						})}`,
+						markup`Received complete frame ${() =>
+							prettyFormat({
+								opcode: frame.opcode,
+								length: frame.payloadLength,
+								msg: frame.payload.toString(),
+							})
+						}`,
 					);
 				}
 
@@ -229,7 +233,10 @@ export class WebSocketInterface {
 	}
 }
 
-export async function createClient(rawUrl: string): Promise<WebSocketInterface> {
+export async function createClient(
+	rawUrl: string,
+	reporter?: Reporter,
+): Promise<WebSocketInterface> {
 	const parts = url.parse(rawUrl);
 
 	return new Promise((resolve, reject) => {
@@ -274,7 +281,7 @@ export async function createClient(rawUrl: string): Promise<WebSocketInterface> 
 					return;
 				}
 
-				const client = new WebSocketInterface({type: "client", socket});
+				const client = new WebSocketInterface({type: "client", socket, reporter});
 				//client.addBuffer(head);
 				head;
 				resolve(client);
