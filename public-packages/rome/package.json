@@ -1,6 +1,6 @@
 {
 	"name": "rome",
-	"version": "10.0.1-beta",
+	"version": "10.0.2-beta",
 	"type": "module",
 	"license": "MIT",
 	"main": "index.ts",
