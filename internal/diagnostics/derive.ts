@@ -165,13 +165,13 @@ export function deriveRootAdviceFromDiagnostic(
 	if (tags.fatal) {
 		lastAdvice.push({
 			type: "log",
-			category: "info",
+			category: "warn",
 			text: markup`Rome exited as this error could not be handled and resulted in a fatal error. Please report if necessary.`,
 		});
 	} else if (tags.internal) {
 		lastAdvice.push({
 			type: "log",
-			category: "info",
+			category: "warn",
 			text: markup`This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.`,
 		});
 	}

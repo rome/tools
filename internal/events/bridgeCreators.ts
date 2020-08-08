@@ -245,8 +245,8 @@ export function createBridgeFromChildProcess<B extends Bridge>(
 	// Catch process dying and reject any requests in flight
 	proc.on(
 		"close",
-		() => {
-			bridge.end("RPC child process died");
+		(code) => {
+			bridge.end(`RPC child process died with exit code ${code}`);
 		},
 	);
 
