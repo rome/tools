@@ -226,7 +226,11 @@ export default class DependencyGraph {
 		});
 
 		for (const path of paths) {
-			await rootQueue.pushQueue(path, undefined);
+			await FileNotFound.maybeAllowMissing(
+				allowFileNotFound,
+				path,
+				() => rootQueue.pushQueue(path, undefined),
+			);
 		}
 
 		// Spin root queue
