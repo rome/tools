@@ -211,9 +211,9 @@ export async function main() {
 					lines.push(escapeXHTMLEntities(description));
 					lines.push("</div>");
 				}
-			}
 
-			lines.push("</section>");
+				lines.push("</section>");
+			}
 
 			return {lines};
 		},

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:0492608aa7b9edbca9afb56a6efe22b03decde78,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:ae982a356b8ce8e28cc2f438aa77616b03a35ef7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -372,6 +372,7 @@ require template literals instead of string concatenation
 </h3>
 MISSING DOCUMENTATION
 </div>
+</section>
 <section>
 <h2>TypeScript</h2>
 <div class="rule">
@@ -386,8 +387,9 @@ it bans the use of `any`
 	<a href="/docs/lint/rules/ts/useInterfaces">useInterfaces</a>
 	<a class="header-anchor" href="#useInterfaces"></a>
 </h3>
-restrict file extensions that may contain JSX
+MISSING DOCUMENTATION
 </div>
+</section>
 <section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
@@ -566,6 +568,7 @@ enforce all anchors are valid, navigable elements
 </h3>
 check if `lang` attribute is valid
 </div>
+</section>
 <section>
 <h2>React</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/yannickcr/eslint-plugin-react">eslint-plugin-react</a>. See individual rule docs for direct references.</p>

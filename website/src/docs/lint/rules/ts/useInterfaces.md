@@ -1,7 +1,7 @@
 ---
 title: Lint Rule ts/useInterfaces
 layout: layouts/rule.liquid
-description: restrict file extensions that may contain JSX
+description: MISSING DOCUMENTATION
 eslint-rule: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md
 eleventyNavigation:
 	key: lint-rules/ts/useInterfaces
@@ -11,8 +11,8 @@ eleventyNavigation:
 
 # ts/useInterfaces
 
-<!-- GENERATED:START(hash:62ea67a62da9ee7c93eb579eaa46a81c2848592e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-restrict file extensions that may contain JSX
+<!-- GENERATED:START(hash:d73068d2ce9c2c77289bff157d4d7371ad605383,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+MISSING DOCUMENTATION
 
 **ESLint Equivalent:** [jsx-filename-extension](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md)
 <!-- GENERATED:END(id:description) -->
