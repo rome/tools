@@ -342,7 +342,7 @@ export default class ProjectManager {
 		}
 
 		const uid = cleanUidParts(parts);
-		if (!allowMissing) {
+		if (this.server.memoryFs.exists(path) || !allowMissing) {
 			this.setUid(path, uid);
 		}
 		return uid;
