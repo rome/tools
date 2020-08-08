@@ -32,7 +32,7 @@ export default createServerCommand({
 
 		for (const file of files) {
 			const path = client.flags.cwd.resolve(file);
-			await server.fileAllocator.evict(path);
+			await server.fileAllocator.evict(path, markup`client request`);
 			reporter.success(markup`Evicted ${path}`);
 		}
 

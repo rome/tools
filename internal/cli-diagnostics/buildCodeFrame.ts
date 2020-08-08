@@ -299,7 +299,7 @@ export default function buildCodeFrame(
 		String(maxVisibleLineNo).length + CODE_FRAME_INDENT.length;
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
-	if (isEmptyMarkup(markerMessage) && start !== undefined && end !== undefined) {
+	if (!isEmptyMarkup(markerMessage) && start !== undefined && end !== undefined) {
 		const line = allLines[ob1Get0(ob1Coerce1To0(start.line))];
 		if (line !== undefined) {
 			const text = line[0].slice(ob1Get0(start.column), ob1Get0(end.column));

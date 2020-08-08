@@ -58,21 +58,14 @@ root: true
 
 
 # .editorconfig
-[*]
-end_of_line = lf
-trim_trailing_whitespace = true
-insert_final_newline = true
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[{*rjson}]
+[{*.rjson}]
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
 charset = utf-8
 indent_style = tab
 indent_size = 2
+
 
 ```
 
@@ -134,15 +127,7 @@ lint: {
 root: true
 
 # .editorconfig
-[*]
-end_of_line = lf
-trim_trailing_whitespace = true
-insert_final_newline = true
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-[{*js, *rjson}]
+[{*.rjson, *.js}]
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
@@ -150,20 +135,10 @@ charset = utf-8
 indent_style = tab
 indent_size = 2
 
-[{*yml}]
-end_of_line = lf
-trim_trailing_whitespace = true
-insert_final_newline = true
-charset = utf-8
-indent_style = space
-indent_size = 2
-
-# config.yml
-something: foo
-  - else; bar
 
 # index.js
 unknownVariable;
+window;
 
 
 ```

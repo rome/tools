@@ -5,13 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export type VoidCallback<Args extends Array<unknown> = []> = (
-	...args: Args
-) => void | undefined;
+type VoidReturn = void | undefined;
 
-export type AsyncVoidCallback<Args extends Array<unknown> = []> = (
-	...args: Args
-) => void | undefined | Promise<void | undefined>;
+export type VoidCallback<Args extends Array<unknown> = []> = Args extends []
+	? ((arg?: VoidReturn) => VoidReturn)
+	: ((...args: Args) => VoidReturn);
+
+export type AsyncVoidCallback<Args extends Array<unknown> = []> = Args extends []
+	? ((arg?: VoidReturn) => VoidReturn | Promise<VoidReturn>)
+	: ((...args: Args) => VoidReturn | Promise<VoidReturn>);
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 

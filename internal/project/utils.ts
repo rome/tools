@@ -88,6 +88,7 @@ export function getParentConfigDependencies(
 		deps.add(directory.append("package.json"));
 
 		for (const configFilename of PROJECT_CONFIG_FILENAMES) {
+			deps.add(directory.append(".config", configFilename));
 			deps.add(directory.append(configFilename));
 		}
 	}

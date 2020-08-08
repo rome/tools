@@ -32,3 +32,24 @@ test(
 		},
 	),
 );
+
+test(
+	"reloads projects on changed manifests",
+	createIntegrationTest(
+		{
+			files: {
+				"module/package.json": "{}",
+			},
+		},
+		async (t, h) => {
+			const beforeProject = await h.server.projectManager.assertProject(h.cwd);
+			t.is(beforeProject.packages.size, 0);
+
+			await h.writeFile("module/package.json", '{"name": "bar"}');
+
+			const afterProject = await h.server.projectManager.assertProject(h.cwd);
+			t.is(afterProject.packages.size, 1);
+			t.true(afterProject.packages.has("bar"));
+		},
+	),
+);

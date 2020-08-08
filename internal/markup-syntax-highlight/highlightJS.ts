@@ -105,7 +105,9 @@ export default function highlightJS(
 						word === "from" ||
 						word === "let" ||
 						word === "async" ||
-						word === "await"
+						word === "await" ||
+						word === "public" ||
+						word === "private"
 					) {
 						return {type: "keyword"};
 					}

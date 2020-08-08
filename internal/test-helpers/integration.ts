@@ -413,9 +413,10 @@ export function createIntegrationTest(
 			await client.subscribeLogs(
 				true,
 				(chunk) => {
-					logs += joinMarkupLines(
+					const textChunk = joinMarkupLines(
 						markupToPlainText(convertToMarkupFromRandomString(chunk)),
 					);
+					logs += textChunk;
 				},
 			);
 
@@ -456,7 +457,12 @@ export function createIntegrationTest(
 					): Promise<void> {
 						const absolute = projectPath.append(relative);
 						await server.recoveryStore.writeFiles(
-							new AbsoluteFilePathMap([[absolute, {content, mtime: undefined}]]),
+							new AbsoluteFilePathMap([
+								[
+									absolute,
+									{content, mtime: server.memoryFs.maybeGetMtime(absolute)},
+								],
+							]),
 						);
 					},
 					async createRequest(

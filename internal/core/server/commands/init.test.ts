@@ -1,18 +1,13 @@
 import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
-import {dedent} from "@internal/string-utils";
 
-test(
+test.only(
 	"should create the .editorconfig file with correct extensions if it doesn't exist and add 'unknownVariable' to globals",
 	createIntegrationTest(
 		{
 			disableProjectConfig: true,
 			files: {
-				"index.js": "unknownVariable",
-				"config.yml": dedent`
-                something: foo
-                  - else; bar
-                `,
+				"index.js": "unknownVariable; window;",
 			},
 		},
 		async (t, {client}) => {

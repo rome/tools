@@ -11,7 +11,11 @@ import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
 
 // Node flags to pass to all forked processes
-export const CHILD_ARGS = ["--max-old-space-size=8192"];
+export const CHILD_ARGS = [
+	"--max-old-space-size=8192",
+	"--trace-warnings",
+	"--unhandled-rejections=strict",
+];
 
 // @ts-ignore: this will be wrong if we weren't the entry node script
 export const BIN = createAbsoluteFilePath(process.mainModule.filename);

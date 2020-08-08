@@ -12,7 +12,11 @@ export type MissingFileReturn<T> =
 
 export class FileNotFound extends Error {
 	constructor(path: AbsoluteFilePath, message?: string) {
-		super(message === undefined ? path.join() : `${path.join()}: ${message}`);
+		super(
+			message === undefined
+				? `${path.join()} not found`
+				: `${path.join()}: ${message}`,
+		);
 		this.name = "FileNotFound";
 		this.path = path;
 	}

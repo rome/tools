@@ -122,7 +122,7 @@ export async function main() {
 		path: AbsoluteFilePath,
 		content: string,
 	): string {
-		const description = content.match(/description:(.*)\n/);
+		const description = content.match(/description:(.*)(\n|\r\n)/);
 		if (description) {
 			return description[1].trim();
 		} else {

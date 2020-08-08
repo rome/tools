@@ -10,6 +10,7 @@ type HandleFatalErrorOptions = {
 	source: StaticMarkup;
 	error: Error;
 	reporter: Reporter;
+	exit?: boolean;
 };
 
 export default function handleFatalError(opts: HandleFatalErrorOptions) {
@@ -18,7 +19,7 @@ export default function handleFatalError(opts: HandleFatalErrorOptions) {
 }
 
 async function _handleFatalError(
-	{error, source, reporter}: HandleFatalErrorOptions,
+	{error, source, reporter, exit = true}: HandleFatalErrorOptions,
 ) {
 	try {
 		const diagnostics = getOrDeriveDiagnosticsFromError(
@@ -52,6 +53,8 @@ async function _handleFatalError(
 		console.error("Log error:");
 		console.error(logErr.stack);
 	} finally {
-		process.exit(1);
+		if (exit) {
+			process.exit(1);
+		}
 	}
 }

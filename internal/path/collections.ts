@@ -101,8 +101,10 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 		return this.map.keys()[Symbol.iterator]();
 	}
 
-	public toJoined(): Array<string> {
-		return Array.from(this.map.joinedToPath.keys());
+	public toJoined(
+		callback: (path: string) => string = (filename) => filename,
+	): Array<string> {
+		return Array.from(this.map.joinedToPath.keys(), callback);
 	}
 
 	public has(path: FilePath) {
@@ -128,16 +130,28 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 export class AbsoluteFilePathMap<Value>
 	extends FilePathMap<AbsoluteFilePath, Value> {
 	public type: "absolute" = "absolute";
+
+	public keysToSet() {
+		return new AbsoluteFilePathSet(this.keys());
+	}
 }
 
 export class RelativeFilePathMap<Value>
 	extends FilePathMap<RelativeFilePath, Value> {
 	public type: "relative" = "relative";
+
+	public keysToSet() {
+		return new RelativeFilePathSet(this.keys());
+	}
 }
 
 export class UnknownFilePathMap<Value>
 	extends FilePathMap<UnknownFilePath, Value> {
 	public type: "unknown" = "unknown";
+
+	public keysToSet() {
+		return new UnknownFilePathSet(this.keys());
+	}
 }
 
 export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {

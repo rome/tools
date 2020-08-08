@@ -16,21 +16,15 @@ import {
 	Diagnostics,
 	DiagnosticsProcessor,
 	descriptions,
-	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
 	DiagnosticsFileReaders,
-	DiagnosticsPrinter,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
 import {Event, EventSubscription} from "@internal/events";
-import ServerRequest, {
-	EMPTY_SUCCESS_RESPONSE,
-	ServerRequestCancelled,
-	ServerRequestInvalid,
-} from "./ServerRequest";
+import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
 import Resolver from "./fs/Resolver";
@@ -343,7 +337,12 @@ export default class Server {
 
 		// NB: This will call process.exit. If we want to expose this for other use-cases then we will probably want to
 		// make this customizable
-		handleFatalError({error, source, reporter: this.getImportantReporter()});
+		handleFatalError({
+			error,
+			source,
+			reporter: this.getImportantReporter(),
+			exit: this.options.dedicated,
+		});
 	}
 
 	// This is so all progress bars are renderer on each client. If we just use this.progressLocal then
@@ -936,97 +935,7 @@ export default class Server {
 				throw new Error(`Unknown command ${String(query.commandName)}`);
 			}
 		} catch (err) {
-			let diagnostics: Diagnostics = await this.handleRequestError(req, err);
-
-			if (err instanceof ServerRequestCancelled) {
-				return {
-					type: "CANCELLED",
-					markers: [],
-				};
-			} else if (err instanceof ServerRequestInvalid) {
-				return {
-					type: "INVALID_REQUEST",
-					diagnostics,
-					showHelp: err.showHelp,
-					markers: [],
-				};
-			} else {
-				return {
-					type: "DIAGNOSTICS",
-					files: {},
-					hasDiagnostics: diagnostics.length > 0,
-					diagnostics,
-					markers: [],
-				};
-			}
+			return await req.buildResponseFromError(err);
 		}
-	}
-
-	private async handleRequestError(
-		req: ServerRequest,
-		rawErr: Error,
-	): Promise<Diagnostics> {
-		if (!req.bridge.alive) {
-			// Doesn't matter
-			return [];
-		}
-
-		let err = rawErr;
-		let printer: DiagnosticsPrinter;
-
-		if (err instanceof DiagnosticsPrinter) {
-			printer = err;
-		} else {
-			// If we can derive diagnostics from the error then create a diagnostics printer
-			const diagnostics = getOrDeriveDiagnosticsFromError(
-				err,
-				{
-					description: {
-						category: "internalError/request",
-					},
-					tags: {
-						internal: true,
-					},
-				},
-			);
-
-			printer = req.createDiagnosticsPrinter(
-				req.createDiagnosticsProcessor({
-					origins: [
-						{
-							category: "internal",
-							message: "Derived diagnostics from thrown error",
-						},
-					],
-				}),
-			);
-
-			printer.processor.addDiagnostics(diagnostics);
-		}
-
-		// Only print when the bridge is alive and we aren't in review mode
-		// When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
-		// We will always print invalid request errors
-		let shouldPrint = true;
-		if (req.query.requestFlags.review) {
-			shouldPrint = false;
-		}
-		if (rawErr instanceof ServerRequestInvalid) {
-			shouldPrint = true;
-		}
-		if (!req.bridge.alive) {
-			shouldPrint = false;
-		}
-
-		if (shouldPrint) {
-			await printer.print();
-
-			// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
-			if (!(rawErr instanceof ServerRequestInvalid)) {
-				await printer.footer();
-			}
-		}
-
-		return printer.processor.getDiagnostics();
 	}
 }

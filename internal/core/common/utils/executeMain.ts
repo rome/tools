@@ -35,16 +35,12 @@ export default async function executeMain(
 	syntaxError: undefined | Diagnostic;
 	exitCode: undefined | number;
 }> {
-	const {path, code, sourceMap, globals, args = []} = opts;
+	const {path, code, sourceMap, globals = {}, args = []} = opts;
 
 	const filename = path.join();
 
 	// Create global context
 	const sandbox: UnknownObject = {
-		process: {
-			argv: ["rome", "run", filename, "--", ...args],
-			__proto__: process,
-		},
 		Buffer,
 		clearImmediate,
 		clearInterval,
@@ -59,6 +55,14 @@ export default async function executeMain(
 		__dirname: path.getParent().join(),
 		__filename: filename,
 		...globals,
+		process: Object.setPrototypeOf(
+			{
+				argv: ["rome", "run", filename, "--", ...args],
+				// @ts-ignore
+				...globals.process,
+			},
+			process,
+		),
 	};
 	sandbox.global = sandbox;
 	const context = vm.createContext(sandbox);

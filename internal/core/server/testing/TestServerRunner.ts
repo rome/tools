@@ -70,6 +70,8 @@ import {
 import {FileReference} from "@internal/core/common/types/files";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import {VoidCallback} from "@internal/typescript-helpers";
+import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
+import handleFatalError from "@internal/core/common/handleFatalError";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -166,6 +168,14 @@ export default class TestServerRunner {
 				this.sourceMaps.add(filename, consumer);
 			}
 		}
+
+		setupGlobalErrorHandlers((error) => {
+			handleFatalError({
+				error,
+				source: markup`test worker`,
+				reporter: Reporter.fromProcess(),
+			});
+		});
 	}
 
 	private coverageCollector: CoverageCollector;
@@ -432,6 +442,13 @@ export default class TestServerRunner {
 					return;
 				}
 
+				if (str.startsWith("Waiting for the debugger to disconnect...")) {
+					if (inspector !== undefined) {
+						inspector.end();
+						return;
+					}
+				}
+
 				process.stderr.write(chunk);
 			},
 		);
@@ -478,7 +495,8 @@ export default class TestServerRunner {
 	private async setupWorkers(): Promise<TestWorkerContainers> {
 		// TODO some smarter logic. we may not need all these workers
 		const containerPromises: Array<Promise<TestWorkerContainer>> = [];
-		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
+		const max = Math.min(MAX_WORKER_COUNT, this.sourcesQueue.length);
+		for (let i = 0; i < max; i++) {
 			const inspectorPort = await findAvailablePort();
 			containerPromises.push(this.spawnWorker({inspectorPort}));
 		}
@@ -749,6 +767,9 @@ export default class TestServerRunner {
 								filename: ref.filename,
 								description: {
 									category: "tests/failure",
+								},
+								tags: {
+									internal: true,
 								},
 							},
 						);

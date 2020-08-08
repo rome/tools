@@ -36,7 +36,7 @@ export default createServerCommand({
 		};
 	},
 	async callback(req: ServerRequest, commandFlags: Flags): Promise<void> {
-		const paths = await req.getFilesFromArgs({
+		const globber = await req.glob({
 			tryAlternateArg: (path) => {
 				if (path.hasExtension("test")) {
 					return undefined;
@@ -60,6 +60,7 @@ export default createServerCommand({
 			extensions: JS_EXTENSIONS,
 			disabledDiagnosticCategory: "tests/disabled",
 		});
+		const paths = await globber.get();
 
 		let addDiagnostics: Diagnostics = [];
 

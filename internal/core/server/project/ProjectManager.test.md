@@ -30,3 +30,27 @@ name: "bar"
 
 
 ```
+
+## `reloads projects on changed manifests`
+
+### `console`
+
+```
+
+```
+
+### `files`
+
+```
+# .config/rome.json
+{
+	"files": {
+		"vendorPath": "../remote"
+	}
+}
+
+
+# module/package.json
+{"name": "bar"}
+
+```

@@ -44,6 +44,7 @@ import {VoidCallback} from "@internal/typescript-helpers";
 const DEFAULT_DENYLIST = [
 	".hg",
 	".git",
+	".idea",
 	"node_modules/.staging",
 	"node_modules/.cache",
 ];
@@ -302,7 +303,7 @@ export default class MemoryFileSystem {
 		};
 	}
 
-	public unwatch(dirPath: AbsoluteFilePath) {
+	public close(dirPath: AbsoluteFilePath) {
 		const watcher = this.watchers.get(dirPath);
 		if (watcher === undefined) {
 			return;
@@ -310,6 +311,10 @@ export default class MemoryFileSystem {
 
 		this.watchers.delete(dirPath);
 		watcher.close();
+	}
+
+	public unwatch(dirPath: AbsoluteFilePath) {
+		this.close(dirPath);
 
 		// Go through and clear all files and directories from our internal maps
 		// NOTE: We deliberately do not call 'deletedFileEvent' as the code that
@@ -403,9 +408,9 @@ export default class MemoryFileSystem {
 			}
 		}
 
-		// Wait for any subscribers that might need the file's stats
 		this.logger.info(markup`File deleted: ${path}`);
 
+		// Wait for any subscribers that might need the file's stats
 		// Only emit these events for files
 		if (directoryInfo === undefined) {
 			await this.deletedFileEvent.call(path);
@@ -857,6 +862,14 @@ export default class MemoryFileSystem {
 		const {projectManager} = this.server;
 		projectManager.checkPathForIncorrectConfig(path, opts.diagnostics);
 
+		// Detect file changes
+		const oldStats = this.getFileStats(path);
+		if (oldStats !== undefined && opts.reason === "watch") {
+			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
+			await this.server.refreshFileEvent.callOptional(path);
+			await this.changedFileEvent.callOptional({path, oldStats, newStats: stats});
+		}
+
 		// Add project if this is a config
 		if (
 			dirname.getBasename() === PROJECT_CONFIG_DIRECTORY &&
@@ -878,25 +891,24 @@ export default class MemoryFileSystem {
 			});
 		}
 
-		// Detect file changes
-		const oldStats = this.getFileStats(path);
-		if (oldStats !== undefined && opts.reason === "watch") {
-			this.logger.info(markup`File change: <emphasis>${path}</emphasis>`);
-			this.server.refreshFileEvent.send(path);
-			this.changedFileEvent.send({path, oldStats, newStats: stats});
-		}
-
 		if (isNew) {
-			this.newFileEvent.send(path);
+			await this.newFileEvent.callOptional(path);
 		}
 
 		return true;
 	}
 
 	public glob(
-		cwd: AbsoluteFilePath,
-		opts: GlobOptions = {},
+		arg: AbsoluteFilePath,
+		opts: Omit<GlobOptions, "args"> = {},
 	): AbsoluteFilePathSet {
-		return new Globber(opts, this.server).glob(cwd);
+		const globber = new Globber(
+			this.server,
+			{
+				...opts,
+				args: [arg],
+			},
+		);
+		return globber.search(arg);
 	}
 }
