@@ -213,10 +213,12 @@ module.exports = function(eleventyConfig) {
 		"titlify",
 		function(title) {
 			title = (title || "").trim();
-			if (title !== "") {
-				title += " \u2014 ";
+			if (!title.includes("Rome")) {
+				if (title !== "") {
+					title += " \u2014 ";
+				}
+				title += "Rome Frontend Toolchain";
 			}
-			title += "Rome Frontend Toolchain";
 			return title;
 		},
 	);
