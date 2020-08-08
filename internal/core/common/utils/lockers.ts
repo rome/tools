@@ -78,6 +78,17 @@ class LockerNormalized<RawKey, MapKey> {
 		}
 	}
 
+	public async waitLockDrained(key: RawKey): Promise<void> {
+		if (this.hasLock(key)) {
+			const lock = await this.getLock(key);
+			lock.release();
+
+			if (this.hasLock(key)) {
+				return this.waitLockDrained(key);
+			}
+		}
+	}
+
 	public async waitLock(key: RawKey): Promise<void> {
 		if (this.hasLock(key)) {
 			const lock = await this.getLock(key);
@@ -100,6 +111,12 @@ class LockerNormalized<RawKey, MapKey> {
 
 export class Locker<Key> extends LockerNormalized<Key, Key> {
 	protected normalizeKey(key: Key): Key {
+		return key;
+	}
+}
+
+export class SingleLocker extends LockerNormalized<void, void> {
+	protected normalizeKey(key: void): void {
 		return key;
 	}
 }
