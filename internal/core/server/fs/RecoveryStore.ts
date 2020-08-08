@@ -79,9 +79,21 @@ type WriteFilesOptions = {
 const DEFAULT_WRITE_FILES_EVENTS: WriteFilesEvents = {
 	onFileDone() {},
 	beforeFileWrite() {},
-	expectedExists() {},
-	unexpectedExists() {},
-	unexpectedModified() {},
+	unexpectedModified: (path, expectedMtime, actualMtime) => {
+		throw new Error(
+			`File ${path.join()} was not updated as it was changed since we read it`,
+		);
+	},
+	expectedExists: (path) => {
+		throw new Error(
+			`File ${path.join()} was not updated as it does not exist when we expected it to`,
+		);
+	},
+	unexpectedExists: (path) => {
+		throw new Error(
+			`File ${path.join()} was not written as it exists when we didn't expect it`,
+		);
+	},
 };
 
 // Chosen arbitrarily

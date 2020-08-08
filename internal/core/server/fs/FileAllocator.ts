@@ -10,7 +10,7 @@ import {Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../common/utils/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {markup} from "@internal/markup";
+import {AnyMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 
 export default class FileAllocator {
@@ -49,9 +49,12 @@ export default class FileAllocator {
 	}
 
 	public verifySize(path: AbsoluteFilePath, stats: Stats) {
-		const project = this.server.projectManager.assertProjectExisting(path);
-		const maxSize = project.config.files.maxSize;
+		const project = this.server.projectManager.findLoadedProject(path);
+		if (project === undefined) {
+			return;
+		}
 
+		const maxSize = project.config.files.maxSize;
 		if (stats.size > maxSize) {
 			throw new Error(
 				`The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
@@ -87,7 +90,7 @@ export default class FileAllocator {
 		}
 	}
 
-	public async evict(path: AbsoluteFilePath) {
+	public async evict(path: AbsoluteFilePath, reason: AnyMarkup) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {
@@ -101,7 +104,7 @@ export default class FileAllocator {
 			filename,
 		});
 
-		this.logger.info(markup`Evicted ${path}`);
+		this.logger.info(markup`Evicted ${path} due to ${reason}`);
 	}
 
 	private async handleDeleted(path: AbsoluteFilePath) {
@@ -112,7 +115,7 @@ export default class FileAllocator {
 		}
 
 		// Evict file from 'worker cache
-		await this.evict(path);
+		await this.evict(path, markup`file deleted`);
 
 		// Disown it from 'our internal map
 		this.fileToWorker.delete(path);
@@ -129,6 +132,10 @@ export default class FileAllocator {
 	) {
 		const {workerManager} = this.server;
 
+		if (await this.server.projectManager.maybeEvictProjects(path)) {
+			this.logger.info(markup`Evicted projects belonging to dependency ${path}`);
+		}
+
 		// Send update to worker owner
 		if (this.hasOwner(path)) {
 			// Get the worker
@@ -138,7 +145,7 @@ export default class FileAllocator {
 			}
 
 			// Evict the file from 'cache
-			await this.evict(path);
+			await this.evict(path, markup`file change`);
 
 			// Verify that this file doesn't exceed any size limit
 			this.verifySize(path, newStats);
@@ -151,8 +158,6 @@ export default class FileAllocator {
 			}
 			workerManager.disown(workerId, oldStats);
 			workerManager.own(workerId, newStats);
-		} else if (await this.server.projectManager.maybeEvictPossibleConfig(path)) {
-			this.logger.info(markup`Evicted the project belonging to config ${path}`);
 		} else {
 			this.logger.info(markup`No owner for eviction ${path}`);
 		}

@@ -8,8 +8,11 @@
 import {WorkerContainer} from "./WorkerManager";
 import Server from "./Server";
 import {AbsoluteFilePath} from "@internal/path";
+import createDeferredPromise from "@internal/core/common/utils/createDeferredPromise";
+import {VoidCallback} from "@internal/typescript-helpers";
+import {FileNotFound} from "@internal/core/common/FileNotFound";
 
-type Queue<M> = Array<[AbsoluteFilePath, M, () => void]>;
+type Queue<M> = Array<[AbsoluteFilePath, M, VoidCallback]>;
 
 type WorkerQueueItem<M> = {
 	running: boolean;
@@ -44,7 +47,10 @@ export default class WorkerQueue<M> {
 			Array.from(
 				paths,
 				async (path) => {
-					await this.server.fileAllocator.getOrAssignOwner(path);
+					return FileNotFound.allowMissing(
+						path,
+						() => this.server.fileAllocator.getOrAssignOwner(path),
+					);
 				},
 			),
 		);
@@ -67,13 +73,7 @@ export default class WorkerQueue<M> {
 			path,
 		);
 
-		let resolve;
-		const promise = new Promise((_resolve) => {
-			resolve = _resolve;
-		});
-		if (resolve === undefined) {
-			throw new Error("Expected resolve to have been declared");
-		}
+		const {resolve, promise} = createDeferredPromise<void>();
 
 		// Populate the worker queue for this item
 		let worker = this.workers.get(workerContainer);

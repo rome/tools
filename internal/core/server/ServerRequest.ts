@@ -13,6 +13,8 @@ import {
 import {BundlerConfig, JSONFileReference, LAG_INTERVAL} from "@internal/core";
 import {
 	Diagnostic,
+	DiagnosticAdvice,
+	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppressions,
@@ -22,7 +24,9 @@ import {
 	createSingleDiagnosticError,
 	deriveDiagnosticFromError,
 	descriptions,
+	diagnosticLocationToMarkupFilelink,
 	getDiagnosticsFromError,
+	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsPrinter,
@@ -44,7 +48,7 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {Event, EventSubscription} from "@internal/events";
+import {Event} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLITarget,
@@ -69,6 +73,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	UnknownFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
 } from "@internal/path";
@@ -83,13 +88,7 @@ import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import crypto = require("crypto");
-import {
-	GetFilesFlushCallback,
-	GetFilesOptions,
-	WatchFilesCallback,
-	getFilesFromArgs,
-	watchFilesFromArgs,
-} from "./fs/glob";
+import {GlobOptions, Globber} from "./fs/glob";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -115,6 +114,89 @@ export const EMPTY_SUCCESS_RESPONSE: ServerQueryResponseSuccess = {
 type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
 };
+
+type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
+	args?: Array<UnknownFilePath | string>;
+	tryAlternateArg?: (path: UnknownFilePath) => undefined | UnknownFilePath;
+	ignoreArgumentMisses?: boolean;
+	ignoreProjectIgnore?: boolean;
+	disabledDiagnosticCategory?: DiagnosticCategory;
+	advice?: DiagnosticAdvice;
+	verb?: string;
+	noun?: string;
+};
+
+async function globUnmatched(
+	req: ServerRequest,
+	opts: ServerRequestGlobOptions,
+	path: AbsoluteFilePath,
+	location: DiagnosticLocation,
+) {
+	const {server} = req;
+	const {configCategory, ignoreProjectIgnore} = opts;
+
+	let category: DiagnosticCategory = "args/fileNotFound";
+
+	let advice: DiagnosticAdvice = [...(opts.advice || [])];
+
+	// Hint if all files were ignored
+	if (configCategory !== undefined && !ignoreProjectIgnore) {
+		const globber = await req.glob({
+			...opts,
+			ignoreProjectIgnore: true,
+		});
+		const withoutIgnore = await globber.get(false);
+
+		if (withoutIgnore.size > 0) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`The following files were ignored`,
+			});
+
+			advice.push({
+				type: "list",
+				list: Array.from(withoutIgnore, (path) => markup`${path}`),
+				truncate: true,
+			});
+
+			const ignoreSource = server.projectManager.findProjectConfigConsumer(
+				await req.server.projectManager.assertProject(path, location),
+				(consumer) =>
+					consumer.has(configCategory) &&
+					consumer.get(configCategory).get("ignore")
+				,
+			);
+
+			if (ignoreSource.value !== undefined) {
+				const ignorePointer = ignoreSource.value.getDiagnosticLocation("value");
+
+				advice.push({
+					type: "log",
+					category: "info",
+					text: markup`Ignore patterns were defined here`,
+				});
+
+				advice.push({
+					type: "frame",
+					location: ignorePointer,
+				});
+			}
+		}
+	}
+
+	throw createSingleDiagnosticError({
+		location: {
+			...location,
+			marker: markup`${path}`,
+		},
+		description: {
+			...descriptions.FLAGS.NO_FILES_FOUND(opts.noun),
+			category,
+			advice,
+		},
+	});
+}
 
 export class ServerRequestInvalid extends DiagnosticsError {
 	constructor(message: string, diagnostics: Diagnostics, showHelp: boolean) {
@@ -425,6 +507,16 @@ export default class ServerRequest {
 		);
 	}
 
+	private logDiagnostics(diagnostics: Diagnostics) {
+		for (const diag of diagnostics) {
+			this.logger.error(
+				markup`Encountered diagnostic: ${diag.description.message}. Category: ${diag.description.category}. Location: ${diagnosticLocationToMarkupFilelink(
+					diag.location,
+				)}`,
+			);
+		}
+	}
+
 	public async printDiagnostics(
 		{diagnostics, suppressions = [], printerOptions, excludeFooter}: {
 			diagnostics: Diagnostics;
@@ -433,6 +525,8 @@ export default class ServerRequest {
 			excludeFooter?: boolean;
 		},
 	) {
+		this.logDiagnostics(diagnostics);
+
 		await printDiagnostics({
 			diagnostics,
 			suppressions,
@@ -486,7 +580,11 @@ export default class ServerRequest {
 		};
 	}
 
-	public expectArgumentLength(min: number, max: number = min) {
+	public expectArgumentLength(
+		min: number,
+		max: number = min,
+		advice: DiagnosticAdvice = [],
+	) {
 		const {args} = this.query;
 		let message;
 
@@ -512,13 +610,20 @@ export default class ServerRequest {
 		}
 
 		if (message !== undefined) {
+			const description = descriptions.FLAGS.INCORRECT_ARG_COUNT(
+				excessive,
+				message,
+			);
 			this.throwDiagnosticFlagError({
 				target: {
 					type: "arg-range",
 					from: min,
 					to: max,
 				},
-				description: descriptions.FLAGS.INCORRECT_ARG_COUNT(excessive, message),
+				description: {
+					...description,
+					advice: [...description.advice, ...advice],
+				},
 			});
 		}
 	}
@@ -663,7 +768,7 @@ export default class ServerRequest {
 			...startMarker,
 			end: Date.now(),
 		};
-		this.logger.info(markup`Started marker: ${startMarker.label}`);
+		this.logger.info(markup`Completed marker: ${startMarker.label}`);
 		this.markerEvent.send(endMarker);
 		return endMarker;
 	}
@@ -757,7 +862,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.updateBuffer.call({ref, content});
 				this.server.memoryFs.addBuffer(path, content);
-				this.server.refreshFileEvent.send(path);
+				await this.server.refreshFileEvent.call(path);
 			},
 			{noRetry: true},
 		);
@@ -1088,17 +1193,183 @@ export default class ServerRequest {
 		return prefetchedModuleSignatures;
 	}
 
-	public watchFilesFromArgs(
-		opts: GetFilesOptions,
-		callback: WatchFilesCallback,
-	): Promise<EventSubscription> {
-		return watchFilesFromArgs(this, opts, callback);
+	public async glob(opts: ServerRequestGlobOptions): Promise<Globber> {
+		const {cwd} = this.client.flags;
+
+		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
+		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+
+		let rawArgs = opts.args ?? this.query.args;
+		if (rawArgs.length === 0) {
+			rawArgs = [cwd];
+			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());
+		}
+
+		for (let i = 0; i < rawArgs.length; i++) {
+			const path = createUnknownFilePath(rawArgs[i]);
+			let abs: AbsoluteFilePath;
+
+			if (path.isAbsolute()) {
+				abs = path.assertAbsolute();
+			} else {
+				const resolved = cwd.resolve(path);
+				if (await this.server.memoryFs.existsHard(resolved)) {
+					abs = resolved;
+				} else {
+					// Will need to be resolved...
+					abs = await this.resolveEntryAssertPathArg(i, false);
+				}
+			}
+
+			let exists = await this.server.memoryFs.existsHard(abs);
+
+			// If it doesn't exist then let's try finding an alternate path
+			if (!exists && opts.tryAlternateArg !== undefined) {
+				const alternateSource = opts.tryAlternateArg(path);
+				if (alternateSource !== undefined) {
+					const resolvedAlternate = await this.server.resolver.resolveEntry({
+						origin: cwd,
+						source: alternateSource,
+						// Allow requests to stop at directories
+						requestedType: "directory",
+					});
+					if (resolvedAlternate.type === "FOUND") {
+						abs = resolvedAlternate.path;
+						exists = true;
+					}
+				}
+			}
+
+			if (exists) {
+				args.add(abs);
+
+				if (!argToLocation.has(abs)) {
+					argToLocation.set(
+						abs,
+						this.getDiagnosticLocationFromFlags({
+							type: "arg",
+							key: i,
+						}),
+					);
+				}
+			} else {
+				// This should fail. Resolver produces much nicer error messages.
+				await this.resolveEntryAssertPathArg(i, false);
+			}
+		}
+
+		return new Globber(
+			this.server,
+			{
+				...opts,
+				args,
+
+				onWatch: (sub) => {
+					this.endEvent.subscribe(async () => {
+						await sub.unsubscribe();
+					});
+				},
+
+				onSearchNoMatch: async (path) => {
+					if (!opts.ignoreArgumentMisses) {
+						const location = argToLocation.get(path) ?? {};
+						await globUnmatched(this, opts, path, location);
+					}
+				},
+			},
+		);
 	}
 
-	public getFilesFromArgs(
-		opts?: GetFilesOptions,
-		flushCallback?: GetFilesFlushCallback,
-	): Promise<AbsoluteFilePathSet> {
-		return getFilesFromArgs(this, opts, flushCallback);
+	public async buildResponseFromError(
+		rawErr: Error,
+	): Promise<ServerQueryResponse> {
+		if (!this.bridge.alive) {
+			// Doesn't matter
+			return {
+				type: "CANCELLED",
+				markers: [],
+			};
+		}
+
+		let err = rawErr;
+		let printer: DiagnosticsPrinter;
+
+		if (err instanceof DiagnosticsPrinter) {
+			printer = err;
+		} else {
+			// If we can derive diagnostics from the error then create a diagnostics printer
+			const diagnostics = getOrDeriveDiagnosticsFromError(
+				err,
+				{
+					description: {
+						category: "internalError/request",
+					},
+					tags: {
+						internal: true,
+					},
+				},
+			);
+
+			printer = this.createDiagnosticsPrinter(
+				this.createDiagnosticsProcessor({
+					origins: [
+						{
+							category: "internal",
+							message: "Derived diagnostics from thrown error",
+						},
+					],
+				}),
+			);
+
+			printer.processor.addDiagnostics(diagnostics);
+		}
+
+		// Only print when the bridge is alive and we aren't in review mode
+		// When we're in review mode we don't expect to show any diagnostics because they'll be intercepted in the client command
+		// We will always print invalid request errors
+		let shouldPrint = true;
+		if (this.query.requestFlags.review) {
+			shouldPrint = false;
+		}
+		if (rawErr instanceof ServerRequestInvalid) {
+			shouldPrint = true;
+		}
+		if (!this.bridge.alive) {
+			shouldPrint = false;
+		}
+
+		if (shouldPrint) {
+			await printer.print();
+
+			// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+			if (!(rawErr instanceof ServerRequestInvalid)) {
+				await printer.footer();
+			}
+		}
+
+		const diagnostics = printer.processor.getDiagnostics();
+
+		if (err instanceof ServerRequestCancelled) {
+			return {
+				type: "CANCELLED",
+				markers: [],
+			};
+		} else if (err instanceof ServerRequestInvalid) {
+			return {
+				type: "INVALID_REQUEST",
+				diagnostics,
+				showHelp: err.showHelp,
+				markers: [],
+			};
+		} else {
+			this.logDiagnostics(diagnostics);
+			return {
+				type: "DIAGNOSTICS",
+				files: {},
+				hasDiagnostics: diagnostics.length > 0,
+				diagnostics,
+				markers: [],
+			};
+		}
 	}
 }

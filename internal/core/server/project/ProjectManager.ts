@@ -55,8 +55,13 @@ import {createDirectory, readFileText} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {consumeJSON} from "@internal/codec-json";
 import {VCSClient, getVCSClient} from "@internal/vcs";
-import {FilePathLocker} from "@internal/core/common/utils/lockers";
+import {
+	FilePathLocker,
+	SingleLocker,
+} from "@internal/core/common/utils/lockers";
 import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {markup} from "@internal/markup";
+import {ReporterNamespace} from "@internal/cli-reporter";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
@@ -123,6 +128,7 @@ export type ProjectConfigSource = {
 export default class ProjectManager {
 	constructor(server: Server) {
 		this.server = server;
+		this.logger = server.logger.namespace(markup`[ProjectManager]`);
 
 		this.projectIdCounter = 0;
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
@@ -135,9 +141,14 @@ export default class ProjectManager {
 		this.filenameToUid = new AbsoluteFilePathMap();
 		this.remoteToLocalPath = new UnknownFilePathMap();
 		this.localPathToRemote = new AbsoluteFilePathMap();
+
+		this.evictingProjectLock = new SingleLocker();
 	}
 
+	public evictingProjectLock: SingleLocker;
+
 	private server: Server;
+	private logger: ReporterNamespace;
 
 	private uidToFilename: Map<string, AbsoluteFilePath>;
 	private filenameToUid: AbsoluteFilePathMap<string>;
@@ -370,11 +381,8 @@ export default class ProjectManager {
 		};
 	}
 
-	public async maybeEvictPossibleConfig(
-		path: AbsoluteFilePath,
-	): Promise<boolean> {
-		// TODO not sure if this case handles new manifests?
-		// check if this filename is a rome config dependency
+	public async maybeEvictProjects(path: AbsoluteFilePath): Promise<boolean> {
+		// Check if this filename is a rome config dependency
 		const projectIds = this.projectConfigDependenciesToIds.get(path);
 		if (projectIds === undefined) {
 			return false;
@@ -409,68 +417,94 @@ export default class ProjectManager {
 			}
 		}
 
+		// Evict
 		for (const project of projectsToEvict) {
-			await this.evictProject(project);
+			await this.evictProject(project, true);
 		}
 
 		return true;
 	}
 
-	public async evictProject(project: ProjectDefinition) {
-		const evictProjectId = project.id;
+	public async evictProject(project: ProjectDefinition, reload: boolean) {
+		const lock = await this.evictingProjectLock.getLock();
 
-		// Remove the config locs from our internal map that belong to this project
-		for (const [configLoc, projectIds] of this.projectConfigDependenciesToIds) {
-			if (projectIds.has(evictProjectId)) {
-				projectIds.delete(evictProjectId);
+		try {
+			const evictProjectId = project.id;
+
+			// Remove the config locs from our internal map that belong to this project
+			for (const [configLoc, projectIds] of this.projectConfigDependenciesToIds) {
+				if (projectIds.has(evictProjectId)) {
+					projectIds.delete(evictProjectId);
+				}
+
+				if (projectIds.size === 0) {
+					this.projectConfigDependenciesToIds.delete(configLoc);
+				}
 			}
 
-			if (projectIds.size === 0) {
-				this.projectConfigDependenciesToIds.delete(configLoc);
+			// Notify all workers that it should delete the project
+			for (const {bridge} of this.server.workerManager.getWorkers()) {
+				// Evict project
+				bridge.updateProjects.send({
+					projects: [
+						{
+							id: evictProjectId,
+							directory: project.directory.join(),
+							config: undefined,
+						},
+					],
+				});
+
+				// Evict packages
+				bridge.updateManifests.send({
+					manifests: Array.from(
+						project.manifests.values(),
+						(def) => ({
+							id: def.id,
+							manifest: undefined,
+						}),
+					),
+				});
 			}
-		}
 
-		// Notify all workers that it should delete the project
-		for (const {bridge} of this.server.workerManager.getWorkers()) {
-			// Evict project
-			bridge.updateProjects.send({
-				projects: [
-					{
-						id: evictProjectId,
-						directory: project.directory.join(),
-						config: undefined,
-					},
-				],
-			});
+			// Delete the project from 'our internal map
+			this.projects.delete(evictProjectId);
+			this.projectDirectoryToProject.delete(project.directory);
 
-			// Evict packages
-			bridge.updateManifests.send({
-				manifests: Array.from(
-					project.manifests.values(),
-					(def) => ({
-						id: def.id,
-						manifest: undefined,
-					}),
+			// Tell the MemoryFileSystem to close the watcher so new file events are not emitted
+			this.server.memoryFs.close(project.directory);
+
+			// Evict all files that belong to this project and delete their project mapping
+			const ownedFiles: Array<AbsoluteFilePath> = [];
+			for (const path of this.server.memoryFs.glob(project.directory)) {
+				this.handleDeleted(path);
+				ownedFiles.push(path);
+			}
+			await Promise.all(
+				ownedFiles.map((path) =>
+					this.server.fileAllocator.evict(
+						path,
+						markup`project dependency change`,
+					)
 				),
-			});
+			);
+
+			// Tell the MemoryFileSystem to clear it's maps
+			this.server.memoryFs.unwatch(project.directory);
+
+			this.logger.info(
+				markup`Evicted project <emphasis>${project.directory}</emphasis>`,
+			);
+
+			if (reload) {
+				this.logger.info(
+					markup`Reloading evicted project <emphasis>${project.directory}</emphasis>`,
+				);
+				await this.findProject(project.directory);
+			}
+		} finally {
+			lock.release();
 		}
-
-		// Delete the project from 'our internal map
-		this.projects.delete(evictProjectId);
-		this.projectDirectoryToProject.delete(project.directory);
-
-		// Evict all files that belong to this project and delete their project mapping
-		const ownedFiles: Array<AbsoluteFilePath> = [];
-		for (const path of this.server.memoryFs.glob(project.directory)) {
-			this.handleDeleted(path);
-			ownedFiles.push(path);
-		}
-		await Promise.all(
-			ownedFiles.map((path) => this.server.fileAllocator.evict(path)),
-		);
-
-		// Tell the MemoryFileSystem to stop watching and clear it's maps
-		this.server.memoryFs.unwatch(project.directory);
 	}
 
 	public getProjects(): Array<ProjectDefinition> {
@@ -587,6 +621,7 @@ export default class ProjectManager {
 		// Make sure there's no project with the same `name` as us
 		for (const project of this.getProjects()) {
 			if (project.config.name === config.name) {
+				// TODO
 				throw new Error(
 					`Conflicting project name ${config.name}. ${projectDirectory.join()} and ${project.directory.join()}`,
 				);
@@ -876,6 +911,8 @@ export default class ProjectManager {
 				}
 			}
 		}
+
+		this.logger.info(markup`Found no project for <emphasis>${cwd}</emphasis>`);
 
 		return undefined;
 	}

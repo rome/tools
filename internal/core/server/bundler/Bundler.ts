@@ -301,7 +301,7 @@ export default class Bundler {
 
 		// Copy manifest.files
 		if (manifest.files !== undefined) {
-			const paths = await this.server.memoryFs.glob(
+			const paths = this.server.memoryFs.glob(
 				manifestDef.directory,
 				{
 					overrideIgnore: flipPathPatterns(manifest.files),

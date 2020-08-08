@@ -12,7 +12,7 @@ import {
 } from "@internal/codec-json";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import Linter from "../linter/Linter";
-import {PROJECT_CONFIG_DIRECTORY, ProjectDefinition} from "@internal/project";
+import {PROJECT_CONFIG_DIRECTORY} from "@internal/project";
 import {AbsoluteFilePathMap} from "@internal/path";
 import {getVCSClient} from "@internal/vcs";
 import {
@@ -42,8 +42,28 @@ export default createServerCommand<Flags>({
 	},
 	async callback(req: ServerRequest, flags: Flags) {
 		const {server, client, reporter} = req;
-		const {cwd} = client.flags;
-		req.expectArgumentLength(0);
+
+		const {args} = req.query;
+		let {cwd} = client.flags;
+
+		// Warn if provided with arguments
+		if (args.length > 0) {
+			req.expectArgumentLength(
+				0,
+				0,
+				[
+					{
+						type: "log",
+						category: "info",
+						text: markup`If you meant to specify a specific folder to initialize other than the one you're in, use the <code>--cwd</code> flag:`,
+					},
+					{
+						type: "command",
+						command: `rome init --cwd ${args[0]}`,
+					},
+				],
+			);
+		}
 
 		// Check for sensitive directory
 		if (server.projectManager.isBannedProjectPath(cwd)) {
@@ -121,23 +141,13 @@ export default createServerCommand<Flags>({
 			},
 		);
 
-		// Ensure project is evicted and recreated properly
-		let project: undefined | ProjectDefinition;
 		async function updateConfig(partial: JSONObject = {}) {
-			// Evict the project
-			if (project !== undefined) {
-				await server.projectManager.evictProject(project);
-			}
-
 			// Update it on disk
 			config = {
 				...config,
 				...partial,
 			};
 			await writeFile(configPath, stringifyRJSON(config, comments));
-
-			// Add it again
-			project = await server.projectManager.assertProject(cwd);
 		}
 
 		// Create initial project config
@@ -200,56 +210,31 @@ export default createServerCommand<Flags>({
 					}
 
 					let editorConfigTabExtensions: Array<string> = [];
-					let editorConfigSpaceExtensions: Array<string> = [];
 					for (const [ext, handler] of uniqueHandlers) {
 						if (handler.hasTabs) {
-							editorConfigTabExtensions.push(`*${ext}`);
-						} else {
-							editorConfigSpaceExtensions.push(`*${ext}`);
+							editorConfigTabExtensions.push(`*.${ext}`);
 						}
 					}
 
-					let editorConfigTemplate = dedent`
-							[*]
+					let editorConfigTemplate = "";
+
+					if (editorConfigTabExtensions.length > 0) {
+						editorConfigTemplate = dedent`
+							[{${editorConfigTabExtensions.join(", ")}}]
 							end_of_line = lf
 							trim_trailing_whitespace = true
 							insert_final_newline = true
 							charset = utf-8
-							indent_style = space
+							indent_style = tab
 							indent_size = 2
 						`;
-
-					if (editorConfigTabExtensions.length > 0) {
-						editorConfigTemplate += "\n\n";
-						editorConfigTemplate += dedent`
-								[{${editorConfigTabExtensions.join(", ")}}]
-								end_of_line = lf
-								trim_trailing_whitespace = true
-								insert_final_newline = true
-								charset = utf-8
-								indent_style = tab
-								indent_size = 2
-							`;
-					}
-
-					if (editorConfigSpaceExtensions.length > 0) {
-						editorConfigTemplate += "\n\n";
-						editorConfigTemplate += dedent`
-								[{${editorConfigSpaceExtensions.join(", ")}}]
-								end_of_line = lf
-								trim_trailing_whitespace = true
-								insert_final_newline = true
-								charset = utf-8
-								indent_style = space
-								indent_size = 2
-							`;
 					}
 
 					files.set(
 						editorConfigPath,
 						markup`Sets editor formatting and indentation options. Documentation: <hyperlink target="https://editorconfig.org/" />`,
 					);
-					await writeFile(editorConfigPath, editorConfigTemplate);
+					await writeFile(editorConfigPath, editorConfigTemplate.trim() + "\n");
 				},
 			},
 		]);

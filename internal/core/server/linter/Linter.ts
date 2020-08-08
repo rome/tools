@@ -34,7 +34,7 @@ import {markup} from "@internal/markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/core/common/FileNotFound";
-import {GetFilesOptions, WatchFilesEvent} from "../fs/glob";
+import {WatchFilesEvent} from "../fs/glob";
 
 type LintWatchChanges = Array<{
 	type: "absolute" | "unknown";
@@ -168,9 +168,7 @@ class LintRunner {
 	private async runLint(
 		{paths}: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
-	): Promise<{
-		savedCount: number;
-	}> {
+	): Promise<void> {
 		const {server} = this.request;
 		const {
 			lintCompilerOptionsPerFile = {},
@@ -255,21 +253,12 @@ class LintRunner {
 
 		await queue.spin();
 		progress.end();
-
-		// Run through save queue
-		const savedCount = await this.request.flushFiles();
-		return {savedCount};
 	}
 
 	private async runGraph(
 		event: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 	): Promise<AbsoluteFilePathSet> {
-		if (event.chunk) {
-			// TODO ignore chunks
-			return new AbsoluteFilePathSet();
-		}
-
 		const {graph} = this;
 		const evictedPaths = event.paths;
 
@@ -404,15 +393,20 @@ class LintRunner {
 		// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
 		for (const path of updatedPaths) {
 			const filename = path.join();
+			let diagnostics = [...(diagnosticsByFilename.get(filename) || [])];
+
+			// Could have been a UID that we turned into an absolute path so turn it back
+			diagnostics = [
+				...diagnostics,
+				...(diagnosticsByFilename.get(
+					this.server.projectManager.getUid(path, true),
+				) || []),
+			];
+
 			changes.push({
 				type: "absolute",
 				filename,
-				diagnostics: [
-					...(diagnosticsByFilename.get(filename) || []),
-
-					// Could have been a UID that we turned into an absolute path so turn it back
-					...(diagnosticsByFilename.get(this.server.projectManager.getUid(path)) || []),
-				],
+				diagnostics,
 			});
 		}
 
@@ -435,13 +429,23 @@ class LintRunner {
 		processor: DiagnosticsProcessor,
 	): Promise<WatchResults> {
 		this.events.onRunStart();
-		const {savedCount} = await this.runLint(event, processor);
+
+		// Run compiler lint
+		await this.runLint(event, processor);
+
+		// Update dependency graph
 		const validatedDependencyPaths = await this.runGraph(event, processor);
+
+		// Computed diagnostic changes
 		const changes = await this.computeChanges(
 			event,
 			processor,
 			validatedDependencyPaths,
 		);
+
+		// Flush saved files
+		const savedCount = await this.request.flushFiles();
+
 		return {
 			evictedPaths: event.paths,
 			changes,
@@ -470,17 +474,6 @@ export default class Linter {
 	public shouldSave(): boolean {
 		const {apply, hasDecisions} = this.options;
 		return apply || hasDecisions || this.shouldOnlyFormat();
-	}
-
-	private getFileArgOptions(): GetFilesOptions {
-		return {
-			args: this.options.args,
-			noun: "lint",
-			verb: "linting",
-			configCategory: "lint",
-			extensions: LINTABLE_EXTENSIONS,
-			disabledDiagnosticCategory: "lint/disabled",
-		};
 	}
 
 	private createDiagnosticsProcessor(
@@ -524,14 +517,20 @@ export default class Linter {
 
 		const runner = new LintRunner(this, {events, graph});
 
-		return this.request.watchFilesFromArgs(
-			this.getFileArgOptions(),
-			async (event) => {
-				const processor = this.createDiagnosticsProcessor(event.paths, runner);
-				const result = await runner.run(event, processor);
-				await events.onChanges(result);
-			},
-		);
+		const globber = await this.request.glob({
+			args: this.options.args,
+			noun: "lint",
+			verb: "linting",
+			configCategory: "lint",
+			extensions: LINTABLE_EXTENSIONS,
+			disabledDiagnosticCategory: "lint/disabled",
+		});
+
+		return globber.watch(async (event) => {
+			const processor = this.createDiagnosticsProcessor(event.paths, runner);
+			const result = await runner.run(event, processor);
+			await events.onChanges(result);
+		});
 	}
 
 	public async runWatch() {
