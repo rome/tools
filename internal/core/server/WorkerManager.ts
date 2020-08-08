@@ -101,9 +101,8 @@ export default class WorkerManager {
 	public end() {
 		// Shutdown all workers, no need to clean up any internal data structures since they will never be used
 		for (const {process, bridge} of this.workers.values()) {
-			bridge.end();
-
 			if (process !== undefined) {
+				bridge.end();
 				process.kill();
 			}
 		}

@@ -23,7 +23,7 @@ import {
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
-import {Event, EventSubscription} from "@internal/events";
+import {Event, EventQueue, EventSubscription} from "@internal/events";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
@@ -199,9 +199,7 @@ export default class Server {
 			name: "Server.requestStart",
 		});
 
-		this.refreshFileEvent = new Event({
-			name: "Server.refreshFile",
-		});
+		this.refreshFileEvent = new EventQueue();
 
 		this.endEvent = new Event({
 			name: "Server.end",
@@ -277,7 +275,7 @@ export default class Server {
 	// - Created
 	// - Modified
 	// - Buffer updated
-	public refreshFileEvent: Event<AbsoluteFilePath, void>;
+	public refreshFileEvent: EventQueue<AbsoluteFilePath>;
 
 	// Public modules
 	public recoveryStore: RecoveryStore;
@@ -487,7 +485,7 @@ export default class Server {
 		// Cancel all queries in flight
 		for (const client of this.connectedClients) {
 			for (const req of client.requestsInFlight) {
-				await req.cancel();
+				await req.cancel("server ended");
 			}
 
 			// Kill socket
@@ -603,7 +601,7 @@ export default class Server {
 		bridge.cancelQuery.subscribe(async (token) => {
 			for (const req of client.requestsInFlight) {
 				if (req.query.cancelToken === token) {
-					await req.cancel();
+					await req.cancel("user requested");
 				}
 			}
 		});
@@ -714,7 +712,7 @@ export default class Server {
 
 			// Cancel any requests still in flight
 			for (const req of client.requestsInFlight) {
-				req.cancel();
+				req.cancel("bridge died");
 			}
 
 			// Teardown reporter

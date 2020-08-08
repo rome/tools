@@ -19,6 +19,7 @@ import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
 export type DependencyPattern =
+	| GistPattern
 	| HostedGitPattern
 	| HTTPTarballPattern
 	| SemverPattern
@@ -47,6 +48,9 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 
 		case "file":
 			return `file:${pattern.path}`;
+
+		case "gist":
+			return `gist:${pattern.id}`;
 
 		case "semver":
 			return stringifySemver(pattern.range);
@@ -96,8 +100,24 @@ function removePrefix(prefix: string, value: string): string {
 	}
 }
 
+//# GIST
+
+const GIST_PREFIX = "gist:";
+
+type GistPattern = {
+	type: "gist";
+	id: string;
+};
+
+function parseGist(pattern: string): GistPattern {
+	return {
+		type: "gist",
+		id: pattern.slice(GIST_PREFIX.length),
+	};
+}
+
 //# HOSTED GIT
-export type HostedGitHost = "bitbucket" | "github" | "gist" | "gitlab";
+export type HostedGitHost = "bitbucket" | "github" | "gitlab";
 
 type IncompleteHostedGitPattern = {
 	type: "hosted-git";
@@ -116,7 +136,6 @@ const GITHUB_SHORTHAND = /^[^:@%\/\s.\-][^:@%\/\s]*[\/][^:@\s\/%]+(?:#.*)?$/;
 const HOSTED_GIT_PREFIXES: Array<HostedGitHost> = [
 	"bitbucket",
 	"github",
-	"gist",
 	"gitlab",
 ];
 
@@ -170,7 +189,6 @@ export function getHostedGitURL(pattern: IncompleteHostedGitPattern): string {
 			return "";
 
 		case "gitlab":
-		case "gist":
 			return "";
 
 		case "github":
@@ -431,6 +449,10 @@ export function parseDependencyPattern(
 
 	if (pattern.startsWith("http://") || pattern.startsWith("https://")) {
 		return parseHttpTarball(pattern, consumer);
+	}
+
+	if (pattern.startsWith(GIST_PREFIX)) {
+		return parseGist(pattern);
 	}
 
 	if (pattern.startsWith(NPM_PREFIX)) {

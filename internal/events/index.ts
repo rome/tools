@@ -9,6 +9,8 @@ import Event from "./Event";
 
 export {Event};
 
+export {default as EventQueue} from "./EventQueue";
+
 // rome-ignore lint/ts/noExplicitAny
 export type AnyEvent = Event<any, any>;
 

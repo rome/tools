@@ -15,6 +15,7 @@ import {TestWorkerBridge} from "@internal/core";
 import {createBridgeFromParentProcess} from "@internal/events";
 import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
 import inspector = require("inspector");
+import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
 
 export type TestWorkerFlags = {
 	inspectorPort: number;
@@ -43,22 +44,19 @@ export default class TestWorker {
 			},
 		);
 
-		process.on(
-			"unhandledRejection",
-			(err) => {
-				bridge.testDiagnostic.send({
-					origin: undefined,
-					diagnostic: deriveDiagnosticFromError(
-						err,
-						{
-							description: {
-								category: "tests/unhandledRejection",
-							},
+		setupGlobalErrorHandlers((err) => {
+			bridge.testDiagnostic.send({
+				origin: undefined,
+				diagnostic: deriveDiagnosticFromError(
+					err,
+					{
+						description: {
+							category: "tests/unhandledRejection",
 						},
-					),
-				});
-			},
-		);
+					},
+				),
+			});
+		});
 
 		bridge.inspectorDetails.subscribe(() => {
 			return {

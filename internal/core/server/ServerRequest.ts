@@ -214,11 +214,15 @@ function hash(val: JSONObject): string {
 }
 
 export class ServerRequestCancelled extends Error {
-	constructor() {
+	constructor(reason: string) {
 		super(
 			"ServerRequest has been cancelled. This error is meant to be seen by Server",
 		);
+
+		this.reason = reason;
 	}
+
+	public reason: string;
 }
 
 export default class ServerRequest {
@@ -231,7 +235,7 @@ export default class ServerRequest {
 
 		this.start = Date.now();
 		this.id = requestIdCounter++;
-		this.cancelled = false;
+		this.cancelledReason = undefined;
 		this.toredown = false;
 		this.markers = [];
 		this.normalizedCommandFlags = {
@@ -272,7 +276,7 @@ export default class ServerRequest {
 	private start: number;
 	private normalizedCommandFlags: NormalizedCommandFlags;
 	private markers: Array<ServerMarker>;
-	private cancelled: boolean;
+	private cancelledReason: undefined | string;
 	private toredown: boolean;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
 
@@ -370,16 +374,17 @@ export default class ServerRequest {
 	}
 
 	public checkCancelled() {
-		if (this.cancelled) {
-			throw new ServerRequestCancelled();
+		if (this.cancelledReason !== undefined) {
+			throw new ServerRequestCancelled(this.cancelledReason);
 		}
 	}
 
-	public async cancel(): Promise<void> {
+	public async cancel(reason: string): Promise<void> {
 		await this.cancelEvent.callOptional();
-		this.cancelled = true;
+		this.cancelledReason = reason;
 		await this.teardown({
 			type: "CANCELLED",
+			reason,
 			markers: [],
 		});
 	}
@@ -393,7 +398,11 @@ export default class ServerRequest {
 
 		this.toredown = true;
 		this.client.requestsInFlight.delete(this);
+
 		this.logger.info(markup`Response type: ${String(res?.type)}`);
+		if (res.type === "DIAGNOSTICS") {
+			this.logDiagnostics(res.diagnostics);
+		}
 
 		// Output timing information
 		if (this.query.requestFlags.timing) {
@@ -779,6 +788,12 @@ export default class ServerRequest {
 		factory: (bridge: WorkerBridge, ref: JSONFileReference) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
+		// Wait on any evicting projects in case it will change the FileReference
+		const {evictingProjectLock} = this.server.projectManager;
+		if (evictingProjectLock.hasLock()) {
+			await this.server.projectManager.evictingProjectLock.waitLockDrained();
+		}
+
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
 		const startMtime = server.memoryFs.maybeGetMtime(path);
@@ -862,7 +877,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.updateBuffer.call({ref, content});
 				this.server.memoryFs.addBuffer(path, content);
-				await this.server.refreshFileEvent.call(path);
+				await this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
 		);
@@ -880,7 +895,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				const buffer = await bridge.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
-				this.server.refreshFileEvent.send(path);
+				this.server.refreshFileEvent.push(path);
 				return buffer;
 			},
 			{noRetry: true},
@@ -896,7 +911,7 @@ export default class ServerRequest {
 			async (bridge, ref) => {
 				await bridge.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
-				this.server.refreshFileEvent.send(path);
+				this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
 		);
@@ -1287,6 +1302,7 @@ export default class ServerRequest {
 			// Doesn't matter
 			return {
 				type: "CANCELLED",
+				reason: "dead",
 				markers: [],
 			};
 		}
@@ -1352,6 +1368,7 @@ export default class ServerRequest {
 		if (err instanceof ServerRequestCancelled) {
 			return {
 				type: "CANCELLED",
+				reason: err.reason,
 				markers: [],
 			};
 		} else if (err instanceof ServerRequestInvalid) {
@@ -1362,7 +1379,6 @@ export default class ServerRequest {
 				markers: [],
 			};
 		} else {
-			this.logDiagnostics(diagnostics);
 			return {
 				type: "DIAGNOSTICS",
 				files: {},

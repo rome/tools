@@ -312,11 +312,7 @@ export default class TestWorkerRunner {
 	}
 
 	private isFocusedTest({name, only}: TestOptions): boolean {
-		const {filter, focusAllowed} = this.options;
-		if (!focusAllowed) {
-			return false;
-		}
-
+		const {filter} = this.options;
 		if (filter === undefined) {
 			return only === true;
 		} else {

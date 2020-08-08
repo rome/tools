@@ -103,8 +103,10 @@ export default class Cache {
 	}
 
 	public async init() {
-		this.server.memoryFs.deletedFileEvent.subscribe((filename) => {
-			return this.server.cache.handleDeleted(filename);
+		this.server.memoryFs.deletedFileEvent.subscribe(async (paths) => {
+			for (const path of paths) {
+				await this.server.cache.handleDeleted(path);
+			}
 		});
 
 		const {memoryFs} = this.server;

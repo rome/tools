@@ -131,11 +131,14 @@ export default createVisitor<State>({
 							});
 
 				nodes.push(
-					jsFunctionDeclaration.create({
-						id,
-						head: init.head,
-						body,
-					}),
+					jsFunctionDeclaration.create(
+						{
+							id,
+							head: init.head,
+							body,
+						},
+						init,
+					),
 				);
 			}
 

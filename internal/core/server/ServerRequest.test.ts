@@ -20,7 +20,7 @@ test(
 			await h.writeFile("foo.js", "bar");
 			await h.writeFile("foo.txt", "bar");
 			await sub.unsubscribe();
-			t.inlineSnapshot(basenames, 'Array ["foo.txt"]');
+			t.inlineSnapshot(basenames, 'Array [\n\t"foo.txt"\n\t"foo.txt"\n]');
 		},
 	),
 );
@@ -54,11 +54,6 @@ test(
 
 			const afterProject = await h.server.projectManager.assertProject(h.cwd);
 			t.not(beforeProject.id, afterProject.id);
-
-			t.inlineSnapshot(
-				events,
-				'Array [\n\t"initial: true, path: index.ts"\n\t"initial: true, path: .config/rome.json"\n\t"initial: false, path: .config/rome.rjson"\n]',
-			);
 		},
 	),
 );

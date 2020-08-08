@@ -10,5 +10,5 @@ layout: layouts/homepage.liquid
 {% include docs/cli.md %}
 {% include docs/project-config.md %}
 {% include docs/rjson.md %}
-{% include docs/philosophy.md %}
 {% include docs/internals.md %}
+{% include docs/philosophy.md %}

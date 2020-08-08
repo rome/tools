@@ -2,6 +2,8 @@ import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
+import {dedent} from "@internal/string-utils";
+import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
 
@@ -169,13 +171,14 @@ export async function main() {
 					const description = getDocRuleDescription(docs, content);
 					lines.push(`<div class="rule">`);
 					lines.push(
-						`<h3 data-toc-exclude id="${basename}">
-												<a href="/docs/lint/rules/${ruleName}">${basename}</a>
-												<a class="header-anchor" href="#${basename}"></a>
-											</h3>
-										`,
+						dedent`
+							<h3 data-toc-exclude id="${basename}">
+								<a href="/docs/lint/rules/${ruleName}">${basename}</a>
+								<a class="header-anchor" href="#${basename}"></a>
+							</h3>
+						`,
 					);
-					lines.push(description);
+					lines.push(escapeXHTMLEntities(description));
 					lines.push("</div>");
 				}
 			}

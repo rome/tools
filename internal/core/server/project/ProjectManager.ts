@@ -167,8 +167,8 @@ export default class ProjectManager {
 	public async init() {
 		await this.injectVirtualModules();
 
-		this.server.memoryFs.deletedFileEvent.subscribe((path) => {
-			this.handleDeleted(path);
+		this.server.memoryFs.deletedFileEvent.subscribe((paths) => {
+			this.handleDeleted(paths);
 		});
 
 		const vendorProjectConfig: ProjectConfig = {
@@ -203,16 +203,18 @@ export default class ProjectManager {
 		});
 	}
 
-	private handleDeleted(path: AbsoluteFilePath) {
-		const filename = path.join();
+	private handleDeleted(paths: Array<AbsoluteFilePath>) {
+		for (const path of paths) {
+			const filename = path.join();
 
-		this.projectConfigDependenciesToIds.delete(path);
+			this.projectConfigDependenciesToIds.delete(path);
 
-		// Remove uids
-		const uid = this.filenameToUid.get(path);
-		this.filenameToUid.delete(path);
-		if (uid !== undefined) {
-			this.uidToFilename.delete(filename);
+			// Remove uids
+			const uid = this.filenameToUid.get(path);
+			this.filenameToUid.delete(path);
+			if (uid !== undefined) {
+				this.uidToFilename.delete(filename);
+			}
 		}
 	}
 
@@ -381,10 +383,18 @@ export default class ProjectManager {
 		};
 	}
 
-	public async maybeEvictProjects(path: AbsoluteFilePath): Promise<boolean> {
+	public async maybeEvictProjects(
+		paths: Array<AbsoluteFilePath>,
+	): Promise<boolean> {
 		// Check if this filename is a rome config dependency
-		const projectIds = this.projectConfigDependenciesToIds.get(path);
-		if (projectIds === undefined) {
+		let projectIds: Set<number> = new Set();
+		for (const path of paths) {
+			const pathProjectIds = this.projectConfigDependenciesToIds.get(path);
+			if (pathProjectIds !== undefined) {
+				projectIds = new Set([...projectIds, ...pathProjectIds]);
+			}
+		}
+		if (projectIds.size === 0) {
 			return false;
 		}
 
@@ -475,11 +485,10 @@ export default class ProjectManager {
 			this.server.memoryFs.close(project.directory);
 
 			// Evict all files that belong to this project and delete their project mapping
-			const ownedFiles: Array<AbsoluteFilePath> = [];
-			for (const path of this.server.memoryFs.glob(project.directory)) {
-				this.handleDeleted(path);
-				ownedFiles.push(path);
-			}
+			const ownedFiles: Array<AbsoluteFilePath> = Array.from(
+				this.server.memoryFs.glob(project.directory),
+			);
+			this.handleDeleted(ownedFiles);
 			await Promise.all(
 				ownedFiles.map((path) =>
 					this.server.fileAllocator.evict(
@@ -642,6 +651,10 @@ export default class ProjectManager {
 			initialized: false,
 		};
 
+		this.logger.info(
+			markup`Declared project <emphasis>#${project.id}</emphasis> from <emphasis>${projectDirectory}</emphasis>`,
+		);
+
 		this.projects.set(project.id, project);
 		this.projectDirectoryToProject.set(projectDirectory, project);
 
@@ -668,6 +681,11 @@ export default class ProjectManager {
 		diagnostics: DiagnosticsProcessor,
 	) {
 		const name = manifestNameToString(def.manifest.name);
+
+		const type = isProjectPackage ? "project package manifest" : "manifest";
+		this.logger.info(
+			markup`Declaring ${type} <emphasis>${name}</emphasis> in project <emphasis>#${project.id}</emphasis> in <emphasis>${def.directory}</emphasis>`,
+		);
 
 		// Declare this package in all projects
 		const projects = this.getHierarchyFromProject(project);
