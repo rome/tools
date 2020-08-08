@@ -334,6 +334,8 @@ export default async function cli() {
 	let commandFlags: JSONObject = {};
 	let args: Array<string> = [];
 
+	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";
+
 	// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 	const commandNames = new Set([
 		...localCommands.keys(),
@@ -350,7 +352,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
-				hidden: local.hidden,
+				hidden: isRelease && local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -370,7 +372,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
-				hidden: server.hidden,
+				hidden: isRelease && server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
