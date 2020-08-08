@@ -71,10 +71,17 @@ This command assists in the creation of a new Rome project. Actions that are per
 
  - `rome.rjson` is created that serves as your [project configuration](/docs/project-config).
  - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
+
+**Flags**
+
+- `--apply`
+
+Additional operations are applied with this flag:
+
  - `rome check --apply` is ran which will automatically format and autofix your files.
  - Global variables are extracted from previous errors and automatically added to your project config.
 
-**Uncomitted changes**
+**Uncomitted changes and `--apply`**
 
 Since this command can be destructive and may have unintended consequences, we check if you have any uncomitted changes. It's important to make sure you have everything committed in case you aren't happy with the effects of running this command. ie. you run into a bug, you don't like Rome, or want to try it some other time. You can bypass this restriction by adding the `--allow-dirty` flag.
 
