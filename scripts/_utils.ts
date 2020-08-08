@@ -62,12 +62,12 @@ export async function modifyGeneratedFile(
 
 	const startRegex = regex`${COMMENT_START} GENERATED:START\(hash:(.*?),id:${id}\) ${createGeneratedCommentInstructions(
 		scriptName,
-	)} ${COMMENT_END}\n`;
+	)} ${COMMENT_END}(\n|\r\n)`;
 	const startMatch = file.match(startRegex);
 	const startIndex = startMatch?.index ?? file.length;
 	const startInnerIndex = startIndex + (startMatch ? startMatch[0].length : 0);
 
-	const endRegex = regex`${COMMENT_START} GENERATED:END\(id:${id}\) ${COMMENT_END}\n`;
+	const endRegex = regex`${COMMENT_START} GENERATED:END\(id:${id}\) ${COMMENT_END}(\n|\r\n)`;
 	const endMatch = file.match(endRegex);
 	const endInnerIndex = endMatch?.index ?? file.length;
 	const endIndex = endInnerIndex + (endMatch ? endMatch[0].length : 0);
