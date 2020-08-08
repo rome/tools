@@ -2,7 +2,7 @@
 <html lang="en" data-theme="auto">
 	<head>
 		<meta charset="utf8" />
-		<title>{{ title }}{{ " — " if title }}Rome Frontend Toolchain</title>
+		<title>{{ title | titlify }}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel="mask-icon" href="/img/pinned-rome-logo.svg" color="#FFC905">
@@ -11,7 +11,7 @@
 
 		<meta name="description" content="Unifying the frontend development toolchain.">
 		<meta name="theme-color" content="#FFC905">
-		<meta property="og:title" content="{{ title }}{{ " — " if title }}Rome Frontend Toolchain">
+		<meta property="og:title" content="{{ title | titlify }}Rome Frontend Toolchain">
 		<meta property="og:description" content="Unifying the frontend development toolchain.">
 		<meta property="og:image" content="https://romefrontend.dev/img/social-logo.png">
 		<meta property="twitter:image" content="https://romefrontend.dev/img/social-logo.png">

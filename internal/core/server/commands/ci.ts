@@ -21,6 +21,7 @@ export default createServerCommand({
 	category: commandCategories.CODE_QUALITY,
 	description: markup`run lint and tests`,
 	usage: "",
+	hidden: true,
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {

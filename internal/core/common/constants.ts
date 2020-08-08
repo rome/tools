@@ -34,6 +34,8 @@ export const MAX_WORKER_COUNT = Math.min(CPU_COUNT, 4);
 
 // Verson constants
 export let VERSION = String(packageJson.version);
+export let REQUIRED_NODE_VERSION_RANGE = String(packageJson.engines.node);
+
 // Vendor Rome and Trunk Rome could have the same version number if there was no release in between
 // Ensure they are properly namespaced to avoid having daemon socket conflicts
 if (getEnvVar("ROME_DEV").type === "ENABLED") {

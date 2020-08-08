@@ -3,7 +3,7 @@
 	"license": "MIT",
 	"version": "10.0.0-beta",
 	"engines": {
-		"node": ">=12.0.0"
+		"node": ">=12.10.0"
 	},
 	"//": "Look! No deps!",
 	"dependencies": {},

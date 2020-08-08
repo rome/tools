@@ -11,29 +11,29 @@ permalink: /blog/2020/08/08/introducing-rome.html
 layout: layouts/blog.liquid
 ---
 
-We're excited to announce the first release and general availability of the **Rome** linter for JavaScript and TypeScript.
+We're excited to announce the first beta release and general availability of the **Rome** linter for JavaScript and TypeScript.
 
-This is only the beginning. Rome is not only linter but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
+This is just the beginning. Rome is not only linter, but also a compiler, bundler, test runner, and [more](/#development-status), for JavaScript, TypeScript, HTML, JSON, Markdown, and CSS. We aim to unify the entire frontend development toolchain.
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
 Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
+We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to build and develop Rome itself! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
+
 <!-- DESCRIPTION_END -->
 
 Linting is an excellent low-risk way for us to mature and validate shared functionality like editor integration, configuration, parallelization, caching, parsing, and dependency analysis. It is not in the critical build path for development so is relatively straight forward and safe to adopt.
 
-We believe that Rome is one of the best linters available for JavaScript. With excellent errors including recommendations and suggestions, terminal interface, and the ability to automatically fix most issues, we believe it stands alone despite our large scope.
-
 {% include docs/cli-screenshots/check.md %}
+
+Even though this is a beta, we have support for over 100 lint rules, including the most common rules needed when working with TypeScript and React. See the full [list of rules](/docs/lint/rules). You can expect a full featured experience, however may still encounter bugs. With most of the feature development out of the way we will be focusing primarily on stability.
 
 Since open sourcing, at the beginning of the year, we have received contributions from over [70 contributors](https://github.com/romefrontend/rome/graphs/contributors) and [600 pull requests](https://github.com/romefrontend/rome/pulls?q=is%3Apr+is%3Amerged). We have an established [team](/credits#team), a formal [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md), and a [code of conduct](https://github.com/romefrontend/rome/blob/main/CODE_OF_CONDUCT.md) enforcement policy. This ensures transparency around project decisions, moderation, and direction.
 
-We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to build and develop Rome itself! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
-
 You can read more about Rome, including how to get started, in our [documentation](/). If you would like to get involved, check out our [contributing instructions](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md). If you are interested in reading more about the history and rationale for the project, you can continue reading below.
 
-&mdash; [Sebastian McKenzie](https://twitter.com/sebmck)
+{% include action-links.liquid %}
 
 ## History
 
@@ -65,8 +65,10 @@ Language tooling maintainers spend so much time working on the same things. Proc
 
 A linter in the JavaScript ecosystem is exactly the same as a compiler. They both consume code, then produce compiled code and errors. What the compiled code is varies. In the case of a linter, the compiled code is formatted source code with automatic fixes applied. The more powerful your compilation infrastructure, the more theoretically powerful your linter could be. These commonalities extend to pretty much anything that involves language processing. We can build more powerful tools using a shared base that is easily adaptable.
 
-Rome is the spiritual successor of that idea, except rather than exposing a large public API for other tools to be built on, we are building them all in one place, with batteries included. We support frontend languages other than JavaScript too, those that can benefit the most from tight integration.
-
 I had always maintained private repos where I would experiment with ideas, but the original code that would become Rome was started at the beginning of 2017 while I was working for Facebook in my free time. I continued iterating and experimenting on the idea and building out all the different pieces, until 2019, when I was given the opportunity to work on and explore using it at Facebook full-time.
 
 I eventually left Facebook and the project became open source in February 2020 where I would continue it as an independent community-driven project.
+
+Rome is the spiritual successor of Babel. I've taken the lessons I learnt, and refined the mission. Rather than exposing a large public API for other tools to be built on, we are building them all in one place, with batteries included. I'm excited to be trying something new that the JavaScript and web ecosystem haven't seen before.
+
+&mdash; [Sebastian McKenzie](https://twitter.com/sebmck)

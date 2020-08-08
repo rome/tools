@@ -21,6 +21,7 @@ type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
 export default createServerCommand({
 	category: commandCategories.CODE_QUALITY,
 	description: markup`run tests`,
+	hidden: true,
 	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {

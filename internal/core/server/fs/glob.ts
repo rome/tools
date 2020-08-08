@@ -266,26 +266,7 @@ class GlobberWatcher {
 	async init(): Promise<EventSubscription> {
 		const {memoryFs} = this;
 		const subs = this.setupEvents();
-
-		const promises: Array<Promise<unknown>> = [];
-		const batchPaths = new AbsoluteFilePathSet();
-		this.batchPaths = batchPaths;
-
-		// Determine what arguments are not available in the memory file system
-		for (const arg of this.args) {
-			// exists returns undefined when it's not available
-			if (memoryFs.exists(arg) === undefined) {
-				promises.push(this.server.projectManager.findProject(arg));
-			} else {
-				promises.push(this.flushPaths([arg]));
-			}
-		}
-
-		await Promise.all(promises);
-		this.batchPaths = undefined;
-		await this.flush(batchPaths, true);
-
-		return mergeEventSubscriptions([
+		const finalSubs = mergeEventSubscriptions([
 			...subs,
 			{
 				unsubscribe: async () => {
@@ -293,5 +274,31 @@ class GlobberWatcher {
 				},
 			},
 		]);
+
+		try {
+			const promises: Array<Promise<unknown>> = [];
+			const batchPaths = new AbsoluteFilePathSet();
+			this.batchPaths = batchPaths;
+
+			// Determine what arguments are not available in the memory file system
+			for (const arg of this.args) {
+				// exists returns undefined when it's not available
+				if (memoryFs.exists(arg) === undefined) {
+					promises.push(this.server.projectManager.findProject(arg));
+				} else {
+					promises.push(this.flushPaths([arg]));
+				}
+			}
+
+			await Promise.all(promises);
+			this.batchPaths = undefined;
+			await this.flush(batchPaths, true);
+			await this.globber.get(true);
+
+			return finalSubs;
+		} catch (err) {
+			await finalSubs.unsubscribe();
+			throw err;
+		}
 	}
 }

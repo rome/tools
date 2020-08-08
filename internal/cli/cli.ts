@@ -13,6 +13,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 	PLATFORMS,
+	REQUIRED_NODE_VERSION_RANGE,
 	USER_CONFIG_DIRECTORY,
 	VERSION,
 	localCommands,
@@ -36,6 +37,8 @@ import {
 } from "@internal/markup";
 import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
+import {satisfiesSemver} from "@internal/codec-semver";
+import {Reporter} from "@internal/cli-reporter";
 
 type CLIFlags = {
 	logs: boolean;
@@ -54,6 +57,22 @@ type CLIFlags = {
 
 export default async function cli() {
 	setProcessTitle("cli");
+
+	// Verify correct Node version
+	if (
+		!satisfiesSemver(
+			process.version,
+			REQUIRED_NODE_VERSION_RANGE,
+			{loose: true},
+		)
+	) {
+		const reporter = Reporter.fromProcess();
+		reporter.error(
+			markup`Node <emphasis>${REQUIRED_NODE_VERSION_RANGE}</emphasis> is required, but you are on <emphasis>${process.version}</emphasis>`,
+		);
+		process.exit(1);
+	}
+
 	const p = parseCLIFlagsFromProcess({
 		programName: getEnvVar("ROME_DEV").type === "ENABLED" ? "dev-rome" : "rome",
 		usage: "[command] [flags]",
@@ -323,6 +342,8 @@ export default async function cli() {
 	let commandFlags: JSONObject = {};
 	let args: Array<string> = [];
 
+	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";
+
 	// Create command handlers. We use a set here since we may have some conflicting server and local command names. We always want the local command to take precedence.
 	const commandNames = new Set([
 		...localCommands.keys(),
@@ -339,7 +360,7 @@ export default async function cli() {
 				ignoreFlags: local.ignoreFlags,
 				examples: local.examples,
 				usage: local.usage,
-				hidden: local.hidden,
+				hidden: isRelease && local.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
@@ -359,7 +380,7 @@ export default async function cli() {
 				ignoreFlags: server.ignoreFlags,
 				usage: server.usage,
 				examples: server.examples,
-				hidden: server.hidden,
+				hidden: isRelease && server.hidden,
 				callback(_commandFlags) {
 					commandFlags = _commandFlags;
 					args = p.getArgs();
