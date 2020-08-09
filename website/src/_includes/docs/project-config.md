@@ -2,9 +2,9 @@
 
 **Rome** needs to know how to find your project and what files it includes. To do this we require a project configuration file.
 
-Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](/docs/rjson) which is our flavor of JSON. It supports comments and has a simpler syntax.
+Your configuration can be placed in a [few different locations](#supported-locations), but we recommend using a single `rome.rjson` file. This file is written using [RJSON](#rome-json) which is our flavor of JSON. It supports comments and has a simpler syntax.
 
-All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](/docs/cli/commands/config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
+All properties are **optional**, you can even have an empty config! We recommend using the [`rome config`](#rome-config) command to modify your configuration, this works with any of the supported config locations, and when editing RJSON will even retain comments.
 
 We are deliberately lean with the supported configuration. We do not include options just for the sake of personalization. We aim to offer everything out of the box and only introduce configuration if absolutely necessary.
 
@@ -83,7 +83,7 @@ You can specify your project config in a few different places.
 
 This is the recommend location. It's the file we create when running `rome init`.
 
-It can contains Rome's flavor of JSON, [RJSON](/docs/rjson), that allows comments and simpler syntax.
+It can contains Rome's flavor of JSON, [RJSON](#rome-json), that allows comments and simpler syntax.
 
 ##### `.config/rome.json`
 

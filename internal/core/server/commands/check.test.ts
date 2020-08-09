@@ -28,3 +28,27 @@ test(
 		},
 	),
 );
+
+test(
+	"only checks files matching arguments",
+	createIntegrationTest(
+		{
+			files: {
+				"foo.js": "let foo",
+				"bar.js": "let bar",
+			},
+		},
+		async (t, {client}) => {
+			const res = await client.query({
+				commandName: "check",
+				args: ["foo.js"],
+				commandFlags: {apply: true},
+			});
+
+			t.true(res.type === "DIAGNOSTICS");
+			if (res.type === "DIAGNOSTICS") {
+				t.true(res.diagnostics.length === 1);
+			}
+		},
+	),
+);
