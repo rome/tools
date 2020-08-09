@@ -107,7 +107,7 @@ This command does nothing. Used in conjunction with other global flags such as [
 
 #### `rome rage`
 
-Alias for `rome noop --rage`. See [`--rage` documentation](#rome-rage) for more info.
+Alias for `rome noop --rage`. See [`--rage` documentation](#--rage) for more info.
 
 #### `rome recover`
 
