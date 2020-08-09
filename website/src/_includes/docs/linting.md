@@ -112,7 +112,7 @@ They require an explicit action to apply and can be chosen via the CLI with the 
 rome check --review
 ```
 
-This displays each [diagnostic](#diagnostics) provides you with a list of actions that you can select using keyboard navigation.
+This displays each [diagnostic](#diagnostics) and provides you with a list of actions that you can select using keyboard navigation.
 
 Alternatively, these actions can be applied via a supported [editor integration](#editor-integration).
 
@@ -124,7 +124,7 @@ See [Project Configuration](#project-configuration) for configuration options.
 
 ### Diagnostics
 
-Diagnostics are what Rome calls errors. They are emitted absolutely everywhere finds a problem. This includes CLI argument parsing, JSON normalization, module resolution, lint errors, and more.
+Diagnostics are what Rome calls errors. They are emitted absolutely everywhere Rome finds a problem. This includes CLI argument parsing, JSON normalization, module resolution, lint errors, and more.
 
 #### Anatomy
 
