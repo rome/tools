@@ -368,9 +368,7 @@ export default class Client {
 		}
 
 		const envVars: Array<string> = [
-			"PATH",
 			"ROME_CACHE",
-			"USER",
 			"LANG",
 			"COLORFGBG",
 
