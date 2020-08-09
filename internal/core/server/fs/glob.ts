@@ -200,7 +200,7 @@ class GlobberWatcher {
 
 	isDependentPath(path: AbsoluteFilePath): boolean {
 		for (const arg of this.args) {
-			if (path.equal(path) || path.isRelativeTo(arg)) {
+			if (path.equal(arg) || path.isRelativeTo(arg)) {
 				return true;
 			}
 		}
