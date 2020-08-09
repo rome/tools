@@ -254,7 +254,7 @@ export default class MemoryFileSystem {
 
 				let recursive = true;
 
-				if (process.platform === "linux") {
+				if (process.platform === "linux" || process.platform === "android") {
 					// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
 					recursive = false;
 				} else if (!directoryPath.equal(projectDirectory)) {
