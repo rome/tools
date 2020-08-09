@@ -25,6 +25,17 @@ export const ROOT = findRoot();
 export const INTERNAL = ROOT.append("internal");
 export const PUBLIC_PACKAGES = ROOT.append("public-packages");
 
+export const GIT_PLACEHOLDERS = {
+	authorEmail: "%aE",
+	authorName: "%aN",
+	body: "%b",
+	commit: "%H",
+	date: "%ad",
+	rawBody: "%B",
+	refNames: "%d",
+	subject: "%s",
+};
+
 // This is only necessary because we have poor support for __dirname in the bundler
 function findRoot(): AbsoluteFilePath {
 	let pickNext = false;

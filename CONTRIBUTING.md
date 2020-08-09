@@ -107,13 +107,53 @@ If you are adding a new lint rule, or modifying some core code, you might need t
 ./rome run scripts/generate-all-files
 ```
 
+## Commit messages
+
+Internally, we try to follow [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/). 
+Following this convention will help the project to create well formatted changelogs.
+
+
+We support the following prefixes:
+ - `feat:`, a new feature
+ - `fix:`, a bugfix
+ - `docs:`, when part of the documentation is updated
+ - `test`, when the changes involve tests
+ - `chore:`, anything that doesn't  fit the previous tags, can be marked as chore
+
+An example of a well formatted commits are:
+
+```
+feat(compiler): implemented parsing for new type of files
+fix: fixed nasty unhandled error 
+docs: fixed link to website page
+test(lint): added more cases to handle invalid rules
+``` 
+
+### Commit check
+
+You can run
+
+```
+./rome run scripts/vcs/verify-commits
+```
+
+To verify that the commit messages are correct, before actually open a PR.
+
+### Creating a PR
+
+When creating a PR, it preferable to use the first commit as a title. 
+The reason is that because when squashing and merging, github will use the title of the PR as commit message. 
+
+This will make the work of the core contributors easier and all the PRs will be consistent. 
+ 
+
 ## Scripts
 
 Here are some other scripts that you might find useful.
 
 ### `lint-create-rule`
 
-This is used to generate new lint rules and boilperlate.
+This is used to generate new lint rules and boilerplate.
 
 ```bash
 ./rome run scripts/lint-create-rule [category]/[ruleName]
