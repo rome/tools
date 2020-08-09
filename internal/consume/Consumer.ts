@@ -1024,7 +1024,7 @@ export default class Consumer {
 			return path.assertURL();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
-			return createURLFilePath("unknown://").append(path);
+			return createURLFilePath("unknown://").append(...path.getSegments());
 		}
 	}
 
@@ -1070,7 +1070,7 @@ export default class Consumer {
 			return cwd.resolve(path);
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
-			return createAbsoluteFilePath("/").append(path);
+			return createAbsoluteFilePath("/").append(...path.getSegments());
 		}
 	}
 

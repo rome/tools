@@ -718,7 +718,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createFilePathFromSegments(moduleNameParts),
+					relative: createFilePathFromSegments(moduleNameParts, "relative"),
 					platform: query.platform,
 				});
 
