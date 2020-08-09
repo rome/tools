@@ -20,10 +20,10 @@ Rome stands out in the following ways:
 
 The [`rome check`](#rome-check) command is used to find problems in your project. This includes:
 
- - Dependency verification
- - Formatting
- - Linting
- - `package.json` validation
+- Dependency verification
+- Formatting
+- Linting
+- `package.json` validation
 
 We plan on expanding this list to include other checks such as dead code detection, license verification, type checking, and more.
 
@@ -77,8 +77,8 @@ To use the Rome linter we require usage of the Rome formatter. We offer powerful
 
 Notable formatting choices include:
 
- - Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
- - Double string quotes. Consistent quote style across all supported languages.
+- Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
+- Double string quotes. Consistent quote style across all supported languages.
 
 ### Applying Fixes
 
@@ -185,7 +185,7 @@ Get the most out of Rome by integrating it with your editor. You will get diagno
 
 Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/) supported by [various editors](https://microsoft.github.io/language-server-protocol/implementors/tools/). We have official extensions available for:
 
-- [VSCode](- [VSCode](https://marketplace.visualstudio.com/items?itemName=rome.rome))
+- [VSCode](https://marketplace.visualstudio.com/items?itemName=rome.rome)
 
 Once an editor extension has been installed, the version of Rome in your project will be automatically found and used. As we improve Rome and add new functionality any changes will automatically work with your editor!
 
