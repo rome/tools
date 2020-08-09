@@ -35,7 +35,7 @@ Reformat all files without applying any fixes.
 
 #### `rome config`
 
-Used to modify project configuration. These commands work with all Rome project config locations (see [supported locations](/docs/project-config#supported-locations) for more info). When formatting a project config written with [RJSON](/docs/rjson), comments will be retained.
+Used to modify project configuration. These commands work with all Rome project config locations (see [supported locations](#supported-locations) for more info). When formatting a project config written with [RJSON](#rome-json), comments will be retained.
 
 Before your project config is saved, we will validate it for errors. It is not possible to save an invalid config with `rome config`.
 
@@ -69,7 +69,7 @@ Show the config location that would be modified.
 
 This command assists in the creation of a new Rome project. Actions that are performed:
 
- - `rome.rjson` is created that serves as your [project configuration](/docs/project-config).
+ - `rome.rjson` is created that serves as your [project configuration](#project-configuration).
  - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
 
 **Flags**
@@ -89,7 +89,7 @@ Since this command can be destructive and may have unintended consequences, we c
 
 #### `rome logs`
 
-Alias for `rome noop --logs --hang`. See [`--logs` documentation](/docs/cli/debugging#--logs) for more info.
+Alias for `rome noop --logs --hang`. See [`--logs` documentation](#--logs) for more info.
 
 This command will never complete.
 
@@ -107,7 +107,7 @@ This command does nothing. Used in conjunction with other global flags such as [
 
 #### `rome rage`
 
-Alias for `rome noop --rage`. See [`--rage` documentation](/docs/cli/debugging#--rage) for more info.
+Alias for `rome noop --rage`. See [`--rage` documentation](#rome-rage) for more info.
 
 #### `rome recover`
 
@@ -145,7 +145,7 @@ Clear the entire contents of the recovery store.
 
 #### `rome restart`
 
-Equivalent to running [`rome stop`](/docs/cli/commands/stop) and then [`rome start`](/docs/cli/commands/start).
+Equivalent to running [`rome stop`](#rome-stop) and then [`rome start`](#rome-start).
 
 #### `rome start`
 
