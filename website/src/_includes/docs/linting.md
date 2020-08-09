@@ -77,8 +77,8 @@ To use the Rome linter we require usage of the Rome formatter. We offer powerful
 
 Notable formatting choices include:
 
-- Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
-- Double string quotes. Consistent quote style across all supported languages.
+ - Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
+ - Double string quotes. Consistent quote style across all supported languages.
 
 ### Applying Fixes
 

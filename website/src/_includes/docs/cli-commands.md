@@ -10,10 +10,10 @@ Clear all artifacts from the cache directory.
 
 Used to find problems in your project. This includes:
 
-- Dependency verification
-- Formatting
-- Linting
-- `package.json` validation
+ - Dependency verification
+ - Formatting
+ - Linting
+ - `package.json` validation
 
 See [Linting: Command Usage](#command-usage) for more usage information.
 
@@ -69,8 +69,8 @@ Show the config location that would be modified.
 
 This command assists in the creation of a new Rome project. Actions that are performed:
 
-- `rome.rjson` is created that serves as your [project configuration](#project-configuration).
-- `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
+ - `rome.rjson` is created that serves as your [project configuration](#project-configuration).
+ - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
 
 **Flags**
 
@@ -78,8 +78,8 @@ This command assists in the creation of a new Rome project. Actions that are per
 
 Additional operations are applied with this flag:
 
-- `rome check --apply` is ran which will automatically format and autofix your files.
-- Global variables are extracted from previous errors and automatically added to your project config.
+ - `rome check --apply` is ran which will automatically format and autofix your files.
+ - Global variables are extracted from previous errors and automatically added to your project config.
 
 **Uncomitted changes and `--apply`**
 
