@@ -17,8 +17,8 @@
     "onLanguage:typescriptreact",
     "onLanguage:json",
     "onLanguage:rjson"
-	],
-	"contributes": {
+  ],
+  "contributes": {
     "languages": [
       {
         "id": "rjson",
@@ -33,20 +33,20 @@
           "application/rjson"
         ],
         "configuration": "./syntaxes/rjson-language-configuration.json"
-			}
-		],
-		"grammars": [
-			{
-				"language": "rjson",
-				"scopeName": "source.json.rome",
-				"path": "./syntaxes/RJSON.tmLanguage.json"
-			}
-		]
-	},
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rjson",
+        "scopeName": "source.json.rome",
+        "path": "./syntaxes/RJSON.tmLanguage.json"
+      }
+    ]
+  },
   "files": [
     "/icon.png",
-		"/README.md",
-		"/syntaxes"
+    "/README.md",
+    "/syntaxes"
   ],
   "main": "index.ts",
   "engines": {
