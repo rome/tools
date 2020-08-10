@@ -18,7 +18,7 @@ import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
-import {UserConfig, loadUserConfig} from "../common/userConfig";
+import {UserConfig} from "@internal/core";
 import {hydrateJSONProjectConfig} from "@internal/project";
 import {DiagnosticsError} from "@internal/diagnostics";
 import {
@@ -36,7 +36,7 @@ import {
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
-import {FileNotFound} from "../common/FileNotFound";
+import {FileNotFound} from "../../fs/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
@@ -53,9 +53,8 @@ export type ParseResult = {
 };
 
 type WorkerOptions = {
-	userConfig?: UserConfig;
+	userConfig: UserConfig;
 	dedicated: boolean;
-	globalErrorHandlers: boolean;
 	bridge: WorkerBridge;
 };
 
@@ -63,8 +62,7 @@ export default class Worker {
 	constructor(opts: WorkerOptions) {
 		this.bridge = opts.bridge;
 
-		this.userConfig =
-			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
+		this.userConfig = opts.userConfig;
 		this.partialManifests = new Map();
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
@@ -88,7 +86,7 @@ export default class Worker {
 
 		this.api = new WorkerAPI(this);
 
-		if (opts.globalErrorHandlers) {
+		if (opts.dedicated) {
 			setupGlobalErrorHandlers((err) => {
 				try {
 					// Dispatch error to the server and trigger a fatal
@@ -103,10 +101,8 @@ export default class Worker {
 					process.exit(1);
 				}
 			});
-		}
 
-		// Pretty sure we'll hit another error condition before this but for completeness
-		if (opts.dedicated) {
+			// Pretty sure we'll hit another error condition before this but for completeness
 			/*opts.bridge.monitorHeartbeat(
 				LAG_INTERVAL,
 				({iterations, totalTime}) => {
@@ -394,25 +390,17 @@ export default class Worker {
 	}
 
 	public async readFile(path: AbsoluteFilePath): Promise<string> {
-		try {
-			const buffer = this.buffers.get(path);
-			if (buffer !== undefined) {
-				return buffer;
-			}
-
-			const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
-			if (virtual !== undefined) {
-				return virtual;
-			}
-
-			return await readFileText(path);
-		} catch (err) {
-			if (err.code === "ENOENT") {
-				throw new FileNotFound(path, "fs.readFile ENOENT");
-			} else {
-				throw err;
-			}
+		const buffer = this.buffers.get(path);
+		if (buffer !== undefined) {
+			return buffer;
 		}
+
+		const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
+		if (virtual !== undefined) {
+			return virtual;
+		}
+
+		return await readFileText(path);
 	}
 
 	public async parse(

@@ -8,6 +8,7 @@
 import setProcessTitle from "./utils/setProcessTitle";
 import {createBridgeFromParentProcess} from "@internal/events";
 import {Worker, WorkerBridge} from "@internal/core";
+import {loadUserConfig} from "@internal/core/common/userConfig";
 
 export default async function worker() {
 	setProcessTitle("worker");
@@ -17,9 +18,10 @@ export default async function worker() {
 			type: "server",
 		},
 	);
+	const userConfig = await loadUserConfig();
 	const worker = new Worker({
+		userConfig,
 		bridge,
-		globalErrorHandlers: true,
 		dedicated: true,
 	});
 	await worker.init();

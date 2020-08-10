@@ -39,6 +39,7 @@ import {JSONObject, stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
+import {loadUserConfig} from "@internal/core/common/userConfig";
 
 type CLIFlags = {
 	logs: boolean;
@@ -458,7 +459,9 @@ export default async function cli() {
 		cliFlags.logs = true;
 	}
 
+	const userConfig = await loadUserConfig();
 	const client = new Client({
+		userConfig,
 		terminalFeatures,
 		globalErrorHandlers: true,
 		flags: clientFlags,

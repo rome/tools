@@ -136,7 +136,6 @@ export default class WorkerManager {
 		const worker = new Worker({
 			userConfig: this.server.userConfig,
 			bridge,
-			globalErrorHandlers: false,
 			dedicated: false,
 		});
 

@@ -127,7 +127,7 @@ async function runCommand(
 
 	try {
 		if (flags.user) {
-			let {configPath: existingConfigPath} = loadUserConfig();
+			let {configPath: existingConfigPath} = await loadUserConfig();
 
 			let configPath: AbsoluteFilePath;
 			if (existingConfigPath === undefined) {
