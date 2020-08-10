@@ -188,17 +188,18 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	}
 
 	public toExplicitRelative(): RelativeFilePath {
-		const relative = this.assertRelative();
-		if (relative.isExplicitRelative()) {
-			return relative;
+		if (this.isExplicitRelative()) {
+			return this.assertRelative();
 		} else {
-			return createRelativeFilePath(".").append(relative);
+			return createRelativeFilePath(".").append(...this.getSegments());
 		}
 	}
 
 	public assertRelative(): RelativeFilePath {
 		if (this.isAbsolute()) {
-			throw new Error(`Expected relative file path but got: ${JSON.stringify(this.join())}`);
+			throw new Error(
+				`Expected relative file path but got: ${JSON.stringify(this.join())}`,
+			);
 		} else {
 			return new RelativeFilePath(
 				this.getParsed(),
@@ -220,7 +221,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
 				},
 			);
 		} else {
-			throw new Error(`Expected absolute file path but got: ${JSON.stringify(this.join())}`);
+			throw new Error(
+				`Expected absolute file path but got: ${JSON.stringify(this.join())}`,
+			);
 		}
 	}
 
@@ -234,7 +237,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
 				},
 			);
 		} else {
-			throw new Error(`Expected URL file path but got: ${JSON.stringify(this.join())}`);
+			throw new Error(
+				`Expected URL file path but got: ${JSON.stringify(this.join())}`,
+			);
 		}
 	}
 
