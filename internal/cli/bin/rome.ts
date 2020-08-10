@@ -11,11 +11,11 @@ import cli from "../cli";
 import server from "../server";
 import testWorker from "../testWorker";
 import worker from "../worker";
-import {readFileTextSync} from "@internal/fs";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import handleFatalError from "@internal/core/common/handleFatalError";
+import fs = require("fs");
 
 async function main(): Promise<void> {
 	switch (
@@ -40,7 +40,7 @@ sourceMapManager.add(
 	BIN.join(),
 	SourceMapConsumer.fromJSONLazy(
 		BIN.join(),
-		() => JSON.parse(readFileTextSync(MAP)),
+		() => JSON.parse(fs.readFileSync(MAP.join(), "utf8")),
 	),
 );
 

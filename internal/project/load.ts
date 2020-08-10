@@ -28,13 +28,7 @@ import {
 } from "./utils";
 import {ConsumeJSONResult, consumeJSONExtra} from "@internal/codec-json";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {
-	existsSync,
-	lstatSync,
-	readDirectorySync,
-	readFileText,
-	readFileTextSync,
-} from "@internal/fs";
+import {exists, lstat, readDirectory, readFileText} from "@internal/fs";
 import crypto = require("crypto");
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
@@ -101,8 +95,8 @@ export async function loadCompleteProjectConfig(
 		const possiblePath = config.vcs.root.append(filename);
 		meta.configDependencies.add(possiblePath);
 
-		if (existsSync(possiblePath)) {
-			const file = readFileTextSync(possiblePath);
+		if (await exists(possiblePath)) {
+			const file = await readFileText(possiblePath);
 
 			consumer.handleThrownDiagnostics(() => {
 				const patterns = parsePathPatternsFile({
@@ -237,7 +231,7 @@ export async function normalizeProjectConfig(
 		}
 
 		if (typeChecking.has("libs")) {
-			const libs = normalizeTypeCheckingLibs(
+			const libs = await normalizeTypeCheckingLibs(
 				projectDirectory,
 				typeChecking.get("libs"),
 			);
@@ -342,13 +336,13 @@ export async function normalizeProjectConfig(
 	};
 }
 
-function normalizeTypeCheckingLibs(
+async function normalizeTypeCheckingLibs(
 	projectDirectory: AbsoluteFilePath,
 	consumer: Consumer,
-): {
+): Promise<{
 	directories: Array<AbsoluteFilePath>;
 	files: AbsoluteFilePathSet;
-} {
+}> {
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Normalize library directories
@@ -358,9 +352,9 @@ function normalizeTypeCheckingLibs(
 
 	// Crawl library directories and add their files
 	for (const directory of directories) {
-		const files = readDirectorySync(directory);
+		const files = await readDirectory(directory);
 		for (const file of files) {
-			const stats = lstatSync(file);
+			const stats = await lstat(file);
 			if (stats.isFile()) {
 				libFiles.add(file);
 			} else if (stats.isDirectory()) {

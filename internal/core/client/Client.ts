@@ -36,11 +36,7 @@ import prettyFormat from "@internal/pretty-format";
 import {TarWriter} from "@internal/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@internal/v8";
 import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
-import {
-	UserConfig,
-	getUserConfigFile,
-	loadUserConfig,
-} from "../common/userConfig";
+import {UserConfig, getUserConfigFile} from "../common/userConfig";
 import {createWriteStream, removeFile} from "@internal/fs";
 import {stringifyJSON} from "@internal/codec-json";
 import stream = require("stream");
@@ -72,11 +68,12 @@ export function getFilenameTimestamp(): string {
 const NEW_SERVER_INIT_TIMEOUT = 10_000;
 
 type ClientOptions = {
-	terminalFeatures?: ClientTerminalFeatures;
-	globalErrorHandlers?: boolean;
-	stdout?: stream.Writable;
-	stderr?: stream.Writable;
-	stdin?: NodeJS.ReadStream;
+	terminalFeatures: ClientTerminalFeatures;
+	globalErrorHandlers: boolean;
+	stdout: stream.Writable;
+	stderr: stream.Writable;
+	stdin: NodeJS.ReadStream;
+	userConfig: UserConfig;
 	flags: Partial<Omit<ClientFlags, "clientName">>;
 };
 
@@ -110,7 +107,7 @@ type ClientRequestResponseResult = {
 export default class Client {
 	constructor(opts: ClientOptions) {
 		this.options = opts;
-		this.userConfig = loadUserConfig();
+		this.userConfig = opts.userConfig;
 		this.queryCounter = 0;
 		this.flags = mergeObjects(DEFAULT_CLIENT_FLAGS, opts.flags);
 
@@ -394,7 +391,7 @@ export default class Client {
 		}
 		push("Environment Variables", env);
 
-		const userConfig = getUserConfigFile();
+		const userConfig = await getUserConfigFile();
 		push(
 			"User Config",
 			userConfig === undefined ? "unset" : userConfig.consumer.asUnknown(),
@@ -646,6 +643,7 @@ export default class Client {
 	}> {
 		// Otherwise, start a server inside this process
 		const server = new Server({
+			userConfig: this.userConfig,
 			dedicated: false,
 			globalErrorHandlers: this.options.globalErrorHandlers === true,
 			...opts,

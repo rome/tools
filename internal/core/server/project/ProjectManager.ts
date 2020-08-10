@@ -59,7 +59,7 @@ import {
 	FilePathLocker,
 	SingleLocker,
 } from "@internal/core/common/utils/lockers";
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 

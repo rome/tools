@@ -5,11 +5,18 @@ import {buildSuggestionAdvice} from "../../helpers";
 // @internal/codec-spdx-license
 export const spdx = createDiagnosticsCategory({
 	UNKNOWN_LICENSE: (id: string, knownLicenses: Array<string>) => ({
-		message: markup`Unknown SPDX license <emphasis>${id}</emphasis>`,
-		advice: buildSuggestionAdvice(id, knownLicenses),
+		message: markup`Unknown license <emphasis>${id}</emphasis>`,
+		advice: [
+			...buildSuggestionAdvice(id, knownLicenses),
+			{
+				type: "log",
+				category: "info",
+				text: markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information.`,
+			},
+		],
 	}),
 	VALID_LICENSE_WITH_MISSING_DASH: (possibleCorrectLicense: string) => ({
-		message: markup`Missing dash between SPDX license name and version`,
+		message: markup`Missing dash between license name and version`,
 		advice: [
 			{
 				type: "log",

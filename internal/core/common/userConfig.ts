@@ -12,9 +12,9 @@ import {
 	VERSION,
 } from "./constants";
 import {AbsoluteFilePath, TEMP_PATH} from "@internal/path";
-import {existsSync, readFileTextSync} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {descriptions} from "@internal/diagnostics";
+import {exists, readFileText} from "@internal/fs";
 
 export type UserConfig = {
 	configPath: undefined | AbsoluteFilePath;
@@ -30,10 +30,10 @@ export const DEFAULT_USER_CONFIG: UserConfig = {
 	syntaxTheme: undefined,
 };
 
-export function normalizeUserConfig(
+export async function normalizeUserConfig(
 	consumer: Consumer,
 	configPath: AbsoluteFilePath,
-): UserConfig {
+): Promise<UserConfig> {
 	const userConfig: UserConfig = {
 		...DEFAULT_USER_CONFIG,
 	};
@@ -49,8 +49,8 @@ export function normalizeUserConfig(
 		const prop = consumer.get("vscodeTheme");
 		const path = prop.asAbsoluteFilePath(undefined, configPath.getParent());
 
-		if (existsSync(path)) {
-			const input = readFileTextSync(path);
+		if (await exists(path)) {
+			const input = await readFileText(path);
 
 			userConfig.syntaxTheme = consumeJSON({
 				consumeDiagnosticCategory: "parse/vscodeTheme",
@@ -69,20 +69,21 @@ export function normalizeUserConfig(
 
 let loadedUserConfig: undefined | UserConfig;
 
-export function getUserConfigFile():
+export async function getUserConfigFile(): Promise<
 	| undefined
 	| {
 			consumer: Consumer;
 			configPath: AbsoluteFilePath;
-		} {
+		}
+> {
 	for (const configFilename of USER_CONFIG_FILENAMES) {
 		const configPath = USER_CONFIG_DIRECTORY.append(configFilename);
 
-		if (!existsSync(configPath)) {
+		if (!(await exists(configPath))) {
 			continue;
 		}
 
-		const configFile = readFileTextSync(configPath);
+		const configFile = await readFileText(configPath);
 		const consumer = consumeJSON({
 			path: configPath,
 			input: configFile,
@@ -93,17 +94,17 @@ export function getUserConfigFile():
 	return undefined;
 }
 
-export function loadUserConfig(): UserConfig {
+export async function loadUserConfig(): Promise<UserConfig> {
 	if (loadedUserConfig !== undefined) {
 		return loadedUserConfig;
 	}
 
-	const res = getUserConfigFile();
+	const res = await getUserConfigFile();
 	if (res === undefined) {
 		loadedUserConfig = DEFAULT_USER_CONFIG;
 		return loadedUserConfig;
 	} else {
-		loadedUserConfig = normalizeUserConfig(res.consumer, res.configPath);
+		loadedUserConfig = await normalizeUserConfig(res.consumer, res.configPath);
 		return loadedUserConfig;
 	}
 }

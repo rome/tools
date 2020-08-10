@@ -10,7 +10,7 @@ import Server from "./Server";
 import {AbsoluteFilePath} from "@internal/path";
 import createDeferredPromise from "@internal/core/common/utils/createDeferredPromise";
 import {VoidCallback} from "@internal/typescript-helpers";
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {FileNotFound} from "@internal/fs/FileNotFound";
 
 type Queue<M> = Array<[AbsoluteFilePath, M, VoidCallback]>;
 

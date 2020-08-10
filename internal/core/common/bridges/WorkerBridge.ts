@@ -26,7 +26,7 @@ import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
 import {JSONFileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {FileNotFound} from "@internal/fs/FileNotFound";
 import {createAbsoluteFilePath} from "@internal/path";
 import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";

@@ -177,13 +177,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 	// Add on remaining regular error props so it can be treated as a normal error if necessary
 
 	// Inherit NodeSystemError props
-	diagErr.address = err.address;
-	diagErr.code = err.code;
-	diagErr.dest = err.dest;
-	diagErr.errno = err.errno;
-	diagErr.path = err.path;
-	diagErr.port = err.port;
-	diagErr.syscall = err.syscall;
+	inheritNodeSystemError(err, diagErr);
 
 	// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
 	// We probably don't need to or actually care
@@ -193,6 +187,16 @@ export function convertPossibleNodeErrorToDiagnostic(
 	setErrorFrames(diagErr, struct.frames);
 
 	return diagErr;
+}
+
+export function inheritNodeSystemError(orig: NodeSystemError, err: NodeSystemError) {
+	err.address = orig.address;
+	err.code = orig.code;
+	err.dest = orig.dest;
+	err.errno = orig.errno;
+	err.path = orig.path;
+	err.port = orig.port;
+	err.syscall = orig.syscall;
 }
 
 // https://nodejs.org/api/errors.html#errors_class_systemerror
