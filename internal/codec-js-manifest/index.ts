@@ -17,6 +17,8 @@ import {
 	MString,
 	Manifest,
 	ManifestExportConditions,
+	ManifestExportNestedCondition,
+	ManifestExportRelativeCondition,
 	ManifestExports,
 	ManifestMap,
 	ManifestName,
@@ -33,6 +35,7 @@ import {
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
+import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
 
 export * from "./types";
 
@@ -184,7 +187,6 @@ function normalizeLicense(
 	}
 
 	let licenseProp = consumer.get("license");
-
 	let licenseId;
 
 	// Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
@@ -434,15 +436,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 	if (typeof unknown === "string") {
 		exports.set(
 			createRelativeFilePath("."),
-			new Map([
-				[
-					"default",
-					{
-						consumer,
-						relative: consumer.asExplicitRelativeFilePath(),
-					},
-				],
-			]),
+			new Map([["default", createRelativeExportCondition(consumer)]]),
 		);
 		return exports;
 	}
@@ -456,13 +450,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 				value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
 			}
 
-			dotConditions.set(
-				relative,
-				{
-					consumer: value,
-					relative: value.asExplicitRelativeFilePath(),
-				},
-			);
+			dotConditions.set(relative, createRelativeExportCondition(value));
 			continue;
 		}
 
@@ -481,18 +469,22 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 	return exports;
 }
 
+function createRelativeExportCondition(
+	value: Consumer,
+): ManifestExportRelativeCondition {
+	return {
+		type: "relative",
+		consumer: value,
+		relative: value.asExplicitRelativeFilePath(),
+	};
+}
+
 function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
 	const conditions: ManifestExportConditions = new Map();
 	const unknown = value.asUnknown();
 
 	if (typeof unknown === "string") {
-		conditions.set(
-			"default",
-			{
-				consumer: value,
-				relative: value.asExplicitRelativeFilePath(),
-			},
-		);
+		conditions.set("default", createRelativeExportCondition(value));
 	} else if (Array.isArray(unknown)) {
 		// Find the first item that passes validation
 		for (const elem of value.asIterable()) {
@@ -503,14 +495,22 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
 			}
 		}
 	} else {
-		for (const [type, relativeAlias] of value.asMap()) {
-			conditions.set(
-				type,
-				{
-					consumer: relativeAlias,
-					relative: relativeAlias.asExplicitRelativeFilePath(),
-				},
-			);
+		for (const [type, prop] of value.asMap()) {
+			if (prop.isObject()) {
+				const condition: ManifestExportNestedCondition = {
+					type: "nested",
+					consumer: prop,
+					conditions: new Map(),
+				};
+
+				for (const [name, subprop] of prop.asMap()) {
+					condition.conditions.set(name, createRelativeExportCondition(subprop));
+				}
+
+				conditions.set(type, condition);
+			} else {
+				conditions.set(type, createRelativeExportCondition(prop));
+			}
 		}
 	}
 
@@ -632,7 +632,7 @@ export async function normalizeManifest(
 		consumer.setValue({});
 	}
 
-	//
+	// Check for typos. Ignore them in loose mode.
 	if (!loose) {
 		for (const [key, prop] of consumer.asMap()) {
 			// Check for typos for dependencies
@@ -647,10 +647,15 @@ export async function normalizeManifest(
 	}
 
 	const name = normalizeRootName(consumer, loose);
+	const version = normalizeVersion(consumer, loose);
+
+	if (loose) {
+		normalizeCompatManifest(consumer, name, version);
+	}
 
 	const manifest: Manifest = {
 		name,
-		version: normalizeVersion(consumer, loose),
+		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
 		license: normalizeLicense(consumer, loose),
