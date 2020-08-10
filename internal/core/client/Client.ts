@@ -502,7 +502,7 @@ export default class Client {
 
 			await writer.finalize();
 			this.reporter.success(
-				markup`Rage archive written to <emphasis><filelink target="${ragePath}" /></emphasis>`,
+				markup`Rage archive written to <emphasis>${ragePath}</emphasis>`,
 			);
 		});
 	}
