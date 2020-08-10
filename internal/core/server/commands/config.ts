@@ -67,7 +67,7 @@ async function runCommand(
 	async function handleConfig(
 		configPath: AbsoluteFilePath,
 		subKey: string | undefined,
-		validate: (res: ConsumeJSONResult, stringified: string) => void,
+		validate: (res: ConsumeJSONResult, stringified: string) => Promise<void>,
 	) {
 		if (action === "location") {
 			reporter.log(markup`${configPath.join()}`);
@@ -114,7 +114,7 @@ async function runCommand(
 					input: stringified,
 				});
 
-				validate(res, stringified);
+				await validate(res, stringified);
 			},
 			(processor) => {
 				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
@@ -143,8 +143,8 @@ async function runCommand(
 			await handleConfig(
 				configPath,
 				undefined,
-				(res) => {
-					normalizeUserConfig(res.consumer, configPath);
+				async (res) => {
+					await normalizeUserConfig(res.consumer, configPath);
 				},
 			);
 		} else {
@@ -155,8 +155,8 @@ async function runCommand(
 			await handleConfig(
 				configPath,
 				configSourceSubKey,
-				(res, stringified) => {
-					normalizeProjectConfig(
+				async (res, stringified) => {
+					await normalizeProjectConfig(
 						res,
 						meta.configPath,
 						stringified,
