@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Manifest, ManifestDefinition} from "@internal/codec-js-manifest";
+import {
+	Manifest,
+	ManifestDefinition,
+	ManifestExportCondition,
+} from "@internal/codec-js-manifest";
 import Server from "../Server";
 import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
 import {ProjectDefinition, createDefaultProjectConfig} from "@internal/project";
@@ -255,24 +259,33 @@ function getExportsAlias(
 		return undefined;
 	}
 
-	const alias = aliases.get(platform);
+	const alias = resolveExportCondition(aliases.get(platform));
 	if (alias !== undefined) {
-		return {
-			key: alias.consumer,
-			value: alias.relative,
-		};
+		return alias;
 	}
 
-	const def = aliases.get("default");
+	const def = resolveExportCondition(aliases.get("default"));
 	if (def !== undefined) {
-		return {
-			key: def.consumer,
-			value: def.relative,
-		};
+		return def;
 	}
 
 	// TODO check for directory aliases
 	return undefined;
+}
+
+function resolveExportCondition(
+	entry: undefined | ManifestExportCondition,
+): undefined | ExportAlias {
+	if (entry === undefined) {
+		return undefined;
+	} else if (entry.type === "relative") {
+		return {
+			key: entry.consumer,
+			value: entry.relative,
+		};
+	} else {
+		return resolveExportCondition(entry.conditions.get(""));
+	}
 }
 
 function getPreferredMainKey(
