@@ -303,11 +303,16 @@ export default class Consumer {
 		let str = "";
 
 		for (let i = 0; i < path.length; i++) {
+			const prevPart = path[i - 1];
 			let part = path[i];
 			const nextPart = path[i + 1];
 
 			if (typeof part === "string" && normalizeKey !== undefined) {
 				part = normalizeKey(part);
+			}
+
+			if (prevPart !== undefined && isComputedPart(prevPart)) {
+				str += ".";
 			}
 
 			// If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
@@ -319,7 +324,7 @@ export default class Consumer {
 						: escapeJSString(
 								part,
 								{
-									quote: "'",
+									quote: '"',
 								},
 							);
 
@@ -1024,7 +1029,7 @@ export default class Consumer {
 			return path.assertURL();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
-			return createURLFilePath("unknown://").append(path);
+			return createURLFilePath("unknown://").append(...path.getSegments());
 		}
 	}
 
@@ -1070,7 +1075,7 @@ export default class Consumer {
 			return cwd.resolve(path);
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
-			return createAbsoluteFilePath("/").append(path);
+			return createAbsoluteFilePath("/").append(...path.getSegments());
 		}
 	}
 

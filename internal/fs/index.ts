@@ -5,11 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {convertPossibleNodeErrorToDiagnostic} from "@internal/node";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	createAbsoluteFilePath,
+} from "@internal/path";
+import {
+	NodeSystemError,
+	convertPossibleNodeErrorToDiagnostic,
+} from "@internal/node";
 import {getEnvVar} from "@internal/cli-environment";
-import {getErrorStructure, setErrorFrames} from "@internal/v8";
+import {
+	getErrorStructure,
+	setErrorFrames,
+	setNodeErrorProps,
+} from "@internal/v8";
 import fs = require("fs");
+import {FileNotFound} from "@internal/fs/FileNotFound";
 
 // Most fs errors don't have a stack trace. This is due to the way that node queues file operations.
 // Capturing a stacktrace would be very expensive.
@@ -20,7 +32,7 @@ const debugErrors = getEnvVar("ROME_FS_ERRORS").type === "ENABLED";
 function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 	const callError = debugErrors ? new Error() : undefined;
 
-	return promise.catch((err) => {
+	return promise.catch((err: NodeSystemError) => {
 		if (callError !== undefined) {
 			// Remove wrapReject frame and custom addFrames to get to the real callsite
 			setErrorFrames(
@@ -29,10 +41,20 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 			);
 		}
 
+		// Convert ENOENT to FileNotFound errors, if we want this to be a pretty node error then it can be converted later
+		if (err.code === "ENOENT" && err.path !== undefined) {
+			const err2 = new FileNotFound(createAbsoluteFilePath(err.path));
+			setNodeErrorProps(err2, err);
+			setErrorFrames(err2, getErrorStructure(err).frames);
+			return Promise.reject(err2);
+		}
+
 		// If the error has no stacktrace then we'll recommend adding the envvar
 		return Promise.reject(convertPossibleNodeErrorToDiagnostic(err));
 	});
 }
+
+export {FileNotFound} from "./FileNotFound";
 
 // Reexported types: Only file that ever imports the fs module is this one
 export type FileHandle = fs.promises.FileHandle;
@@ -113,17 +135,9 @@ export function readFile(path: AbsoluteFilePath): Promise<Buffer> {
 	);
 }
 
-export function readFileSync(path: AbsoluteFilePath): Buffer {
-	return fs.readFileSync(path.join());
-}
-
 // readFileText
 export async function readFileText(path: AbsoluteFilePath): Promise<string> {
 	return (await readFile(path)).toString();
-}
-
-export function readFileTextSync(path: AbsoluteFilePath): string {
-	return fs.readFileSync(path.join(), "utf8");
 }
 
 // writeFile
@@ -137,13 +151,6 @@ export function writeFile(
 	);
 }
 
-export function writeFileSync(
-	path: AbsoluteFilePath,
-	content: Buffer | string,
-): void {
-	return fs.writeFileSync(path.join(), content);
-}
-
 // copyFile
 export function copyFile(
 	src: AbsoluteFilePath,
@@ -153,13 +160,6 @@ export function copyFile(
 		src,
 		(src, callback) => fs.copyFile(src, dest.join(), callback),
 	);
-}
-
-export function copyFileSync(
-	src: AbsoluteFilePath,
-	dest: AbsoluteFilePath,
-): void {
-	return fs.copyFileSync(src.join(), dest.join());
 }
 
 // readdir
@@ -194,20 +194,12 @@ export function readDirectory(
 	);
 }
 
-export function readDirectorySync(path: AbsoluteFilePath): AbsoluteFilePathSet {
-	return createReaddirReturn(path, fs.readdirSync(path.join()));
-}
-
 // lstat
 export function lstat(path: AbsoluteFilePath): Promise<fs.Stats> {
 	return promisifyData(
 		path,
 		(filename, callback) => fs.lstat(filename, callback),
 	);
-}
-
-export function lstatSync(path: AbsoluteFilePath): fs.Stats {
-	return fs.lstatSync(path.join());
 }
 
 // exists
@@ -220,10 +212,6 @@ export function exists(path: AbsoluteFilePath): Promise<boolean> {
 			},
 		);
 	});
-}
-
-export function existsSync(path: AbsoluteFilePath): boolean {
-	return fs.existsSync(path.join());
 }
 
 // unlink
@@ -245,38 +233,24 @@ export function removeFile(path: AbsoluteFilePath): Promise<void> {
 	);
 }
 
-export function removeFileSync(path: AbsoluteFilePath): void {
-	try {
-		fs.unlinkSync(path.join());
-	} catch (err) {
-		if (err.code !== "ENOENT") {
-			throw err;
+// We previously just use fs.rmdir with the `recursive: true` flag but it was added in Node 12.10 and we need to support 12.8.1
+// NB: There are probably race conditions, we could switch to openFile and openDirectory if it's a problem
+// https://github.com/romefrontend/rome/issues/1001
+export async function removeDirectory(path: AbsoluteFilePath): Promise<void> {
+	// Delete all inner files
+	for (const subpath of await readDirectory(path)) {
+		const stats = await lstat(subpath);
+		if (stats.isDirectory()) {
+			await removeDirectory(subpath);
+		} else {
+			await removeFile(subpath);
 		}
 	}
-}
 
-// rmdir
-export function removeDirectory(path: AbsoluteFilePath): Promise<void> {
+	// Remove directory with all files deleted
 	return promisifyVoid(
 		path,
-		(filename, callback) =>
-			fs.rmdir(
-				filename,
-				{
-					recursive: true,
-				},
-				callback,
-			)
-		,
-	);
-}
-
-export function removeDirectorySync(path: AbsoluteFilePath): void {
-	fs.rmdirSync(
-		path.join(),
-		{
-			recursive: true,
-		},
+		(filename, callback) => fs.rmdir(filename, callback),
 	);
 }
 
@@ -296,10 +270,6 @@ export function createDirectory(path: AbsoluteFilePath): Promise<void> {
 	);
 }
 
-export function createDirectorySync(path: AbsoluteFilePath): void {
-	fs.mkdirSync(path.join());
-}
-
 // open
 export function openFile(
 	path: AbsoluteFilePath,
@@ -307,14 +277,6 @@ export function openFile(
 	mode?: fs.Mode,
 ): Promise<fs.promises.FileHandle> {
 	return fs.promises.open(path.join(), flags, mode);
-}
-
-export function openFileSync(
-	path: AbsoluteFilePath,
-	flags: fs.OpenMode = "r",
-	mode?: fs.Mode,
-): number {
-	return fs.openSync(path.join(), flags, mode);
 }
 
 // openDirectory
@@ -326,13 +288,6 @@ export function openDirectory(
 		path,
 		(filename, callback) => fs.opendir(filename, opts, callback),
 	);
-}
-
-export function openDirectorySync(
-	path: AbsoluteFilePath,
-	opts: fs.OpenDirOptions = {},
-): fs.Dir {
-	return fs.opendirSync(path.join(), opts);
 }
 
 // createWriteStream
@@ -349,4 +304,14 @@ export function createReadStream(
 	opts?: Parameters<typeof fs.createReadStream>[1],
 ): fs.ReadStream {
 	return fs.createReadStream(path.join(), opts);
+}
+
+// Super special sync methods that we should only use sparingly if there's absolutely no way to do them async
+
+export function readFileTextSync(path: AbsoluteFilePath): string {
+	return fs.readFileSync(path.join(), "utf8");
+}
+
+export function lstatSync(path: AbsoluteFilePath): fs.Stats {
+	return fs.lstatSync(path.join());
 }

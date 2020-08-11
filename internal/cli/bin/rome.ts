@@ -11,11 +11,11 @@ import cli from "../cli";
 import server from "../server";
 import testWorker from "../testWorker";
 import worker from "../worker";
-import {readFileTextSync} from "@internal/fs";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import handleFatalError from "@internal/core/common/handleFatalError";
+import {readFileTextSync} from "@internal/fs";
 
 async function main(): Promise<void> {
 	switch (

@@ -16,11 +16,14 @@ import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 
 import {exists, removeFile} from "@internal/fs";
+import {loadUserConfig} from "@internal/core/common/userConfig";
 
 export default async function server() {
 	setProcessTitle("server");
 
+	const userConfig = await loadUserConfig();
 	const server = new Server({
+		userConfig,
 		dedicated: true,
 		globalErrorHandlers: true,
 	});

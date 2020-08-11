@@ -1,4 +1,5 @@
 import {AbsoluteFilePath} from "@internal/path";
+import {NodeSystemError} from "@internal/node";
 
 export type MissingFileReturn<T> =
 	| {
@@ -10,18 +11,20 @@ export type MissingFileReturn<T> =
 			value: undefined;
 		};
 
-export class FileNotFound extends Error {
-	constructor(path: AbsoluteFilePath, message?: string) {
+export class FileNotFound extends Error implements NodeSystemError {
+	constructor(path: AbsoluteFilePath, suffixMessage?: string) {
 		super(
-			message === undefined
+			suffixMessage === undefined
 				? `${path.join()} not found`
-				: `${path.join()}: ${message}`,
+				: `${path.join()}: ${suffixMessage}`,
 		);
+		this.suffixMessage = suffixMessage;
 		this.name = "FileNotFound";
-		this.path = path;
+		this._path = path;
 	}
 
-	public path: AbsoluteFilePath;
+	public suffixMessage: undefined | string;
+	public _path: AbsoluteFilePath;
 
 	public static async maybeAllowMissing<T>(
 		allow: undefined | boolean,
@@ -48,7 +51,7 @@ export class FileNotFound extends Error {
 				missing: false,
 			};
 		} catch (err) {
-			if (err instanceof FileNotFound && err.path.equal(path)) {
+			if (err instanceof FileNotFound && err._path.equal(path)) {
 				return {missing: true, value: undefined};
 			} else {
 				throw err;

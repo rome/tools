@@ -34,7 +34,7 @@ import {
 } from "@internal/fs";
 import {getFileHandlerFromPath} from "@internal/core";
 import crypto = require("crypto");
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";

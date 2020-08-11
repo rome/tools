@@ -28,10 +28,7 @@ import {
 } from "@internal/path";
 
 import {markup} from "@internal/markup";
-import {
-	FileNotFound,
-	MissingFileReturn,
-} from "@internal/core/common/FileNotFound";
+import {FileNotFound, MissingFileReturn} from "@internal/fs/FileNotFound";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;

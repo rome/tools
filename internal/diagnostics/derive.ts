@@ -188,7 +188,7 @@ export type DeriveErrorDiagnosticOptions = {
 };
 
 export function deriveDiagnosticFromErrorStructure(
-	struct: StructuredError,
+	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
 	const {filename} = opts;
@@ -197,10 +197,10 @@ export function deriveDiagnosticFromErrorStructure(
 	let targetCode = undefined;
 	let targetLoc = undefined;
 
-	let {frames, message = "Unknown error"} = struct;
+	let {frames = [], message = "Unknown error"} = struct;
 
 	const {cleanFrames} = opts;
-	if (cleanFrames !== undefined) {
+	if (cleanFrames !== undefined && frames) {
 		frames = cleanFrames(frames);
 	}
 
@@ -245,11 +245,11 @@ export function deriveDiagnosticFromError(
 }
 
 export function getErrorStackAdvice(
-	error: StructuredError,
+	error: Partial<StructuredError>,
 	title?: StaticMarkup,
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
-	const {frames, stack} = error;
+	const {frames = [], stack} = error;
 
 	if (frames.length === 0 && stack !== undefined) {
 		// Just in case we didn't get the frames for some reason

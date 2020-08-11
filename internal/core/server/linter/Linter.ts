@@ -33,7 +33,7 @@ import {
 import {markup} from "@internal/markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
-import {FileNotFound} from "@internal/core/common/FileNotFound";
+import {FileNotFound} from "@internal/fs/FileNotFound";
 import {WatchFilesEvent} from "../fs/glob";
 
 type LintWatchChanges = Array<{

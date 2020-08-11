@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: '12.8.1'
       - name: rome ci
         run: ./rome ci
 
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: '12.8.1'
       - name: rome test
         run: ./rome test --freeze-snapshots
 
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: '12.8.1'
       - name: Run TypeScript
         run: node ./node_modules/.bin/tsc --noEmit
 
@@ -56,6 +56,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '13.x'
+          node-version: '12.8.1'
       - name: Check if generated files need to be updated
         run: ./rome run scripts/generate-all-files

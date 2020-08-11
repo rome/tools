@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createAbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {
+	createAbsoluteFilePath,
+	createRelativeFilePath,
+	createUnknownFilePath,
+} from "@internal/path";
 import {test} from "rome";
 
 const relativeTests: Array<[string, string, string]> = [
@@ -98,3 +102,18 @@ for (let i = 0; i < segmentTests.length; i++) {
 		},
 	);
 }
+
+test(
+	"tilde doesn't expand with relative hint",
+	(t) => {
+		t.true(createAbsoluteFilePath("~/foo").getRawSegments()[0] !== "~");
+		t.inlineSnapshot(
+			createRelativeFilePath("~/foo").getRawSegments(),
+			'Array [\n\t"~"\n\t"foo"\n]',
+		);
+		t.inlineSnapshot(
+			createAbsoluteFilePath("/bar").append("~/foo").getRawSegments(),
+			'Array [\n\t""\n\t"bar"\n\t"~"\n\t"foo"\n]',
+		);
+	},
+);

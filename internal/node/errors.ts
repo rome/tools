@@ -1,7 +1,9 @@
 import {
+	StructuredNodeSystemErrorProperties,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
+	setNodeErrorProps,
 } from "@internal/v8";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
@@ -13,9 +15,9 @@ import {
 	createSingleDiagnosticError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
-import fs = require("fs");
 import {prettyFormatEager} from "@internal/pretty-format";
 import {createAbsoluteFilePath} from "@internal/path";
+import {lstatSync} from "@internal/fs";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -127,7 +129,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 			for (const parent of path.getChain()) {
 				try {
-					const stat = fs.statSync(parent.join());
+					const stat = lstatSync(parent);
 
 					advice.push({
 						type: "group",
@@ -177,13 +179,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 	// Add on remaining regular error props so it can be treated as a normal error if necessary
 
 	// Inherit NodeSystemError props
-	diagErr.address = err.address;
-	diagErr.code = err.code;
-	diagErr.dest = err.dest;
-	diagErr.errno = err.errno;
-	diagErr.path = err.path;
-	diagErr.port = err.port;
-	diagErr.syscall = err.syscall;
+	setNodeErrorProps(diagErr, err);
 
 	// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
 	// We probably don't need to or actually care
@@ -196,12 +192,4 @@ export function convertPossibleNodeErrorToDiagnostic(
 }
 
 // https://nodejs.org/api/errors.html#errors_class_systemerror
-export interface NodeSystemError extends Error {
-	address?: string;
-	code?: string;
-	dest?: string;
-	errno?: number;
-	path?: string;
-	port?: string;
-	syscall?: string;
-}
+export type NodeSystemError = Error & StructuredNodeSystemErrorProperties;

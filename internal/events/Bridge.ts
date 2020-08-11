@@ -30,10 +30,11 @@ import {
 import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import prettyFormat from "@internal/pretty-format";
+import {NodeSystemError} from "@internal/node";
 
-type ErrorJSON = {
-	serialize: (err: Error) => JSONObject;
-	hydrate: (err: StructuredError, obj: JSONObject) => Error;
+type ErrorJSON<Data extends JSONObject> = {
+	serialize: (err: Error) => Data;
+	hydrate: (err: StructuredError, obj: Data) => NodeSystemError;
 };
 
 export default class Bridge {
@@ -113,7 +114,9 @@ export default class Bridge {
 	public updatedListenersEvent: Event<Set<string>, void>;
 
 	private opts: BridgeOptions;
-	private errorTransports: Map<string, ErrorJSON>;
+
+	// rome-ignore lint/ts/noExplicitAny
+	private errorTransports: Map<string, ErrorJSON<any>>;
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
 		this.endEvent.subscribe(async () => {
@@ -391,7 +394,8 @@ export default class Bridge {
 		};
 	}
 
-	public addErrorTransport(name: string, transport: ErrorJSON) {
+	// rome-ignore lint/ts/noExplicitAny
+	public addErrorTransport(name: string, transport: ErrorJSON<any>) {
 		this.errorTransports.set(name, transport);
 	}
 

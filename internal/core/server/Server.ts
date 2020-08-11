@@ -9,6 +9,7 @@ import {
 	ServerBridge,
 	ServerQueryRequest,
 	ServerQueryResponse,
+	UserConfig,
 	VERSION,
 } from "@internal/core";
 import {
@@ -50,7 +51,7 @@ import {
 } from "../common/types/client";
 
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
-import {UserConfig, loadUserConfig} from "../common/userConfig";
+
 import {
 	AbsoluteFilePath,
 	createAbsoluteFilePath,
@@ -81,7 +82,7 @@ export type ServerClient = {
 export type ServerOptions = {
 	inbandOnly?: boolean;
 	forceCacheEnabled?: boolean;
-	userConfig?: UserConfig;
+	userConfig: UserConfig;
 	dedicated: boolean;
 	globalErrorHandlers: boolean;
 };
@@ -174,8 +175,7 @@ export default class Server {
 		this.profiling = undefined;
 		this.options = opts;
 
-		this.userConfig =
-			opts.userConfig === undefined ? loadUserConfig() : opts.userConfig;
+		this.userConfig = opts.userConfig;
 
 		this.requestFileLocker = new FilePathLocker();
 

@@ -51,13 +51,23 @@ export type ManifestBugs = {
 
 export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
 
-export type ManifestExportConditions = Map<
-	string,
-	{
-		consumer: Consumer;
-		relative: RelativeFilePath;
-	}
->;
+export type ManifestExportRelativeCondition = {
+	type: "relative";
+	consumer: Consumer;
+	relative: RelativeFilePath;
+};
+
+export type ManifestExportNestedCondition = {
+	type: "nested";
+	consumer: Consumer;
+	conditions: Map<string, ManifestExportRelativeCondition>;
+};
+
+export type ManifestExportCondition =
+	| ManifestExportRelativeCondition
+	| ManifestExportNestedCondition;
+
+export type ManifestExportConditions = Map<string, ManifestExportCondition>;
 
 export type ManifestName = {
 	org?: string;
@@ -125,7 +135,7 @@ export type JSONManifest = {
 	[key: string]: JSONPropertyValue;
 };
 
-export type JSONManifestExports = Dict<Dict<string> | string>;
+export type JSONManifestExports = Dict<Dict<Dict<string> | string> | string>;
 
 export type ManifestDefinition = {
 	path: AbsoluteFilePath;

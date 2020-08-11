@@ -156,7 +156,6 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	}
 
 	const worker = new Worker({
-		globalErrorHandlers: false,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 
@@ -393,6 +392,7 @@ export function createIntegrationTest(
 
 			// Create a Client. The abstraction used by the CLI.
 			const client = new Client({
+				userConfig,
 				terminalFeatures: {
 					...DEFAULT_TERMINAL_FEATURES,
 					format: "markup",
@@ -403,7 +403,7 @@ export function createIntegrationTest(
 					cwd: projectPath,
 					...flags,
 				},
-				stdin: undefined,
+				stdin: process.stdin,
 				stdout,
 				stderr: stdout,
 			});

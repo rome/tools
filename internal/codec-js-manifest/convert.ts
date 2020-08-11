@@ -11,6 +11,7 @@ import {
 	JSONManifest,
 	JSONManifestExports,
 	Manifest,
+	ManifestExportCondition,
 	ManifestExports,
 } from "./types";
 import {stringifySemver} from "@internal/codec-semver";
@@ -31,9 +32,7 @@ export function convertManifestToJSON(manifest: Manifest): JSONManifest {
 		bugs: manifest.bugs,
 		main: manifest.main,
 		// TODO we now support fallbacks which means manifest.exports is lossy
-		//exports: exportsToObject(manifest.exports),
-		// rome-ignore lint/ts/noExplicitAny
-		exports: (manifest.raw.exports as any),
+		exports: exportsToObject(manifest.exports),
 		author: manifest.author,
 		contributors: manifest.contributors,
 		maintainers: manifest.maintainers,
@@ -80,24 +79,29 @@ function exportsToObject(
 	const obj: JSONManifestExports = {};
 
 	for (const [key, entries] of exports) {
-		if (entries.size === 1) {
-			const def = entries.get("default");
-			if (def !== undefined) {
-				obj[key.join()] = def.relative.join();
-				continue;
-			}
-		}
-
-		const entriesObj: Dict<string> = {};
-		for (const [type, alias] of entries) {
-			entriesObj[type] = alias.relative.join();
+		const entriesObj: JSONManifestExports[keyof JSONManifestExports] = {};
+		for (const [type, condition] of entries) {
+			entriesObj[type] = exportConditionToObject(condition);
 		}
 		obj[key.join()] = entriesObj;
 	}
 
 	return obj;
 }
-exportsToObject;
+
+function exportConditionToObject(
+	condition: ManifestExportCondition,
+): string | Dict<string> {
+	if (condition.type === "relative") {
+		return condition.relative.join();
+	}
+
+	const obj: Dict<string> = {};
+	for (const [key, value] of condition.conditions) {
+		obj[key] = value.relative.join();
+	}
+	return obj;
+}
 
 function maybeArray<T>(items: Array<T>): undefined | Array<T> {
 	if (items.length === 0) {
