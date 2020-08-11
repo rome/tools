@@ -6,9 +6,9 @@
  */
 
 import {AbsoluteFilePath, AbsoluteFilePathSet, createAbsoluteFilePath} from "@internal/path";
-import {convertPossibleNodeErrorToDiagnostic, inheritNodeSystemError, NodeSystemError} from "@internal/node";
+import {convertPossibleNodeErrorToDiagnostic, NodeSystemError} from "@internal/node";
 import {getEnvVar} from "@internal/cli-environment";
-import {getErrorStructure, setErrorFrames} from "@internal/v8";
+import {getErrorStructure, setErrorFrames, setNodeErrorProps} from "@internal/v8";
 import fs = require("fs");
 import {FileNotFound} from "@internal/fs/FileNotFound";
 
@@ -33,7 +33,7 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 		// Convert ENOENT to FileNotFound errors, if we want this to be a pretty node error then it can be converted later
 		if (err.code === "ENOENT" && err.path !== undefined) {
 			const err2 = new FileNotFound(createAbsoluteFilePath(err.path));
-			inheritNodeSystemError(err, err2);
+			setNodeErrorProps(err2, err);
 			setErrorFrames(err2, getErrorStructure(err).frames);
 			return Promise.reject(err2);
 		}
@@ -288,4 +288,14 @@ export function createReadStream(
 	opts?: Parameters<typeof fs.createReadStream>[1],
 ): fs.ReadStream {
 	return fs.createReadStream(path.join(), opts);
+}
+
+// Super special sync methods that we should only use sparingly if there's absolutely no way to do them async
+
+export function readFileTextSync(path: AbsoluteFilePath): string {
+	return fs.readFileSync(path.join(), "utf8");
+}
+
+export function lstatSync(path: AbsoluteFilePath): fs.Stats {
+	return fs.lstatSync(path.join());
 }

@@ -15,7 +15,7 @@ import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import handleFatalError from "@internal/core/common/handleFatalError";
-import fs = require("fs");
+import {readFileTextSync} from "@internal/fs";
 
 async function main(): Promise<void> {
 	switch (
@@ -40,7 +40,7 @@ sourceMapManager.add(
 	BIN.join(),
 	SourceMapConsumer.fromJSONLazy(
 		BIN.join(),
-		() => JSON.parse(fs.readFileSync(MAP.join(), "utf8")),
+		() => JSON.parse(readFileTextSync(MAP)),
 	),
 );
 

@@ -36,7 +36,6 @@ import {
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
-import {FileNotFound} from "../../fs/FileNotFound";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";

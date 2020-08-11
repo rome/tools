@@ -1,7 +1,7 @@
 import {
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-	setErrorFrames,
+	setErrorFrames, setNodeErrorProps, StructuredNodeSystemErrorProperties,
 } from "@internal/v8";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
@@ -13,9 +13,9 @@ import {
 	createSingleDiagnosticError,
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
-import fs = require("fs");
 import {prettyFormatEager} from "@internal/pretty-format";
 import {createAbsoluteFilePath} from "@internal/path";
+import {lstatSync} from "@internal/fs";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -127,7 +127,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 			for (const parent of path.getChain()) {
 				try {
-					const stat = fs.statSync(parent.join());
+					const stat = lstatSync(parent);
 
 					advice.push({
 						type: "group",
@@ -177,7 +177,7 @@ export function convertPossibleNodeErrorToDiagnostic(
 	// Add on remaining regular error props so it can be treated as a normal error if necessary
 
 	// Inherit NodeSystemError props
-	inheritNodeSystemError(err, diagErr);
+	setNodeErrorProps(diagErr, err);
 
 	// Without doing something jank we can't retain the original Error constructor ie. TypeError etc
 	// We probably don't need to or actually care
@@ -189,23 +189,5 @@ export function convertPossibleNodeErrorToDiagnostic(
 	return diagErr;
 }
 
-export function inheritNodeSystemError(orig: NodeSystemError, err: NodeSystemError) {
-	err.address = orig.address;
-	err.code = orig.code;
-	err.dest = orig.dest;
-	err.errno = orig.errno;
-	err.path = orig.path;
-	err.port = orig.port;
-	err.syscall = orig.syscall;
-}
-
 // https://nodejs.org/api/errors.html#errors_class_systemerror
-export interface NodeSystemError extends Error {
-	address?: string;
-	code?: string;
-	dest?: string;
-	errno?: number;
-	path?: string;
-	port?: string;
-	syscall?: string;
-}
+export type NodeSystemError = Error & StructuredNodeSystemErrorProperties;

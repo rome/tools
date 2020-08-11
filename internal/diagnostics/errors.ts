@@ -25,7 +25,7 @@ let insideDiagnosticsErrorSerial = false;
 
 export class DiagnosticsError extends Error implements NodeSystemError {
 	constructor(
-		message: string,
+		message: undefined | string,
 		diagnostics: Diagnostics,
 		suppressions: DiagnosticSuppressions = [],
 	) {
@@ -42,7 +42,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 	}
 
 	private _memoMessage: string | undefined;
-	private _message: string;
+	private _message: undefined | string;
 
 	// Lazily instantiate this. If we ever catchDiagnostics we wont even care about the `message`
 	// so this avoids having to print it to a string
@@ -61,9 +61,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			].join("\n");
 		}
 
-		let message = this._message;
-		message += "\n";
-
+		let message = this._message === undefined ? "" : this._message + "\n";
 		insideDiagnosticsErrorSerial = true;
 
 		const reporter = new Reporter();

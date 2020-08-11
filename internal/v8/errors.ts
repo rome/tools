@@ -23,11 +23,22 @@ export type ErrorWithFrames = NodeSystemError & {
 	[ERROR_FRAMES_PROP]?: unknown;
 };
 
+export type StructuredNodeSystemErrorProperties = {
+	address?: string;
+	code?: string;
+	dest?: string;
+	errno?: number;
+	path?: string;
+	port?: string;
+	syscall?: string;
+};
+
 export type StructuredError = {
 	name: string;
 	message?: string;
 	stack?: string;
 	frames: ErrorFrames;
+	node: StructuredNodeSystemErrorProperties;
 };
 
 export function setErrorFrames(
@@ -35,6 +46,16 @@ export function setErrorFrames(
 	frames: undefined | ErrorFrames,
 ) {
 	err[ERROR_FRAMES_PROP] = frames;
+}
+
+export function setNodeErrorProps(err: NodeSystemError, props: StructuredNodeSystemErrorProperties) {
+	err.address = props.address;
+	err.code = props.code;
+	err.dest = props.dest;
+	err.errno = props.errno;
+	err.path = props.path;
+	err.port = props.port;
+	err.syscall = props.syscall;
 }
 
 export function getErrorStructure(
@@ -86,7 +107,24 @@ export function getErrorStructure(
 		message,
 		stack,
 		frames,
+		node: extractNodeSystemErrorProperties(err),
 	};
+}
+
+export function extractNodeSystemErrorProperties(err: unknown): StructuredNodeSystemErrorProperties {
+	if (isPlainObject(err)) {
+		return {
+			address: typeof err.address === "string" ? err.address : undefined,
+			code: typeof err.code === "string" ? err.code : undefined,
+			dest: typeof err.dest === "string" ? err.dest : undefined,
+			errno: typeof err.errno === "number" ? err.errno : undefined,
+			path: typeof err.path === "string" ? err.path : undefined,
+			port: typeof err.port === "string" ? err.port : undefined,
+			syscall: typeof err.syscall === "string" ? err.syscall : undefined,
+		};
+	} else {
+		return {};
+	}
 }
 
 export function getDiagnosticLocationFromErrorFrame(

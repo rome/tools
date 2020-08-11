@@ -2,11 +2,10 @@ import {markup} from "@internal/markup";
 import {parseCommit} from "@internal/commit-parser";
 import {readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
-import {PUBLIC_PACKAGES, ROOT, reporter} from "./_utils";
+import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent} from "@internal/string-utils";
 import {consumeJSON} from "@internal/codec-json";
 import child = require("child_process");
-import fs = require("fs");
 import https = require("https");
 import http = require("http");
 
@@ -335,7 +334,7 @@ export async function main(): Promise<void> {
 	const commits = await parseCommitLog(GIT_PLACEHOLDERS);
 	const tagMap = createTagMap(commits, newVersion);
 	const markdown = generateMarkdown(tagMap);
-	fs.writeFileSync("./CHANGELOG.md", markdown);
+	await writeFile(ROOT.append("CHANGELOG.md"), markdown);
 	child.spawnSync("git", ["add", "CHANGELOG.md"]);
 	reporter.success(
 		markup`The <emphasis>CHANGELOG.md</emphasis> was successfully generated.`,

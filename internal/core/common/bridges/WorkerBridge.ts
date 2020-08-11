@@ -331,14 +331,14 @@ export default class WorkerBridge extends Bridge {
 					}
 
 					return {
-						path: err.path.join(),
+						suffixMessage: err.suffixMessage,
+						path: err._path.join(),
 					};
 				},
 				hydrate(err, data) {
-					// rome-ignore lint/ts/noExplicitAny
 					return new FileNotFound(
-						createAbsoluteFilePath((data.path as any)),
-						err.message,
+						createAbsoluteFilePath(data.path),
+						data.suffixMessage,
 					);
 				},
 			},
@@ -358,9 +358,8 @@ export default class WorkerBridge extends Bridge {
 				},
 				hydrate(err, data) {
 					return new DiagnosticsError(
-						String(err.message),
-						// rome-ignore lint/ts/noExplicitAny
-						(data.diagnostics as any),
+						err.message,
+						data.diagnostics,
 					);
 				},
 			},
