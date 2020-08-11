@@ -48,6 +48,7 @@ export type DiagnosticCategory =
 	| "parse/url/query"
 	| "parse/vscodeTheme"
 	| "projectManager/sensitiveDirectory"
+	| "projectManager/multipleConfigFiles"
 	| "projectManager/typoConfigFilename"
 	| "projectManager/misplacedConfig"
 	| "projectManager/missing"

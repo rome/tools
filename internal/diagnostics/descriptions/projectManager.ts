@@ -44,6 +44,17 @@ export const projectManager = createDiagnosticsCategory({
 			},
 		],
 	}),
+	MULTIPLE_CONFIGS: {
+		category: "projectManager/multipleConfigFiles",
+		message: markup`Multiple config files were found`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`There should be a single config file. Remove those that are unnecessary.`,
+			},
+		],
+	},
 	NOT_FOUND: {
 		category: "projectManager/missing",
 		message: markup`Couldn't find a project`,
