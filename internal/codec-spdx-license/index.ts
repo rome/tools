@@ -23,7 +23,7 @@ const idToLicense: Map<string, License> = new Map();
 const licenseNames: Array<string> = [];
 for (const license of data.licenses) {
 	licenseNames.push(license.licenseId);
-	idToLicense.set(license.licenseId, license);
+	idToLicense.set(license.licenseId.toLowerCase(), license);
 }
 
 export {licenseNames};
@@ -31,7 +31,7 @@ export {licenseNames};
 export {ExpressionNode as SPDXExpressionNode} from "./parse";
 
 export function getSPDXLicense(licenseId: string): undefined | License {
-	return idToLicense.get(licenseId);
+	return idToLicense.get(licenseId.toLowerCase());
 }
 
 export {default as parseSPDXLicense} from "./parse";
