@@ -48,7 +48,10 @@ export function setErrorFrames(
 	err[ERROR_FRAMES_PROP] = frames;
 }
 
-export function setNodeErrorProps(err: NodeSystemError, props: StructuredNodeSystemErrorProperties) {
+export function setNodeErrorProps(
+	err: NodeSystemError,
+	props: StructuredNodeSystemErrorProperties,
+) {
 	err.address = props.address;
 	err.code = props.code;
 	err.dest = props.dest;
@@ -111,7 +114,9 @@ export function getErrorStructure(
 	};
 }
 
-export function extractNodeSystemErrorProperties(err: unknown): StructuredNodeSystemErrorProperties {
+export function extractNodeSystemErrorProperties(
+	err: unknown,
+): StructuredNodeSystemErrorProperties {
 	if (isPlainObject(err)) {
 		return {
 			address: typeof err.address === "string" ? err.address : undefined,

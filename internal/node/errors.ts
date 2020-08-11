@@ -1,7 +1,9 @@
 import {
+	StructuredNodeSystemErrorProperties,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
-	setErrorFrames, setNodeErrorProps, StructuredNodeSystemErrorProperties,
+	setErrorFrames,
+	setNodeErrorProps,
 } from "@internal/v8";
 import {StaticMarkup, markup} from "@internal/markup";
 import {

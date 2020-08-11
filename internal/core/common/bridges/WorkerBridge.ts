@@ -357,10 +357,7 @@ export default class WorkerBridge extends Bridge {
 					};
 				},
 				hydrate(err, data) {
-					return new DiagnosticsError(
-						err.message,
-						data.diagnostics,
-					);
+					return new DiagnosticsError(err.message, data.diagnostics);
 				},
 			},
 		);

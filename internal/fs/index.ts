@@ -5,10 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathSet, createAbsoluteFilePath} from "@internal/path";
-import {convertPossibleNodeErrorToDiagnostic, NodeSystemError} from "@internal/node";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	createAbsoluteFilePath,
+} from "@internal/path";
+import {
+	NodeSystemError,
+	convertPossibleNodeErrorToDiagnostic,
+} from "@internal/node";
 import {getEnvVar} from "@internal/cli-environment";
-import {getErrorStructure, setErrorFrames, setNodeErrorProps} from "@internal/v8";
+import {
+	getErrorStructure,
+	setErrorFrames,
+	setNodeErrorProps,
+} from "@internal/v8";
 import fs = require("fs");
 import {FileNotFound} from "@internal/fs/FileNotFound";
 
@@ -239,12 +250,7 @@ export async function removeDirectory(path: AbsoluteFilePath): Promise<void> {
 	// Remove directory with all files deleted
 	return promisifyVoid(
 		path,
-		(filename, callback) =>
-			fs.rmdir(
-				filename,
-				callback,
-			)
-		,
+		(filename, callback) => fs.rmdir(filename, callback),
 	);
 }
 
