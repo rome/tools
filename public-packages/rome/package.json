@@ -15,6 +15,6 @@
     "postinstall": "echo \"Thanks for using Rome! This space reserved for future sustainability announcements. See https://github.com/romefrontend/rome/pull/198 for context.\""
   },
   "engines": {
-    "node": ">=12.10.0"
+    "node": ">=12.8.1"
   }
 }
