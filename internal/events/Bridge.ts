@@ -17,7 +17,6 @@ import {
 	BridgeType,
 	EventSubscription,
 } from "./types";
-import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
 import BridgeError from "./BridgeError";
 import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
 import Event from "./Event";
@@ -31,8 +30,9 @@ import {AnyMarkups, concatMarkup, markup} from "@internal/markup";
 import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import prettyFormat from "@internal/pretty-format";
 import {NodeSystemError} from "@internal/node";
+import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
 
-type ErrorJSON<Data extends JSONObject> = {
+type ErrorSerial<Data extends RSERValue> = {
 	serialize: (err: Error) => Data;
 	hydrate: (err: StructuredError, obj: Data) => NodeSystemError;
 };
@@ -116,7 +116,7 @@ export default class Bridge {
 	private opts: BridgeOptions;
 
 	// rome-ignore lint/ts/noExplicitAny
-	private errorTransports: Map<string, ErrorJSON<any>>;
+	private errorTransports: Map<string, ErrorSerial<any>>;
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
 		this.endEvent.subscribe(async () => {
@@ -289,6 +289,20 @@ export default class Bridge {
 		this.updatedListenersEvent.send(this.listeners);
 	}
 
+	public attachRSER(): RSERStream {
+		const buf = new RSERStream();
+
+		buf.errorEvent.subscribe((err) => {
+			this.endWithError(err);
+		});
+
+		buf.valueEvent.subscribe((value) => {
+			this.handleMessage((value as BridgeMessage));
+		});
+
+		return buf;
+	}
+
 	public init(): void {
 		// This method can be overridden by subclasses, it allows you to add logic such as error serializers
 	}
@@ -303,10 +317,9 @@ export default class Bridge {
 		return ++this.messageIdCounter;
 	}
 
-	public createEvent<
-		Param extends JSONPropertyValue,
-		Ret extends JSONPropertyValue
-	>(opts: BridgeEventOptions): BridgeEvent<Param, Ret> {
+	public createEvent<Param extends RSERValue, Ret extends RSERValue>(
+		opts: BridgeEventOptions,
+	): BridgeEvent<Param, Ret> {
 		if (this.events.has(opts.name)) {
 			throw new Error("Duplicate event");
 		}
@@ -371,7 +384,7 @@ export default class Bridge {
 
 		// Fetch some metadata for hydration
 		const tranport = this.errorTransports.get(err.name);
-		const metadata: JSONObject =
+		const metadata: RSERObject =
 			tranport === undefined ? {} : tranport.serialize(err);
 
 		return {
@@ -395,7 +408,7 @@ export default class Bridge {
 	}
 
 	// rome-ignore lint/ts/noExplicitAny
-	public addErrorTransport(name: string, transport: ErrorJSON<any>) {
+	public addErrorTransport(name: string, transport: ErrorSerial<any>) {
 		this.errorTransports.set(name, transport);
 	}
 
@@ -429,21 +442,6 @@ export default class Bridge {
 		opts.sendMessage(msg);
 		if (opts.onSendMessage !== undefined) {
 			opts.onSendMessage(msg);
-		}
-	}
-
-	public handleJSONMessage(str: string) {
-		try {
-			const data = JSON.parse(str);
-			this.handleMessage(data);
-		} catch (err) {
-			if (err instanceof SyntaxError) {
-				this.endWithError(
-					new BridgeError(`Error parsing message JSON: ${err.message}`, this),
-				);
-			} else {
-				this.endWithError(err);
-			}
 		}
 	}
 

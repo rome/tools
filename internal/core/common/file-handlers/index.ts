@@ -6,7 +6,11 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
+import {
+	AnyFilePath,
+	UnknownFilePath,
+	createUnknownFilePath,
+} from "@internal/path";
 import {ExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -61,7 +65,7 @@ export function getFileHandlerExtensions(
 }
 
 export function getFileHandlerFromPath(
-	path: UnknownFilePath,
+	path: AnyFilePath,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
@@ -87,7 +91,7 @@ export function getFileHandlerFromPath(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: UnknownFilePath,
+	path: AnyFilePath,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);

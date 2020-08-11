@@ -9,7 +9,7 @@ import {Diagnostics} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
 import {ServerRequest, TestWorkerBridge} from "@internal/core";
 import {CoverageFile, InspectorClient} from "@internal/v8";
-import child = require("child_process");
+import workerThreads = require("worker_threads");
 import {FileReference} from "@internal/core/common/types/files";
 import {DiagnosticsPrinterFlags} from "@internal/cli-diagnostics";
 
@@ -48,7 +48,7 @@ export type CoverageDirectory = {
 
 export type TestWorkerContainer = {
 	bridge: TestWorkerBridge;
-	process: child.ChildProcess;
+	thread: workerThreads.Worker;
 	inspector: undefined | InspectorClient;
 };
 

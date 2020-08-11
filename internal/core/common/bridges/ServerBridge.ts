@@ -7,18 +7,19 @@
 
 import {Profile} from "@internal/v8";
 import {Diagnostics} from "@internal/diagnostics";
-import {ClientFlagsJSON, ClientRequestFlags} from "../types/client";
+import {ClientFlags, ClientRequestFlags} from "../types/client";
 import {Bridge} from "@internal/events";
-import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-json";
 import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
+import {RSERObject} from "@internal/codec-binary-serial";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
-	commandFlags: JSONObject;
+	commandFlags: RSERObject;
 	args: Array<string>;
 	commandName: string;
 	silent: boolean;
@@ -88,7 +89,7 @@ export type ServerBridgeInfo = {
 	};
 	outputSupport: TerminalFeatures;
 	outputFormat: ReporterStream["format"];
-	flags: ClientFlagsJSON;
+	flags: ClientFlags;
 };
 
 export default class ServerBridge extends Bridge {

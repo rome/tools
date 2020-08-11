@@ -37,10 +37,7 @@ import SnapshotManager, {
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../common/utils/executeMain";
-import {
-	FileReference,
-	convertTransportFileReference,
-} from "../common/types/files";
+import {FileReference} from "../common/types/files";
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {
 	concatMarkup,
@@ -123,7 +120,7 @@ export default class TestWorkerRunner {
 	constructor(opts: TestWorkerPrepareTestOptions, bridge: TestWorkerBridge) {
 		this.opts = opts;
 		this.locked = false;
-		this.file = convertTransportFileReference(opts.file);
+		this.file = opts.file;
 		this.options = opts.options;
 		this.bridge = bridge;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);

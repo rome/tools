@@ -19,7 +19,6 @@ import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig} from "@internal/core";
-import {hydrateJSONProjectConfig} from "@internal/project";
 import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
@@ -29,10 +28,7 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {lstat, readFileText} from "@internal/fs";
-import {
-	FileReference,
-	convertTransportFileReference,
-} from "../common/types/files";
+import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
@@ -171,7 +167,7 @@ export default class Worker {
 
 		bridge.compile.subscribe((payload) => {
 			return this.api.compile(
-				convertTransportFileReference(payload.ref),
+				payload.ref,
 				payload.stage,
 				payload.options,
 				payload.parseOptions,
@@ -179,41 +175,27 @@ export default class Worker {
 		});
 
 		bridge.parse.subscribe((payload) => {
-			return this.api.parse(
-				convertTransportFileReference(payload.ref),
-				payload.options,
-			);
+			return this.api.parse(payload.ref, payload.options);
 		});
 
 		bridge.lint.subscribe((payload) => {
-			return this.api.lint(
-				convertTransportFileReference(payload.ref),
-				payload.options,
-				payload.parseOptions,
-			);
+			return this.api.lint(payload.ref, payload.options, payload.parseOptions);
 		});
 
 		bridge.format.subscribe((payload) => {
-			return this.api.format(
-				convertTransportFileReference(payload.ref),
-				payload.options,
-				payload.parseOptions,
-			);
+			return this.api.format(payload.ref, payload.options, payload.parseOptions);
 		});
 
 		bridge.updateInlineSnapshots.subscribe((payload) => {
 			return this.api.updateInlineSnapshots(
-				convertTransportFileReference(payload.ref),
+				payload.ref,
 				payload.updates,
 				payload.parseOptions,
 			);
 		});
 
 		bridge.analyzeDependencies.subscribe((payload) => {
-			return this.api.analyzeDependencies(
-				convertTransportFileReference(payload.ref),
-				payload.parseOptions,
-			);
+			return this.api.analyzeDependencies(payload.ref, payload.parseOptions);
 		});
 
 		bridge.evict.subscribe((payload) => {
@@ -222,10 +204,7 @@ export default class Worker {
 		});
 
 		bridge.moduleSignatureJS.subscribe((payload) => {
-			return this.api.moduleSignatureJS(
-				convertTransportFileReference(payload.ref),
-				payload.parseOptions,
-			);
+			return this.api.moduleSignatureJS(payload.ref, payload.parseOptions);
 		});
 
 		bridge.updateProjects.subscribe((payload) => {
@@ -246,25 +225,19 @@ export default class Worker {
 		});
 
 		bridge.getBuffer.subscribe((payload) => {
-			return this.getBuffer(convertTransportFileReference(payload.ref));
+			return this.getBuffer(payload.ref);
 		});
 
 		bridge.updateBuffer.subscribe((payload) => {
-			return this.updateBuffer(
-				convertTransportFileReference(payload.ref),
-				payload.content,
-			);
+			return this.updateBuffer(payload.ref, payload.content);
 		});
 
 		bridge.patchBuffer.subscribe((payload) => {
-			return this.patchBuffer(
-				convertTransportFileReference(payload.ref),
-				payload.patches,
-			);
+			return this.patchBuffer(payload.ref, payload.patches);
 		});
 
 		bridge.clearBuffer.subscribe((payload) => {
-			return this.clearBuffer(convertTransportFileReference(payload.ref));
+			return this.clearBuffer(payload.ref);
 		});
 
 		bridge.getFileBuffers.subscribe(() => {
@@ -355,10 +328,7 @@ export default class Worker {
 				}
 
 				case "OWNED":
-					return this.api.moduleSignatureJS(
-						convertTransportFileReference(value.ref),
-						parseOptions,
-					);
+					return this.api.moduleSignatureJS(value.ref, parseOptions);
 
 				case "POINTER":
 					return resolveGraph(value.key);
@@ -567,8 +537,8 @@ export default class Worker {
 				this.projects.set(
 					id,
 					{
-						directory: createAbsoluteFilePath(directory),
-						config: hydrateJSONProjectConfig(config),
+						directory,
+						config,
 					},
 				);
 			}

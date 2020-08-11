@@ -7,7 +7,6 @@
 
 import {
 	ClientFlags,
-	ClientFlagsJSON,
 	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
 } from "../common/types/client";
@@ -20,7 +19,7 @@ import {
 	ServerQueryResponse,
 	VERSION,
 } from "@internal/core";
-import fork from "../common/utils/fork";
+import {forkProcess} from "../common/utils/fork";
 import {
 	BridgeError,
 	Event,
@@ -197,14 +196,6 @@ export default class Client {
 		this.flags = {
 			...this.flags,
 			...flags,
-		};
-	}
-
-	private getClientJSONFlags(): ClientFlagsJSON {
-		return {
-			...this.flags,
-			realCwd: this.flags.realCwd.join(),
-			cwd: this.flags.cwd.join(),
 		};
 	}
 
@@ -401,7 +392,7 @@ export default class Client {
 		push("Node Version", process.versions.node);
 		push("Platform", `${process.platform} ${process.arch} ${os.release()}`);
 		push("Terminal Features", this.derivedReporterStreams.features);
-		push("Client Flags", this.getClientJSONFlags());
+		push("Client Flags", this.flags);
 
 		// Don't do this if we never connected to the server
 		const bridgeStatus = this.getBridgeStatus();
@@ -608,7 +599,7 @@ export default class Client {
 					...handle.stream.state,
 					lineSnapshots: undefined,
 				},
-				flags: this.getClientJSONFlags(),
+				flags: this.flags,
 			}),
 			bridge.handshake(),
 			bridge.serverReady.wait(),
@@ -718,7 +709,7 @@ export default class Client {
 			function listen() {
 				socketServer.listen(CLI_SOCKET_PATH.join());
 
-				proc = fork(
+				proc = forkProcess(
 					"server",
 					{
 						detached: true,

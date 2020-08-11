@@ -33,10 +33,10 @@ import {
 	DiagnosticsError,
 	descriptions,
 } from "@internal/diagnostics";
-import {JSONObject} from "@internal/codec-json";
 import {exists, readFileText, writeFile} from "@internal/fs";
 import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
+import {RSERObject} from "@internal/codec-binary-serial";
 
 export type Examples = Array<{
 	description: StaticMarkup;
@@ -49,7 +49,7 @@ type FlagsConsumer = {
 	rawFlags: Dict<FlagValue>;
 };
 
-type CommandOptions<T extends JSONObject> = {
+type CommandOptions<T extends RSERObject> = {
 	name: string;
 	category?: string;
 	description?: StaticMarkup;
@@ -61,7 +61,7 @@ type CommandOptions<T extends JSONObject> = {
 	callback: (flags: T) => void | Promise<void>;
 };
 
-type AnyCommandOptions = CommandOptions<JSONObject>;
+type AnyCommandOptions = CommandOptions<RSERObject>;
 
 type ArgDeclaration = {
 	definition: ConsumePropertyDefinition;
@@ -70,7 +70,7 @@ type ArgDeclaration = {
 };
 
 type DefinedCommand = {
-	flags: JSONObject;
+	flags: RSERObject;
 	command: AnyCommandOptions;
 };
 
@@ -346,7 +346,7 @@ export default class Parser<T> {
 	private async maybeDefineCommandFlags(
 		command: AnyCommandOptions,
 		consumer: Consumer,
-	): Promise<undefined | JSONObject> {
+	): Promise<undefined | RSERObject> {
 		// A command name could be made of multiple strings
 		const commandParts = splitCommandName(command.name);
 		for (let i = 0; i < commandParts.length; i++) {
@@ -1113,10 +1113,10 @@ export default class Parser<T> {
 	private async defineCommandFlags(
 		command: AnyCommandOptions,
 		consumer: Consumer,
-	): Promise<JSONObject> {
+	): Promise<RSERObject> {
 		this.currentCommand = command.name;
 
-		let flags: JSONObject = {};
+		let flags: RSERObject = {};
 		if (command.defineFlags !== undefined) {
 			flags = command.defineFlags(consumer);
 		}

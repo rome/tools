@@ -34,11 +34,7 @@ import {DEFAULT_USER_CONFIG, UserConfig} from "../core/common/userConfig";
 import ServerRequest from "../core/server/ServerRequest";
 import {partialServerQueryRequestToFull} from "../core/server/Server";
 import {PartialServerQueryRequest} from "../core/common/bridges/ServerBridge";
-import {
-	ProjectConfig,
-	createDefaultProjectConfig,
-	serializeJSONProjectConfig,
-} from "@internal/project";
+import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {createBridgeFromLocal} from "@internal/events";
 
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
@@ -219,9 +215,9 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		let id = projectIdCounter++;
 		worker.updateProjects([
 			{
-				config: serializeJSONProjectConfig(config),
+				config,
 				id,
-				directory: `/project-${id}`,
+				directory: createAbsoluteFilePath(`/project-${id}`),
 			},
 		]);
 		return id;

@@ -41,6 +41,9 @@ export default async function executeMain(
 
 	// Create global context
 	const sandbox: UnknownObject = {
+		// TODO Find a more reliable way to do this
+		TextEncoder,
+		TextDecoder,
 		Buffer,
 		clearImmediate,
 		clearInterval,

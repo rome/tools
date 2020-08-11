@@ -19,7 +19,6 @@ import {
 	createDefaultProjectConfig,
 	createDefaultProjectConfigMeta,
 	loadCompleteProjectConfig,
-	serializeJSONProjectConfig,
 } from "@internal/project";
 import {
 	WorkerPartialManifests,
@@ -40,12 +39,12 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AnyFilePath,
 	URLFilePath,
-	UnknownFilePath,
 	UnknownFilePathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {FileReference, JSONFileReference} from "../../common/types/files";
+import {FileReference} from "../../common/types/files";
 import {
 	GetFileHandlerResult,
 	getFileHandlerFromPath,
@@ -92,7 +91,7 @@ function cleanUidParts(parts: Array<string>): string {
 }
 
 // If a UID has a relative path that's just index.js, index.ts etc then omit it
-function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
+function cleanRelativeUidPath(relative: AnyFilePath): undefined | string {
 	return relative.join();
 
 	const segments = relative.getSegments();
@@ -374,15 +373,6 @@ export default class ProjectManager {
 		return this.getFileReference(local);
 	}
 
-	public getTransportFileReference(path: AbsoluteFilePath): JSONFileReference {
-		const ref = this.getFileReference(path);
-		return {
-			...ref,
-			relative: ref.relative.join(),
-			real: ref.real.join(),
-		};
-	}
-
 	public async maybeEvictProjects(
 		paths: Array<AbsoluteFilePath>,
 	): Promise<boolean> {
@@ -459,7 +449,7 @@ export default class ProjectManager {
 					projects: [
 						{
 							id: evictProjectId,
-							directory: project.directory.join(),
+							directory: project.directory,
 							config: undefined,
 						},
 					],
@@ -735,9 +725,9 @@ export default class ProjectManager {
 		const projectsSerial: WorkerProjects = [];
 		for (const project of projects) {
 			projectsSerial.push({
-				config: serializeJSONProjectConfig(project.config),
+				config: project.config,
 				id: project.id,
-				directory: project.directory.join(),
+				directory: project.directory,
 			});
 
 			for (const def of project.manifests.values()) {

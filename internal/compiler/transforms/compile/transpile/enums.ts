@@ -2,17 +2,21 @@ import {
 	AnyJSExpression,
 	JSBindingIdentifier,
 	JSCallExpression,
+	JSExpressionStatement,
+	JSVariableDeclaration,
 	TSEnumDeclaration,
 	jsCallExpression,
 	jsFunctionExpression,
 	jsNumericLiteral,
 	jsStringLiteral,
+	jsVariableDeclaration,
+	jsVariableDeclarationStatement,
+	jsVariableDeclarator,
 } from "@internal/ast";
 import {
 	CompilerContext,
-	LetBinding,
+	Path,
 	Scope,
-	VarBinding,
 	createVisitor,
 	signals,
 } from "@internal/compiler";
@@ -24,28 +28,41 @@ import {EvalResult} from "@internal/js-ast-utils/tryStaticEvaluation";
 type PreviousEnumMembers = Map<string, EvalResult["value"]>;
 
 function buildEnumWrapper(
+	path: Path,
+	node: TSEnumDeclaration,
 	id: JSBindingIdentifier,
 	assignments: Array<AnyJSExpression>,
-): JSCallExpression {
+): JSVariableDeclaration {
 	const call = jsCallExpression.assert(
-		template.expression`(function (${id}) {})(${id} || (${id} = {}));`,
+		template.expression`(function () { const ${id} = {}; return ${id};})();`,
 	);
 
-	const func = jsFunctionExpression.assert(call.callee);
+	const statements: Array<JSExpressionStatement> = assignments.map((expression) => ({
+		type: "JSExpressionStatement",
+		expression,
+	}));
 
-	return {
+	const func = jsFunctionExpression.assert(call.callee);
+	const factoryCall: JSCallExpression = {
 		...call,
 		callee: {
 			...func,
 			body: {
 				...func.body,
-				body: assignments.map((expression) => ({
-					type: "JSExpressionStatement",
-					expression,
-				})),
+				body: [func.body.body[0], ...statements, func.body.body[1]],
 			},
 		},
 	};
+
+	return jsVariableDeclaration.create({
+		kind: "const",
+		declarations: [
+			jsVariableDeclarator.create({
+				id: node.id,
+				init: factoryCall,
+			}),
+		],
+	});
 }
 
 function buildEnumMember(
@@ -82,10 +99,11 @@ function buildStringAssignment(
 }
 
 function enumFill(
+	path: Path,
 	node: TSEnumDeclaration,
 	scope: Scope,
 	context: CompilerContext,
-): AnyJSExpression {
+): JSVariableDeclaration {
 	const x = translateEnumValues(node, scope, context);
 	const assignments = x.map(([memberName, memberValue]) =>
 		buildEnumMember(
@@ -95,7 +113,7 @@ function enumFill(
 			memberValue,
 		)
 	);
-	return buildEnumWrapper({...node.id}, assignments);
+	return buildEnumWrapper(path, node, {...node.id}, assignments);
 }
 
 function translateEnumValues(
@@ -185,23 +203,15 @@ export default createVisitor({
 			return signals.remove;
 		}
 
-		const fill = enumFill(node, scope, context);
+		const fill = enumFill(path, node, scope, context);
 
 		switch (path.parent.type) {
-			case "JSBlockStatement":
 			case "JSExportLocalDeclaration":
-			case "JSRoot": {
-				const BindingCtor =
-					path.parent.type === "JSRoot" ? VarBinding : LetBinding;
-				path.scope.addBinding(
-					new BindingCtor({
-						node: node.id,
-						name: node.id.name,
-						scope: path.scope,
-					}),
-				);
 				return signals.replace(fill);
-			}
+
+			case "JSBlockStatement":
+			case "JSRoot":
+				return signals.replace(jsVariableDeclarationStatement.quick(fill));
 
 			default:
 				throw new Error(`Unexpected enum parent '${path.parent.type}`);

@@ -77,7 +77,7 @@ for (let i = 0; i < relativeTests.length; i++) {
 					},
 					out: {
 						filename: relative.join(),
-						segments: relative.getRawSegments(),
+						parsed: relative.parsed,
 					},
 				},
 			});
@@ -89,7 +89,7 @@ for (let i = 0; i < relativeTests.length; i++) {
 
 const segmentTests: Array<[string, Array<string>]> = [
 	["./../images/test.png", ["..", "images", "test.png"]],
-	["foo/", ["foo", ""]],
+	["foo/", ["foo"]],
 ];
 
 for (let i = 0; i < segmentTests.length; i++) {
@@ -98,7 +98,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createUnknownFilePath(loc).getRawSegments(), expectedSegments);
+			t.looksLike(createUnknownFilePath(loc).parsed.segments, expectedSegments);
 		},
 	);
 }
@@ -106,13 +106,13 @@ for (let i = 0; i < segmentTests.length; i++) {
 test(
 	"tilde doesn't expand with relative hint",
 	(t) => {
-		t.true(createAbsoluteFilePath("~/foo").getRawSegments()[0] !== "~");
+		t.true(createAbsoluteFilePath("~/foo").parsed.segments[0] !== "~");
 		t.inlineSnapshot(
-			createRelativeFilePath("~/foo").getRawSegments(),
+			createRelativeFilePath("~/foo").parsed.segments,
 			'Array [\n\t"~"\n\t"foo"\n]',
 		);
 		t.inlineSnapshot(
-			createAbsoluteFilePath("/bar").append("~/foo").getRawSegments(),
+			createAbsoluteFilePath("/bar").append("~/foo").parsed.segments,
 			'Array [\n\t""\n\t"bar"\n\t"~"\n\t"foo"\n]',
 		);
 	},

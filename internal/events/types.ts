@@ -6,8 +6,8 @@
  */
 
 import {StructuredError} from "@internal/v8";
-import {JSONObject} from "@internal/codec-json";
 import {AnyMarkups} from "@internal/markup";
+import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;
@@ -52,7 +52,7 @@ export type BridgeSubscriptionsMessage = {
 export type BridgeRequestMessage = {
 	id?: number;
 	event: string;
-	param: unknown;
+	param: RSERValue;
 	type: "request";
 	priority: boolean;
 };
@@ -60,14 +60,14 @@ export type BridgeRequestMessage = {
 export type BridgeSuccessResponseMessage = {
 	id: number;
 	event: string;
-	value: unknown;
+	value: RSERValue;
 	type: "response";
 	responseStatus: "success";
 };
 
 export type BridgeErrorResponseDetails = {
 	value: StructuredError;
-	metadata: JSONObject;
+	metadata: RSERObject;
 };
 
 export type BridgeErrorResponseMessage = BridgeErrorResponseDetails & {

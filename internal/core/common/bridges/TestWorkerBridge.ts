@@ -8,7 +8,7 @@
 import {Diagnostic, DiagnosticOrigin} from "@internal/diagnostics";
 import {TestServerRunnerOptions} from "../../server/testing/types";
 import {Bridge} from "@internal/events";
-import {JSONFileReference} from "../types/files";
+import {FileReference} from "../types/files";
 import {
 	FocusedTest,
 	TestWorkerFileResult,
@@ -21,7 +21,7 @@ export type TestRef = {
 
 export type TestWorkerPrepareTestOptions = {
 	id: number;
-	file: JSONFileReference;
+	file: FileReference;
 	projectDirectory: string;
 	code: string;
 	cwd: string;

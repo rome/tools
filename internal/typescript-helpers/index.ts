@@ -17,6 +17,13 @@ export type AsyncVoidCallback<Args extends Array<unknown> = []> = Args extends [
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
+// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((
+	k: infer I,
+) => void)
+	? I
+	: never;
+
 // rome-ignore lint/ts/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
 	new (

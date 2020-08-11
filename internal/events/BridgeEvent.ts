@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue} from "@internal/codec-json";
 import {
 	BridgeErrorResponseMessage,
 	BridgeSuccessResponseMessage,
@@ -16,6 +15,7 @@ import Bridge from "./Bridge";
 import BridgeError from "./BridgeError";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
+import {RSERValue} from "@internal/codec-binary-serial";
 
 type CallOptions = {
 	timeout?: number;
@@ -48,10 +48,8 @@ function validateDirection(
 	}
 }
 
-export default class BridgeEvent<
-	Param extends JSONPropertyValue,
-	Ret extends JSONPropertyValue
-> extends Event<Param, Ret> {
+export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
+	extends Event<Param, Ret> {
 	constructor(opts: BridgeEventOptions, bridge: Bridge) {
 		super(opts);
 

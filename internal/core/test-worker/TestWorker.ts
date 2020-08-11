@@ -5,15 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	TestWorkerPrepareTestOptions,
-	TestWorkerPrepareTestResult,
-	TestWorkerRunTestOptions,
-} from "../common/bridges/TestWorkerBridge";
 import {deriveDiagnosticFromError} from "@internal/diagnostics";
 import {TestWorkerBridge} from "@internal/core";
-import {createBridgeFromParentProcess} from "@internal/events";
-import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
+import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
+import TestWorkerRunner from "./TestWorkerRunner";
 import inspector = require("inspector");
 import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
 
@@ -22,22 +17,12 @@ export type TestWorkerFlags = {
 };
 
 export default class TestWorker {
-	constructor() {
-		this.bridge = this.buildBridge();
-		this.runners = new Map();
-	}
-
-	private runners: Map<number, TestWorkerRunner>;
-	private bridge: TestWorkerBridge;
+	constructor() {}
 
 	public async init(flags: TestWorkerFlags) {
-		inspector.open(flags.inspectorPort);
+		const runners: Map<number, TestWorkerRunner> = new Map();
 
-		await this.bridge.handshake();
-	}
-
-	private buildBridge(): TestWorkerBridge {
-		const bridge = createBridgeFromParentProcess(
+		const bridge = await createBridgeFromWorkerThreadParentPort(
 			TestWorkerBridge,
 			{
 				type: "server",
@@ -64,34 +49,24 @@ export default class TestWorker {
 			};
 		});
 
-		bridge.prepareTest.subscribe((data) => {
-			return this.prepareTest(data);
+		bridge.prepareTest.subscribe((opts) => {
+			const runner = new TestWorkerRunner(opts, bridge);
+			runners.set(opts.id, runner);
+			return runner.prepare();
 		});
 
 		bridge.runTest.subscribe((opts) => {
-			return this.runTest(opts);
+			const {id} = opts;
+			const runner = runners.get(id);
+			if (runner === undefined) {
+				throw new Error(`No runner ${id} found`);
+			} else {
+				return runner.run(opts);
+			}
 		});
 
-		return bridge;
-	}
+		inspector.open(flags.inspectorPort);
 
-	private async runTest(
-		opts: TestWorkerRunTestOptions,
-	): Promise<TestWorkerFileResult> {
-		const {id} = opts;
-		const runner = this.runners.get(id);
-		if (runner === undefined) {
-			throw new Error(`No runner ${id} found`);
-		} else {
-			return await runner.run(opts);
-		}
-	}
-
-	private async prepareTest(
-		opts: TestWorkerPrepareTestOptions,
-	): Promise<TestWorkerPrepareTestResult> {
-		const runner = new TestWorkerRunner(opts, this.bridge);
-		this.runners.set(opts.id, runner);
-		return await runner.prepare();
+		await bridge.handshake();
 	}
 }

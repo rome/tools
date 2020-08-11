@@ -907,7 +907,7 @@ export default class MemoryFileSystem {
 			}
 		}
 
-		this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
+		//this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
 
 		// Add project if this is a config
 		if (

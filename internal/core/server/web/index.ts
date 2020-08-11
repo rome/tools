@@ -7,7 +7,7 @@
 
 import {
 	BundlerConfig,
-	ClientFlagsJSON,
+	ClientFlags,
 	PLATFORMS,
 	Server,
 	ServerRequest,
@@ -37,7 +37,7 @@ export type WebServerTime = {
 
 export type WebServerClient = WebServerTime & {
 	id: number;
-	flags: ClientFlagsJSON;
+	flags: ClientFlags;
 	stdoutAnsi: string;
 	stdoutHTML: string;
 };
@@ -84,11 +84,7 @@ export class WebServer {
 
 			const data: WebServerClient = {
 				id: client.id,
-				flags: {
-					...client.flags,
-					realCwd: client.flags.realCwd.join(),
-					cwd: client.flags.cwd.join(),
-				},
+				flags: client.flags,
 				startTime: Date.now(),
 				endTime: undefined,
 				stdoutAnsi: "",

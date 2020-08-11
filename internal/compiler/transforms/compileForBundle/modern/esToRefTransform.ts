@@ -105,7 +105,8 @@ export default createVisitor({
 					if (child.specifiers !== undefined) {
 						for (const specifier of child.specifiers) {
 							const local = specifier.local.name;
-							if (scope.getBindingAssert(local) instanceof ImportBinding) {
+							const binding = scope.getBinding(local);
+							if (binding === undefined || binding instanceof ImportBinding) {
 								continue;
 							}
 

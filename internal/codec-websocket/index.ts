@@ -97,7 +97,7 @@ export class WebSocketInterface {
 		this.socket.end();
 	}
 
-	private send(buff: string | Buffer) {
+	public send(buff: string | Buffer) {
 		if (typeof buff === "string") {
 			this.sendFrame({
 				opcode: OPCODES.TEXT,
@@ -131,7 +131,9 @@ export class WebSocketInterface {
 				}`,
 			);
 		}
-		this.socket.write(buildFrame(frameOpts, this.type === "client"));
+		this.socket.write(
+			Buffer.from(buildFrame(frameOpts, this.type === "client")),
+		);
 	}
 
 	private completeFrame(frame: Frame): void {
@@ -174,7 +176,7 @@ export class WebSocketInterface {
 			} else {
 				// Trim off any excess payload
 				let excess;
-				if (frame.payload.length > frame.payloadLength) {
+				if (frame.payload.byteLength > frame.payloadLength) {
 					excess = frame.payload.slice(frame.payloadLength);
 					frame.payload = frame.payload.slice(0, frame.payloadLength);
 				}

@@ -15,7 +15,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Consumer} from "@internal/consume";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {RequiredProps} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 
 // Project wrapper that contains some other metadata
@@ -72,38 +72,6 @@ export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
 
 export type ProjectConfigTarget = {
 	constraints: Array<string>;
-};
-
-// This is a project config that contains only things that can be JSON serializable
-// This is used to transport and reserialize projects in workers
-export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<ProjectConfigBase> & {
-	[ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
-		ProjectConfigObjects[ObjectKey]
-	>
-};
-
-// Weird way to get the value type from a map
-// rome-ignore lint/ts/noExplicitAny
-type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T["get"]>>;
-
-// Turn any file paths into strings
-// Turn maps into objects
-// TODO maybe add path patterns
-// rome-ignore lint/ts/noExplicitAny
-type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
-	? string
-	: Type extends Array<AbsoluteFilePath>
-		? Array<string>
-		: Type extends AbsoluteFilePathSet
-			? Array<string>
-			: Type extends Map<string, any>
-				? Dict<MapValue<Type>>
-				: Type extends Dict<any>
-					? ProjectConfigJSONObjectReducer<Type>
-					: Type;
-
-type ProjectConfigJSONObjectReducer<Obj> = {
-	[PropertyKey in keyof Obj]: ProjectConfigJSONPropertyReducer<Obj[PropertyKey]>
 };
 
 // Base of a project config without any objects

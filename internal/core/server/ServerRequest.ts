@@ -10,7 +10,7 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {BundlerConfig, JSONFileReference, LAG_INTERVAL} from "@internal/core";
+import {BundlerConfig, FileReference, LAG_INTERVAL} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -73,6 +73,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AnyFilePath,
 	UnknownFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
@@ -785,7 +786,7 @@ export default class ServerRequest {
 	private async wrapRequestDiagnostic<T>(
 		method: string,
 		path: AbsoluteFilePath,
-		factory: (bridge: WorkerBridge, ref: JSONFileReference) => Promise<T>,
+		factory: (bridge: WorkerBridge, ref: FileReference) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
 		// Wait on any evicting projects in case it will change the FileReference
@@ -799,7 +800,7 @@ export default class ServerRequest {
 		const startMtime = server.memoryFs.maybeGetMtime(path);
 		const start = Date.now();
 		const lock = await server.requestFileLocker.getLock(path);
-		const ref = server.projectManager.getTransportFileReference(path);
+		const ref = server.projectManager.getFileReference(path);
 
 		const interval = setInterval(
 			() => {
@@ -1228,7 +1229,7 @@ export default class ServerRequest {
 		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
 		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let rawArgs = opts.args ?? this.query.args;
+		let rawArgs: Array<string | AnyFilePath> = opts.args ?? this.query.args;
 		if (rawArgs.length === 0) {
 			rawArgs = [cwd];
 			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());

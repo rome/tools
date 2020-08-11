@@ -17,9 +17,9 @@ import {FileReference} from "@internal/core";
 import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
+	AnyFilePath,
 	RelativeFilePath,
 	URLFilePath,
-	UnknownFilePath,
 	createFilePathFromSegments,
 	createRelativeFilePath,
 } from "@internal/path";
@@ -103,7 +103,7 @@ const NODE_MODULES = "node_modules";
 
 export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
 	origin: URLFilePath | AbsoluteFilePath;
-	source: UnknownFilePath;
+	source: AnyFilePath;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
@@ -158,7 +158,7 @@ export type ResolverQueryResponseFetchError = {
 };
 
 type FilenameVariant = {
-	path: UnknownFilePath;
+	path: AnyFilePath;
 	types: Array<ResolverQueryResponseFoundType>;
 };
 
@@ -180,7 +180,7 @@ function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
 	return res.type === "FOUND" || res.source !== undefined;
 }
 
-export function isPathLike(source: UnknownFilePath): boolean {
+export function isPathLike(source: AnyFilePath): boolean {
 	return source.isAbsolute() || source.isExplicitRelative();
 }
 
@@ -238,7 +238,7 @@ function getExportsAlias(
 		platform,
 	}: {
 		manifest: Manifest;
-		relative: UnknownFilePath;
+		relative: RelativeFilePath;
 		platform?: Platform;
 	},
 ): undefined | ExportAlias {
@@ -481,7 +481,7 @@ export default class Resolver {
 
 	private *getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: UnknownFilePath,
+		path: AnyFilePath,
 	): Iterable<FilenameVariant> {
 		const seen: Set<string> = new Set();
 		for (const variant of this._getFilenameVariants(query, path, [])) {
@@ -497,7 +497,7 @@ export default class Resolver {
 
 	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
-		path: UnknownFilePath,
+		path: AnyFilePath,
 		callees: Array<ResolverQueryResponseFoundType>,
 	): Iterable<FilenameVariant> {
 		const {platform} = query;
@@ -731,7 +731,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createFilePathFromSegments(moduleNameParts, "relative"),
+					relative: createFilePathFromSegments(moduleNameParts, "relative").assertRelative(),
 					platform: query.platform,
 				});
 
@@ -797,7 +797,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	private splitModuleName(path: UnknownFilePath): [string, Array<string>] {
+	private splitModuleName(path: AnyFilePath): [string, Array<string>] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();

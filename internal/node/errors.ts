@@ -192,4 +192,5 @@ export function convertPossibleNodeErrorToDiagnostic(
 }
 
 // https://nodejs.org/api/errors.html#errors_class_systemerror
-export type NodeSystemError = Error & StructuredNodeSystemErrorProperties;
+export type NodeSystemError = Error &
+	Partial<StructuredNodeSystemErrorProperties>;
