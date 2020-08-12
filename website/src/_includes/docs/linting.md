@@ -186,6 +186,7 @@ Get the most out of Rome by integrating it with your editor. You will get diagno
 Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io/language-server-protocol/) supported by [various editors](https://microsoft.github.io/language-server-protocol/implementors/tools/). We have official extensions available for:
 
 - [VSCode](https://marketplace.visualstudio.com/items?itemName=rome.rome)
+- [coc-rome](https://github.com/fannheyward/coc-rome) for coc.nvim
 
 Once an editor extension has been installed, the version of Rome in your project will be automatically found and used. As we improve Rome and add new functionality any changes will automatically work with your editor!
 
