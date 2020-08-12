@@ -24,9 +24,7 @@ export type Class<T, Args extends Array<unknown> = Array<any>> = {
 	): T;
 };
 
-export type Dict<T> = {
-	[key: string]: T;
-};
+export type Dict<T> = Record<string, T>;
 
 export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 	[Key in Keys]-?: NonNullable<Obj[Key]>
