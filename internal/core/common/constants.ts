@@ -14,7 +14,11 @@ import os = require("os");
 export const CHILD_ARGS = ["--max-old-space-size=8192", "--trace-warnings"];
 
 // @ts-ignore: this will be wrong if we weren't the entry node script
-export const BIN = createAbsoluteFilePath(process.mainModule.filename);
+export const BIN = createAbsoluteFilePath(
+	process.mainModule === undefined
+		? module.filename
+		: process.mainModule.filename,
+);
 export const MAP = BIN.addExtension(".map");
 
 const MEGABYTE = 10_000;

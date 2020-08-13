@@ -93,7 +93,7 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 			? this.getExtensionlessBasename()
 			: this.getBasename();
 		const newExt = clearExt ? ext : this.memo.ext + ext;
-		const segments = this.getParentSegments(false).concat(newBasename + ext);
+		const segments = this.getParentSegments().concat(newBasename + ext);
 
 		return this._fork(
 			{
@@ -109,7 +109,7 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 	}
 
 	public changeBasename(newBasename: string): Super {
-		const segments = this.getParentSegments(false).concat(newBasename);
+		const segments = this.getParentSegments().concat(newBasename);
 		return this._fork(
 			{
 				...this.parsed,
@@ -165,7 +165,7 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 		return parent;
 	}
 
-	public getParentSegments(explicit: boolean = true): PathSegments {
+	public getParentSegments(): PathSegments {
 		// Should we throw an error?
 		if (this.isRoot()) {
 			return this.segments;

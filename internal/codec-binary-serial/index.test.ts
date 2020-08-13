@@ -1,6 +1,7 @@
 import RSERBufferWriter from "./RSERBufferWriter";
 import RSERBufferAssembler from "./RSERBufferAssembler";
 import RSERBufferParser from "./RSERBufferParser";
+import {RSERValue} from "./types";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
@@ -11,11 +12,11 @@ import {test} from "rome";
 test(
 	"value types",
 	(t) => {
-		const cases = [
+		const cases: Array<RSERValue> = [
 			"foobar",
 			[1, 2, 3, "a", "b", "c"],
 			new Set([1, 2, 3, "a", "b", "c"]),
-			new Map([[1, 2], ["a", "b"]]),
+			new Map([[1, 2], [3, 4]]),
 			Symbol.for("test"),
 			new Date("2020-08-13T08:00:27.235Z"),
 			true,

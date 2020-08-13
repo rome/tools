@@ -59,6 +59,7 @@ export default createServerCommand({
 		if (commandFlags.compact) {
 			res = {
 				...res,
+				topLevelLocalBindings: {},
 				importFirstUsage: res.importFirstUsage.map((imp) => {
 					return removeLoc(imp);
 				}),

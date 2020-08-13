@@ -40,7 +40,7 @@ export function filenameToId(
 		// If the filename is `index` then use the parent directory name
 		basename = path.getParent().getExtensionlessBasename();
 	}
-	
+
 	return normalizeCamelCase(
 		toCamelCase(
 			basename,

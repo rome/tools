@@ -40,9 +40,10 @@ export function forkThread(
 	opts: workerThreads.WorkerOptions = {},
 ): workerThreads.Worker {
 	return new workerThreads.Worker(
-		BIN.join(),
+		`require("${BIN.join()}");`,
 		{
 			...opts,
+			eval: true,
 			env: createEnv(processType),
 		},
 	);
