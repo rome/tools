@@ -227,7 +227,7 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 
 		if (this.segments.length === 2) {
 			// Explicit directory reference
-			return this.segments[1] === "";
+			return this.parsed.absoluteType == "windows-drive";
 		}
 
 		if (this.segments.length === 3) {
