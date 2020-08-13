@@ -107467,7 +107467,9 @@ const ___R$project$rome$$internal$core$common$constants_ts = {
 	];
 
 	const ___R$project$rome$$internal$core$common$constants_ts$BIN = ___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
-		process.mainModule.filename,
+		process.mainModule === undefined
+			? module.filename
+			: process.mainModule.filename
 	);
 	const ___R$project$rome$$internal$core$common$constants_ts$MAP = ___R$project$rome$$internal$core$common$constants_ts$BIN.addExtension(
 		".map",
@@ -122486,7 +122488,7 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 		opts = {},
 	) {
 		return new ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads.Worker(
-			___R$project$rome$$internal$core$common$constants_ts$BIN.join(),
+			`require("${___R$project$rome$$internal$core$common$constants_ts$BIN.join()}");`,
 			Object.assign(
 				{},
 				opts,
@@ -122494,6 +122496,7 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 					env: ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$createEnv(
 						processType,
 					),
+					eval: true,
 				},
 			),
 		);

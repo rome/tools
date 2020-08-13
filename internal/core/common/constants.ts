@@ -13,10 +13,11 @@ import os = require("os");
 // Node flags to pass to all forked processes
 export const CHILD_ARGS = ["--max-old-space-size=8192", "--trace-warnings"];
 
-// @ts-ignore: this will be wrong if we weren't the entry node script
 export const BIN = createAbsoluteFilePath(
+	// @ts-ignore
 	process.mainModule === undefined
 		? module.filename
+			// @ts-ignore
 		: process.mainModule.filename,
 );
 export const MAP = BIN.addExtension(".map");
