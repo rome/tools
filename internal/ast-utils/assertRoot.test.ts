@@ -5,7 +5,6 @@ import {parseJS} from "@internal/js-parser";
 import {parseCSS} from "@internal/css-parser";
 import {dedent} from "@internal/string-utils";
 import {parseCommit} from "@internal/commit-parser";
-import {AnyRoot} from "@internal/ast";
 import {parseMarkdown} from "@internal/markdown-parser";
 
 const jsNode = parseJS({
@@ -27,7 +26,7 @@ const commitNode = parseCommit({
 	input: "fix: changed foo to bar",
 });
 
-const mdRoot = parseMarkdown({
+const mdNode = parseMarkdown({
 	path: "unknown",
 	input: "**foo**_bar_",
 });
@@ -37,36 +36,34 @@ const htmlNode = parseHTML({
 	input: "<div></div>",
 });
 
-const nodes = [jsNode, cssNode, commitNode, mdRoot, htmlNode];
-
-test(
-	"nodes",
-	async (t) => {
-		nodes.map((node) => {
-			t.snapshot(node);
-		});
-	},
-);
-
 test(
 	"returns the same if it is a root node",
 	async (t) => {
-		nodes.map((node) => {
-			t.is(assertRoot(node), node);
-		});
+		t.is(assertRoot(jsNode), jsNode);
+		t.is(assertRoot(cssNode), cssNode);
+		t.is(assertRoot(commitNode), commitNode);
+		t.is(assertRoot(mdNode), mdNode);
+		t.is(assertRoot(htmlNode), htmlNode);
 	},
 );
 
 test(
 	"throws if not a root node",
 	async (t) => {
-		nodes.map((node: AnyRoot) => {
-			// CommitRoot doesn't have a body nor other types
-			if (node.type !== "CommitRoot") {
-				t.throws(() => {
-					assertRoot(node.body[0]);
-				});
-			}
+		t.throws(() => {
+			assertRoot(jsNode.body[0]);
+		});
+		t.throws(() => {
+			assertRoot(cssNode.body[0]);
+		});
+		t.throws(() => {
+			assertRoot(mdNode.body[0]);
+		});
+		t.throws(() => {
+			assertRoot(mdNode.body[0]);
+		});
+		t.throws(() => {
+			assertRoot(htmlNode.body[0]);
 		});
 	},
 );
