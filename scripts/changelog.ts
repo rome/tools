@@ -1,6 +1,6 @@
 import {markup} from "@internal/markup";
 import {readFileTextMeta} from "@internal/fs";
-import {AbsoluteFilePath, createUIDPath} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 import {
 	GIT_PLACEHOLDERS,
 	PUBLIC_PACKAGES,

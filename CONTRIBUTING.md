@@ -123,10 +123,10 @@ The following commit prefixes are supported:
  Below are examples of well-formatted commits:
 
 ```
-feat(compiler): implemented parsing for new type of files
-fix: fixed nasty unhandled error 
-docs: fixed link to website page
-test(lint): added more cases to handle invalid rules
+feat(compiler): implement parsing for new type of files
+fix: fix nasty unhandled error 
+docs: fix link to website page
+test(lint): add more cases to handle invalid rules
 ``` 
 
 ### Commit verification

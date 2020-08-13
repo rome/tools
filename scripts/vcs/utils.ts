@@ -1,5 +1,6 @@
 import {parseCommit} from "@internal/commit-parser";
 import child = require("child_process");
+import {createUIDPath} from "@internal/path";
 
 const PROPERTY_DELIM = "<--ROME-PROPERTY-->";
 const LINE_DELIM = "<--ROME-LINE-->";
@@ -51,7 +52,7 @@ export function parseCommitLog(
 		],
 	).stdout.toString();
 
-	const commits = log.split(LINE_DELIM).reduce(
+	return log.split(LINE_DELIM).reduce(
 		(totalCommits, rawCommit) => {
 			const values = rawCommit.trim().split(PROPERTY_DELIM);
 			if (values.length <= 1) {
@@ -69,7 +70,7 @@ export function parseCommitLog(
 						if (config[key] === "%B") {
 							const ast = parseCommit({
 								input: values[index],
-								path: "commit",
+								path: createUIDPath(`commit/${index}`),
 							});
 							newCommit.meta = {
 								breaking: ast.breaking,
@@ -89,6 +90,4 @@ export function parseCommitLog(
 		},
 		([] as Array<Commit>),
 	);
-
-	return commits;
 }
