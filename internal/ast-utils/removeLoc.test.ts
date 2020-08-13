@@ -3,8 +3,9 @@ import {parseJS} from "@internal/js-parser";
 import {parseCSS} from "@internal/css-parser";
 import {dedent} from "@internal/string-utils";
 import {removeLoc} from "@internal/ast-utils/removeLoc";
+import {AnyNode} from "@internal/ast";
 
-// Needed to access non existing property loc
+// Needed to access non existing property body
 // rome-ignore lint/ts/noExplicitAny
 const jsNode: any = removeLoc(
 	parseJS({
@@ -18,7 +19,6 @@ const cssNode: any = removeLoc(
 	parseCSS({
 		path: "unknown",
 		input: dedent`
-
 		div {
 			background: red;
 		}
@@ -29,18 +29,16 @@ const cssNode: any = removeLoc(
 test(
 	"nodes and their children should no longer have locations",
 	async (t) => {
-		t.true(jsNode.loc == null);
+		t.is(jsNode.loc, undefined);
 
-		// rome-ignore lint/ts/noExplicitAny
-		jsNode.body.map((child: any) => {
-			t.true(child.loc == null);
+		jsNode.body.map((child: AnyNode) => {
+			t.is(child.loc, undefined);
 		});
 
-		t.true(cssNode.loc == null);
+		t.is(cssNode.loc, undefined);
 
-		// rome-ignore lint/ts/noExplicitAny
-		cssNode.body.map((child: any) => {
-			t.true(child.loc == null);
+		cssNode.body.map((child: AnyNode) => {
+			t.is(child.loc, undefined);
 		});
 	},
 );
