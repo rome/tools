@@ -1,33 +1,29 @@
 ## Getting Started
 
-### Installation
+### Installation and quickstart
 
-Rome is available for installation via [Yarn](https://yarnpkg.com/):
+#### [Yarn](https://yarnpkg.com/):
 
 ```bash
 yarn add rome
+yarn rome init
 ```
 
-or [npm](https://www.npmjs.com/):
+#### [npm/npx](https://www.npmjs.com/):
 
 ```bash
-npm install rome
+npx rome init
 ```
 
-### Creating a Project
+After running this command, Rome:
 
-In order for Rome to find your files it needs a project configuration. To automatically create a project, you can use the [`rome init`](#rome-init) command:
-
-```bash
-rome init
-```
-
-This will create a `.config` directory and place a `rome.rjson` inside of it that contains your project config.
+- Iexecute a self-installation by adding itself to the `package.json` as dependency of your project (if there's a `package.json` already)
+- Generates a project configuration which creates `.config` folder, with `rome.rjson` which serves as a project config.
 
 If you're putting Rome into an already established project and you'd like to automatically apply formatting and fixes, you can use:
 
 ```bash
-rome init --apply
+npx rome init --apply
 ```
 
 Refer to [Project Configuration](#project-configuration) for configuration options.
@@ -39,7 +35,7 @@ Refer to [Project Configuration](#project-configuration) for configuration optio
 You can now run Rome commands! Linting can be accessed via the command:
 
 ```bash
-rome check
+npx rome check
 ```
 
 Continue to the next section to learn more about linting in Rome!
