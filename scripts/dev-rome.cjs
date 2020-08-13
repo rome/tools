@@ -182,7 +182,7 @@ async function buildTrunk() {
 					resolve();
 				} else {
 					console.error(`Trunk build failure. Exit code ${code}`);
-					process.exit(code);
+					process.exit(1);
 				}
 			},
 		);
