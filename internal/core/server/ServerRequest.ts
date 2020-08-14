@@ -920,7 +920,7 @@ export default class ServerRequest {
 		this.checkCancelled();
 
 		await this.wrapRequestDiagnostic(
-			"updateBuffer",
+			"clearBuffer",
 			path,
 			async (bridge, ref) => {
 				await bridge.clearBuffer.call({ref});
