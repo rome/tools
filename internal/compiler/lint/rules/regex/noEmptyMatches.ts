@@ -36,11 +36,11 @@ function lintEmptyMatches(expr: AnyJSRegExpExpression): boolean {
 }
 
 export default createVisitor({
-	name: "js/noEmptyMatches",
+	name: "regex/noEmptyMatches",
 	enter(path) {
 		const {context, node} = path;
 		if (node.type === "JSRegExpLiteral" && lintEmptyMatches(node.expression)) {
-			context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_EMPTY_MATCHES);
+			context.addNodeDiagnostic(node, descriptions.LINT.REGEX_NO_EMPTY_MATCHES);
 		}
 		return signals.retain;
 	},

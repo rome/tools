@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:224d5ad9b5562b098b85c228679fd99cf4d65b68,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:91ad1102a06130294ccebd4b443466e7ece68e55,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -36,17 +36,11 @@ import noDupeArgs from "./js/noDupeArgs.test.rjson";
 // @ts-ignore
 import noDuplicateCase from "./js/noDuplicateCase.test.rjson";
 // @ts-ignore
-import noDuplicateGroupNamesInRegularExpressions from "./js/noDuplicateGroupNamesInRegularExpressions.test.rjson";
-// @ts-ignore
 import noDuplicateImportSource from "./js/noDuplicateImportSource.test.rjson";
 // @ts-ignore
 import noDuplicateKeys from "./js/noDuplicateKeys.test.rjson";
 // @ts-ignore
 import noEmptyBlocks from "./js/noEmptyBlocks.test.rjson";
-// @ts-ignore
-import noEmptyCharacterClass from "./js/noEmptyCharacterClass.test.rjson";
-// @ts-ignore
-import noEmptyMatches from "./js/noEmptyMatches.test.rjson";
 // @ts-ignore
 import noExtraBooleanCast from "./js/noExtraBooleanCast.test.rjson";
 // @ts-ignore
@@ -58,13 +52,9 @@ import noImportAssign from "./js/noImportAssign.test.rjson";
 // @ts-ignore
 import noLabelVar from "./js/noLabelVar.test.rjson";
 // @ts-ignore
-import noMultipleSpacesInRegularExpressionLiterals from "./js/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
-// @ts-ignore
 import noNegationElse from "./js/noNegationElse.test.rjson";
 // @ts-ignore
 import noNestedTernary from "./js/noNestedTernary.test.rjson";
-// @ts-ignore
-import noPosixInRegularExpression from "./js/noPosixInRegularExpression.test.rjson";
 // @ts-ignore
 import noRestrictedGlobals from "./js/noRestrictedGlobals.test.rjson";
 // @ts-ignore
@@ -219,6 +209,16 @@ import useRenderReturn from "./react/useRenderReturn.test.rjson";
 import useSortComp from "./react/useSortComp.test.rjson";
 // @ts-ignore
 import useStylePropObject from "./react/useStylePropObject.test.rjson";
+// @ts-ignore
+import noDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions.test.rjson";
+// @ts-ignore
+import noEmptyCharacterClass from "./regex/noEmptyCharacterClass.test.rjson";
+// @ts-ignore
+import noEmptyMatches from "./regex/noEmptyMatches.test.rjson";
+// @ts-ignore
+import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
+// @ts-ignore
+import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
 
 export const tests: Tests = {
 	"html/useClosingNonVoid": useClosingNonVoid,
@@ -234,21 +234,16 @@ export const tests: Tests = {
 	"js/noDoubleEquals": noDoubleEquals,
 	"js/noDupeArgs": noDupeArgs,
 	"js/noDuplicateCase": noDuplicateCase,
-	"js/noDuplicateGroupNamesInRegularExpressions": noDuplicateGroupNamesInRegularExpressions,
 	"js/noDuplicateImportSource": noDuplicateImportSource,
 	"js/noDuplicateKeys": noDuplicateKeys,
 	"js/noEmptyBlocks": noEmptyBlocks,
-	"js/noEmptyCharacterClass": noEmptyCharacterClass,
-	"js/noEmptyMatches": noEmptyMatches,
 	"js/noExtraBooleanCast": noExtraBooleanCast,
 	"js/noFunctionAssign": noFunctionAssign,
 	"js/noGetterReturn": noGetterReturn,
 	"js/noImportAssign": noImportAssign,
 	"js/noLabelVar": noLabelVar,
-	"js/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
 	"js/noNegationElse": noNegationElse,
 	"js/noNestedTernary": noNestedTernary,
-	"js/noPosixInRegularExpression": noPosixInRegularExpression,
 	"js/noRestrictedGlobals": noRestrictedGlobals,
 	"js/noSetterReturn": noSetterReturn,
 	"js/noShadowRestrictedNames": noShadowRestrictedNames,
@@ -326,5 +321,10 @@ export const tests: Tests = {
 	"react/useRenderReturn": useRenderReturn,
 	"react/useSortComp": useSortComp,
 	"react/useStylePropObject": useStylePropObject,
+	"regex/noDuplicateGroupNamesInRegularExpressions": noDuplicateGroupNamesInRegularExpressions,
+	"regex/noEmptyCharacterClass": noEmptyCharacterClass,
+	"regex/noEmptyMatches": noEmptyMatches,
+	"regex/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
+	"regex/noPosixInRegularExpression": noPosixInRegularExpression,
 };
 /* GENERATED:END(id:main) */

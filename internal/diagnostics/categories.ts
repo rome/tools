@@ -106,7 +106,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:a0003bac381576d182711c2f28781f7318461ff8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:a9dbbe8880fdb546a0b5377abfec1e1512553002,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 type LintDiagnosticCategory =
 	| "lint/html/useClosingNonVoid"
 	| "lint/js/noArguments"
@@ -121,22 +121,16 @@ type LintDiagnosticCategory =
 	| "lint/js/noDoubleEquals"
 	| "lint/js/noDupeArgs"
 	| "lint/js/noDuplicateCase"
-	| "lint/js/noDuplicateGroupNamesInRegularExpressions"
 	| "lint/js/noDuplicateImportSource"
 	| "lint/js/noDuplicateKeys"
 	| "lint/js/noEmptyBlocks"
-	| "lint/js/noEmptyCharacterClass"
-	| "lint/js/noEmptyMatches"
 	| "lint/js/noExtraBooleanCast"
 	| "lint/js/noFunctionAssign"
 	| "lint/js/noGetterReturn"
 	| "lint/js/noImportAssign"
 	| "lint/js/noLabelVar"
-	| "lint/js/noMultipleSpacesInRegularExpressionLiterals"
 	| "lint/js/noNegationElse"
 	| "lint/js/noNestedTernary"
-	| "lint/js/noPosixInRegularExpression"
-	| "lint/js/noReferenceToNonExistingGroup"
 	| "lint/js/noRestrictedGlobals"
 	| "lint/js/noSetterReturn"
 	| "lint/js/noShadowRestrictedNames"
@@ -215,6 +209,12 @@ type LintDiagnosticCategory =
 	| "lint/react/useRenderReturn"
 	| "lint/react/useSortComp"
 	| "lint/react/useStylePropObject"
+	| "lint/regex/noDuplicateGroupNamesInRegularExpressions"
+	| "lint/regex/noEmptyCharacterClass"
+	| "lint/regex/noEmptyMatches"
+	| "lint/regex/noMultipleSpacesInRegularExpressionLiterals"
+	| "lint/regex/noPosixInRegularExpression"
+	| "lint/regex/noReferenceToNonExistingGroup"
 	| "lint/ts/noExplicitAny"
 	| "lint/ts/useInterfaces";
 /* GENERATED:END(id:main) */

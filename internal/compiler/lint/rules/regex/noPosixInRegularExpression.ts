@@ -9,7 +9,7 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
-	name: "js/noPosixInRegularExpression",
+	name: "regex/noPosixInRegularExpression",
 	enter(path) {
 		const {context, node} = path;
 
@@ -29,7 +29,7 @@ export default createVisitor({
 				) {
 					context.addNodeDiagnostic(
 						currNode,
-						descriptions.LINT.JS_NO_POSIX_IN_REGULAR_EXPRESSION,
+						descriptions.LINT.REGEX_NO_POSIX_IN_REGULAR_EXPRESSION,
 					);
 				}
 			}
