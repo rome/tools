@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:4a7fd8905fc81b6b2b6ff90529b370c6f264dea4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:7eba8757b5c471ad06578872a5618edd56a74472,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -12,22 +12,16 @@ import noDeleteVars from "./js/noDeleteVars";
 import noDoubleEquals from "./js/noDoubleEquals";
 import noDupeArgs from "./js/noDupeArgs";
 import noDuplicateCase from "./js/noDuplicateCase";
-import noDuplicateGroupNamesInRegularExpressions from "./js/noDuplicateGroupNamesInRegularExpressions";
 import noDuplicateImportSource from "./js/noDuplicateImportSource";
 import noDuplicateKeys from "./js/noDuplicateKeys";
 import noEmptyBlocks from "./js/noEmptyBlocks";
-import noEmptyCharacterClass from "./js/noEmptyCharacterClass";
-import noEmptyMatches from "./js/noEmptyMatches";
 import noExtraBooleanCast from "./js/noExtraBooleanCast";
 import noFunctionAssign from "./js/noFunctionAssign";
 import noGetterReturn from "./js/noGetterReturn";
 import noImportAssign from "./js/noImportAssign";
 import noLabelVar from "./js/noLabelVar";
-import noMultipleSpacesInRegularExpressionLiterals from "./js/noMultipleSpacesInRegularExpressionLiterals";
 import noNegationElse from "./js/noNegationElse";
 import noNestedTernary from "./js/noNestedTernary";
-import noPosixInRegularExpression from "./js/noPosixInRegularExpression";
-import noReferenceToNonExistingGroup from "./js/noReferenceToNonExistingGroup";
 import noRestrictedGlobals from "./js/noRestrictedGlobals";
 import noSetterReturn from "./js/noSetterReturn";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
@@ -106,6 +100,12 @@ import useKey from "./react/useKey";
 import useRenderReturn from "./react/useRenderReturn";
 import useSortComp from "./react/useSortComp";
 import useStylePropObject from "./react/useStylePropObject";
+import noDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions";
+import noEmptyCharacterClass from "./regex/noEmptyCharacterClass";
+import noEmptyMatches from "./regex/noEmptyMatches";
+import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals";
+import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
+import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
 import useInterfaces from "./ts/useInterfaces";
 import {AnyVisitors} from "@internal/compiler";
@@ -124,22 +124,16 @@ export const lintTransforms: AnyVisitors = [
 	noDoubleEquals,
 	noDupeArgs,
 	noDuplicateCase,
-	noDuplicateGroupNamesInRegularExpressions,
 	noDuplicateImportSource,
 	noDuplicateKeys,
 	noEmptyBlocks,
-	noEmptyCharacterClass,
-	noEmptyMatches,
 	noExtraBooleanCast,
 	noFunctionAssign,
 	noGetterReturn,
 	noImportAssign,
 	noLabelVar,
-	noMultipleSpacesInRegularExpressionLiterals,
 	noNegationElse,
 	noNestedTernary,
-	noPosixInRegularExpression,
-	noReferenceToNonExistingGroup,
 	noRestrictedGlobals,
 	noSetterReturn,
 	noShadowRestrictedNames,
@@ -218,6 +212,12 @@ export const lintTransforms: AnyVisitors = [
 	useRenderReturn,
 	useSortComp,
 	useStylePropObject,
+	noDuplicateGroupNamesInRegularExpressions,
+	noEmptyCharacterClass,
+	noEmptyMatches,
+	noMultipleSpacesInRegularExpressionLiterals,
+	noPosixInRegularExpression,
+	noReferenceToNonExistingGroup,
 	noExplicitAny,
 	useInterfaces,
 ];

@@ -740,8 +740,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JS_NO_EMPTY_MATCHES: {
-		category: "lint/js/noEmptyMatches",
+	REGEX_NO_EMPTY_MATCHES: {
+		category: "lint/regex/noEmptyMatches",
 		message: markup`This expression can return <emphasis>empty matches</emphasis>, and may match infinitely in some use cases.`,
 		advice: [
 			{
@@ -840,8 +840,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
-		category: "lint/js/noMultipleSpacesInRegularExpressionLiterals",
+	REGEX_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
+		category: "lint/regex/noMultipleSpacesInRegularExpressionLiterals",
 		message: markup`This <emphasis>regular expression</emphasis> contains unclear uses of <emphasis>multiple spaces</emphasis>.`,
 		advice: [
 			{
@@ -897,8 +897,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JS_NO_EMPTY_CHAR_SET: {
-		category: "lint/js/noEmptyCharacterClass",
+	REGEX_NO_EMPTY_CHAR_SET: {
+		category: "lint/regex/noEmptyCharacterClass",
 		message: markup`Do not use <emphasis>empty character classes in regular expressions</emphasis>.`,
 		advice: [
 			{
@@ -912,8 +912,8 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/js/noDuplicateKeys",
 		message: markup`Avoid duplicate component key. Check the <emphasis>${key}</emphasis> key.`,
 	}),
-	JS_NO_POSIX_IN_REGULAR_EXPRESSION: {
-		category: "lint/js/noPosixInRegularExpression",
+	REGEX_NO_POSIX_IN_REGULAR_EXPRESSION: {
+		category: "lint/regex/noPosixInRegularExpression",
 		message: markup`Do not use POSIX character classes and collating sequences.`,
 		advice: [
 			{
@@ -1028,12 +1028,12 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JS_DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
-		category: "lint/js/noDuplicateGroupNamesInRegularExpressions",
+	REGEX_DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
+		category: "lint/regex/noDuplicateGroupNamesInRegularExpressions",
 		message: markup`Avoid duplicate group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
-	JS_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
-		category: "lint/js/noReferenceToNonExistingGroup",
+	REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
+		category: "lint/regex/noReferenceToNonExistingGroup",
 		message: markup`Avoid nonexistent group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
 	JS_USE_DEFAULT_EXPORT_BASENAME: (

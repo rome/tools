@@ -9,7 +9,7 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
-	name: "js/noEmptyCharacterClass",
+	name: "regex/noEmptyCharacterClass",
 	enter(path) {
 		const {context, node} = path;
 
@@ -18,7 +18,7 @@ export default createVisitor({
 			node.body.length === 0 &&
 			!node.invert
 		) {
-			context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_EMPTY_CHAR_SET);
+			context.addNodeDiagnostic(node, descriptions.LINT.REGEX_NO_EMPTY_CHAR_SET);
 			return signals.remove;
 		}
 

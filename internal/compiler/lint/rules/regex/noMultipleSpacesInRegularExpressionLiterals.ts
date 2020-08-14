@@ -67,7 +67,7 @@ function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
 				target: diagnosticTargets,
 				fixed: signals.replace(newRegex),
 			},
-			descriptions.LINT.JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
+			descriptions.LINT.REGEX_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
 				diagnosticTargets.length,
 			),
 		);
@@ -77,7 +77,7 @@ function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
 }
 
 export default createVisitor({
-	name: "js/noMultipleSpacesInRegularExpressionLiterals",
+	name: "regex/noMultipleSpacesInRegularExpressionLiterals",
 	enter(path) {
 		const {node} = path;
 
