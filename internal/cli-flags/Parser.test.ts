@@ -308,6 +308,24 @@ test(
 );
 
 test(
+	"allow special-cased -h shorthand for help",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					noProcessExit: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["-h"],
+			},
+		);
+	},
+);
+
+test(
 	"command required with no command but with --help flag",
 	async (t) => {
 		await testParser(

@@ -37,6 +37,7 @@ export type ConsumeContext = {
 export type ConsumePropertyMetadata = {
 	description?: StaticMarkup;
 	inputName?: string;
+	alternateName?: string;
 	getDiagnosticLocation?: (
 		target: ConsumeSourceLocationRequestTarget,
 	) => DiagnosticLocation;

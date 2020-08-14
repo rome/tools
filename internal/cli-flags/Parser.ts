@@ -217,10 +217,6 @@ export default class Parser<T> {
 				}
 
 				this.flagToArgIndex.set(camelName, this.args.length);
-
-				if (arg[0] === "-" && arg[1] !== "-") {
-					this.shorthandFlags.add(camelName);
-				}
 			} else {
 				// Not a flag and hasn't been consumed already by a previous arg so it must be a file
 				this.args.push(arg);
@@ -375,12 +371,6 @@ export default class Parser<T> {
 			consumer.markUsedProperty(key);
 		}
 
-		for (const shorthandName of this.shorthandFlags) {
-			consumer.get(shorthandName).unexpected(
-				descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
-			);
-		}
-
 		for (const incorrectName of this.incorrectCaseFlags) {
 			consumer.get(incorrectName).unexpected(
 				descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
@@ -530,6 +520,7 @@ export default class Parser<T> {
 			"help",
 			{
 				description: markup`Show this help screen`,
+				alternateName: "h",
 			},
 		).asBoolean(false);
 
@@ -624,6 +615,10 @@ export default class Parser<T> {
 				argCol += ` <${inputName}>`;
 			}
 
+			if (metadata.alternateName) {
+				argCol += `, -${metadata.alternateName}`;
+			}
+
 			// Set arg col length if we'll be longer
 			if (argColumnLength < argCol.length) {
 				argColumnLength = argCol.length;
@@ -654,7 +649,10 @@ export default class Parser<T> {
 
 			optionOutput.push({
 				argName,
-				arg: concatMarkup(highlightShell({input: argCol}), markup` `),
+				arg: concatMarkup(
+					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
+					markup` `,
+				),
 				description: descCol,
 			});
 		}
