@@ -15,6 +15,7 @@ import {markup} from "@internal/markup";
 
 type Flags = {
 	fix: boolean;
+	changed?: string;
 };
 
 export default createServerCommand({
@@ -25,6 +26,12 @@ export default createServerCommand({
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
+			changed: consumer.get(
+				"changed",
+				{
+					description: markup`only check files that have changed from the specified branch/commit (defaults to main)`,
+				},
+			).asStringOrVoid(),
 			fix: consumer.get(
 				"fix",
 				{
@@ -33,7 +40,7 @@ export default createServerCommand({
 			).asBoolean(false),
 		};
 	},
-	async callback(req: ServerRequest, flags: Flags): Promise<void> {
+	async callback(req: ServerRequest, { fix, changed }: Flags): Promise<void> {
 		req.updateRequestFlags({
 			truncateDiagnostics: false,
 			maxDiagnostics: Infinity,
@@ -50,8 +57,8 @@ export default createServerCommand({
 							{
 								formatOnly: false,
 								decisions: [],
-								apply: flags.fix,
-								changed: undefined,
+								apply: fix,
+								changed,
 								suppressionExplanation: undefined,
 							},
 						);
@@ -66,8 +73,8 @@ export default createServerCommand({
 								filter: undefined,
 								focusAllowed: false,
 								coverage: false,
-								freezeSnapshots: !flags.fix,
-								updateSnapshots: flags.fix,
+								freezeSnapshots: !fix,
+								updateSnapshots: fix,
 								showAllCoverage: false,
 								runInSync: false,
 								sourceMaps: true,
