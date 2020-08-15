@@ -49,7 +49,7 @@ export type AnyFilePath =
 
 export type PathSegments = Array<string>;
 
-export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
+export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 	constructor(parsed: ParsedPath, memo: FilePathMemo<Super>) {
 		this.segments = parsed.segments;
 		this.parsed = parsed;
@@ -507,7 +507,7 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 	}
 }
 
-export class UnknownPath extends BaseFilePath<UnknownPath> {
+export class UnknownPath extends BasePath<UnknownPath> {
 	protected _fork(
 		parsed: ParsedPath,
 		opts: FilePathMemo<UnknownPath>,
@@ -520,7 +520,7 @@ export class UnknownPath extends BaseFilePath<UnknownPath> {
 	}
 }
 
-export class RelativeFilePath extends BaseFilePath<RelativeFilePath> {
+export class RelativeFilePath extends BasePath<RelativeFilePath> {
 	// TypeScript is structurally typed whereas here we would prefer nominal typing
 	// We use this as a hack.
 	protected type: "relative" = "relative";
@@ -541,7 +541,7 @@ export class RelativeFilePath extends BaseFilePath<RelativeFilePath> {
 	}
 }
 
-export class AbsoluteFilePath extends BaseFilePath<AbsoluteFilePath> {
+export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 	protected type: "absolute" = "absolute";
 
 	private chain: undefined | Array<AbsoluteFilePath>;
@@ -644,7 +644,7 @@ export class AbsoluteFilePath extends BaseFilePath<AbsoluteFilePath> {
 	}
 }
 
-export class URLPath extends BaseFilePath<URLPath> {
+export class URLPath extends BasePath<URLPath> {
 	protected type: "url" = "url";
 
 	protected _assert(): URLPath {
@@ -903,7 +903,7 @@ export function createUnknownPath(
 	hint: PathTypeHint = "auto",
 ): UnknownPath {
 	// Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
-	if (filename instanceof BaseFilePath) {
+	if (filename instanceof BasePath) {
 		return filename.toUnknown();
 	}
 
