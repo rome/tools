@@ -17,7 +17,7 @@ This is the beginning of an entire suite of tools. Rome is not only linter, but 
 
 Rome is a [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tool containing functionality that has traditionally been separate tools in the frontend ecosystem. We call this a toolchain. It is **not** a collection of existing tools, but completely custom, built [largely](/credits) from scratch, contained entirely in a single package and codebase.
 
-Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [Webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
+Rome is designed to replace [Babel](https://babeljs.io/), [ESLint](https://eslint.org/), [webpack](https://webpack.js.org/), [Prettier](https://prettier.io/), [Jest](https://jestjs.io/), and others.
 
 We have significant implementations already for most components, including compiling, bundling, and testing, all using the same core abstractions and internal libraries. Rome is even [self-hosted](https://en.wikipedia.org/wiki/Self-hosting_(compilers)) and we use them to [build and develop Rome itself](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md)! Once usage as a linter has stabilized, we will move onto the unreleased features to prepare and generalize them for public usage.
 
@@ -63,7 +63,7 @@ Even though I wasn't involved in Babel, I still maintained a presence in the dev
 
 The original idea behind Babel had always stuck. What sort of capabilities would be possible if a tool did more than one thing? This sort of philosophy has always seemed alien in the JavaScript ecosystem where micropackages and arbitrary separation of concerns are the norms. These tools being independent has never provided the sort of user autonomy and efficiency that most skeptics of [monolithic](https://en.wikipedia.org/wiki/Monolithic_application) tools proclaim.
 
-Language tooling maintainers spend so much time working on the same things. Processing source code, whether it's in a transpiler like Babel, linting it in ESLint, or bundling it in Webpack, is fundamentally the same problem with overlapping responsibilities and technical implementation.
+Language tooling maintainers spend so much time working on the same things. Processing source code, whether it's in a transpiler like Babel, linting it in ESLint, or bundling it in webpack, is fundamentally the same problem with overlapping responsibilities and technical implementation.
 
 A linter in the JavaScript ecosystem is exactly the same as a compiler. They both consume code, then produce compiled code and errors. What the compiled code is varies. In the case of a linter, the compiled code is formatted source code with automatic fixes applied. The more powerful your compilation infrastructure, the more theoretically powerful your linter could be. These commonalities extend to pretty much anything that involves language processing. We can build more powerful tools using a shared base that is easily adaptable.
 
