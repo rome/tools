@@ -146,7 +146,10 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 				const pathSegments = (this.path && this.path.getSegments()) || [];
 				const lastNodeModulesIndex = pathSegments.lastIndexOf("node_modules");
 				if (lastNodeModulesIndex >= 0) {
-					const dependencyName = pathSegments.slice(lastNodeModulesIndex + 1, -1).join("/");
+					const dependencyName = pathSegments.slice(
+						lastNodeModulesIndex + 1,
+						-1,
+					).join("/");
 					throw this.unexpected({
 						description: descriptions.SPDX.UNKNOWN_DEPENDENCY_LICENSE(
 							this.input,
