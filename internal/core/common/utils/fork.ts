@@ -39,7 +39,6 @@ export function forkThread(
 	processType: string,
 	opts: workerThreads.WorkerOptions = {},
 ): workerThreads.Worker {
-	console.log(JSON.stringify(getBinPath().join()));
 	return new workerThreads.Worker(
 		`require(${JSON.stringify(getBinPath().join())});`,
 		{

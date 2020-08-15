@@ -122915,9 +122915,11 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 		opts = {},
 	) {
 		return new ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads.Worker(
-			'require("' +
-			___R$project$rome$$internal$core$common$constants_ts$getBinPath().join() +
-			'");',
+			"require(" +
+			JSON.stringify(
+				___R$project$rome$$internal$core$common$constants_ts$getBinPath().join(),
+			) +
+			");",
 			Object.assign(
 				{},
 				opts,
