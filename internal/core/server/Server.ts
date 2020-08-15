@@ -52,11 +52,7 @@ import {
 
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 
-import {
-	AbsoluteFilePath,
-	createAbsoluteFilePath,
-	createUnknownFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
 import {Dict, ErrorCallback, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -494,7 +490,7 @@ export default class Server {
 
 		// We should remove everything that has an external dependency like a socket or process
 		await this.endEvent.callOptional();
-		this.workerManager.end();
+		await this.workerManager.end();
 
 		if (this.options.dedicated) {
 			process.exit();
@@ -616,19 +612,12 @@ export default class Server {
 
 	private async createClient(bridge: ServerBridge): Promise<ServerClient> {
 		const {
-			flags: rawFlags,
+			flags,
 			streamState,
 			outputFormat,
 			outputSupport,
 			version,
 		} = await bridge.getClientInfo.call();
-
-		// Turn the cwd back into a AbsoluteFilePath
-		const flags: ClientFlags = {
-			...rawFlags,
-			realCwd: createAbsoluteFilePath(rawFlags.realCwd),
-			cwd: createAbsoluteFilePath(rawFlags.cwd),
-		};
 
 		// Initialize the reporter
 		const reporter = new Reporter({

@@ -17,25 +17,22 @@ Array [
 			filename: undefined
 			forceDiagnosticTarget: undefined
 			forkCache: Map [
-				Array [
-					"target"
-					___R$project$rome$$internal$consume$Consumer_ts$default {
-						value: "C:\\Users\\sebmck\\file.ts"
-						declared: false
-						filename: undefined
-						forceDiagnosticTarget: undefined
-						forkCache: Map []
-						handleUnexpected: undefined
-						hasHandledUnexpected: false
-						onDefinition: undefined
-						path: undefined
-						usedNames: Set ["target"]
-						context: Object {category: "parse/stringMarkup"}
-						keyPath: Array ["target"]
-						parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
-						propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
-					}
-				]
+				target => ___R$project$rome$$internal$consume$Consumer_ts$default {
+					value: "C:\\Users\\sebmck\\file.ts"
+					declared: false
+					filename: undefined
+					forceDiagnosticTarget: undefined
+					forkCache: Map []
+					handleUnexpected: undefined
+					hasHandledUnexpected: false
+					onDefinition: undefined
+					path: undefined
+					usedNames: Set ["target"]
+					context: Object {category: "parse/stringMarkup"}
+					keyPath: Array ["target"]
+					parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
+					propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
+				}
 			]
 			handleUnexpected: undefined
 			hasHandledUnexpected: false

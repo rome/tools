@@ -7,7 +7,7 @@
 
 import {ProjectDefinition} from "@internal/project";
 import {Stats} from "./fs/MemoryFileSystem";
-import fork from "../common/utils/fork";
+import {forkThread} from "../common/utils/fork";
 import {
 	LAG_INTERVAL,
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
@@ -17,21 +17,21 @@ import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
 import {Locker} from "../common/utils/lockers";
 import {
 	Event,
-	createBridgeFromChildProcess,
 	createBridgeFromLocal,
+	createBridgeFromWorkerThread,
 } from "@internal/events";
-import child = require("child_process");
 import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import workerThreads = require("worker_threads");
 
 export type WorkerContainer = {
 	id: number;
 	fileCount: number;
 	byteCount: number;
 	bridge: WorkerBridge;
-	process: undefined | child.ChildProcess;
+	thread: undefined | workerThreads.Worker;
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
 	ready: boolean;
 	// Whether we should assign files to this worker
@@ -95,17 +95,22 @@ export default class WorkerManager {
 
 	// Get all the workers that live in external processes
 	public getExternalWorkers(): Array<WorkerContainer> {
-		return this.getWorkers().filter((worker) => worker.process !== undefined);
+		return this.getWorkers().filter((worker) => worker.thread !== undefined);
 	}
 
-	public end() {
+	public async end() {
 		// Shutdown all workers, no need to clean up any internal data structures since they will never be used
-		for (const {process, bridge} of this.workers.values()) {
-			if (process !== undefined) {
-				bridge.end();
-				process.kill();
-			}
-		}
+		await Promise.all(
+			Array.from(
+				this.workers.values(),
+				async ({thread, bridge}) => {
+					if (thread !== undefined) {
+						bridge.end();
+						await thread.terminate();
+					}
+				},
+			),
+		);
 	}
 
 	private getLowestByteCountWorker(): WorkerContainer {
@@ -132,7 +137,16 @@ export default class WorkerManager {
 
 	public async init(): Promise<void> {
 		// Create the worker
-		const bridge = createBridgeFromLocal(WorkerBridge, {});
+		const bridge = createBridgeFromLocal(
+			WorkerBridge,
+			{
+				onSendMessage: (msg) => {
+					this.logger.info(
+						markup`Sending local worker request: ${prettyFormat(msg)}`,
+					);
+				},
+			},
+		);
 		const worker = new Worker({
 			userConfig: this.server.userConfig,
 			bridge,
@@ -150,7 +164,7 @@ export default class WorkerManager {
 			id: 0,
 			fileCount: 0,
 			byteCount: 0,
-			process: undefined,
+			thread: undefined,
 			bridge,
 			ghost: false,
 			ready: false,
@@ -183,7 +197,7 @@ export default class WorkerManager {
 
 			for (const {filename, content} of buffers) {
 				await newWorker.bridge.updateBuffer.call({
-					ref: this.server.projectManager.getTransportFileReference(
+					ref: this.server.projectManager.getFileReference(
 						createAbsoluteFilePath(filename),
 					),
 					content,
@@ -203,7 +217,7 @@ export default class WorkerManager {
 					fileCount: serverWorker.fileCount,
 					byteCount: serverWorker.byteCount,
 					bridge: newWorker.bridge,
-					process: newWorker.process,
+					thread: newWorker.thread,
 					ghost: false,
 					ready: true,
 				},
@@ -247,16 +261,16 @@ export default class WorkerManager {
 		const fatalErrorSource = markup`worker ${workerId}`;
 		const start = Date.now();
 
-		const process = fork("worker");
+		const thread = forkThread("worker", {});
 
-		const bridge = createBridgeFromChildProcess(
+		const bridge = createBridgeFromWorkerThread(
 			WorkerBridge,
-			process,
+			thread,
 			{
 				type: "client",
 				onSendMessage: (data) => {
 					this.logger.info(
-						markup`Sending worker request to ${String(workerId)}: ${prettyFormat(
+						markup`Sending dedicated worker request to ${String(workerId)}: ${prettyFormat(
 							data,
 						)}`,
 					);
@@ -271,6 +285,7 @@ export default class WorkerManager {
 		bridge.monitorHeartbeat(
 			LAG_INTERVAL,
 			({summary, totalTime, iterations}) => {
+				return;
 				const reporter = this.server.getImportantReporter();
 				reporter.warn(
 					markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(
@@ -297,21 +312,21 @@ export default class WorkerManager {
 			id: workerId,
 			fileCount: 0,
 			byteCount: 0,
-			process,
+			thread,
 			bridge,
 			ghost: isGhost,
 			ready: false,
 		};
 		this.workers.set(workerId, worker);
 
-		process.once(
+		thread.once(
 			"error",
 			(err) => {
 				// The process could not be spawned, or
 				// The process could not be killed, or
 				// Sending a message to the child process failed.
 				this.server.onFatalError(err, fatalErrorSource);
-				process.kill();
+				thread.terminate();
 			},
 		);
 

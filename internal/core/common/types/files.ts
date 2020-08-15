@@ -5,12 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AbsoluteFilePath,
-	RelativeFilePath,
-	createAbsoluteFilePath,
-	createRelativeFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, RelativeFilePath} from "@internal/path";
 
 export type FileReference = {
 	project: number;
@@ -20,18 +15,3 @@ export type FileReference = {
 	real: AbsoluteFilePath;
 	remote: boolean;
 };
-
-export type JSONFileReference = Omit<FileReference, "real" | "relative"> & {
-	real: string;
-	relative: string;
-};
-
-export function convertTransportFileReference(
-	ref: JSONFileReference,
-): FileReference {
-	return {
-		...ref,
-		relative: createRelativeFilePath(ref.relative),
-		real: createAbsoluteFilePath(ref.real),
-	};
-}

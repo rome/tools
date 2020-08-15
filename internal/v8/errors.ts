@@ -24,13 +24,13 @@ export type ErrorWithFrames = NodeSystemError & {
 };
 
 export type StructuredNodeSystemErrorProperties = {
-	address?: string;
-	code?: string;
-	dest?: string;
-	errno?: number;
-	path?: string;
-	port?: string;
-	syscall?: string;
+	address: undefined | string;
+	code: undefined | string;
+	dest: undefined | string;
+	errno: undefined | number;
+	path: undefined | string;
+	port: undefined | string;
+	syscall: undefined | string;
 };
 
 export type StructuredError = {
@@ -50,7 +50,7 @@ export function setErrorFrames(
 
 export function setNodeErrorProps(
 	err: NodeSystemError,
-	props: StructuredNodeSystemErrorProperties,
+	props: Partial<StructuredNodeSystemErrorProperties>,
 ) {
 	err.address = props.address;
 	err.code = props.code;
@@ -128,7 +128,15 @@ export function extractNodeSystemErrorProperties(
 			syscall: typeof err.syscall === "string" ? err.syscall : undefined,
 		};
 	} else {
-		return {};
+		return {
+			address: undefined,
+			code: undefined,
+			dest: undefined,
+			errno: undefined,
+			path: undefined,
+			port: undefined,
+			syscall: undefined,
+		};
 	}
 }
 

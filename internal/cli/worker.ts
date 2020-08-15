@@ -6,18 +6,19 @@
  */
 
 import setProcessTitle from "./utils/setProcessTitle";
-import {createBridgeFromParentProcess} from "@internal/events";
+import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
 import {Worker, WorkerBridge} from "@internal/core";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 
 export default async function worker() {
 	setProcessTitle("worker");
-	const bridge = createBridgeFromParentProcess(
+	const bridge = createBridgeFromWorkerThreadParentPort(
 		WorkerBridge,
 		{
 			type: "server",
 		},
 	);
+
 	const userConfig = await loadUserConfig();
 	const worker = new Worker({
 		userConfig,

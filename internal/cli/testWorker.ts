@@ -7,22 +7,20 @@
 
 import setProcessTitle from "./utils/setProcessTitle";
 import {TestWorker} from "@internal/core";
-import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
-import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
+import workerThreads = require("worker_threads");
 
 export default async function testWorker() {
 	setProcessTitle("test-worker");
 
-	const parser = parseCLIFlagsFromProcess({
-		programName: "rome test-worker",
-		defineFlags(c): TestWorkerFlags {
-			return {
-				inspectorPort: c.get("inspectorPort").asNumber(),
-			};
-		},
-	});
-	const flags: TestWorkerFlags = await parser.init();
+	const {inspectorPort} = workerThreads.workerData;
+	if (typeof inspectorPort !== "number") {
+		throw new Error(
+			`Expected inspectorPort to be a number but got ${inspectorPort}`,
+		);
+	}
 
 	const worker = new TestWorker();
-	await worker.init(flags);
+	await worker.init({
+		inspectorPort,
+	});
 }

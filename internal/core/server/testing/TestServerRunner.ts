@@ -27,7 +27,7 @@ import {humanizeNumber} from "@internal/string-utils";
 import {
 	Bridge,
 	BridgeError,
-	createBridgeFromChildProcess,
+	createBridgeFromWorkerThread,
 } from "@internal/events";
 import {
 	CoverageCollector,
@@ -36,7 +36,7 @@ import {
 	InspectorClientCloseError,
 	urlToFilename,
 } from "@internal/v8";
-import fork from "../../common/utils/fork";
+import {forkThread} from "../../common/utils/fork";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {ob1Coerce0To1} from "@internal/ob1";
 import {
@@ -255,7 +255,7 @@ export default class TestServerRunner {
 	}
 
 	private async prepareWorker(
-		{bridge, process, inspector}: TestWorkerContainer,
+		{bridge, thread, inspector}: TestWorkerContainer,
 		progress: ReporterProgress,
 	): Promise<() => Promise<void>> {
 		const {options: opts, sourcesQueue} = this;
@@ -302,7 +302,7 @@ export default class TestServerRunner {
 					projectDirectory: req.server.projectManager.assertProjectExisting(
 						ref.real,
 					).directory.join(),
-					file: req.server.projectManager.getTransportFileReference(ref.real),
+					file: req.server.projectManager.getFileReference(ref.real),
 					cwd: flags.cwd.join(),
 					code,
 				});
@@ -353,7 +353,7 @@ export default class TestServerRunner {
 					inspector.end();
 				}
 
-				process.kill();
+				await thread.terminate();
 			}
 		};
 	}
@@ -392,18 +392,17 @@ export default class TestServerRunner {
 	private async spawnWorker(
 		flags: TestWorkerFlags,
 	): Promise<TestWorkerContainer> {
-		const proc = fork(
+		const thread = forkThread(
 			"test-worker",
 			{
-				stdio: "pipe",
+				workerData: flags,
+				stdin: true,
+				stdout: true,
+				stderr: true,
 			},
-			["--inspector-port", String(flags.inspectorPort)],
 		);
 
-		const {stdout, stderr} = proc;
-		if (stdout == null || stderr == null) {
-			throw new Error("stdout or stderr was undefined for a spawned Worker");
-		}
+		const {stdout, stderr} = thread;
 
 		stdout.on(
 			"data",
@@ -443,9 +442,9 @@ export default class TestServerRunner {
 			},
 		);
 
-		const bridge = createBridgeFromChildProcess(
+		const bridge = createBridgeFromWorkerThread(
 			TestWorkerBridge,
-			proc,
+			thread,
 			{
 				type: "client",
 			},
@@ -477,7 +476,7 @@ export default class TestServerRunner {
 
 		return {
 			bridge,
-			process: proc,
+			thread,
 			inspector,
 		};
 	}

@@ -47,6 +47,7 @@ const NODE_BUILTINS = [
 	"http",
 	"https",
 	"net",
+	"worker_threads",
 	"os",
 	"readline",
 	"stream",

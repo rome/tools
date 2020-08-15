@@ -12,7 +12,7 @@ import {
 } from "../common/bridges/TestWorkerBridge";
 import {deriveDiagnosticFromError} from "@internal/diagnostics";
 import {TestWorkerBridge} from "@internal/core";
-import {createBridgeFromParentProcess} from "@internal/events";
+import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
 import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
 import inspector = require("inspector");
 import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
@@ -37,7 +37,7 @@ export default class TestWorker {
 	}
 
 	private buildBridge(): TestWorkerBridge {
-		const bridge = createBridgeFromParentProcess(
+		const bridge = createBridgeFromWorkerThreadParentPort(
 			TestWorkerBridge,
 			{
 				type: "server",

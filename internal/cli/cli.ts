@@ -21,7 +21,7 @@ import {
 } from "@internal/core";
 import setProcessTitle from "./utils/setProcessTitle";
 import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
-import {CWD_PATH, UnknownFilePath} from "@internal/path";
+import {AbsoluteFilePath, CWD_PATH} from "@internal/path";
 import {Consumer} from "@internal/consume";
 import {
 	ClientProfileOptions,
@@ -35,21 +35,22 @@ import {
 	joinMarkupLines,
 	markup,
 } from "@internal/markup";
-import {JSONObject, stringifyJSON} from "@internal/codec-json";
+import {stringifyJSON} from "@internal/codec-json";
 import {getEnvVar} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
 import {loadUserConfig} from "@internal/core/common/userConfig";
+import {RSERObject} from "@internal/codec-binary-serial";
 
 type CLIFlags = {
 	logs: boolean;
 	logWorkers: undefined | boolean;
-	logPath: undefined | UnknownFilePath;
-	markersPath: undefined | UnknownFilePath;
+	logPath: undefined | AbsoluteFilePath;
+	markersPath: undefined | AbsoluteFilePath;
 	rage: boolean;
-	ragePath: undefined | UnknownFilePath;
+	ragePath: undefined | AbsoluteFilePath;
 	profile: boolean;
-	profilePath: undefined | UnknownFilePath;
+	profilePath: undefined | AbsoluteFilePath;
 	profileTimeout: undefined | number;
 	profileSampling: number;
 	profileWorkers: boolean;
@@ -340,7 +341,7 @@ export default async function cli() {
 
 	let command = "";
 	let overrideCLIFlags: Partial<CLIFlags> = {};
-	let commandFlags: JSONObject = {};
+	let commandFlags: RSERObject = {};
 	let args: Array<string> = [];
 
 	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";

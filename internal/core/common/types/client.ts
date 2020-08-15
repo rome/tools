@@ -64,8 +64,3 @@ export type ClientFlags = {
 	realCwd: AbsoluteFilePath;
 	silent: boolean;
 };
-
-export type ClientFlagsJSON = Omit<ClientFlags, "cwd" | "realCwd"> & {
-	cwd: string;
-	realCwd: string;
-};

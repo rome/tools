@@ -21,21 +21,21 @@ import {
 	Diagnostics,
 	DiagnosticsError,
 } from "@internal/diagnostics";
-import {ProjectConfigJSON} from "@internal/project";
 import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
-import {JSONFileReference} from "../types/files";
+import {FileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
 import {FileNotFound} from "@internal/fs/FileNotFound";
-import {createAbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
+import {ProjectConfig} from "@internal/project";
 
 export type WorkerProjects = Array<{
 	id: number;
-	directory: string;
-	config: undefined | ProjectConfigJSON;
+	directory: AbsoluteFilePath;
+	config: undefined | ProjectConfig;
 }>;
 
 export type WorkerCompileResult = CompileResult & {
@@ -43,7 +43,7 @@ export type WorkerCompileResult = CompileResult & {
 };
 
 export type WorkerPartialManifest = {
-	path: string;
+	path: AbsoluteFilePath;
 	type: Manifest["type"];
 };
 
@@ -102,7 +102,7 @@ export type PrefetchedModuleSignatures = {
 			}
 		| {
 				type: "OWNED";
-				ref: JSONFileReference;
+				ref: FileReference;
 			}
 		| {
 				type: "POINTER";
@@ -199,7 +199,7 @@ export default class WorkerBridge extends Bridge {
 
 	public format = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			options: FormatterOptions;
 			parseOptions: WorkerParseOptions;
 		},
@@ -211,7 +211,7 @@ export default class WorkerBridge extends Bridge {
 
 	public moduleSignatureJS = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			parseOptions: WorkerParseOptions;
 		},
 		ModuleSignature
@@ -222,7 +222,7 @@ export default class WorkerBridge extends Bridge {
 
 	public analyzeDependencies = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			parseOptions: WorkerParseOptions;
 		},
 		AnalyzeDependencyResult
@@ -233,7 +233,7 @@ export default class WorkerBridge extends Bridge {
 
 	public lint = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			options: WorkerLintOptions;
 			parseOptions: WorkerParseOptions;
 		},
@@ -242,7 +242,7 @@ export default class WorkerBridge extends Bridge {
 
 	public updateInlineSnapshots = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			updates: InlineSnapshotUpdates;
 			parseOptions: WorkerParseOptions;
 		},
@@ -251,7 +251,7 @@ export default class WorkerBridge extends Bridge {
 
 	public compile = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			stage: TransformStageName;
 			options: WorkerCompilerOptions;
 			parseOptions: WorkerParseOptions;
@@ -261,7 +261,7 @@ export default class WorkerBridge extends Bridge {
 
 	public parse = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			options: WorkerParseOptions;
 		},
 		// @ts-ignore
@@ -281,7 +281,7 @@ export default class WorkerBridge extends Bridge {
 
 	public getBuffer = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 		},
 		string | undefined
 	>({
@@ -291,7 +291,7 @@ export default class WorkerBridge extends Bridge {
 
 	public updateBuffer = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			content: string;
 		},
 		void
@@ -302,7 +302,7 @@ export default class WorkerBridge extends Bridge {
 
 	public patchBuffer = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 			patches: Array<WorkerBufferPatch>;
 		},
 		string
@@ -313,7 +313,7 @@ export default class WorkerBridge extends Bridge {
 
 	public clearBuffer = this.createEvent<
 		{
-			ref: JSONFileReference;
+			ref: FileReference;
 		},
 		void
 	>({

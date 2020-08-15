@@ -12,7 +12,7 @@ import {TestHelper, test, testOptions} from "rome";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	UnknownFilePath,
+	RelativeFilePath,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
@@ -46,7 +46,7 @@ export type Fixture = {
 };
 
 export type FixtureFile = {
-	relative: UnknownFilePath;
+	relative: RelativeFilePath;
 	absolute: AbsoluteFilePath;
 	content: Buffer;
 };
@@ -132,7 +132,7 @@ async function _getFixtures(
 		fileContents.set(
 			path.getBasename(),
 			{
-				relative: opts.root.relative(path),
+				relative: opts.root.relative(path).assertRelative(),
 				absolute: path,
 				content: await readFile(path),
 			},

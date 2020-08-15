@@ -5,14 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from "./index";
+import {
+	AbsoluteFilePath,
+	AnyFilePath,
+	RelativeFilePath,
+	UnknownFilePath,
+	createAbsoluteFilePath,
+	createRelativeFilePath,
+	createUnknownFilePath,
+} from "./index";
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-class FilePathMap<FilePath extends UnknownFilePath, Value> {
+abstract class BaseFilePathMap<FilePath extends AnyFilePath, Value> {
 	constructor(entries?: Array<[FilePath, Value]>) {
 		this.joinedToValue = new Map();
 		this.joinedToPath = new Map();
@@ -24,6 +32,8 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 			}
 		}
 	}
+
+	public abstract createKey(str: string): FilePath
 
 	private joinedToValue: Map<string, Value>;
 	public joinedToPath: Map<string, FilePath>;
@@ -69,6 +79,10 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 		return this.joinedToValue.get(path.getUnique().join());
 	}
 
+	public setString(path: string, value: Value) {
+		this.set(this.createKey(path), value);
+	}
+
 	public set(path: FilePath, value: Value) {
 		const uniq = (path.getUnique() as FilePath);
 		const joined = uniq.join();
@@ -78,9 +92,12 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 	}
 }
 
-class FilePathSet<FilePath extends UnknownFilePath> {
+abstract class BaseFilePathSet<
+	FilePath extends AnyFilePath,
+	FilePathMap extends BaseFilePathMap<FilePath, void>
+> {
 	constructor(entries?: Iterable<FilePath>) {
-		this.map = new FilePathMap();
+		this.map = this.createMap();
 		this.size = 0;
 
 		if (entries !== undefined) {
@@ -90,8 +107,14 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 		}
 	}
 
-	private map: FilePathMap<FilePath, void>;
+	abstract createMap(): FilePathMap
+
+	private map: FilePathMap;
 	public size: number;
+
+	public createKey(str: string): FilePath {
+		return this.map.createKey(str);
+	}
 
 	public _updateSize() {
 		this.size = this.map.size;
@@ -116,6 +139,10 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 		this._updateSize();
 	}
 
+	public addString(str: string) {
+		this.add(this.createKey(str));
+	}
+
 	public delete(path: FilePath) {
 		this.map.delete(path);
 		this._updateSize();
@@ -128,40 +155,72 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 }
 
 export class AbsoluteFilePathMap<Value>
-	extends FilePathMap<AbsoluteFilePath, Value> {
+	extends BaseFilePathMap<AbsoluteFilePath, Value> {
 	public type: "absolute" = "absolute";
 
-	public keysToSet() {
+	public createKey(str: string): AbsoluteFilePath {
+		return createAbsoluteFilePath(str);
+	}
+
+	public keysToSet(): AbsoluteFilePathSet {
 		return new AbsoluteFilePathSet(this.keys());
 	}
 }
 
 export class RelativeFilePathMap<Value>
-	extends FilePathMap<RelativeFilePath, Value> {
+	extends BaseFilePathMap<RelativeFilePath, Value> {
 	public type: "relative" = "relative";
 
-	public keysToSet() {
+	public createKey(str: string): RelativeFilePath {
+		return createRelativeFilePath(str);
+	}
+
+	public keysToSet(): RelativeFilePathSet {
 		return new RelativeFilePathSet(this.keys());
 	}
 }
 
 export class UnknownFilePathMap<Value>
-	extends FilePathMap<UnknownFilePath, Value> {
+	extends BaseFilePathMap<AnyFilePath, Value> {
 	public type: "unknown" = "unknown";
 
-	public keysToSet() {
+	public createKey(str: string): UnknownFilePath {
+		return createUnknownFilePath(str);
+	}
+
+	public keysToSet(): UnknownFilePathSet {
 		return new UnknownFilePathSet(this.keys());
 	}
 }
 
-export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {
+export class AbsoluteFilePathSet
+	extends BaseFilePathSet<AbsoluteFilePath, AbsoluteFilePathMap<void>> {
 	public type: "absolute" = "absolute";
+
+	createMap(): AbsoluteFilePathMap<void> {
+		return new AbsoluteFilePathMap();
+	}
 }
 
-export class RelativeFilePathSet extends FilePathSet<RelativeFilePath> {
+export class RelativeFilePathSet
+	extends BaseFilePathSet<RelativeFilePath, RelativeFilePathMap<void>> {
 	public type: "relative" = "relative";
+
+	createMap(): RelativeFilePathMap<void> {
+		return new RelativeFilePathMap();
+	}
 }
 
-export class UnknownFilePathSet extends FilePathSet<UnknownFilePath> {
+export class UnknownFilePathSet
+	extends BaseFilePathSet<AnyFilePath, UnknownFilePathMap<void>> {
 	public type: "unknown" = "unknown";
+
+	createMap(): UnknownFilePathMap<void> {
+		return new UnknownFilePathMap();
+	}
 }
+
+export type AnyFilePathSet =
+	| AbsoluteFilePathSet
+	| RelativeFilePathSet
+	| UnknownFilePathSet;

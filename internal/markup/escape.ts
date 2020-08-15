@@ -7,7 +7,13 @@
 
 import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {AbsoluteFilePath, RelativeFilePath, URLFilePath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AnyFilePath,
+	RelativeFilePath,
+	URLFilePath,
+	UnknownFilePath,
+} from "@internal/path";
 
 type MarkupPart = StaticMarkup | RawMarkup | string;
 type LazyMarkupPart = MarkupPart | LazyMarkupFactory | LazyMarkup;
@@ -56,7 +62,7 @@ export function convertToMarkupFromRandomString(unsafe: string): StaticMarkup {
 }
 
 export function filePathToMarkup(
-	path: URLFilePath | RelativeFilePath | AbsoluteFilePath,
+	path: AnyFilePath,
 	explicit: boolean = false,
 ): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";
@@ -76,12 +82,7 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue =
-	| undefined
-	| number
-	| RelativeFilePath
-	| AbsoluteFilePath
-	| URLFilePath;
+type InterpolatedValue = undefined | number | AnyFilePath;
 
 const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
 
@@ -130,7 +131,8 @@ export function markup(
 		} else if (
 			value instanceof RelativeFilePath ||
 			value instanceof AbsoluteFilePath ||
-			value instanceof URLFilePath
+			value instanceof URLFilePath ||
+			value instanceof UnknownFilePath
 		) {
 			parts.push(filePathToMarkup(value));
 		} else {

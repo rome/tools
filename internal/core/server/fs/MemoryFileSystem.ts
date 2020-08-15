@@ -395,7 +395,7 @@ export default class MemoryFileSystem {
 
 	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
 		return {
-			path: def.path.join(),
+			path: def.path,
 			type: def.manifest.type,
 		};
 	}
@@ -907,7 +907,7 @@ export default class MemoryFileSystem {
 			}
 		}
 
-		this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
+		//this.logger.info(markup`Found: <emphasis>${path}</emphasis>`);
 
 		// Add project if this is a config
 		if (

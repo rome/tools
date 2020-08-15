@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownFilePath} from "@internal/path";
+import {AnyFilePath} from "@internal/path";
 
 type LockResolve<RawKey, MapKey> = (lock: Lock<RawKey, MapKey>) => void;
 
@@ -39,16 +39,14 @@ class Lock<RawKey, MapKey> {
 	}
 }
 
-class LockerNormalized<RawKey, MapKey> {
+abstract class LockerNormalized<RawKey, MapKey> {
 	constructor() {
 		this.locks = new Map();
 	}
 
 	public locks: Map<MapKey, Lock<RawKey, MapKey>>;
 
-	protected normalizeKey(rawKey: RawKey): MapKey {
-		throw new Error("Unimplemented");
-	}
+	protected abstract normalizeKey(rawKey: RawKey): MapKey
 
 	public hasLock(key: RawKey): boolean {
 		return this.locks.has(this.normalizeKey(key));
@@ -117,8 +115,8 @@ export class SingleLocker extends LockerNormalized<void, void> {
 	}
 }
 
-export class FilePathLocker extends LockerNormalized<UnknownFilePath, string> {
-	protected normalizeKey(path: UnknownFilePath): string {
+export class FilePathLocker extends LockerNormalized<AnyFilePath, string> {
+	protected normalizeKey(path: AnyFilePath): string {
 		return path.join();
 	}
 }

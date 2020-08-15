@@ -6,15 +6,19 @@
  */
 
 import {AnyJSExpression, NodeBaseWithComments} from "@internal/ast";
-import {createBuilder} from "../../utils";
+import {createQuickBuilder} from "../../utils";
 
 export interface JSExpressionStatement extends NodeBaseWithComments {
 	readonly type: "JSExpressionStatement";
 	readonly expression: AnyJSExpression;
 }
 
-export const jsExpressionStatement = createBuilder<JSExpressionStatement>(
+export const jsExpressionStatement = createQuickBuilder<
+	JSExpressionStatement,
+	"expression"
+>(
 	"JSExpressionStatement",
+	"expression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

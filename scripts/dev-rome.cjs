@@ -181,7 +181,7 @@ async function buildTrunk() {
 					clearLines(lines);
 					resolve();
 				} else {
-					console.error("Trunk build failure");
+					console.error(`Trunk build failure. Exit code ${code}`);
 					process.exit(1);
 				}
 			},

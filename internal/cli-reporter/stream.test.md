@@ -64,12 +64,7 @@ Object {
 Object {
 	currentLine: 4
 	leadingNewline: true
-	lineSnapshots: Map [
-		Array [
-			Object {close: Function close}
-			1
-		]
-	]
+	lineSnapshots: Map [Object {close: Function close} => 1]
 	nextLineInsertLeadingNewline: false
 	buffer: Array [
 		"1"
@@ -94,12 +89,7 @@ remove me[1G[2K
 Object {
 	currentLine: 0
 	leadingNewline: false
-	lineSnapshots: Map [
-		Array [
-			Object {close: Function close}
-			0
-		]
-	]
+	lineSnapshots: Map [Object {close: Function close} => 0]
 	nextLineInsertLeadingNewline: false
 	buffer: Array [""]
 }
@@ -123,12 +113,7 @@ Object {
 Object {
 	currentLine: 4
 	leadingNewline: true
-	lineSnapshots: Map [
-		Array [
-			Object {close: Function close}
-			2
-		]
-	]
+	lineSnapshots: Map [Object {close: Function close} => 2]
 	nextLineInsertLeadingNewline: false
 	buffer: Array [
 		"1"
@@ -153,12 +138,7 @@ remove me[1G[2Kok i did it
 Object {
 	currentLine: 0
 	leadingNewline: false
-	lineSnapshots: Map [
-		Array [
-			Object {close: Function close}
-			0
-		]
-	]
+	lineSnapshots: Map [Object {close: Function close} => 0]
 	nextLineInsertLeadingNewline: false
 	buffer: Array ["ok i did it"]
 }
