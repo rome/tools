@@ -18,7 +18,7 @@ import {
 } from "@internal/compiler";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "@internal/core/common/commands";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 
 type Flags = {
@@ -91,7 +91,7 @@ export default createServerCommand<Flags>({
 
 			// Only include lintable files
 			args = args.filter((arg) => {
-				const path = createUnknownFilePath(arg);
+				const path = createUnknownPath(arg);
 
 				for (const ext of LINTABLE_EXTENSIONS) {
 					if (path.hasEndExtension(ext)) {

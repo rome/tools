@@ -28,7 +28,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
+import {UnknownPath, createUnknownPath} from "@internal/path";
 import {
 	Number0,
 	Number1,
@@ -74,7 +74,7 @@ export default class ParserCore<
 		} = opts;
 
 		// Input information
-		this.path = path === undefined ? undefined : createUnknownFilePath(path);
+		this.path = path === undefined ? undefined : createUnknownPath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
 		this.mtime = mtime;
 		this.input = normalizeInput(opts);
@@ -125,7 +125,7 @@ export default class ParserCore<
 	private eofToken: EOFToken;
 	protected ignoreWhitespaceTokens: boolean;
 
-	public path: undefined | UnknownFilePath;
+	public path: undefined | UnknownPath;
 	public filename: undefined | string;
 	public input: string;
 	protected mtime: undefined | number;
@@ -147,7 +147,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected getPathAssert(): UnknownFilePath {
+	protected getPathAssert(): UnknownPath {
 		const {path} = this;
 		if (path === undefined) {
 			throw new Error("Path expected but none was passed to this Parser");
@@ -792,7 +792,7 @@ export class ParserWithRequiredPath<
 		this.path = this.getPathAssert();
 	}
 
-	public path: UnknownFilePath;
+	public path: UnknownPath;
 	public filename: string;
 }
 

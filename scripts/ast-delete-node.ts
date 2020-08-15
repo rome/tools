@@ -1,7 +1,7 @@
 import {INTERNAL, reporter} from "./_utils";
 import {main as generateAST} from "./generated-files/ast";
 import {removeFile} from "@internal/fs";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 export async function main([filename]: Array<string>) {
@@ -12,7 +12,7 @@ export async function main([filename]: Array<string>) {
 		return 1;
 	}
 
-	const segments = createUnknownFilePath(filename).getSegments();
+	const segments = createUnknownPath(filename).getSegments();
 	if (segments.length !== 3) {
 		reporter.error(markup`Expected three segments in filename argument`);
 		return 1;

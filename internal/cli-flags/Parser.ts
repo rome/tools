@@ -21,11 +21,7 @@ import {
 	toCamelCase,
 	toKebabCase,
 } from "@internal/string-utils";
-import {
-	AbsoluteFilePath,
-	HOME_PATH,
-	createUnknownFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH, createUnknownPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
 	AnyMarkups,
@@ -240,7 +236,7 @@ export default class Parser<T> {
 		}
 
 		const consumer = consume({
-			filePath: createUnknownFilePath("argv"),
+			filePath: createUnknownPath("argv"),
 			value: flags,
 			onDefinition: (def, valueConsumer) => {
 				const key = def.objectPath.join(".");

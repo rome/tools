@@ -25,10 +25,10 @@ import {
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
-	URLFilePath,
-	UnknownFilePath,
-	UnknownFilePathMap,
-	UnknownFilePathSet,
+	URLPath,
+	UnknownPath,
+	UnknownPathMap,
+	UnknownPathSet,
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
@@ -254,10 +254,10 @@ export default class RSERBufferAssembler {
 		this.seenObjects.add(val);
 
 		if (
-			val instanceof UnknownFilePath ||
+			val instanceof UnknownPath ||
 			val instanceof RelativeFilePath ||
 			val instanceof AbsoluteFilePath ||
-			val instanceof URLFilePath
+			val instanceof URLPath
 		) {
 			return this.encodeFilePath(val);
 		}
@@ -281,7 +281,7 @@ export default class RSERBufferAssembler {
 		if (
 			val instanceof RelativeFilePathMap ||
 			val instanceof AbsoluteFilePathMap ||
-			val instanceof UnknownFilePathMap
+			val instanceof UnknownPathMap
 		) {
 			return this.encodeFilePathMap(val);
 		}
@@ -289,7 +289,7 @@ export default class RSERBufferAssembler {
 		if (
 			val instanceof RelativeFilePathSet ||
 			val instanceof AbsoluteFilePathSet ||
-			val instanceof UnknownFilePathSet
+			val instanceof UnknownPathSet
 		) {
 			return this.encodeFilePathSet(val);
 		}

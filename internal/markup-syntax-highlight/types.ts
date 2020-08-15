@@ -1,11 +1,11 @@
 import {Number0} from "@internal/ob1";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@internal/diagnostics";
-import {UnknownFilePath} from "@internal/path";
+import {UnknownPath} from "@internal/path";
 import {MarkupTokenType, StaticMarkup} from "@internal/markup";
 import {AnyMarkups} from "@internal/markup/escape";
 
 export type AnsiHighlightOptions = {
-	path: UnknownFilePath;
+	path: UnknownPath;
 	input: string;
 	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: DiagnosticLanguage;

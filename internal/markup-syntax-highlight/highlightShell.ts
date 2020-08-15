@@ -1,7 +1,7 @@
 import {HighlightCodeResult} from "./types";
 import {concatMarkup, filePathToMarkup, markup} from "@internal/markup";
 import {concatSplitLinesMarkup, markupToken} from "./utils";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {markupTag} from "@internal/markup/escape";
 
 // Very crude. Should be updated to support hash bangs and other fancy syntax
@@ -28,7 +28,7 @@ export default function highlightShell(
 					return punc;
 				} else {
 					return concatMarkup([
-						filePathToMarkup(createUnknownFilePath(segment.slice(0, -1)), true),
+						filePathToMarkup(createUnknownPath(segment.slice(0, -1)), true),
 						punc,
 					]);
 				}

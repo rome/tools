@@ -7,14 +7,14 @@ import {
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
-	URLFilePath,
-	UnknownFilePath,
-	UnknownFilePathMap,
-	UnknownFilePathSet,
+	URLPath,
+	UnknownPath,
+	UnknownPathMap,
+	UnknownPathSet,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createURLFilePath,
-	createUnknownFilePath,
+	createURLPath,
+	createUnknownPath,
 } from "@internal/path";
 import {AnyRSERFilePathMap} from "@internal/codec-binary-serial/types";
 
@@ -191,7 +191,7 @@ export function filePathMapToCode(map: AnyRSERFilePathMap): FILE_CODES {
 		return FILE_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
 		return FILE_CODES.ABSOLUTE;
-	} else if (map instanceof UnknownFilePathMap) {
+	} else if (map instanceof UnknownPathMap) {
 		return FILE_CODES.UNKNOWN;
 	} else {
 		throw new Error("Unknown FilePath type");
@@ -203,7 +203,7 @@ export function filePathSetToCode(set: AnyFilePathSet): FILE_CODES {
 		return FILE_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
 		return FILE_CODES.ABSOLUTE;
-	} else if (set instanceof UnknownFilePathSet) {
+	} else if (set instanceof UnknownPathSet) {
 		return FILE_CODES.UNKNOWN;
 	} else {
 		throw new Error("Unknown FilePath type");
@@ -215,9 +215,9 @@ export function filePathToCode(path: AnyFilePath): FILE_CODES {
 		return FILE_CODES.RELATIVE;
 	} else if (path instanceof AbsoluteFilePath) {
 		return FILE_CODES.ABSOLUTE;
-	} else if (path instanceof UnknownFilePath) {
+	} else if (path instanceof UnknownPath) {
 		return FILE_CODES.UNKNOWN;
-	} else if (path instanceof URLFilePath) {
+	} else if (path instanceof URLPath) {
 		return FILE_CODES.URL;
 	} else {
 		throw new Error("Unknown FilePath type");
@@ -236,17 +236,17 @@ export function filePathFromCode(
 			return createAbsoluteFilePath(filename);
 
 		case FILE_CODES.URL:
-			return createURLFilePath(filename);
+			return createURLPath(filename);
 
 		case FILE_CODES.UNKNOWN:
-			return createUnknownFilePath(filename);
+			return createUnknownPath(filename);
 	}
 }
 
 export function filePathMapFromCode(code: FILE_CODES): AnyRSERFilePathMap {
 	switch (code) {
 		case FILE_CODES.UNKNOWN:
-			return new UnknownFilePathMap();
+			return new UnknownPathMap();
 
 		case FILE_CODES.RELATIVE:
 			return new RelativeFilePathMap();
@@ -262,7 +262,7 @@ export function filePathMapFromCode(code: FILE_CODES): AnyRSERFilePathMap {
 export function filePathSetFromCode(code: FILE_CODES): AnyFilePathSet {
 	switch (code) {
 		case FILE_CODES.UNKNOWN:
-			return new UnknownFilePathSet();
+			return new UnknownPathSet();
 
 		case FILE_CODES.RELATIVE:
 			return new RelativeFilePathSet();

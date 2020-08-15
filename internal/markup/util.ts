@@ -1,7 +1,7 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@internal/string-utils";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {StaticMarkup} from "./escape";
 
@@ -33,7 +33,7 @@ export function humanizeMarkupFilename(
 		}
 	}
 
-	return createUnknownFilePath(filename).format(opts.cwd);
+	return createUnknownPath(filename).format(opts.cwd);
 }
 
 export function buildFileLink(

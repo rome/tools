@@ -40,8 +40,8 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyFilePath,
-	URLFilePath,
-	UnknownFilePathMap,
+	URLPath,
+	UnknownPathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {FileReference} from "../../common/types/files";
@@ -138,7 +138,7 @@ export default class ProjectManager {
 		// We maintain these maps so we can reverse any uids, and protect against collisions
 		this.uidToFilename = new Map();
 		this.filenameToUid = new AbsoluteFilePathMap();
-		this.remoteToLocalPath = new UnknownFilePathMap();
+		this.remoteToLocalPath = new UnknownPathMap();
 		this.localPathToRemote = new AbsoluteFilePathMap();
 
 		this.evictingProjectLock = new SingleLocker();
@@ -152,8 +152,8 @@ export default class ProjectManager {
 	private uidToFilename: Map<string, AbsoluteFilePath>;
 	private filenameToUid: AbsoluteFilePathMap<string>;
 
-	private remoteToLocalPath: UnknownFilePathMap<AbsoluteFilePath>;
-	private localPathToRemote: AbsoluteFilePathMap<URLFilePath>;
+	private remoteToLocalPath: UnknownPathMap<AbsoluteFilePath>;
+	private localPathToRemote: AbsoluteFilePathMap<URLPath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
 	private projectLoadingLocks: FilePathLocker;
@@ -217,7 +217,7 @@ export default class ProjectManager {
 		}
 	}
 
-	public getRemoteFromLocalPath(path: AbsoluteFilePath): undefined | URLFilePath {
+	public getRemoteFromLocalPath(path: AbsoluteFilePath): undefined | URLPath {
 		return this.localPathToRemote.get(path);
 	}
 
@@ -363,7 +363,7 @@ export default class ProjectManager {
 
 	public getURLFileReference(
 		local: AbsoluteFilePath,
-		url: URLFilePath,
+		url: URLPath,
 	): FileReference {
 		if (!this.remoteToLocalPath.has(url)) {
 			this.remoteToLocalPath.set(url, local);
