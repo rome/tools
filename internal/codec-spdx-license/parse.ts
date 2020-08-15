@@ -143,11 +143,28 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			}
 
 			if (licenseInfo === undefined) {
-				throw this.unexpected({
-					description: descriptions.SPDX.UNKNOWN_LICENSE(id, licenseNames),
-					start: this.getPositionFromIndex(token.start),
-					end: this.getPositionFromIndex(token.end),
-				});
+				const pathSegments = (this.path && this.path.getSegments()) || [];
+				const lastNodeModulesIndex = pathSegments.lastIndexOf("node_modules");
+				if (lastNodeModulesIndex >= 0) {
+					const dependencyName = pathSegments.slice(lastNodeModulesIndex + 1, -1).join("/");
+					throw this.unexpected({
+						description: descriptions.SPDX.UNKNOWN_DEPENDENCY_LICENSE(
+							this.input,
+							dependencyName,
+						),
+						start: this.getPositionFromIndex(token.start),
+						end: this.getPositionFromIndex(token.end),
+					});
+				} else {
+					throw this.unexpected({
+						description: descriptions.SPDX.UNKNOWN_LICENSE(
+							this.input,
+							licenseNames,
+						),
+						start: this.getPositionFromIndex(token.start),
+						end: this.getPositionFromIndex(token.end),
+					});
+				}
 			}
 
 			// Is this a plus? (wtf is this)

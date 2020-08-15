@@ -15,6 +15,16 @@ export const spdx = createDiagnosticsCategory({
 			},
 		],
 	}),
+	UNKNOWN_DEPENDENCY_LICENSE: (id: string, dependencyName: string) => ({
+		message: markup`Unknown dependency license <emphasis>${id}</emphasis> for dependecy <emphasis>${dependencyName}</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information. Please contact the owner of <emphasis>${dependencyName}</emphasis> and kindly ask them to use a valid <emphasis>SPDX</emphasis> licence`,
+			},
+		],
+	}),
 	VALID_LICENSE_WITH_MISSING_DASH: (possibleCorrectLicense: string) => ({
 		message: markup`Missing dash between license name and version`,
 		advice: [
