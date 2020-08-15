@@ -583,9 +583,7 @@ export class AbsoluteFilePath extends BaseFilePath<AbsoluteFilePath> {
 		return paths;
 	}
 
-	public resolveMaybeUrl(
-		otherRaw: FilePathOrString,
-	): URLPath | AbsoluteFilePath {
+	public resolveMaybeUrl(otherRaw: FilePathOrString): URLPath | AbsoluteFilePath {
 		const other = toFilePath(otherRaw, "url");
 		if (other.isURL()) {
 			return other.assertURL();
@@ -653,10 +651,7 @@ export class URLPath extends BaseFilePath<URLPath> {
 		return this;
 	}
 
-	protected _fork(
-		parsed: ParsedPath,
-		opts: FilePathMemo<URLPath>,
-	): URLPath {
+	protected _fork(parsed: ParsedPath, opts: FilePathMemo<URLPath>): URLPath {
 		return new URLPath(parsed, opts);
 	}
 
@@ -730,11 +725,13 @@ type PathTypeHint = "absolute" | "relative" | "url" | "auto";
 function parsePathSegments(
 	segments: PathSegments,
 	hint: PathTypeHint,
-	overrides: Pick<Partial<ParsedPath>, "explicitRelative" | "explicitDirectory"> = {},
+	overrides: Pick<Partial<ParsedPath>, "explicitRelative" | "explicitDirectory"> = {
+
+	},
 ): ParsedPath {
 	let absoluteType: ParsedPathAbsoluteType = "posix";
 	let absoluteTarget: undefined | string;
-	let firstSeg = segments[0] as undefined | string;
+	let firstSeg = (segments[0] as undefined | string);
 
 	// Detect URL
 	if (

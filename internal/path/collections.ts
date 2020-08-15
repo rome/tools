@@ -180,8 +180,7 @@ export class RelativeFilePathMap<Value>
 	}
 }
 
-export class UnknownPathMap<Value>
-	extends BaseFilePathMap<AnyFilePath, Value> {
+export class UnknownPathMap<Value> extends BaseFilePathMap<AnyFilePath, Value> {
 	public type: "unknown" = "unknown";
 
 	public createKey(str: string): UnknownPath {

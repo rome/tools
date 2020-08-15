@@ -328,9 +328,7 @@ function tryPathSuggestions(
 					server,
 					resolver,
 					suggestions,
-					path: createUnknownPath(rating.target).append(
-						...segments.slice(1),
-					).assertAbsolute(),
+					path: createUnknownPath(rating.target).append(...segments.slice(1)).assertAbsolute(),
 				});
 			}
 		}

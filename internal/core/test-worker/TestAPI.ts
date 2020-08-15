@@ -513,7 +513,7 @@ export default class TestAPI implements TestHelper {
 					getErrorStackAdvice(
 						getErrorStructure(err),
 						{
-							title: markup`Incorrect error stack trace`
+							title: markup`Incorrect error stack trace`,
 						},
 					),
 					1,
@@ -542,7 +542,7 @@ export default class TestAPI implements TestHelper {
 					getErrorStackAdvice(
 						getErrorStructure(err),
 						{
-							title: markup`Incorrect error stack trace`
+							title: markup`Incorrect error stack trace`,
 						},
 					),
 					1,
@@ -564,7 +564,7 @@ export default class TestAPI implements TestHelper {
 				{
 					title: markup`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 						err.message,
-					)}`
+					)}`,
 				},
 			);
 			this.fail(message, advice, 1);
@@ -583,7 +583,7 @@ export default class TestAPI implements TestHelper {
 				{
 					title: markup`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
 						err.message,
-					)}`
+					)}`,
 				},
 			);
 			this.fail(message, advice, 1);

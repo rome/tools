@@ -6,11 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {
-	AnyFilePath,
-	UnknownPath,
-	createUnknownPath,
-} from "@internal/path";
+import {AnyFilePath, UnknownPath, createUnknownPath} from "@internal/path";
 import {ExtensionHandler} from "./types";
 import {
 	cjsHandler,

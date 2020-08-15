@@ -21,11 +21,7 @@ import {
 	toCamelCase,
 	toKebabCase,
 } from "@internal/string-utils";
-import {
-	AbsoluteFilePath,
-	HOME_PATH,
-	createUnknownPath,
-} from "@internal/path";
+import {AbsoluteFilePath, HOME_PATH, createUnknownPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
 	AnyMarkups,

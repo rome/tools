@@ -216,10 +216,13 @@ export function deriveDiagnosticFromErrorStructure(
 		break;
 	}
 
-	const advice = getErrorStackAdvice({
-		...struct,
-		frames,
-	}, opts.stackAdviceOptions);
+	const advice = getErrorStackAdvice(
+		{
+			...struct,
+			frames,
+		},
+		opts.stackAdviceOptions,
+	);
 
 	return {
 		description: {
@@ -246,7 +249,7 @@ export function deriveDiagnosticFromError(
 }
 
 export type DeriveErrorStackAdviceOptions = {
-	title?: StaticMarkup,
+	title?: StaticMarkup;
 	importantFilenames?: Array<string>;
 };
 
@@ -275,9 +278,9 @@ export function getErrorStackAdvice(
 		}
 		cleanStack = cleanStack.trim();
 
-		const cleanStackList = cleanStack.replace(/\n+/g, "\n").split("\n").map((line) =>
-			markup`${line.trim()}`
-		);
+		const cleanStackList = cleanStack.replace(/\n+/g, "\n").split("\n").map((
+			line,
+		) => markup`${line.trim()}`);
 
 		if (cleanStackList.length === 1 && isEmptyMarkup(cleanStackList[0])) {
 			advice.push({

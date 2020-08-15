@@ -481,13 +481,19 @@ function printStacktrace(
 
 			// A code frame will always be displayed if it's been marked as important on the stackframe advice or if it
 			// refers to the diagnostic
-			const isImportantStackFrame = filename !== undefined && (filename === diagnostic.location.filename || (item.importantFilenames !== undefined && item.importantFilenames.includes(filename)));
+			const isImportantStackFrame =
+				filename !== undefined &&
+				(filename === diagnostic.location.filename ||
+				(item.importantFilenames !== undefined &&
+				item.importantFilenames.includes(filename)));
 			const shouldShowCodeFrame = isImportantStackFrame || shownCodeFrames < 2;
 
-			if (shouldShowCodeFrame &&
+			if (
+				shouldShowCodeFrame &&
 				filename !== undefined &&
 				line !== undefined &&
-				column !== undefined) {
+				column !== undefined
+			) {
 				const pos: Position = {
 					line,
 					column,
