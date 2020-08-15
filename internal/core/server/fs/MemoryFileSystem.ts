@@ -649,10 +649,8 @@ export default class MemoryFileSystem {
 			consumeDiagnosticCategory: "parse/manifest",
 		});
 
-		const {
-			manifest,
-			diagnostics: normalizedDiagnostics,
-		} = await normalizeManifest(path, consumer);
+		const {consumer: normalizeConsumer, diagnostics: normalizedDiagnostics} = consumer.capture();
+		const manifest = await normalizeManifest(normalizeConsumer);
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (normalizedDiagnostics.length > 0) {

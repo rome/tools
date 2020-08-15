@@ -1,13 +1,19 @@
 import {createServerCommand} from "@internal/core/server/commands";
 import {commandCategories} from "@internal/core/common/commands";
 import {StaticMarkup, markup} from "@internal/markup";
-import {ServerRequest} from "@internal/core";
+import {ServerRequest, VERSION} from "@internal/core";
 import {ExtensionHandler} from "@internal/core/common/file-handlers/types";
 import {dedent} from "@internal/string-utils";
-import {createDirectory, exists, writeFile} from "@internal/fs";
+import {
+	createDirectory,
+	exists,
+	readFileTextMeta,
+	writeFile,
+} from "@internal/fs";
 import {
 	JSONObject,
 	RJSONCommentMap,
+	consumeJSON,
 	stringifyRJSON,
 } from "@internal/codec-json";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
@@ -20,6 +26,13 @@ import {
 	createSingleDiagnosticError,
 	descriptions,
 } from "@internal/diagnostics";
+import {
+	Manifest,
+	convertManifestToJSON,
+	normalizeManifest,
+} from "@internal/codec-js-manifest";
+import {parseSemverRange} from "@internal/codec-semver";
+import {spawn} from "@internal/child-process";
 
 type Flags = {
 	apply: boolean;
@@ -161,15 +174,70 @@ export default createServerCommand<Flags>({
 		await createDirectory(configPath.getParent());
 		await updateConfig();
 
+		//
+		const manifestPath = cwd.append("package.json");
+		let manifest: undefined | Manifest;
+		if (await exists(manifestPath)) {
+			manifest = await normalizeManifest(
+				consumeJSON(await readFileTextMeta(manifestPath)),
+			);
+		}
+
 		// Generate files
 		await reporter.steps([
 			{
-				message: markup`Generating lint config and apply formatting`,
+				message: markup`Installing Rome as a dependency`,
+				test() {
+					return (
+						manifest !== undefined &&
+						!manifest.dependencies.has("rome") &&
+						!manifest.devDependencies.has("rome")
+					);
+				},
 				async callback() {
-					if (!flags.apply) {
-						return {skipped: true};
+					if (manifest === undefined) {
+						// Should not be because of test()
+						return;
 					}
 
+					// Modify package.json
+					manifest.devDependencies.set(
+						"rome",
+						{
+							type: "semver",
+							range: parseSemverRange({input: `^${VERSION}`}),
+						},
+					);
+					await writeFile(
+						manifestPath,
+						JSON.stringify(convertManifestToJSON(manifest), null, "  "),
+					);
+
+					// Run package manager
+					let installCommand;
+					if (await exists(cwd.append("yarn.lock"))) {
+						installCommand = "yarn";
+					} else if (await exists(cwd.append("package-lock.json"))) {
+						installCommand = "npm";
+					}
+					if (installCommand !== undefined) {
+						const proc = spawn(
+							installCommand,
+							["install"],
+							{
+								cwd,
+							},
+						);
+						await proc.waitSuccess();
+					}
+				},
+			},
+			{
+				message: markup`Generating lint config and apply formatting`,
+				test() {
+					return flags.apply;
+				},
+				async callback() {
 					const linter = new Linter(
 						req,
 						{
@@ -197,8 +265,6 @@ export default createServerCommand<Flags>({
 							},
 						});
 					}
-
-					return {skipped: false};
 				},
 			},
 			{

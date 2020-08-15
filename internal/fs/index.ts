@@ -140,6 +140,19 @@ export async function readFileText(path: AbsoluteFilePath): Promise<string> {
 	return (await readFile(path)).toString();
 }
 
+// Return value is meant to be consumed via ParserOptions
+export async function readFileTextMeta(
+	path: AbsoluteFilePath,
+): Promise<{
+	path: AbsoluteFilePath;
+	input: string;
+}> {
+	return {
+		input: (await readFile(path)).toString(),
+		path,
+	};
+}
+
 // writeFile
 export function writeFile(
 	path: AbsoluteFilePath,

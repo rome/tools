@@ -13,7 +13,7 @@ import {
 } from "@internal/codec-semver";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {UnknownPath, createUnknownPath} from "@internal/path";
-import {normalizeName} from "./name";
+import {manifestNameToString, normalizeName} from "./name";
 import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
@@ -29,7 +29,7 @@ export type DependencyPattern =
 	| NpmPattern
 	| LinkPattern;
 
-export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
+export type ManifestDependencies = Map<string, DependencyPattern>;
 
 type UrlWithHash = {
 	url: string;
@@ -497,7 +497,7 @@ export function normalizeDependencies(
 	}
 
 	for (const [rawName, value] of consumer.asMap()) {
-		const name = normalizeName({
+		const nameObj = normalizeName({
 			name: rawName,
 			loose,
 			unexpected: ({description, at}) => {
@@ -511,7 +511,10 @@ export function normalizeDependencies(
 			},
 		});
 
-		map.set(name, parseDependencyPattern(value, loose));
+		const name = manifestNameToString(nameObj);
+		if (name !== undefined) {
+			map.set(name, parseDependencyPattern(value, loose));
+		}
 	}
 
 	return map;

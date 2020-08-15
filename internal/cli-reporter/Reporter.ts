@@ -35,6 +35,7 @@ import {
 	ReporterNamespace,
 	ReporterProgress,
 	ReporterProgressOptions,
+	ReporterStepCallback,
 	ReporterStream,
 	ReporterStreamAttached,
 	ReporterStreamHandle,
@@ -653,29 +654,27 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public async steps(
-		callbacks: Array<{
-			message: AnyMarkup;
-			callback: () => Promise<
-				| void
-				| {
-						skipped: boolean;
-					}
-			>;
-		}>,
+		callbacks: Array<ReporterStepCallback>,
 		clear: boolean = true,
 	) {
-		const total = callbacks.length;
+		let total = 0;
 		let current = 1;
-		for (const {message, callback} of callbacks) {
+
+		const filteredCallbacks: Array<ReporterStepCallback> = [];
+		for (const item of callbacks) {
+			if (item.test === undefined || (await item.test())) {
+				filteredCallbacks.push(item);
+				total++;
+			}
+		}
+
+		for (const {message, callback} of filteredCallbacks) {
 			const lineSnapshot = this.getLineSnapshot();
 
 			try {
 				this.step(current, total, message);
 
-				const res = await callback();
-				if (res === undefined || !res.skipped) {
-					current++;
-				}
+				await callback();
 
 				if (clear) {
 					this.removeLine(lineSnapshot);
