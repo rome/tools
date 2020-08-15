@@ -40,7 +40,7 @@ export function forkThread(
 	opts: workerThreads.WorkerOptions = {},
 ): workerThreads.Worker {
 	return new workerThreads.Worker(
-		`require("${getBinPath().join()}");`,
+		`require(${JSON.stringify(getBinPath().join())});`,
 		{
 			...opts,
 			eval: true,
