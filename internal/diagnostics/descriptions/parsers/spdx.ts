@@ -7,7 +7,7 @@ export const spdx = createDiagnosticsCategory({
 	UNKNOWN_LICENSE: (id: string, knownLicenses: Array<string>) => ({
 		message: markup`Unknown license <emphasis>${id}</emphasis>`,
 		advice: [
-			...buildSuggestionAdvice(id, knownLicenses),
+			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
 			{
 				type: "log",
 				category: "info",

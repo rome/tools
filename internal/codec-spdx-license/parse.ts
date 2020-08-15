@@ -170,7 +170,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			return {
 				type: "License",
 				loc: this.finishLoc(startPos),
-				id,
+				id: licenseInfo.licenseId,
 				exception,
 				plus,
 			};
