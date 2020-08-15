@@ -171,7 +171,7 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 	const rser = bridge.attachRSER();
 
 	rser.sendEvent.subscribe((msg) => {
-		worker.postMessage(msg);
+		worker.postMessage(msg, [msg]);
 	});
 
 	bridge.endEvent.subscribe(() => {
@@ -228,7 +228,7 @@ export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 	const rser = bridge.attachRSER();
 
 	rser.sendEvent.subscribe((msg) => {
-		parentPort.postMessage(msg);
+		parentPort.postMessage(msg, [msg]);
 	});
 
 	bridge.endEvent.subscribe(() => {

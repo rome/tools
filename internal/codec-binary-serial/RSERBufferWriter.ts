@@ -20,8 +20,7 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 	public view: DataView;
 
 	static allocate(size: number): RSERBufferWriter {
-		// NB: Are there any downsides to this always be a SharedArrayBuffer?
-		return new RSERBufferWriter(new SharedArrayBuffer(size), new Map());
+		return new RSERBufferWriter(new ArrayBuffer(size), new Map());
 	}
 
 	protected onReferenceCreate() {}

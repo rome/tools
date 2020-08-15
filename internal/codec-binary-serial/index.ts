@@ -27,7 +27,7 @@ export function encodeRSERBuffer(val: RSERValue): ArrayBuffer {
 	const messageLength = observer.totalSize;
 
 	const buf = new RSERBufferWriter(
-		new SharedArrayBuffer(messageLength),
+		new ArrayBuffer(messageLength),
 		observer.references,
 	);
 	buf.encodeHeader(payloadLength);
