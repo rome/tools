@@ -18758,36 +18758,51 @@ const ___R$$priv$project$rome$$internal$pretty$format$index_ts$DEFAULT_OPTIONS =
 		const props = [];
 		const ignoreKeys = {};
 
-		if (obj instanceof Map) {
-			for (const [key, val] of obj) {
-				const formattedKey =
-					typeof key === "string"
-						? ___R$$priv$project$rome$$internal$pretty$format$index_ts$formatKey(
-								key,
-							)
-						: ___R$project$rome$$internal$pretty$format$index_ts$default(
-								key,
+		if (___R$project$rome$$internal$typescript$helpers$index_ts$isIterable(obj)) {
+			// Duck typing Map check
+			if (
+				typeof obj.keys === "function" &&
+				typeof obj.values === "function" &&
+				typeof obj.size === "number"
+			) {
+				for (const item of obj) {
+					if (Array.isArray(item) && item.length === 2) {
+						const [key, val] = item;
+						const formattedKey =
+							typeof key === "string"
+								? ___R$$priv$project$rome$$internal$pretty$format$index_ts$formatKey(
+										key,
+									)
+								: ___R$project$rome$$internal$pretty$format$index_ts$default(
+										key,
+										opts,
+									);
+						props.push(
+							___R$project$rome$$internal$markup$escape_ts$markup`${formattedKey} => ${___R$project$rome$$internal$pretty$format$index_ts$default(
+								val,
 								opts,
-							);
-				props.push(
-					___R$project$rome$$internal$markup$escape_ts$markup`${formattedKey} => ${___R$project$rome$$internal$pretty$format$index_ts$default(
-						val,
-						opts,
-					)}`,
-				);
-			}
-		} else if (
-			___R$project$rome$$internal$typescript$helpers$index_ts$isIterable(obj)
-		) {
-			let i = 0;
-			for (const val of obj) {
-				ignoreKeys[String(i++)] = val;
-				props.push(
-					___R$project$rome$$internal$markup$escape_ts$markup`${___R$project$rome$$internal$pretty$format$index_ts$default(
-						val,
-						opts,
-					)}`,
-				);
+							)}`,
+						);
+					} else {
+						props.push(
+							___R$project$rome$$internal$markup$escape_ts$markup`${___R$project$rome$$internal$pretty$format$index_ts$default(
+								item,
+								opts,
+							)}`,
+						);
+					}
+				}
+			} else {
+				let i = 0;
+				for (const val of obj) {
+					ignoreKeys[String(i++)] = val;
+					props.push(
+						___R$project$rome$$internal$markup$escape_ts$markup`${___R$project$rome$$internal$pretty$format$index_ts$default(
+							val,
+							opts,
+						)}`,
+					);
+				}
 			}
 		}
 
@@ -19052,21 +19067,22 @@ const ___R$$priv$project$rome$$internal$pretty$format$index_ts$DEFAULT_OPTIONS =
 			);
 		}
 
+		let labelKeys = [];
+
 		let label = ___R$project$rome$$internal$markup$escape_ts$markup`null`;
 
 		if (val.constructor !== undefined) {
 			label = ___R$project$rome$$internal$markup$escape_ts$markup`${val.constructor.name}`;
-		}
 
-		let labelKeys = [];
-
-		// If there's a string type or kind property then use it as the label
-		if (typeof val.type === "string") {
-			label = ___R$project$rome$$internal$markup$escape_ts$markup`${val.type}`;
-			labelKeys.push("type");
-		} else if (typeof val.kind === "string") {
-			label = ___R$project$rome$$internal$markup$escape_ts$markup`${val.kind}`;
-			labelKeys.push("kind");
+			if (val.constructor.name === "Object") {
+				if (typeof val.type === "string") {
+					label = ___R$project$rome$$internal$markup$escape_ts$markup`${val.type}`;
+					labelKeys.push("type");
+				} else if (typeof val.kind === "string") {
+					label = ___R$project$rome$$internal$markup$escape_ts$markup`${val.kind}`;
+					labelKeys.push("kind");
+				}
+			}
 		}
 
 		return ___R$$priv$project$rome$$internal$pretty$format$index_ts$formatObject(
@@ -19587,7 +19603,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	// to speed up the usage of FilePaths in these scenarios.
 	// The API here attempts to match what is expected from the native classes, however we may deviate from it
 	// to avoid the usage of getters and generator/symbol indirection for iteration.
-	class ___R$$priv$project$rome$$internal$path$collections_ts$FilePathMap {
+	class ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathMap {
 		constructor(entries) {
 			this.joinedToValue = new Map();
 			this.joinedToPath = new Map();
@@ -19653,7 +19669,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 		}
 	}
 
-	class ___R$$priv$project$rome$$internal$path$collections_ts$FilePathSet {
+	class ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathSet {
 		constructor(entries) {
 			this.map = this.createMap();
 			this.size = 0;
@@ -19706,7 +19722,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathMap {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathMap {
 		constructor(...args) {
 			super(...args);
 			this.type = "absolute";
@@ -19725,7 +19741,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathMap {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathMap {
 		constructor(...args) {
 			super(...args);
 			this.type = "relative";
@@ -19744,7 +19760,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathMap {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathMap {
 		constructor(...args) {
 			super(...args);
 			this.type = "unknown";
@@ -19763,7 +19779,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathSet {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathSet {
 		constructor(...args) {
 			super(...args);
 			this.type = "absolute";
@@ -19774,7 +19790,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathSet {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathSet {
 		constructor(...args) {
 			super(...args);
 			this.type = "relative";
@@ -19785,7 +19801,7 @@ const ___R$project$rome$$internal$path$collections_ts = {
 	}
 
 	class ___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet
-		extends ___R$$priv$project$rome$$internal$path$collections_ts$FilePathSet {
+		extends ___R$$priv$project$rome$$internal$path$collections_ts$BaseFilePathSet {
 		constructor(...args) {
 			super(...args);
 			this.type = "unknown";
@@ -19856,7 +19872,7 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 				? this.getExtensionlessBasename()
 				: this.getBasename();
 			const newExt = clearExt ? ext : this.memo.ext + ext;
-			const segments = this.getParentSegments(false).concat(newBasename + ext);
+			const segments = this.getParentSegments().concat(newBasename + ext);
 
 			return this._fork(
 				Object.assign({}, this.parsed, {segments}),
@@ -19869,7 +19885,7 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 		}
 
 		changeBasename(newBasename) {
-			const segments = this.getParentSegments(false).concat(newBasename);
+			const segments = this.getParentSegments().concat(newBasename);
 			return this._fork(
 				Object.assign({}, this.parsed, {segments}),
 				Object.assign(
@@ -19898,7 +19914,7 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 		}
 
 		hasParent() {
-			return this.getParentSegments().length > 0;
+			return !this.isRoot() && this.getParentSegments().length > 0;
 		}
 
 		getParent() {
@@ -19912,27 +19928,27 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 			}
 
 			const parent = this._fork(
-				Object.assign({}, this.parsed, {segments}),
+				Object.assign(
+					{},
+					this.parsed,
+					{
+						//explicitDirectory: true,
+						segments,
+					},
+				),
 				___R$$priv$project$rome$$internal$path$index_ts$createEmptyMemo(),
 			);
 			this.memo.parent = parent;
 			return parent;
 		}
 
-		getParentSegments(explicit = true) {
+		getParentSegments() {
 			// Should we throw an error?
 			if (this.isRoot()) {
 				return this.segments;
 			}
 
-			const segments = this.getSegments().slice(0, -1);
-
-			// Always make this an explicit directory
-			if (explicit && segments.length > 0 && segments[0] !== "") {
-				segments.push("");
-			}
-
-			return segments;
+			return this.getSegments().slice(0, -1);
 		}
 
 		preferExplicitRelative() {
@@ -19997,13 +20013,13 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 		}
 
 		isRoot() {
-			if (this.segments.length === 1) {
+			if (this.segments.length <= 1) {
 				return true;
 			}
 
 			if (this.segments.length === 2) {
 				// Explicit directory reference
-				return this.segments[1] === "";
+				return this.parsed.absoluteType === "windows-drive";
 			}
 
 			if (this.segments.length === 3) {
@@ -20169,8 +20185,12 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 				segments.push("");
 			}
 
-			if (this.isExplicitRelative()) {
-				segments.unshift("");
+			if (this.isExplicitRelative() && segments[0] !== "..") {
+				segments.unshift(".");
+			}
+
+			if (segments.length === 0) {
+				segments.push(".");
 			}
 
 			let filename;
@@ -20544,10 +20564,6 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 		hint,
 		overrides = {},
 	) {
-		if (segments.length === 0) {
-			throw new Error("Cannot construct a FilePath with zero segments");
-		}
-
 		let absoluteType = "posix";
 		let absoluteTarget;
 		let firstSeg = segments[0];
@@ -46168,40 +46184,177 @@ function ___R$$priv$project$rome$$internal$events$BridgeEvent_ts$validateDirecti
 	}
 
 
-  // project-rome/@internal/codec-rser/types.ts
+  // project-rome/@internal/codec-binary-serial/types.ts
 
 
 
-  // project-rome/@internal/codec-rser/codes.ts
-const ___R$project$rome$$internal$codec$rser$codes_ts$CODES = function() {
-		const CODES = {};
-		CODES[CODES["ARRAY"] = 0] = "ARRAY";
-		CODES[CODES["SET"] = 1] = "SET";
-		CODES[CODES["MAP"] = 2] = "MAP";
-		CODES[CODES["OBJECT"] = 3] = "OBJECT";
-		CODES[CODES["STRING"] = 4] = "STRING";
-		CODES[CODES["FILE_PATH"] = 5] = "FILE_PATH";
-		CODES[CODES["FILE_PATH_SET"] = 6] = "FILE_PATH_SET";
-		CODES[CODES["FILE_PATH_MAP"] = 7] = "FILE_PATH_MAP";
-		CODES[CODES["INT8"] = 8] = "INT8";
-		CODES[CODES["INT16"] = 9] = "INT16";
-		CODES[CODES["INT32"] = 10] = "INT32";
-		CODES[CODES["INT64"] = 11] = "INT64";
-		CODES[CODES["DOUBLE"] = 12] = "DOUBLE";
-		CODES[CODES["NAN"] = 13] = "NAN";
-		CODES[CODES["POSITIVE_INFINITY"] = 14] = "POSITIVE_INFINITY";
-		CODES[CODES["NEGATIVE_INFINITY"] = 15] = "NEGATIVE_INFINITY";
-		CODES[CODES["NEGATIVE_ZERO"] = 16] = "NEGATIVE_ZERO";
-		CODES[CODES["TRUE"] = 17] = "TRUE";
-		CODES[CODES["FALSE"] = 18] = "FALSE";
-		CODES[CODES["NULL"] = 19] = "NULL";
-		CODES[CODES["UNDEFINED"] = 20] = "UNDEFINED";
-		CODES[CODES["TEMPLATE"] = 21] = "TEMPLATE";
-		CODES[CODES["SYMBOL"] = 22] = "SYMBOL";
-		CODES[CODES["DATE"] = 23] = "DATE";
-		return CODES;
+  // project-rome/@internal/codec-binary-serial/codes.ts
+function ___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+		code,
+	) {
+		if (
+			___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES[code] ===
+			undefined
+		) {
+			return "?(" + code + ")";
+		} else {
+			return (
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES[code] +
+				"(" +
+				code +
+				")"
+			);
+		}
+	}
+	const ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES = function() {
+		const VALUE_CODES = {};
+		VALUE_CODES[VALUE_CODES["STRING"] = 0] = "STRING";
+		VALUE_CODES[VALUE_CODES["ARRAY"] = 1] = "ARRAY";
+		VALUE_CODES[VALUE_CODES["SET"] = 2] = "SET";
+		VALUE_CODES[VALUE_CODES["MAP"] = 3] = "MAP";
+		VALUE_CODES[VALUE_CODES["OBJECT"] = 4] = "OBJECT";
+		VALUE_CODES[VALUE_CODES["SYMBOL"] = 5] = "SYMBOL";
+		VALUE_CODES[VALUE_CODES["DATE"] = 6] = "DATE";
+		VALUE_CODES[VALUE_CODES["TRUE"] = 7] = "TRUE";
+		VALUE_CODES[VALUE_CODES["FALSE"] = 8] = "FALSE";
+		VALUE_CODES[VALUE_CODES["NULL"] = 9] = "NULL";
+		VALUE_CODES[VALUE_CODES["UNDEFINED"] = 10] = "UNDEFINED";
+		VALUE_CODES[VALUE_CODES["INT8"] = 11] = "INT8";
+		VALUE_CODES[VALUE_CODES["INT16"] = 12] = "INT16";
+		VALUE_CODES[VALUE_CODES["INT32"] = 13] = "INT32";
+		VALUE_CODES[VALUE_CODES["INT64"] = 14] = "INT64";
+		VALUE_CODES[VALUE_CODES["FLOAT"] = 15] = "FLOAT";
+		VALUE_CODES[VALUE_CODES["NAN"] = 16] = "NAN";
+		VALUE_CODES[VALUE_CODES["POSITIVE_INFINITY"] = 17] = "POSITIVE_INFINITY";
+		VALUE_CODES[VALUE_CODES["NEGATIVE_INFINITY"] = 18] = "NEGATIVE_INFINITY";
+		VALUE_CODES[VALUE_CODES["NEGATIVE_ZERO"] = 19] = "NEGATIVE_ZERO";
+		VALUE_CODES[VALUE_CODES["FILE_PATH"] = 20] = "FILE_PATH";
+		VALUE_CODES[VALUE_CODES["FILE_PATH_SET"] = 21] = "FILE_PATH_SET";
+		VALUE_CODES[VALUE_CODES["FILE_PATH_MAP"] = 22] = "FILE_PATH_MAP";
+		VALUE_CODES[VALUE_CODES["ERROR"] = 23] = "ERROR";
+		VALUE_CODES[VALUE_CODES["REGEXP"] = 24] = "REGEXP";
+		VALUE_CODES[VALUE_CODES["TEMPLATED_OBJECT_ARRAY"] = 25] = "TEMPLATED_OBJECT_ARRAY";
+		VALUE_CODES[VALUE_CODES["REFERENCE"] = 26] = "REFERENCE";
+		VALUE_CODES[VALUE_CODES["DECLARE_REFERENCE"] = 27] = "DECLARE_REFERENCE";
+		return VALUE_CODES;
 	}()
-	const ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES = function() {
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateValueCode(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.STRING:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SET:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.MAP:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.OBJECT:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SYMBOL:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DATE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TRUE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FALSE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NULL:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.UNDEFINED:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT8:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT16:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT32:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT64:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FLOAT:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NAN:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.POSITIVE_INFINITY:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_INFINITY:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_ZERO:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_SET:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_MAP:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ERROR:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REGEXP:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DECLARE_REFERENCE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REFERENCE:
+				return code;
+
+			default:
+				throw new Error("Invalid value code " + code);
+		}
+	}
+	const ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES = function() {
+		const ERROR_CODES = {};
+		ERROR_CODES[ERROR_CODES["REGULAR"] = 0] = "REGULAR";
+		ERROR_CODES[ERROR_CODES["EVAL"] = 1] = "EVAL";
+		ERROR_CODES[ERROR_CODES["RANGE"] = 2] = "RANGE";
+		ERROR_CODES[ERROR_CODES["REFERENCE"] = 3] = "REFERENCE";
+		ERROR_CODES[ERROR_CODES["SYNTAX"] = 4] = "SYNTAX";
+		ERROR_CODES[ERROR_CODES["TYPE"] = 5] = "TYPE";
+		ERROR_CODES[ERROR_CODES["URI"] = 6] = "URI";
+		return ERROR_CODES;
+	}()
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateErrorCode(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REGULAR:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.EVAL:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.RANGE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REFERENCE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.SYNTAX:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.TYPE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.URI:
+				return code;
+
+			default:
+				throw new Error("Invalid error code " + code);
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$instanceToErrorCode(
+		err,
+	) {
+		if (err instanceof EvalError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.EVAL;
+		} else if (err instanceof ReferenceError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REFERENCE;
+		} else if (err instanceof SyntaxError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.SYNTAX;
+		} else if (err instanceof TypeError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.TYPE;
+		} else if (err instanceof URIError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.URI;
+		} else if (err instanceof RangeError) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.RANGE;
+		} else {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REGULAR;
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$errorCodeToInstance(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.EVAL:
+				return new EvalError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.RANGE:
+				return new RangeError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REFERENCE:
+				return new ReferenceError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.SYNTAX:
+				return new SyntaxError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.TYPE:
+				return new TypeError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.URI:
+				return new URIError();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$ERROR_CODES.REGULAR:
+				return new Error();
+
+			default:
+				throw new Error("Invalid error code " + code);
+		}
+	}
+	const ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES = function() {
 		const FILE_CODES = {};
 		FILE_CODES[FILE_CODES["UNKNOWN"] = 0] = "UNKNOWN";
 		FILE_CODES[FILE_CODES["ABSOLUTE"] = 1] = "ABSOLUTE";
@@ -46209,41 +46362,193 @@ const ___R$project$rome$$internal$codec$rser$codes_ts$CODES = function() {
 		FILE_CODES[FILE_CODES["URL"] = 3] = "URL";
 		return FILE_CODES;
 	}()
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateFileCode(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE:
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.URL:
+				return code;
+
+			default:
+				throw new Error("Unknown file code " + code);
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathMapToCode(
+		map,
+	) {
+		if (
+			map instanceof
+			___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE;
+		} else if (
+			map instanceof
+			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE;
+		} else if (
+			map instanceof
+			___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN;
+		} else {
+			throw new Error("Unknown FilePath type");
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathSetToCode(
+		set,
+	) {
+		if (
+			set instanceof
+			___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE;
+		} else if (
+			set instanceof
+			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE;
+		} else if (
+			set instanceof
+			___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN;
+		} else {
+			throw new Error("Unknown FilePath type");
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathToCode(
+		path,
+	) {
+		if (
+			path instanceof
+			___R$project$rome$$internal$path$index_ts$RelativeFilePath
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE;
+		} else if (
+			path instanceof
+			___R$project$rome$$internal$path$index_ts$AbsoluteFilePath
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE;
+		} else if (
+			path instanceof
+			___R$project$rome$$internal$path$index_ts$UnknownFilePath
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN;
+		} else if (
+			path instanceof
+			___R$project$rome$$internal$path$index_ts$URLFilePath
+		) {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.URL;
+		} else {
+			throw new Error("Unknown FilePath type");
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathFromCode(
+		code,
+		filename,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE:
+				return ___R$project$rome$$internal$path$index_ts$createRelativeFilePath(
+					filename,
+				);
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE:
+				return ___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
+					filename,
+				);
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.URL:
+				return ___R$project$rome$$internal$path$index_ts$createURLFilePath(
+					filename,
+				);
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN:
+				return ___R$project$rome$$internal$path$index_ts$createUnknownFilePath(
+					filename,
+				);
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathMapFromCode(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN:
+				return new ___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE:
+				return new ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE:
+				return new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
+
+			default:
+				throw new Error("File path code " + code + " cannot be a map");
+		}
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathSetFromCode(
+		code,
+	) {
+		switch (code) {
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.UNKNOWN:
+				return new ___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.RELATIVE:
+				return new ___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet();
+
+			case ___R$project$rome$$internal$codec$binary$serial$codes_ts$FILE_CODES.ABSOLUTE:
+				return new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet();
+
+			default:
+				throw new Error("File path code " + code + " cannot be a map");
+		}
+	}
 
 
-  // project-rome/@internal/codec-rser/serialize.ts
-const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
-		"os",
-	);
-	const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT8 = 127;
-	const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT16 = 32_767;
-	const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT32 = 2_147_483_647;
+  // project-rome/@internal/codec-binary-serial/RSERBufferAssembler.ts
+const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT8 = 127;
+	const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT16 = 32_767;
+	const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT32 = 2_147_483_647;
 
-	// RSER uses the local endianness to reduce byte swapping overheads
-	// (the protocol is expressly local IPC only).  We need to tell node
-	// to use the native endianness when reading various native values.
-	const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$isBigEndian =
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os.endianness() ===
-		"BE";
-
-	class ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$BufferObserver {
+	class ___R$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$default {
 		constructor() {
 			this.totalSize = 0;
+			this.seenObjects = new Set();
+			this.references = new Map();
 		}
 
 		writeCode(code) {
 			this.totalSize += 1;
+			code;
 		}
 
 		writeByte(value) {
 			this.totalSize += 1;
+			value;
 		}
 
 		writeInt(value, size) {
 			this.totalSize += size;
 		}
 
-		writeDouble(value) {
+		// When we are writing the buffer, we will insert a header before all values that will be referenced
+		// We need to account for that here since we do it after the fact
+		onReferenceCreate(id) {
+			this.encodeDeclareReferenceHead(id);
+		}
+
+		writeFloat(value) {
+			value;
 			this.totalSize += 8;
 		}
 
@@ -46251,20 +46556,486 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 			this.totalSize += Buffer.byteLength(buf);
 		}
 
-		appendBuffer(buf, offset) {
-			this.totalSize += Buffer.byteLength(buf) - offset;
+		appendArray(buf, offset) {
+			this.totalSize += buf.byteLength - offset;
+		}
+
+		encodeHeader(size) {
+			this.writeByte(0);
+			this.writeByte(1);
+			this.encodeInt(size);
+		}
+
+		encodeBigInt(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT64,
+			);
+			this.writeInt(val, 8);
+		}
+
+		encodeInt(val) {
+			if (typeof val === "bigint") {
+				return this.encodeBigInt(val);
+			}
+
+			const abs = Math.abs(val);
+			if (
+				abs <=
+				___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT8
+			) {
+				this.writeCode(
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT8,
+				);
+				this.writeInt(val, 1);
+			} else if (
+				abs <=
+				___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT16
+			) {
+				this.writeCode(
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT16,
+				);
+				this.writeInt(val, 2);
+			} else if (
+				abs <=
+				___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$MAX_INT32
+			) {
+				this.writeCode(
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT32,
+				);
+				this.writeInt(val, 4);
+			} else {
+				this.encodeFloat(val);
+			}
+		}
+
+		encodeTemplatedObjectArray(arr) {
+			if (arr.length === 0) {
+				this.writeCode(
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY,
+				);
+				this.encodeInt(0);
+				return;
+			}
+
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TEMPLATED_OBJECT_ARRAY,
+			);
+
+			// Encode keys
+			const keys = Object.keys(arr[0]);
+			this.encodeInt(keys.length);
+			for (const key of keys) {
+				this.encodeStringValue(key);
+			}
+
+			// Encode entries
+			this.encodeInt(arr.length);
+			for (const obj of arr) {
+				for (const key of keys) {
+					const val = obj[key];
+					this.encodeValue(val);
+				}
+			}
+		}
+
+		encodeArray(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY,
+			);
+			this.encodeInt(val.length);
+			for (let i = 0; i < val.length; ++i) {
+				this.encodeValue(val[i]);
+			}
+		}
+
+		encodeSet(set) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SET,
+			);
+			this.encodeInt(set.size);
+			for (const elem of set) {
+				this.encodeValue(elem);
+			}
+		}
+
+		encodeMap(map) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.MAP,
+			);
+			this.encodeInt(map.size);
+			for (const [key, value] of map) {
+				this.encodeValue(key);
+				this.encodeValue(value);
+			}
+		}
+
+		encodeFilePathMap(map) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_MAP,
+			);
+			this.writeByte(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathMapToCode(
+					map,
+				),
+			);
+			this.encodeInt(map.size);
+			for (const [path, value] of map) {
+				this.encodeStringValue(path.join());
+				this.encodeValue(value);
+			}
+		}
+
+		encodeFilePathSet(set) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_SET,
+			);
+			this.writeByte(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathSetToCode(
+					set,
+				),
+			);
+			this.encodeInt(set.size);
+			for (const path of set) {
+				this.encodeStringValue(path.join());
+			}
+		}
+
+		encodeFilePath(path) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH,
+			);
+			this.writeByte(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathToCode(
+					path,
+				),
+			);
+			this.encodeStringValue(path.join());
+		}
+
+		encodeDate(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DATE,
+			);
+			this.encodeInt(val.valueOf());
+		}
+
+		encodeError(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ERROR,
+			);
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$instanceToErrorCode(
+					val,
+				),
+			);
+
+			const struct = ___R$project$rome$$internal$v8$errors_ts$getErrorStructure(
+				val,
+				0,
+				false,
+			);
+			this.encodeStringValue(struct.message == null ? "" : struct.message);
+			this.encodeValue(struct.stack);
+			this.encodePlainObject(struct.node);
+			this.encodeTemplatedObjectArray(struct.frames);
+
+			throw new Error("TODO");
+		}
+
+		encodeNull() {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NULL,
+			);
+		}
+
+		encodeRegExp(regex) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REGEXP,
+			);
+			this.encodeStringValue(regex.source);
+			this.encodeStringValue(regex.flags);
+		}
+
+		encodeReference(id) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REFERENCE,
+			);
+			this.encodeInt(id);
+		}
+
+		encodeDeclareReferenceHead(id) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DECLARE_REFERENCE,
+			);
+			this.encodeInt(id);
+		}
+
+		encodeObject(val) {
+			// Already a declared reference
+			const refId = this.references.get(val);
+			if (refId !== undefined) {
+				if (this.seenObjects.has(val)) {
+					this.encodeReference(refId);
+					return;
+				} else {
+					this.encodeDeclareReferenceHead(refId);
+				}
+			}
+
+			// Is this the second time we've seen this object?
+			if (this.seenObjects.has(val)) {
+				const id = this.references.size;
+				this.references.set(val, id);
+				this.onReferenceCreate(id);
+				this.encodeReference(id);
+				return;
+			}
+
+			this.seenObjects.add(val);
+
+			if (
+				val instanceof ___R$project$rome$$internal$path$index_ts$UnknownFilePath ||
+				val instanceof
+				___R$project$rome$$internal$path$index_ts$RelativeFilePath ||
+				val instanceof
+				___R$project$rome$$internal$path$index_ts$AbsoluteFilePath ||
+				val instanceof ___R$project$rome$$internal$path$index_ts$URLFilePath
+			) {
+				return this.encodeFilePath(val);
+			}
+
+			if (val instanceof Set) {
+				return this.encodeSet(val);
+			}
+
+			if (val instanceof Map) {
+				return this.encodeMap(val);
+			}
+
+			if (val instanceof Error) {
+				return this.encodeError(val);
+			}
+
+			if (val instanceof RegExp) {
+				return this.encodeRegExp(val);
+			}
+
+			if (
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap ||
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap ||
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap
+			) {
+				return this.encodeFilePathMap(val);
+			}
+
+			if (
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet ||
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet ||
+				val instanceof
+				___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet
+			) {
+				return this.encodeFilePathSet(val);
+			}
+
+			if (Array.isArray(val)) {
+				return this.encodeArray(val);
+			}
+
+			if (val instanceof Date) {
+				return this.encodeDate(val);
+			}
+
+			if (
+				___R$project$rome$$internal$typescript$helpers$index_ts$isPlainObject(
+					val,
+				)
+			) {
+				this.encodePlainObject(val);
+			} else {
+				throw new Error(
+					___R$project$rome$$internal$pretty$format$index_ts$pretty`Don't know how to serialize the object ${val} to RSER`,
+				);
+			}
+		}
+
+		encodePlainObject(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.OBJECT,
+			);
+
+			const keys = Object.keys(val);
+
+			// First pass to compute number of defined keys
+			let numKeys = keys.length;
+			for (let i = 0; i < keys.length; ++i) {
+				const key = keys[i];
+				const v = val[key];
+				if (typeof v === "undefined") {
+					numKeys--;
+				}
+			}
+
+			this.encodeInt(numKeys);
+
+			for (let i = 0; i < keys.length; ++i) {
+				const key = keys[i];
+				const v = val[key];
+				if (typeof v === "undefined") {
+					// Don't include it
+					continue;
+				}
+
+				this.encodeValue(key);
+				this.encodeValue(v);
+			}
+		}
+
+		encodeUndefined() {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.UNDEFINED,
+			);
+		}
+
+		encodeStringValue(val) {
+			this.encodeInt(Buffer.byteLength(val));
+			this.appendString(val);
+		}
+
+		encodeNumber(val) {
+			if (typeof val === "bigint" || (isFinite(val) && Math.floor(val) === val)) {
+				this.encodeInt(val);
+			} else {
+				this.encodeFloat(val);
+			}
+		}
+
+		encodeFloat(val) {
+			this.writeCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FLOAT,
+			);
+			this.writeFloat(val);
+		}
+
+		encodeValue(val) {
+			switch (typeof val) {
+				case "bigint":
+				case "number": {
+					// NaN
+					if (typeof val === "number" && isNaN(val)) {
+						this.writeCode(
+							___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NAN,
+						);
+						return;
+					}
+
+					// -0
+					if (Object.is(val, -0)) {
+						this.writeCode(
+							___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_ZERO,
+						);
+						return;
+					}
+
+					// +Infinity
+					if (val === Number.POSITIVE_INFINITY) {
+						this.writeCode(
+							___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.POSITIVE_INFINITY,
+						);
+						return;
+					}
+
+					// -Infinity
+					if (val === Number.NEGATIVE_INFINITY) {
+						this.writeCode(
+							___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_INFINITY,
+						);
+						return;
+					}
+
+					this.encodeNumber(val);
+					return;
+				}
+
+				case "undefined": {
+					return this.encodeUndefined();
+				}
+
+				case "string": {
+					this.writeCode(
+						___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.STRING,
+					);
+					this.encodeStringValue(val);
+					return;
+				}
+
+				case "boolean": {
+					this.writeByte(
+						val
+							? ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TRUE
+							: ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FALSE,
+					);
+					return;
+				}
+
+				case "symbol": {
+					this.writeCode(
+						___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SYMBOL,
+					);
+					const key = Symbol.keyFor(val);
+					if (key === undefined) {
+						throw new Error("Not a global symbol");
+					}
+					this.encodeStringValue(key);
+					return;
+				}
+
+				case "object": {
+					if (val === null) {
+						return this.encodeNull();
+					}
+
+					return this.encodeObject(val);
+				}
+			}
+
+			throw new Error(
+				___R$project$rome$$internal$pretty$format$index_ts$pretty`Don't know how to serialize the value ${val} to RSER`,
+			);
 		}
 	}
 
-	class ___R$project$rome$$internal$codec$rser$serialize_ts$RSERBufferWriter {
-		constructor(size) {
+
+  // project-rome/@internal/codec-binary-serial/RSERBufferWriter.ts
+const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$textEncoder = new TextEncoder();
+
+	class ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default
+		extends ___R$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$default {
+		constructor(buffer, references) {
+			super();
+			this.references = references;
+			this.totalSize = buffer.byteLength;
 			this.writeOffset = 0;
-			this.shared = new SharedArrayBuffer(size);
-			this.buffer = Buffer.from(this.shared);
+			this.buffer = buffer;
+			this.array = new Uint8Array(buffer);
+			this.view = new DataView(buffer);
 		}
 
+		static allocate(size) {
+			return new ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default(
+				new ArrayBuffer(size),
+				new Map(),
+			);
+		}
+
+		onReferenceCreate() {}
+
 		getWritableSize() {
-			return this.buffer.length - this.writeOffset;
+			return this.buffer.byteLength - this.writeOffset;
 		}
 
 		assertWritableSize(size) {
@@ -46281,18 +47052,19 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 			}
 		}
 
-		appendBuffer(buf) {
-			const size = buf.length;
+		appendArray(buf) {
+			const size = buf.byteLength;
 			this.assertWritableSize(size);
-			buf.copy(this.buffer, this.writeOffset);
+			this.array.set(buf, this.writeOffset);
 			this.writeOffset += size;
 		}
 
-		appendString(buf) {
-			const size = Buffer.byteLength(buf);
-			this.assertWritableSize(size);
-			this.buffer.write(buf, this.writeOffset);
-			this.writeOffset += size;
+		appendString(text) {
+			this.appendArray(
+				___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$textEncoder.encode(
+					text,
+				),
+			);
 		}
 
 		writeCode(code) {
@@ -46301,7 +47073,7 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 
 		writeByte(value) {
 			this.assertWritableSize(1);
-			this.buffer.writeInt8(value, this.writeOffset);
+			this.view.setInt8(this.writeOffset, value);
 			this.writeOffset++;
 		}
 
@@ -46310,13 +47082,7 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 
 			if (typeof value === "bigint") {
 				if (size === 8) {
-					if (
-						___R$$priv$project$rome$$internal$codec$rser$serialize_ts$isBigEndian
-					) {
-						this.buffer.writeBigInt64BE(value, this.writeOffset);
-					} else {
-						this.buffer.writeBigInt64LE(value, this.writeOffset);
-					}
+					this.view.setBigInt64(this.writeOffset, value);
 					this.writeOffset += size;
 					return;
 				} else {
@@ -46326,29 +47092,17 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 
 			switch (size) {
 				case 1: {
-					this.buffer.writeInt8(value, this.writeOffset);
+					this.view.setInt8(this.writeOffset, value);
 					break;
 				}
 
 				case 2: {
-					if (
-						___R$$priv$project$rome$$internal$codec$rser$serialize_ts$isBigEndian
-					) {
-						this.buffer.writeInt16BE(value, this.writeOffset);
-					} else {
-						this.buffer.writeInt16LE(value, this.writeOffset);
-					}
+					this.view.setInt16(this.writeOffset, value);
 					break;
 				}
 
 				case 4: {
-					if (
-						___R$$priv$project$rome$$internal$codec$rser$serialize_ts$isBigEndian
-					) {
-						this.buffer.writeInt32BE(value, this.writeOffset);
-					} else {
-						this.buffer.writeInt32LE(value, this.writeOffset);
-					}
+					this.view.setInt32(this.writeOffset, value);
 					break;
 				}
 
@@ -46359,576 +47113,26 @@ const ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$os = require(
 			this.writeOffset += size;
 		}
 
-		writeDouble(value) {
+		writeFloat(value) {
 			this.assertWritableSize(8);
-			if (___R$$priv$project$rome$$internal$codec$rser$serialize_ts$isBigEndian) {
-				this.buffer.writeDoubleBE(value, this.writeOffset);
-			} else {
-				this.buffer.writeDoubleLE(value, this.writeOffset);
-			}
+			this.view.setFloat64(this.writeOffset, value);
 			this.writeOffset += 8;
 		}
 	}
 
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$getDumpInt(
-		val,
-	) {
-		if (typeof val === "bigint") {
-			return [___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT64, 8];
-		}
 
-		const abs = Math.abs(val);
-		if (
-			abs <=
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT8
-		) {
-			return [___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT8, 1];
-		} else if (
-			abs <=
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT16
-		) {
-			return [___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT16, 2];
-		} else if (
-			abs <=
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$MAX_INT32
-		) {
-			return [___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT32, 4];
-		} else {
-			throw new Error("???");
-		}
-	}
+  // project-rome/@internal/codec-binary-serial/RSERBufferParser.ts
+const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$textDecoder = new TextDecoder();
 
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-		buf,
-		val,
-	) {
-		const [code, size] = ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$getDumpInt(
-			val,
-		);
-		buf.writeByte(code);
-		buf.writeInt(val, size);
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpArray(
-		buf,
-		val,
-	) {
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.ARRAY);
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			val.length,
-		);
-		for (let i = 0; i < val.length; ++i) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				val[i],
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpSet(
-		buf,
-		set,
-	) {
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.SET);
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			set.size,
-		);
-		for (const elem of set) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				elem,
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpMap(
-		buf,
-		map,
-	) {
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.MAP);
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			map.size,
-		);
-		for (const [key, value] of map) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				key,
-			);
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				value,
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePathMap(
-		buf,
-		map,
-	) {
-		buf.writeCode(
-			___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_MAP,
-		);
-		if (
-			map instanceof
-			___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE,
-			);
-		} else if (
-			map instanceof
-			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE,
-			);
-		} else if (
-			map instanceof
-			___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN,
-			);
-		} else {
-			throw new Error("Unknown FilePath type");
-		}
-
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			map.size,
-		);
-		for (const [path, value] of map) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-				buf,
-				path.join(),
-			);
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				value,
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePathSet(
-		buf,
-		set,
-	) {
-		buf.writeCode(
-			___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_SET,
-		);
-		if (
-			set instanceof
-			___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE,
-			);
-		} else if (
-			set instanceof
-			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE,
-			);
-		} else if (
-			set instanceof
-			___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN,
-			);
-		} else {
-			throw new Error("Unknown FilePath type");
-		}
-
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			set.size,
-		);
-		for (const path of set) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-				buf,
-				path.join(),
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePath(
-		buf,
-		path,
-	) {
-		buf.writeCode(
-			___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH,
-		);
-		if (
-			path instanceof
-			___R$project$rome$$internal$path$index_ts$RelativeFilePath
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE,
-			);
-		} else if (
-			path instanceof
-			___R$project$rome$$internal$path$index_ts$AbsoluteFilePath
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE,
-			);
-		} else if (
-			path instanceof
-			___R$project$rome$$internal$path$index_ts$UnknownFilePath
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN,
-			);
-		} else if (
-			path instanceof
-			___R$project$rome$$internal$path$index_ts$URLFilePath
-		) {
-			buf.writeByte(
-				___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.URL,
-			);
-		} else {
-			throw new Error("Unknown FilePath type");
-		}
-
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-			buf,
-			path.join(),
-		);
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpDate(
-		buf,
-		val,
-	) {
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.DATE);
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			val.valueOf(),
-		);
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpObject(
-		buf,
-		val,
-	) {
-		if (val === null) {
-			buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.NULL);
-			return;
-		}
-
-		if (
-			val instanceof ___R$project$rome$$internal$path$index_ts$UnknownFilePath ||
-			val instanceof ___R$project$rome$$internal$path$index_ts$RelativeFilePath ||
-			val instanceof ___R$project$rome$$internal$path$index_ts$AbsoluteFilePath ||
-			val instanceof ___R$project$rome$$internal$path$index_ts$URLFilePath
-		) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePath(
-				buf,
-				val,
-			);
-		}
-
-		if (val instanceof Set) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpSet(
-				buf,
-				val,
-			);
-		}
-
-		if (val instanceof Map) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpMap(
-				buf,
-				val,
-			);
-		}
-
-		if (
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap ||
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap ||
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap
-		) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePathMap(
-				buf,
-				val,
-			);
-		}
-
-		if (
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet ||
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet ||
-			val instanceof
-			___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet
-		) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpFilePathSet(
-				buf,
-				val,
-			);
-		}
-
-		if (Array.isArray(val)) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpArray(
-				buf,
-				val,
-			);
-		}
-
-		if (val instanceof Date) {
-			return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpDate(
-				buf,
-				val,
-			);
-		}
-
-		if (
-			___R$project$rome$$internal$typescript$helpers$index_ts$isPlainObject(val)
-		) {
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpPlainObject(
-				buf,
-				val,
-			);
-		} else {
-			throw new Error(
-				___R$project$rome$$internal$pretty$format$index_ts$pretty`Don't know how to serialize the object ${val} to RSER`,
-			);
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpPlainObject(
-		buf,
-		val,
-	) {
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.OBJECT);
-
-		const keys = Object.keys(val);
-
-		// First pass to compute number of defined keys
-		let numKeys = keys.length;
-		for (let i = 0; i < keys.length; ++i) {
-			const key = keys[i];
-			const v = val[key];
-			if (typeof v === "undefined") {
-				numKeys--;
-			}
-		}
-
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			numKeys,
-		);
-
-		for (let i = 0; i < keys.length; ++i) {
-			const key = keys[i];
-			const v = val[key];
-			if (typeof v === "undefined") {
-				// Don't include it
-				continue;
-			}
-
-			___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-				buf,
-				key,
-			);
-			try {
-				___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-					buf,
-					v,
-				);
-			} catch (err) {
-				throw new Error(
-					err.message + "  (while serializing object property with name " + key,
-				);
-			}
-		}
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-		buf,
-		val,
-	) {
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-			buf,
-			Buffer.byteLength(val),
-		);
-		buf.appendString(val);
-	}
-
-	function ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-		buf,
-		val,
-	) {
-		switch (typeof val) {
-			case "bigint":
-			case "number": {
-				// NaN
-				if (typeof val === "number" && isNaN(val)) {
-					buf.writeCode(
-						___R$project$rome$$internal$codec$rser$codes_ts$CODES.NAN,
-					);
-					return;
-				}
-
-				// -0
-				if (Object.is(val, -1)) {
-					buf.writeCode(
-						___R$project$rome$$internal$codec$rser$codes_ts$CODES.NEGATIVE_ZERO,
-					);
-					return;
-				}
-
-				// +Infinity
-				if (val === Number.POSITIVE_INFINITY) {
-					buf.writeCode(
-						___R$project$rome$$internal$codec$rser$codes_ts$CODES.POSITIVE_INFINITY,
-					);
-					return;
-				}
-
-				// -Infinity
-				if (val === Number.NEGATIVE_INFINITY) {
-					buf.writeCode(
-						___R$project$rome$$internal$codec$rser$codes_ts$CODES.POSITIVE_INFINITY,
-					);
-					return;
-				}
-
-				// Integer
-				if (
-					typeof val === "bigint" ||
-					(isFinite(val) && Math.floor(val) === val)
-				) {
-					___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpInt(
-						buf,
-						val,
-					);
-					return;
-				}
-
-				// Double/float
-				buf.writeCode(
-					___R$project$rome$$internal$codec$rser$codes_ts$CODES.DOUBLE,
-				);
-				buf.writeDouble(val);
-				return;
-			}
-
-			case "undefined": {
-				buf.writeCode(
-					___R$project$rome$$internal$codec$rser$codes_ts$CODES.UNDEFINED,
-				);
-				return;
-			}
-
-			case "string": {
-				buf.writeCode(
-					___R$project$rome$$internal$codec$rser$codes_ts$CODES.STRING,
-				);
-				___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-					buf,
-					val,
-				);
-				return;
-			}
-
-			case "boolean": {
-				buf.writeByte(
-					val
-						? ___R$project$rome$$internal$codec$rser$codes_ts$CODES.TRUE
-						: ___R$project$rome$$internal$codec$rser$codes_ts$CODES.FALSE,
-				);
-				return;
-			}
-
-			case "symbol": {
-				buf.writeCode(
-					___R$project$rome$$internal$codec$rser$codes_ts$CODES.SYMBOL,
-				);
-				const key = Symbol.keyFor(val);
-				if (key === undefined) {
-					throw new Error("Not a global symbol");
-				}
-				___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpStringValue(
-					buf,
-					key,
-				);
-				return;
-			}
-
-			case "object": {
-				return ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpObject(
-					buf,
-					val,
-				);
-			}
-		}
-
-		throw new Error(
-			___R$project$rome$$internal$pretty$format$index_ts$pretty`Don't know how to serialize the value ${val} to RSER`,
-		);
-	}
-
-	// RSER encode value and return a buffer of the contents
-	function ___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-		val,
-		onBuffer,
-	) {
-		// Calculate size
-		const observer = new ___R$$priv$project$rome$$internal$codec$rser$serialize_ts$BufferObserver();
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-			observer,
-			val,
-		);
-		const len = observer.totalSize;
-
-		// Allocate
-		const buf = new ___R$project$rome$$internal$codec$rser$serialize_ts$RSERBufferWriter(
-			len + 7,
-		);
-
-		// Write header
-		buf.writeByte(0);
-		buf.writeByte(1);
-
-		// Write PDU
-		buf.writeCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT32);
-		buf.writeInt(len, 4);
-
-		// Write data
-		___R$$priv$project$rome$$internal$codec$rser$serialize_ts$dumpUnknown(
-			buf,
-			val,
-		);
-
-		onBuffer(buf.shared, buf.buffer);
-	}
-
-
-  // project-rome/@internal/codec-rser/index.ts
-const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
-	// RSER uses the local endianness to reduce byte swapping overheads
-	// (the protocol is expressly local IPC only).  We need to tell node
-	// to use the native endianness when reading various native values.
-	const ___R$$priv$project$rome$$internal$codec$rser$index_ts$isBigEndian =
-		___R$$priv$project$rome$$internal$codec$rser$index_ts$os.endianness() ===
-		"BE";
-
-	class ___R$project$rome$$internal$codec$rser$index_ts$RSERBufferParser {
-		constructor(buffer) {
-			this.buffer = buffer;
+	class ___R$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$default {
+		constructor(view) {
+			this.view = view;
 			this.readOffset = 0;
+			this.references = new Map();
 		}
 
 		getReadableSize() {
-			return this.buffer.length - this.readOffset;
+			return this.view.byteLength - this.readOffset;
 		}
 
 		canRead(size) {
@@ -46949,15 +47153,13 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 
 		peekString(size) {
 			this.assertReadableSize(size);
-			return this.buffer.toString(
-				"utf8",
-				this.readOffset,
-				this.readOffset + size,
+			return ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$textDecoder.decode(
+				new DataView(this.view.buffer, this.readOffset, size),
 			);
 		}
 
 		readString() {
-			const size = this.decodeIntNumber();
+			const size = this.decodeNumber();
 			const str = this.peekString(size);
 			this.readOffset += size;
 			return str;
@@ -46968,26 +47170,26 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 
 			switch (size) {
 				case 1:
-					return this.buffer.readInt8(this.readOffset);
+					return this.view.getInt8(this.readOffset);
 
 				case 2:
-					return ___R$$priv$project$rome$$internal$codec$rser$index_ts$isBigEndian
-						? this.buffer.readInt16BE(this.readOffset)
-						: this.buffer.readInt16LE(this.readOffset);
+					return this.view.getInt16(this.readOffset);
 
 				case 4:
-					return ___R$$priv$project$rome$$internal$codec$rser$index_ts$isBigEndian
-						? this.buffer.readInt32BE(this.readOffset)
-						: this.buffer.readInt32LE(this.readOffset);
+					return this.view.getInt32(this.readOffset);
 
 				case 8:
-					return ___R$$priv$project$rome$$internal$codec$rser$index_ts$isBigEndian
-						? this.buffer.readBigInt64BE(this.readOffset)
-						: this.buffer.readBigInt64LE(this.readOffset);
+					return this.view.getBigInt64(this.readOffset);
 
 				default:
 					throw new Error("Invalid integer size " + size);
 			}
+		}
+
+		peekCode() {
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateValueCode(
+				this.peekInt(1),
+			);
 		}
 
 		readInt(bytes) {
@@ -46996,23 +47198,21 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			return ival;
 		}
 
-		peekDouble() {
-			this.assertReadableSize(8);
-			return ___R$$priv$project$rome$$internal$codec$rser$index_ts$isBigEndian
-				? this.buffer.readDoubleBE(this.readOffset)
-				: this.buffer.readDoubleLE(this.readOffset);
-		}
-
-		readDouble() {
-			const dval = this.peekDouble();
-			this.readOffset += 8;
-			return dval;
-		}
-
 		expectCode(expected) {
-			const code = this.readInt(1);
-			if (code !== expected) {
-				throw new Error("Expected RSER opcode " + expected + " but got " + code);
+			const got = this.peekCode();
+			if (got === expected) {
+				this.readOffset++;
+			} else {
+				throw new Error(
+					"Expected code " +
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+						expected,
+					) +
+					" but got " +
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+						got,
+					),
+				);
 			}
 		}
 
@@ -47023,11 +47223,200 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			if (this.canRead(1)) {
 				const size = this.getDecodeIntSize();
 				if (this.canRead(1 + size)) {
-					return this.decodeIntNumber();
+					return this.decodeNumber();
 				}
 			}
 
 			return false;
+		}
+
+		decodeDeclareReference() {
+			this.expectCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DECLARE_REFERENCE,
+			);
+			const id = this.decodeNumber();
+			const code = this.peekCode();
+
+			switch (code) {
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_MAP: {
+					const code = ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateFileCode(
+						this.view.getInt8(this.readOffset + 1),
+					);
+					const map = ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathMapFromCode(
+						code,
+					);
+					this.references.set(id, map);
+					return this.decodeFilePathMap(map);
+				}
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SET: {
+					const set = new Set();
+					this.references.set(id, set);
+					return this.decodeSet(set);
+				}
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.MAP: {
+					const map = new Map();
+					this.references.set(id, map);
+					return this.decodeMap(map);
+				}
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY: {
+					const arr = [];
+					this.references.set(id, arr);
+					return this.decodeArray(arr);
+				}
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.OBJECT: {
+					const obj = {};
+					this.references.set(id, obj);
+					return this.decodeObject(obj);
+				}
+			}
+
+			// These can never refer to itself
+			let val;
+			if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REGEXP
+			) {
+				val = this.decodeRegExp();
+			} else if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH
+			) {
+				val = this.decodeFilePath();
+			} else if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DATE
+			) {
+				val = this.decodeDate();
+			} else if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_SET
+			) {
+				val = this.decodeFilePathSet();
+			} else if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ERROR
+			) {
+				val = this.decodeError();
+			} else {
+				throw new Error(
+					"Don't know how to decode reference " +
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+						code,
+					),
+				);
+			}
+			this.references.set(id, val);
+			return val;
+		}
+
+		decodeReference() {
+			this.expectCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REFERENCE,
+			);
+			const id = this.decodeNumber();
+			const ref = this.references.get(id);
+			if (ref === undefined) {
+				throw new Error("Invalid reference " + id + " does not exist");
+			} else {
+				return ref;
+			}
+		}
+
+		decodeValue() {
+			const code = this.peekCode();
+
+			switch (code) {
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT8:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT16:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT32:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT64:
+					return this.decodeInt();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REFERENCE:
+					return this.decodeReference();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DECLARE_REFERENCE:
+					return this.decodeDeclareReference();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FLOAT:
+					return this.decodeFloat();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SYMBOL:
+					return this.decodeSymbol();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TRUE:
+					return this.decodeTrue();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FALSE:
+					return this.decodeFalse();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NULL:
+					return this.decodeNull();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.UNDEFINED:
+					return this.decodeUndefined();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NAN:
+					return this.decodeNaN();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.POSITIVE_INFINITY:
+					return this.decodePositiveInfinity();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_INFINITY:
+					return this.decodeNegativeInfinity();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.NEGATIVE_ZERO:
+					return this.decodeNegativeZero();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH:
+					return this.decodeFilePath();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_MAP:
+					return this.decodeFilePathMap();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_SET:
+					return this.decodeFilePathSet();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SET:
+					return this.decodeSet();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.MAP:
+					return this.decodeMap();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ERROR:
+					return this.decodeError();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.STRING:
+					return this.decodeString();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY:
+					return this.decodeArray();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.OBJECT:
+					return this.decodeObject();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REGEXP:
+					return this.decodeRegExp();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
+					return this.decodeTemplatedObjectArray();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DATE:
+					return this.decodeDate();
+
+				default:
+					throw new Error(
+						"Unhandled " +
+						___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+							code,
+						) +
+						" code",
+					);
+			}
 		}
 
 		decodeSymbol() {
@@ -47076,127 +47465,76 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			return undefined;
 		}
 
-		decodeDouble() {
+		decodeFloat() {
 			this.readOffset++;
-			return this.readDouble();
+			this.assertReadableSize(8);
+			const num = this.view.getFloat64(this.readOffset);
+			this.readOffset += 8;
+			return num;
 		}
 
-		decodeValue() {
-			const code = this.peekInt(1);
-			if (typeof code !== "number") {
-				throw new Error("Expected " + code + " to be a number not a bigint");
-			}
-
-			switch (code) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT8:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT16:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT32:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT64:
-					return this.decodeInt();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.SYMBOL:
-					return this.decodeSymbol();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.DOUBLE:
-					return this.decodeDouble();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.TRUE:
-					return this.decodeTrue();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.FALSE:
-					return this.decodeFalse();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.NULL:
-					return this.decodeNull();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.UNDEFINED:
-					return this.decodeUndefined();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.NAN:
-					return this.decodeNaN();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.POSITIVE_INFINITY:
-					return this.decodePositiveInfinity();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.NEGATIVE_INFINITY:
-					return this.decodeNegativeInfinity();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.NEGATIVE_ZERO:
-					return this.decodeNegativeZero();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH:
-					return this.decodeFilePath();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_MAP:
-					return this.decodeFilePathMap();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_SET:
-					return this.decodeFilePathSet();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.SET:
-					return this.decodeSet();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.MAP:
-					return this.decodeMap();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.STRING:
-					return this.decodeString();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.ARRAY:
-					return this.decodeArray();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.OBJECT:
-					return this.decodeObject();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.TEMPLATE:
-					return this.decodeTemplate();
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.DATE:
-					return this.decodeDate();
-
-				default:
-					throw new Error("Unhandled RSER opcode " + code);
-			}
-		}
-
-		decodeArray() {
+		decodeRegExp() {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.ARRAY,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.REGEXP,
+			);
+			const pattern = this.readString();
+			const flags = this.readString();
+			return new RegExp(pattern, flags);
+		}
+
+		decodeArray(arr = []) {
+			this.expectCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY,
 			);
 			const nitems = this.decodeInt();
-			const arr = [];
 			for (let i = 0; i < nitems; ++i) {
 				arr.push(this.decodeValue());
 			}
 			return arr;
 		}
 
-		decodeObject() {
+		decodeObject(obj = {}) {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.OBJECT,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.OBJECT,
 			);
 			const nitems = this.decodeInt();
-			const res = {};
 			for (let i = 0; i < nitems; ++i) {
 				const key = this.decodeString();
 				const val = this.decodeValue();
-				res[key] = val;
+				obj[key] = val;
 			}
-			return res;
+			return obj;
 		}
 
-		decodeTemplate() {
+		decodeTemplatedObjectArray(arr = []) {
+			// Sometimes we may encode a templated object array to a regular array (like when there's no elements)
+			const code = this.peekCode();
+			if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.ARRAY
+			) {
+				return this.decodeArray(arr);
+			}
+
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.TEMPLATE,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.TEMPLATED_OBJECT_ARRAY,
 			);
-			const keys = this.decodeArray();
+
+			// Decode keys
+			const nkeys = this.decodeInt();
+			const keys = [];
+			for (let i = 0; i < nkeys; ++i) {
+				keys.push(this.readString());
+			}
+
+			// Decode array and objects
 			const nitems = this.decodeInt();
-			const arr = [];
 			for (let i = 0; i < nitems; ++i) {
 				const obj = {};
 				for (let keyidx = 0; keyidx < keys.length; ++keyidx) {
 					const val = this.decodeValue();
-					obj[String(keys[keyidx])] = val;
+					const key = keys[keyidx];
+					obj[key] = val;
 				}
 				arr.push(obj);
 			}
@@ -47205,80 +47543,40 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 
 		decodeDate() {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.DATE,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.DATE,
 			);
-			const time = this.decodeIntNumber();
+			const time = this.decodeNumber();
 			return new Date(time);
 		}
 
 		decodeFilePathCode() {
-			const code = this.readInt(1);
-			switch (code) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE:
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.URL:
-					return code;
-
-				default:
-					throw new Error("Expected valid file path code but got " + code);
-			}
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateFileCode(
+				this.readInt(1),
+			);
 		}
 
 		decodeFilePath() {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH,
 			);
-			const filePathCode = this.decodeFilePathCode();
+			const code = this.decodeFilePathCode();
 			const str = this.readString();
-			switch (filePathCode) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE:
-					return ___R$project$rome$$internal$path$index_ts$createRelativeFilePath(
-						str,
-					);
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE:
-					return ___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
-						str,
-					);
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.URL:
-					return ___R$project$rome$$internal$path$index_ts$createURLFilePath(
-						str,
-					);
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN:
-					return ___R$project$rome$$internal$path$index_ts$createUnknownFilePath(
-						str,
-					);
-			}
+			return ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathFromCode(
+				code,
+				str,
+			);
 		}
 
-		decodeFilePathMap() {
+		decodeFilePathMap(map) {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_MAP,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_MAP,
 			);
 
-			let map;
-			const filePathCode = this.decodeFilePathCode();
-			switch (filePathCode) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN: {
-					map = new ___R$project$rome$$internal$path$collections_ts$UnknownFilePathMap();
-					break;
-				}
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE: {
-					map = new ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap();
-					break;
-				}
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE: {
-					map = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
-					break;
-				}
-
-				default:
-					throw new Error("File path " + filePathCode + " is not a valid map");
+			const code = this.decodeFilePathCode();
+			if (map === undefined) {
+				map = ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathMapFromCode(
+					code,
+				);
 			}
 
 			const nitems = this.decodeInt();
@@ -47292,30 +47590,13 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 
 		decodeFilePathSet() {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.FILE_PATH_SET,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FILE_PATH_SET,
 			);
 
-			let set;
-			const filePathCode = this.decodeFilePathCode();
-			switch (filePathCode) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.UNKNOWN: {
-					set = new ___R$project$rome$$internal$path$collections_ts$UnknownFilePathSet();
-					break;
-				}
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.RELATIVE: {
-					set = new ___R$project$rome$$internal$path$collections_ts$RelativeFilePathSet();
-					break;
-				}
-
-				case ___R$project$rome$$internal$codec$rser$codes_ts$FILE_CODES.ABSOLUTE: {
-					set = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet();
-					break;
-				}
-
-				default:
-					throw new Error("File path " + filePathCode + " is not a valid map");
-			}
+			const code = this.decodeFilePathCode();
+			const set = ___R$project$rome$$internal$codec$binary$serial$codes_ts$filePathSetFromCode(
+				code,
+			);
 
 			const nitems = this.decodeInt();
 			for (let i = 0; i < nitems; ++i) {
@@ -47324,19 +47605,21 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			return set;
 		}
 
-		decodeSet() {
-			this.expectCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.SET);
+		decodeSet(set = new Set()) {
+			this.expectCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.SET,
+			);
 			const nitems = this.decodeInt();
-			const set = new Set();
 			for (let i = 0; i < nitems; ++i) {
 				set.add(this.decodeValue());
 			}
 			return set;
 		}
 
-		decodeMap() {
-			this.expectCode(___R$project$rome$$internal$codec$rser$codes_ts$CODES.MAP);
-			const map = new Map();
+		decodeMap(map = new Map()) {
+			this.expectCode(
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.MAP,
+			);
 			const nitems = this.decodeInt();
 			for (let i = 0; i < nitems; ++i) {
 				const key = this.decodeValue();
@@ -47346,9 +47629,57 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			return map;
 		}
 
+		decodeError() {
+			this.readOffset++;
+
+			const errorCode = ___R$project$rome$$internal$codec$binary$serial$codes_ts$validateErrorCode(
+				this.readInt(1),
+			);
+			const message = this.readString();
+			const stack = this.decodeStringOrVoid();
+
+			const err = ___R$project$rome$$internal$codec$binary$serial$codes_ts$errorCodeToInstance(
+				errorCode,
+			);
+			err.message = message;
+			err.stack = stack;
+
+			// @ts-ignore: Validating these is expensive but we can be confident on the validity
+			const nodeProps = this.decodeObject();
+			___R$project$rome$$internal$v8$errors_ts$setNodeErrorProps(err, nodeProps);
+
+			// @ts-ignore: ^^
+			const frames = this.decodeTemplatedObjectArray();
+			___R$project$rome$$internal$v8$errors_ts$setErrorFrames(err, frames);
+
+			return err;
+		}
+
+		decodeStringOrVoid() {
+			const code = this.peekCode();
+			if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.UNDEFINED
+			) {
+				return this.decodeUndefined();
+			} else if (
+				code ===
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.STRING
+			) {
+				return this.decodeString();
+			} else {
+				throw new Error(
+					"Expected string or undefined but got " +
+					___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+						code,
+					),
+				);
+			}
+		}
+
 		decodeString() {
 			this.expectCode(
-				___R$project$rome$$internal$codec$rser$codes_ts$CODES.STRING,
+				___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.STRING,
 			);
 			return this.readString();
 		}
@@ -47360,39 +47691,66 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			return this.readInt(size);
 		}
 
-		decodeIntNumber() {
-			const num = this.decodeInt();
-			if (typeof num === "bigint") {
-				throw new Error("Did not expect a bigint");
-			} else {
-				return num;
+		decodeNumber() {
+			const code = this.peekCode();
+
+			switch (code) {
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT8:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT16:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT32: {
+					const num = this.decodeInt();
+					if (typeof num === "bigint") {
+						throw new Error("Did not expect a bigint");
+					} else {
+						return num;
+					}
+				}
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.FLOAT:
+					return this.decodeFloat();
+
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT64:
+					throw new Error("Unexpected bigint, only regular numbers accepted");
+
+				default:
+					throw new Error(
+						___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+							code,
+						) + " is not a valid number code",
+					);
 			}
 		}
 
 		getDecodeIntSize() {
 			const code = this.peekInt(1);
 			switch (code) {
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT8:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT8:
 					return 1;
 
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT16:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT16:
 					return 2;
 
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT32:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT32:
 					return 4;
 
-				case ___R$project$rome$$internal$codec$rser$codes_ts$CODES.INT64:
+				case ___R$project$rome$$internal$codec$binary$serial$codes_ts$VALUE_CODES.INT64:
 					return 8;
 
 				default:
-					throw new Error("Invalid RSER int encoding " + code);
+					throw new Error(
+						"No int encoding for " +
+						___R$project$rome$$internal$codec$binary$serial$codes_ts$formatCode(
+							code,
+						),
+					);
 			}
 		}
 	}
 
-	class ___R$project$rome$$internal$codec$rser$index_ts$RSERStream {
+
+  // project-rome/@internal/codec-binary-serial/RSERStream.ts
+class ___R$project$rome$$internal$codec$binary$serial$RSERStream_ts$default {
 		constructor() {
-			this.processLaterQueued = false;
 			this.state = this.createWaitingState();
 			this.overflow = [];
 
@@ -47403,16 +47761,32 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 			this.valueEvent = new ___R$project$rome$$internal$events$Event_ts$default({
 				name: "RSERStream.value",
 			});
+
+			this.sendEvent = new ___R$project$rome$$internal$events$Event_ts$default({
+				name: "RSERStream.sendEvent",
+			});
 		}
 
 		createWaitingState() {
 			return {
 				type: "WAITING",
 				// Max size of the message header
-				writer: new ___R$project$rome$$internal$codec$rser$serialize_ts$RSERBufferWriter(
+				writer: ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default.allocate(
 					7,
 				),
 			};
+		}
+
+		send(val) {
+			try {
+				this.sendEvent.send(
+					___R$project$rome$$internal$codec$binary$serial$index_ts$encodeRSERBuffer(
+						val,
+					),
+				);
+			} catch (err) {
+				this.errorEvent.send(err);
+			}
 		}
 
 		append(buf) {
@@ -47420,9 +47794,9 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 
 			try {
 				// Fast path for appending a full message
-				if (type === "WAITING" && writer.writeOffset === 0 && buf.length > 7) {
-					const reader = new ___R$project$rome$$internal$codec$rser$index_ts$RSERBufferParser(
-						buf,
+				if (type === "WAITING" && writer.writeOffset === 0 && buf.byteLength > 7) {
+					const reader = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$default(
+						new DataView(buf),
 					);
 					const payloadLength = reader.decodeHeader();
 					if (
@@ -47436,14 +47810,16 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 				}
 
 				// Push to overflow queue if necessary
+				let arr = new Uint8Array(buf);
+
 				const remaining = writer.getWritableSize();
-				if (remaining < buf.length) {
+				if (remaining < arr.byteLength) {
 					// Slicing Node buffers is cheap since it just creates a view
-					this.overflow.push(buf.slice(remaining));
-					buf = buf.slice(0, remaining);
+					this.overflow.push(arr.slice(remaining));
+					arr = arr.slice(0, remaining);
 				}
 
-				writer.appendBuffer(buf);
+				writer.appendArray(arr);
 				this.process();
 			} catch (err) {
 				this.errorEvent.send(err);
@@ -47451,25 +47827,28 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 		}
 
 		setState(state) {
-			this.state = state;
+			try {
+				this.state = state;
+				const {writer} = this.state;
 
-			const {writer} = this.state;
+				while (this.overflow.length > 0 && writer.getWritableSize() > 0) {
+					let entry = this.overflow[0];
+					const writableSize = writer.getWritableSize();
 
-			while (this.overflow.length > 0 && writer.getWritableSize() > 0) {
-				let entry = this.overflow[0];
-				const writableSize = writer.getWritableSize();
+					const bufferSize = Buffer.byteLength(entry);
+					if (bufferSize > writableSize) {
+						this.overflow[0] = entry.slice(writableSize);
+						entry = entry.slice(0, writableSize);
+					} else {
+						this.overflow.shift();
+					}
 
-				const bufferSize = Buffer.byteLength(entry);
-				if (bufferSize > writableSize) {
-					this.overflow[0] = entry.slice(writableSize);
-					entry = entry.slice(0, writableSize);
-				} else {
-					this.overflow.shift();
+					writer.appendArray(entry);
+
+					this.process();
 				}
-
-				writer.appendBuffer(entry);
-
-				this.process();
+			} catch (err) {
+				this.errorEvent.send(err);
 			}
 		}
 
@@ -47481,19 +47860,26 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 					return;
 				}
 
-				const reader = new ___R$project$rome$$internal$codec$rser$index_ts$RSERBufferParser(
-					writer.buffer,
+				const reader = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$default(
+					writer.view,
 				);
 				const payloadLength = reader.decodeHeader();
 				if (payloadLength === false) {
 					return;
 				}
 
+				// The header buffer is set to the maximum size it could be, but there could still be data left so push it on.
+				const leftover = reader.getReadableSize();
+				const payloadWriter = ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default.allocate(
+					payloadLength + leftover,
+				);
+				if (leftover > 0) {
+					payloadWriter.appendArray(writer.array.slice(reader.readOffset));
+				}
+
 				this.setState({
 					type: "READING",
-					writer: new ___R$project$rome$$internal$codec$rser$serialize_ts$RSERBufferWriter(
-						payloadLength,
-					),
+					writer: payloadWriter,
 				});
 			}
 
@@ -47504,14 +47890,34 @@ const ___R$$priv$project$rome$$internal$codec$rser$index_ts$os = require("os");
 				}
 
 				// We have enough to decode it
-				const reader = new ___R$project$rome$$internal$codec$rser$index_ts$RSERBufferParser(
-					writer.buffer,
+				const reader = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$default(
+					writer.view,
 				);
 				const val = reader.decodeValue();
 				this.valueEvent.send(val);
 				this.setState(this.createWaitingState());
 			}
 		}
+	}
+
+
+  // project-rome/@internal/codec-binary-serial/index.ts
+function ___R$project$rome$$internal$codec$binary$serial$index_ts$encodeRSERBuffer(
+		val,
+	) {
+		const observer = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$default();
+		observer.encodeValue(val);
+		const payloadLength = observer.totalSize;
+		observer.encodeHeader(payloadLength);
+		const messageLength = observer.totalSize;
+
+		const buf = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default(
+			new ArrayBuffer(messageLength),
+			observer.references,
+		);
+		buf.encodeHeader(payloadLength);
+		buf.encodeValue(val);
+		return buf.buffer;
 	}
 
 
@@ -47732,7 +48138,7 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 		}
 
 		attachRSER() {
-			const buf = new ___R$project$rome$$internal$codec$rser$index_ts$RSERStream();
+			const buf = new ___R$project$rome$$internal$codec$binary$serial$RSERStream_ts$default();
 
 			buf.errorEvent.subscribe((err) => {
 				this.endWithError(err);
@@ -47944,9 +48350,9 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 			}
 
 			if (id === undefined) {
-				// We don't need to do anything with the return value of this since
-				// there's nothing on the other end to catch it
-				eventHandler.dispatchRequest(param);
+				eventHandler.dispatchRequest(param).catch((err) => {
+					this.endWithError(err);
+				});
 			} else {
 				if (priority) {
 					this.prioritizedResponses.add(id);
@@ -47991,26 +48397,25 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 				opts,
 				{
 					sendMessage: (data) => {
-						___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-							data,
-							(shared, buffer) => {
-								inf.send(buffer);
-							},
-						);
+						rser.send(data);
 					},
 				},
 			),
 		);
 
 		const {socket} = inf;
-		const buf = bridge.attachRSER();
+		const rser = bridge.attachRSER();
+
+		rser.sendEvent.subscribe((buf) => {
+			inf.send(Buffer.from(buf));
+		});
 
 		bridge.endEvent.subscribe(() => {
 			socket.end();
 		});
 
 		inf.completeFrameEvent.subscribe((frame) => {
-			buf.append(frame.payload);
+			rser.append(frame.payload.buffer);
 		});
 
 		socket.on(
@@ -48041,25 +48446,30 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 				opts,
 				{
 					sendMessage: (data) => {
-						___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-							data,
-							(shared, buffer) => {
-								socket.send(buffer);
-							},
-						);
+						rser.send(data);
 					},
 				},
 			),
 		);
 
-		const buf = bridge.attachRSER();
+		const rser = bridge.attachRSER();
+
+		rser.sendEvent.subscribe((buf) => {
+			socket.send(buf);
+		});
 
 		bridge.endEvent.subscribe(() => {
 			socket.close();
 		});
 
+		socket.binaryType = "arraybuffer";
+
 		socket.onmessage = function(event) {
-			buf.append(new Buffer(event.data));
+			const {data} = event;
+			if (!(data instanceof ArrayBuffer)) {
+				throw new Error("Expected ArrayBuffer");
+			}
+			rser.append(data);
 		};
 
 		socket.onclose = () => {
@@ -48080,18 +48490,17 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 				opts,
 				{
 					sendMessage: (data) => {
-						___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-							data,
-							(shared, buffer) => {
-								socket.write(buffer);
-							},
-						);
+						rser.send(data);
 					},
 				},
 			),
 		);
 
-		const buf = bridge.attachRSER();
+		const rser = bridge.attachRSER();
+
+		rser.sendEvent.subscribe((buf) => {
+			socket.write(new Uint8Array(buf));
+		});
 
 		bridge.endEvent.subscribe(() => {
 			socket.end();
@@ -48100,7 +48509,7 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 		socket.on(
 			"data",
 			(chunk) => {
-				buf.append(chunk);
+				rser.append(chunk.buffer);
 			},
 		);
 
@@ -48152,18 +48561,17 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 				opts,
 				{
 					sendMessage: (data) => {
-						___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-							data,
-							(buf) => {
-								worker.postMessage(buf);
-							},
-						);
+						rser.send(data);
 					},
 				},
 			),
 		);
 
-		const buf = bridge.attachRSER();
+		const rser = bridge.attachRSER();
+
+		rser.sendEvent.subscribe((msg) => {
+			worker.postMessage(msg, [msg]);
+		});
 
 		bridge.endEvent.subscribe(() => {
 			worker.terminate();
@@ -48172,7 +48580,7 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 		worker.on(
 			"message",
 			(msg) => {
-				buf.append(Buffer.from(msg));
+				rser.append(msg);
 			},
 		);
 
@@ -48215,18 +48623,17 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 				opts,
 				{
 					sendMessage: (data) => {
-						___R$project$rome$$internal$codec$rser$serialize_ts$dumpToBuffer(
-							data,
-							(buf) => {
-								parentPort.postMessage(buf);
-							},
-						);
+						rser.send(data);
 					},
 				},
 			),
 		);
 
-		const buf = bridge.attachRSER();
+		const rser = bridge.attachRSER();
+
+		rser.sendEvent.subscribe((msg) => {
+			parentPort.postMessage(msg, [msg]);
+		});
 
 		bridge.endEvent.subscribe(() => {
 			parentPort.close();
@@ -48235,7 +48642,7 @@ const ___R$project$rome$$internal$events$bridgeCreators_ts = {
 		parentPort.on(
 			"message",
 			(msg) => {
-				buf.append(Buffer.from(msg));
+				rser.append(msg);
 			},
 		);
 
@@ -58957,10 +59364,13 @@ function ___R$project$rome$$internal$formatter$builders$js$classes$JSClassDeclar
 			}
 		}
 
-		tokens.push("class", ___R$project$rome$$internal$formatter$tokens_ts$space);
+		tokens.push("class");
 
 		if (node.id) {
-			tokens.push(builder.tokenize(node.id, node));
+			tokens.push(
+				___R$project$rome$$internal$formatter$tokens_ts$space,
+				builder.tokenize(node.id, node),
+			);
 		}
 
 		tokens.push(
@@ -59959,7 +60369,7 @@ function ___R$project$rome$$internal$formatter$builders$js$auxiliary$JSFunctionH
 		const printedParameters = ___R$project$rome$$internal$formatter$builders$js$utils_ts$printBindingPatternParams(
 			builder,
 			node,
-			node.params,
+			node.thisType ? [node.thisType, ...node.params] : node.params,
 			node.rest,
 		);
 
@@ -66159,36 +66569,6 @@ const ___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateCase_ts$defa
 	});
 
 
-  // project-rome/@internal/compiler/lint/rules/js/noDuplicateGroupNamesInRegularExpressions.ts
-const ___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateGroupNamesInRegularExpressions_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noDuplicateGroupNamesInRegularExpressions",
-		enter(path) {
-			const {context, node} = path;
-
-			if (node.type === "JSRegExpSubExpression") {
-				const duplicates = new ___R$project$rome$$internal$compiler$lib$DiagnosticsDuplicateHelper_ts$DiagnosticsDuplicateHelper(
-					context,
-					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_DUPLICATE_REGEX_GROUP_NAME,
-				);
-
-				for (const bodyItem of node.body) {
-					if (bodyItem.type === "JSRegExpGroupCapture") {
-						const groupName = bodyItem.name;
-
-						if (groupName !== undefined) {
-							duplicates.addLocation(groupName, bodyItem.loc);
-						}
-					}
-				}
-
-				duplicates.process();
-			}
-
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
   // project-rome/@internal/compiler/lint/rules/js/noDuplicateImportSource.ts
 const ___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateImportSource_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
 		name: "js/duplicateImport",
@@ -66399,90 +66779,6 @@ function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyBlocks_
 				}
 			}
 
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
-  // project-rome/@internal/compiler/lint/rules/js/noEmptyCharacterClass.ts
-const ___R$project$rome$$internal$compiler$lint$rules$js$noEmptyCharacterClass_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noEmptyCharacterClass",
-		enter(path) {
-			const {context, node} = path;
-
-			if (
-				node.type === "JSRegExpCharSet" &&
-				node.body.length === 0 &&
-				!node.invert
-			) {
-				context.addNodeDiagnostic(
-					node,
-					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_EMPTY_CHAR_SET,
-				);
-				return ___R$project$rome$$internal$compiler$index_ts$signals.remove;
-			}
-
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
-  // project-rome/@internal/compiler/lint/rules/js/noEmptyMatches.ts
-function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$isQuantifiedMinZero(
-		el,
-	) {
-		return el.type === "JSRegExpQuantified" && el.min === 0;
-	}
-
-	function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$lintEmptyMatches(
-		expr,
-	) {
-		if (expr.type === "JSRegExpSubExpression") {
-			for (const item of expr.body) {
-				let matches = false;
-				if (
-					item.type === "JSRegExpGroupNonCapture" ||
-					item.type === "JSRegExpGroupCapture"
-				) {
-					matches = ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$lintEmptyMatches(
-						item.expression,
-					);
-				} else {
-					matches = ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$isQuantifiedMinZero(
-						item,
-					);
-				}
-				if (!matches) {
-					return false;
-				}
-			}
-			return true;
-		} else {
-			return (
-				___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$lintEmptyMatches(
-					expr.left,
-				) ||
-				___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$lintEmptyMatches(
-					expr.right,
-				)
-			);
-		}
-	}
-	const ___R$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noEmptyMatches",
-		enter(path) {
-			const {context, node} = path;
-			if (
-				node.type === "JSRegExpLiteral" &&
-				___R$$priv$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$lintEmptyMatches(
-					node.expression,
-				)
-			) {
-				context.addNodeDiagnostic(
-					node,
-					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_EMPTY_MATCHES,
-				);
-			}
 			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
 		},
 	});
@@ -66699,97 +66995,6 @@ const ___R$project$rome$$internal$compiler$lint$rules$js$noLabelVar_ts$default =
 	});
 
 
-  // project-rome/@internal/compiler/lint/rules/js/noMultipleSpacesInRegularExpressionLiterals.ts
-function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
-		node,
-	) {
-		return (
-			node !== undefined &&
-			node.type === "JSRegExpCharacter" &&
-			node.value === " "
-		);
-	}
-
-	function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
-		path,
-		node,
-	) {
-		const newBody = [];
-		const diagnosticTargets = [];
-
-		let index = 0;
-		while (index < node.body.length) {
-			const item = node.body[index];
-
-			// Push the item unchanged if it's not the start of consecutive spaces
-			if (
-				!___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
-					item,
-				) ||
-				!___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
-					node.body[index + 1],
-				)
-			) {
-				newBody.push(item);
-				index++;
-				continue;
-			}
-
-			// Count the number of consecutive space chars
-			let spaceCount = 0;
-			while (
-				___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
-					node.body[index],
-				)
-			) {
-				diagnosticTargets.push(node.body[index]);
-				spaceCount++;
-				index++;
-			}
-
-			// Push a new body item that represents all the consecutive spaces
-			const quantifiedSpace = ___R$project$rome$$internal$ast$js$regex$JSRegExpQuantified_ts$jsRegExpQuantified.create({
-				min: spaceCount,
-				max: spaceCount,
-				target: item,
-			});
-			newBody.push(quantifiedSpace);
-		}
-
-		if (diagnosticTargets.length > 0) {
-			const newRegex = Object.assign({}, node, {body: newBody});
-			return path.addFixableDiagnostic(
-				{
-					target: diagnosticTargets,
-					fixed: ___R$project$rome$$internal$compiler$index_ts$signals.replace(
-						newRegex,
-					),
-				},
-				___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
-					diagnosticTargets.length,
-				),
-			);
-		} else {
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		}
-	}
-	const ___R$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noMultipleSpacesInRegularExpressionLiterals",
-		enter(path) {
-			const {node} = path;
-
-			if (node.type === "JSRegExpSubExpression") {
-				return ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
-					path,
-					node,
-				);
-			}
-
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
   // project-rome/@internal/compiler/lint/rules/js/noNegationElse.ts
 function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noNegationElse_ts$isNegation(
 		node,
@@ -66877,93 +67082,6 @@ const ___R$project$rome$$internal$compiler$lint$rules$js$noNestedTernary_ts$defa
 						node.consequent,
 						___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_NESTED_TERNARY,
 					);
-				}
-			}
-
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
-  // project-rome/@internal/compiler/lint/rules/js/noPosixInRegularExpression.ts
-const ___R$project$rome$$internal$compiler$lint$rules$js$noPosixInRegularExpression_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noPosixInRegularExpression",
-		enter(path) {
-			const {context, node} = path;
-
-			if (node.type === "JSRegExpCharSet" && node.body.length > 2) {
-				for (let i = 0; i < node.body.length; i++) {
-					const nextNode = node.body[i + 1];
-					const currNode = node.body[i];
-					const lastNode = node.body[node.body.length - 1];
-					if (
-						currNode.type === "JSRegExpCharacter" &&
-						currNode.value === "[" &&
-						nextNode &&
-						nextNode.type === "JSRegExpCharacter" &&
-						(nextNode.value === ":" || nextNode.value === ".") &&
-						lastNode.type === "JSRegExpCharacter" &&
-						lastNode.value === nextNode.value
-					) {
-						context.addNodeDiagnostic(
-							currNode,
-							___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_POSIX_IN_REGULAR_EXPRESSION,
-						);
-					}
-				}
-			}
-
-			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
-		},
-	});
-
-
-  // project-rome/@internal/compiler/lint/rules/js/noReferenceToNonExistingGroup.ts
-function ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noReferenceToNonExistingGroup_ts$findCaptureGroups(
-		path,
-	) {
-		const regexLiteral = path.findAncestry((path) =>
-			path.node.type === "JSRegExpLiteral"
-		);
-		if (regexLiteral === undefined) {
-			return regexLiteral;
-		}
-		let captureGroups = [];
-		regexLiteral.traverse(
-			"JSRegExpLiteral",
-			(path) => {
-				if (path.node.type === "JSRegExpGroupCapture") {
-					captureGroups.push(path.node);
-				}
-			},
-		);
-		return captureGroups;
-	}
-	const ___R$project$rome$$internal$compiler$lint$rules$js$noReferenceToNonExistingGroup_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
-		name: "js/noReferenceToNonExistingGroup",
-		enter(path) {
-			const {node, context} = path;
-
-			if (node.type === "JSRegExpNumericBackReference") {
-				const allCaptureGroups = ___R$$priv$project$rome$$internal$compiler$lint$rules$js$noReferenceToNonExistingGroup_ts$findCaptureGroups(
-					path,
-				);
-				if (allCaptureGroups === undefined) {
-					context.addNodeDiagnostic(
-						node,
-						___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_REFERENCE_TO_NON_EXISTING_GROUP(
-							String(node.value),
-						),
-					);
-				} else {
-					if (node.value > allCaptureGroups.length) {
-						context.addNodeDiagnostic(
-							node,
-							___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.JS_NO_REFERENCE_TO_NON_EXISTING_GROUP(
-								String(node.value),
-							),
-						);
-					}
 				}
 			}
 
@@ -74686,6 +74804,298 @@ const ___R$project$rome$$internal$compiler$lint$rules$react$useStylePropObject_t
 	});
 
 
+  // project-rome/@internal/compiler/lint/rules/regex/noDuplicateGroupNamesInRegularExpressions.ts
+const ___R$project$rome$$internal$compiler$lint$rules$regex$noDuplicateGroupNamesInRegularExpressions_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noDuplicateGroupNamesInRegularExpressions",
+		enter(path) {
+			const {context, node} = path;
+
+			if (node.type === "JSRegExpSubExpression") {
+				const duplicates = new ___R$project$rome$$internal$compiler$lib$DiagnosticsDuplicateHelper_ts$DiagnosticsDuplicateHelper(
+					context,
+					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_DUPLICATE_REGEX_GROUP_NAME,
+				);
+
+				for (const bodyItem of node.body) {
+					if (bodyItem.type === "JSRegExpGroupCapture") {
+						const groupName = bodyItem.name;
+
+						if (groupName !== undefined) {
+							duplicates.addLocation(groupName, bodyItem.loc);
+						}
+					}
+				}
+
+				duplicates.process();
+			}
+
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
+  // project-rome/@internal/compiler/lint/rules/regex/noEmptyCharacterClass.ts
+const ___R$project$rome$$internal$compiler$lint$rules$regex$noEmptyCharacterClass_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noEmptyCharacterClass",
+		enter(path) {
+			const {context, node} = path;
+
+			if (
+				node.type === "JSRegExpCharSet" &&
+				node.body.length === 0 &&
+				!node.invert
+			) {
+				context.addNodeDiagnostic(
+					node,
+					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_EMPTY_CHAR_SET,
+				);
+				return ___R$project$rome$$internal$compiler$index_ts$signals.remove;
+			}
+
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
+  // project-rome/@internal/compiler/lint/rules/regex/noEmptyMatches.ts
+function ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$isQuantifiedMinZero(
+		el,
+	) {
+		return el.type === "JSRegExpQuantified" && el.min === 0;
+	}
+
+	function ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$lintEmptyMatches(
+		expr,
+	) {
+		if (expr.type === "JSRegExpSubExpression") {
+			for (const item of expr.body) {
+				let matches = false;
+				if (
+					item.type === "JSRegExpGroupNonCapture" ||
+					item.type === "JSRegExpGroupCapture"
+				) {
+					matches = ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$lintEmptyMatches(
+						item.expression,
+					);
+				} else {
+					matches = ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$isQuantifiedMinZero(
+						item,
+					);
+				}
+				if (!matches) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return (
+				___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$lintEmptyMatches(
+					expr.left,
+				) ||
+				___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$lintEmptyMatches(
+					expr.right,
+				)
+			);
+		}
+	}
+	const ___R$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noEmptyMatches",
+		enter(path) {
+			const {context, node} = path;
+			if (
+				node.type === "JSRegExpLiteral" &&
+				___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$lintEmptyMatches(
+					node.expression,
+				)
+			) {
+				context.addNodeDiagnostic(
+					node,
+					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_EMPTY_MATCHES,
+				);
+			}
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
+  // project-rome/@internal/compiler/lint/rules/regex/noMultipleSpacesInRegularExpressionLiterals.ts
+function ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
+		node,
+	) {
+		return (
+			node !== undefined &&
+			node.type === "JSRegExpCharacter" &&
+			node.value === " "
+		);
+	}
+
+	function ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
+		path,
+		node,
+	) {
+		const newBody = [];
+		const diagnosticTargets = [];
+
+		let index = 0;
+		while (index < node.body.length) {
+			const item = node.body[index];
+
+			// Push the item unchanged if it's not the start of consecutive spaces
+			if (
+				!___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
+					item,
+				) ||
+				!___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
+					node.body[index + 1],
+				)
+			) {
+				newBody.push(item);
+				index++;
+				continue;
+			}
+
+			// Count the number of consecutive space chars
+			let spaceCount = 0;
+			while (
+				___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$isSpaceChar(
+					node.body[index],
+				)
+			) {
+				diagnosticTargets.push(node.body[index]);
+				spaceCount++;
+				index++;
+			}
+
+			// Push a new body item that represents all the consecutive spaces
+			const quantifiedSpace = ___R$project$rome$$internal$ast$js$regex$JSRegExpQuantified_ts$jsRegExpQuantified.create({
+				min: spaceCount,
+				max: spaceCount,
+				target: item,
+			});
+			newBody.push(quantifiedSpace);
+		}
+
+		if (diagnosticTargets.length > 0) {
+			const newRegex = Object.assign({}, node, {body: newBody});
+			return path.addFixableDiagnostic(
+				{
+					target: diagnosticTargets,
+					fixed: ___R$project$rome$$internal$compiler$index_ts$signals.replace(
+						newRegex,
+					),
+				},
+				___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(
+					diagnosticTargets.length,
+				),
+			);
+		} else {
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		}
+	}
+	const ___R$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noMultipleSpacesInRegularExpressionLiterals",
+		enter(path) {
+			const {node} = path;
+
+			if (node.type === "JSRegExpSubExpression") {
+				return ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$checkRegex(
+					path,
+					node,
+				);
+			}
+
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
+  // project-rome/@internal/compiler/lint/rules/regex/noPosixInRegularExpression.ts
+const ___R$project$rome$$internal$compiler$lint$rules$regex$noPosixInRegularExpression_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noPosixInRegularExpression",
+		enter(path) {
+			const {context, node} = path;
+
+			if (node.type === "JSRegExpCharSet" && node.body.length > 2) {
+				for (let i = 0; i < node.body.length; i++) {
+					const nextNode = node.body[i + 1];
+					const currNode = node.body[i];
+					const lastNode = node.body[node.body.length - 1];
+					if (
+						currNode.type === "JSRegExpCharacter" &&
+						currNode.value === "[" &&
+						nextNode &&
+						nextNode.type === "JSRegExpCharacter" &&
+						(nextNode.value === ":" || nextNode.value === ".") &&
+						lastNode.type === "JSRegExpCharacter" &&
+						lastNode.value === nextNode.value
+					) {
+						context.addNodeDiagnostic(
+							currNode,
+							___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_POSIX_IN_REGULAR_EXPRESSION,
+						);
+					}
+				}
+			}
+
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
+  // project-rome/@internal/compiler/lint/rules/regex/noReferenceToNonExistingGroup.ts
+function ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noReferenceToNonExistingGroup_ts$findCaptureGroups(
+		path,
+	) {
+		const regexLiteral = path.findAncestry((path) =>
+			path.node.type === "JSRegExpLiteral"
+		);
+		if (regexLiteral === undefined) {
+			return regexLiteral;
+		}
+		let captureGroups = [];
+		regexLiteral.traverse(
+			"JSRegExpLiteral",
+			(path) => {
+				if (path.node.type === "JSRegExpGroupCapture") {
+					captureGroups.push(path.node);
+				}
+			},
+		);
+		return captureGroups;
+	}
+	const ___R$project$rome$$internal$compiler$lint$rules$regex$noReferenceToNonExistingGroup_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
+		name: "regex/noReferenceToNonExistingGroup",
+		enter(path) {
+			const {node, context} = path;
+
+			if (node.type === "JSRegExpNumericBackReference") {
+				const allCaptureGroups = ___R$$priv$project$rome$$internal$compiler$lint$rules$regex$noReferenceToNonExistingGroup_ts$findCaptureGroups(
+					path,
+				);
+				if (allCaptureGroups === undefined) {
+					context.addNodeDiagnostic(
+						node,
+						___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP(
+							String(node.value),
+						),
+					);
+				} else {
+					if (node.value > allCaptureGroups.length) {
+						context.addNodeDiagnostic(
+							node,
+							___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.LINT.REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP(
+								String(node.value),
+							),
+						);
+					}
+				}
+			}
+
+			return ___R$project$rome$$internal$compiler$index_ts$signals.retain;
+		},
+	});
+
+
   // project-rome/@internal/compiler/lint/rules/ts/noExplicitAny.ts
 const ___R$project$rome$$internal$compiler$lint$rules$ts$noExplicitAny_ts$default = ___R$project$rome$$internal$compiler$utils_ts$createVisitor({
 		name: "ts/noExplicitAny",
@@ -74810,22 +75220,16 @@ const ___R$project$rome$$internal$compiler$lint$rules$index_ts$lintTransforms = 
 		___R$project$rome$$internal$compiler$lint$rules$js$noDoubleEquals_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noDupeArgs_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateCase_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateGroupNamesInRegularExpressions_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateImportSource_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noDuplicateKeys_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noEmptyBlocks_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noEmptyCharacterClass_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noEmptyMatches_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noExtraBooleanCast_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noFunctionAssign_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noGetterReturn_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noImportAssign_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noLabelVar_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noMultipleSpacesInRegularExpressionLiterals_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noNegationElse_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noNestedTernary_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noPosixInRegularExpression_ts$default,
-		___R$project$rome$$internal$compiler$lint$rules$js$noReferenceToNonExistingGroup_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noRestrictedGlobals_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noSetterReturn_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$js$noShadowRestrictedNames_ts$default,
@@ -74904,6 +75308,12 @@ const ___R$project$rome$$internal$compiler$lint$rules$index_ts$lintTransforms = 
 		___R$project$rome$$internal$compiler$lint$rules$react$useRenderReturn_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$react$useSortComp_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$react$useStylePropObject_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noDuplicateGroupNamesInRegularExpressions_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noEmptyCharacterClass_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noEmptyMatches_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noMultipleSpacesInRegularExpressionLiterals_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noPosixInRegularExpression_ts$default,
+		___R$project$rome$$internal$compiler$lint$rules$regex$noReferenceToNonExistingGroup_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$ts$noExplicitAny_ts$default,
 		___R$project$rome$$internal$compiler$lint$rules$ts$useInterfaces_ts$default,
 	];
@@ -85286,13 +85696,24 @@ function ___R$$priv$project$rome$$internal$cli$flags$Parser_ts$splitCommandName(
 
 			// add command completions
 			for (let [subcmd, meta] of this.commands.entries()) {
+				// add command description if exists
+				let description = "";
+				if (meta.description) {
+					description +=
+						" -d '" +
+						___R$project$rome$$internal$markup$escape_ts$readMarkup(
+							meta.description,
+						) +
+						"'";
+				}
+
 				script +=
 					scriptPre +
 					" -n '__fish_use_subcommand' -a '" +
 					subcmd +
-					"' -d '" +
-					meta.description +
-					"'\n";
+					"'" +
+					description +
+					"\n";
 			}
 
 			// add flag completions
@@ -102332,8 +102753,8 @@ const ___R$project$rome$$internal$diagnostics$descriptions$lint_ts$lint = ___R$p
 				},
 			],
 		},
-		JS_NO_EMPTY_MATCHES: {
-			category: "lint/js/noEmptyMatches",
+		REGEX_NO_EMPTY_MATCHES: {
+			category: "lint/regex/noEmptyMatches",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`This expression can return <emphasis>empty matches</emphasis>, and may match infinitely in some use cases.`,
 			advice: [
 				{
@@ -102432,8 +102853,8 @@ const ___R$project$rome$$internal$diagnostics$descriptions$lint_ts$lint = ___R$p
 				},
 			],
 		}),
-		JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count) => ({
-			category: "lint/js/noMultipleSpacesInRegularExpressionLiterals",
+		REGEX_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count) => ({
+			category: "lint/regex/noMultipleSpacesInRegularExpressionLiterals",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`This <emphasis>regular expression</emphasis> contains unclear uses of <emphasis>multiple spaces</emphasis>.`,
 			advice: [
 				{
@@ -102489,8 +102910,8 @@ const ___R$project$rome$$internal$diagnostics$descriptions$lint_ts$lint = ___R$p
 				},
 			],
 		},
-		JS_NO_EMPTY_CHAR_SET: {
-			category: "lint/js/noEmptyCharacterClass",
+		REGEX_NO_EMPTY_CHAR_SET: {
+			category: "lint/regex/noEmptyCharacterClass",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Do not use <emphasis>empty character classes in regular expressions</emphasis>.`,
 			advice: [
 				{
@@ -102504,8 +102925,8 @@ const ___R$project$rome$$internal$diagnostics$descriptions$lint_ts$lint = ___R$p
 			category: "lint/js/noDuplicateKeys",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Avoid duplicate component key. Check the <emphasis>${key}</emphasis> key.`,
 		}),
-		JS_NO_POSIX_IN_REGULAR_EXPRESSION: {
-			category: "lint/js/noPosixInRegularExpression",
+		REGEX_NO_POSIX_IN_REGULAR_EXPRESSION: {
+			category: "lint/regex/noPosixInRegularExpression",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Do not use POSIX character classes and collating sequences.`,
 			advice: [
 				{
@@ -102620,12 +103041,12 @@ const ___R$project$rome$$internal$diagnostics$descriptions$lint_ts$lint = ___R$p
 				},
 			],
 		},
-		JS_DUPLICATE_REGEX_GROUP_NAME: (name) => ({
-			category: "lint/js/noDuplicateGroupNamesInRegularExpressions",
+		REGEX_DUPLICATE_REGEX_GROUP_NAME: (name) => ({
+			category: "lint/regex/noDuplicateGroupNamesInRegularExpressions",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Avoid duplicate group names. Check the <emphasis>${name}</emphasis> group.`,
 		}),
-		JS_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name) => ({
-			category: "lint/js/noReferenceToNonExistingGroup",
+		REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name) => ({
+			category: "lint/regex/noReferenceToNonExistingGroup",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Avoid nonexistent group names. Check the <emphasis>${name}</emphasis> group.`,
 		}),
 		JS_USE_DEFAULT_EXPORT_BASENAME: (
@@ -106436,7 +106857,15 @@ const ___R$project$rome$$internal$v8$errors_ts = {
 				syscall: typeof err.syscall === "string" ? err.syscall : undefined,
 			};
 		} else {
-			return {};
+			return {
+				address: undefined,
+				code: undefined,
+				dest: undefined,
+				errno: undefined,
+				path: undefined,
+				port: undefined,
+				syscall: undefined,
+			};
 		}
 	}
 
@@ -107377,7 +107806,7 @@ const ___R$$priv$project$rome$$internal$v8$CoverageCollector_ts$inspector = requ
 const ___R$project$rome$ackage_json$default = {
 		"name": "rome-root",
 		"license": "MIT",
-		"version": "10.0.3-beta",
+		"version": "10.0.4-beta",
 		"engines": {"node": ">=12.8.1"},
 		"//": "Look! No deps!",
 		"dependencies": {},
@@ -107418,12 +107847,7 @@ const ___R$project$rome$$internal$core$common$constants_ts = {
 		get CHILD_ARGS() {
 			return ___R$project$rome$$internal$core$common$constants_ts$CHILD_ARGS;
 		},
-		get BIN() {
-			return ___R$project$rome$$internal$core$common$constants_ts$BIN;
-		},
-		get MAP() {
-			return ___R$project$rome$$internal$core$common$constants_ts$MAP;
-		},
+		getBinPath: ___R$project$rome$$internal$core$common$constants_ts$getBinPath,
 		get USER_CONFIG_DIRECTORY() {
 			return ___R$project$rome$$internal$core$common$constants_ts$USER_CONFIG_DIRECTORY;
 		},
@@ -107466,14 +107890,11 @@ const ___R$project$rome$$internal$core$common$constants_ts = {
 		"--trace-warnings",
 	];
 
-	const ___R$project$rome$$internal$core$common$constants_ts$BIN = ___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
-		process.mainModule === undefined
-			? module.filename
-			: process.mainModule.filename
-	);
-	const ___R$project$rome$$internal$core$common$constants_ts$MAP = ___R$project$rome$$internal$core$common$constants_ts$BIN.addExtension(
-		".map",
-	);
+	function ___R$project$rome$$internal$core$common$constants_ts$getBinPath() {
+		return ___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
+			__filename,
+		);
+	}
 
 	const ___R$$priv$project$rome$$internal$core$common$constants_ts$MEGABYTE = 10_000;
 
@@ -107683,6 +108104,9 @@ const ___R$$priv$project$rome$$internal$core$common$utils$executeMain_ts$interna
 		// Create global context
 		const sandbox = Object.assign(
 			{
+				// TODO Find a more reliable way to do this
+				TextEncoder,
+				TextDecoder,
 				Buffer,
 				clearImmediate,
 				clearInterval,
@@ -119109,9 +119533,11 @@ const ___R$$priv$project$rome$$internal$codec$websocket$index_ts$crypto = requir
 				);
 			}
 			this.socket.write(
-				___R$project$rome$$internal$codec$websocket$frame_ts$buildFrame(
-					frameOpts,
-					this.type === "client",
+				Buffer.from(
+					___R$project$rome$$internal$codec$websocket$frame_ts$buildFrame(
+						frameOpts,
+						this.type === "client",
+					),
 				),
 			);
 		}
@@ -119162,7 +119588,7 @@ const ___R$$priv$project$rome$$internal$codec$websocket$index_ts$crypto = requir
 				} else {
 					// Trim off any excess payload
 					let excess;
-					if (frame.payload.length > frame.payloadLength) {
+					if (frame.payload.byteLength > frame.payloadLength) {
 						excess = frame.payload.slice(frame.payloadLength);
 						frame.payload = frame.payload.slice(0, frame.payloadLength);
 					}
@@ -120483,6 +120909,7 @@ function ___R$$priv$project$rome$$internal$core$server$commands$analyzeDependenc
 					{},
 					res,
 					{
+						topLevelLocalBindings: {},
 						importFirstUsage: res.importFirstUsage.map((imp) => {
 							return ___R$$priv$project$rome$$internal$core$server$commands$analyzeDependencies_ts$removeLoc(
 								imp,
@@ -122466,7 +122893,7 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 		args = [],
 	) {
 		return ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$child.fork(
-			___R$project$rome$$internal$core$common$constants_ts$BIN.join(),
+			___R$project$rome$$internal$core$common$constants_ts$getBinPath().join(),
 			args,
 			Object.assign(
 				{
@@ -122488,15 +122915,17 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 		opts = {},
 	) {
 		return new ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads.Worker(
-			`require("${___R$project$rome$$internal$core$common$constants_ts$BIN.join()}");`,
+			'require("' +
+			___R$project$rome$$internal$core$common$constants_ts$getBinPath().join() +
+			'");',
 			Object.assign(
 				{},
 				opts,
 				{
+					eval: true,
 					env: ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$createEnv(
 						processType,
 					),
-					eval: true,
 				},
 			),
 		);
@@ -126074,6 +126503,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 			bridge.monitorHeartbeat(
 				___R$project$rome$$internal$core$common$constants_ts$LAG_INTERVAL,
 				({summary, totalTime, iterations}) => {
+					return;
 					const reporter = this.server.getImportantReporter();
 					reporter.warn(
 						___R$project$rome$$internal$markup$escape_ts$markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(
@@ -127982,7 +128412,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 
 		getPartialManifest(def) {
 			return {
-				path: def.path.join(),
+				path: def.path,
 				type: def.manifest.type,
 			};
 		}
@@ -141247,7 +141677,7 @@ class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 
 			let manifestPath;
 			if (ref.manifest !== undefined) {
-				manifestPath = this.getPartialManifest(ref.manifest).path;
+				manifestPath = this.getPartialManifest(ref.manifest).path.join();
 			}
 
 			const {sourceText, astModifiedFromSource, ast} = await handler.parse({
@@ -144307,14 +144737,17 @@ async function ___R$$priv$project$rome$$internal$cli$bin$rome_ts$main() {
 		}
 	}
 
+	const ___R$$priv$project$rome$$internal$cli$bin$rome_ts$bin = ___R$project$rome$$internal$core$common$constants_ts$getBinPath().join();
 	___R$project$rome$$internal$v8$sourceMapManager_ts$default.add(
-		___R$project$rome$$internal$core$common$constants_ts$BIN.join(),
+		___R$$priv$project$rome$$internal$cli$bin$rome_ts$bin,
 		___R$project$rome$$internal$codec$source$map$SourceMapConsumer_ts$default.fromJSONLazy(
-			___R$project$rome$$internal$core$common$constants_ts$BIN.join(),
+			___R$$priv$project$rome$$internal$cli$bin$rome_ts$bin,
 			() =>
 				JSON.parse(
 					___R$project$rome$$internal$fs$index_ts$readFileTextSync(
-						___R$project$rome$$internal$core$common$constants_ts$MAP,
+						___R$project$rome$$internal$core$common$constants_ts$getBinPath().addExtension(
+							".map",
+						),
 					),
 				)
 			,
