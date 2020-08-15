@@ -1,26 +1,26 @@
 ---
-title: Lint Rule js/noMultipleSpacesInRegularExpressionLiterals
+title: Lint Rule regex/noMultipleSpacesInRegularExpressionLiterals
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: lint-rules/js/noMultipleSpacesInRegularExpressionLiterals
+	key: lint-rules/regex/noMultipleSpacesInRegularExpressionLiterals
 	parent: lint-rules
-	title: js/noMultipleSpacesInRegularExpressionLiterals
+	title: regex/noMultipleSpacesInRegularExpressionLiterals
 ---
 
-# js/noMultipleSpacesInRegularExpressionLiterals
+# regex/noMultipleSpacesInRegularExpressionLiterals
 
 <!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:bf592687f3d1202d35cac829ec4fb80f82f2764c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c8ecbe5a1fae2ad35b453acb61dac50fafad6fe6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 
@@ -41,8 +41,8 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/  foo/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 
@@ -63,8 +63,8 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo   /</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 
@@ -85,8 +85,8 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo  bar/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 
@@ -107,8 +107,8 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo   bar    baz/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 
@@ -129,8 +129,8 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token regex">/foo [ba]r  b(a|z)/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/js/noMultipleSpacesInRegularExpressionLiterals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span>
-<span style="color: #000; background-color: #ddd;"> </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/regex/noMultipleSpacesInRegularExpressionLiterals</strong>
+<span style="color: #000; background-color: #ddd;">FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">This </span><span style="color: Tomato;"><strong>regular expression</strong></span><span style="color: Tomato;"> contains unclear uses of </span><span style="color: Tomato;"><strong>multiple spaces</strong></span><span style="color: Tomato;">.</span>
 

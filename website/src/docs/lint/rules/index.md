@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:ae982a356b8ce8e28cc2f438aa77616b03a35ef7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:ae42156f2940a763067781eed8f7d571e45c9179,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -100,13 +100,6 @@ disallow duplicate arguments in `function` definitions
 disallow duplicate case labels
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noDuplicateGroupNamesInRegularExpressions">
-	<a href="/docs/lint/rules/js/noDuplicateGroupNamesInRegularExpressions">noDuplicateGroupNamesInRegularExpressions</a>
-	<a class="header-anchor" href="#noDuplicateGroupNamesInRegularExpressions"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noDuplicateImportSource">
 	<a href="/docs/lint/rules/js/noDuplicateImportSource">noDuplicateImportSource</a>
 	<a class="header-anchor" href="#noDuplicateImportSource"></a>
@@ -126,20 +119,6 @@ disallow duplicate keys in object literals
 	<a class="header-anchor" href="#noEmptyBlocks"></a>
 </h3>
 disallow empty block statements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noEmptyCharacterClass">
-	<a href="/docs/lint/rules/js/noEmptyCharacterClass">noEmptyCharacterClass</a>
-	<a class="header-anchor" href="#noEmptyCharacterClass"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noEmptyMatches">
-	<a href="/docs/lint/rules/js/noEmptyMatches">noEmptyMatches</a>
-	<a class="header-anchor" href="#noEmptyMatches"></a>
-</h3>
-MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noExtraBooleanCast">
@@ -177,13 +156,6 @@ disallow assigning to imported bindings
 disallow labels that share a name with a variable
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noMultipleSpacesInRegularExpressionLiterals">
-	<a href="/docs/lint/rules/js/noMultipleSpacesInRegularExpressionLiterals">noMultipleSpacesInRegularExpressionLiterals</a>
-	<a class="header-anchor" href="#noMultipleSpacesInRegularExpressionLiterals"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/js/noNegationElse">noNegationElse</a>
 	<a class="header-anchor" href="#noNegationElse"></a>
@@ -196,20 +168,6 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#noNestedTernary"></a>
 </h3>
 disallow nested ternary expressions
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noPosixInRegularExpression">
-	<a href="/docs/lint/rules/js/noPosixInRegularExpression">noPosixInRegularExpression</a>
-	<a class="header-anchor" href="#noPosixInRegularExpression"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noReferenceToNonExistingGroup">
-	<a href="/docs/lint/rules/js/noReferenceToNonExistingGroup">noReferenceToNonExistingGroup</a>
-	<a class="header-anchor" href="#noReferenceToNonExistingGroup"></a>
-</h3>
-MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noRestrictedGlobals">

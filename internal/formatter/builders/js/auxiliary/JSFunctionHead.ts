@@ -22,7 +22,7 @@ export default function JSFunctionHead(
 	const printedParameters = printBindingPatternParams(
 		builder,
 		node,
-		node.params,
+		node.thisType ? [node.thisType, ...node.params] : node.params,
 		node.rest,
 	);
 

@@ -15,5 +15,5 @@ export function isNewLine(code: number): boolean {
 
 export const nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
 
-// rome-ignore lint/js/noEmptyMatches
+// rome-ignore lint/regex/noEmptyMatches
 export const skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;

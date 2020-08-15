@@ -27,7 +27,13 @@ import {
 	createUnknownFilePath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
-import {AnyMarkups, StaticMarkup, concatMarkup, markup} from "@internal/markup";
+import {
+	AnyMarkups,
+	StaticMarkup,
+	concatMarkup,
+	markup,
+	readMarkup,
+} from "@internal/markup";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -783,7 +789,13 @@ export default class Parser<T> {
 
 		// add command completions
 		for (let [subcmd, meta] of this.commands.entries()) {
-			script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}' -d '${meta.description}'\n`;
+			// add command description if exists
+			let description = "";
+			if (meta.description) {
+				description += ` -d '${readMarkup(meta.description)}'`;
+			}
+
+			script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}'${description}\n`;
 		}
 
 		// add flag completions

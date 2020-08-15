@@ -10,14 +10,14 @@ import {descriptions} from "@internal/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
 export default createVisitor({
-	name: "js/noDuplicateGroupNamesInRegularExpressions",
+	name: "regex/noDuplicateGroupNamesInRegularExpressions",
 	enter(path) {
 		const {context, node} = path;
 
 		if (node.type === "JSRegExpSubExpression") {
 			const duplicates = new DiagnosticsDuplicateHelper(
 				context,
-				descriptions.LINT.JS_DUPLICATE_REGEX_GROUP_NAME,
+				descriptions.LINT.REGEX_DUPLICATE_REGEX_GROUP_NAME,
 			);
 
 			for (const bodyItem of node.body) {

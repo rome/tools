@@ -40,7 +40,7 @@ test(
 					String.raw`let foo = /([abc]+)=\777/;foo;`,
 					// matches \77  (char code 63) followed by '7'
 				],
-				category: "lint/js/noReferenceToNonExistingGroup",
+				category: "lint/regex/noReferenceToNonExistingGroup",
 				filename: "file.ts",
 			},
 		);

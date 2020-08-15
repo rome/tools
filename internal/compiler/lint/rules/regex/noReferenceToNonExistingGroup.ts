@@ -29,7 +29,7 @@ function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined 
 }
 
 export default createVisitor({
-	name: "js/noReferenceToNonExistingGroup",
+	name: "regex/noReferenceToNonExistingGroup",
 	enter(path) {
 		const {node, context} = path;
 
@@ -38,7 +38,7 @@ export default createVisitor({
 			if (allCaptureGroups === undefined) {
 				context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JS_NO_REFERENCE_TO_NON_EXISTING_GROUP(
+					descriptions.LINT.REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP(
 						String(node.value),
 					),
 				);
@@ -46,7 +46,7 @@ export default createVisitor({
 				if (node.value > allCaptureGroups.length) {
 					context.addNodeDiagnostic(
 						node,
-						descriptions.LINT.JS_NO_REFERENCE_TO_NON_EXISTING_GROUP(
+						descriptions.LINT.REGEX_NO_REFERENCE_TO_NON_EXISTING_GROUP(
 							String(node.value),
 						),
 					);
