@@ -221,13 +221,13 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 	}
 
 	public isRoot(): boolean {
-		if (this.segments.length === 1) {
+		if (this.segments.length <= 1) {
 			return true;
 		}
 
 		if (this.segments.length === 2) {
 			// Explicit directory reference
-			return this.parsed.absoluteType == "windows-drive";
+			return this.parsed.absoluteType === "windows-drive";
 		}
 
 		if (this.segments.length === 3) {
@@ -386,6 +386,10 @@ export abstract class BaseFilePath<Super extends AnyFilePath = AnyFilePath> {
 
 		if (this.isExplicitRelative() && segments[0] !== "..") {
 			segments.unshift(".");
+		}
+
+		if (segments.length === 0) {
+			segments.push(".");
 		}
 
 		let filename;
@@ -730,10 +734,6 @@ function parsePathSegments(
 
 	},
 ): ParsedPath {
-	if (segments.length === 0) {
-		throw new Error("Cannot construct a FilePath with zero segments");
-	}
-
 	let absoluteType: ParsedPathAbsoluteType = "posix";
 	let absoluteTarget: undefined | string;
 	let firstSeg = segments[0];

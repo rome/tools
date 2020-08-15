@@ -201,17 +201,29 @@ function getExtraObjectProps(
 	const props: Array<AnyMarkup> = [];
 	const ignoreKeys: UnknownObject = {};
 
-	if (obj instanceof Map) {
-		for (const [key, val] of obj) {
-			const formattedKey =
-				typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
-			props.push(markup`${formattedKey} => ${prettyFormat(val, opts)}`);
-		}
-	} else if (isIterable(obj)) {
-		let i = 0;
-		for (const val of obj) {
-			ignoreKeys[String(i++)] = val;
-			props.push(markup`${prettyFormat(val, opts)}`);
+	if (isIterable(obj)) {
+		// Duck typing Map check
+		if (
+			typeof obj.keys === "function" &&
+			typeof obj.values === "function" &&
+			typeof obj.size === "number"
+		) {
+			for (const item of obj) {
+				if (Array.isArray(item) && item.length === 2) {
+					const [key, val] = item;
+					const formattedKey =
+						typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
+					props.push(markup`${formattedKey} => ${prettyFormat(val, opts)}`);
+				} else {
+					props.push(markup`${prettyFormat(item, opts)}`);
+				}
+			}
+		} else {
+			let i = 0;
+			for (const val of obj) {
+				ignoreKeys[String(i++)] = val;
+				props.push(markup`${prettyFormat(val, opts)}`);
+			}
 		}
 	}
 
@@ -380,6 +392,7 @@ type Objectish = {
 	type?: unknown;
 	[CUSTOM_PRETTY_FORMAT]?: () => string;
 	[key: string]: unknown;
+	[Symbol.iterator]?: unknown;
 };
 
 function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup {
@@ -396,21 +409,22 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup 
 		return markupTag("color", str, {fg: "magenta"});
 	}
 
+	let labelKeys: Array<string> = [];
+
 	let label = markup`null`;
 
 	if (val.constructor !== undefined) {
 		label = markup`${val.constructor.name}`;
-	}
 
-	let labelKeys: Array<string> = [];
-
-	// If there's a string type or kind property then use it as the label
-	if (typeof val.type === "string") {
-		label = markup`${val.type}`;
-		labelKeys.push("type");
-	} else if (typeof val.kind === "string") {
-		label = markup`${val.kind}`;
-		labelKeys.push("kind");
+		if (val.constructor.name === "Object") {
+			if (typeof val.type === "string") {
+				label = markup`${val.type}`;
+				labelKeys.push("type");
+			} else if (typeof val.kind === "string") {
+				label = markup`${val.kind}`;
+				labelKeys.push("kind");
+			}
+		}
 	}
 
 	return formatObject(label, val, opts, labelKeys);

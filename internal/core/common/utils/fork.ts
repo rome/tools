@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BIN, CHILD_ARGS, VERSION} from "@internal/core";
+import {CHILD_ARGS, VERSION, getBinPath} from "@internal/core";
 import workerThreads = require("worker_threads");
 import child = require("child_process");
 import {Dict} from "@internal/typescript-helpers";
@@ -24,7 +24,7 @@ export function forkProcess(
 	args: Array<string> = [],
 ): child.ChildProcess {
 	return child.fork(
-		BIN.join(),
+		getBinPath().join(),
 		args,
 		{
 			stdio: "inherit",
@@ -40,7 +40,7 @@ export function forkThread(
 	opts: workerThreads.WorkerOptions = {},
 ): workerThreads.Worker {
 	return new workerThreads.Worker(
-		`require("${BIN.join()}");`,
+		`require("${getBinPath().join()}");`,
 		{
 			...opts,
 			eval: true,

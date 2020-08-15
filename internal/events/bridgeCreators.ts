@@ -11,7 +11,6 @@ import Bridge from "./Bridge";
 import {Socket} from "net";
 import {Class} from "@internal/typescript-helpers";
 import workerThreads = require("worker_threads");
-import {RSERSharedBuffer, encodeToBuffer} from "@internal/codec-binary-serial";
 
 export function createBridgeFromWebSocketInterface<B extends Bridge>(
 	CustomBridge: Class<B>,
@@ -21,19 +20,23 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			inf.send(Buffer.from(encodeToBuffer(data)));
+			rser.send(data);
 		},
 	});
 
 	const {socket} = inf;
-	const buf = bridge.attachRSER();
+	const rser = bridge.attachRSER();
+
+	rser.sendEvent.subscribe((buf) => {
+		inf.send(Buffer.from(buf));
+	});
 
 	bridge.endEvent.subscribe(() => {
 		socket.end();
 	});
 
 	inf.completeFrameEvent.subscribe((frame) => {
-		buf.append(frame.payload);
+		rser.append(frame.payload.buffer);
 	});
 
 	socket.on(
@@ -61,11 +64,15 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			socket.send(encodeToBuffer(data));
+			rser.send(data);
 		},
 	});
 
-	const buf = bridge.attachRSER();
+	const rser = bridge.attachRSER();
+
+	rser.sendEvent.subscribe((buf) => {
+		socket.send(buf);
+	});
 
 	bridge.endEvent.subscribe(() => {
 		socket.close();
@@ -78,7 +85,7 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 		if (!(data instanceof ArrayBuffer)) {
 			throw new Error("Expected ArrayBuffer");
 		}
-		buf.append(new Uint8Array(data));
+		rser.append(data);
 	};
 
 	socket.onclose = () => {
@@ -96,11 +103,15 @@ export function createBridgeFromSocket<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			socket.write(new Uint8Array(encodeToBuffer(data)));
+			rser.send(data);
 		},
 	});
 
-	const buf = bridge.attachRSER();
+	const rser = bridge.attachRSER();
+
+	rser.sendEvent.subscribe((buf) => {
+		socket.write(new Uint8Array(buf));
+	});
 
 	bridge.endEvent.subscribe(() => {
 		socket.end();
@@ -109,7 +120,7 @@ export function createBridgeFromSocket<B extends Bridge>(
 	socket.on(
 		"data",
 		(chunk) => {
-			buf.append(chunk);
+			rser.append(chunk.buffer);
 		},
 	);
 
@@ -150,58 +161,27 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 	worker: workerThreads.Worker,
 	opts: BridgeCreatorOptions,
 ): B {
-	const shared = RSERSharedBuffer.create(500_000, 500_000);
-
-	let ready = false;
-	let readyQueue: Array<ArrayBuffer> = [];
-
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			shared.send(data);
+			rser.send(data);
 		},
 	});
 
-	shared.valueEvent.subscribe((msg) => {
-		bridge.handleMessage((msg as BridgeMessage));
-	});
+	const rser = bridge.attachRSER();
 
-	shared.sendEvent.subscribe((msg) => {
-		if (ready) {
-			worker.postMessage(msg);
-		} else {
-			readyQueue.push(msg);
-		}
+	rser.sendEvent.subscribe((msg) => {
+		worker.postMessage(msg);
 	});
 
 	bridge.endEvent.subscribe(() => {
 		worker.terminate();
 	});
 
-	worker.once(
+	worker.on(
 		"message",
 		(msg) => {
-			if (msg === "READY") {
-				worker.on(
-					"message",
-					(msg) => {
-						shared.processOutBand(msg);
-					},
-				);
-
-				worker.postMessage(shared.getFlippedBuffers());
-				ready = true;
-
-				for (const msg of readyQueue) {
-					worker.postMessage(msg);
-				}
-
-				readyQueue = [];
-			} else {
-				throw new Error(
-					`Expected READY as the first worker message but got ${msg}`,
-				);
-			}
+			rser.append(msg);
 		},
 	);
 
@@ -229,38 +209,25 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 	return bridge;
 }
 
-export async function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
+export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 	CustomBridge: Class<B>,
 	opts: BridgeCreatorOptions,
-): Promise<B> {
+): B {
 	const {parentPort} = workerThreads;
 	if (parentPort == null) {
 		throw new Error("No worker_threads parentPort found");
 	}
 
-	const shared: RSERSharedBuffer = await new Promise((resolve) => {
-		parentPort.once(
-			"message",
-			(buffers) => {
-				resolve(new RSERSharedBuffer(buffers));
-			},
-		);
-
-		parentPort.postMessage("READY");
-	});
-
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			shared.send(data);
+			rser.send(data);
 		},
 	});
 
-	shared.valueEvent.subscribe((msg) => {
-		bridge.handleMessage((msg as BridgeMessage));
-	});
+	const rser = bridge.attachRSER();
 
-	shared.sendEvent.subscribe((msg) => {
+	rser.sendEvent.subscribe((msg) => {
 		parentPort.postMessage(msg);
 	});
 
@@ -271,7 +238,7 @@ export async function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 	parentPort.on(
 		"message",
 		(msg) => {
-			shared.processOutBand(msg);
+			rser.append(msg);
 		},
 	);
 

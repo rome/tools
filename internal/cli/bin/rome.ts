@@ -6,7 +6,7 @@
  */
 
 import {initErrorHooks, sourceMapManager} from "@internal/v8";
-import {BIN, MAP, VERSION} from "@internal/core";
+import {VERSION, getBinPath} from "@internal/core";
 import cli from "../cli";
 import server from "../server";
 import testWorker from "../testWorker";
@@ -36,11 +36,12 @@ async function main(): Promise<void> {
 	}
 }
 
+const bin = getBinPath().join();
 sourceMapManager.add(
-	BIN.join(),
+	bin,
 	SourceMapConsumer.fromJSONLazy(
-		BIN.join(),
-		() => JSON.parse(readFileTextSync(MAP)),
+		bin,
+		() => JSON.parse(readFileTextSync(getBinPath().addExtension(".map"))),
 	),
 );
 

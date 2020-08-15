@@ -503,9 +503,9 @@ export default class Bridge {
 		}
 
 		if (id === undefined) {
-			// We don't need to do anything with the return value of this since
-			// there's nothing on the other end to catch it
-			eventHandler.dispatchRequest(param);
+			eventHandler.dispatchRequest(param).catch((err) => {
+				this.endWithError(err);
+			});
 		} else {
 			if (priority) {
 				this.prioritizedResponses.add(id);

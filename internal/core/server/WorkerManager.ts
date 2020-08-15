@@ -285,6 +285,7 @@ export default class WorkerManager {
 		bridge.monitorHeartbeat(
 			LAG_INTERVAL,
 			({summary, totalTime, iterations}) => {
+				return;
 				const reporter = this.server.getImportantReporter();
 				reporter.warn(
 					markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(

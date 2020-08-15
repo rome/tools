@@ -395,7 +395,7 @@ export default class MemoryFileSystem {
 
 	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
 		return {
-			path: def.path.join(),
+			path: def.path,
 			type: def.manifest.type,
 		};
 	}

@@ -443,7 +443,7 @@ export default class Worker {
 
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
-			manifestPath = this.getPartialManifest(ref.manifest).path;
+			manifestPath = this.getPartialManifest(ref.manifest).path.join();
 		}
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({

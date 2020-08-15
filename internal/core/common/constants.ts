@@ -6,21 +6,21 @@
  */
 
 import packageJson from "../../../package.json";
-import {HOME_PATH, TEMP_PATH, createAbsoluteFilePath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	HOME_PATH,
+	TEMP_PATH,
+	createAbsoluteFilePath,
+} from "@internal/path";
 import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
 
 // Node flags to pass to all forked processes
 export const CHILD_ARGS = ["--max-old-space-size=8192", "--trace-warnings"];
 
-export const BIN = createAbsoluteFilePath(
-	// @ts-ignore
-	process.mainModule === undefined
-		? module.filename
-			// @ts-ignore
-		: process.mainModule.filename,
-);
-export const MAP = BIN.addExtension(".map");
+export function getBinPath(): AbsoluteFilePath {
+	return createAbsoluteFilePath(__filename);
+}
 
 const MEGABYTE = 10_000;
 

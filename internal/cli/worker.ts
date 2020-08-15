@@ -12,7 +12,7 @@ import {loadUserConfig} from "@internal/core/common/userConfig";
 
 export default async function worker() {
 	setProcessTitle("worker");
-	const bridge = await createBridgeFromWorkerThreadParentPort(
+	const bridge = createBridgeFromWorkerThreadParentPort(
 		WorkerBridge,
 		{
 			type: "server",
