@@ -52,7 +52,7 @@ import {
 
 import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 
-import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {Dict, ErrorCallback, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -208,7 +208,7 @@ export default class Server {
 				markupOptions: {
 					userConfig: this.userConfig,
 					humanizeFilename: (filename) => {
-						const path = createUnknownFilePath(filename);
+						const path = createUnknownPath(filename);
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),
@@ -859,7 +859,7 @@ export default class Server {
 			// A type-safe wrapper for retrieving command flags
 			// TODO perhaps present this as JSON or something if this isn't a request from the CLI?
 			const flagsConsumer = consume({
-				filePath: createUnknownFilePath("argv"),
+				filePath: createUnknownPath("argv"),
 				parent: undefined,
 				value: query.commandFlags,
 				onDefinition(def) {

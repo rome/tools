@@ -105,6 +105,8 @@ export default class DiagnosticsNormalizer {
 		this.inlineSourceText.set(filename, sourceText);
 	}
 
+	private normalizeFilename(filename: string): string;
+	private normalizeFilename(filename: undefined | string): undefined | string;
 	private normalizeFilename(filename: undefined | string): undefined | string {
 		const {markupOptions} = this;
 		if (markupOptions === undefined || filename === undefined) {
@@ -257,6 +259,7 @@ export default class DiagnosticsNormalizer {
 			case "stacktrace":
 				return {
 					...item,
+					importantFilenames: (item.importantFilenames ?? []).map(filename => this.normalizeFilename(filename)),
 					frames: item.frames.map((frame) => {
 						const {filename, line, column} = frame;
 

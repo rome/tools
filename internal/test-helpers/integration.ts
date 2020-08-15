@@ -15,7 +15,7 @@ import {
 	TEMP_PATH,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 
 import {JSONObject, stringifyJSON} from "@internal/codec-json";
@@ -130,7 +130,7 @@ export function findFixtureInput(
 			return {
 				input,
 				handler: getFileHandlerFromPathAssert(
-					createUnknownFilePath(`input.${ext}`),
+					createUnknownPath(`input.${ext}`),
 					projectConfig,
 				).handler,
 			};

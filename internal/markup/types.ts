@@ -97,6 +97,7 @@ export type MarkupFormatOptions = {
 	humanizeFilename?: MarkupFormatFilenameHumanizer;
 	cwd?: AbsoluteFilePath;
 };
+
 export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 	stripPositions?: boolean;
 	stripFilelinkText?: boolean;

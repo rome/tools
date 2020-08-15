@@ -8,8 +8,8 @@
 import {ProjectConfig} from "@internal/project";
 import {
 	AnyFilePath,
-	UnknownFilePath,
-	createUnknownFilePath,
+	UnknownPath,
+	createUnknownPath,
 } from "@internal/path";
 import {ExtensionHandler} from "./types";
 import {
@@ -35,7 +35,7 @@ export type GetFileHandlerResult = {
 };
 
 export function inferDiagnosticLanguageFromFilename(
-	filename: undefined | UnknownFilePath | string,
+	filename: undefined | UnknownPath | string,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
@@ -43,7 +43,7 @@ export function inferDiagnosticLanguageFromFilename(
 	}
 	if (filename !== undefined) {
 		const {handler} = getFileHandlerFromPath(
-			createUnknownFilePath(filename),
+			createUnknownPath(filename),
 			undefined,
 		);
 		if (handler !== undefined) {

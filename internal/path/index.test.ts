@@ -8,7 +8,7 @@
 import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 import {test} from "rome";
 
@@ -98,7 +98,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createUnknownFilePath(loc).parsed.segments, expectedSegments);
+			t.looksLike(createUnknownPath(loc).parsed.segments, expectedSegments);
 		},
 	);
 }
@@ -114,6 +114,19 @@ test(
 		t.inlineSnapshot(
 			createAbsoluteFilePath("/bar").append("~/foo").parsed.segments,
 			'Array [\n\t""\n\t"bar"\n\t"~"\n\t"foo"\n]',
+		);
+	},
+);
+
+test(
+	"getUnique",
+	(t) => {
+		t.inlineSnapshot(createRelativeFilePath(".").getUnique().join(), ".");
+		t.inlineSnapshot(createRelativeFilePath("./foo").getUnique().join(), "foo");
+		t.inlineSnapshot(createRelativeFilePath("foo/").getUnique().join(), "foo");
+		t.inlineSnapshot(
+			createRelativeFilePath("foo/bar").getUnique().join(),
+			"foo/bar",
 		);
 	},
 );

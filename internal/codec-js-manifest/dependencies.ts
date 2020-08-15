@@ -12,7 +12,7 @@ import {
 	stringifySemver,
 } from "@internal/codec-semver";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
+import {UnknownPath, createUnknownPath} from "@internal/path";
 import {normalizeName} from "./name";
 import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
@@ -297,13 +297,13 @@ const LINK_PREFIX = "link:";
 
 type LinkPattern = {
 	type: "link";
-	path: UnknownFilePath;
+	path: UnknownPath;
 };
 
 function parseLink(pattern: string): LinkPattern {
 	return {
 		type: "link",
-		path: createUnknownFilePath(pattern.slice(LINK_PREFIX.length)),
+		path: createUnknownPath(pattern.slice(LINK_PREFIX.length)),
 	};
 }
 
@@ -465,7 +465,7 @@ export function parseDependencyPattern(
 
 	if (
 		FILE_PREFIX_REGEX.test(pattern) ||
-		createUnknownFilePath(pattern).isAbsolute() ||
+		createUnknownPath(pattern).isAbsolute() ||
 		pattern.startsWith("file:")
 	) {
 		return parseFile(pattern);

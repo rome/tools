@@ -24,7 +24,7 @@ import {
 import {
 	AbsoluteFilePath,
 	HOME_PATH,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 import {
@@ -240,7 +240,7 @@ export default class Parser<T> {
 		}
 
 		const consumer = consume({
-			filePath: createUnknownFilePath("argv"),
+			filePath: createUnknownPath("argv"),
 			value: flags,
 			onDefinition: (def, valueConsumer) => {
 				const key = def.objectPath.join(".");

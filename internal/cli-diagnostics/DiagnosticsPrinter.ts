@@ -35,10 +35,10 @@ import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
 	CWD_PATH,
-	UnknownFilePath,
-	UnknownFilePathMap,
-	UnknownFilePathSet,
-	createUnknownFilePath,
+	UnknownPath,
+	UnknownPathMap,
+	UnknownPathSet,
+	createUnknownPath,
 } from "@internal/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {exists, lstat, readFileText} from "@internal/fs";
@@ -108,14 +108,14 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
 	type: "change";
-	path: UnknownFilePath;
+	path: UnknownPath;
 	mtime: undefined | number;
 };
 
 // Dependency that will have a code frame in the output diagnostic
 type ReferenceFileDependency = {
 	type: "reference";
-	path: UnknownFilePath;
+	path: UnknownPath;
 	mtime: undefined | number;
 	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: undefined | DiagnosticLanguage;
@@ -128,12 +128,12 @@ function hasFrame(loc: DiagnosticLocation): boolean {
 	return loc.start !== undefined && loc.end !== undefined;
 }
 
-export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
+export type DiagnosticsPrinterFileSources = UnknownPathMap<{
 	sourceText: string;
 	lines: ToLines;
 }>;
 
-export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;
+export type DiagnosticsPrinterFileMtimes = UnknownPathMap<number>;
 
 export default class DiagnosticsPrinter extends Error {
 	constructor(opts: DiagnosticsPrinterOptions) {
@@ -159,9 +159,9 @@ export default class DiagnosticsPrinter extends Error {
 		this.truncatedCount = 0;
 
 		this.hasTruncatedDiagnostics = false;
-		this.missingFileSources = new UnknownFilePathSet();
-		this.fileSources = new UnknownFilePathMap();
-		this.fileMtimes = new UnknownFilePathMap();
+		this.missingFileSources = new UnknownPathSet();
+		this.fileSources = new UnknownPathMap();
+		this.fileMtimes = new UnknownPathMap();
 		this.onFooterPrintCallbacks = [];
 	}
 
@@ -177,7 +177,7 @@ export default class DiagnosticsPrinter extends Error {
 	private cwd: AbsoluteFilePath;
 	private fileReaders: Array<DiagnosticsFileReaders>;
 	private hasTruncatedDiagnostics: boolean;
-	private missingFileSources: UnknownFilePathSet;
+	private missingFileSources: UnknownPathSet;
 	private fileSources: DiagnosticsPrinterFileSources;
 	private fileMtimes: DiagnosticsPrinterFileMtimes;
 
@@ -186,13 +186,13 @@ export default class DiagnosticsPrinter extends Error {
 	private filteredCount: number;
 	private truncatedCount: number;
 
-	public createFilePath(filename: string): UnknownFilePath {
+	public createFilePath(filename: string): UnknownPath {
 		const {normalizePosition} = this.reporter.markupOptions;
 
 		if (normalizePosition === undefined) {
-			return createUnknownFilePath(filename);
+			return createUnknownPath(filename);
 		} else {
-			return createUnknownFilePath(
+			return createUnknownPath(
 				normalizePosition(filename, undefined, undefined).filename,
 			);
 		}
@@ -381,7 +381,7 @@ export default class DiagnosticsPrinter extends Error {
 			}
 		}
 
-		const depsMap: UnknownFilePathMap<FileDependency> = new UnknownFilePathMap();
+		const depsMap: UnknownPathMap<FileDependency> = new UnknownPathMap();
 
 		// Remove non-absolute filenames and normalize sourceType and language for conflicts
 		for (const dep of deps) {
@@ -489,8 +489,8 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.redirectOutToErr(restoreRedirect);
 	}
 
-	public getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {
-		let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
+	public getOutdatedFiles(diag: Diagnostic): UnknownPathSet {
+		let outdatedFiles: UnknownPathSet = new UnknownPathSet();
 		for (const {
 			path,
 			mtime: expectedMtime,
@@ -519,7 +519,7 @@ export default class DiagnosticsPrinter extends Error {
 				const parts = [];
 
 				if (filename !== undefined) {
-					const path = createUnknownFilePath(filename);
+					const path = createUnknownPath(filename);
 
 					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
 						parts.push(`file=${this.cwd.relative(path).join()}`);

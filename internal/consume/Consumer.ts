@@ -56,11 +56,11 @@ import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
-	URLFilePath,
-	UnknownFilePath,
+	URLPath,
+	UnknownPath,
 	createAbsoluteFilePath,
-	createURLFilePath,
-	createUnknownFilePath,
+	createURLPath,
+	createUnknownPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 
@@ -96,7 +96,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: undefined | UnknownFilePath;
+	public path: undefined | UnknownPath;
 	public filename: undefined | string;
 
 	private declared: boolean;
@@ -1023,26 +1023,26 @@ export default class Consumer {
 		);
 	}
 
-	public asURLFilePath(def?: string): URLFilePath {
-		const path = this.asUnknownFilePath(def);
+	public asURLPath(def?: string): URLPath {
+		const path = this.asUnknownPath(def);
 		if (path.isURL()) {
 			return path.assertURL();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
-			return createURLFilePath("unknown://").append(...path.getSegments());
+			return createURLPath("unknown://").append(...path.getSegments());
 		}
 	}
 
-	public asURLFilePathOrVoid(): undefined | URLFilePath {
+	public asURLPathOrVoid(): undefined | URLPath {
 		if (this.exists()) {
-			return this.asURLFilePath();
+			return this.asURLPath();
 		} else {
 			this._declareOptionalFilePath();
 			return undefined;
 		}
 	}
 
-	public asUnknownFilePath(def?: string): UnknownFilePath {
+	public asUnknownPath(def?: string): UnknownPath {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1052,12 +1052,12 @@ export default class Consumer {
 			"path",
 		);
 
-		return createUnknownFilePath(this.asString(def));
+		return createUnknownPath(this.asString(def));
 	}
 
-	public asUnknownFilePathOrVoid(): undefined | UnknownFilePath {
+	public asUnknownPathOrVoid(): undefined | UnknownPath {
 		if (this.exists()) {
-			return this.asUnknownFilePath();
+			return this.asUnknownPath();
 		} else {
 			this._declareOptionalFilePath();
 			return undefined;
@@ -1068,7 +1068,7 @@ export default class Consumer {
 		def?: string,
 		cwd?: AbsoluteFilePath,
 	): AbsoluteFilePath {
-		const path = this.asUnknownFilePath(def);
+		const path = this.asUnknownPath(def);
 		if (path.isAbsolute()) {
 			return path.assertAbsolute();
 		} else if (cwd !== undefined && path.isRelative()) {
@@ -1091,7 +1091,7 @@ export default class Consumer {
 	}
 
 	public asRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asUnknownFilePath(def);
+		const path = this.asUnknownPath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
 		} else {

@@ -30,7 +30,7 @@ import {
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {UnknownFilePath, createUnknownFilePath} from "@internal/path";
+import {UnknownPath, createUnknownPath} from "@internal/path";
 import {
 	AnyVisitor,
 	LintCompilerOptionsDecision,
@@ -104,7 +104,7 @@ export default class CompilerContext {
 		this.records = [];
 
 		this.ast = ast;
-		this.path = createUnknownFilePath(ast.filename);
+		this.path = createUnknownPath(ast.filename);
 		this.filename = ast.filename;
 		this.displayFilename =
 			ref === undefined ? ast.filename : ref.relative.join();
@@ -132,7 +132,7 @@ export default class CompilerContext {
 	public displayFilename: string;
 	public filename: string;
 	private mtime: undefined | number;
-	public path: UnknownFilePath;
+	public path: UnknownPath;
 	public project: TransformProjectDefinition;
 	public language: DiagnosticLanguage;
 	private sourceTypeJS: undefined | ConstJSSourceType;

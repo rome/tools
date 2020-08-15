@@ -23,9 +23,9 @@ import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	UnknownFilePathMap,
+	UnknownPathMap,
 	createAbsoluteFilePath,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 import {lstat, readFileText} from "@internal/fs";
 import {FileReference} from "../common/types/files";
@@ -61,7 +61,7 @@ export default class Worker {
 		this.partialManifests = new Map();
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
-		this.moduleSignatureCache = new UnknownFilePathMap();
+		this.moduleSignatureCache = new UnknownPathMap();
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
@@ -119,7 +119,7 @@ export default class Worker {
 	private partialManifests: Map<number, WorkerPartialManifest>;
 	private projects: Map<number, TransformProjectDefinition>;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
-	private moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
+	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<string>;
 
 	private getPartialManifest(id: number): WorkerPartialManifest {
@@ -321,7 +321,7 @@ export default class Worker {
 			switch (value.type) {
 				case "RESOLVED": {
 					this.moduleSignatureCache.set(
-						createUnknownFilePath(value.graph.filename),
+						createUnknownPath(value.graph.filename),
 						value.graph,
 					);
 					return value.graph;
@@ -335,7 +335,7 @@ export default class Worker {
 
 				case "USE_CACHED": {
 					const cached = this.moduleSignatureCache.get(
-						createUnknownFilePath(value.filename),
+						createUnknownPath(value.filename),
 					);
 					if (cached === undefined) {
 						throw new Error(
@@ -448,7 +448,7 @@ export default class Worker {
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
-			path: createUnknownFilePath(uid),
+			path: createUnknownPath(uid),
 			manifestPath,
 			mtime,
 			file: ref,

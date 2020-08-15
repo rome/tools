@@ -11,8 +11,8 @@ import {
 	AbsoluteFilePath,
 	AnyFilePath,
 	RelativeFilePath,
-	URLFilePath,
-	UnknownFilePath,
+	URLPath,
+	UnknownPath,
 } from "@internal/path";
 
 type MarkupPart = StaticMarkup | RawMarkup | string;
@@ -66,7 +66,7 @@ export function filePathToMarkup(
 	explicit: boolean = false,
 ): StaticMarkup {
 	let tagName: MarkupTagName = "filelink";
-	if (path instanceof URLFilePath) {
+	if (path instanceof URLPath) {
 		tagName = "hyperlink";
 	}
 
@@ -131,8 +131,8 @@ export function markup(
 		} else if (
 			value instanceof RelativeFilePath ||
 			value instanceof AbsoluteFilePath ||
-			value instanceof URLFilePath ||
-			value instanceof UnknownFilePath
+			value instanceof URLPath ||
+			value instanceof UnknownPath
 		) {
 			parts.push(filePathToMarkup(value));
 		} else {

@@ -403,6 +403,9 @@ export default class TestWorkerRunner {
 				},
 				filename: this.file.real.join(),
 				cleanFrames,
+				stackAdviceOptions: {
+					importantFilenames: [this.file.uid],
+				},
 			},
 		);
 	}

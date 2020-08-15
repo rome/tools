@@ -186,6 +186,7 @@ export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
 	title?: StaticMarkup;
 	truncate?: boolean;
+	importantFilenames?: Array<string>;
 	frames: Array<DiagnosticAdviceStackFrame>;
 };
 

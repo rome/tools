@@ -15,7 +15,7 @@ import {
 } from "@internal/diagnostics";
 import * as compiler from "@internal/compiler";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
-import {UnknownFilePath} from "@internal/path";
+import {UnknownPath} from "@internal/path";
 
 export type ExtensionLintResult = {
 	mtime: undefined | number;
@@ -36,7 +36,7 @@ export type ExtensionHandlerMethodInfo = {
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	sourceTypeJS: ConstJSSourceType;
 	manifestPath: undefined | string;
-	path: UnknownFilePath;
+	path: UnknownPath;
 };
 
 export type PartialExtensionHandler = {

@@ -185,6 +185,7 @@ export type DeriveErrorDiagnosticOptions = {
 	tags?: DiagnosticTags;
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
+	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
 
 export function deriveDiagnosticFromErrorStructure(
@@ -218,7 +219,7 @@ export function deriveDiagnosticFromErrorStructure(
 	const advice = getErrorStackAdvice({
 		...struct,
 		frames,
-	});
+	}, opts.stackAdviceOptions);
 
 	return {
 		description: {
@@ -244,9 +245,14 @@ export function deriveDiagnosticFromError(
 	return deriveDiagnosticFromErrorStructure(getErrorStructure(error), opts);
 }
 
+export type DeriveErrorStackAdviceOptions = {
+	title?: StaticMarkup,
+	importantFilenames?: Array<string>;
+};
+
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
-	title?: StaticMarkup,
+	{title, importantFilenames}: DeriveErrorStackAdviceOptions = {},
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames = [], stack} = error;
@@ -269,7 +275,7 @@ export function getErrorStackAdvice(
 		}
 		cleanStack = cleanStack.trim();
 
-		const cleanStackList = cleanStack.split("\n").map((line) =>
+		const cleanStackList = cleanStack.replace(/\n+/g, "\n").split("\n").map((line) =>
 			markup`${line.trim()}`
 		);
 
@@ -350,6 +356,7 @@ export function getErrorStackAdvice(
 			type: "stacktrace",
 			title,
 			frames: adviceFrames,
+			importantFilenames,
 		});
 	}
 
