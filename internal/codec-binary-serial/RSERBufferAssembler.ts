@@ -13,6 +13,7 @@ import {
 	RSERObject,
 	RSERSet,
 	RSERValue,
+	RSERValueObject,
 } from "./types";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
@@ -36,66 +37,65 @@ const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
 const MAX_INT32 = 2_147_483_647;
 
+export type RSERBufferAssemblerReferences = Map<RSERValueObject, number>;
+
 export default class RSERBufferAssembler {
 	constructor() {
 		this.totalSize = 0;
+		this.seenObjects = new Set();
+		this.references = new Map();
 	}
 
-	static measure(
-		val: RSERValue,
-	): {
-		payloadLength: number;
-		messageLength: number;
-	} {
-		const observer = new RSERBufferAssembler();
-		observer.encodeValue(val);
-		const payloadLength = observer.totalSize;
-		observer.encodeHeader(payloadLength);
-		const messageLength = observer.totalSize;
-		return {payloadLength, messageLength};
-	}
+	public totalSize: number;
+	public references: RSERBufferAssemblerReferences;
 
-	totalSize: number;
+	private seenObjects: Set<RSERValueObject>;
 
-	writeCode(code: number) {
+	protected writeCode(code: number) {
 		this.totalSize += 1;
 		code;
 	}
 
-	writeByte(value: number) {
+	protected writeByte(value: number) {
 		this.totalSize += 1;
 		value;
 	}
 
-	writeInt(value: bigint | number, size: IntSize) {
+	protected writeInt(value: bigint | number, size: IntSize) {
 		this.totalSize += size;
 	}
 
-	writeFloat(value: number) {
+	// When we are writing the buffer, we will insert a header before all values that will be referenced
+	// We need to account for that here since we do it after the fact
+	protected onReferenceCreate(id: number) {
+		this.encodeDeclareReferenceHead(id);
+	}
+
+	protected writeFloat(value: number) {
 		value;
 		this.totalSize += 8;
 	}
 
-	appendString(buf: string) {
+	protected appendString(buf: string) {
 		this.totalSize += Buffer.byteLength(buf);
 	}
 
-	appendArray(buf: Uint8Array, offset: number) {
+	public appendArray(buf: Uint8Array, offset: number) {
 		this.totalSize += buf.byteLength - offset;
 	}
 
-	encodeHeader(size: number) {
+	public encodeHeader(size: number) {
 		this.writeByte(0);
 		this.writeByte(1);
 		this.encodeInt(size);
 	}
 
-	encodeBigInt(val: bigint) {
+	private encodeBigInt(val: bigint) {
 		this.writeCode(VALUE_CODES.INT64);
 		this.writeInt(val, 8);
 	}
 
-	encodeInt(val: bigint | number) {
+	private encodeInt(val: bigint | number) {
 		if (typeof val === "bigint") {
 			return this.encodeBigInt(val);
 		}
@@ -115,7 +115,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeTemplatedObjectArray<Value extends RSERObject &
+	private encodeTemplatedObjectArray<Value extends RSERObject &
 		UnionToIntersection<Value>>(arr: Array<Value>) {
 		if (arr.length === 0) {
 			this.writeCode(VALUE_CODES.ARRAY);
@@ -142,7 +142,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeArray(val: RSERArray) {
+	private encodeArray(val: RSERArray) {
 		this.writeCode(VALUE_CODES.ARRAY);
 		this.encodeInt(val.length);
 		for (let i = 0; i < val.length; ++i) {
@@ -150,7 +150,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeSet(set: RSERSet) {
+	private encodeSet(set: RSERSet) {
 		this.writeCode(VALUE_CODES.SET);
 		this.encodeInt(set.size);
 		for (const elem of set) {
@@ -158,7 +158,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeMap(map: RSERMap) {
+	private encodeMap(map: RSERMap) {
 		this.writeCode(VALUE_CODES.MAP);
 		this.encodeInt(map.size);
 		for (const [key, value] of map) {
@@ -167,7 +167,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeFilePathMap(map: AnyRSERFilePathMap) {
+	private encodeFilePathMap(map: AnyRSERFilePathMap) {
 		this.writeCode(VALUE_CODES.FILE_PATH_MAP);
 		this.writeByte(filePathMapToCode(map));
 		this.encodeInt(map.size);
@@ -177,7 +177,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeFilePathSet(set: AnyFilePathSet) {
+	private encodeFilePathSet(set: AnyFilePathSet) {
 		this.writeCode(VALUE_CODES.FILE_PATH_SET);
 		this.writeByte(filePathSetToCode(set));
 		this.encodeInt(set.size);
@@ -186,23 +186,23 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeFilePath(path: AnyFilePath) {
+	private encodeFilePath(path: AnyFilePath) {
 		this.writeCode(VALUE_CODES.FILE_PATH);
 		this.writeByte(filePathToCode(path));
 		this.encodeStringValue(path.join());
 	}
 
-	encodeDate(val: Date) {
+	private encodeDate(val: Date) {
 		this.writeCode(VALUE_CODES.DATE);
 		this.encodeInt(val.valueOf());
 	}
 
-	encodeError(val: Error) {
+	private encodeError(val: Error) {
 		this.writeCode(VALUE_CODES.ERROR);
 		this.writeCode(instanceToErrorCode(val));
 
 		const struct = getErrorStructure(val, 0, false);
-		this.encodeValue(struct.message);
+		this.encodeStringValue(struct.message ?? "");
 		this.encodeValue(struct.stack);
 		this.encodePlainObject(struct.node);
 		this.encodeTemplatedObjectArray(struct.frames);
@@ -210,17 +210,49 @@ export default class RSERBufferAssembler {
 		throw new Error("TODO");
 	}
 
-	encodeNull() {
+	private encodeNull() {
 		this.writeCode(VALUE_CODES.NULL);
 	}
 
-	encodeRegExp(regex: RegExp) {
+	private encodeRegExp(regex: RegExp) {
 		this.writeCode(VALUE_CODES.REGEXP);
 		this.encodeStringValue(regex.source);
 		this.encodeStringValue(regex.flags);
 	}
 
-	encodeObject(val: Extract<RSERValue, object>) {
+	private encodeReference(id: number) {
+		this.writeCode(VALUE_CODES.REFERENCE);
+		this.encodeInt(id);
+	}
+
+	private encodeDeclareReferenceHead(id: number) {
+		this.writeCode(VALUE_CODES.DECLARE_REFERENCE);
+		this.encodeInt(id);
+	}
+
+	private encodeObject(val: RSERValueObject) {
+		// Already a declared reference
+		const refId = this.references.get(val);
+		if (refId !== undefined) {
+			if (this.seenObjects.has(val)) {
+				this.encodeReference(refId);
+				return;
+			} else {
+				this.encodeDeclareReferenceHead(refId);
+			}
+		}
+
+		// Is this the second time we've seen this object?
+		if (this.seenObjects.has(val)) {
+			const id = this.references.size;
+			this.references.set(val, id);
+			this.onReferenceCreate(id);
+			this.encodeReference(id);
+			return;
+		}
+
+		this.seenObjects.add(val);
+
 		if (
 			val instanceof UnknownFilePath ||
 			val instanceof RelativeFilePath ||
@@ -279,7 +311,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodePlainObject(val: RSERObject) {
+	private encodePlainObject(val: RSERObject) {
 		this.writeCode(VALUE_CODES.OBJECT);
 
 		const keys = Object.keys(val);
@@ -309,16 +341,16 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeUndefined() {
+	private encodeUndefined() {
 		this.writeCode(VALUE_CODES.UNDEFINED);
 	}
 
-	encodeStringValue(val: string) {
+	private encodeStringValue(val: string) {
 		this.encodeInt(Buffer.byteLength(val));
 		this.appendString(val);
 	}
 
-	encodeNumber(val: bigint | number) {
+	private encodeNumber(val: bigint | number) {
 		if (typeof val === "bigint" || (isFinite(val) && Math.floor(val) === val)) {
 			this.encodeInt(val);
 		} else {
@@ -326,12 +358,12 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	encodeFloat(val: number) {
+	private encodeFloat(val: number) {
 		this.writeCode(VALUE_CODES.FLOAT);
 		this.writeFloat(val);
 	}
 
-	encodeValue(val: RSERValue) {
+	public encodeValue(val: RSERValue) {
 		switch (typeof val) {
 			case "bigint":
 			case "number": {

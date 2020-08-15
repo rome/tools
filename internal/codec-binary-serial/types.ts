@@ -46,3 +46,5 @@ export type RSERObject = {
 	[x: string]: RSERValue;
 };
 export type RSERArray = Array<RSERValue>;
+
+export type RSERValueObject = Extract<RSERValue, object>;

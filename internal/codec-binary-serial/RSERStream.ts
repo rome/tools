@@ -2,6 +2,7 @@ import RSERBufferWriter from "./RSERBufferWriter";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
+import {encodeRSERBuffer} from "@internal/codec-binary-serial/index";
 
 type State = {
 	// Waiting: Need to read and decode PDU length
@@ -12,7 +13,6 @@ type State = {
 
 export default class RSERStream {
 	constructor() {
-		this.processLaterQueued = false;
 		this.state = this.createWaitingState();
 		this.overflow = [];
 
@@ -23,15 +23,20 @@ export default class RSERStream {
 		this.valueEvent = new Event({
 			name: "RSERStream.value",
 		});
+
+		this.sendEvent = new Event({
+			name: "RSERStream.sendEvent",
+		});
 	}
 
-	errorEvent: Event<Error, void>;
-	valueEvent: Event<RSERValue, void>;
-	overflow: Array<Uint8Array>;
-	processLaterQueued: boolean;
-	state: State;
+	public errorEvent: Event<Error, void>;
+	public sendEvent: Event<ArrayBuffer, void>;
+	public valueEvent: Event<RSERValue, void>;
 
-	createWaitingState(): State {
+	private overflow: Array<Uint8Array>;
+	private state: State;
+
+	private createWaitingState(): State {
 		return {
 			type: "WAITING",
 			// Max size of the message header
@@ -39,7 +44,15 @@ export default class RSERStream {
 		};
 	}
 
-	append(buf: Uint8Array) {
+	public send(val: RSERValue) {
+		try {
+			this.sendEvent.send(encodeRSERBuffer(val));
+		} catch (err) {
+			this.errorEvent.send(err);
+		}
+	}
+
+	public append(buf: ArrayBuffer) {
 		const {writer, type} = this.state;
 
 		try {
@@ -51,50 +64,56 @@ export default class RSERStream {
 					payloadLength !== false &&
 					payloadLength === reader.getReadableSize()
 				) {
-					this.valueEvent.send(reader.decodeValue());
+					const val = reader.decodeValue();
+					this.valueEvent.send(val);
 					return;
 				}
 			}
 
 			// Push to overflow queue if necessary
+			let arr = new Uint8Array(buf);
+
 			const remaining = writer.getWritableSize();
-			if (remaining < buf.byteLength) {
+			if (remaining < arr.byteLength) {
 				// Slicing Node buffers is cheap since it just creates a view
-				this.overflow.push(buf.slice(remaining));
-				buf = buf.slice(0, remaining);
+				this.overflow.push(arr.slice(remaining));
+				arr = arr.slice(0, remaining);
 			}
 
-			writer.appendArray(buf);
+			writer.appendArray(arr);
 			this.process();
 		} catch (err) {
 			this.errorEvent.send(err);
 		}
 	}
 
-	setState(state: State) {
-		this.state = state;
+	private setState(state: State) {
+		try {
+			this.state = state;
+			const {writer} = this.state;
 
-		const {writer} = this.state;
+			while (this.overflow.length > 0 && writer.getWritableSize() > 0) {
+				let entry = this.overflow[0];
+				const writableSize = writer.getWritableSize();
 
-		while (this.overflow.length > 0 && writer.getWritableSize() > 0) {
-			let entry = this.overflow[0];
-			const writableSize = writer.getWritableSize();
+				const bufferSize = Buffer.byteLength(entry);
+				if (bufferSize > writableSize) {
+					this.overflow[0] = entry.slice(writableSize);
+					entry = entry.slice(0, writableSize);
+				} else {
+					this.overflow.shift();
+				}
 
-			const bufferSize = Buffer.byteLength(entry);
-			if (bufferSize > writableSize) {
-				this.overflow[0] = entry.slice(writableSize);
-				entry = entry.slice(0, writableSize);
-			} else {
-				this.overflow.shift();
+				writer.appendArray(entry);
+
+				this.process();
 			}
-
-			writer.appendArray(entry);
-
-			this.process();
+		} catch (err) {
+			this.errorEvent.send(err);
 		}
 	}
 
-	process(): void {
+	private process(): void {
 		const {type, writer} = this.state;
 
 		if (type === "WAITING") {

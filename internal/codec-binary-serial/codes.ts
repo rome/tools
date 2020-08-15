@@ -1,4 +1,3 @@
-import {Class} from "@internal/typescript-helpers";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -54,6 +53,8 @@ export enum VALUE_CODES {
 	ERROR,
 	REGEXP,
 	TEMPLATED_OBJECT_ARRAY,
+	REFERENCE,
+	DECLARE_REFERENCE,
 }
 
 export function validateValueCode(code: number): VALUE_CODES {
@@ -84,6 +85,8 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.ERROR:
 		case VALUE_CODES.REGEXP:
 		case VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
+		case VALUE_CODES.DECLARE_REFERENCE:
+		case VALUE_CODES.REFERENCE:
 			return code;
 
 		default:
@@ -135,28 +138,28 @@ export function instanceToErrorCode(err: Error): ERROR_CODES {
 	}
 }
 
-export function errorCodeToConstructor(code: ERROR_CODES): Class<Error> {
+export function errorCodeToInstance(code: ERROR_CODES): Error {
 	switch (code) {
 		case ERROR_CODES.EVAL:
-			return EvalError;
+			return new EvalError();
 
 		case ERROR_CODES.RANGE:
-			return RangeError;
+			return new RangeError();
 
 		case ERROR_CODES.REFERENCE:
-			return ReferenceError;
+			return new ReferenceError();
 
 		case ERROR_CODES.SYNTAX:
-			return SyntaxError;
+			return new SyntaxError();
 
 		case ERROR_CODES.TYPE:
-			return TypeError;
+			return new TypeError();
 
 		case ERROR_CODES.URI:
-			return URIError;
+			return new URIError();
 
 		case ERROR_CODES.REGULAR:
-			return Error;
+			return new Error();
 
 		default:
 			throw new Error(`Invalid error code ${code}`);

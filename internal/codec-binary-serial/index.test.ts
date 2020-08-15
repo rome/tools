@@ -1,13 +1,29 @@
-import RSERBufferWriter from "./RSERBufferWriter";
-import RSERBufferAssembler from "./RSERBufferAssembler";
 import RSERBufferParser from "./RSERBufferParser";
-import {RSERValue} from "./types";
+import {
+	AnyRSERFilePathMap,
+	RSERArray,
+	RSERMap,
+	RSERObject,
+	RSERSet,
+	RSERValue,
+} from "./types";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {test} from "rome";
+import {TestHelper, test} from "rome";
+import {encodeRSERBuffer} from "./index";
+
+function assert(t: TestHelper, val: RSERValue) {
+	const buf = encodeRSERBuffer(val);
+
+	const parser = new RSERBufferParser(new DataView(buf));
+	t.true(typeof parser.decodeHeader() === "number");
+
+	const decoded = parser.decodeValue();
+	t.looksLike(decoded, val);
+}
 
 test(
 	"value types",
@@ -46,17 +62,33 @@ test(
 		];
 
 		for (const val of cases) {
-			const {payloadLength, messageLength} = RSERBufferAssembler.measure(val);
-			const writer = RSERBufferWriter.allocate(messageLength);
-			writer.encodeHeader(payloadLength);
-			writer.encodeValue(val);
-			t.is(writer.getWritableSize(), 0);
-
-			const parser = new RSERBufferParser(writer.view);
-			t.true(typeof parser.decodeHeader() === "number");
-
-			const decoded = parser.decodeValue();
-			t.looksLike(decoded, val);
+			assert(t, val);
 		}
+	},
+);
+
+test(
+	"circular types",
+	(t) => {
+		const set: RSERSet = new Set();
+		set.add(set);
+		set.add(2);
+		assert(t, set);
+
+		const arr: RSERArray = [];
+		arr.push(arr);
+		assert(t, arr);
+
+		const map: RSERMap = new Map();
+		map.set("foo", map);
+		assert(t, map);
+
+		const obj: RSERObject = {};
+		obj.foo = obj;
+		assert(t, obj);
+
+		const pathMap: AnyRSERFilePathMap = new AbsoluteFilePathMap();
+		pathMap.set(createAbsoluteFilePath("/"), pathMap);
+		assert(t, pathMap);
 	},
 );

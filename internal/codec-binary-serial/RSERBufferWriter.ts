@@ -1,11 +1,12 @@
 import {IntSize} from "./types";
-import RSERBufferAssembler from "./RSERBufferAssembler";
+import RSERBufferAssembler, {RSERBufferAssemblerReferences} from "./RSERBufferAssembler";
 
 const textEncoder = new TextEncoder();
 
 export default class RSERBufferWriter extends RSERBufferAssembler {
-	constructor(buffer: ArrayBuffer) {
+	constructor(buffer: ArrayBuffer, references: RSERBufferAssemblerReferences) {
 		super();
+		this.references = references;
 		this.totalSize = buffer.byteLength;
 		this.writeOffset = 0;
 		this.buffer = buffer;
@@ -13,21 +14,23 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		this.view = new DataView(buffer);
 	}
 
+	public writeOffset: number;
+	public array: Uint8Array;
+	public buffer: ArrayBuffer;
+	public view: DataView;
+
 	static allocate(size: number): RSERBufferWriter {
 		// NB: Are there any downsides to this always be a SharedArrayBuffer?
-		return new RSERBufferWriter(new SharedArrayBuffer(size));
+		return new RSERBufferWriter(new SharedArrayBuffer(size), new Map());
 	}
 
-	array: Uint8Array;
-	buffer: ArrayBuffer;
-	view: DataView;
-	writeOffset: number;
+	protected onReferenceCreate() {}
 
-	getWritableSize() {
+	public getWritableSize() {
 		return this.buffer.byteLength - this.writeOffset;
 	}
 
-	assertWritableSize(size: number) {
+	private assertWritableSize(size: number) {
 		const remaining = this.getWritableSize();
 
 		if (remaining < size) {
@@ -37,28 +40,28 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		}
 	}
 
-	appendArray(buf: Uint8Array) {
+	public appendArray(buf: Uint8Array) {
 		const size = buf.byteLength;
 		this.assertWritableSize(size);
 		this.array.set(buf, this.writeOffset);
 		this.writeOffset += size;
 	}
 
-	appendString(text: string) {
+	protected appendString(text: string) {
 		this.appendArray(textEncoder.encode(text));
 	}
 
-	writeCode(code: number) {
+	protected writeCode(code: number) {
 		this.writeByte(code);
 	}
 
-	writeByte(value: number) {
+	protected writeByte(value: number) {
 		this.assertWritableSize(1);
 		this.view.setInt8(this.writeOffset, value);
 		this.writeOffset++;
 	}
 
-	writeInt(value: bigint | number, size: IntSize) {
+	protected writeInt(value: bigint | number, size: IntSize) {
 		this.assertWritableSize(size);
 
 		if (typeof value === "bigint") {
@@ -94,7 +97,7 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		this.writeOffset += size;
 	}
 
-	writeFloat(value: number) {
+	protected writeFloat(value: number) {
 		this.assertWritableSize(8);
 		this.view.setFloat64(this.writeOffset, value);
 		this.writeOffset += 8;
