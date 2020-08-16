@@ -12,10 +12,10 @@ import {ResolvedLocation} from "@internal/codec-source-map/types";
  *	function foo() {
  *		return "bar";
  *	}
-	*
-	*	function hello() {
-	*		return world;
-	*	}
+ *
+ *	function hello() {
+ *		return world;
+ *	}
  */
 
 /* Minified test1
@@ -70,11 +70,13 @@ const jsonSourceMap2 = {
 	],
 };
 
-const consumerCollection = new SourceMapConsumerCollection();
+let consumerCollection: SourceMapConsumerCollection;
 
 test(
 	"Verify hasAny, add, has are correct",
 	async (t) => {
+		consumerCollection = new SourceMapConsumerCollection();
+
 		t.false(consumerCollection.hasAny());
 
 		consumerCollection.add("test1", SourceMapConsumer.fromJSON(jsonSourceMap1));
