@@ -1,16 +1,13 @@
 import {test} from "rome";
 import {assertMultipleNodes} from "./assertMultipleNodes";
-import {AnyNode, AnyNodes } from "@internal/ast";
-import { parseJS } from "@internal/js-parser";
+import {AnyNode, AnyNodes} from "@internal/ast";
+import {template} from "@internal/js-ast-utils";
 
-const node: AnyNode = parseJS({
-    input: "2+3",
-    path: "unknown"
-}).body[0];
+const node: AnyNode = template.statement`let a;`;
 const nodeArray: AnyNodes = [node, node];
 
 test(
-	"returns back an array of nodes when asserted with node array",
+	"returns back the same list of nodes",
 	(t) => {
 		let returnedArray = assertMultipleNodes(nodeArray);
 		t.is(returnedArray.length, nodeArray.length);
@@ -19,14 +16,14 @@ test(
 );
 
 test(
-	"returns an empty array if asserted with undefined",
+	"returns an empty list if asserted with undefined",
 	(t) => {
 		t.looksLike(assertMultipleNodes(((undefined as unknown) as AnyNode)), []);
 	},
 );
 
 test(
-	"returns an array with node when asserted with a single node",
+	"returns a list with node when asserted with a single node",
 	(t) => {
 		t.looksLike(assertMultipleNodes(node), [node]);
 	},
