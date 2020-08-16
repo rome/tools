@@ -1,6 +1,9 @@
-import {test, TestHelper} from "rome";
+import {TestHelper, test} from "rome";
 import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
-import {SourceMapConsumer, SourceMapConsumerCollection} from "@internal/codec-source-map/index";
+import {
+	SourceMapConsumer,
+	SourceMapConsumerCollection,
+} from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
 
 /* Source test1
@@ -62,6 +65,7 @@ const jsonSourceMap2 = {
 	"file": "test2.js",
 	"sourceRoot": "..",
 	"sourcesContent": [
+		// rome-ignore lint/js/noTemplateCurlyInString
 		'let firstName = "John";\r\nconst lastname = "Doe";\r\n\r\nfunction changeName() {\r\n  firstName = "Jane";\r\n}\r\n\r\nfunction fullName() {\r\n  return `${firstName} ${lastname}`;\r\n}\r\n',
 	],
 };
@@ -71,30 +75,43 @@ const consumerCollection = new SourceMapConsumerCollection();
 test(
 	"Verify hasAny, add, has are correct",
 	async (t) => {
-
 		t.false(consumerCollection.hasAny());
 
-		consumerCollection.add('test1', SourceMapConsumer.fromJSON(jsonSourceMap1));
+		consumerCollection.add("test1", SourceMapConsumer.fromJSON(jsonSourceMap1));
 
 		t.true(consumerCollection.hasAny());
-		t.true(consumerCollection.has('test1'));
-		t.false(consumerCollection.has('test2'));
+		t.true(consumerCollection.has("test1"));
+		t.false(consumerCollection.has("test2"));
 
-		consumerCollection.add('test2', SourceMapConsumer.fromJSON(jsonSourceMap2));
+		consumerCollection.add("test2", SourceMapConsumer.fromJSON(jsonSourceMap2));
 
-		t.true(consumerCollection.has('test1'));
-		t.true(consumerCollection.has('test2'));
-		t.false(consumerCollection.has('other'));
+		t.true(consumerCollection.has("test1"));
+		t.true(consumerCollection.has("test2"));
+		t.false(consumerCollection.has("other"));
 	},
 );
 
-function approxAndExact(t: TestHelper, file: string,  line: number, column: number, expected: ResolvedLocation): void {
+function approxAndExact(
+	t: TestHelper,
+	file: string,
+	line: number,
+	column: number,
+	expected: ResolvedLocation,
+): void {
 	t.looksLike(
-		consumerCollection.approxOriginalPositionFor(file, ob1Coerce1(line), ob1Coerce0(column + 1)),
+		consumerCollection.approxOriginalPositionFor(
+			file,
+			ob1Coerce1(line),
+			ob1Coerce0(column + 1),
+		),
 		expected,
 	);
 	t.looksLike(
-		consumerCollection.exactOriginalPositionFor(file, ob1Coerce1(line), ob1Coerce0(column)),
+		consumerCollection.exactOriginalPositionFor(
+			file,
+			ob1Coerce1(line),
+			ob1Coerce0(column),
+		),
 		expected,
 	);
 }
@@ -126,7 +143,6 @@ test(
 			column: ob1Coerce0(9),
 			name: "hello",
 		};
-
 
 		//test2
 		const firstName = {
