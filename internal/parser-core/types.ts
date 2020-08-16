@@ -8,12 +8,54 @@
 import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
 import {AnyFilePath} from "@internal/path";
 import {
+	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 } from "@internal/diagnostics";
-import {default as ParserCore, ParserCoreState} from "./ParserCore";
+import {default as ParserCore} from "./ParserCore";
+import {Dict} from "@internal/typescript-helpers";
 
-export type AnyParserCore = ParserCore<TokensShape, ParserCoreState>;
+// rome-ignore lint/ts/noExplicitAny
+export type AnyParserCore = ParserCore<{
+	tokens: TokensShape;
+	state: Dict<any>;
+	options: ParserOptions & Dict<any>;
+	meta: Dict<any> | void;
+}>;
+
+export type ParserCoreTypes = {
+	tokens: BaseTokens;
+	state: object;
+	options: ParserOptions;
+	meta: object | void;
+};
+
+export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
+	diagnosticCategory: DiagnosticCategory;
+	ignoreWhitespaceTokens?: boolean;
+	retainCarriageReturn?: boolean;
+	getInitialState?: (parser: ParserCore<Types>) => Types["state"];
+	tokenize?: (
+		parser: ParserCore<Types>,
+		index: Number0,
+	) => undefined | TokenValues<Types["tokens"]>;
+	normalizeInput?: (input: string) => string;
+	tokenizeWithState?: (
+		parser: ParserCore<Types>,
+		index: Number0,
+		state: Types["state"],
+	) => undefined | ParserCoreTokenizeState<Types>;
+	overrides?: {
+		getPosition: (parser: ParserCore<Types>) => Position;
+		getIndex: (parser: ParserCore<Types>) => Number0;
+		getLastEndPosition: (parser: ParserCore<Types>) => Position;
+	};
+};
+
+export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = {
+	token: TokenValues<Types["tokens"]>;
+	state: Types["state"];
+};
 
 //# Node types
 export type NodeBase = {
@@ -94,7 +136,6 @@ export const UNKNOWN_POSITION: Position = {
 };
 
 export type ParserOptions = {
-	retainCarriageReturn?: boolean;
 	path?: string | AnyFilePath;
 	mtime?: number;
 	input?: string;
@@ -118,6 +159,5 @@ export type ParserUnexpectedOptions = {
 	location?: DiagnosticLocation;
 };
 
-export type TokenValues<Tokens extends TokensShape> =
-	| Tokens[keyof Tokens]
-	| BaseTokens[keyof BaseTokens];
+export type TokenValues<Tokens extends TokensShape> = TokenBase &
+	(Tokens[keyof Tokens] | BaseTokens[keyof BaseTokens]);

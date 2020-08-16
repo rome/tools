@@ -6,7 +6,7 @@
  */
 
 import {
-	ParserCoreState,
+	ParserCore,
 	ParserOptions,
 	Position,
 	TokenValues,
@@ -57,379 +57,364 @@ export function isTagStartChar(index: Number0, input: string): boolean {
 	return input[i] === "<" && !isEscaped(index, input);
 }
 
-type State = ParserCoreState & {
+type State = {
 	inTagHead: boolean;
 };
 
-type StringMarkupParserOptions = ParserOptions;
+type MarkupParserTypes = {
+	tokens: Tokens;
+	state: State;
+	options: ParserOptions;
+	meta: void;
+};
 
-const createStringMarkupParser = createParser((ParserCore) =>
-	class StringMarkupParser extends ParserCore<Tokens, State> {
-		constructor(opts: StringMarkupParserOptions) {
-			super(opts, "parse/stringMarkup", {inTagHead: false});
-		}
+type MarkupParser = ParserCore<MarkupParserTypes>;
 
-		protected tokenizeWithState(
-			index: Number0,
-			state: State,
-		):
-			| undefined
-			| {
-					token: TokenValues<Tokens>;
-					state: State;
-				} {
-			const escaped = isEscaped(index, this.input);
-			const char = this.getInputCharOnly(index);
+const createStringMarkupParser = createParser<MarkupParserTypes>({
+	diagnosticCategory: "parse/stringMarkup",
+	getInitialState: () => ({inTagHead: false}),
+	tokenizeWithState(parser, index, state) {
+		const escaped = isEscaped(index, parser.input);
+		const char = parser.getInputCharOnly(index);
 
-			if (!escaped && state.inTagHead) {
-				if (char === " ") {
-					return this.lookahead(ob1Inc(index));
-				}
-
-				if (char === "=") {
-					return {
-						state,
-						token: this.finishToken("Equals"),
-					};
-				}
-
-				if (char === "/") {
-					return {
-						state,
-						token: this.finishToken("Slash"),
-					};
-				}
-
-				if (isAlpha(char)) {
-					const [value, end] = this.readInputFrom(index, isAlpha);
-					return {
-						state,
-						token: this.finishValueToken("Word", value, end),
-					};
-				}
-
-				if (char === '"') {
-					const [value, stringValueEnd, unclosed] = this.readInputFrom(
-						ob1Inc(index),
-						isStringValueChar,
-					);
-
-					if (unclosed) {
-						throw this.unexpected({
-							description: descriptions.STRING_MARKUP.UNCLOSED_STRING,
-							start: this.getPositionFromIndex(stringValueEnd),
-						});
-					}
-
-					const end = ob1Add(stringValueEnd, 1);
-					return {
-						state,
-						token: this.finishValueToken(
-							"String",
-							unescapeTextValue(value),
-							end,
-						),
-					};
-				}
-
-				if (char === ">") {
-					return {
-						state: {
-							...state,
-							inTagHead: false,
-						},
-						token: this.finishToken("Greater"),
-					};
-				}
+		if (!escaped && state.inTagHead) {
+			if (char === " ") {
+				return parser.lookahead(ob1Inc(index));
 			}
 
-			if (isTagStartChar(index, this.input)) {
+			if (char === "=") {
+				return {
+					state,
+					token: parser.finishToken("Equals"),
+				};
+			}
+
+			if (char === "/") {
+				return {
+					state,
+					token: parser.finishToken("Slash"),
+				};
+			}
+
+			if (isAlpha(char)) {
+				const [value, end] = parser.readInputFrom(index, isAlpha);
+				return {
+					state,
+					token: parser.finishValueToken("Word", value, end),
+				};
+			}
+
+			if (char === '"') {
+				const [value, stringValueEnd, unclosed] = parser.readInputFrom(
+					ob1Inc(index),
+					isStringValueChar,
+				);
+
+				if (unclosed) {
+					throw parser.unexpected({
+						description: descriptions.STRING_MARKUP.UNCLOSED_STRING,
+						start: parser.getPositionFromIndex(stringValueEnd),
+					});
+				}
+
+				const end = ob1Add(stringValueEnd, 1);
+				return {
+					state,
+					token: parser.finishValueToken(
+						"String",
+						unescapeTextValue(value),
+						end,
+					),
+				};
+			}
+
+			if (char === ">") {
 				return {
 					state: {
 						...state,
-						inTagHead: true,
+						inTagHead: false,
 					},
-					token: this.finishToken("Less"),
+					token: parser.finishToken("Greater"),
 				};
 			}
+		}
 
-			// Keep eating text until we hit a <
-			const [value, end] = this.readInputFrom(index, isTextChar);
+		if (isTagStartChar(index, parser.input)) {
 			return {
-				state,
-				token: {
-					type: "Text",
-					value: unescapeTextValue(value),
-					start: index,
-					end,
+				state: {
+					...state,
+					inTagHead: true,
 				},
+				token: parser.finishToken("Less"),
 			};
 		}
 
-		private atTagEnd(): boolean {
-			return this.matchToken("Less") && this.lookahead().token.type === "Slash";
-		}
+		// Keep eating text until we hit a <
+		const [value, end] = parser.readInputFrom(index, isTextChar);
+		return {
+			state,
+			token: {
+				type: "Text",
+				value: unescapeTextValue(value),
+				start: index,
+				end,
+			},
+		};
+	},
+});
 
-		private parseTag(
-			headStart: Position,
-			parentTagName: undefined | MarkupTagName,
-		): MarkupParsedTag {
-			const nameToken = this.expectToken("Word");
-			const tagName = (nameToken.value as MarkupTagName);
+function atTagEnd(parser: MarkupParser): boolean {
+	return parser.matchToken("Less") && parser.lookahead().token.type === "Slash";
+}
 
-			const allowedAttributes = tags.get(tagName);
-			if (allowedAttributes === undefined) {
-				throw this.unexpected({
-					description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(tagName),
-					token: nameToken,
-				});
-			}
+function parseTag(
+	parser: MarkupParser,
+	headStart: Position,
+	parentTagName: undefined | MarkupTagName,
+): MarkupParsedTag {
+	const nameToken = parser.expectToken("Word");
+	const tagName = (nameToken.value as MarkupTagName);
 
-			// Check if this tag is restricted to certain parents
-			const onlyAllowedAsChild = tagsToOnlyParent.get(tagName);
-			if (onlyAllowedAsChild !== undefined) {
-				if (
-					parentTagName === undefined ||
-					!onlyAllowedAsChild.includes(parentTagName)
-				) {
-					throw this.unexpected({
-						description: descriptions.STRING_MARKUP.RESTRICTED_CHILD(
-							tagName,
-							onlyAllowedAsChild,
-							parentTagName,
-						),
-						token: nameToken,
-					});
-				}
-			}
+	const allowedAttributes = tags.get(tagName);
+	if (allowedAttributes === undefined) {
+		throw parser.unexpected({
+			description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(tagName),
+			token: nameToken,
+		});
+	}
 
-			// Check if the parent only allows certain children
-			if (parentTagName !== undefined) {
-				const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
-				if (
-					onlyAllowedAsParent !== undefined &&
-					!onlyAllowedAsParent.includes(tagName)
-				) {
-					throw this.unexpected({
-						description: descriptions.STRING_MARKUP.RESTRICTED_PARENT(
-							parentTagName,
-							onlyAllowedAsParent,
-							tagName,
-						),
-						token: nameToken,
-					});
-				}
-			}
-
-			const attributes: MarkupParsedAttributes = createEmptyAttributes();
-			const children: MarkupParsedChildren = [];
-			let selfClosing = false;
-
-			// Parse attributes
-			while (!this.matchToken("EOF") && !this.matchToken("Greater")) {
-				const keyToken = this.getToken();
-
-				let valueToken: TokenValues<Tokens>;
-				let key;
-				if (keyToken.type === "Word") {
-					key = keyToken.value;
-
-					const validator =
-						allowedAttributes.get(key) || globalAttributes.get(key);
-					if (validator === undefined) {
-						throw this.unexpected({
-							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
-								tagName,
-								key,
-								[...allowedAttributes.keys(), ...globalAttributes.keys()],
-							),
-						});
-					}
-
-					this.nextToken();
-
-					let rawValue;
-
-					// Shorthand properties
-					if (
-						this.matchToken("Word") ||
-						this.matchToken("Slash") ||
-						this.matchToken("Greater")
-					) {
-						rawValue = key;
-						valueToken = keyToken;
-					} else {
-						this.expectToken("Equals");
-
-						valueToken = this.expectToken("String");
-						rawValue = valueToken.value;
-					}
-
-					const value = validator(rawValue, key);
-
-					if (value === undefined) {
-						throw this.unexpected({
-							token: valueToken,
-							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_VALUE(
-								tagName,
-								key,
-								rawValue,
-							),
-						});
-					}
-
-					attributes.get(
-						key,
-						{
-							getDiagnosticLocation: (target) => {
-								switch (target) {
-									case "key":
-										return this.getDiagnosticLocation({token: keyToken});
-
-									case "value":
-										return this.getDiagnosticLocation({token: valueToken});
-
-									case "inner-value":
-										if (valueToken === keyToken) {
-											// Shorthand
-											return this.getDiagnosticLocation({token: keyToken});
-										} else {
-											// Remove string quotes
-											return this.getDiagnosticLocation({
-												startIndex: ob1Inc(keyToken.start),
-												endIndex: ob1Dec(valueToken.end),
-											});
-										}
-
-									case "all":
-										return this.getDiagnosticLocation({
-											startIndex: keyToken.start,
-											endIndex: valueToken.end,
-										});
-								}
-							},
-						},
-					).setValue(value);
-				} else if (keyToken.type === "Slash") {
-					this.nextToken();
-					selfClosing = true;
-				} else {
-					throw this.unexpected({
-						description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
-					});
-				}
-			}
-
-			this.expectToken("Greater");
-
-			const headEnd = this.getPosition();
-
-			// Verify closing tag
-			if (!selfClosing) {
-				while (
-					// Build children
-					!this.matchToken("EOF") &&
-					!this.atTagEnd()
-				) {
-					const child = this.parseChild(tagName);
-					if (child !== undefined) {
-						children.push(child);
-					}
-				}
-
-				if (this.matchToken("EOF")) {
-					throw this.unexpected({
-						description: descriptions.STRING_MARKUP.UNCLOSED_TAG(
-							tagName,
-							this.finishLocAt(headStart, headEnd),
-						),
-					});
-				} else {
-					this.expectToken("Less");
-					this.expectToken("Slash");
-
-					const name = this.getToken();
-					if (name.type === "Word") {
-						if (name.value !== tagName) {
-							throw this.unexpected({
-								description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
-									tagName,
-									name.value,
-								),
-							});
-						}
-
-						this.nextToken();
-					} else {
-						throw this.unexpected({
-							description: descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
-						});
-					}
-
-					this.expectToken("Greater");
-				}
-			}
-
-			return {
-				type: "Tag",
-				attributes,
-				name: tagName,
-				children,
-			};
-		}
-
-		private parseChild(
-			parentTagName: undefined | MarkupTagName,
-		): undefined | MarkupParsedChild {
-			const start = this.getPosition();
-			const token = this.getToken();
-			this.nextToken();
-
-			if (token.type === "Text") {
-				// If this tag has restricted children then no text is allowed
-				if (parentTagName !== undefined) {
-					const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
-					if (onlyAllowedAsParent !== undefined) {
-						// Ignore text that's just whitespace
-						if (token.value.trim() === "") {
-							return undefined;
-						} else {
-							throw this.unexpected({
-								description: descriptions.STRING_MARKUP.RESTRICTED_PARENT_TEXT(
-									parentTagName,
-								),
-								token,
-							});
-						}
-					}
-				}
-
-				return {
-					type: "Text",
-					source: true,
-					value: token.value,
-				};
-			} else if (token.type === "Less") {
-				return this.parseTag(start, parentTagName);
-			} else {
-				throw this.unexpected({
-					description: descriptions.STRING_MARKUP.UNKNOWN_START,
-				});
-			}
-		}
-
-		public parse(): MarkupParsedChildren {
-			const children: MarkupParsedChildren = [];
-			while (!this.matchToken("EOF")) {
-				const child = this.parseChild(undefined);
-				if (child !== undefined) {
-					children.push(child);
-				}
-			}
-			return children;
+	// Check if this tag is restricted to certain parents
+	const onlyAllowedAsChild = tagsToOnlyParent.get(tagName);
+	if (onlyAllowedAsChild !== undefined) {
+		if (
+			parentTagName === undefined ||
+			!onlyAllowedAsChild.includes(parentTagName)
+		) {
+			throw parser.unexpected({
+				description: descriptions.STRING_MARKUP.RESTRICTED_CHILD(
+					tagName,
+					onlyAllowedAsChild,
+					parentTagName,
+				),
+				token: nameToken,
+			});
 		}
 	}
-);
+
+	// Check if the parent only allows certain children
+	if (parentTagName !== undefined) {
+		const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
+		if (
+			onlyAllowedAsParent !== undefined &&
+			!onlyAllowedAsParent.includes(tagName)
+		) {
+			throw parser.unexpected({
+				description: descriptions.STRING_MARKUP.RESTRICTED_PARENT(
+					parentTagName,
+					onlyAllowedAsParent,
+					tagName,
+				),
+				token: nameToken,
+			});
+		}
+	}
+
+	const attributes: MarkupParsedAttributes = createEmptyAttributes();
+	const children: MarkupParsedChildren = [];
+	let selfClosing = false;
+
+	// Parse attributes
+	while (!parser.matchToken("EOF") && !parser.matchToken("Greater")) {
+		const keyToken = parser.getToken();
+
+		let valueToken: TokenValues<Tokens>;
+		let key;
+		if (keyToken.type === "Word") {
+			key = keyToken.value;
+
+			const validator = allowedAttributes.get(key) || globalAttributes.get(key);
+			if (validator === undefined) {
+				throw parser.unexpected({
+					description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+						tagName,
+						key,
+						[...allowedAttributes.keys(), ...globalAttributes.keys()],
+					),
+				});
+			}
+
+			parser.nextToken();
+
+			let rawValue;
+
+			// Shorthand properties
+			if (
+				parser.matchToken("Word") ||
+				parser.matchToken("Slash") ||
+				parser.matchToken("Greater")
+			) {
+				rawValue = key;
+				valueToken = keyToken;
+			} else {
+				parser.expectToken("Equals");
+
+				valueToken = parser.expectToken("String");
+				rawValue = valueToken.value;
+			}
+
+			const value = validator(rawValue, key);
+
+			if (value === undefined) {
+				throw parser.unexpected({
+					token: valueToken,
+					description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_VALUE(
+						tagName,
+						key,
+						rawValue,
+					),
+				});
+			}
+
+			attributes.get(
+				key,
+				{
+					getDiagnosticLocation: (target) => {
+						switch (target) {
+							case "key":
+								return parser.getDiagnosticLocation({token: keyToken});
+
+							case "value":
+								return parser.getDiagnosticLocation({token: valueToken});
+
+							case "inner-value":
+								if (valueToken === keyToken) {
+									// Shorthand
+									return parser.getDiagnosticLocation({token: keyToken});
+								} else {
+									// Remove string quotes
+									return parser.getDiagnosticLocation({
+										startIndex: ob1Inc(keyToken.start),
+										endIndex: ob1Dec(valueToken.end),
+									});
+								}
+
+							case "all":
+								return parser.getDiagnosticLocation({
+									startIndex: keyToken.start,
+									endIndex: valueToken.end,
+								});
+						}
+					},
+				},
+			).setValue(value);
+		} else if (keyToken.type === "Slash") {
+			parser.nextToken();
+			selfClosing = true;
+		} else {
+			throw parser.unexpected({
+				description: descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
+			});
+		}
+	}
+
+	parser.expectToken("Greater");
+
+	const headEnd = parser.getPosition();
+
+	// Verify closing tag
+	if (!selfClosing) {
+		while (
+			// Build children
+			!parser.matchToken("EOF") &&
+			!atTagEnd(parser)
+		) {
+			const child = parseChild(parser, tagName);
+			if (child !== undefined) {
+				children.push(child);
+			}
+		}
+
+		if (parser.matchToken("EOF")) {
+			throw parser.unexpected({
+				description: descriptions.STRING_MARKUP.UNCLOSED_TAG(
+					tagName,
+					parser.finishLocAt(headStart, headEnd),
+				),
+			});
+		} else {
+			parser.expectToken("Less");
+			parser.expectToken("Slash");
+
+			const name = parser.getToken();
+			if (name.type === "Word") {
+				if (name.value !== tagName) {
+					throw parser.unexpected({
+						description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+							tagName,
+							name.value,
+						),
+					});
+				}
+
+				parser.nextToken();
+			} else {
+				throw parser.unexpected({
+					description: descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
+				});
+			}
+
+			parser.expectToken("Greater");
+		}
+	}
+
+	return {
+		type: "Tag",
+		attributes,
+		name: tagName,
+		children,
+	};
+}
+
+function parseChild(
+	parser: MarkupParser,
+	parentTagName: undefined | MarkupTagName,
+): undefined | MarkupParsedChild {
+	const start = parser.getPosition();
+	const token = parser.getToken();
+	parser.nextToken();
+
+	if (token.type === "Text") {
+		// If this tag has restricted children then no text is allowed
+		if (parentTagName !== undefined) {
+			const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
+			if (onlyAllowedAsParent !== undefined) {
+				// Ignore text that's just whitespace
+				if (token.value.trim() === "") {
+					return undefined;
+				} else {
+					throw parser.unexpected({
+						description: descriptions.STRING_MARKUP.RESTRICTED_PARENT_TEXT(
+							parentTagName,
+						),
+						token,
+					});
+				}
+			}
+		}
+
+		return {
+			type: "Text",
+			source: true,
+			value: token.value,
+		};
+	} else if (token.type === "Less") {
+		return parseTag(parser, start, parentTagName);
+	} else {
+		throw parser.unexpected({
+			description: descriptions.STRING_MARKUP.UNKNOWN_START,
+		});
+	}
+}
 
 const parseCache: WeakMap<StaticMarkup, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
@@ -462,10 +447,13 @@ export function parseMarkup(
 	}
 
 	if (children === undefined) {
-		try {
-			children = createStringMarkupParser({...opts, input}).parse();
-		} catch (err) {
-			throw err;
+		children = [];
+		const parser = createStringMarkupParser({...opts, input});
+		while (!parser.matchToken("EOF")) {
+			const child = parseChild(parser, undefined);
+			if (child !== undefined) {
+				children.push(child);
+			}
 		}
 	}
 

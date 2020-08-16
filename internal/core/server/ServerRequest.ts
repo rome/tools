@@ -74,9 +74,9 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyFilePath,
-	UnknownFilePath,
+	UnknownPath,
 	createAbsoluteFilePath,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -117,8 +117,8 @@ type WrapRequestDiagnosticOpts = {
 };
 
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
-	args?: Array<UnknownFilePath | string>;
-	tryAlternateArg?: (path: UnknownFilePath) => undefined | UnknownFilePath;
+	args?: Array<UnknownPath | string>;
+	tryAlternateArg?: (path: UnknownPath) => undefined | UnknownPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
 	disabledDiagnosticCategory?: DiagnosticCategory;
@@ -491,7 +491,7 @@ export default class ServerRequest {
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
-				source: createUnknownFilePath(arg),
+				source: createUnknownPath(arg),
 			},
 			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
 		);
@@ -1236,7 +1236,7 @@ export default class ServerRequest {
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createUnknownFilePath(rawArgs[i]);
+			const path = createUnknownPath(rawArgs[i]);
 			let abs: AbsoluteFilePath;
 
 			if (path.isAbsolute()) {

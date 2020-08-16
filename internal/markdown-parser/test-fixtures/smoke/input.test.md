@@ -8,7 +8,6 @@
 MarkdownRoot {
 	comments: Array []
 	corrupt: false
-	diagnostics: Array []
 	filename: "smoke/input.md"
 	mtime: undefined
 	loc: Object {
@@ -22,6 +21,29 @@ MarkdownRoot {
 			line: 1
 		}
 	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse/markdown"}]
+			description: Object {
+				advice: Array []
+				category: "parse/markdown"
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid sequence"}]}
+			}
+			location: Object {
+				filename: "smoke/input.md"
+				mtime: undefined
+				sourceText: undefined
+				end: Object {
+					column: 13
+					line: 9
+				}
+				start: Object {
+					column: 0
+					line: 10
+				}
+			}
+		}
+	]
 	body: Array [
 		MarkdownHeadingBlock {
 			value: "Title"
@@ -48,8 +70,8 @@ MarkdownRoot {
 					line: 2
 				}
 				start: Object {
-					column: 7
-					line: 1
+					column: 0
+					line: 2
 				}
 			}
 		}
@@ -63,8 +85,8 @@ MarkdownRoot {
 					line: 3
 				}
 				start: Object {
-					column: 8
-					line: 2
+					column: 0
+					line: 3
 				}
 			}
 		}
@@ -78,8 +100,8 @@ MarkdownRoot {
 					line: 4
 				}
 				start: Object {
-					column: 9
-					line: 3
+					column: 0
+					line: 4
 				}
 			}
 		}
@@ -93,8 +115,8 @@ MarkdownRoot {
 					line: 5
 				}
 				start: Object {
-					column: 10
-					line: 4
+					column: 0
+					line: 5
 				}
 			}
 		}
@@ -108,8 +130,8 @@ MarkdownRoot {
 					line: 6
 				}
 				start: Object {
-					column: 11
-					line: 5
+					column: 0
+					line: 6
 				}
 			}
 		}
@@ -117,12 +139,12 @@ MarkdownRoot {
 			loc: Object {
 				filename: "smoke/input.md"
 				end: Object {
-					column: 0
-					line: 8
+					column: 32
+					line: 7
 				}
 				start: Object {
-					column: 12
-					line: 6
+					column: 0
+					line: 7
 				}
 			}
 			children: Array [
@@ -135,22 +157,8 @@ MarkdownRoot {
 							line: 7
 						}
 						start: Object {
-							column: 32
-							line: 7
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 32
-							line: 7
-						}
-						start: Object {
-							column: 32
-							line: 7
+							column: 0
+							line: 8
 						}
 					}
 				}
@@ -165,8 +173,8 @@ MarkdownRoot {
 					line: 8
 				}
 				start: Object {
-					column: 3
-					line: 8
+					column: 0
+					line: 9
 				}
 			}
 		}
@@ -175,8 +183,8 @@ MarkdownRoot {
 			loc: Object {
 				filename: "smoke/input.md"
 				end: Object {
-					column: 0
-					line: 11
+					column: 14
+					line: 10
 				}
 				start: Object {
 					column: 0
@@ -190,7 +198,7 @@ MarkdownRoot {
 					loc: Object {
 						filename: "smoke/input.md"
 						end: Object {
-							column: 0
+							column: 14
 							line: 10
 						}
 						start: Object {
@@ -203,7 +211,7 @@ MarkdownRoot {
 							loc: Object {
 								filename: "smoke/input.md"
 								end: Object {
-									column: 0
+									column: 14
 									line: 10
 								}
 								start: Object {
@@ -221,43 +229,11 @@ MarkdownRoot {
 											line: 9
 										}
 										start: Object {
-											column: 13
-											line: 9
+											column: 0
+											line: 10
 										}
 									}
 								}
-							]
-						}
-					]
-				}
-				MarkdownListItem {
-					value: undefined
-					checked: undefined
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 0
-							line: 11
-						}
-						start: Object {
-							column: 3
-							line: 10
-						}
-					}
-					children: Array [
-						MarkdownParagraph {
-							loc: Object {
-								filename: "smoke/input.md"
-								end: Object {
-									column: 0
-									line: 11
-								}
-								start: Object {
-									column: 3
-									line: 10
-								}
-							}
-							children: Array [
 								MarkdownText {
 									value: "second item"
 									loc: Object {
@@ -267,8 +243,8 @@ MarkdownRoot {
 											line: 10
 										}
 										start: Object {
-											column: 14
-											line: 10
+											column: 0
+											line: 11
 										}
 									}
 								}
@@ -287,8 +263,8 @@ MarkdownRoot {
 					line: 11
 				}
 				start: Object {
-					column: 3
-					line: 11
+					column: 0
+					line: 12
 				}
 			}
 		}
@@ -296,8 +272,8 @@ MarkdownRoot {
 			loc: Object {
 				filename: "smoke/input.md"
 				end: Object {
-					column: 0
-					line: 13
+					column: 9
+					line: 12
 				}
 				start: Object {
 					column: 0
@@ -314,22 +290,8 @@ MarkdownRoot {
 							line: 12
 						}
 						start: Object {
-							column: 9
-							line: 12
-						}
-					}
-				}
-				MarkdownText {
-					value: "\n"
-					loc: Object {
-						filename: "smoke/input.md"
-						end: Object {
-							column: 9
-							line: 12
-						}
-						start: Object {
-							column: 9
-							line: 12
+							column: 0
+							line: 13
 						}
 					}
 				}
@@ -344,8 +306,8 @@ MarkdownRoot {
 					line: 13
 				}
 				start: Object {
-					column: 3
-					line: 13
+					column: 0
+					line: 14
 				}
 			}
 		}

@@ -15,7 +15,7 @@ import Bundler from "../bundler/Bundler";
 import {WebSocketInterface, createKey} from "@internal/codec-websocket";
 import {Reporter, ReporterCaptureStream} from "@internal/cli-reporter";
 import {createBridgeFromWebSocketInterface} from "@internal/events";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {WebServer} from "./index";
 import {ProjectDefinition} from "@internal/project";
 import {ConsumableUrl, consumeUrl} from "@internal/codec-url";
@@ -265,7 +265,7 @@ export default class WebRequest {
 		);
 		const resolved = await this.server.resolver.resolveEntryAssertPath({
 			origin: this.serverRequest.client.flags.cwd,
-			source: createUnknownFilePath("@internal/web-ui"),
+			source: createUnknownPath("@internal/web-ui"),
 		});
 		const bundle = await bundler.bundle(resolved);
 		res.end(bundle.entry.js.content);

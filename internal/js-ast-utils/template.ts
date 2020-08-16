@@ -15,7 +15,7 @@ import {
 import {CompilerContext, Path, signals} from "@internal/compiler";
 import {removeLoc} from "@internal/ast-utils";
 import {parseJS} from "@internal/js-parser";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {isIdentifierish} from "./isIdentifierish";
 import {Dict} from "@internal/typescript-helpers";
 
@@ -68,7 +68,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	let ast = parseJS({
 		input: code,
 		sourceType: "template",
-		path: createUnknownFilePath("template"),
+		path: createUnknownPath("template"),
 	});
 
 	// remove `loc` properties

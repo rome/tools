@@ -16,7 +16,7 @@ import {
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import BundleRequest, {BundleOptions} from "./BundleRequest";
-import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
@@ -65,7 +65,7 @@ export default class Bundler {
 		const res = await this.server.resolver.resolveEntryAssert({
 			...this.config.resolver,
 			origin: cwd,
-			source: createUnknownFilePath(unresolvedEntry),
+			source: createUnknownPath(unresolvedEntry),
 		});
 
 		const {server} = this;
@@ -76,7 +76,7 @@ export default class Bundler {
 			...this.config.resolver,
 			origin: cwd,
 			requestedType: "package",
-			source: createUnknownFilePath(unresolvedEntry),
+			source: createUnknownPath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
 			manifestRootResolved.type === "FOUND"
@@ -333,7 +333,7 @@ export default class Bundler {
 					{
 						...this.config.resolver,
 						origin: manifestDef.directory,
-						source: createUnknownFilePath(relative).toExplicitRelative(),
+						source: createUnknownPath(relative).toExplicitRelative(),
 					},
 					{
 						location,

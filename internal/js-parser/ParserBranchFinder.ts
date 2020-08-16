@@ -6,7 +6,15 @@
  */
 
 import {State} from "./tokenizer/state";
-import {DiagnosticsFatalError, JSParser} from "./parser";
+import {
+	DiagnosticsFatalError,
+	JSParser,
+	cloneState,
+	popScope,
+	pushScope,
+	setState,
+} from "./parser";
+import {ParserCoreState} from "@internal/parser-core";
 
 export type ParserBranch<T> = {
 	diagnosticsPriority: undefined | number;
@@ -14,7 +22,7 @@ export type ParserBranch<T> = {
 	newDiagnosticCount: number;
 	diagnosticCount: number;
 	result: T;
-	state: State;
+	state: ParserCoreState & State;
 };
 
 export type ParserBranchOptions = {
@@ -54,16 +62,16 @@ export default class ParserBranchFinder<T> {
 
 		const {maxNewDiagnostics, diagnosticsPriority} = opts;
 		const {parser} = this;
-		const prevState = parser.cloneState();
+		const prevState = cloneState(parser);
 
-		parser.pushScope("MAX_NEW_DIAGNOSTICS", maxNewDiagnostics);
+		pushScope(parser, "MAX_NEW_DIAGNOSTICS", maxNewDiagnostics);
 
 		let result;
 		try {
 			result = callback(parser);
 		} catch (err) {
 			if (err instanceof DiagnosticsFatalError) {
-				parser.setState(prevState);
+				setState(parser, prevState);
 				return this;
 			} else {
 				throw err;
@@ -71,14 +79,14 @@ export default class ParserBranchFinder<T> {
 		}
 
 		if (result === undefined) {
-			parser.setState(prevState);
+			setState(parser, prevState);
 			return this;
 		}
 
 		// We capture the state at this point because it could have been previously changed
 		const newState = parser.state;
-		parser.popScope("MAX_NEW_DIAGNOSTICS");
-		parser.setState(prevState);
+		popScope(parser, "MAX_NEW_DIAGNOSTICS");
+		setState(parser, prevState);
 
 		// Verify that we didn't exceed the maxDiagnostics, this should have already been done in Parser#addDiagnostic
 
@@ -173,7 +181,7 @@ export default class ParserBranchFinder<T> {
 		const branch = this.getBranch();
 
 		const {result, state} = branch;
-		parser.setState(state);
+		setState(parser, state);
 		return result;
 	}
 }

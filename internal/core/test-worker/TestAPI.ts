@@ -512,7 +512,9 @@ export default class TestAPI implements TestHelper {
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
 					getErrorStackAdvice(
 						getErrorStructure(err),
-						markup`Incorrect error stack trace`,
+						{
+							title: markup`Incorrect error stack trace`,
+						},
 					),
 					1,
 				);
@@ -539,7 +541,9 @@ export default class TestAPI implements TestHelper {
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
 					getErrorStackAdvice(
 						getErrorStructure(err),
-						markup`Incorrect error stack trace`,
+						{
+							title: markup`Incorrect error stack trace`,
+						},
 					),
 					1,
 				);
@@ -557,9 +561,11 @@ export default class TestAPI implements TestHelper {
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				markup`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
-					err.message,
-				)}`,
+				{
+					title: markup`t.notThrows() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+						err.message,
+					)}`,
+				},
 			);
 			this.fail(message, advice, 1);
 		}
@@ -574,9 +580,11 @@ export default class TestAPI implements TestHelper {
 		} catch (err) {
 			const advice = getErrorStackAdvice(
 				getErrorStructure(err),
-				markup`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
-					err.message,
-				)}`,
+				{
+					title: markup`t.notThrowsAsync() did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+						err.message,
+					)}`,
+				},
 			);
 			this.fail(message, advice, 1);
 		}

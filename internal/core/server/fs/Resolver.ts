@@ -19,7 +19,7 @@ import {
 	AbsoluteFilePath,
 	AnyFilePath,
 	RelativeFilePath,
-	URLFilePath,
+	URLPath,
 	createFilePathFromSegments,
 	createRelativeFilePath,
 } from "@internal/path";
@@ -102,7 +102,7 @@ function request(
 const NODE_MODULES = "node_modules";
 
 export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
-	origin: URLFilePath | AbsoluteFilePath;
+	origin: URLPath | AbsoluteFilePath;
 	source: AnyFilePath;
 	// Allows a resolution to stop at a directory or package boundary
 	requestedType?: "package" | "directory";

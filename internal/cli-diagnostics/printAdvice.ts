@@ -37,7 +37,7 @@ import {
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {UnknownFilePathSet, createUnknownFilePath} from "@internal/path";
+import {UnknownPathSet, createUnknownPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
@@ -47,7 +47,7 @@ import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-ha
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
 	flags: DiagnosticsPrinterFlags;
-	missingFileSources: UnknownFilePathSet;
+	missingFileSources: UnknownPathSet;
 	fileSources: DiagnosticsPrinterFileSources;
 	reporter: Reporter;
 	diagnostic: Diagnostic;
@@ -314,7 +314,7 @@ function printCode(
 		truncateLines: MAX_CODE_LINES,
 		lines: toLines({
 			input: code,
-			path: createUnknownFilePath("inline"),
+			path: createUnknownPath("inline"),
 			sourceTypeJS: item.sourceTypeJS,
 			language: item.language,
 			highlight: opts.printer.shouldHighlight(),
@@ -345,7 +345,7 @@ function printFrame(
 	let {sourceText} = item.location;
 	const path =
 		filename === undefined
-			? createUnknownFilePath("unknown")
+			? createUnknownPath("unknown")
 			: opts.printer.createFilePath(filename);
 
 	let lines: ToLines = [];
@@ -479,8 +479,17 @@ function printStacktrace(
 
 			reporter.log(concatMarkup(logParts, markup` `));
 
+			// A code frame will always be displayed if it's been marked as important on the stackframe advice or if it
+			// refers to the diagnostic
+			const isImportantStackFrame =
+				filename !== undefined &&
+				(filename === diagnostic.location.filename ||
+				(item.importantFilenames !== undefined &&
+				item.importantFilenames.includes(filename)));
+			const shouldShowCodeFrame = isImportantStackFrame || shownCodeFrames < 2;
+
 			if (
-				shownCodeFrames < 2 &&
+				shouldShowCodeFrame &&
 				filename !== undefined &&
 				line !== undefined &&
 				column !== undefined
@@ -507,7 +516,7 @@ function printStacktrace(
 						reporter,
 					},
 				);
-				if (frame.printed) {
+				if (frame.printed && !isImportantStackFrame) {
 					shownCodeFrames++;
 				}
 			}

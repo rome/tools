@@ -39,7 +39,20 @@ import {
 	JSSpreadElement,
 	JSSpreadProperty,
 } from "@internal/ast";
-import {JSParser, OpeningContext} from "../parser";
+import {
+	JSParser,
+	OpeningContext,
+	createUnknownIdentifier,
+	eat,
+	expectClosing,
+	expectOpening,
+	inScope,
+	isParenthesized,
+	isSyntaxEnabled,
+	match,
+	next,
+	unexpectedDiagnostic,
+} from "../parser";
 import {
 	ambiguousTypeCastToParameter,
 	hasTSModifier,
@@ -137,10 +150,13 @@ export function toAssignmentPattern(
 					if (arg.type === "JSAssignmentIdentifier") {
 						rest = arg;
 					} else {
-						parser.unexpectedDiagnostic({
-							loc: arg.loc,
-							description: descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
-						});
+						unexpectedDiagnostic(
+							parser,
+							{
+								loc: arg.loc,
+								description: descriptions.JS_PARSER.INVALID_OBJECT_REST_ARGUMENT,
+							},
+						);
 					}
 					continue;
 				}
@@ -171,10 +187,13 @@ export function toAssignmentPattern(
 
 		case "JSAssignmentExpression": {
 			if (node.operator !== "=") {
-				parser.unexpectedDiagnostic({
-					loc: parser.getLoc(node.left),
-					description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: parser.getLoc(node.left),
+						description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
+					},
+				);
 			}
 
 			return {
@@ -187,15 +206,18 @@ export function toAssignmentPattern(
 		}
 
 		default: {
-			parser.unexpectedDiagnostic({
-				loc: node.loc,
-				description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
-					contextDescription,
-				),
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: node.loc,
+					description: descriptions.JS_PARSER.INVALID_LEFT_HAND_SIDE(
+						contextDescription,
+					),
+				},
+			);
 			return toAssignmentIdentifier(
 				parser,
-				parser.createUnknownIdentifier(contextDescription),
+				createUnknownIdentifier(parser, contextDescription),
 			);
 		}
 	}
@@ -219,10 +241,13 @@ export function toTargetAssignmentPattern(
 			return binding;
 
 		default: {
-			parser.unexpectedDiagnostic({
-				loc: node.loc,
-				description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: node.loc,
+					description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_TARGET,
+				},
+			);
 			return {
 				type: "JSAssignmentIdentifier",
 				loc: node.loc,
@@ -279,10 +304,13 @@ export function toBindingPattern(
 	const binding = toAssignmentPattern(parser, node, contextDescription);
 
 	if (binding.type === "JSMemberExpression") {
-		parser.unexpectedDiagnostic({
-			loc: node.loc,
-			description: descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: node.loc,
+				description: descriptions.JS_PARSER.BINDING_MEMBER_EXPRESSION,
+			},
+		);
 
 		return {
 			type: "JSBindingIdentifier",
@@ -365,10 +393,13 @@ export function toAssignmentObjectProperty(
 ): JSAssignmentObjectPatternProperty {
 	switch (prop.type) {
 		case "JSObjectMethod": {
-			parser.unexpectedDiagnostic({
-				loc: prop.key.loc,
-				description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: prop.key.loc,
+					description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
+				},
+			);
 
 			const fakeProp: JSAssignmentObjectPatternProperty = {
 				type: "JSAssignmentObjectPatternProperty",
@@ -404,10 +435,13 @@ export function toAssignmentObjectProperty(
 			};
 
 		default: {
-			parser.unexpectedDiagnostic({
-				loc: prop.loc,
-				description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: prop.loc,
+					description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROPERTY,
+				},
+			);
 			return {
 				type: "JSAssignmentObjectPatternProperty",
 				loc: prop.loc,
@@ -488,10 +522,13 @@ export function toAssignableList(
 		}
 
 		if (expr.type === "TSAsExpression" || expr.type === "TSTypeAssertion") {
-			parser.unexpectedDiagnostic({
-				loc: expr.loc,
-				description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: expr.loc,
+					description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
+				},
+			);
 		}
 	}
 
@@ -617,32 +654,44 @@ export function normalizeReferencedItem(
 		return expr;
 	}
 
-	parser.unexpectedDiagnostic({
-		loc: expr.loc,
-		description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
-	});
-
-	if (!parser.isParenthesized(expr) && (multiple || !isParenthesizedExpr)) {
-		parser.unexpectedDiagnostic({
+	unexpectedDiagnostic(
+		parser,
+		{
 			loc: expr.loc,
-			description: descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
-		});
+			description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
+		},
+	);
+
+	if (!isParenthesized(parser, expr) && (multiple || !isParenthesizedExpr)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: expr.loc,
+				description: descriptions.JS_PARSER.TYPE_CAST_EXPECTED_PARENS,
+			},
+		);
 	}
 
 	if (expr.optional) {
-		parser.unexpectedDiagnostic({
-			loc: expr.loc,
-			description: descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: expr.loc,
+				description: descriptions.JS_PARSER.TYPE_CAST_CANNOT_BE_OPTIONAL,
+			},
+		);
 	}
 
 	const {typeAnnotation, expression} = expr;
 
 	if (typeAnnotation === undefined) {
-		parser.unexpectedDiagnostic({
-			loc: expr.loc,
-			description: descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: expr.loc,
+				description: descriptions.JS_PARSER.TYPE_CAST_WITHOUT_ANNOTATION,
+			},
+		);
 		return expression;
 	}
 
@@ -656,13 +705,16 @@ export function filterSpread<T extends AnyNode>(
 	for (let i = 0; i < elems.length; i++) {
 		const elem = elems[i];
 		if (elem.type === "JSSpreadElement") {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
+				},
+			);
 
 			elems[i] = toReferenceIdentifier(
 				parser,
-				parser.createUnknownIdentifier("spread substitute"),
+				createUnknownIdentifier(parser, "spread substitute"),
 			);
 		}
 	}
@@ -712,7 +764,7 @@ export function parseSpread(
 	refNeedsArrowPos?: IndexTracker,
 ): JSSpreadElement {
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 
 	const argument = parseMaybeAssign<AnyJSExpression>(
 		parser,
@@ -723,7 +775,7 @@ export function parseSpread(
 		refNeedsArrowPos,
 	);
 
-	if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
+	if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && match(parser, tt.comma)) {
 		parser.state.commaAfterSpreadAt = parser.state.index;
 	}
 
@@ -753,7 +805,8 @@ export function parseTargetBindingPattern(
 
 function parseArrayPattern(parser: JSParser): JSBindingArrayPattern {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.bracketL,
 		tt.bracketR,
 		"array pattern",
@@ -783,31 +836,34 @@ export function parseBindingList(
 
 	let first = true;
 	while (true) {
-		if (parser.match(openContext.close) || parser.match(tt.eof)) {
-			parser.expectClosing(openContext);
+		if (match(parser, openContext.close) || match(parser, tt.eof)) {
+			expectClosing(parser, openContext);
 			break;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			if (!parser.eat(tt.comma)) {
-				parser.unexpectedDiagnostic({
-					description: descriptions.JS_PARSER.EXPECTED_COMMA_SEPARATOR(
-						openContext.name,
-					),
-				});
+			if (!eat(parser, tt.comma)) {
+				unexpectedDiagnostic(
+					parser,
+					{
+						description: descriptions.JS_PARSER.EXPECTED_COMMA_SEPARATOR(
+							openContext.name,
+						),
+					},
+				);
 				break;
 			}
 		}
 
-		if (allowHoles && parser.match(tt.comma)) {
+		if (allowHoles && match(parser, tt.comma)) {
 			elts.push(parseArrayHole(parser));
-		} else if (parser.match(openContext.close)) {
-			parser.expectClosing(openContext);
+		} else if (match(parser, openContext.close)) {
+			expectClosing(parser, openContext);
 			break;
-		} else if (parser.match(tt.ellipsis)) {
-			parser.next();
+		} else if (match(parser, tt.ellipsis)) {
+			next(parser);
 
 			rest = parseBindingListItemTypes(
 				parser,
@@ -816,7 +872,7 @@ export function parseBindingList(
 			);
 
 			if (!hasCommaAfterRest(parser)) {
-				parser.expectClosing(openContext);
+				expectClosing(parser, openContext);
 				break;
 			}
 		} else {
@@ -860,20 +916,26 @@ export function parseBindingListItem(
 	const elt = parseMaybeDefault(parser, start, left);
 
 	if (accessibility !== undefined || readonly) {
-		if (!parser.isSyntaxEnabled("ts")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
-			});
+		if (!isSyntaxEnabled(parser, "ts")) {
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
+				},
+			);
 		}
 
 		if (
 			elt.type !== "JSBindingIdentifier" &&
 			elt.type !== "JSBindingAssignmentPattern"
 		) {
-			parser.unexpectedDiagnostic({
-				start,
-				description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					start,
+					description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
+				},
+			);
 		}
 
 		return parser.finishNode(
@@ -903,18 +965,21 @@ export function parseBindingListItemTypes(
 	let typeAnnotation;
 	let optional;
 
-	if (parser.eat(tt.question)) {
+	if (eat(parser, tt.question)) {
 		if (param.type !== "JSBindingIdentifier") {
-			parser.unexpectedDiagnostic({
-				loc: param.loc,
-				description: descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: param.loc,
+					description: descriptions.JS_PARSER.TYPE_BINDING_PARAMETER_OPTIONAL,
+				},
+			);
 		}
 
 		optional = true;
 	}
 
-	if (parser.match(tt.colon)) {
+	if (match(parser, tt.colon)) {
 		typeAnnotation = parseTSTypeAnnotation(parser, true);
 	}
 
@@ -939,7 +1004,7 @@ export function parseMaybeDefault(
 ): AnyJSTargetBindingPattern | JSBindingAssignmentPattern {
 	let target: AnyJSBindingPattern;
 
-	if (parser.eat(tt.eq)) {
+	if (eat(parser, tt.eq)) {
 		const right = parseMaybeAssign<AnyJSExpression>(
 			parser,
 			"assignment pattern right",
@@ -966,10 +1031,13 @@ export function parseMaybeDefault(
 			parser.getLoc(target.meta.typeAnnotation).start,
 		) === -1
 	) {
-		parser.unexpectedDiagnostic({
-			loc: target.meta.typeAnnotation.loc,
-			description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: target.meta.typeAnnotation.loc,
+				description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
+			},
+		);
 	}
 
 	return target;
@@ -1003,7 +1071,7 @@ export function checkLVal(
 
 	// Verify that nodes aren't parenthesized
 	if (
-		parser.isParenthesized(expr) &&
+		isParenthesized(parser, expr) &&
 		!ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)
 	) {
 		let patternType: "object" | "array" | undefined;
@@ -1013,12 +1081,15 @@ export function checkLVal(
 		if (expr.type === "JSBindingArrayPattern") {
 			patternType = "array";
 		}
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
-				patternType,
-			),
-			loc: expr.loc,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
+					patternType,
+				),
+				loc: expr.loc,
+			},
+		);
 	}
 
 	switch (expr.type) {
@@ -1039,13 +1110,16 @@ export function checkLVal(
 		case "JSReferenceIdentifier":
 		case "JSAssignmentIdentifier": {
 			if (
-				parser.inScope("STRICT") &&
-				isStrictBindReservedWord(expr.name, parser.inModule)
+				inScope(parser, "STRICT") &&
+				isStrictBindReservedWord(expr.name, parser.meta.inModule)
 			) {
-				parser.unexpectedDiagnostic({
-					loc: expr.loc,
-					description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: expr.loc,
+						description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
+					},
+				);
 			}
 
 			if (checkClashes !== undefined) {
@@ -1054,13 +1128,16 @@ export function checkLVal(
 				if (clash === undefined) {
 					checkClashes.set(expr.name, expr);
 				} else {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.ARGUMENT_CLASH_IN_STRICT(
-							expr.name,
-							expr.loc,
-						),
-						loc: expr.loc,
-					});
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.ARGUMENT_CLASH_IN_STRICT(
+								expr.name,
+								expr.loc,
+							),
+							loc: expr.loc,
+						},
+					);
 				}
 			}
 			break;
@@ -1134,15 +1211,18 @@ export function checkToRestConversion(
 	node: JSSpreadProperty | JSSpreadElement,
 ): void {
 	if (VALID_REST_ARGUMENT_TYPES.includes(node.argument.type) === false) {
-		parser.unexpectedDiagnostic({
-			loc: node.argument.loc,
-			description: descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: node.argument.loc,
+				description: descriptions.JS_PARSER.REST_INVALID_ARGUMENT,
+			},
+		);
 	}
 }
 
 export function hasCommaAfterRest(parser: JSParser): boolean {
-	if (parser.match(tt.comma)) {
+	if (match(parser, tt.comma)) {
 		raiseRestNotLast(parser);
 		return true;
 	}
@@ -1155,11 +1235,14 @@ export function raiseRestNotLast(
 	loc?: SourceLocation,
 	start?: Position,
 ) {
-	parser.unexpectedDiagnostic({
-		start,
-		loc,
-		description: descriptions.JS_PARSER.DESTRUCTURING_REST_ELEMENT_NOT_LAST,
-	});
+	unexpectedDiagnostic(
+		parser,
+		{
+			start,
+			loc,
+			description: descriptions.JS_PARSER.DESTRUCTURING_REST_ELEMENT_NOT_LAST,
+		},
+	);
 }
 
 export function checkCommaAfterRestFromSpread(parser: JSParser): void {

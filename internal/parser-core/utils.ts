@@ -1,6 +1,11 @@
-import {default as ParserCore, ParserWithRequiredPath} from "./ParserCore";
-import {ParserOptions, Position, SourceLocation} from "./types";
-import {Class} from "@internal/typescript-helpers";
+import {default as ParserCore} from "./ParserCore";
+import {
+	ParserCoreImplementation,
+	ParserCoreTypes,
+	ParserOptions,
+	Position,
+	SourceLocation,
+} from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 
 export function isDigit(char: undefined | string): boolean {
@@ -27,21 +32,11 @@ export function readUntilLineBreak(char: string): boolean {
 	return char !== "\n";
 }
 
-// Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available
-export function createParser<T, Args extends Array<unknown>>(
-	callback: (
-		parser: typeof ParserCore,
-		parserRequiredPath: typeof ParserWithRequiredPath,
-	) => Class<T, Args>,
-): (...args: Args) => T {
-	let klass: undefined | Class<T, Args>;
-
-	return (...args: Args) => {
-		if (klass === undefined) {
-			klass = callback(ParserCore, ParserWithRequiredPath);
-		}
-
-		return new klass(...args);
+export function createParser<Types extends ParserCoreTypes>(
+	impl: ParserCoreImplementation<Types>,
+): (opts: Types["options"], meta: Types["meta"]) => ParserCore<Types> {
+	return (opts: Types["options"], meta: Types["meta"]) => {
+		return new ParserCore(impl, opts, meta);
 	};
 }
 

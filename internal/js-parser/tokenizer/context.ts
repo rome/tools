@@ -8,7 +8,7 @@
 // The algorithm used to determine whether a regexp can appear at a
 // given point in the program is loosely based on sweet.js' approach.
 // See https://github.com/mozilla/sweet.js/wiki/design
-import {JSParser} from "../parser";
+import {JSParser, inScope} from "../parser";
 import {getCurContext, isBraceBlock, readTemplateToken} from "./index";
 import {lineBreak} from "@internal/js-parser-utils";
 import {types as tt} from "./types";
@@ -77,7 +77,7 @@ tt.name.updateContext = function(parser, prevType) {
 	if (prevType !== tt.dot) {
 		if (
 			(parser.state.tokenValue === "of" && !parser.state.exprAllowed) ||
-			(parser.state.tokenValue === "yield" && parser.inScope("GENERATOR"))
+			(parser.state.tokenValue === "yield" && inScope(parser, "GENERATOR"))
 		) {
 			allowed = true;
 		}

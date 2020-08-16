@@ -10,12 +10,12 @@ import {descriptions} from "@internal/diagnostics";
 import {parseJSON} from "@internal/codec-json";
 import {test} from "rome";
 import {ParserOptions} from "@internal/parser-core";
-import {createUnknownFilePath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {readMarkup} from "@internal/markup";
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
 function parseExtJSON(opts: ParserOptions) {
-	return parseJSON({...opts, path: createUnknownFilePath("input.rjson")});
+	return parseJSON({...opts, path: createUnknownPath("input.rjson")});
 }
 
 test(

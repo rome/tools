@@ -3,7 +3,7 @@ import {
 	AnyFilePath,
 	AnyFilePathSet,
 	RelativeFilePathMap,
-	UnknownFilePathMap,
+	UnknownPathMap,
 } from "@internal/path";
 
 export type IntSize = 1 | 2 | 4 | 8;
@@ -33,9 +33,9 @@ export type RSERValue =
 export type AnyRSERFilePathMap =
 	| RSERAbsoluteFilePathMap
 	| RSERRelativeFilePathMap
-	| RSERUnknownFilePathMap;
+	| RSERUnknownPathMap;
 
-export type RSERUnknownFilePathMap = UnknownFilePathMap<RSERValue>;
+export type RSERUnknownPathMap = UnknownPathMap<RSERValue>;
 export type RSERAbsoluteFilePathMap = AbsoluteFilePathMap<RSERValue>;
 export type RSERRelativeFilePathMap = RelativeFilePathMap<RSERValue>;
 

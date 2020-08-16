@@ -11,7 +11,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
-import {UnknownFilePath} from "@internal/path";
+import {UnknownPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
 export type ConsumeKey = number | string;
@@ -82,7 +82,7 @@ export type ConsumerOptions = {
 	handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
 	onDefinition?: ConsumerOnDefinition;
 	propertyMetadata?: ConsumePropertyMetadata;
-	filePath?: UnknownFilePath;
+	filePath?: UnknownPath;
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;

@@ -24,7 +24,7 @@ import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "@internal/path";
 
 import {markup} from "@internal/markup";
@@ -355,7 +355,7 @@ export default class DependencyGraph {
 							{
 								...this.resolverOpts,
 								origin,
-								source: createUnknownFilePath(source),
+								source: createUnknownPath(source),
 							},
 							dep.loc === undefined
 								? undefined

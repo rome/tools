@@ -19,7 +19,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
-import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 
@@ -316,7 +316,7 @@ function tryPathSuggestions(
 			const ratings = orderBySimilarity(
 				path.getExtensionlessBasename(),
 				entries.map((target) => {
-					return createUnknownFilePath(target).getExtensionlessBasename();
+					return createUnknownPath(target).getExtensionlessBasename();
 				}),
 				{
 					minRating: MIN_SIMILARITY,
@@ -328,9 +328,7 @@ function tryPathSuggestions(
 					server,
 					resolver,
 					suggestions,
-					path: createUnknownFilePath(rating.target).append(
-						...segments.slice(1),
-					).assertAbsolute(),
+					path: createUnknownPath(rating.target).append(...segments.slice(1)).assertAbsolute(),
 				});
 			}
 		}

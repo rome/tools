@@ -6,26 +6,15 @@
  */
 
 import {ScopeType} from "../parser";
-import {
-	ParserCore,
-	ParserCoreState,
-	Position,
-	SourceLocation,
-} from "@internal/parser-core";
-import {TokContext, types as ct} from "./context";
-import {TokenTypes, types as tt} from "./types";
+import {Position, SourceLocation} from "@internal/parser-core";
+import {TokContext} from "./context";
+import {TokenTypes} from "./types";
 import {Token} from "..";
-import {
-	Number0,
-	Number1,
-	ob1Number0,
-	ob1Number0Neg1,
-	ob1Number1,
-} from "@internal/ob1";
+import {Number0, Number1} from "@internal/ob1";
 
 type Scopes = {[K in ScopeType]?: Array<unknown>};
 
-export type State = ParserCoreState & {
+export type State = {
 	isIterator: boolean;
 	tokens: Array<Token>;
 	hasHoistedVars: boolean;
@@ -126,51 +115,3 @@ export type Label = {
 	name?: string;
 	statementStart?: Number0;
 };
-
-const EMPTY_POS: Position = {
-	line: ob1Number1,
-	column: ob1Number0,
-};
-
-export function createInitialState(): State {
-	return {
-		...ParserCore.createInitialState(),
-		scopes: {},
-		hasHoistedVars: false,
-		tokens: [],
-		potentialArrowAt: ob1Number0Neg1,
-		commaAfterSpreadAt: ob1Number0Neg1,
-		yieldPos: ob1Number0,
-		awaitPos: ob1Number0,
-		noArrowAt: [],
-		noArrowParamsConversionAt: [],
-		maybeInArrowParameters: false,
-		isIterator: false,
-		noAnonFunctionType: false,
-		classLevel: ob1Number0,
-		labels: [],
-		yieldInPossibleArrowParameters: undefined,
-		index: ob1Number0,
-		lineStartIndex: ob1Number0,
-		curLine: ob1Number1,
-		tokenType: tt.eof,
-		tokenValue: undefined,
-		startPos: EMPTY_POS,
-		endPos: EMPTY_POS,
-		lastStartPos: EMPTY_POS,
-		lastEndPos: EMPTY_POS,
-		startIndex: ob1Number0,
-		endIndex: ob1Number0,
-		lastEndIndex: ob1Number0,
-		lastStartIndex: ob1Number0,
-		context: [ct.braceStatement],
-		exprAllowed: true,
-		containsOctal: false,
-		escapePosition: undefined,
-		octalPosition: undefined,
-		invalidTemplateEscapePosition: undefined,
-		exportedIdentifiers: new Map(),
-		lineStart: true,
-		indentLevel: ob1Number0,
-	};
-}

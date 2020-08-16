@@ -11,7 +11,7 @@ import {
 	stringifyJSON,
 	stringifyRJSONFromConsumer,
 } from "@internal/codec-json";
-import {createAbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {createAbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,
@@ -39,7 +39,7 @@ export const jsonHandler: ExtensionHandler = {
 
 		const real = createAbsoluteFilePath(file.real);
 		const sourceText = await worker.readFile(real);
-		const path = createUnknownFilePath(uid);
+		const path = createUnknownPath(uid);
 
 		let formatted: string = sourceText;
 
@@ -84,7 +84,7 @@ export const jsonHandler: ExtensionHandler = {
 
 		// Parse the JSON to make sure it's valid
 		const obj = parseJSON({
-			path: createUnknownFilePath(file.uid),
+			path: createUnknownPath(file.uid),
 			input: src,
 		});
 

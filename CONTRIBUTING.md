@@ -87,6 +87,12 @@ If you would like to run only the test runner:
 ./rome test
 ```
 
+To run specific files:
+
+```bash
+./rome test path/to/files
+```
+
 And to update snapshots:
 
 ```bash

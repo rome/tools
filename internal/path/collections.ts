@@ -9,10 +9,10 @@ import {
 	AbsoluteFilePath,
 	AnyFilePath,
 	RelativeFilePath,
-	UnknownFilePath,
+	UnknownPath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownFilePath,
+	createUnknownPath,
 } from "./index";
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
@@ -20,7 +20,7 @@ import {
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-abstract class BaseFilePathMap<FilePath extends AnyFilePath, Value> {
+abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 	constructor(entries?: Array<[FilePath, Value]>) {
 		this.joinedToValue = new Map();
 		this.joinedToPath = new Map();
@@ -92,9 +92,9 @@ abstract class BaseFilePathMap<FilePath extends AnyFilePath, Value> {
 	}
 }
 
-abstract class BaseFilePathSet<
+abstract class BasePathSet<
 	FilePath extends AnyFilePath,
-	FilePathMap extends BaseFilePathMap<FilePath, void>
+	FilePathMap extends BasePathMap<FilePath, void>
 > {
 	constructor(entries?: Iterable<FilePath>) {
 		this.map = this.createMap();
@@ -155,7 +155,7 @@ abstract class BaseFilePathSet<
 }
 
 export class AbsoluteFilePathMap<Value>
-	extends BaseFilePathMap<AbsoluteFilePath, Value> {
+	extends BasePathMap<AbsoluteFilePath, Value> {
 	public type: "absolute" = "absolute";
 
 	public createKey(str: string): AbsoluteFilePath {
@@ -168,7 +168,7 @@ export class AbsoluteFilePathMap<Value>
 }
 
 export class RelativeFilePathMap<Value>
-	extends BaseFilePathMap<RelativeFilePath, Value> {
+	extends BasePathMap<RelativeFilePath, Value> {
 	public type: "relative" = "relative";
 
 	public createKey(str: string): RelativeFilePath {
@@ -180,21 +180,20 @@ export class RelativeFilePathMap<Value>
 	}
 }
 
-export class UnknownFilePathMap<Value>
-	extends BaseFilePathMap<AnyFilePath, Value> {
+export class UnknownPathMap<Value> extends BasePathMap<AnyFilePath, Value> {
 	public type: "unknown" = "unknown";
 
-	public createKey(str: string): UnknownFilePath {
-		return createUnknownFilePath(str);
+	public createKey(str: string): UnknownPath {
+		return createUnknownPath(str);
 	}
 
-	public keysToSet(): UnknownFilePathSet {
-		return new UnknownFilePathSet(this.keys());
+	public keysToSet(): UnknownPathSet {
+		return new UnknownPathSet(this.keys());
 	}
 }
 
 export class AbsoluteFilePathSet
-	extends BaseFilePathSet<AbsoluteFilePath, AbsoluteFilePathMap<void>> {
+	extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathMap<void>> {
 	public type: "absolute" = "absolute";
 
 	createMap(): AbsoluteFilePathMap<void> {
@@ -203,7 +202,7 @@ export class AbsoluteFilePathSet
 }
 
 export class RelativeFilePathSet
-	extends BaseFilePathSet<RelativeFilePath, RelativeFilePathMap<void>> {
+	extends BasePathSet<RelativeFilePath, RelativeFilePathMap<void>> {
 	public type: "relative" = "relative";
 
 	createMap(): RelativeFilePathMap<void> {
@@ -211,16 +210,16 @@ export class RelativeFilePathSet
 	}
 }
 
-export class UnknownFilePathSet
-	extends BaseFilePathSet<AnyFilePath, UnknownFilePathMap<void>> {
+export class UnknownPathSet
+	extends BasePathSet<AnyFilePath, UnknownPathMap<void>> {
 	public type: "unknown" = "unknown";
 
-	createMap(): UnknownFilePathMap<void> {
-		return new UnknownFilePathMap();
+	createMap(): UnknownPathMap<void> {
+		return new UnknownPathMap();
 	}
 }
 
 export type AnyFilePathSet =
 	| AbsoluteFilePathSet
 	| RelativeFilePathSet
-	| UnknownFilePathSet;
+	| UnknownPathSet;

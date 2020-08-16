@@ -9,7 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {assertHardMeta, normalizeProjectConfig} from "@internal/project";
-import {AbsoluteFilePath, createUnknownFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {markup} from "@internal/markup";
 import {interceptDiagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
@@ -219,7 +219,7 @@ export const setDirectory = createServerCommand<Flags>({
 		req.expectArgumentLength(2);
 
 		let value = req.query.args[1];
-		const path = createUnknownFilePath(value);
+		const path = createUnknownPath(value);
 
 		// If the value is an absolute path, then make it relative to the project directory
 		if (path.isAbsolute()) {

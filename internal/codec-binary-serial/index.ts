@@ -15,7 +15,7 @@ export {
 	RSERObject,
 	RSERRelativeFilePathMap,
 	RSERSet,
-	RSERUnknownFilePathMap,
+	RSERUnknownPathMap,
 	RSERValue,
 } from "./types";
 
