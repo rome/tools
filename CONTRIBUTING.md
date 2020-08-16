@@ -87,7 +87,8 @@ If you would like to run only the test runner:
 ./rome test
 ```
 
-to run test runner on specific files:
+To run specific files:
+
 ```bash
 ./rome test path/to/files
 ```
