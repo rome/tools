@@ -2,8 +2,9 @@ import {
 	ComplexToken,
 	EOFToken,
 	NodeBase,
-	ParserOptions,
-	ParserOptionsWithRequiredPath,
+	ParserCoreImplementation,
+	ParserCoreTokenizeState,
+	ParserCoreTypes,
 	ParserUnexpectedOptions,
 	Position,
 	SOFToken,
@@ -11,12 +12,10 @@ import {
 	SourceLocation,
 	TokenBase,
 	TokenValues,
-	TokensShape,
 	ValueToken,
 } from "./types";
 import {
 	Diagnostic,
-	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
 	DiagnosticLocation,
@@ -39,7 +38,6 @@ import {
 	ob1Number0,
 	ob1Number1,
 } from "@internal/ob1";
-
 import {CommentsConsumer} from "@internal/js-parser";
 import PositionTracker from "./PositionTracker";
 import {RequiredProps} from "@internal/typescript-helpers";
@@ -57,14 +55,11 @@ export type ParserCoreState = {
 	corrupt: boolean;
 };
 
-export default class ParserCore<
-	Tokens extends TokensShape,
-	State extends ParserCoreState = ParserCoreState
-> {
+export default class ParserCore<Types extends ParserCoreTypes> {
 	constructor(
-		opts: ParserOptions,
-		diagnosticCategory: DiagnosticCategory,
-		initialState: Omit<State, keyof ParserCoreState>,
+		impl: ParserCoreImplementation<Types>,
+		opts: Types["options"],
+		meta: Types["meta"],
 	) {
 		const {
 			path,
@@ -73,11 +68,25 @@ export default class ParserCore<
 			sourceText,
 		} = opts;
 
+		let {input} = opts;
+		if (input === undefined) {
+			input = "";
+		} else if (!impl.retainCarriageReturn) {
+			input = removeCarriageReturn(input);
+		}
+		if (impl.normalizeInput !== undefined) {
+			input = impl.normalizeInput(input);
+		}
+
+		this.options = opts;
+		this.meta = meta;
+		this.impl = impl;
+
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownPath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
 		this.mtime = mtime;
-		this.input = normalizeInput(opts);
+		this.input = input;
 		this.sourceText = sourceText ?? this.input;
 		this.length = ob1Coerce0(this.input.length);
 
@@ -88,7 +97,6 @@ export default class ParserCore<
 		};
 
 		// Parser/tokenizer state
-		this.diagnosticCategory = diagnosticCategory;
 		this.tokenizing = false;
 		this.currLine =
 			offsetPosition === undefined ? ob1Number1 : offsetPosition.line;
@@ -97,7 +105,6 @@ export default class ParserCore<
 		this.nextTokenIndex = ob1Number0;
 		this.currentToken = SOF_TOKEN;
 		this.prevToken = SOF_TOKEN;
-		this.ignoreWhitespaceTokens = false;
 		this.comments = new CommentsConsumer();
 
 		this.indexTracker = new PositionTracker({
@@ -107,6 +114,11 @@ export default class ParserCore<
 			getPosition: this.getPosition.bind(this),
 		});
 
+		let initialState: undefined | Types["state"];
+		if (initialState === undefined && impl.getInitialState !== undefined) {
+			initialState = impl.getInitialState(this);
+		}
+
 		// @ts-ignore
 		this.state = {
 			...initialState,
@@ -114,21 +126,21 @@ export default class ParserCore<
 		};
 	}
 
+	public options: Types["options"];
+	public meta: Types["meta"];
 	public comments: CommentsConsumer;
-	protected indexTracker: PositionTracker;
-	private diagnosticCategory: DiagnosticCategory;
+	public indexTracker: PositionTracker;
+	private impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private nextTokenIndex: Number0;
-	public state: State;
-	private prevToken: TokenValues<Tokens>;
-	private currentToken: TokenValues<Tokens>;
+	public state: Types["state"] & ParserCoreState;
+	private prevToken: TokenValues<Types["tokens"]>;
+	private currentToken: TokenValues<Types["tokens"]>;
 	private eofToken: EOFToken;
-	protected ignoreWhitespaceTokens: boolean;
-
 	public path: undefined | UnknownPath;
 	public filename: undefined | string;
 	public input: string;
-	protected mtime: undefined | number;
+	public mtime: undefined | number;
 	private sourceText: string;
 	public length: Number0;
 	private currLine: Number1;
@@ -147,7 +159,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected getPathAssert(): UnknownPath {
+	public getPathAssert(): UnknownPath {
 		const {path} = this;
 		if (path === undefined) {
 			throw new Error("Path expected but none was passed to this Parser");
@@ -156,7 +168,7 @@ export default class ParserCore<
 		}
 	}
 
-	protected getFilenameAssert(): string {
+	public getFilenameAssert(): string {
 		const {filename} = this;
 		if (filename === undefined) {
 			throw new Error("Filename expected but none was passed to this Parser");
@@ -166,8 +178,8 @@ export default class ParserCore<
 	}
 
 	// Run the tokenizer over all tokens
-	public tokenizeAll(): Array<TokenValues<Tokens>> {
-		const tokens: Array<TokenValues<Tokens>> = [];
+	public tokenizeAll(): Array<TokenValues<Types["tokens"]>> {
+		const tokens: Array<TokenValues<Types["tokens"]>> = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
 			while (true) {
@@ -192,38 +204,38 @@ export default class ParserCore<
 	}
 
 	// Tokenize method that must be implemented by subclasses
-	protected tokenize(index: Number0): undefined | TokenValues<Tokens> {
-		throw new Error("Unimplemented");
+	public tokenize(index: Number0): undefined | TokenValues<Types["tokens"]> {
+		const {tokenize} = this.impl;
+		if (tokenize === undefined) {
+			throw new Error("No tokenize implementation defined");
+		} else {
+			return tokenize(this, index);
+		}
 	}
 
 	// Alternate tokenize method to allow that allows the use of state
-	protected tokenizeWithState(
+	public tokenizeWithState(
 		index: Number0,
-		state: State,
-	):
-		| undefined
-		| {
-				token: TokenValues<Tokens>;
-				state: State;
-			} {
+		state: Types["state"],
+	): undefined | ParserCoreTokenizeState<Types> {
+		const {tokenizeWithState} = this.impl;
+		if (tokenizeWithState !== undefined) {
+			return tokenizeWithState(this, index, state);
+		}
+
 		const token = this.tokenize(index);
 		if (token !== undefined) {
 			return {token, state};
-		} else {
-			return undefined;
 		}
+
+		return undefined;
 	}
 
 	private _tokenizeWithState(
 		index: Number0,
-		state: State,
-	):
-		| undefined
-		| {
-				token: TokenValues<Tokens>;
-				state: State;
-			} {
-		if (this.ignoreWhitespaceTokens) {
+		state: Types["state"],
+	): undefined | ParserCoreTokenizeState<Types> {
+		if (this.impl.ignoreWhitespaceTokens) {
 			switch (this.getInputCharOnly(index)) {
 				case " ":
 				case "\t":
@@ -237,7 +249,7 @@ export default class ParserCore<
 	}
 
 	// Get the current token
-	protected getToken(): TokenValues<Tokens> {
+	public getToken(): TokenValues<Types["tokens"]> {
 		const {currentToken} = this;
 		if (currentToken === SOF_TOKEN) {
 			return this.nextToken();
@@ -246,7 +258,7 @@ export default class ParserCore<
 		}
 	}
 
-	protected save(): ParserSnapshot<Tokens, State> {
+	public save(): ParserSnapshot<Types> {
 		return {
 			nextTokenIndex: this.nextTokenIndex,
 			currentToken: this.currentToken,
@@ -255,7 +267,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected restore(snapshot: ParserSnapshot<Tokens, State>) {
+	public restore(snapshot: ParserSnapshot<Types>) {
 		this.nextTokenIndex = snapshot.nextTokenIndex;
 		this.currentToken = snapshot.currentToken;
 		this.prevToken = snapshot.prevToken;
@@ -263,7 +275,7 @@ export default class ParserCore<
 	}
 
 	// Advance to the next token, returning the new one
-	protected nextToken(): TokenValues<Tokens> {
+	public nextToken(): TokenValues<Types["tokens"]> {
 		if (this.isEOF(this.nextTokenIndex)) {
 			this.currentToken = this.eofToken;
 			return this.eofToken;
@@ -300,11 +312,21 @@ export default class ParserCore<
 
 	// Get the start index of the current token
 	public getIndex(): Number0 {
+		const {overrides} = this.impl;
+		if (overrides !== undefined) {
+			return overrides.getIndex(this);
+		}
+
 		return this.currentToken.start;
 	}
 
 	// Get the position of the current token
-	protected getPosition(): Position {
+	public getPosition(): Position {
+		const {overrides} = this.impl;
+		if (overrides !== undefined) {
+			return overrides.getPosition(this);
+		}
+
 		const index = this.getIndex();
 		const cached = this.indexTracker.cachedPositions.get(index);
 		if (cached !== undefined) {
@@ -320,21 +342,26 @@ export default class ParserCore<
 	}
 
 	// Get the end position of the previous token
-	protected getLastEndPosition(): Position {
+	public getLastEndPosition(): Position {
+		const {overrides} = this.impl;
+		if (overrides !== undefined) {
+			return overrides.getLastEndPosition(this);
+		}
+
 		return this.getPositionFromIndex(this.prevToken.end);
 	}
 
 	// Return the token that's after this current token without advancing to it
-	protected lookaheadToken(index?: Number0): TokenValues<Tokens> {
+	public lookaheadToken(index?: Number0): TokenValues<Types["tokens"]> {
 		return this.lookahead(index).token;
 	}
 
 	// Return the token and state that's after the current token without advancing to it
-	protected lookahead(
+	public lookahead(
 		index: Number0 = this.nextTokenIndex,
 	): {
-		token: TokenValues<Tokens>;
-		state: State;
+		token: TokenValues<Types["tokens"]>;
+		state: ParserCoreState & Types["state"];
 	} {
 		if (this.isEOF(index)) {
 			return {token: this.eofToken, state: this.state};
@@ -349,8 +376,9 @@ export default class ParserCore<
 		this.tokenizing = true;
 
 		// Tokenize and do some validation
-		const nextToken = this._tokenizeWithState(index, this.state);
-		if (nextToken === undefined) {
+		const beforeState = this.state;
+		const next = this._tokenizeWithState(index, beforeState);
+		if (next === undefined) {
 			throw this.unexpected({
 				start: this.getPositionFromIndex(index),
 			});
@@ -360,7 +388,13 @@ export default class ParserCore<
 		this.tokenizing = wasTokenizing;
 		this.nextTokenIndex = prevNextTokenIndex;
 
-		return nextToken;
+		return {
+			token: next.token,
+			state: {
+				...beforeState,
+				...next.state,
+			},
+		};
 	}
 
 	public getPositionFromIndex(index: Number0): Position {
@@ -374,7 +408,7 @@ export default class ParserCore<
 		return this.indexTracker.getIndexFromPosition(pos, filename);
 	}
 
-	protected createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
+	public createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
 		let {description} = opts;
 		const location = this.getDiagnosticLocation(opts);
@@ -397,7 +431,7 @@ export default class ParserCore<
 		const descriptionWithCategory: DiagnosticDescription = {
 			...description,
 			advice: description.advice ?? [],
-			category: description.category ?? this.diagnosticCategory,
+			category: description.category ?? this.impl.diagnosticCategory,
 		};
 
 		return {
@@ -411,11 +445,11 @@ export default class ParserCore<
 		return createSingleDiagnosticError(this.createDiagnostic(opts));
 	}
 
-	protected unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
+	public unexpectedDiagnostic(opts: ParserUnexpectedOptions = {}) {
 		this.addDiagnostic(this.createDiagnostic(opts));
 	}
 
-	protected getDiagnosticLocation(
+	public getDiagnosticLocation(
 		opts: Omit<ParserUnexpectedOptions, "description"> = {},
 	): RequiredProps<DiagnosticLocation, "start" | "end"> {
 		let {start, end, token} = opts;
@@ -490,7 +524,9 @@ export default class ParserCore<
 	}
 
 	// If the current token is the specified type then return the next token, otherwise return null
-	protected eatToken(type: keyof Tokens): undefined | TokenValues<Tokens> {
+	public eatToken(
+		type: keyof Types["tokens"],
+	): undefined | TokenValues<Types["tokens"]> {
 		if (this.matchToken(type)) {
 			return this.nextToken();
 		} else {
@@ -499,20 +535,20 @@ export default class ParserCore<
 	}
 
 	// Check if we're at the end of the input
-	protected isEOF(index: Number0): boolean {
+	public isEOF(index: Number0): boolean {
 		return ob1Get0(index) >= this.input.length;
 	}
 
 	// Check if the current token matches the input type
-	protected matchToken(type: keyof Tokens): boolean {
+	public matchToken(type: keyof Types["tokens"]): boolean {
 		return this.getToken().type === type;
 	}
 
 	// Get the current token and assert that it's of the specified type, the token stream will also be advanced
-	protected expectToken<Type extends keyof Tokens>(
+	public expectToken<Type extends keyof Types["tokens"]>(
 		type: Type,
 		_metadata?: DiagnosticDescription,
-	): Tokens[Type] {
+	): Types["tokens"][Type] {
 		const token = this.getToken();
 		if (token.type === type) {
 			this.nextToken();
@@ -530,7 +566,7 @@ export default class ParserCore<
 		}
 	}
 
-	protected getInputRange(
+	public getInputRange(
 		start: Number0,
 		count: number,
 		startOffset?: number,
@@ -543,11 +579,11 @@ export default class ParserCore<
 		return [this.input.slice(startIndex, endIndex), ob1Coerce0(endIndex + 1)];
 	}
 
-	protected getInputCharOnly(index: Number0, offset?: number): string {
+	public getInputCharOnly(index: Number0, offset?: number): string {
 		return this.getInputChar(index, offset)[0];
 	}
 
-	protected getInputChar(index: Number0, offset?: number): [string, Number0] {
+	public getInputChar(index: Number0, offset?: number): [string, Number0] {
 		const {input} = this;
 
 		// Allow passing in an `offset` to avoid callsites having to do `ob1Add` themselves
@@ -564,7 +600,7 @@ export default class ParserCore<
 	}
 
 	// Read from the input starting at the specified index, until the callback returns false
-	protected readInputFrom(
+	public readInputFrom(
 		index: Number0,
 		callback?: (char: string, index: Number0, input: string) => boolean,
 	): [string, Number0, boolean] {
@@ -615,7 +651,7 @@ export default class ParserCore<
 
 	//# Token finalization
 
-	protected finishToken<Type extends string>(
+	public finishToken<Type extends string>(
 		type: Type,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
 	): SimpleToken<Type> {
@@ -626,7 +662,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected finishValueToken<Type extends string, Value>(
+	public finishValueToken<Type extends string, Value>(
 		type: Type,
 		value: Value,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
@@ -639,7 +675,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected finishComplexToken<Type extends string, Data>(
+	public finishComplexToken<Type extends string, Data>(
 		type: Type,
 		data: Data,
 		end: Number0 = ob1Inc(this.nextTokenIndex),
@@ -654,7 +690,7 @@ export default class ParserCore<
 
 	//# SourceLocation finalization
 
-	protected finishLocFromToken(token: TokenBase): SourceLocation {
+	public finishLocFromToken(token: TokenBase): SourceLocation {
 		return this.finishLocAt(
 			this.getPositionFromIndex(token.start),
 			this.getPositionFromIndex(token.end),
@@ -729,7 +765,7 @@ export default class ParserCore<
 		};
 	}
 
-	protected finalize(): void {
+	public finalize(): void {
 		if (!this.eatToken("EOF")) {
 			throw this.unexpected({
 				description: descriptions.PARSER_CORE.EXPECTED_EOF,
@@ -743,7 +779,7 @@ export default class ParserCore<
 		const collector = new DiagnosticsProcessor({
 			origins: [
 				{
-					category: this.diagnosticCategory,
+					category: this.impl.diagnosticCategory,
 				},
 			],
 			//unique: ['start.line'],
@@ -765,7 +801,7 @@ export default class ParserCore<
 		this.state.diagnosticFilters.push(diag);
 	}
 
-	protected addCompleteDiagnostic(diags: Diagnostics) {
+	public addCompleteDiagnostic(diags: Diagnostics) {
 		this.state.diagnostics = [...this.state.diagnostics, ...diags];
 	}
 
@@ -778,45 +814,15 @@ export default class ParserCore<
 	}
 }
 
-export class ParserWithRequiredPath<
-	Tokens extends TokensShape,
-	State extends ParserCoreState = ParserCoreState
-> extends ParserCore<Tokens, State> {
-	constructor(
-		opts: ParserOptionsWithRequiredPath,
-		diagnosticCategory: DiagnosticCategory,
-		initialState: Omit<State, keyof ParserCoreState>,
-	) {
-		super(opts, diagnosticCategory, initialState);
-		this.filename = this.getFilenameAssert();
-		this.path = this.getPathAssert();
-	}
-
-	public path: UnknownPath;
-	public filename: string;
-}
-
 const SOF_TOKEN: SOFToken = {
 	type: "SOF",
 	start: ob1Number0,
 	end: ob1Number0,
 };
 
-type ParserSnapshot<Tokens extends TokensShape, State> = {
+type ParserSnapshot<Types extends ParserCoreTypes> = {
 	nextTokenIndex: Number0;
-	currentToken: TokenValues<Tokens>;
-	prevToken: TokenValues<Tokens>;
-	state: State;
+	currentToken: TokenValues<Types["tokens"]>;
+	prevToken: TokenValues<Types["tokens"]>;
+	state: ParserCoreState & Types["state"];
 };
-
-function normalizeInput(opts: ParserOptions): string {
-	const {input} = opts;
-
-	if (input === undefined) {
-		return "";
-	} else if (opts.retainCarriageReturn) {
-		return input;
-	} else {
-		return removeCarriageReturn(input);
-	}
-}

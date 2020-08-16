@@ -6,7 +6,31 @@
  */
 
 import {Position} from "@internal/parser-core";
-import {JSParser} from "../parser";
+import {
+	JSParser,
+	cloneState,
+	createUnknownIdentifier,
+	eat,
+	eatContextual,
+	expect,
+	expectClosing,
+	expectContextual,
+	expectOpening,
+	expectRelational,
+	hasPrecedingLineBreak,
+	isContextual,
+	isLineTerminator,
+	isLookaheadContextual,
+	isRelational,
+	isSyntaxEnabled,
+	lookaheadState,
+	match,
+	next,
+	popScope,
+	pushScope,
+	semicolon,
+	unexpectedDiagnostic,
+} from "../parser";
 import {TokenType, types as tt} from "../tokenizer/types";
 import {
 	assertVarKind,
@@ -151,7 +175,7 @@ function keywordTypeFromName(
 function tsIsIdentifier(parser: JSParser): boolean {
 	// TODO: actually a bit more complex in TypeScript, but shouldn't matter.
 	// See https://github.com/Microsoft/TypeScript/issues/15008
-	return parser.match(tt.name);
+	return match(parser, tt.name);
 }
 
 function tsNextTokenCanFollowModifier(parser: JSParser) {
@@ -159,15 +183,15 @@ function tsNextTokenCanFollowModifier(parser: JSParser) {
 	// more things are considered modifiers there.
 	// This implementation only handles modifiers not handled by @babel/parser itself. And 'static'.
 	// TODO: Would be nice to avoid lookahead. Want a hasLineBreakUpNext() method...
-	parser.next();
+	next(parser);
 	return (
-		!parser.hasPrecedingLineBreak() &&
-		!parser.match(tt.parenL) &&
-		!parser.match(tt.parenR) &&
-		!parser.match(tt.colon) &&
-		!parser.match(tt.eq) &&
-		!parser.match(tt.question) &&
-		!parser.match(tt.bang)
+		!hasPrecedingLineBreak(parser) &&
+		!match(parser, tt.parenL) &&
+		!match(parser, tt.parenR) &&
+		!match(parser, tt.colon) &&
+		!match(parser, tt.eq) &&
+		!match(parser, tt.question) &&
+		!match(parser, tt.bang)
 	);
 }
 
@@ -176,7 +200,7 @@ export function parseTSModifier<T extends ConstTSModifier>(
 	parser: JSParser,
 	allowedModifiers: Array<T>,
 ): undefined | T {
-	if (!parser.match(tt.name)) {
+	if (!match(parser, tt.name)) {
 		return undefined;
 	}
 
@@ -203,23 +227,23 @@ export function hasTSModifier(
 }
 
 function tsIsListTerminator(parser: JSParser, kind: ParsingContext): boolean {
-	if (parser.match(tt.eof)) {
+	if (match(parser, tt.eof)) {
 		return true;
 	}
 
 	switch (kind) {
 		case "EnumMembers":
 		case "TypeMembers":
-			return parser.match(tt.braceR);
+			return match(parser, tt.braceR);
 
 		case "HeritageClauseElement":
-			return parser.match(tt.braceL);
+			return match(parser, tt.braceL);
 
 		case "TupleElementTypes":
-			return parser.match(tt.bracketR);
+			return match(parser, tt.bracketR);
 
 		case "TypeParametersOrArguments":
-			return parser.isRelational(">");
+			return isRelational(parser, ">");
 	}
 
 	throw new Error("Unreachable");
@@ -230,14 +254,17 @@ function expectTSEnabled(
 	label: string,
 	start: Position = parser.getPosition(),
 ) {
-	if (parser.isSyntaxEnabled("ts")) {
+	if (isSyntaxEnabled(parser, "ts")) {
 		return;
 	}
 
-	parser.unexpectedDiagnostic({
-		start,
-		description: descriptions.JS_PARSER.TS_REQUIRED(label),
-	});
+	unexpectedDiagnostic(
+		parser,
+		{
+			start,
+			description: descriptions.JS_PARSER.TS_REQUIRED(label),
+		},
+	);
 }
 
 function parseTSList<T>(
@@ -276,7 +303,7 @@ function parseTSDelimitedList<T>(
 
 		result.push(element);
 
-		if (parser.eat(tt.comma)) {
+		if (eat(parser, tt.comma)) {
 			continue;
 		}
 
@@ -285,7 +312,7 @@ function parseTSDelimitedList<T>(
 		}
 
 		// This will fail with an error about a missing comma
-		if (parser.expect(tt.comma)) {
+		if (expect(parser, tt.comma)) {
 			break;
 		}
 	}
@@ -302,18 +329,18 @@ function parseTSBracketedList<T>(
 ): Array<T> {
 	if (!skipFirstToken) {
 		if (bracket) {
-			parser.expect(tt.bracketL);
+			expect(parser, tt.bracketL);
 		} else {
-			parser.expectRelational("<");
+			expectRelational(parser, "<");
 		}
 	}
 
 	const result = parseTSDelimitedList(parser, kind, parseElement);
 
 	if (bracket) {
-		parser.expect(tt.bracketR);
+		expect(parser, tt.bracketR);
 	} else {
-		parser.expectRelational(">");
+		expectRelational(parser, ">");
 	}
 
 	return result;
@@ -321,29 +348,33 @@ function parseTSBracketedList<T>(
 
 function parseTSImportType(parser: JSParser): TSImportType {
 	const start = parser.getPosition();
-	parser.expect(tt._import);
-	const openContext = parser.expectOpening(
+	expect(parser, tt._import);
+	const openContext = expectOpening(
+		parser,
 		tt.parenL,
 		tt.parenR,
 		"ts import type",
 	);
 
-	if (!parser.match(tt.string)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.TS_IMPORT_ARG_NOT_STRING,
-		});
+	if (!match(parser, tt.string)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.TS_IMPORT_ARG_NOT_STRING,
+			},
+		);
 	}
 
 	const argument = parseExpressionAtom(parser, "ts import argument");
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	let qualifier;
-	if (parser.eat(tt.dot)) {
+	if (eat(parser, tt.dot)) {
 		qualifier = parseTSEntityName(parser, /* allowReservedWords */ true);
 	}
 
 	let typeParameters;
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		typeParameters = parseTSTypeArguments(parser);
 	}
 
@@ -363,7 +394,7 @@ function parseTSEntityName(
 	allowReservedWords: boolean,
 ): AnyTSEntityName {
 	let entity: AnyTSEntityName = parseReferenceIdentifier(parser);
-	while (parser.eat(tt.dot)) {
+	while (eat(parser, tt.dot)) {
 		const start: Position = parser.getLoc(entity).start;
 		const right = parseIdentifier(parser, allowReservedWords);
 		entity = parser.finishNode(
@@ -382,7 +413,7 @@ function parseTSTypeReference(parser: JSParser): TSTypeReference {
 	const start = parser.getPosition();
 	const typeName = parseTSEntityName(parser, /* allowReservedWords */ false);
 	let typeParameters;
-	if (!parser.hasPrecedingLineBreak() && parser.isRelational("<")) {
+	if (!hasPrecedingLineBreak(parser) && isRelational(parser, "<")) {
 		typeParameters = parseTSTypeArguments(parser);
 	}
 	return parser.finishNode(
@@ -399,7 +430,7 @@ function parseTSThisTypePredicate(
 	parser: JSParser,
 	lhs: TSThisType,
 ): TSTypePredicate {
-	parser.next();
+	next(parser);
 	const start = parser.getLoc(lhs).start;
 	const parameterName = lhs;
 	const typeAnnotation = parseTSTypeAnnotation(parser, /* eatColon */ false);
@@ -417,7 +448,7 @@ function parseTSThisTypePredicate(
 
 function parseTSThisTypeNode(parser: JSParser): TSThisType {
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -428,9 +459,9 @@ function parseTSThisTypeNode(parser: JSParser): TSThisType {
 
 function parseTSTypeQuery(parser: JSParser): TSTypeQuery {
 	const start = parser.getPosition();
-	parser.expect(tt._typeof);
+	expect(parser, tt._typeof);
 	let exprName;
-	if (parser.match(tt._import)) {
+	if (match(parser, tt._import)) {
 		exprName = parseTSImportType(parser);
 	} else {
 		exprName = parseTSEntityName(parser, /* allowReservedWords */ true);
@@ -473,7 +504,7 @@ export function ambiguousTypeCastToParameter(
 export function maybeParseTSTypeParameters(
 	parser: JSParser,
 ): undefined | TSTypeParameterDeclaration {
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		return parseTSTypeParameters(parser);
 	} else {
 		return undefined;
@@ -483,7 +514,7 @@ export function maybeParseTSTypeParameters(
 export function maybeParseTSTypeArguments(
 	parser: JSParser,
 ): undefined | TSTypeParameterInstantiation {
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		return parseTSTypeArguments(parser);
 	} else {
 		return undefined;
@@ -511,7 +542,7 @@ function parseTSTypeParameter(parser: JSParser): TSTypeParameter {
 function tryParseTSTypeParameters(
 	parser: JSParser,
 ): undefined | TSTypeParameterDeclaration {
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		return parseTSTypeParameters(parser);
 	} else {
 		return undefined;
@@ -523,7 +554,7 @@ export function parseTSTypeParameters(
 ): TSTypeParameterDeclaration {
 	const start = parser.getPosition();
 
-	parser.expectRelational("<");
+	expectRelational(parser, "<");
 
 	const params = parseTSBracketedList(
 		parser,
@@ -545,8 +576,8 @@ export function parseTSTypeParameters(
 export function tryTSNextParseConstantContext(
 	parser: JSParser,
 ): undefined | TSConstKeyword {
-	if (parser.lookaheadState().tokenType === tt._const) {
-		parser.next();
+	if (lookaheadState(parser).tokenType === tt._const) {
+		next(parser);
 		return parseTSConstKeyword(parser);
 	} else {
 		return undefined;
@@ -587,10 +618,13 @@ export function tsCheckLiteralForConstantContext(
 		}
 
 		default:
-			parser.unexpectedDiagnostic({
-				loc: node.loc,
-				description: descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: node.loc,
+					description: descriptions.JS_PARSER.TS_CONSTANT_NOT_LITERAL,
+				},
+			);
 	}
 }
 
@@ -613,7 +647,7 @@ function parseTSSignatureDeclarationMeta(
 	let typeAnnotation;
 	if (returnTokenRequired) {
 		typeAnnotation = parseTSTypeOrTypePredicateAnnotation(parser, returnToken);
-	} else if (parser.match(returnToken)) {
+	} else if (match(parser, returnToken)) {
 		typeAnnotation = parseTSTypeOrTypePredicateAnnotation(parser, returnToken);
 	}
 
@@ -637,7 +671,8 @@ function parseTSBindingListForSignature(
 	list: Array<AnyJSTargetBindingPattern>;
 	rest: undefined | AnyJSTargetBindingPattern;
 } {
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.parenL,
 		tt.parenR,
 		"ts signature parameters",
@@ -653,10 +688,13 @@ function parseTSBindingListForSignature(
 		) {
 			validPatterns.push(pattern);
 		} else {
-			parser.unexpectedDiagnostic({
-				loc: pattern.loc,
-				description: descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: pattern.loc,
+					description: descriptions.JS_PARSER.TS_INVALID_SIGNATURE_BINDING_NODE,
+				},
+			);
 		}
 	}
 
@@ -664,8 +702,8 @@ function parseTSBindingListForSignature(
 }
 
 function parseTSTypeMemberSemicolon(parser: JSParser): void {
-	if (!parser.eat(tt.comma)) {
-		parser.semicolon();
+	if (!eat(parser, tt.comma)) {
+		semicolon(parser);
 	}
 }
 
@@ -673,12 +711,12 @@ function parseTSConstructSignatureDeclaration(
 	parser: JSParser,
 ): TSConstructSignatureDeclaration {
 	const start = parser.getPosition();
-	parser.expect(tt._new);
+	expect(parser, tt._new);
 	const {meta, typeAnnotation} = parseTSSignatureDeclarationMeta(
 		parser,
 		tt.colon,
 	);
-	parser.semicolon();
+	semicolon(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -697,7 +735,7 @@ function parseTSCallSignatureDeclaration(
 		parser,
 		tt.colon,
 	);
-	parser.semicolon();
+	semicolon(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -709,8 +747,8 @@ function parseTSCallSignatureDeclaration(
 }
 
 function tsIsUnambiguouslyIndexSignature(parser: JSParser) {
-	parser.next(); // Skip '{'
-	return parser.eat(tt.name) && parser.match(tt.colon);
+	next(parser); // Skip '{'
+	return eat(parser, tt.name) && match(parser, tt.colon);
 }
 
 export function tryTSParseIndexSignature(
@@ -718,13 +756,13 @@ export function tryTSParseIndexSignature(
 	start: Position,
 ): undefined | TSIndexSignature {
 	if (
-		!(parser.match(tt.bracketL) &&
+		!(match(parser, tt.bracketL) &&
 		lookaheadTS(parser, tsIsUnambiguouslyIndexSignature))
 	) {
 		return undefined;
 	}
 
-	parser.expect(tt.bracketL);
+	expect(parser, tt.bracketL);
 
 	const idStart = parser.getPosition();
 	const id = parseBindingIdentifier(parser);
@@ -745,11 +783,11 @@ export function tryTSParseIndexSignature(
 		},
 	);
 
-	parser.expect(tt.bracketR);
+	expect(parser, tt.bracketR);
 
 	const typeAnnotation = tryTSParseTypeAnnotation(parser);
 
-	parser.semicolon();
+	semicolon(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -766,9 +804,9 @@ function parseTSPropertyOrMethodSignature(
 	readonly: boolean,
 ): TSPropertySignature | TSMethodSignature {
 	const key = parseObjectPropertyKey(parser);
-	const optional = parser.eat(tt.question);
+	const optional = eat(parser, tt.question);
 
-	if (!readonly && (parser.match(tt.parenL) || parser.isRelational("<"))) {
+	if (!readonly && (match(parser, tt.parenL) || isRelational(parser, "<"))) {
 		const {meta, typeAnnotation} = parseTSSignatureDeclarationMeta(
 			parser,
 			tt.colon,
@@ -801,12 +839,12 @@ function parseTSPropertyOrMethodSignature(
 }
 
 function parseTSTypeMember(parser: JSParser): AnyTSTypeElement {
-	if (parser.match(tt.parenL) || parser.isRelational("<")) {
+	if (match(parser, tt.parenL) || isRelational(parser, "<")) {
 		return parseTSCallSignatureDeclaration(parser);
 	}
 
 	if (
-		parser.match(tt._new) &&
+		match(parser, tt._new) &&
 		lookaheadTS(parser, tsIsStartOfConstructSignature)
 	) {
 		return parseTSConstructSignatureDeclaration(parser);
@@ -827,8 +865,8 @@ function parseTSTypeMember(parser: JSParser): AnyTSTypeElement {
 }
 
 function tsIsStartOfConstructSignature(parser: JSParser) {
-	parser.next();
-	return parser.match(tt.parenL) || parser.isRelational("<");
+	next(parser);
+	return match(parser, tt.parenL) || isRelational(parser, "<");
 }
 
 function parseTSObjectTypeAnnotation(parser: JSParser): TSObjectTypeAnnotation {
@@ -844,40 +882,41 @@ function parseTSObjectTypeAnnotation(parser: JSParser): TSObjectTypeAnnotation {
 }
 
 function parseTSObjectTypeMembers(parser: JSParser): Array<AnyTSTypeElement> {
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"ts object type members",
 	);
 	const members = parseTSList(parser, "TypeMembers", parseTSTypeMember);
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 	return members;
 }
 
 function tsIsStartOfMappedType(parser: JSParser): boolean {
-	parser.next();
+	next(parser);
 
-	if (parser.eat(tt.plusMin)) {
-		return parser.isContextual("readonly");
+	if (eat(parser, tt.plusMin)) {
+		return isContextual(parser, "readonly");
 	}
 
-	if (parser.isContextual("readonly")) {
-		parser.next();
+	if (isContextual(parser, "readonly")) {
+		next(parser);
 	}
 
-	if (!parser.match(tt.bracketL)) {
+	if (!match(parser, tt.bracketL)) {
 		return false;
 	}
 
-	parser.next();
+	next(parser);
 
 	if (!tsIsIdentifier(parser)) {
 		return false;
 	}
 
-	parser.next();
+	next(parser);
 
-	return parser.match(tt._in);
+	return match(parser, tt._in);
 }
 
 function parseTSMappedTypeParameter(parser: JSParser): TSTypeParameter {
@@ -906,41 +945,43 @@ function toPlusMin(val: unknown): "+" | "-" {
 function parseTSMappedType(parser: JSParser): TSMappedType {
 	const start = parser.getPosition();
 
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"ts mapped type",
 	);
 
 	let readonly: TSMappedTypeBoolean;
-	if (parser.match(tt.plusMin)) {
+	if (match(parser, tt.plusMin)) {
 		readonly = toPlusMin(parser.state.tokenValue);
-		parser.next();
-		parser.expectContextual("readonly");
-	} else if (parser.eatContextual("readonly")) {
+		next(parser);
+		expectContextual(parser, "readonly");
+	} else if (eatContextual(parser, "readonly")) {
 		readonly = true;
 	}
 
-	const paramOpenContext = parser.expectOpening(
+	const paramOpenContext = expectOpening(
+		parser,
 		tt.bracketL,
 		tt.bracketR,
 		"ts mapped type parameter",
 	);
 	const typeParameter = parseTSMappedTypeParameter(parser);
-	parser.expectClosing(paramOpenContext);
+	expectClosing(parser, paramOpenContext);
 
 	let optional: TSMappedTypeBoolean;
-	if (parser.match(tt.plusMin)) {
+	if (match(parser, tt.plusMin)) {
 		optional = toPlusMin(parser.state.tokenValue);
-		parser.next();
-		parser.expect(tt.question);
-	} else if (parser.eat(tt.question)) {
+		next(parser);
+		expect(parser, tt.question);
+	} else if (eat(parser, tt.question)) {
 		optional = true;
 	}
 
 	const typeAnnotation = tryTSParseType(parser);
-	parser.semicolon();
-	parser.expectClosing(openContext);
+	semicolon(parser);
+	expectClosing(parser, openContext);
 
 	return parser.finishNode(
 		start,
@@ -980,10 +1021,13 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 		if (type.optional) {
 			seenOptionalElement = true;
 		} else if (seenOptionalElement && !isRest) {
-			parser.unexpectedDiagnostic({
-				loc: type.loc,
-				description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: type.loc,
+					description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
+				},
+			);
 		}
 
 		if (isRest) {
@@ -1011,10 +1055,10 @@ function parseTSTupleElementTypeInner(
 	optional: boolean;
 } {
 	let typeAnnotation = parseTSType(parser);
-	let optional = parser.eat(tt.question);
+	let optional = eat(parser, tt.question);
 	let name: undefined | JSBindingIdentifier;
 
-	if (parser.eat(tt.colon)) {
+	if (eat(parser, tt.colon)) {
 		if (
 			typeAnnotation.type === "TSTypeReference" &&
 			typeAnnotation.typeName.type === "JSReferenceIdentifier"
@@ -1022,17 +1066,23 @@ function parseTSTupleElementTypeInner(
 			name = toBindingIdentifier(parser, typeAnnotation.typeName);
 			typeAnnotation = parseTSType(parser);
 		} else {
-			parser.unexpectedDiagnostic({
-				loc: typeAnnotation.loc,
-				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: typeAnnotation.loc,
+					description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_LABEL_INCORRECT,
+				},
+			);
 		}
 
-		if (parser.match(tt.question)) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_TRAILING,
-			});
-			parser.next();
+		if (match(parser, tt.question)) {
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_TRAILING,
+				},
+			);
+			next(parser);
 			optional = true;
 		}
 	}
@@ -1057,7 +1107,7 @@ function parseTSTupleElementType(
 	let name;
 
 	// parses `...TsType[]`
-	if (parser.eat(tt.ellipsis)) {
+	if (eat(parser, tt.ellipsis)) {
 		isRest = true;
 		({typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser));
 		hasCommaAfterRest(parser);
@@ -1076,10 +1126,13 @@ function parseTSTupleElementType(
 	);
 
 	if (optional && isRest) {
-		parser.unexpectedDiagnostic({
-			loc: elem.loc,
-			description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: elem.loc,
+				description: descriptions.JS_PARSER.TS_TUPLE_ELEMENT_OPTIONAL_REST,
+			},
+		);
 	}
 
 	return {
@@ -1090,13 +1143,14 @@ function parseTSTupleElementType(
 
 function parseTSParenthesizedType(parser: JSParser): TSParenthesizedType {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.parenL,
 		tt.parenR,
 		"ts parenthesized type",
 	);
 	const typeAnnotation = parseTSType(parser);
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 	return parser.finishNode(
 		start,
 		{
@@ -1131,7 +1185,7 @@ function parseTSFunctionType(parser: JSParser): TSFunctionType {
 
 function parseTSConstructorType(parser: JSParser): TSConstructorType {
 	const start = parser.getPosition();
-	parser.expect(tt._new);
+	expect(parser, tt._new);
 
 	const {meta, typeAnnotation} = parseTSSignatureDeclarationMeta(
 		parser,
@@ -1160,10 +1214,13 @@ function parseTSTemplateLiteralType(
 	const templateNode = parseTemplate(parser, false);
 
 	if (templateNode.expressions.length > 0) {
-		parser.unexpectedDiagnostic({
-			loc: parser.getLoc(templateNode.expressions[0]),
-			description: descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: parser.getLoc(templateNode.expressions[0]),
+				description: descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
+			},
+		);
 	}
 
 	return {
@@ -1183,17 +1240,17 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 				| AnyTSKeywordTypeAnnotation["type"]
 				| "TSVoidKeywordTypeAnnotation"
 				| "TSNullKeywordTypeAnnotation";
-			if (parser.match(tt._void)) {
+			if (match(parser, tt._void)) {
 				type = "TSVoidKeywordTypeAnnotation";
-			} else if (parser.match(tt._null)) {
+			} else if (match(parser, tt._null)) {
 				type = "TSNullKeywordTypeAnnotation";
 			} else {
 				type = keywordTypeFromName(String(parser.state.tokenValue));
 			}
 
-			if (type !== undefined && parser.lookaheadState().tokenType !== tt.dot) {
+			if (type !== undefined && lookaheadState(parser).tokenType !== tt.dot) {
 				const start = parser.getPosition();
-				parser.next();
+				next(parser);
 				return parser.finishNode(
 					start,
 					({
@@ -1213,7 +1270,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 
 		case tt._this: {
 			const thisKeyword = parseTSThisTypeNode(parser);
-			if (parser.isContextual("is") && !parser.hasPrecedingLineBreak()) {
+			if (isContextual(parser, "is") && !hasPrecedingLineBreak(parser)) {
 				return parseTSThisTypePredicate(parser, thisKeyword);
 			} else {
 				return thisKeyword;
@@ -1243,17 +1300,20 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 			return parseTSTemplateLiteralType(parser);
 	}
 
-	parser.unexpectedDiagnostic({
-		description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
-	});
-	parser.next();
+	unexpectedDiagnostic(
+		parser,
+		{
+			description: descriptions.JS_PARSER.TS_UNKNOWN_NON_ARRAY_START,
+		},
+	);
+	next(parser);
 	return parser.finishNode(
 		parser.getPosition(),
 		{
 			type: "TSTypeReference",
 			typeName: toReferenceIdentifier(
 				parser,
-				parser.createUnknownIdentifier("ts non array type start"),
+				createUnknownIdentifier(parser, "ts non array type start"),
 			),
 		},
 	);
@@ -1267,7 +1327,7 @@ function parseTSObjectTypeAnnotationAnnotation(
 	switch (parser.state.tokenType) {
 		case tt.string: {
 			const value = String(parser.state.tokenValue);
-			parser.next();
+			next(parser);
 			return parser.finishNode(
 				start,
 				{
@@ -1284,7 +1344,7 @@ function parseTSObjectTypeAnnotationAnnotation(
 			}
 
 			const {value, format} = tokenValue;
-			parser.next();
+			next(parser);
 			return parser.finishNode(
 				start,
 				{
@@ -1297,8 +1357,8 @@ function parseTSObjectTypeAnnotationAnnotation(
 
 		case tt._true:
 		case tt._false: {
-			const value = parser.match(tt._true);
-			parser.next();
+			const value = match(parser, tt._true);
+			next(parser);
 			return parser.finishNode(
 				start,
 				{
@@ -1311,13 +1371,16 @@ function parseTSObjectTypeAnnotationAnnotation(
 		case tt.plusMin: {
 			const {tokenValue} = parser.state;
 			if (tokenValue === "-") {
-				parser.next();
+				next(parser);
 
-				if (!parser.match(tt.num)) {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
-					});
-					parser.next();
+				if (!match(parser, tt.num)) {
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+						},
+					);
+					next(parser);
 					return parser.finishNode(
 						start,
 						{
@@ -1333,7 +1396,7 @@ function parseTSObjectTypeAnnotationAnnotation(
 				}
 
 				const {value, format} = tokenValue;
-				parser.next();
+				next(parser);
 				return parser.finishNode(
 					start,
 					{
@@ -1343,16 +1406,22 @@ function parseTSObjectTypeAnnotationAnnotation(
 					},
 				);
 			} else {
-				parser.unexpectedDiagnostic({
-					description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
-				});
-				parser.next();
+				unexpectedDiagnostic(
+					parser,
+					{
+						description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
+					},
+				);
+				next(parser);
 
-				if (!parser.match(tt.num)) {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
-					});
-					parser.next();
+				if (!match(parser, tt.num)) {
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+						},
+					);
+					next(parser);
 					return parser.finishNode(
 						start,
 						{
@@ -1376,11 +1445,11 @@ function parseTSObjectTypeAnnotationAnnotation(
 function parseTSArrayTypeOrHigher(parser: JSParser): AnyTSPrimary {
 	let type = parseTSNonArrayType(parser);
 
-	while (!parser.hasPrecedingLineBreak() && parser.eat(tt.bracketL)) {
-		if (parser.match(tt.bracketR)) {
+	while (!hasPrecedingLineBreak(parser) && eat(parser, tt.bracketL)) {
+		if (match(parser, tt.bracketR)) {
 			const start = parser.getLoc(type).start;
 			const elementType = type;
-			parser.expect(tt.bracketR);
+			expect(parser, tt.bracketR);
 			type = parser.finishNode(
 				start,
 				{
@@ -1392,7 +1461,7 @@ function parseTSArrayTypeOrHigher(parser: JSParser): AnyTSPrimary {
 			const start = parser.getLoc(type).start;
 			const objectType = type;
 			const indexType = parseTSType(parser);
-			parser.expect(tt.bracketR);
+			expect(parser, tt.bracketR);
 			type = parser.finishNode(
 				start,
 				{
@@ -1411,7 +1480,7 @@ function parseTSTypeOperator(
 	operator: TSTypeOperator["operator"],
 ): TSTypeOperator {
 	const start = parser.getPosition();
-	parser.expectContextual(operator);
+	expectContextual(parser, operator);
 
 	const typeAnnotation = parseTSTypeOperatorOrHigher(parser);
 
@@ -1438,10 +1507,13 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
 			return;
 
 		default: {
-			parser.unexpectedDiagnostic({
-				loc: node.loc,
-				description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: node.loc,
+					description: descriptions.JS_PARSER.TS_INVALID_READONLY_MODIFIER,
+				},
+			);
 			break;
 		}
 	}
@@ -1449,7 +1521,7 @@ function tsCheckTypeAnnotationForReadOnly(parser: JSParser, node: AnyTSPrimary) 
 
 function parseTSInferType(parser: JSParser): TSInferType {
 	const inferStart = parser.getPosition();
-	parser.expectContextual("infer");
+	expectContextual(parser, "infer");
 
 	const start = parser.getPosition();
 	const name = parseIdentifierName(parser);
@@ -1480,7 +1552,7 @@ function parseTSTypeOperatorOrHigher(parser: JSParser): AnyTSPrimary {
 	let operator: undefined | TSTypeOperator["operator"];
 
 	for (const op of TS_TYPE_OPERATORS) {
-		if (parser.isContextual(op)) {
+		if (isContextual(parser, op)) {
 			operator = op;
 			break;
 		}
@@ -1488,7 +1560,7 @@ function parseTSTypeOperatorOrHigher(parser: JSParser): AnyTSPrimary {
 
 	if (operator !== undefined) {
 		return parseTSTypeOperator(parser, operator);
-	} else if (parser.isContextual("infer")) {
+	} else if (isContextual(parser, "infer")) {
 		return parseTSInferType(parser);
 	} else {
 		return parseTSArrayTypeOrHigher(parser);
@@ -1501,12 +1573,12 @@ function parseTSUnionOrIntersectionType(
 	parseConstituentType: ParserCallback<AnyTSPrimary>,
 	operator: TokenType,
 ): AnyTSPrimary {
-	parser.eat(operator);
+	eat(parser, operator);
 	let type = parseConstituentType(parser);
 
-	if (parser.match(operator)) {
+	if (match(parser, operator)) {
 		const types = [type];
-		while (parser.eat(operator)) {
+		while (eat(parser, operator)) {
 			types.push(parseConstituentType(parser));
 		}
 
@@ -1554,49 +1626,49 @@ function parseUnionTypeAnnotationOrHigher(parser: JSParser) {
 }
 
 function tsIsStartOfFunctionType(parser: JSParser) {
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		return true;
 	}
 	return (
-		parser.match(tt.parenL) &&
+		match(parser, tt.parenL) &&
 		lookaheadTS(parser, tsIsUnambiguouslyStartOfFunctionType)
 	);
 }
 
 function tsSkipParameterStart(parser: JSParser): boolean {
-	if (parser.match(tt.name) || parser.match(tt._this)) {
-		parser.next();
+	if (match(parser, tt.name) || match(parser, tt._this)) {
+		next(parser);
 		return true;
 	}
 
-	if (parser.match(tt.braceL)) {
+	if (match(parser, tt.braceL)) {
 		let braceStackCounter = 1;
-		parser.next();
+		next(parser);
 
 		while (braceStackCounter > 0) {
-			if (parser.match(tt.braceL)) {
+			if (match(parser, tt.braceL)) {
 				braceStackCounter++;
-			} else if (parser.match(tt.braceR)) {
+			} else if (match(parser, tt.braceR)) {
 				braceStackCounter--;
 			}
 
-			parser.next();
+			next(parser);
 		}
 		return true;
 	}
 
-	if (parser.match(tt.bracketL)) {
+	if (match(parser, tt.bracketL)) {
 		let braceStackCounter = 1;
-		parser.next();
+		next(parser);
 
 		while (braceStackCounter > 0) {
-			if (parser.match(tt.bracketL)) {
+			if (match(parser, tt.bracketL)) {
 				braceStackCounter++;
-			} else if (parser.match(tt.bracketR)) {
+			} else if (match(parser, tt.bracketR)) {
 				braceStackCounter--;
 			}
 
-			parser.next();
+			next(parser);
 		}
 		return true;
 	}
@@ -1605,18 +1677,18 @@ function tsSkipParameterStart(parser: JSParser): boolean {
 }
 
 function tsIsUnambiguouslyStartOfFunctionType(parser: JSParser): boolean {
-	parser.next();
-	if (parser.match(tt.parenR) || parser.match(tt.ellipsis)) {
+	next(parser);
+	if (match(parser, tt.parenR) || match(parser, tt.ellipsis)) {
 		// ()
 		// (...
 		return true;
 	}
 	if (tsSkipParameterStart(parser)) {
 		if (
-			parser.match(tt.colon) ||
-			parser.match(tt.comma) ||
-			parser.match(tt.question) ||
-			parser.match(tt.eq)
+			match(parser, tt.colon) ||
+			match(parser, tt.comma) ||
+			match(parser, tt.question) ||
+			match(parser, tt.eq)
 		) {
 			// (xxx :
 			// (xxx ,
@@ -1624,9 +1696,9 @@ function tsIsUnambiguouslyStartOfFunctionType(parser: JSParser): boolean {
 			// (xxx =
 			return true;
 		}
-		if (parser.match(tt.parenR)) {
-			parser.next();
-			if (parser.match(tt.arrow)) {
+		if (match(parser, tt.parenR)) {
+			next(parser);
+			if (match(parser, tt.arrow)) {
 				// (xxx ) =>
 				return true;
 			}
@@ -1642,10 +1714,10 @@ export function parseTSTypeOrTypePredicateAnnotation(
 	let start: Position = parser.getPosition();
 	expectTSEnabled(parser, "type annotation", start);
 
-	parser.pushScope("TYPE", true);
-	parser.expect(returnToken);
+	pushScope(parser, "TYPE", true);
+	expect(parser, returnToken);
 
-	let hasAsserts = parser.eatContextual("asserts");
+	let hasAsserts = eatContextual(parser, "asserts");
 	let parameterName: JSIdentifier;
 	let typePredicateVariable;
 	if (tsIsIdentifier(parser)) {
@@ -1658,7 +1730,7 @@ export function parseTSTypeOrTypePredicateAnnotation(
 				throw Error("Should have an identifier after asserts");
 			}
 		} else {
-			parser.popScope("TYPE");
+			popScope(parser, "TYPE");
 			return parseTSTypeAnnotation(parser, /* eatColon */ false, start);
 		}
 	} else {
@@ -1671,7 +1743,7 @@ export function parseTSTypeOrTypePredicateAnnotation(
 		start = parser.getLoc(typePredicateVariable).start;
 	}
 
-	parser.popScope("TYPE");
+	popScope(parser, "TYPE");
 
 	return parser.finishNode(
 		start,
@@ -1685,7 +1757,7 @@ export function parseTSTypeOrTypePredicateAnnotation(
 }
 
 function tryTSParseTypeAnnotation(parser: JSParser): undefined | AnyTSPrimary {
-	return parser.match(tt.colon) ? parseTSTypeAnnotation(parser) : undefined;
+	return match(parser, tt.colon) ? parseTSTypeAnnotation(parser) : undefined;
 }
 
 function tryTSParseType(parser: JSParser): undefined | AnyTSPrimary {
@@ -1694,8 +1766,8 @@ function tryTSParseType(parser: JSParser): undefined | AnyTSPrimary {
 
 function parseTSTypePredicatePrefix(parser: JSParser): undefined | JSIdentifier {
 	const id = parseIdentifier(parser);
-	if (parser.isContextual("is") && !parser.hasPrecedingLineBreak()) {
-		parser.next();
+	if (isContextual(parser, "is") && !hasPrecedingLineBreak(parser)) {
+		next(parser);
 		return id;
 	} else {
 		return undefined;
@@ -1709,14 +1781,14 @@ export function parseTSTypeAnnotation(
 ): AnyTSPrimary {
 	expectTSEnabled(parser, "type annotation", start);
 
-	parser.pushScope("TYPE", true);
+	pushScope(parser, "TYPE", true);
 
 	if (eatColon) {
-		parser.expect(tt.colon);
+		expect(parser, tt.colon);
 	}
 
 	const typeAnnotation = parseTSType(parser, start);
-	parser.popScope("TYPE");
+	popScope(parser, "TYPE");
 	return typeAnnotation;
 }
 
@@ -1725,24 +1797,24 @@ function parseTSType(
 	parser: JSParser,
 	start: Position = parser.getPosition(),
 ): AnyTSPrimary {
-	parser.pushScope("TYPE", true);
+	pushScope(parser, "TYPE", true);
 
 	const type = parseTSNonConditionalType(parser);
-	if (parser.hasPrecedingLineBreak() || !parser.eat(tt._extends)) {
-		parser.popScope("TYPE");
+	if (hasPrecedingLineBreak(parser) || !eat(parser, tt._extends)) {
+		popScope(parser, "TYPE");
 		return type;
 	}
 
 	const checkType = type;
 
 	const extendsType = parseTSNonConditionalType(parser);
-	parser.expect(tt.question);
+	expect(parser, tt.question);
 
 	const trueType = parseTSType(parser);
-	parser.expect(tt.colon);
+	expect(parser, tt.colon);
 
 	const falseType = parseTSType(parser);
-	parser.popScope("TYPE");
+	popScope(parser, "TYPE");
 
 	return parser.finishNode(
 		start,
@@ -1761,7 +1833,7 @@ function parseTSNonConditionalType(parser: JSParser): AnyTSPrimary {
 		return parseTSFunctionType(parser);
 	}
 
-	if (parser.match(tt._new)) {
+	if (match(parser, tt._new)) {
 		// As in `new () => Date`
 		return parseTSConstructorType(parser);
 	}
@@ -1775,7 +1847,7 @@ export function parseTSTypeAssertion(parser: JSParser): TSTypeAssertion {
 
 	const _const = tryTSNextParseConstantContext(parser);
 	const typeAnnotation = _const || tsNextThenParseType(parser);
-	parser.expectRelational(">");
+	expectRelational(parser, ">");
 
 	const expression = parseMaybeUnary(parser, "ts type assertion");
 	if (_const) {
@@ -1806,10 +1878,13 @@ export function parseTSHeritageClause(
 	);
 
 	if (delimitedList.length === 0) {
-		parser.unexpectedDiagnostic({
-			start: originalStart,
-			description: descriptions.JS_PARSER.TS_EMPTY_LIST(descriptor),
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				start: originalStart,
+				description: descriptions.JS_PARSER.TS_EMPTY_LIST(descriptor),
+			},
+		);
 	}
 
 	return delimitedList;
@@ -1826,7 +1901,7 @@ function parseTSExpressionWithTypeArguments(
 	const expression = parseTSEntityName(parser, /* allowReservedWords */ false);
 
 	let typeParameters;
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		typeParameters = parseTSTypeArguments(parser);
 	}
 
@@ -1846,12 +1921,12 @@ export function parseTSInterfaceDeclaration(
 ): TSInterfaceDeclaration {
 	expectTSEnabled(parser, "interface declaration", start);
 
-	parser.pushScope("TYPE", true);
+	pushScope(parser, "TYPE", true);
 	const id = parseBindingIdentifier(parser);
 	const typeParameters = tryParseTSTypeParameters(parser);
 
 	let _extends;
-	if (parser.eat(tt._extends)) {
+	if (eat(parser, tt._extends)) {
 		_extends = parseTSHeritageClause(parser, "extends");
 	}
 
@@ -1865,7 +1940,7 @@ export function parseTSInterfaceDeclaration(
 		},
 	);
 
-	parser.popScope("TYPE");
+	popScope(parser, "TYPE");
 	return parser.finishNode(
 		start,
 		{
@@ -1882,7 +1957,7 @@ export function parseTSTypeAlias(parser: JSParser, start: Position): TSTypeAlias
 	const id = parseBindingIdentifier(parser);
 	const typeParameters = tryParseTSTypeParameters(parser);
 	const typeAnnotation = tsExpectThenParseType(parser, tt.eq);
-	parser.semicolon();
+	semicolon(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -1906,7 +1981,7 @@ function tsEatThenParseType(
 	parser: JSParser,
 	token: TokenType,
 ): AnyTSPrimary | undefined {
-	if (parser.match(token)) {
+	if (match(parser, token)) {
 		return tsNextThenParseType(parser);
 	} else {
 		return undefined;
@@ -1917,13 +1992,13 @@ function tsExpectThenParseType(parser: JSParser, token: TokenType): AnyTSPrimary
 	return tsDoThenParseType(
 		parser,
 		() => {
-			parser.expect(token);
+			expect(parser, token);
 		},
 	);
 }
 
 export function tsNextThenParseType(parser: JSParser): AnyTSPrimary {
-	return tsDoThenParseType(parser, () => parser.next());
+	return tsDoThenParseType(parser, () => next(parser));
 }
 
 function tsDoThenParseType(parser: JSParser, cb: VoidCallback): AnyTSPrimary {
@@ -1934,12 +2009,12 @@ function tsDoThenParseType(parser: JSParser, cb: VoidCallback): AnyTSPrimary {
 function parseTSEnumMember(parser: JSParser): TSEnumMember {
 	const start = parser.getPosition();
 	// Computed property names are grammar errors in an enum, so accept just string literal or identifier.
-	const id: JSStringLiteral | JSIdentifier = parser.match(tt.string)
+	const id: JSStringLiteral | JSIdentifier = match(parser, tt.string)
 		? parseStringLiteral(parser)
 		: parseIdentifier(parser, /* liberal */ true);
 
 	let initializer: undefined | AnyJSExpression;
-	if (parser.eat(tt.eq)) {
+	if (eat(parser, tt.eq)) {
 		initializer = parseMaybeAssign<AnyJSExpression>(
 			parser,
 			"ts enum member initializer",
@@ -1969,14 +2044,15 @@ export function parseTSEnumDeclaration(
 	const id = parseBindingIdentifier(parser);
 
 	const braceOpenStart = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"ts enum declaration",
 	);
 
 	const members = parseTSDelimitedList(parser, "EnumMembers", parseTSEnumMember);
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	return parser.finishNodeWithStarts(
 		[braceOpenStart, start],
@@ -1992,7 +2068,8 @@ export function parseTSEnumDeclaration(
 export function parseTSModuleBlock(parser: JSParser): TSModuleBlock {
 	const start = parser.getPosition();
 
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"ts module block",
@@ -2021,7 +2098,7 @@ export function parseTSModuleOrNamespaceDeclaration(
 	const id = parseBindingIdentifier(parser);
 
 	let body;
-	if (parser.eat(tt.dot)) {
+	if (eat(parser, tt.dot)) {
 		body = parseTSModuleOrNamespaceDeclaration(parser, parser.getPosition());
 	} else {
 		body = parseTSModuleBlock(parser);
@@ -2043,20 +2120,20 @@ export function parseTSAmbientExternalModuleDeclaration(
 ): TSModuleDeclaration {
 	let global;
 	let id;
-	if (parser.isContextual("global")) {
+	if (isContextual(parser, "global")) {
 		global = true;
 		id = parseBindingIdentifier(parser);
-	} else if (parser.match(tt.string)) {
+	} else if (match(parser, tt.string)) {
 		id = parseStringLiteral(parser);
 	} else {
 		throw parser.unexpected();
 	}
 
 	let body;
-	if (parser.match(tt.braceL)) {
+	if (match(parser, tt.braceL)) {
 		body = parseTSModuleBlock(parser);
 	} else {
-		parser.semicolon();
+		semicolon(parser);
 	}
 
 	return parser.finishNode(
@@ -2078,10 +2155,10 @@ export function parseTSImportEqualsDeclaration(
 	expectTSEnabled(parser, "import equals declaration", start);
 
 	const id = parseBindingIdentifier(parser);
-	parser.expect(tt.eq);
+	expect(parser, tt.eq);
 
 	const moduleReference = parseTSModuleReference(parser);
-	parser.semicolon();
+	semicolon(parser);
 
 	return parser.finishNode(
 		start,
@@ -2096,8 +2173,8 @@ export function parseTSImportEqualsDeclaration(
 
 function tsIsExternalModuleReference(parser: JSParser): boolean {
 	return (
-		parser.isContextual("require") &&
-		parser.lookaheadState().tokenType === tt.parenL
+		isContextual(parser, "require") &&
+		lookaheadState(parser).tokenType === tt.parenL
 	);
 }
 
@@ -2111,20 +2188,24 @@ function parseTSExternalModuleReference(
 	parser: JSParser,
 ): TSExternalModuleReference {
 	const start = parser.getPosition();
-	parser.expectContextual("require");
-	const openContext = parser.expectOpening(
+	expectContextual(parser, "require");
+	const openContext = expectOpening(
+		parser,
 		tt.parenL,
 		tt.parenR,
 		"ts external module reference",
 	);
 
 	let expression: JSStringLiteral;
-	if (parser.match(tt.string)) {
+	if (match(parser, tt.string)) {
 		expression = parseStringLiteral(parser);
 	} else {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.TS_EXTERNAL_MODULE_REFERENCE_ARG_NOT_STRING,
+			},
+		);
 
 		// Skip as much of the next expression as we can
 		parseExpressionAtom(parser, "ts external module reference expression");
@@ -2139,7 +2220,7 @@ function parseTSExternalModuleReference(
 		);
 	}
 
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	return parser.finishNode(
 		start,
@@ -2154,7 +2235,7 @@ function parseTSExternalModuleReference(
 type ParserCallback<T> = (parser: JSParser) => T;
 
 function lookaheadTS<T>(parser: JSParser, f: ParserCallback<T>): T {
-	const state = parser.cloneState();
+	const state = cloneState(parser);
 	const res = f(parser);
 	parser.state = state;
 	return res;
@@ -2164,7 +2245,7 @@ function tryTSParse<T>(
 	parser: JSParser,
 	f: ParserCallback<undefined | false | T>,
 ): undefined | T {
-	const state = parser.cloneState();
+	const state = cloneState(parser);
 	const result = f(parser);
 	if (result === undefined || result === false) {
 		parser.state = state;
@@ -2187,19 +2268,19 @@ export type TSDeclareNode =
 export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode {
 	let starttype = parser.state.tokenType;
 	let kind: undefined | JSVariableDeclarationKind;
-	if (parser.isContextual("let")) {
+	if (isContextual(parser, "let")) {
 		starttype = tt._var;
 		kind = "let";
 	}
 
 	if (
 		starttype === tt._const &&
-		parser.match(tt._const) &&
-		parser.isLookaheadContextual("enum")
+		match(parser, tt._const) &&
+		isLookaheadContextual(parser, "enum")
 	) {
 		// `const enum = 0;` not allowed because 'enum' is a strict mode reserved word.
-		parser.expect(tt._const);
-		parser.expectContextual("enum");
+		expect(parser, tt._const);
+		expectContextual(parser, "enum");
 		return {
 			declare: true,
 			...parseTSEnumDeclaration(parser, start, /* isConst */ true),
@@ -2267,9 +2348,12 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 		}
 	}
 
-	parser.unexpectedDiagnostic({
-		description: descriptions.JS_PARSER.TS_UNKNOWN_DECLARE_START,
-	});
+	unexpectedDiagnostic(
+		parser,
+		{
+			description: descriptions.JS_PARSER.TS_UNKNOWN_DECLARE_START,
+		},
+	);
 
 	// Fake node
 	const loc = parser.finishLoc(start);
@@ -2286,7 +2370,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 					loc,
 					id: toBindingIdentifier(
 						parser,
-						parser.createUnknownIdentifier("typescript declare start", start),
+						createUnknownIdentifier(parser, "typescript declare start", start),
 					),
 					init: undefined,
 				},
@@ -2300,24 +2384,24 @@ export function parseTSTypeExpressionStatement(
 	start: Position,
 	expr: AnyJSExpression,
 ): undefined | TSDeclareNode | TSTypeAlias | TSInterfaceDeclaration {
-	// TODO TypeScript does not like parser.isLineTerminator()
+	// TODO TypeScript does not like isLineTerminator(parser, )
 	if (expr.type !== "JSReferenceIdentifier") {
 		return undefined;
 	}
 
-	if (parser.hasPrecedingLineBreak()) {
+	if (hasPrecedingLineBreak(parser)) {
 		return undefined;
 	}
 
 	switch (expr.name) {
 		case "declare":
 			if (
-				parser.match(tt._class) ||
-				parser.match(tt.name) ||
-				parser.match(tt._function) ||
-				parser.match(tt._const) ||
-				parser.match(tt._var) ||
-				parser.match(tt._export)
+				match(parser, tt._class) ||
+				match(parser, tt.name) ||
+				match(parser, tt._function) ||
+				match(parser, tt._const) ||
+				match(parser, tt._var) ||
+				match(parser, tt._export)
 			) {
 				return parseTSDeclare(parser, start);
 			} else {
@@ -2340,7 +2424,7 @@ export function parseTSTypeExpressionStatement(
 		}
 
 		case "abstract":
-			if (parser.match(tt._class)) {
+			if (match(parser, tt._class)) {
 				expectTSEnabled(parser, "abstract class", start);
 				return parseTSAbstractClass(parser, start);
 			} else {
@@ -2348,7 +2432,7 @@ export function parseTSTypeExpressionStatement(
 			}
 
 		case "enum": {
-			if (parser.match(tt.name)) {
+			if (match(parser, tt.name)) {
 				expectTSEnabled(parser, "enum declaration", start);
 				return parseTSEnumDeclaration(parser, start, /* isConst */ false);
 			} else {
@@ -2357,10 +2441,10 @@ export function parseTSTypeExpressionStatement(
 		}
 
 		case "module":
-			if (parser.match(tt.string)) {
+			if (match(parser, tt.string)) {
 				expectTSEnabled(parser, "ambient external module declaration", start);
 				return parseTSAmbientExternalModuleDeclaration(parser, start);
-			} else if (parser.match(tt.name) && !parser.isLineTerminator()) {
+			} else if (match(parser, tt.name) && !isLineTerminator(parser)) {
 				expectTSEnabled(parser, "module or namespace declaration", start);
 				return parseTSModuleOrNamespaceDeclaration(parser, start);
 			} else {
@@ -2368,7 +2452,7 @@ export function parseTSTypeExpressionStatement(
 			}
 
 		case "namespace": {
-			if (!parser.match(tt.name)) {
+			if (!match(parser, tt.name)) {
 				return undefined;
 			}
 
@@ -2380,7 +2464,7 @@ export function parseTSTypeExpressionStatement(
 		case "global":
 			// `global { }` (with no `declare`) may appear inside an ambient module declaration.
 			// Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
-			if (parser.match(tt.braceL)) {
+			if (match(parser, tt.braceL)) {
 				expectTSEnabled(parser, "module declaration", start);
 				const global = true;
 				const id = toBindingIdentifier(parser, expr);
@@ -2426,12 +2510,12 @@ export function parseTSTypeArguments(
 	const start = parser.getPosition();
 	expectTSEnabled(parser, "type arguments", start);
 
-	parser.pushScope("TYPE", true);
+	pushScope(parser, "TYPE", true);
 
 	const params = tsInNoContext(
 		parser,
 		() => {
-			parser.expectRelational("<");
+			expectRelational(parser, "<");
 			return parseTSDelimitedList(
 				parser,
 				"TypeParametersOrArguments",
@@ -2444,8 +2528,8 @@ export function parseTSTypeArguments(
 
 	// But be sure not to parse a regex in the jsx expression `<C<number> />`, so set exprAllowed = false
 	parser.state.exprAllowed = false;
-	parser.popScope("TYPE");
-	parser.expectRelational(">");
+	popScope(parser, "TYPE");
+	expectRelational(parser, ">");
 
 	return parser.finishNode(
 		start,
@@ -2457,7 +2541,7 @@ export function parseTSTypeArguments(
 }
 
 export function isTSDeclarationStart(parser: JSParser): boolean {
-	if (parser.match(tt.name)) {
+	if (match(parser, tt.name)) {
 		switch (parser.state.tokenValue) {
 			case "abstract":
 			case "declare":
@@ -2481,8 +2565,8 @@ export function parseTSAccessModifier(
 
 export function isTSAbstractClass(parser: JSParser): boolean {
 	return (
-		parser.isContextual("abstract") &&
-		parser.lookaheadState().tokenType === tt._class
+		isContextual(parser, "abstract") &&
+		lookaheadState(parser).tokenType === tt._class
 	);
 }
 
@@ -2494,20 +2578,20 @@ export function parseTSExport(
 	| TSNamespaceExportDeclaration
 	| TSExportAssignment
 	| TSImportEqualsDeclaration {
-	if (!parser.isSyntaxEnabled("ts")) {
+	if (!isSyntaxEnabled(parser, "ts")) {
 		return undefined;
 	}
 
-	if (parser.match(tt._import)) {
+	if (match(parser, tt._import)) {
 		// `export const A =B;`
-		parser.expect(tt._import);
+		expect(parser, tt._import);
 		return parseTSImportEqualsDeclaration(parser, start, /* isExport */ true);
 	}
 
-	if (parser.eat(tt.eq)) {
+	if (eat(parser, tt.eq)) {
 		// `export = x;`
 		const expression = parseExpression(parser, "ts export assignment");
-		parser.semicolon();
+		semicolon(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -2517,12 +2601,12 @@ export function parseTSExport(
 		);
 	}
 
-	if (parser.eatContextual("as")) {
+	if (eatContextual(parser, "as")) {
 		// `export as namespace A;`
 		// See `parseNamespaceExportDeclaration` in TypeScript's own parser
-		parser.expectContextual("namespace");
+		expectContextual(parser, "namespace");
 		const id = parseIdentifier(parser);
-		parser.semicolon();
+		semicolon(parser);
 		return parser.finishNode(
 			start,
 			{

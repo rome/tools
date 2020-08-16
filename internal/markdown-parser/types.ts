@@ -1,7 +1,6 @@
 import {
 	BaseTokens,
 	ComplexToken,
-	ParserCoreState,
 	ParserOptions,
 	SimpleToken,
 	ValueToken,
@@ -15,7 +14,7 @@ export interface MarkdownParserOptions extends Omit<
 	consumeDiagnosticCategory?: DiagnosticCategory;
 }
 
-export type State = ParserCoreState & {
+export type State = {
 	isBlockHead: boolean;
 };
 

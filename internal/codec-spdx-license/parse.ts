@@ -8,6 +8,7 @@
 import {
 	BaseTokens,
 	ComplexNode,
+	ParserCore,
 	ParserOptions,
 	SimpleToken,
 	ValueToken,
@@ -66,191 +67,188 @@ type SPDXLicenseParserOptions = ParserOptions & {
 	loose?: boolean;
 };
 
-const createSPDXLicenseParser = createParser((ParserCore) =>
-	class SPDXLicenseParser extends ParserCore<Tokens> {
-		constructor(opts: SPDXLicenseParserOptions) {
-			super(opts, "parse/spdxLicense", {});
-			this.ignoreWhitespaceTokens = true;
-			this.loose = opts.loose === true;
+type SPDXParserTypes = {
+	tokens: Tokens;
+	state: {};
+	options: SPDXLicenseParserOptions;
+	meta: void;
+};
+
+type SPDXParser = ParserCore<SPDXParserTypes>;
+
+const createSPDXLicenseParser = createParser<SPDXParserTypes>({
+	diagnosticCategory: "parse/spdxLicense",
+	ignoreWhitespaceTokens: true,
+	tokenize(parser: SPDXParser, index: Number0) {
+		const char = parser.getInputCharOnly(index);
+
+		if (char === "+") {
+			return parser.finishToken("Plus");
 		}
 
-		private loose: boolean;
-
-		// For some reason Flow will throw an error without the type casts...
-		protected tokenize(index: Number0) {
-			const char = this.getInputCharOnly(index);
-
-			if (char === "+") {
-				return this.finishToken("Plus");
-			}
-
-			if (char === "(") {
-				return this.finishToken("ParenOpen");
-			}
-
-			if (char === ")") {
-				return this.finishToken("ParenClose");
-			}
-
-			if (isWordChar(char)) {
-				const [value, end] = this.readInputFrom(index, isWordChar);
-
-				if (value === "AND") {
-					return this.finishToken("And", end);
-				} else if (value === "OR") {
-					return this.finishToken("Or", end);
-				} else if (value === "WITH") {
-					return this.finishToken("With", end);
-				} else {
-					return this.finishValueToken("Word", value, end);
-				}
-			}
-
-			return undefined;
+		if (char === "(") {
+			return parser.finishToken("ParenOpen");
 		}
 
-		private parseLicense(token: Tokens["Word"]): LicenseNode {
-			const startPos = this.getPosition();
-			this.nextToken();
+		if (char === ")") {
+			return parser.finishToken("ParenClose");
+		}
 
-			// Validate id
-			const id = token.value;
-			let licenseInfo = getSPDXLicense(id);
-			const nextToken = this.getToken();
+		if (isWordChar(char)) {
+			const [value, end] = parser.readInputFrom(index, isWordChar);
 
-			// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
-
-			// In loose mode, just make it equivalent, otherwise, complain
-			if (licenseInfo === undefined && nextToken.type === "Word") {
-				const possibleCorrectLicense = `${id}-${nextToken.value}`;
-				const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
-
-				if (possibleLicenseInfo !== undefined) {
-					if (this.loose) {
-						// Just allow it...
-						licenseInfo = possibleLicenseInfo;
-						this.nextToken();
-					} else {
-						throw this.unexpected({
-							description: descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
-								possibleCorrectLicense,
-							),
-							start: this.getPositionFromIndex(token.start),
-							end: this.getPositionFromIndex(nextToken.end),
-						});
-					}
-				}
+			if (value === "AND") {
+				return parser.finishToken("And", end);
+			} else if (value === "OR") {
+				return parser.finishToken("Or", end);
+			} else if (value === "WITH") {
+				return parser.finishToken("With", end);
+			} else {
+				return parser.finishValueToken("Word", value, end);
 			}
+		}
 
-			if (licenseInfo === undefined) {
-				throw this.unexpected({
-					description: descriptions.SPDX.UNKNOWN_LICENSE(id, licenseNames),
-					start: this.getPositionFromIndex(token.start),
-					end: this.getPositionFromIndex(token.end),
+		return undefined;
+	},
+});
+
+function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
+	const startPos = parser.getPosition();
+	parser.nextToken();
+
+	// Validate id
+	const id = token.value;
+	let licenseInfo = getSPDXLicense(id);
+	const nextToken = parser.getToken();
+
+	// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
+
+	// In loose mode, just make it equivalent, otherwise, complain
+	if (licenseInfo === undefined && nextToken.type === "Word") {
+		const possibleCorrectLicense = `${id}-${nextToken.value}`;
+		const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
+
+		if (possibleLicenseInfo !== undefined) {
+			if (parser.options.loose) {
+				// Just allow it...
+				licenseInfo = possibleLicenseInfo;
+				parser.nextToken();
+			} else {
+				throw parser.unexpected({
+					description: descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
+						possibleCorrectLicense,
+					),
+					start: parser.getPositionFromIndex(token.start),
+					end: parser.getPositionFromIndex(nextToken.end),
 				});
 			}
+		}
+	}
 
-			// Is this a plus? (wtf is this)
-			const plus = this.eatToken("Plus") !== undefined;
+	if (licenseInfo === undefined) {
+		throw parser.unexpected({
+			description: descriptions.SPDX.UNKNOWN_LICENSE(id, licenseNames),
+			start: parser.getPositionFromIndex(token.start),
+			end: parser.getPositionFromIndex(token.end),
+		});
+	}
 
-			// Get exception
-			let exception;
-			if (this.eatToken("With")) {
-				const token = this.getToken();
-				if (token.type === "Word") {
-					exception = token.value;
-					this.nextToken();
-				} else {
-					throw this.unexpected({
-						description: descriptions.SPDX.WITH_RIGHT_LICENSE_ONLY,
-					});
-				}
-			}
+	// Is this a plus? (wtf is this)
+	const plus = parser.eatToken("Plus") !== undefined;
 
+	// Get exception
+	let exception;
+	if (parser.eatToken("With")) {
+		const token = parser.getToken();
+		if (token.type === "Word") {
+			exception = token.value;
+			parser.nextToken();
+		} else {
+			throw parser.unexpected({
+				description: descriptions.SPDX.WITH_RIGHT_LICENSE_ONLY,
+			});
+		}
+	}
+
+	return {
+		type: "License",
+		loc: parser.finishLoc(startPos),
+		id: licenseInfo.licenseId,
+		exception,
+		plus,
+	};
+}
+
+function parseExpression(parser: SPDXParser): ExpressionNode {
+	const startPos = parser.getPosition();
+	const startToken = parser.getToken();
+
+	let value;
+
+	switch (startToken.type) {
+		case "ParenOpen": {
+			parser.nextToken();
+			value = parseExpression(parser);
+			parser.expectToken("ParenClose");
+			break;
+		}
+
+		case "Word": {
+			value = parseLicense(parser, startToken);
+			break;
+		}
+
+		case "Or":
+		case "And":
+			throw parser.unexpected({
+				description: descriptions.SPDX.OPERATOR_NOT_BETWEEN_EXPRESSION,
+			});
+
+		case "Plus":
+			throw parser.unexpected({
+				description: descriptions.SPDX.PLUS_NOT_AFTER_LICENSE,
+			});
+
+		case "ParenClose":
+			throw parser.unexpected({
+				description: descriptions.SPDX.UNOPENED_PAREN,
+			});
+
+		default:
+			throw parser.unexpected();
+	}
+
+	// Parse and/or
+	const nextToken = parser.getToken();
+	switch (nextToken.type) {
+		case "Or": {
+			parser.nextToken();
 			return {
-				type: "License",
-				loc: this.finishLoc(startPos),
-				id: licenseInfo.licenseId,
-				exception,
-				plus,
+				type: "Or",
+				loc: parser.finishLoc(startPos),
+				left: value,
+				right: parseExpression(parser),
 			};
 		}
 
-		private parseExpression(): ExpressionNode {
-			const startPos = this.getPosition();
-			const startToken = this.getToken();
-
-			let value;
-
-			switch (startToken.type) {
-				case "ParenOpen": {
-					this.nextToken();
-					value = this.parseExpression();
-					this.expectToken("ParenClose");
-					break;
-				}
-
-				case "Word": {
-					value = this.parseLicense(startToken);
-					break;
-				}
-
-				case "Or":
-				case "And":
-					throw this.unexpected({
-						description: descriptions.SPDX.OPERATOR_NOT_BETWEEN_EXPRESSION,
-					});
-
-				case "Plus":
-					throw this.unexpected({
-						description: descriptions.SPDX.PLUS_NOT_AFTER_LICENSE,
-					});
-
-				case "ParenClose":
-					throw this.unexpected({
-						description: descriptions.SPDX.UNOPENED_PAREN,
-					});
-
-				default:
-					throw this.unexpected();
-			}
-
-			// Parse and/or
-			const nextToken = this.getToken();
-			switch (nextToken.type) {
-				case "Or": {
-					this.nextToken();
-					return {
-						type: "Or",
-						loc: this.finishLoc(startPos),
-						left: value,
-						right: this.parseExpression(),
-					};
-				}
-
-				case "And": {
-					this.nextToken();
-					return {
-						type: "And",
-						loc: this.finishLoc(startPos),
-						left: value,
-						right: this.parseExpression(),
-					};
-				}
-
-				default:
-					return value;
-			}
+		case "And": {
+			parser.nextToken();
+			return {
+				type: "And",
+				loc: parser.finishLoc(startPos),
+				left: value,
+				right: parseExpression(parser),
+			};
 		}
 
-		public parse(): ExpressionNode {
-			const expr = this.parseExpression();
-			this.finalize();
-			return expr;
-		}
+		default:
+			return value;
 	}
-);
+}
 
 export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {
-	return createSPDXLicenseParser(opts).parse();
+	const parser = createSPDXLicenseParser(opts);
+	const expr = parseExpression(parser);
+	parser.finalize();
+	return expr;
 }

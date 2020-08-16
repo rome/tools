@@ -13,20 +13,26 @@ import {
 } from "./options";
 import {PublicToken, Token} from "./tokenizer/index";
 import {types as tokTypes} from "./tokenizer/types";
-import {createJSParser} from "./parser";
 import "./tokenizer/context";
+import {createJSParser, createMeta, parseRoot} from "./parser";
 
 export {default as CommentsConsumer} from "./CommentsConsumer";
 
 export function parseJS(userOptions: JSParserUserOptions): JSRoot {
-	const options: JSParserOptions = normalizeOptions(userOptions);
-	return createJSParser(options).parse();
+	const options = normalizeOptions(userOptions);
+	const meta = createMeta(options);
+	const parser = createJSParser(options, meta);
+	return parseRoot(parser);
 }
 
 export function tokenizeJS(userOptions: JSParserUserOptions): Array<PublicToken> {
-	const options: JSParserOptions = normalizeOptions(userOptions);
-	const parser = createJSParser({...options, tokens: true});
-	parser.parse();
+	const options: JSParserOptions = {
+		...normalizeOptions(userOptions),
+		tokens: true,
+	};
+	const meta = createMeta(options);
+	const parser = createJSParser(options, meta);
+	parseRoot(parser);
 
 	let tokens: Array<PublicToken> = [];
 
