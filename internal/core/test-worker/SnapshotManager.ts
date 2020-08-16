@@ -10,7 +10,7 @@ import {exists, readFileText, removeFile, writeFile} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerRunner from "./TestWorkerRunner";
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
-import {createSnapshotParser} from "./SnapshotParser";
+import {createSnapshotParser, parseSnapshot} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
 import {Number0, Number1} from "@internal/ob1";
 import {prettyFormatToString} from "@internal/pretty-format";
@@ -147,8 +147,7 @@ export default class SnapshotManager {
 					path,
 					input: content,
 				});
-
-				const nodes = parser.parse();
+				const nodes = parseSnapshot(parser);
 
 				const snapshot: Snapshot = {
 					existsOnDisk: true,

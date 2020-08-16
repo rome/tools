@@ -7,7 +7,20 @@
 
 import {types as tt} from "../tokenizer/types";
 import {Position, SourceLocation} from "@internal/parser-core";
-import {JSParser} from "../parser";
+import {
+	JSParser,
+	atEOF,
+	eat,
+	expect,
+	expectClosing,
+	expectOpening,
+	isRelational,
+	isSyntaxEnabled,
+	lookaheadState,
+	match,
+	next,
+	unexpectedDiagnostic,
+} from "../parser";
 import {
 	JSStringLiteral,
 	JSXAttribute,
@@ -62,18 +75,21 @@ function getQualifiedJSXName(
 function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
 	const start = parser.getPosition();
 	let name;
-	if (parser.match(tt.jsxName)) {
+	if (match(parser, tt.jsxName)) {
 		name = String(parser.state.tokenValue);
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 	} else {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
+			},
+		);
 		name = "";
 	}
 
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -90,7 +106,7 @@ function parseJSXNamespacedName(
 	const start = parser.getPosition();
 
 	const namespace = parseJSXIdentifier(parser);
-	if (!parser.eat(tt.colon)) {
+	if (!eat(parser, tt.colon)) {
 		return namespace;
 	}
 
@@ -125,7 +141,7 @@ function parseJSXElementName(parser: JSParser): JSXElement["name"] {
 		node = namespacedName;
 	}
 
-	while (parser.eat(tt.dot)) {
+	while (eat(parser, tt.dot)) {
 		const property = parseJSXIdentifier(parser);
 		node = parser.finishNode(
 			start,
@@ -149,10 +165,13 @@ function parseJSXAttributeValue(
 		case tt.braceL: {
 			node = parseJSXExpressionContainer(parser);
 			if (node.expression.type === "JSXEmptyExpression") {
-				parser.unexpectedDiagnostic({
-					loc: node.loc,
-					description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: node.loc,
+						description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
+					},
+				);
 			}
 			return node;
 		}
@@ -164,9 +183,12 @@ function parseJSXAttributeValue(
 			return parseStringLiteral(parser);
 
 		default: {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.JSX_INVALID_ATTRIBUTE_VALUE,
+				},
+			);
 			return parser.finishNode(
 				parser.getPosition(),
 				{
@@ -193,14 +215,15 @@ function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
 // Parse JSX spread child
 function parseJSXSpreadChild(parser: JSParser): JSXSpreadChild {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"jsx spread child",
 	);
-	parser.expect(tt.ellipsis);
+	expect(parser, tt.ellipsis);
 	const expression = parseExpression(parser, "jsx spread child expression");
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	return parser.finishNode(
 		start,
@@ -214,18 +237,19 @@ function parseJSXSpreadChild(parser: JSParser): JSXSpreadChild {
 // Parses JSX expression enclosed into curly brackets.
 function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"jsx expression container",
 	);
 	let expression;
-	if (parser.match(tt.braceR)) {
+	if (match(parser, tt.braceR)) {
 		expression = parseJSXEmptyExpression(parser);
 	} else {
 		expression = parseExpression(parser, "jsx inner expression container");
 	}
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 	return parser.finishNode(
 		start,
 		{
@@ -239,15 +263,16 @@ function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
 function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute {
 	const start = parser.getPosition();
 
-	if (parser.match(tt.braceL)) {
-		const openContext = parser.expectOpening(
+	if (match(parser, tt.braceL)) {
+		const openContext = expectOpening(
+			parser,
 			tt.braceL,
 			tt.braceR,
 			"jsx attribute spread",
 		);
-		parser.expect(tt.ellipsis);
+		expect(parser, tt.ellipsis);
 		const argument = parseMaybeAssign(parser, "jsx attribute spread");
-		parser.expectClosing(openContext);
+		expectClosing(parser, openContext);
 		return parser.finishNode(
 			start,
 			{
@@ -258,7 +283,7 @@ function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute 
 	}
 
 	const name = parseJSXNamespacedName(parser);
-	const value = parser.eat(tt.eq) ? parseJSXAttributeValue(parser) : undefined;
+	const value = eat(parser, tt.eq) ? parseJSXAttributeValue(parser) : undefined;
 	return parser.finishNode(
 		start,
 		{
@@ -282,8 +307,8 @@ function parseJSXOpeningElementAt(
 	parser: JSParser,
 	start: Position,
 ): OpeningElementDef {
-	if (parser.match(tt.jsxTagEnd)) {
-		parser.expect(tt.jsxTagEnd);
+	if (match(parser, tt.jsxTagEnd)) {
+		expect(parser, tt.jsxTagEnd);
 		return {
 			typeArguments: undefined,
 			name: undefined,
@@ -301,11 +326,14 @@ function parseJSXOpeningElementAt(
 	const name = parseJSXElementName(parser);
 
 	let typeArguments;
-	if (parser.isRelational("<")) {
-		if (!parser.isSyntaxEnabled("ts")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
-			});
+	if (isRelational(parser, "<")) {
+		if (!isSyntaxEnabled(parser, "ts")) {
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
+				},
+			);
 		}
 
 		typeArguments = parseTSTypeArguments(parser);
@@ -315,17 +343,20 @@ function parseJSXOpeningElementAt(
 
 	// into an unusual state for: <foo<bar>></foo>
 	while (
-		!parser.match(tt.slash) &&
-		!parser.match(tt.jsxTagEnd) &&
-		!parser.atEOF()
+		!match(parser, tt.slash) &&
+		!match(parser, tt.jsxTagEnd) &&
+		!atEOF(parser)
 	) {
 		attributes.push(parseJSXAttribute(parser));
 	}
-	const selfClosing = parser.eat(tt.slash);
-	if (!parser.eat(tt.jsxTagEnd)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.JSX_UNCLOSED_SELF_CLOSING_TAG,
-		});
+	const selfClosing = eat(parser, tt.slash);
+	if (!eat(parser, tt.jsxTagEnd)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.JSX_UNCLOSED_SELF_CLOSING_TAG,
+			},
+		);
 	}
 	return {
 		typeArguments,
@@ -340,16 +371,19 @@ function parseJSXOpeningElementAt(
 function parseJSXClosingElementAt(
 	parser: JSParser,
 ): undefined | JSXElement["name"] {
-	if (parser.eat(tt.jsxTagEnd)) {
+	if (eat(parser, tt.jsxTagEnd)) {
 		return undefined;
 	}
 
 	const name = parseJSXElementName(parser);
 
-	if (!parser.eat(tt.jsxTagEnd)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.JSX_UNCLOSED_CLOSING_TAG,
-		});
+	if (!eat(parser, tt.jsxTagEnd)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.JSX_UNCLOSED_CLOSING_TAG,
+			},
+		);
 	}
 
 	return name;
@@ -379,8 +413,8 @@ function parseJSXElementAt(
 			switch (parser.state.tokenType) {
 				case tt.jsxTagStart: {
 					const start = parser.getPosition();
-					parser.next();
-					if (parser.eat(tt.slash)) {
+					next(parser);
+					if (eat(parser, tt.slash)) {
 						closingName = parseJSXClosingElementAt(parser);
 						closingNameLoc = {
 							filename: parser.filename,
@@ -399,7 +433,7 @@ function parseJSXElementAt(
 				}
 
 				case tt.braceL: {
-					if (parser.lookaheadState().tokenType === tt.ellipsis) {
+					if (lookaheadState(parser).tokenType === tt.ellipsis) {
 						children.push(parseJSXSpreadChild(parser));
 					} else {
 						children.push(parseJSXExpressionContainer(parser));
@@ -408,22 +442,28 @@ function parseJSXElementAt(
 				}
 
 				case tt.eof: {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
-							getQualifiedJSXName(openingDef.name),
-							openingDef.loc,
-						),
-					});
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.JSX_UNCLOSED_ELEMENT(
+								getQualifiedJSXName(openingDef.name),
+								openingDef.loc,
+							),
+						},
+					);
 					break contents;
 				}
 
 				default: {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
-							getQualifiedJSXName(openingDef.name),
-							openingDef.loc,
-						),
-					});
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.JSX_UNKNOWN_CHILD_START(
+								getQualifiedJSXName(openingDef.name),
+								openingDef.loc,
+							),
+						},
+					);
 
 					// We don't need to do it for the tt.eof case above because nothing will ever be parsed after
 					recoverFromUnclosedJSX(parser);
@@ -441,24 +481,30 @@ function parseJSXElementAt(
 
 		// Fragment open, element close
 		if (openingDef.name === undefined && closingName !== undefined) {
-			parser.unexpectedDiagnostic({
-				loc: openingDef.loc,
-				description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_FRAGMENT_TAG(
-					getQualifiedJSXName(openingDef.name),
-					openingDef.loc,
-				),
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: openingDef.loc,
+					description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_FRAGMENT_TAG(
+						getQualifiedJSXName(openingDef.name),
+						openingDef.loc,
+					),
+				},
+			);
 		}
 
 		// Element open, fragment close
 		if (openingDef.name !== undefined && closingName === undefined) {
-			parser.unexpectedDiagnostic({
-				loc: openingDef.loc,
-				description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
-					getQualifiedJSXName(openingDef.name),
-					openingDef.loc,
-				),
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: openingDef.loc,
+					description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+						getQualifiedJSXName(openingDef.name),
+						openingDef.loc,
+					),
+				},
+			);
 		}
 
 		// Validate element names: Element open, element close
@@ -467,13 +513,16 @@ function parseJSXElementAt(
 				getQualifiedJSXName(closingName) !==
 				getQualifiedJSXName(openingDef.name)
 			) {
-				parser.unexpectedDiagnostic({
-					loc: openingDef.loc,
-					description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
-						getQualifiedJSXName(openingDef.name),
-						openingDef.loc,
-					),
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: openingDef.loc,
+						description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(
+							getQualifiedJSXName(openingDef.name),
+							openingDef.loc,
+						),
+					},
+				);
 			}
 		}
 	}
@@ -505,10 +554,13 @@ function parseJSXElementAt(
 }
 
 function checkAccidentalFragment(parser: JSParser) {
-	if (parser.match(tt.relational) && parser.state.tokenValue === "<") {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
-		});
+	if (match(parser, tt.relational) && parser.state.tokenValue === "<") {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
+			},
+		);
 	}
 }
 
@@ -516,7 +568,7 @@ export function parseJSXText(parser: JSParser): JSXText {
 	// No need to assert syntax here because we wont get that far as parseJSXElement would have already been called
 	const start = parser.getPosition();
 	const value = String(parser.state.tokenValue);
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -529,19 +581,25 @@ export function parseJSXText(parser: JSParser): JSXText {
 // Parses entire JSX element from 'current position.
 export function parseJSXElement(parser: JSParser): JSXElement | JSXFragment {
 	// Only necessary here as this is the only JSX entry point
-	if (!parser.isSyntaxEnabled("jsx")) {
-		if (parser.isSyntaxEnabled("ts")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
-			});
+	if (!isSyntaxEnabled(parser, "jsx")) {
+		if (isSyntaxEnabled(parser, "ts")) {
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
+				},
+			);
 		} else {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.JSX_DISABLED,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.JSX_DISABLED,
+				},
+			);
 		}
 	}
 
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 	return parseJSXElementAt(parser, start);
 }

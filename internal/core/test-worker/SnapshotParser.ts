@@ -8,6 +8,7 @@
 import {
 	BaseTokens,
 	NodeBase,
+	ParserCore,
 	ParserOptions,
 	ValueToken,
 	createParser,
@@ -72,137 +73,142 @@ function unescapeTicks(code: string): string {
 	return code;
 }
 
-export const createSnapshotParser = createParser((ParserCore) =>
-	class SnapshotParser extends ParserCore<Tokens> {
-		constructor(opts: ParserOptions) {
-			super(opts, "parse/snapshots", {});
-			this.ignoreWhitespaceTokens = true;
-		}
+type SnapshotParserTypes = {
+	tokens: Tokens;
+	options: ParserOptions;
+	state: {};
+	meta: void;
+};
 
-		protected tokenize(index: Number0) {
-			const char = this.getInputCharOnly(index);
+type SnapshotParser = ParserCore<SnapshotParserTypes>;
 
-			switch (char) {
-				case "#": {
-					const [hashes] = this.readInputFrom(index, isHash);
-					const level = hashes.length;
-					return this.finishValueToken("Hashes", level, ob1Add(index, level));
-				}
+export const createSnapshotParser = createParser<SnapshotParserTypes>({
+	diagnosticCategory: "parse/snapshots",
+	ignoreWhitespaceTokens: true,
 
-				case "`": {
-					const nextChar = this.getInputCharOnly(index, 1);
-					const nextNextChar = this.getInputCharOnly(index, 2);
+	tokenize(parser, index) {
+		const char = parser.getInputCharOnly(index);
 
-					if (nextChar === "`" && nextNextChar === "`") {
-						let codeOffset = ob1Add(index, 3);
+		switch (char) {
+			case "#": {
+				const [hashes] = parser.readInputFrom(index, isHash);
+				const level = hashes.length;
+				return parser.finishValueToken("Hashes", level, ob1Add(index, level));
+			}
 
-						let language: undefined | string;
-						if (this.getInputCharOnly(codeOffset) !== "\n") {
-							[language, codeOffset] = this.readInputFrom(
-								codeOffset,
-								isntNewline,
+			case "`": {
+				const nextChar = parser.getInputCharOnly(index, 1);
+				const nextNextChar = parser.getInputCharOnly(index, 2);
+
+				if (nextChar === "`" && nextNextChar === "`") {
+					let codeOffset = ob1Add(index, 3);
+
+					let language: undefined | string;
+					if (parser.getInputCharOnly(codeOffset) !== "\n") {
+						[language, codeOffset] = parser.readInputFrom(
+							codeOffset,
+							isntNewline,
+						);
+					}
+
+					// Expect the first offset character to be a newline
+					if (parser.getInputCharOnly(codeOffset) === "\n") {
+						// Skip leading newline
+						codeOffset = ob1Add(codeOffset, 1);
+					} else {
+						throw parser.unexpected({
+							description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
+							start: parser.getPositionFromIndex(codeOffset),
+						});
+					}
+
+					let [code] = parser.readInputFrom(codeOffset, isInCodeBlock);
+
+					let end = ob1Add(codeOffset, code.length);
+
+					if (isCodeBlockEnd(end, parser.input)) {
+						// Check for trailing newline
+						if (code[code.length - 1] === "\n") {
+							// Trim trailing newline
+							code = code.slice(0, -1);
+
+							// Skip closing ticks
+							end = ob1Add(end, 3);
+
+							return parser.finishValueToken(
+								"CodeBlock",
+								{
+									language,
+									text: unescapeTicks(code),
+								},
+								end,
 							);
-						}
-
-						// Expect the first offset character to be a newline
-						if (this.getInputCharOnly(codeOffset) === "\n") {
-							// Skip leading newline
-							codeOffset = ob1Add(codeOffset, 1);
 						} else {
-							throw this.unexpected({
-								description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
-								start: this.getPositionFromIndex(codeOffset),
+							throw parser.unexpected({
+								description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
+								start: parser.getPositionFromIndex(end),
 							});
 						}
-
-						let [code] = this.readInputFrom(codeOffset, isInCodeBlock);
-
-						let end = ob1Add(codeOffset, code.length);
-
-						if (isCodeBlockEnd(end, this.input)) {
-							// Check for trailing newline
-							if (code[code.length - 1] === "\n") {
-								// Trim trailing newline
-								code = code.slice(0, -1);
-
-								// Skip closing ticks
-								end = ob1Add(end, 3);
-
-								return this.finishValueToken(
-									"CodeBlock",
-									{
-										language,
-										text: unescapeTicks(code),
-									},
-									end,
-								);
-							} else {
-								throw this.unexpected({
-									description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
-									start: this.getPositionFromIndex(end),
-								});
-							}
-						} else {
-							throw this.unexpected({
-								description: descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
-								start: this.getPositionFromIndex(end),
-							});
-						}
+					} else {
+						throw parser.unexpected({
+							description: descriptions.SNAPSHOTS.UNCLOSED_CODE_BLOCK,
+							start: parser.getPositionFromIndex(end),
+						});
 					}
 				}
 			}
-
-			const [text, end] = this.readInputFrom(index, isntNewline);
-			return this.finishValueToken("TextLine", text, end);
 		}
 
-		public parse(): Array<Node> {
-			const nodes: Array<Node> = [];
+		const [text, end] = parser.readInputFrom(index, isntNewline);
+		return parser.finishValueToken("TextLine", text, end);
+	},
+});
 
-			while (!this.matchToken("EOF")) {
-				const start = this.getPosition();
-				const token = this.getToken();
+export function parseSnapshot(parser: SnapshotParser): Array<Node> {
+	const nodes: Array<Node> = [];
 
-				switch (token.type) {
-					case "Hashes": {
-						const level = token.value;
-						this.nextToken();
-						const text = this.expectToken("TextLine").value;
-						nodes.push({
-							type: "Heading",
-							level,
-							text,
-							loc: this.finishLoc(start),
-						});
-						break;
-					}
+	while (!parser.matchToken("EOF")) {
+		const start = parser.getPosition();
+		const token = parser.getToken();
 
-					case "CodeBlock": {
-						nodes.push({
-							type: "CodeBlock",
-							...token.value,
-							loc: this.finishLoc(start),
-						});
-						this.nextToken();
-						break;
-					}
-
-					case "TextLine": {
-						nodes.push({
-							type: "TextLine",
-							text: token.value,
-							loc: this.finishLoc(start),
-						});
-						this.nextToken();
-						break;
-					}
-
-					default:
-						throw this.unexpected();
-				}
+		switch (token.type) {
+			case "Hashes": {
+				const level = token.value;
+				parser.nextToken();
+				const text = parser.expectToken("TextLine").value;
+				nodes.push({
+					type: "Heading",
+					level,
+					text,
+					loc: parser.finishLoc(start),
+				});
+				break;
 			}
 
-			return nodes;
+			case "CodeBlock": {
+				nodes.push({
+					type: "CodeBlock",
+					...token.value,
+					loc: parser.finishLoc(start),
+				});
+				parser.nextToken();
+				break;
+			}
+
+			case "TextLine": {
+				nodes.push({
+					type: "TextLine",
+					text: token.value,
+					loc: parser.finishLoc(start),
+				});
+				parser.nextToken();
+				break;
+			}
+
+			default:
+				throw parser.unexpected();
 		}
 	}
-);
+
+	return nodes;
+}

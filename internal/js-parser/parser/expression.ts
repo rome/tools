@@ -6,7 +6,39 @@
  */
 
 import {Position, SourceLocation} from "@internal/parser-core";
-import {JSParser, OpeningContext} from "../parser";
+import {
+	JSParser,
+	OpeningContext,
+	addParenthesized,
+	assertNoSpace,
+	banUnicodeEscape,
+	canInsertSemicolon,
+	cloneNode,
+	createBranch,
+	createUnknownIdentifier,
+	eat,
+	expect,
+	expectClosing,
+	expectOpening,
+	getLastScope,
+	hasPrecedingLineBreak,
+	inScope,
+	isContextual,
+	isLineTerminator,
+	isParenthesized,
+	isRelational,
+	isSyntaxEnabled,
+	lookaheadState,
+	match,
+	next,
+	popScope,
+	pushScope,
+	resetStartLocationFromNode,
+	shouldTokenizeJSX,
+	tryBranch,
+	unexpectedDiagnostic,
+	unexpectedToken,
+} from "../parser";
 import {
 	NumberTokenValue,
 	RegExpTokenValue,
@@ -127,7 +159,7 @@ import {
 	ob1Number0Neg1,
 } from "@internal/ob1";
 import {splitFunctionParams} from "./statement";
-import {createRegExpParser} from "@internal/codec-js-regexp";
+import {parseRegExp} from "@internal/codec-js-regexp";
 import {descriptions} from "@internal/diagnostics";
 
 export function checkPropClash(
@@ -158,10 +190,13 @@ export function checkPropClash(
 
 	if (name === "__proto__") {
 		if (props.has("proto")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
-				loc: key.loc,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.PROTO_PROP_REDEFINITION,
+					loc: key.loc,
+				},
+			);
 		} else {
 			props.add("proto");
 		}
@@ -176,9 +211,9 @@ export function parseExpression(
 ): AnyJSExpression {
 	const startPos = parser.state.startPos;
 	const expr = parseMaybeAssign(parser, context, noIn, refShorthandDefaultPos);
-	if (parser.match(tt.comma)) {
+	if (match(parser, tt.comma)) {
 		let expressions: Array<AnyJSExpression> = [expr];
-		while (parser.eat(tt.comma)) {
+		while (eat(parser, tt.comma)) {
 			expressions.push(
 				parseMaybeAssign(parser, context, noIn, refShorthandDefaultPos),
 			);
@@ -205,12 +240,12 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 	afterLeftParse?: MaybeAssignAfterParse<T>,
 	refNeedsArrowPos?: IndexTracker,
 ): AnyJSExpression | T {
-	const branches = parser.createBranch<AnyJSExpression | T>();
+	const branches = createBranch<AnyJSExpression | T>(parser);
 
 	// Try parsing as JSX
 	if (
-		(parser.isRelational("<") || parser.match(tt.jsxTagStart)) &&
-		parser.shouldTokenizeJSX()
+		(isRelational(parser, "<") || match(parser, tt.jsxTagStart)) &&
+		shouldTokenizeJSX(parser)
 	) {
 		branches.add(
 			() => {
@@ -237,7 +272,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 	}
 
 	// Try parsing as an arrow function with type parameters
-	if (parser.isRelational("<")) {
+	if (isRelational(parser, "<")) {
 		branches.add(() => {
 			const start = parser.getPosition();
 			const typeParameters = parseTSTypeParameters(parser);
@@ -255,7 +290,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 					)
 				,
 			);
-			parser.resetStartLocationFromNode(possibleArrow, typeParameters);
+			resetStartLocationFromNode(parser, possibleArrow, typeParameters);
 
 			if (possibleArrow.type === "JSArrowFunctionExpression") {
 				// `as` cast for reasons... `possibleArrow` is `T | JSArrowFunctionExpression`
@@ -268,13 +303,16 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 					},
 				};
 			} else {
-				parser.unexpectedDiagnostic({
-					loc: typeParameters.loc,
-					description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: typeParameters.loc,
+						description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
+					},
+				);
 				return toReferenceIdentifier(
 					parser,
-					parser.createUnknownIdentifier("type params without arrow function"),
+					createUnknownIdentifier(parser, "type params without arrow function"),
 				);
 			}
 		});
@@ -310,8 +348,8 @@ function _parseMaybeAssign<T extends AnyNode>(
 ): AnyJSExpression | T {
 	const startPos = parser.state.startPos;
 
-	if (parser.isContextual("yield")) {
-		if (parser.inScope("GENERATOR")) {
+	if (isContextual(parser, "yield")) {
+		if (inScope(parser, "GENERATOR")) {
 			let left: T | AnyJSExpression = parseYield(parser, noIn);
 			if (afterLeftParse) {
 				left = afterLeftParse(parser, left, startPos);
@@ -335,7 +373,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 		failOnShorthandAssign = true;
 	}
 
-	if (parser.match(tt.parenL) || parser.match(tt.name)) {
+	if (match(parser, tt.parenL) || match(parser, tt.name)) {
 		parser.state.potentialArrowAt = parser.getIndex();
 	}
 
@@ -367,7 +405,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 		//}
 		parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
-		parser.next();
+		next(parser);
 		const right = parseMaybeAssign(parser, "assignment right", noIn);
 		return parser.finishNode(
 			startPos,
@@ -379,7 +417,8 @@ function _parseMaybeAssign<T extends AnyNode>(
 			},
 		);
 	} else if (failOnShorthandAssign && ob1Get0(refShorthandDefaultPos.index) > 0) {
-		parser.unexpectedToken(
+		unexpectedToken(
+			parser,
 			parser.getPositionFromIndex(refShorthandDefaultPos.index),
 		);
 	}
@@ -420,10 +459,10 @@ export function tryParseConditionalConsequent(
 	consequent: AnyJSExpression;
 	failed: boolean;
 } {
-	const brancher = parser.createBranch<{
+	const brancher = createBranch<{
 		consequent: AnyJSExpression;
 		failed: boolean;
-	}>();
+	}>(parser);
 
 	brancher.add(() => {
 		parser.state.noArrowParamsConversionAt.push(parser.getIndex());
@@ -431,7 +470,7 @@ export function tryParseConditionalConsequent(
 		parser.state.noArrowParamsConversionAt.pop();
 		return {
 			consequent,
-			failed: !parser.match(tt.colon),
+			failed: !match(parser, tt.colon),
 		};
 	});
 
@@ -445,7 +484,7 @@ export function parseConditional(
 	startPos: Position,
 	refNeedsArrowPos?: IndexTracker,
 ): AnyJSExpression {
-	if (!parser.match(tt.question)) {
+	if (!match(parser, tt.question)) {
 		return expr;
 	}
 
@@ -453,7 +492,7 @@ export function parseConditional(
 	// We'll be called due to the `?`, and we should mark ourselves as an
 	// expected arrow function if parsing as a regular conditional fails
 	if (refNeedsArrowPos) {
-		const branch = parser.createBranch<AnyJSExpression>();
+		const branch = createBranch<AnyJSExpression>(parser);
 
 		branch.add(
 			() => _parseConditional(parser, expr, noIn, startPos),
@@ -470,15 +509,18 @@ export function parseConditional(
 		}
 	}
 
-	parser.expect(tt.question);
+	expect(parser, tt.question);
 	const originalNoArrowAt = parser.state.noArrowAt;
 	let {consequent} = tryParseConditionalConsequent(parser);
 	parser.state.noArrowAt = originalNoArrowAt;
 
-	if (!parser.eat(tt.colon)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.MISSING_CONDITIONAL_SEPARATOR,
-		});
+	if (!eat(parser, tt.colon)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.MISSING_CONDITIONAL_SEPARATOR,
+			},
+		);
 	}
 
 	const alternate = forwardNoArrowParamsConversionAt(
@@ -533,10 +575,10 @@ function _parseConditional(
 	noIn: undefined | boolean,
 	startPos: Position,
 ): AnyJSExpression {
-	if (parser.eat(tt.question)) {
+	if (eat(parser, tt.question)) {
 		const test = expr;
 		const consequent = parseMaybeAssign(parser, "conditional consequent");
-		parser.expect(tt.colon);
+		expect(parser, tt.colon);
 		const alternate = parseMaybeAssign(parser, "conditional alternate", noIn);
 		return parser.finishNode(
 			startPos,
@@ -584,8 +626,8 @@ export function parseExpressionOp(
 ): AnyJSExpression {
 	if (
 		tt._in.getBinop() > minPrec &&
-		!parser.hasPrecedingLineBreak() &&
-		parser.isContextual("as")
+		!hasPrecedingLineBreak(parser) &&
+		isContextual(parser, "as")
 	) {
 		const _const = tryTSNextParseConstantContext(parser);
 
@@ -610,7 +652,7 @@ export function parseExpressionOp(
 	}
 
 	const prec = parser.state.tokenType.binop;
-	if (prec !== undefined && (!noIn || !parser.match(tt._in))) {
+	if (prec !== undefined && (!noIn || !match(parser, tt._in))) {
 		if (prec > minPrec) {
 			const operator = (String(parser.state.tokenValue) as
 				| BinaryOperator
@@ -619,16 +661,19 @@ export function parseExpressionOp(
 			if (
 				operator === "**" &&
 				left.type === "JSUnaryExpression" &&
-				!parser.isParenthesized(left)
+				!isParenthesized(parser, left)
 			) {
-				parser.unexpectedDiagnostic({
-					loc: left.argument.loc,
-					description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: left.argument.loc,
+						description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
+					},
+				);
 			}
 
 			const op = parser.state.tokenType;
-			parser.next();
+			next(parser);
 
 			const startPos = parser.state.startPos;
 
@@ -685,51 +730,58 @@ export function parseMaybeUnary(
 	refShorthandDefaultPos?: IndexTracker,
 ): AnyJSExpression {
 	if (
-		parser.isSyntaxEnabled("ts") &&
-		!parser.isSyntaxEnabled("jsx") &&
-		parser.isRelational("<")
+		isSyntaxEnabled(parser, "ts") &&
+		!isSyntaxEnabled(parser, "jsx") &&
+		isRelational(parser, "<")
 	) {
 		return parseTSTypeAssertion(parser);
 	}
 
-	if (parser.isContextual("await") && parser.inScope("ASYNC")) {
+	if (isContextual(parser, "await") && inScope(parser, "ASYNC")) {
 		return parseAwait(parser);
 	}
 
 	if (parser.state.tokenType.prefix) {
 		const start = parser.getPosition();
-		const update = parser.match(tt.incDec);
+		const update = match(parser, tt.incDec);
 		const operator = (String(parser.state.tokenValue) as
 			| UnaryOperator
 			| UpdateOperator);
 		const prefix = true;
 
-		parser.next();
+		next(parser);
 
 		const argument = parseMaybeUnary(parser, context);
 
 		if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
-			parser.unexpectedToken(
+			unexpectedToken(
+				parser,
 				parser.getPositionFromIndex(refShorthandDefaultPos.index),
 			);
 		}
 
 		if (update) {
 			checkLVal(parser, argument, undefined, undefined, "prefix operation");
-		} else if (parser.inScope("STRICT") && operator === "delete") {
+		} else if (inScope(parser, "STRICT") && operator === "delete") {
 			if (argument.type === "JSReferenceIdentifier") {
-				parser.unexpectedDiagnostic({
-					loc: argument.loc,
-					description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: argument.loc,
+						description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
+					},
+				);
 			} else if (
 				argument.type === "JSMemberExpression" &&
 				argument.property.value.type === "JSPrivateName"
 			) {
-				parser.unexpectedDiagnostic({
-					loc: argument.property.loc,
-					description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: argument.property.loc,
+						description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
+					},
+				);
 			}
 		}
 
@@ -778,10 +830,10 @@ export function parseMaybeUnary(
 		return expr;
 	}
 
-	while (parser.state.tokenType.postfix && !parser.canInsertSemicolon()) {
+	while (parser.state.tokenType.postfix && !canInsertSemicolon(parser)) {
 		const operator = (String(parser.state.tokenValue) as UpdateOperator);
 		checkLVal(parser, expr, undefined, undefined, "postfix operation");
-		parser.next();
+		next(parser);
 
 		const updateNode: JSUpdateExpression = parser.finishNode(
 			startPos,
@@ -838,7 +890,8 @@ export function parseSubscripts(
 		)
 	) {
 		const argsStart = parser.getPosition();
-		const openContext = parser.expectOpening(
+		const openContext = expectOpening(
+			parser,
 			tt.parenL,
 			tt.parenR,
 			"call arguments",
@@ -856,9 +909,9 @@ export function parseSubscripts(
 	} else if (
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
-		parser.isRelational("<")
+		isRelational(parser, "<")
 	) {
-		const branch = parser.createBranch<AnyJSExpression>();
+		const branch = createBranch<AnyJSExpression>(parser);
 		branch.add(() => parseAsyncArrowWithTypeParameters(parser, startPos));
 		branch.add(() =>
 			parseExpressionSubscriptsRecursively(
@@ -889,9 +942,12 @@ export function parseAsyncArrowWithTypeParameters(
 
 	const {returnType, valid} = parseArrowHead(parser);
 	if (!valid) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
+			},
+		);
 		return undefined;
 	}
 
@@ -952,9 +1008,9 @@ export function parseExpressionSubscript(
 	state: ParseSubscriptState,
 	maybeAsyncArrow: boolean,
 ): AnyJSExpression {
-	if (!parser.hasPrecedingLineBreak() && parser.match(tt.bang)) {
+	if (!hasPrecedingLineBreak(parser) && match(parser, tt.bang)) {
 		parser.state.exprAllowed = false;
-		parser.next();
+		next(parser);
 
 		return parser.finishNode(
 			startPos,
@@ -965,18 +1021,18 @@ export function parseExpressionSubscript(
 		);
 	}
 
-	if (parser.match(tt.questionDot)) {
+	if (match(parser, tt.questionDot)) {
 		state.optionalChainMember = true;
 
-		if (noCalls && parser.lookaheadState().tokenType === tt.parenL) {
+		if (noCalls && lookaheadState(parser).tokenType === tt.parenL) {
 			state.stop = true;
 			return base;
 		}
 
-		parser.next();
+		next(parser);
 
 		// eg: o.m?.<T>(e);
-		if (parser.isRelational("<")) {
+		if (isRelational(parser, "<")) {
 			if (noCalls) {
 				state.stop = true;
 				return base;
@@ -984,7 +1040,8 @@ export function parseExpressionSubscript(
 
 			const callee = base;
 			const typeArguments = parseTSTypeArguments(parser);
-			const openContext = parser.expectOpening(
+			const openContext = expectOpening(
+				parser,
 				tt.parenL,
 				tt.parenR,
 				"call arguments",
@@ -1001,9 +1058,10 @@ export function parseExpressionSubscript(
 			);
 		}
 
-		if (parser.match(tt.bracketL)) {
+		if (match(parser, tt.bracketL)) {
 			const propStart = parser.getPosition();
-			const openContext = parser.expectOpening(
+			const openContext = expectOpening(
+				parser,
 				tt.bracketL,
 				tt.bracketR,
 				"computed property",
@@ -1013,7 +1071,7 @@ export function parseExpressionSubscript(
 				parser,
 				"optional member expression property",
 			);
-			parser.expectClosing(openContext);
+			expectClosing(parser, openContext);
 			return parser.finishNode(
 				startPos,
 				{
@@ -1031,8 +1089,9 @@ export function parseExpressionSubscript(
 			);
 		}
 
-		if (parser.match(tt.parenL)) {
-			const openContext = parser.expectOpening(
+		if (match(parser, tt.parenL)) {
+			const openContext = expectOpening(
+				parser,
 				tt.parenL,
 				tt.parenR,
 				"call arguments",
@@ -1068,7 +1127,7 @@ export function parseExpressionSubscript(
 		);
 	}
 
-	if (parser.eat(tt.dot)) {
+	if (eat(parser, tt.dot)) {
 		const object = base;
 		const property = parseMaybePrivateName(parser);
 
@@ -1086,9 +1145,10 @@ export function parseExpressionSubscript(
 		);
 	}
 
-	if (parser.match(tt.bracketL)) {
+	if (match(parser, tt.bracketL)) {
 		const propStart = parser.getPosition();
-		const openContext = parser.expectOpening(
+		const openContext = expectOpening(
+			parser,
 			tt.bracketL,
 			tt.bracketR,
 			"computed property",
@@ -1098,7 +1158,7 @@ export function parseExpressionSubscript(
 			parser,
 			"member expression computed property",
 		);
-		parser.expectClosing(openContext);
+		expectClosing(parser, openContext);
 
 		return parser.finishNode(
 			startPos,
@@ -1117,49 +1177,57 @@ export function parseExpressionSubscript(
 	}
 
 	// Supports: foo<Foo>(); and foo<Foo>``;
-	if (parser.isRelational("<") && parser.isSyntaxEnabled("ts")) {
-		const possibleCallExpression = parser.tryBranch(() => {
-			const typeArguments = parseTSTypeArguments(parser);
+	if (isRelational(parser, "<") && isSyntaxEnabled(parser, "ts")) {
+		const possibleCallExpression = tryBranch(
+			parser,
+			() => {
+				const typeArguments = parseTSTypeArguments(parser);
 
-			if (!noCalls && parser.match(tt.parenL)) {
-				const argsStart = parser.getPosition();
-				const openContext = parser.expectOpening(
-					tt.parenL,
-					tt.parenR,
-					"call arguments",
-				);
-				const {args} = parseCallExpressionArguments(parser, openContext, false);
-				const node: JSCallExpression = parser.finishNodeWithStarts(
-					[argsStart, startPos],
-					{
-						type: "JSCallExpression",
-						arguments: args,
-						callee: base,
+				if (!noCalls && match(parser, tt.parenL)) {
+					const argsStart = parser.getPosition();
+					const openContext = expectOpening(
+						parser,
+						tt.parenL,
+						tt.parenR,
+						"call arguments",
+					);
+					const {args} = parseCallExpressionArguments(
+						parser,
+						openContext,
+						false,
+					);
+					const node: JSCallExpression = parser.finishNodeWithStarts(
+						[argsStart, startPos],
+						{
+							type: "JSCallExpression",
+							arguments: args,
+							callee: base,
+							typeArguments,
+						},
+					);
+					return node;
+				}
+
+				if (match(parser, tt.backQuote)) {
+					return parseTaggedTemplateExpression(
+						parser,
+						startPos,
+						base,
+						state,
 						typeArguments,
-					},
-				);
-				return node;
-			}
+					);
+				}
 
-			if (parser.match(tt.backQuote)) {
-				return parseTaggedTemplateExpression(
-					parser,
-					startPos,
-					base,
-					state,
-					typeArguments,
-				);
-			}
-
-			return undefined;
-		});
+				return undefined;
+			},
+		);
 
 		if (possibleCallExpression !== undefined) {
 			return possibleCallExpression;
 		}
 	}
 
-	if (!noCalls && parser.match(tt.parenL)) {
+	if (!noCalls && match(parser, tt.parenL)) {
 		const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
 		const oldYieldPos = parser.state.yieldPos;
 		const oldAwaitPos = parser.state.awaitPos;
@@ -1168,7 +1236,8 @@ export function parseExpressionSubscript(
 		parser.state.awaitPos = ob1Number0;
 
 		const argsStart = parser.getPosition();
-		const openContext = parser.expectOpening(
+		const openContext = expectOpening(
+			parser,
 			tt.parenL,
 			tt.parenR,
 			"call arguments",
@@ -1223,7 +1292,7 @@ export function parseExpressionSubscript(
 		);
 	}
 
-	if (parser.match(tt.backQuote)) {
+	if (match(parser, tt.backQuote)) {
 		return parseTaggedTemplateExpression(parser, startPos, base, state);
 	}
 
@@ -1239,9 +1308,12 @@ export function parseTaggedTemplateExpression(
 	typeArguments?: TSTypeParameterInstantiation,
 ): JSTaggedTemplateExpression {
 	if (state.optionalChainMember) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.TAGGED_TEMPLATE_IN_OPTIONAL_CHAIN,
+			},
+		);
 	}
 
 	const quasi = parseTemplate(parser, true);
@@ -1262,17 +1334,23 @@ export function checkYieldAwaitInDefaultParams(parser: JSParser) {
 		(parser.state.awaitPos === ob1Number0 ||
 		parser.state.yieldPos < parser.state.awaitPos)
 	) {
-		parser.unexpectedDiagnostic({
-			index: parser.state.yieldPos,
-			description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				index: parser.state.yieldPos,
+				description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
+			},
+		);
 	}
 
 	if (ob1Get0(parser.state.awaitPos) > 0) {
-		parser.unexpectedDiagnostic({
-			index: parser.state.awaitPos,
-			description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				index: parser.state.awaitPos,
+				description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
+			},
+		);
 	}
 }
 
@@ -1286,7 +1364,7 @@ export function atPossibleAsync(
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
 		parser.state.lastEndIndex === end &&
-		!parser.canInsertSemicolon() &&
+		!canInsertSemicolon(parser) &&
 		parser.getRawInput(start, end) === "async"
 	);
 }
@@ -1315,25 +1393,25 @@ export function parseCallExpressionArguments(
 	let forceAsyncArrow = false;
 
 	while (true) {
-		if (parser.match(openContext.close) || parser.match(tt.eof)) {
-			parser.expectClosing(openContext);
+		if (match(parser, openContext.close) || match(parser, tt.eof)) {
+			expectClosing(parser, openContext);
 			break;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			if (!parser.expect(tt.comma)) {
+			if (!expect(parser, tt.comma)) {
 				break;
 			}
 
-			if (parser.eat(openContext.close)) {
+			if (eat(parser, openContext.close)) {
 				break;
 			}
 		}
 
 		// we need to make sure that if this is an async arrow functions, that we don't allow inner parens inside the params
-		if (parser.match(tt.parenL) && !innerParenStart) {
+		if (match(parser, tt.parenL) && !innerParenStart) {
 			innerParenStart = parser.state.startPos;
 		}
 
@@ -1361,10 +1439,13 @@ export function parseCallExpressionArguments(
 
 				funcParams.push(elt);
 			} else {
-				parser.unexpectedDiagnostic({
-					description: descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
-					loc: elt.loc,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						description: descriptions.JS_PARSER.CONFUSING_CALL_ARGUMENT,
+						loc: elt.loc,
+					},
+				);
 			}
 			continue;
 		}
@@ -1377,9 +1458,12 @@ export function parseCallExpressionArguments(
 	}
 
 	if (forceAsyncArrow && !shouldParseAsyncArrow(parser)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
+			},
+		);
 	}
 
 	// we found an async arrow function so let's not allow any inner parens
@@ -1388,10 +1472,13 @@ export function parseCallExpressionArguments(
 		innerParenStart !== undefined &&
 		shouldParseAsyncArrow(parser)
 	) {
-		parser.unexpectedDiagnostic({
-			start: innerParenStart,
-			description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				start: innerParenStart,
+				description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
+			},
+		);
 	}
 
 	return {
@@ -1402,8 +1489,8 @@ export function parseCallExpressionArguments(
 
 export function shouldParseAsyncArrow(parser: JSParser): boolean {
 	return (
-		parser.match(tt.colon) ||
-		(parser.match(tt.arrow) && !parser.canInsertSemicolon())
+		match(parser, tt.colon) ||
+		(match(parser, tt.arrow) && !canInsertSemicolon(parser))
 	);
 }
 
@@ -1416,7 +1503,7 @@ export function parseAsyncArrowFromCallExpression(
 ): JSArrowFunctionExpression {
 	let returnType;
 
-	if (parser.match(tt.colon)) {
+	if (match(parser, tt.colon)) {
 		const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
 		parser.state.noAnonFunctionType = true;
 		returnType = parseTSTypeAnnotation(parser, true);
@@ -1425,7 +1512,7 @@ export function parseAsyncArrowFromCallExpression(
 
 	const oldYield = parser.state.yieldInPossibleArrowParameters;
 	parser.state.yieldInPossibleArrowParameters = undefined;
-	parser.expect(tt.arrow);
+	expect(parser, tt.arrow);
 	const node = parseArrowExpression(
 		parser,
 		start,
@@ -1528,7 +1615,7 @@ export function parseExpressionAtom(
 
 	// We don't want to match <! as it's the start of a HTML comment
 	if (
-		parser.isRelational("<") &&
+		isRelational(parser, "<") &&
 		parser.input.charCodeAt(ob1Get0(parser.state.index)) !==
 		charCodes.exclamationMark
 	) {
@@ -1550,7 +1637,7 @@ export function parseExpressionAtom(
 
 		case tt._this: {
 			const start = parser.getPosition();
-			parser.next();
+			next(parser);
 			return parser.finishNode(start, {type: "JSThisExpression"});
 		}
 
@@ -1562,10 +1649,10 @@ export function parseExpressionAtom(
 			if (
 				!containsEsc &&
 				id.name === "async" &&
-				parser.match(tt._function) &&
-				!parser.canInsertSemicolon()
+				match(parser, tt._function) &&
+				!canInsertSemicolon(parser)
 			) {
-				parser.next();
+				next(parser);
 				return parseFunctionExpression(parser, start, true);
 			}
 
@@ -1573,12 +1660,12 @@ export function parseExpressionAtom(
 				canBeArrow &&
 				!containsEsc &&
 				id.name === "async" &&
-				parser.match(tt.name)
+				match(parser, tt.name)
 			) {
 				const oldYield = parser.state.yieldInPossibleArrowParameters;
 				parser.state.yieldInPossibleArrowParameters = undefined;
 				const params = [parseReferenceIdentifier(parser)];
-				parser.expect(tt.arrow);
+				expect(parser, tt.arrow);
 				// let foo = bar => {};
 				const node = parseArrowExpression(
 					parser,
@@ -1592,7 +1679,7 @@ export function parseExpressionAtom(
 				return node;
 			}
 
-			if (canBeArrow && !parser.canInsertSemicolon() && parser.eat(tt.arrow)) {
+			if (canBeArrow && !canInsertSemicolon(parser) && eat(parser, tt.arrow)) {
 				const oldYield = parser.state.yieldInPossibleArrowParameters;
 				parser.state.yieldInPossibleArrowParameters = undefined;
 				const node = parseArrowExpression(
@@ -1656,15 +1743,18 @@ export function parseExpressionAtom(
 
 		default: {
 			const start = parser.getPosition();
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
-					context,
-				),
-			});
-			parser.next();
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
+						context,
+					),
+				},
+			);
+			next(parser);
 			return toReferenceIdentifier(
 				parser,
-				parser.createUnknownIdentifier(context, start),
+				createUnknownIdentifier(parser, context, start),
 			);
 		}
 	}
@@ -1672,8 +1762,8 @@ export function parseExpressionAtom(
 
 export function parseBooleanLiteral(parser: JSParser): JSBooleanLiteral {
 	const start = parser.getPosition();
-	const value = parser.match(tt._true);
-	parser.next();
+	const value = match(parser, tt._true);
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -1686,12 +1776,12 @@ export function parseBooleanLiteral(parser: JSParser): JSBooleanLiteral {
 export function parseMaybePrivateName(
 	parser: JSParser,
 ): JSPrivateName | JSIdentifier {
-	const isPrivate = parser.match(tt.hash);
+	const isPrivate = match(parser, tt.hash);
 
 	if (isPrivate) {
 		const start = parser.getPosition();
-		parser.next();
-		parser.assertNoSpace(descriptions.JS_PARSER.SPACE_BETWEEN_PRIVATE_HASH);
+		next(parser);
+		assertNoSpace(parser, descriptions.JS_PARSER.SPACE_BETWEEN_PRIVATE_HASH);
 		const id = parseIdentifier(parser, true);
 		return parser.finishNode(
 			start,
@@ -1709,7 +1799,7 @@ export function parseFunctionExpressionOrMetaProperty(
 	parser: JSParser,
 ): JSFunctionExpression | JSMetaProperty {
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 
 	// We do not do parseIdentifier here because when parseFunctionExpressionOrMetaProperty
 
@@ -1722,7 +1812,7 @@ export function parseFunctionExpressionOrMetaProperty(
 	// if "function" or "class" is parsed as identifier (in objects e.g.), which should not happen here.
 	const meta = createIdentifier(parser, start, "function");
 
-	if (parser.inScope("GENERATOR") && parser.eat(tt.dot)) {
+	if (inScope(parser, "GENERATOR") && eat(parser, tt.dot)) {
 		return parseMetaProperty(parser, start, meta, "sent");
 	}
 
@@ -1744,25 +1834,28 @@ export function parseMetaProperty(
 	if (
 		meta.name === "function" &&
 		propertyName === "sent" &&
-		!parser.isContextual(propertyName)
+		!isContextual(parser, propertyName)
 	) {
 		// They didn't actually say `function.sent`, just `function.`, so a simple error would be less confusing.
-		parser.unexpectedToken();
+		unexpectedToken(parser);
 	}
 
 	const escapePosition = parser.state.escapePosition;
 	const property = parseIdentifier(parser, true);
 
 	if (property.name === propertyName) {
-		parser.banUnicodeEscape(escapePosition, propertyName);
+		banUnicodeEscape(parser, escapePosition, propertyName);
 	} else {
-		parser.unexpectedDiagnostic({
-			loc: property.loc,
-			description: descriptions.JS_PARSER.INVALID_META_PROPERTY(
-				meta.name,
-				propertyName,
-			),
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: property.loc,
+				description: descriptions.JS_PARSER.INVALID_META_PROPERTY(
+					meta.name,
+					propertyName,
+				),
+			},
+		);
 	}
 
 	return parser.finishNode(
@@ -1778,14 +1871,17 @@ export function parseMetaProperty(
 export function parseImportMetaProperty(parser: JSParser): JSMetaProperty {
 	const start = parser.getPosition();
 	const id = parseIdentifier(parser, true);
-	parser.expect(tt.dot);
+	expect(parser, tt.dot);
 	const node = parseMetaProperty(parser, start, id, "meta");
 
-	if (!parser.inModule) {
-		parser.unexpectedDiagnostic({
-			loc: node.loc,
-			description: descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
-		});
+	if (!parser.meta.inModule) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: node.loc,
+				description: descriptions.JS_PARSER.IMPORT_META_OUTSIDE_MODULE,
+			},
+		);
 	}
 
 	return node;
@@ -1795,9 +1891,9 @@ export function parseParenExpression(
 	parser: JSParser,
 	context: ExpressionContext,
 ): AnyJSExpression {
-	const openContext = parser.expectOpening(tt.parenL, tt.parenR, context);
+	const openContext = expectOpening(parser, tt.parenL, tt.parenR, context);
 	const val = parseExpression(parser, context);
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 	return val;
 }
 
@@ -1813,7 +1909,8 @@ export function parseParenAndDistinguishExpression(
 		canBeArrow = false;
 	}
 
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.parenL,
 		tt.parenR,
 		"paren expression",
@@ -1836,12 +1933,13 @@ export function parseParenAndDistinguishExpression(
 	let spreadStart;
 	let optionalCommaStart;
 
-	while (!parser.match(tt.parenR)) {
+	while (!match(parser, tt.parenR)) {
 		if (first) {
 			first = false;
 		} else {
 			if (
-				!parser.expect(
+				!expect(
+					parser,
 					tt.comma,
 					refNeedsArrowPos.index === ob1Number0
 						? undefined
@@ -1851,13 +1949,13 @@ export function parseParenAndDistinguishExpression(
 				break;
 			}
 
-			if (parser.match(tt.parenR)) {
+			if (match(parser, tt.parenR)) {
 				optionalCommaStart = parser.state.startPos;
 				break;
 			}
 		}
 
-		if (parser.match(tt.ellipsis)) {
+		if (match(parser, tt.ellipsis)) {
 			const spreadNodeStartPos = parser.state.startPos;
 			spreadStart = parser.state.startPos;
 			exprList.push(
@@ -1865,11 +1963,11 @@ export function parseParenAndDistinguishExpression(
 			);
 
 			if (
-				parser.match(tt.comma) &&
-				parser.lookaheadState().tokenType === tt.parenR
+				match(parser, tt.comma) &&
+				lookaheadState(parser).tokenType === tt.parenR
 			) {
 				raiseRestNotLast(parser);
-				parser.eat(tt.comma);
+				eat(parser, tt.comma);
 			}
 		} else {
 			exprList.push(
@@ -1886,7 +1984,7 @@ export function parseParenAndDistinguishExpression(
 	}
 
 	const innerEnd = parser.getPosition();
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 
@@ -1899,11 +1997,14 @@ export function parseParenAndDistinguishExpression(
 			parser.state.awaitPos = oldAwaitPos;
 
 			for (const param of exprList) {
-				if (parser.isParenthesized(param)) {
-					parser.unexpectedDiagnostic({
-						loc: param.loc,
-						description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
-					});
+				if (isParenthesized(parser, param)) {
+					unexpectedDiagnostic(
+						parser,
+						{
+							loc: param.loc,
+							description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
+						},
+					);
 				}
 			}
 
@@ -1934,16 +2035,20 @@ export function parseParenAndDistinguishExpression(
 	parser.state.awaitPos = oldAwaitPos || parser.state.awaitPos;
 
 	if (exprList.length === 0) {
-		parser.unexpectedDiagnostic({
-			start: innerStart,
-			end: innerEnd,
-			description: descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				start: innerStart,
+				end: innerEnd,
+				description: descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
+			},
+		);
 
 		exprList.push(
 			toReferenceIdentifier(
 				parser,
-				parser.createUnknownIdentifier(
+				createUnknownIdentifier(
+					parser,
 					"empty parenthesized expression",
 					innerStart,
 					innerEnd,
@@ -1953,21 +2058,22 @@ export function parseParenAndDistinguishExpression(
 	}
 
 	if (optionalCommaStart !== undefined) {
-		parser.unexpectedToken(optionalCommaStart);
+		unexpectedToken(parser, optionalCommaStart);
 	}
 
 	if (spreadStart !== undefined) {
-		parser.unexpectedToken(spreadStart);
+		unexpectedToken(parser, spreadStart);
 	}
 
 	if (ob1Get0(refShorthandDefaultPos.index) > 0) {
-		parser.unexpectedToken(
+		unexpectedToken(
+			parser,
 			parser.getPositionFromIndex(refShorthandDefaultPos.index),
 		);
 	}
 
 	if (ob1Get0(refNeedsArrowPos.index) > 0) {
-		parser.unexpectedToken(parser.getPositionFromIndex(refNeedsArrowPos.index));
+		unexpectedToken(parser, parser.getPositionFromIndex(refNeedsArrowPos.index));
 	}
 
 	const filterList = filterSpread(
@@ -1987,13 +2093,13 @@ export function parseParenAndDistinguishExpression(
 		);
 	}
 
-	parser.addParenthesized(val);
+	addParenthesized(parser, val);
 
 	return val;
 }
 
 export function shouldParseArrow(parser: JSParser): boolean {
-	return parser.match(tt.colon) || !parser.canInsertSemicolon();
+	return match(parser, tt.colon) || !canInsertSemicolon(parser);
 }
 
 export function parseArrowHead(
@@ -2002,21 +2108,21 @@ export function parseArrowHead(
 	valid: boolean;
 	returnType: undefined | AnyTSPrimary;
 } {
-	if (parser.match(tt.colon)) {
+	if (match(parser, tt.colon)) {
 		const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
 		parser.state.noAnonFunctionType = true;
 
-		const branch = parser.createBranch<undefined | AnyTSPrimary>();
+		const branch = createBranch<undefined | AnyTSPrimary>(parser);
 
 		branch.add(() => {
 			const res = parseTSTypeOrTypePredicateAnnotation(parser, tt.colon);
 
-			if (parser.canInsertSemicolon()) {
+			if (canInsertSemicolon(parser)) {
 				// No semicolon insertion expected
 				return undefined;
 			}
 
-			if (parser.eat(tt.arrow)) {
+			if (eat(parser, tt.arrow)) {
 				return res;
 			}
 
@@ -2046,7 +2152,7 @@ export function parseArrowHead(
 		}
 	} else {
 		return {
-			valid: parser.eat(tt.arrow),
+			valid: eat(parser, tt.arrow),
 			returnType: undefined,
 		};
 	}
@@ -2059,11 +2165,11 @@ export function parseParenItem(
 	startPos: Position,
 ): ToReferencedItem {
 	let optional: undefined | boolean = undefined;
-	if (parser.eat(tt.question)) {
+	if (eat(parser, tt.question)) {
 		optional = true;
 	}
 
-	if (parser.match(tt.colon)) {
+	if (match(parser, tt.colon)) {
 		const typeAnnotation = parseTSTypeAnnotation(parser, true);
 		return parser.finishNode(
 			startPos,
@@ -2095,17 +2201,20 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 	const start = parser.getPosition();
 	const meta = parseIdentifier(parser, true);
 
-	if (parser.eat(tt.dot)) {
+	if (eat(parser, tt.dot)) {
 		const metaProp = parseMetaProperty(parser, start, meta, "target");
 
 		if (
-			!parser.inScope("NON_ARROW_FUNCTION") &&
-			!parser.inScope("CLASS_PROPERTY")
+			!inScope(parser, "NON_ARROW_FUNCTION") &&
+			!inScope(parser, "CLASS_PROPERTY")
 		) {
-			parser.unexpectedDiagnostic({
-				loc: metaProp.loc,
-				description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: metaProp.loc,
+					description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
+				},
+			);
 		}
 
 		return metaProp;
@@ -2114,40 +2223,50 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 	const callee = parseNoCallExpr(parser, "new callee");
 
 	if (callee.type === "JSImportCall") {
-		parser.unexpectedDiagnostic({
-			loc: callee.loc,
-			description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: callee.loc,
+				description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
+			},
+		);
 	}
 
 	const optionalMember = getFirstOptionalChainMember(callee);
 	if (optionalMember !== undefined) {
 		const memberLoc = parser.getLoc(optionalMember);
 
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(memberLoc),
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(memberLoc),
+			},
+		);
 	}
 
-	if (parser.eat(tt.questionDot)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(),
-		});
+	if (eat(parser, tt.questionDot)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.NEW_IN_OPTIONAL_CHAIN(),
+			},
+		);
 	}
 
 	let optional = undefined;
-	if (parser.eat(tt.questionDot)) {
+	if (eat(parser, tt.questionDot)) {
 		optional = true;
 	}
 
 	let typeArguments = undefined;
-	if (parser.isSyntaxEnabled("ts") && parser.isRelational("<")) {
-		typeArguments = parser.tryBranch(parseTSTypeArguments);
+	if (isSyntaxEnabled(parser, "ts") && isRelational(parser, "<")) {
+		typeArguments = tryBranch(parser, parseTSTypeArguments);
 	}
 
 	let args: Array<AnyJSExpression | JSSpreadElement> = [];
-	if (parser.match(tt.parenL)) {
-		const openContext = parser.expectOpening(
+	if (match(parser, tt.parenL)) {
+		const openContext = expectOpening(
+			parser,
 			tt.parenL,
 			tt.parenR,
 			"new argument",
@@ -2158,10 +2277,13 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 			openContext,
 		);
 		args = toReferencedList(parser, args);
-	} else if (parser.isSyntaxEnabled("ts") && typeArguments !== undefined) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
-		});
+	} else if (isSyntaxEnabled(parser, "ts") && typeArguments !== undefined) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
+			},
+		);
 	}
 
 	return parser.finishNode(
@@ -2208,10 +2330,13 @@ export function parseTemplateElement(
 		if (isTagged) {
 			parser.state.invalidTemplateEscapePosition = undefined;
 		} else {
-			parser.unexpectedDiagnostic({
-				index: parser.state.invalidTemplateEscapePosition,
-				description: descriptions.JS_PARSER.INVALID_TEMPLATE_ESCAPE,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					index: parser.state.invalidTemplateEscapePosition,
+					description: descriptions.JS_PARSER.INVALID_TEMPLATE_ESCAPE,
+				},
+			);
 		}
 	}
 
@@ -2221,8 +2346,8 @@ export function parseTemplateElement(
 	);
 	const cooked = tokenValue === undefined ? raw : String(tokenValue);
 
-	parser.next();
-	const tail = parser.match(tt.backQuote);
+	next(parser);
+	const tail = match(parser, tt.backQuote);
 	return parser.finishNode(
 		start,
 		{
@@ -2239,7 +2364,8 @@ export function parseTemplate(
 	isTagged: boolean,
 ): JSTemplateLiteral {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.backQuote,
 		tt.backQuote,
 		"template literal",
@@ -2249,23 +2375,24 @@ export function parseTemplate(
 	const quasis = [curElt];
 
 	while (true) {
-		if (parser.match(tt.eof) || curElt.tail === true) {
+		if (match(parser, tt.eof) || curElt.tail === true) {
 			break;
 		}
 
-		const exprPpenContext = parser.expectOpening(
+		const exprPpenContext = expectOpening(
+			parser,
 			tt.dollarBraceL,
 			tt.braceR,
 			"template expression value",
 		);
 		expressions.push(parseExpression(parser, "template expression value"));
-		parser.expectClosing(exprPpenContext);
+		expectClosing(parser, exprPpenContext);
 
 		curElt = parseTemplateElement(parser, isTagged);
 		quasis.push(curElt);
 	}
 
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	return parser.finishNode(
 		start,
@@ -2287,27 +2414,27 @@ export function parseObjectExpression(
 	const start = parser.getPosition();
 	const properties = [];
 
-	const openContext = parser.expectOpening(tt.braceL, tt.braceR, "object");
+	const openContext = expectOpening(parser, tt.braceL, tt.braceR, "object");
 
 	while (true) {
-		if (parser.match(tt.braceR) || parser.match(tt.eof)) {
-			parser.expectClosing(openContext);
+		if (match(parser, tt.braceR) || match(parser, tt.eof)) {
+			expectClosing(parser, openContext);
 			break;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			if (!parser.expect(tt.comma)) {
+			if (!expect(parser, tt.comma)) {
 				break;
 			}
 
-			if (parser.eat(tt.braceR)) {
+			if (eat(parser, tt.braceR)) {
 				break;
 			}
 		}
 
-		if (parser.match(tt.ellipsis)) {
+		if (match(parser, tt.ellipsis)) {
 			const prop: JSSpreadProperty = {
 				...parseSpread(parser),
 				type: "JSSpreadProperty",
@@ -2317,24 +2444,24 @@ export function parseObjectExpression(
 		}
 
 		const start = parser.getPosition();
-		let isGenerator = parser.eat(tt.star);
+		let isGenerator = eat(parser, tt.star);
 		let isAsync = false;
 
 		let key: JSStaticPropertyKey | JSComputedPropertyKey;
 		let escapePosition;
 
-		if (parser.isContextual("async")) {
+		if (isContextual(parser, "async")) {
 			if (isGenerator) {
-				parser.unexpectedToken();
+				unexpectedToken(parser);
 			}
 
 			const asyncId = parseIdentifier(parser);
 			if (
-				parser.match(tt.colon) ||
-				parser.match(tt.parenL) ||
-				parser.match(tt.braceR) ||
-				parser.match(tt.eq) ||
-				parser.match(tt.comma)
+				match(parser, tt.colon) ||
+				match(parser, tt.parenL) ||
+				match(parser, tt.braceR) ||
+				match(parser, tt.eq) ||
+				match(parser, tt.comma)
 			) {
 				key = {
 					type: "JSStaticPropertyKey",
@@ -2342,15 +2469,18 @@ export function parseObjectExpression(
 					value: asyncId,
 				};
 			} else {
-				if (parser.hasPrecedingLineBreak()) {
-					parser.unexpectedDiagnostic({
-						description: descriptions.JS_PARSER.ASYNC_OBJECT_METHOD_LINE_BREAK,
-					});
+				if (hasPrecedingLineBreak(parser)) {
+					unexpectedDiagnostic(
+						parser,
+						{
+							description: descriptions.JS_PARSER.ASYNC_OBJECT_METHOD_LINE_BREAK,
+						},
+					);
 				}
 
 				isAsync = true;
-				if (parser.match(tt.star)) {
-					parser.next();
+				if (match(parser, tt.star)) {
+					next(parser);
 					isGenerator = true;
 				}
 				escapePosition = parser.state.escapePosition;
@@ -2404,7 +2534,8 @@ export function parseObjectPattern(
 	const properties: Array<JSBindingObjectPatternProperty> = [];
 	let rest: undefined | JSBindingIdentifier;
 
-	const openContext = parser.expectOpening(
+	const openContext = expectOpening(
+		parser,
 		tt.braceL,
 		tt.braceR,
 		"object pattern",
@@ -2413,16 +2544,16 @@ export function parseObjectPattern(
 	let firstRestLocation = undefined;
 
 	while (true) {
-		if (parser.match(tt.eof) || parser.match(tt.braceR)) {
+		if (match(parser, tt.eof) || match(parser, tt.braceR)) {
 			break;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			parser.expect(tt.comma);
+			expect(parser, tt.comma);
 
-			if (parser.match(tt.eof) || parser.match(tt.braceR)) {
+			if (match(parser, tt.eof) || match(parser, tt.braceR)) {
 				break;
 			}
 		}
@@ -2431,29 +2562,35 @@ export function parseObjectPattern(
 		let isAsync = false;
 		let start = parser.getPosition();
 
-		if (parser.eat(tt.ellipsis)) {
+		if (eat(parser, tt.ellipsis)) {
 			const argument = parseBindingIdentifier(parser);
 			rest = argument;
 
 			if (firstRestLocation !== undefined) {
-				parser.unexpectedDiagnostic({
-					loc: argument.loc,
-					description: descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: argument.loc,
+						description: descriptions.JS_PARSER.MULTIPLE_DESTRUCTURING_RESTS,
+					},
+				);
 			}
 
-			if (parser.match(tt.braceR) || parser.match(tt.eof)) {
+			if (match(parser, tt.braceR) || match(parser, tt.eof)) {
 				break;
 			}
 
 			if (
-				parser.match(tt.comma) &&
-				parser.lookaheadState().tokenType === tt.braceR
+				match(parser, tt.comma) &&
+				lookaheadState(parser).tokenType === tt.braceR
 			) {
-				parser.unexpectedDiagnostic({
-					description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
-				});
-				parser.eat(tt.comma);
+				unexpectedDiagnostic(
+					parser,
+					{
+						description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
+					},
+				);
+				eat(parser, tt.comma);
 				break;
 			} else {
 				firstRestLocation = argument.loc;
@@ -2484,17 +2621,20 @@ export function parseObjectPattern(
 		checkPropClash(parser, prop, propHash);
 
 		if (prop.type !== "JSBindingObjectPatternProperty") {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
-				loc: prop.loc,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.INVALID_OBJECT_PATTERN_PROP,
+					loc: prop.loc,
+				},
+			);
 			continue;
 		}
 
 		properties.push(prop);
 	}
 
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	if (firstRestLocation !== undefined) {
 		raiseRestNotLast(parser, firstRestLocation);
@@ -2522,13 +2662,13 @@ export function isGetterOrSetterMethod(
 		key.type === "JSStaticPropertyKey" &&
 		keyVal.type === "JSIdentifier" &&
 		(keyVal.name === "get" || keyVal.name === "set") &&
-		(parser.match(tt.string) ||
+		(match(parser, tt.string) ||
 		// get "string"() {}
-		parser.match(tt.num) ||
+		match(parser, tt.num) ||
 		// get 1() {}
-		parser.match(tt.bracketL) ||
+		match(parser, tt.bracketL) ||
 		// get ["string"]() {}
-		parser.match(tt.name) ||
+		match(parser, tt.name) ||
 		// get foo() {}
 		!!parser.state.tokenType.keyword) // get debugger() {}
 	);
@@ -2550,22 +2690,31 @@ export function checkGetterSetterParamCount(
 
 	if (kind === "get") {
 		if (head.rest !== undefined || head.params.length !== 0) {
-			parser.unexpectedDiagnostic({
-				loc: method.loc,
-				description: descriptions.JS_PARSER.GETTER_WITH_PARAMS,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: method.loc,
+					description: descriptions.JS_PARSER.GETTER_WITH_PARAMS,
+				},
+			);
 		}
 	} else if (kind === "set") {
 		if (head.rest !== undefined) {
-			parser.unexpectedDiagnostic({
-				loc: head.rest.loc,
-				description: descriptions.JS_PARSER.SETTER_WITH_REST,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: head.rest.loc,
+					description: descriptions.JS_PARSER.SETTER_WITH_REST,
+				},
+			);
 		} else if (head.params.length !== 1) {
-			parser.unexpectedDiagnostic({
-				loc: method.loc,
-				description: descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: method.loc,
+					description: descriptions.JS_PARSER.SETTER_NOT_ONE_PARAM,
+				},
+			);
 		}
 	}
 }
@@ -2590,11 +2739,14 @@ export function parseObjectMethod(
 		escapePosition,
 	}: ParseObjectMethodOpts,
 ): undefined | JSObjectMethod {
-	if (isAsync || isGenerator || parser.match(tt.parenL)) {
+	if (isAsync || isGenerator || match(parser, tt.parenL)) {
 		if (isPattern) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.OBJECT_METHOD_IN_PATTERN,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.OBJECT_METHOD_IN_PATTERN,
+				},
+			);
 		}
 
 		const partial = parseMethod(
@@ -2627,15 +2779,21 @@ export function parseObjectMethod(
 
 	if (isGetterOrSetterMethod(parser, key, key.value, isPattern)) {
 		if (isAsync) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.ASYNC_GETTER_SETTER,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.ASYNC_GETTER_SETTER,
+				},
+			);
 		}
 
 		if (isGenerator) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.JS_PARSER.GENERATOR_GETTER_SETTER,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					description: descriptions.JS_PARSER.GENERATOR_GETTER_SETTER,
+				},
+			);
 		}
 
 		const kind = key.value.name;
@@ -2644,7 +2802,7 @@ export function parseObjectMethod(
 				"Name should be get or set as we already validated it as such",
 			);
 		}
-		parser.banUnicodeEscape(escapePosition, kind);
+		banUnicodeEscape(parser, escapePosition, kind);
 
 		const newKey = parseObjectPropertyKey(parser);
 
@@ -2688,7 +2846,7 @@ export function parseObjectProperty(
 	isPattern: boolean,
 	refShorthandDefaultPos: undefined | IndexTracker,
 ): undefined | JSObjectProperty | JSBindingObjectPatternProperty {
-	if (parser.eat(tt.colon)) {
+	if (eat(parser, tt.colon)) {
 		if (isPattern) {
 			const value = parseMaybeDefault(parser);
 			return parser.finishNode(
@@ -2729,10 +2887,10 @@ export function parseObjectProperty(
 		if (isPattern) {
 			let value: AnyJSBindingPattern = toBindingIdentifier(
 				parser,
-				parser.cloneNode(key.value),
+				cloneNode(parser, key.value),
 			);
 
-			if (parser.match(tt.eq) && refShorthandDefaultPos) {
+			if (match(parser, tt.eq) && refShorthandDefaultPos) {
 				if (refShorthandDefaultPos.index === ob1Number0) {
 					refShorthandDefaultPos.index = parser.getIndex();
 				}
@@ -2755,7 +2913,7 @@ export function parseObjectProperty(
 			{
 				type: "JSObjectProperty",
 				key,
-				value: toReferenceIdentifier(parser, parser.cloneNode(key.value)),
+				value: toReferenceIdentifier(parser, cloneNode(parser, key.value)),
 			},
 		);
 	}
@@ -2791,8 +2949,8 @@ export function parseObjectPropertyValue(
 	| JSBindingObjectPatternProperty {
 	// parse type parameters for object method shorthand
 	let typeParameters = maybeParseTSTypeParameters(parser);
-	if (typeParameters !== undefined && !parser.match(tt.parenL)) {
-		parser.unexpectedToken();
+	if (typeParameters !== undefined && !match(parser, tt.parenL)) {
+		unexpectedToken(parser);
 	}
 
 	let node:
@@ -2814,7 +2972,7 @@ export function parseObjectPropertyValue(
 		parseObjectProperty(parser, key, start, isPattern, refShorthandDefaultPos);
 
 	if (node === undefined) {
-		parser.unexpectedToken();
+		unexpectedToken(parser);
 		return undefined;
 	}
 
@@ -2825,10 +2983,13 @@ export function parseObjectPropertyValue(
 			node.type === "JSObjectProperty" ||
 			node.type === "JSBindingObjectPatternProperty"
 		) {
-			parser.unexpectedDiagnostic({
-				loc: typeParameters.loc,
-				description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: typeParameters.loc,
+					description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
+				},
+			);
 			return node;
 		}
 
@@ -2847,15 +3008,16 @@ export function parseObjectPropertyKey(
 ): JSStaticPropertyKey | JSComputedPropertyKey {
 	const start = parser.getPosition();
 
-	if (parser.match(tt.bracketL)) {
-		const openContext = parser.expectOpening(
+	if (match(parser, tt.bracketL)) {
+		const openContext = expectOpening(
+			parser,
 			tt.bracketL,
 			tt.bracketR,
 			"property name",
 		);
 
 		const value = parseMaybeAssign(parser, "property name");
-		parser.expectClosing(openContext);
+		expectClosing(parser, openContext);
 		return parser.finishNode(
 			start,
 			{
@@ -2864,19 +3026,19 @@ export function parseObjectPropertyKey(
 			},
 		);
 	} else {
-		parser.pushScope("PROPERTY_NAME", true);
+		pushScope(parser, "PROPERTY_NAME", true);
 
 		// We check if it's valid for it to be a private name when we push it.
 		let value;
-		if (parser.match(tt.num)) {
+		if (match(parser, tt.num)) {
 			value = parseNumericLiteral(parser);
-		} else if (parser.match(tt.string)) {
+		} else if (match(parser, tt.string)) {
 			value = parseStringLiteral(parser);
 		} else {
 			value = parseMaybePrivateName(parser);
 		}
 
-		parser.popScope("PROPERTY_NAME");
+		popScope(parser, "PROPERTY_NAME");
 
 		return parser.finishNode(
 			start,
@@ -2906,10 +3068,10 @@ export function parseMethod(
 
 	const oldYieldPos = parser.state.yieldPos;
 	const oldAwaitPos = parser.state.awaitPos;
-	parser.pushScope("FUNCTION", true);
-	parser.pushScope("NON_ARROW_FUNCTION");
-	parser.pushScope("METHOD", kind);
-	parser.pushScope("GENERATOR", isGenerator);
+	pushScope(parser, "FUNCTION", true);
+	pushScope(parser, "NON_ARROW_FUNCTION");
+	pushScope(parser, "METHOD", kind);
+	pushScope(parser, "GENERATOR", isGenerator);
 	parser.state.yieldPos = ob1Number0;
 	parser.state.awaitPos = ob1Number0;
 
@@ -2937,10 +3099,10 @@ export function parseMethod(
 		},
 	);
 
-	parser.popScope("METHOD");
-	parser.popScope("GENERATOR");
-	parser.popScope("FUNCTION");
-	parser.popScope("NON_ARROW_FUNCTION");
+	popScope(parser, "METHOD");
+	popScope(parser, "GENERATOR");
+	popScope(parser, "FUNCTION");
+	popScope(parser, "NON_ARROW_FUNCTION");
 	parser.state.yieldPos = oldYieldPos;
 	parser.state.awaitPos = oldAwaitPos;
 
@@ -2997,18 +3159,21 @@ export function parseArrowExpression(
 	// if we got there, it's no more "yield in possible arrow parameters";
 	// it's just "yield in arrow parameters"
 	if (parser.state.yieldInPossibleArrowParameters) {
-		parser.unexpectedDiagnostic({
-			start: parser.state.yieldInPossibleArrowParameters,
-			description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				start: parser.state.yieldInPossibleArrowParameters,
+				description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
+			},
+		);
 	}
 
-	parser.pushScope("FUNCTION", true);
+	pushScope(parser, "FUNCTION", true);
 
 	const oldYieldPos = parser.state.yieldPos;
 	const oldAwaitPos = parser.state.awaitPos;
 	const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
-	parser.pushScope("GENERATOR", false);
+	pushScope(parser, "GENERATOR", false);
 	parser.state.maybeInArrowParameters = false;
 	parser.state.yieldPos = ob1Number0;
 	parser.state.awaitPos = ob1Number0;
@@ -3075,8 +3240,8 @@ export function parseArrowExpression(
 		body,
 	);
 
-	parser.popScope("GENERATOR");
-	parser.popScope("FUNCTION");
+	popScope(parser, "GENERATOR");
+	popScope(parser, "FUNCTION");
 	parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
 	parser.state.yieldPos = oldYieldPos;
 	parser.state.awaitPos = oldAwaitPos;
@@ -3130,7 +3295,7 @@ export function parseFunctionBodyAndFinish(
 	let returnType = undefined;
 
 	// For arrow functions, `parseArrow` handles the return type itself.
-	if (!opts.isArrowFunction && parser.match(tt.colon)) {
+	if (!opts.isArrowFunction && match(parser, tt.colon)) {
 		returnType = parseTSTypeOrTypePredicateAnnotation(parser, tt.colon);
 	}
 
@@ -3153,8 +3318,8 @@ export function parseFunctionBodyAndFinish(
 
 	if (
 		opts.allowBodiless &&
-		!parser.match(tt.braceL) &&
-		parser.isLineTerminator()
+		!match(parser, tt.braceL) &&
+		isLineTerminator(parser)
 	) {
 		return {
 			head,
@@ -3215,10 +3380,10 @@ function _parseFunctionBody(
 ): ParseFunctionBodyReturn {
 	const {isArrowFunction, isAsync, isGenerator} = opts;
 
-	const isExpression = isArrowFunction && !parser.match(tt.braceL);
+	const isExpression = isArrowFunction && !match(parser, tt.braceL);
 
-	parser.pushScope("PARAMETERS", false);
-	parser.pushScope("ASYNC", isAsync);
+	pushScope(parser, "PARAMETERS", false);
+	pushScope(parser, "ASYNC", isAsync);
 
 	let hasHoistedVars = false;
 	let body: AnyJSExpression | JSBlockStatement;
@@ -3228,7 +3393,7 @@ function _parseFunctionBody(
 		// Start a new scope with regard to labels and the `inGenerator`
 		// flag (restore them to their old value afterwards).
 		const oldLabels = parser.state.labels;
-		parser.pushScope("GENERATOR", isGenerator);
+		pushScope(parser, "GENERATOR", isGenerator);
 		parser.state.labels = [];
 
 		const oldhasHoistedVars = parser.state.hasHoistedVars;
@@ -3237,14 +3402,14 @@ function _parseFunctionBody(
 		body = parseBlock(parser, true);
 		hasHoistedVars = parser.state.hasHoistedVars;
 
-		parser.popScope("GENERATOR");
+		popScope(parser, "GENERATOR");
 
 		parser.state.hasHoistedVars = oldhasHoistedVars;
 		parser.state.labels = oldLabels;
 	}
 
-	parser.popScope("ASYNC");
-	parser.popScope("PARAMETERS");
+	popScope(parser, "ASYNC");
+	popScope(parser, "PARAMETERS");
 
 	return {body, hasHoistedVars};
 }
@@ -3273,10 +3438,13 @@ export function checkFunctionNameAndParams(
 	) {
 		const firstDirective = body.directives[0];
 		if (firstDirective !== undefined && firstDirective.value === "use strict") {
-			parser.unexpectedDiagnostic({
-				loc: firstDirective.loc,
-				description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc: firstDirective.loc,
+					description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
+				},
+			);
 		}
 	}
 
@@ -3292,13 +3460,13 @@ export function checkFunctionNameAndParams(
 	// If this is a strict mode function, verify that argument names
 	// are not repeated, and it does not try to bind the words `eval`
 	const _isStrictBody = isStrictBody(parser, body);
-	const isStrict = parser.inScope("STRICT") || _isStrictBody;
+	const isStrict = inScope(parser, "STRICT") || _isStrictBody;
 
 	const isSimpleParams = isSimpleParamList(params, rest);
 	const shouldCheckLVal: boolean =
 		isStrict || isArrowFunction || isMethod || !isSimpleParams;
 
-	parser.pushScope("STRICT", isStrict);
+	pushScope(parser, "STRICT", isStrict);
 
 	if (shouldCheckLVal) {
 		const clashes: Map<string, AnyNode> = new Map();
@@ -3309,16 +3477,19 @@ export function checkFunctionNameAndParams(
 
 		for (const param of params) {
 			if (_isStrictBody && param.type !== "JSBindingIdentifier") {
-				parser.unexpectedDiagnostic({
-					loc: param.loc,
-					description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
-				});
+				unexpectedDiagnostic(
+					parser,
+					{
+						loc: param.loc,
+						description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
+					},
+				);
 			}
 			checkLVal(parser, param, true, clashes, "function parameter list");
 		}
 	}
 
-	parser.popScope("STRICT");
+	popScope(parser, "STRICT");
 }
 
 function isSimpleParamList(
@@ -3349,16 +3520,16 @@ export function parseExpressionList(
 	let first = true;
 
 	while (true) {
-		if (parser.match(openContext.close) || parser.match(tt.eof)) {
+		if (match(parser, openContext.close) || match(parser, tt.eof)) {
 			break;
 		}
 
 		if (first) {
 			first = false;
 		} else {
-			parser.expect(tt.comma);
+			expect(parser, tt.comma);
 
-			if (parser.match(openContext.close)) {
+			if (match(parser, openContext.close)) {
 				break;
 			}
 		}
@@ -3368,7 +3539,7 @@ export function parseExpressionList(
 		);
 	}
 
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	return elts;
 }
@@ -3402,9 +3573,9 @@ export function parseCallArgument(
 	| AnyJSExpression
 	| JSSpreadElement
 	| JSAmbiguousFlowTypeCastExpression {
-	if (allowHoles && parser.match(tt.comma)) {
+	if (allowHoles && match(parser, tt.comma)) {
 		return parseArrayHole(parser);
-	} else if (parser.match(tt.ellipsis)) {
+	} else if (match(parser, tt.ellipsis)) {
 		const spreadNodeStart = parser.state.startPos;
 
 		const elt = parseParenItem(
@@ -3413,7 +3584,7 @@ export function parseCallArgument(
 			spreadNodeStart,
 		);
 
-		if (refTrailingCommaPos && parser.match(tt.comma)) {
+		if (refTrailingCommaPos && match(parser, tt.comma)) {
 			refTrailingCommaPos.index = parser.getIndex();
 		}
 
@@ -3544,19 +3715,15 @@ export function parseIdentifierName(
 
 	let name: string;
 
-	if (parser.match(tt.name)) {
+	if (match(parser, tt.name)) {
 		name = String(parser.state.tokenValue);
 	} else if (parser.state.tokenType.keyword !== undefined) {
 		name = parser.state.tokenType.keyword;
 
 		// `class` and `function` keywords push new context into this.context.
-
 		// But there is no chance to pop the context if the keyword is consumed
-
 		// as an identifier such as a property name.
-
 		// If the previous token is a dot, this does not apply because the
-
 		// context-managing code already ignored the keyword
 		if (
 			(name === "class" || name === "function") &&
@@ -3567,9 +3734,12 @@ export function parseIdentifierName(
 			parser.state.context.pop();
 		}
 	} else {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.EXPECTED_IDENTIFIER,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.EXPECTED_IDENTIFIER,
+			},
+		);
 		name = "";
 	}
 
@@ -3583,7 +3753,7 @@ export function parseIdentifierName(
 		);
 	}
 
-	parser.next();
+	next(parser);
 	return name;
 }
 
@@ -3594,63 +3764,81 @@ export function checkReservedWord(
 	checkKeywords: boolean,
 	isBinding: boolean,
 ): void {
-	if (parser.isSyntaxEnabled("ts")) {
+	if (isSyntaxEnabled(parser, "ts")) {
 		// TypeScript support in Babel disables reserved word checking...
 		// This is mostly because TS allows reserved words in certain scenarios
 		// TODO we should just allow those rather than relying on this hack
 		return undefined;
 	}
 
-	if (parser.inScope("GENERATOR") && word === "yield") {
-		parser.unexpectedDiagnostic({
-			loc,
-			description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
-		});
+	if (inScope(parser, "GENERATOR") && word === "yield") {
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc,
+				description: descriptions.JS_PARSER.YIELD_NAME_IN_GENERATOR,
+			},
+		);
 	}
 
-	if (parser.inScope("ASYNC") && word === "await") {
-		parser.unexpectedDiagnostic({
-			loc,
-			description: descriptions.JS_PARSER.AWAIT_NAME_IN_ASYNC,
-		});
+	if (inScope(parser, "ASYNC") && word === "await") {
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc,
+				description: descriptions.JS_PARSER.AWAIT_NAME_IN_ASYNC,
+			},
+		);
 	}
 
-	if (parser.inScope("CLASS_PROPERTY") && word === "arguments") {
-		parser.unexpectedDiagnostic({
-			loc,
-			description: descriptions.JS_PARSER.ARGUMENTS_IN_CLASS_FIELD,
-		});
+	if (inScope(parser, "CLASS_PROPERTY") && word === "arguments") {
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc,
+				description: descriptions.JS_PARSER.ARGUMENTS_IN_CLASS_FIELD,
+			},
+		);
 	}
 
 	if (checkKeywords && isKeyword(word)) {
-		parser.unexpectedDiagnostic({
-			loc,
-			description: descriptions.JS_PARSER.UNEXPECTED_KEYWORD(word),
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc,
+				description: descriptions.JS_PARSER.UNEXPECTED_KEYWORD(word),
+			},
+		);
 	}
 
 	let isReserved: boolean;
-	if (parser.inScope("STRICT")) {
+	if (inScope(parser, "STRICT")) {
 		if (isBinding) {
-			isReserved = isStrictBindReservedWord(word, parser.inModule);
+			isReserved = isStrictBindReservedWord(word, parser.meta.inModule);
 		} else {
-			isReserved = isStrictReservedWord(word, parser.inModule);
+			isReserved = isStrictReservedWord(word, parser.meta.inModule);
 		}
 	} else {
-		isReserved = isReservedWord(word, parser.inModule);
+		isReserved = isReservedWord(word, parser.meta.inModule);
 	}
 
 	if (isReserved) {
-		if (!parser.inScope("ASYNC") && word === "await") {
-			parser.unexpectedDiagnostic({
-				loc,
-				description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
-			});
+		if (!inScope(parser, "ASYNC") && word === "await") {
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc,
+					description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
+				},
+			);
 		} else {
-			parser.unexpectedDiagnostic({
-				loc,
-				description: descriptions.JS_PARSER.RESERVED_WORD(word),
-			});
+			unexpectedDiagnostic(
+				parser,
+				{
+					loc,
+					description: descriptions.JS_PARSER.RESERVED_WORD(word),
+				},
+			);
 		}
 	}
 }
@@ -3661,26 +3849,35 @@ export function parseAwait(parser: JSParser): JSAwaitExpression {
 		parser.state.awaitPos = parser.state.index;
 	}
 
-	if (!parser.inScope("ASYNC")) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
-		});
+	if (!inScope(parser, "ASYNC")) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.AWAIT_OUTSIDE_ASYNC,
+			},
+		);
 	}
 
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 
-	if (parser.inScope("PARAMETERS")) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
-		});
+	if (inScope(parser, "PARAMETERS")) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
+			},
+		);
 	}
 
-	if (parser.eat(tt.star)) {
-		parser.unexpectedDiagnostic({
-			start,
-			description: descriptions.JS_PARSER.AWAIT_STAR,
-		});
+	if (eat(parser, tt.star)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				start,
+				description: descriptions.JS_PARSER.AWAIT_STAR,
+			},
+		);
 	}
 
 	const argument = parseMaybeUnary(parser, "await argument");
@@ -3695,11 +3892,14 @@ export function parseYield(parser: JSParser, noIn?: boolean): JSYieldExpression 
 
 	const start = parser.getPosition();
 
-	if (parser.inScope("PARAMETERS")) {
-		parser.unexpectedDiagnostic({
-			start,
-			description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
-		});
+	if (inScope(parser, "PARAMETERS")) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				start,
+				description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
+			},
+		);
 	}
 
 	if (
@@ -3711,18 +3911,18 @@ export function parseYield(parser: JSParser, noIn?: boolean): JSYieldExpression 
 		parser.state.yieldInPossibleArrowParameters = start;
 	}
 
-	parser.next();
+	next(parser);
 
 	let delegate: undefined | boolean;
 	let argument: undefined | AnyJSExpression;
 	if (
-		parser.match(tt.semi) ||
-		(!parser.match(tt.star) && !parser.state.tokenType.startsExpr) ||
-		parser.canInsertSemicolon()
+		match(parser, tt.semi) ||
+		(!match(parser, tt.star) && !parser.state.tokenType.startsExpr) ||
+		canInsertSemicolon(parser)
 	) {
 		delegate = false;
 	} else {
-		delegate = parser.eat(tt.star);
+		delegate = eat(parser, tt.star);
 		argument = parseMaybeAssign<AnyJSExpression>(parser, "yield argument", noIn);
 	}
 
@@ -3738,14 +3938,14 @@ export function parseYield(parser: JSParser, noIn?: boolean): JSYieldExpression 
 
 function parseNullLiteral(parser: JSParser): JSNullLiteral {
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 	return parser.finishNode(start, {type: "JSNullLiteral"});
 }
 
 export function parseStringLiteral(parser: JSParser): JSStringLiteral {
 	const start = parser.getPosition();
 	const value = String(parser.state.tokenValue);
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -3758,7 +3958,7 @@ export function parseStringLiteral(parser: JSParser): JSStringLiteral {
 function parseBigIntLiteral(parser: JSParser): JSBigIntLiteral {
 	const start = parser.getPosition();
 	const value = String(parser.state.tokenValue);
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -3776,7 +3976,7 @@ export function parseNumericLiteral(parser: JSParser): JSNumericLiteral {
 	}
 
 	const {value, format} = tokenValue;
-	parser.next();
+	next(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -3793,11 +3993,11 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 	if (!(value instanceof RegExpTokenValue)) {
 		throw new Error("Expected regex token value");
 	}
-	parser.next();
+	next(parser);
 
 	const {flags, pattern} = value;
 
-	const regexParser = createRegExpParser({
+	const {diagnostics, expression} = parseRegExp({
 		// Advance past first slash
 		offsetPosition: {
 			line: start.line,
@@ -3807,8 +4007,6 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 		input: pattern,
 		unicode: flags.has("u"),
 	});
-
-	const {diagnostics, expression} = regexParser.parse();
 
 	for (const diagnostic of diagnostics) {
 		parser.addDiagnostic(diagnostic);
@@ -3832,7 +4030,7 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 function parseImportOrMetaProperty(
 	parser: JSParser,
 ): JSImportCall | JSMetaProperty {
-	if (parser.lookaheadState().tokenType === tt.dot) {
+	if (lookaheadState(parser).tokenType === tt.dot) {
 		return parseImportMetaProperty(parser);
 	} else {
 		return parseImportCall(parser);
@@ -3840,21 +4038,24 @@ function parseImportOrMetaProperty(
 }
 
 function parseImportCall(parser: JSParser): JSImportCall {
-	parser.expect(tt._import);
+	expect(parser, tt._import);
 
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(tt.parenL, tt.parenR, "array");
+	const openContext = expectOpening(parser, tt.parenL, tt.parenR, "array");
 
 	let argument: ReturnType<typeof parseCallArgument>;
 
-	if (parser.match(tt.parenR)) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
-		});
+	if (match(parser, tt.parenR)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
+			},
+		);
 
 		argument = toReferenceIdentifier(
 			parser,
-			parser.createUnknownIdentifier("import call argument"),
+			createUnknownIdentifier(parser, "import call argument"),
 		);
 	} else {
 		const callArg = parseCallArgument(parser, "call expression argument", false);
@@ -3868,22 +4069,28 @@ function parseImportCall(parser: JSParser): JSImportCall {
 	}
 
 	// TODO warn on multiple arguments
-	if (parser.eat(tt.comma)) {
-		parser.unexpectedDiagnostic({
-			start: parser.state.lastStartPos,
-			end: parser.state.lastEndPos,
-			description: descriptions.JS_PARSER.IMPORT_TRAILING_COMMA,
-		});
+	if (eat(parser, tt.comma)) {
+		unexpectedDiagnostic(
+			parser,
+			{
+				start: parser.state.lastStartPos,
+				end: parser.state.lastEndPos,
+				description: descriptions.JS_PARSER.IMPORT_TRAILING_COMMA,
+			},
+		);
 	}
 
 	if (argument.type === "JSSpreadElement") {
-		parser.unexpectedDiagnostic({
-			loc: argument.loc,
-			description: descriptions.JS_PARSER.IMPORT_SPREAD,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc: argument.loc,
+				description: descriptions.JS_PARSER.IMPORT_SPREAD,
+			},
+		);
 	}
 
-	parser.expectClosing(openContext);
+	expectClosing(parser, openContext);
 
 	const spreadOrExpression: AnyJSExpression | JSSpreadElement =
 		argument.type === "JSAmbiguousFlowTypeCastExpression"
@@ -3900,40 +4107,49 @@ function parseImportCall(parser: JSParser): JSImportCall {
 
 function parseSuper(parser: JSParser): JSSuper {
 	if (
-		!parser.inScope("METHOD") &&
-		!parser.inScope("CLASS_PROPERTY") &&
-		parser.sourceType !== "template"
+		!inScope(parser, "METHOD") &&
+		!inScope(parser, "CLASS_PROPERTY") &&
+		parser.options.sourceType !== "template"
 	) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
+			},
+		);
 	}
 
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 
 	if (
-		!parser.match(tt.parenL) &&
-		!parser.match(tt.bracketL) &&
-		!parser.match(tt.dot)
+		!match(parser, tt.parenL) &&
+		!match(parser, tt.bracketL) &&
+		!match(parser, tt.dot)
 	) {
-		parser.unexpectedDiagnostic({
-			description: descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				description: descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
+			},
+		);
 	}
 
 	const loc = parser.finishLoc(start);
 
 	if (
-		parser.match(tt.parenL) &&
-		(parser.getLastScope("METHOD") !== "constructor" ||
-		parser.getLastScope("CLASS") !== "derived") &&
-		parser.sourceType !== "template"
+		match(parser, tt.parenL) &&
+		(getLastScope(parser, "METHOD") !== "constructor" ||
+		getLastScope(parser, "CLASS") !== "derived") &&
+		parser.options.sourceType !== "template"
 	) {
-		parser.unexpectedDiagnostic({
-			loc,
-			description: descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
-		});
+		unexpectedDiagnostic(
+			parser,
+			{
+				loc,
+				description: descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
+			},
+		);
 	}
 
 	return parser.finalizeNode({
@@ -3944,12 +4160,12 @@ function parseSuper(parser: JSParser): JSSuper {
 
 function parseDoExpression(parser: JSParser): JSDoExpression {
 	const start = parser.getPosition();
-	parser.next();
+	next(parser);
 	const oldLabels = parser.state.labels;
 	parser.state.labels = [];
-	parser.pushScope("FUNCTION", false);
+	pushScope(parser, "FUNCTION", false);
 	const body = parseBlock(parser, false);
-	parser.popScope("FUNCTION");
+	popScope(parser, "FUNCTION");
 	parser.state.labels = oldLabels;
 	return parser.finishNode(
 		start,
@@ -3974,7 +4190,7 @@ function parseArrayExpression(
 	refShorthandDefaultPos?: IndexTracker,
 ): JSArrayExpression {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(tt.bracketL, tt.bracketR, "array");
+	const openContext = expectOpening(parser, tt.bracketL, tt.bracketR, "array");
 
 	const elements = toReferencedListOptional(
 		parser,

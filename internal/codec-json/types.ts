@@ -13,6 +13,7 @@ import {
 } from "@internal/parser-core";
 import {ConsumeContext} from "@internal/consume";
 import {DiagnosticCategory} from "@internal/diagnostics";
+import {UnknownPath} from "@internal/path";
 
 export type JSONParserOptions = Omit<ParserOptions, "retainCarriageReturn"> & {
 	consumeDiagnosticCategory?: DiagnosticCategory;
@@ -38,8 +39,11 @@ export type BlockComment = {
 export type Comments = Array<BlockComment | LineComment>;
 
 export type JSONParserResult = {
+	path: undefined | UnknownPath;
 	value: JSONValue;
 	context: Required<ConsumeContext>;
+	hasExtensions: boolean;
+	comments: RJSONCommentMap;
 };
 
 export type Tokens = BaseTokens & {

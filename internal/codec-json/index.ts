@@ -6,7 +6,7 @@
  */
 
 import {JSONParserOptions, JSONValue, RJSONCommentMap, Tokens} from "./types";
-import {createJSONParser} from "./parse";
+import {createJSONParser, parseJSONExtra} from "./parse";
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {stringifyRootConsumer} from "./stringify";
 import {TokenValues} from "@internal/parser-core";
@@ -31,24 +31,23 @@ export function consumeJSON(opts: JSONParserOptions): Consumer {
 }
 
 export function consumeJSONExtra(opts: JSONParserOptions): ConsumeJSONResult {
-	const parser = createJSONParser(opts);
-	const {value, context} = parser.parse();
+	const {value, context, hasExtensions, comments, path} = parseJSONExtra(opts);
 
 	return {
-		hasExtensions: parser.hasExtensions,
+		hasExtensions,
 		consumer: consume({
-			filePath: parser.path,
+			filePath: path,
 			context,
 			objectPath: [],
 			value,
 			parent: undefined,
 		}),
-		comments: parser.pathToComments,
+		comments,
 	};
 }
 
 export function parseJSON(opts: JSONParserOptions): JSONValue {
-	return createJSONParser(opts).parse().value;
+	return parseJSONExtra(opts).value;
 }
 
 export function tokenizeJSON(

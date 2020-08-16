@@ -30,7 +30,10 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [
+				Object {category: "parse/js"}
+				Object {category: "parse/regex"}
+			]
 			description: Object {
 				advice: Array []
 				category: "parse/regex"
