@@ -49,29 +49,44 @@ class GitVCSClient extends VCSClient {
 	}
 
 	public async getDefaultBranch(): Promise<string> {
-		const exitCode = await spawn(
-			"git",
-			["show-ref", "--verify", "--quiet", "refs/heads/main"],
-			{cwd: this.root},
-		).wait();
-		return exitCode === 0 ? "main" : "master";
+		try {
+			const exitCode = await spawn(
+				"git",
+				["show-ref", "--verify", "--quiet", "refs/heads/main"],
+				{cwd: this.root},
+			).wait();
+			return exitCode === 0 ? "main" : "master";
+		} catch (_) {
+			throw new Error("Unexpected error when checking the default branch");
+		}
 	}
 
 	public async getUncommittedFiles(): Promise<string[]> {
-		const stdout = (await spawn("git", ["status", "--short"], {cwd: this.root}).waitSuccess()).getOutput(
-			true,
-			false,
-		);
-		return extractFileList(stdout);
+		try {
+			const stdout = (await spawn(
+				"git",
+				["status", "--short"],
+				{cwd: this.root},
+			).waitSuccess()).getOutput(true, false);
+			return extractFileList(stdout);
+		} catch (_) {
+			throw new Error("Unexpected error when checking for uncommitted files");
+		}
 	}
 
 	public async getModifiedFiles(branch: string): Promise<string[]> {
-		const stdout = (await spawn(
-			"git",
-			["diff", "--name-status", branch],
-			{cwd: this.root},
-		).waitSuccess()).getOutput(true, false);
-		return extractFileList(stdout);
+		try {
+			const stdout = (await spawn(
+				"git",
+				["diff", "--name-status", branch],
+				{cwd: this.root},
+			).waitSuccess()).getOutput(true, false);
+			return extractFileList(stdout);
+		} catch (_) {
+			throw new Error(
+				`Unexpected error when checking for modified files on the "${branch}" branch`,
+			);
+		}
 	}
 }
 

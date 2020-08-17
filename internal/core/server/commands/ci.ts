@@ -40,7 +40,7 @@ export default createServerCommand({
 			).asBoolean(false),
 		};
 	},
-	async callback(req: ServerRequest, { fix, changed }: Flags): Promise<void> {
+	async callback(req: ServerRequest, {fix, changed}: Flags): Promise<void> {
 		req.updateRequestFlags({
 			truncateDiagnostics: false,
 			maxDiagnostics: Infinity,
