@@ -55,8 +55,8 @@ export default class Trace {
 		const {startTime, endTime} = profile.cpuProfile;
 
 		const common = {
-			pid: 1,
-			tid: profile.pid,
+			pid: profile.pid,
+			tid: profile.tid,
 		};
 
 		this.events.push({

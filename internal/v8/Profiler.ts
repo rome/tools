@@ -6,8 +6,8 @@
  */
 
 import {MemorySamples, Profile} from "./types";
-import {hrTime} from "./utils";
 import inspector = require("inspector");
+import workerThreads = require("worker_threads");
 
 export default class Profiler {
 	constructor() {
@@ -26,9 +26,9 @@ export default class Profiler {
 
 		this.memoryInterval = setInterval(
 			() => {
-				const time = hrTime();
-				const size = process.memoryUsage().heapUsed;
-				this.memorySamples.push([time, size]);
+				//const time = hrTime();
+				//const size = process.memoryUsage().heapUsed;
+				//this.memorySamples.push([time, size]);
 			},
 			100,
 		);
@@ -105,6 +105,7 @@ export default class Profiler {
 
 		return {
 			pid: process.pid,
+			tid: workerThreads.threadId,
 			cpuProfile: res.profile,
 			memorySamples,
 		};
