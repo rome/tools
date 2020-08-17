@@ -68,7 +68,11 @@ export function utf8Encode(
 	byteLength: number,
 ): void {
 	if (byteLength > TEXT_ENCODER_THRESHOLD) {
-		sharedTextEncoder.encodeInto(str, output.subarray(outputOffset));
+		if (sharedTextEncoder.encodeInto === undefined) {
+			output.set(sharedTextEncoder.encode(str), outputOffset);
+		} else {
+			sharedTextEncoder.encodeInto(str, output.subarray(outputOffset));
+		}
 		return;
 	}
 

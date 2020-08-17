@@ -235,6 +235,7 @@ export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 
 	bridge.endEvent.subscribe(() => {
 		parentPort.close();
+		process.exit();
 	});
 
 	parentPort.on(

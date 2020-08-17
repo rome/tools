@@ -359,7 +359,7 @@ export default class RSERBufferAssembler {
 				continue;
 			}
 
-			this.encodeValue(key);
+			this.encodeStringValue(key);
 			this.encodeValue(v);
 		}
 	}
