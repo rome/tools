@@ -586,7 +586,11 @@ export default class RSERBufferParser {
 	private decodeKey(): string {
 		const size = this.decodeNumber();
 		if (sharedCachedKeyDecoder.canBeCached(size)) {
-			const str = sharedCachedKeyDecoder.decode(this.bytes, this.readOffset, size);
+			const str = sharedCachedKeyDecoder.decode(
+				this.bytes,
+				this.readOffset,
+				size,
+			);
 			this.readOffset += size;
 			return str;
 		} else {
