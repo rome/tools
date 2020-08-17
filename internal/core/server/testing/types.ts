@@ -5,26 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from "@internal/diagnostics";
-import {SourceMapGenerator} from "@internal/codec-source-map";
-import {ServerRequest, TestWorkerBridge} from "@internal/core";
-import {CoverageFile, InspectorClient} from "@internal/v8";
-import workerThreads = require("worker_threads");
-import {FileReference} from "@internal/core/common/types/files";
+import {ServerRequest} from "@internal/core";
+import {CoverageFile} from "@internal/v8";
 import {DiagnosticsPrinterFlags} from "@internal/cli-diagnostics";
-
-export type TestSource = {
-	code: string;
-	sourceMap: SourceMapGenerator;
-	ref: FileReference;
-};
-
-export type TestSources = Map<string, TestSource>;
+import {AbsoluteFilePathSet} from "@internal/path";
 
 export type TestServerRunnerConstructorOptions = {
-	sources: TestSources;
+	paths: AbsoluteFilePathSet;
 	request: ServerRequest;
-	addDiagnostics: Diagnostics;
 	options: TestServerRunnerOptions;
 };
 
@@ -45,11 +33,3 @@ export type CoverageDirectory = {
 	directories: Map<string, CoverageDirectory>;
 	files: Map<string, CoverageFile>;
 };
-
-export type TestWorkerContainer = {
-	bridge: TestWorkerBridge;
-	thread: workerThreads.Worker;
-	inspector: undefined | InspectorClient;
-};
-
-export type TestWorkerContainers = Array<TestWorkerContainer>;
