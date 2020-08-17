@@ -20,7 +20,7 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --help, -h                        Show this help screen
+  --h, -h                           Show this help screen
   --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
@@ -42,7 +42,7 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --help, -h                        Show this help screen
+  --h, -h                           Show this help screen
   --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
@@ -332,8 +332,8 @@ Object {}
 
   ✖ Unknown f flag at
 
-    test --f
-         ^^^
+    test -f
+         ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -216,6 +216,10 @@ export default class Parser<T> {
 					this.setFlag(camelName, String(rawArgs.shift()));
 				}
 
+				if (arg[0] === "-" && arg[1] !== "-") {
+					this.shorthandFlags.add(camelName);
+				}
+
 				this.flagToArgIndex.set(camelName, this.args.length);
 			} else {
 				// Not a flag and hasn't been consumed already by a previous arg so it must be a file
@@ -369,6 +373,17 @@ export default class Parser<T> {
 			this.shorthandFlags.delete(key);
 			this.incorrectCaseFlags.delete(key);
 			consumer.markUsedProperty(key);
+		}
+
+		for (const [key] of this.flags) {
+			if (this.shorthandFlags.has(key)) {
+				const def = this.declaredFlags.get(key)?.definition;
+				if (def && def.metadata?.alternateName !== key) {
+					consumer.get(key).unexpected(
+						descriptions.FLAGS.UNSUPPORTED_SHORTHAND(key),
+					);
+				}
+			}
 		}
 
 		for (const incorrectName of this.incorrectCaseFlags) {
@@ -541,9 +556,7 @@ export default class Parser<T> {
 				}
 			}
 
-			if (!shouldShowHelp) {
-				this.checkBadFlags(consumer, definedCommand);
-			}
+			this.checkBadFlags(consumer, definedCommand);
 
 			this.currentCommand = undefined;
 
