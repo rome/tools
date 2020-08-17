@@ -99,7 +99,7 @@ export function onKeypress(
 		switch (key.name) {
 			case "c": {
 				if (key.ctrl) {
-					reporter.br(true);
+					reporter.br({force: true});
 					reporter.warn(markup`Cancelled by user`);
 					process.exit(1);
 				}
@@ -107,7 +107,7 @@ export function onKeypress(
 			}
 
 			case "escape": {
-				reporter.br(true);
+				reporter.br({force: true});
 				reporter.warn(markup`Cancelled by user`);
 				process.exit(1);
 				return;

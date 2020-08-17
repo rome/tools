@@ -6,14 +6,14 @@
  */
 
 import {humanizeNumber, humanizeTime, splitChars} from "@internal/string-utils";
-import {Reporter} from "@internal/cli-reporter";
+import {Reporter, ReporterStreamHandle} from "@internal/cli-reporter";
 import {
 	ReporterProgressOptions,
 	ReporterStream,
 	ReporterStreamLineSnapshot,
 } from "./types";
 import ProgressBase from "./ProgressBase";
-import {AnyMarkup} from "@internal/markup";
+import {AnyMarkup, markup} from "@internal/markup";
 import {formatAnsi} from "@internal/cli-layout";
 import {Number1, ob1Get1} from "@internal/ob1";
 import * as streamUtils from "./stream";
@@ -37,7 +37,8 @@ export default class Progress extends ProgressBase {
 
 		this.firstRenderLineSnapshot = undefined;
 		this.startTime = Date.now();
-		this.lastRenderTime = Date.now();
+		this.lastRenderTime = undefined;
+		this.lastNoCursorRenderTime = undefined;
 		this.lastRenderCurrent = 0;
 
 		this.closed = false;
@@ -65,7 +66,8 @@ export default class Progress extends ProgressBase {
 	private renderEvery: number;
 	private startTime: number;
 	private lastRenderCurrent: number;
-	private lastRenderTime: number;
+	private lastRenderTime: undefined | number;
+	private lastNoCursorRenderTime: undefined | number;
 
 	private initName(name: undefined | string) {
 		if (name === undefined) {
@@ -76,7 +78,14 @@ export default class Progress extends ProgressBase {
 	}
 
 	private getElapsedTime(): number {
-		return Date.now() - this.startTime - this.pausedElapsed;
+		const elapsed = Date.now() - this.startTime - this.pausedElapsed;
+		if (elapsed < 1_000) {
+			// Sometimes there'll be a small delay between when the initial startTime was set and when the first elapsed is
+			// displayed. If we're under a second then just pretend as if no time has elapsed to prevent displaying a janky time.
+			return 0;
+		} else {
+			return elapsed;
+		}
 	}
 
 	private getBouncerPosition(stream: ReporterStream): number {
@@ -192,6 +201,7 @@ export default class Progress extends ProgressBase {
 	}
 
 	public end() {
+		this._render(true);
 		this.closed = true;
 		this.endBouncer();
 		this.endRender();
@@ -210,6 +220,10 @@ export default class Progress extends ProgressBase {
 	// Ensure that we update the progress bar after a certain amount of ticks
 	// This allows us to use the progress bar for sync work where the event loop is always blocked
 	private isRenderDue(): boolean {
+		if (this.lastRenderTime === undefined) {
+			return true;
+		}
+
 		const isDue: boolean =
 			this.current > this.lastRenderCurrent + this.renderEvery;
 		if (isDue) {
@@ -252,7 +266,7 @@ export default class Progress extends ProgressBase {
 				if (this.paused) {
 					fullBar += formatAnsi.inverse(char);
 				} else {
-					fullBar += formatAnsi.white(formatAnsi.bgYellow(char));
+					fullBar += formatAnsi.black(formatAnsi.bgYellow(char));
 				}
 			} else {
 				fullBar += char;
@@ -276,7 +290,7 @@ export default class Progress extends ProgressBase {
 				if (this.paused) {
 					fullBar += formatAnsi.inverse(char);
 				} else {
-					fullBar += formatAnsi.white(formatAnsi.bgGreen(char));
+					fullBar += formatAnsi.black(formatAnsi.bgGreen(char));
 				}
 			} else {
 				fullBar += char;
@@ -285,8 +299,62 @@ export default class Progress extends ProgressBase {
 		return fullBar;
 	}
 
-	private buildBar(stream: ReporterStream, columns: Number1) {
-		const {total, current, title} = this;
+	private buildBarSuffix(): string {
+		const {total, current} = this;
+
+		// Text to put at the end of the bar
+		let suffix = "";
+
+		// Total time since the progress bar was created
+		const elapsed = this.getElapsedTime();
+
+		// Time elapsed eg: elapsed 1m5s
+		if (this.opts.elapsed) {
+			suffix += `elapsed ${humanizeTime(elapsed)} `;
+		}
+
+		// Don't bother with a suffix if we haven't completed a single item
+		if (current > 0) {
+			if (elapsed > 0) {
+				// How many milliseconds spent per total items
+				const averagePerItem = elapsed / current;
+
+				// ETA eg: 1m5s
+				if (this.opts.eta) {
+					if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
+						// Approximate ETA
+						const left = elapsed - this.approximateETA;
+						suffix += `eta ~${humanizeTime(left)} `;
+					} else if (total !== undefined) {
+						// How many items we have left
+						const itemsLeft = total - current;
+
+						// Total estimated time left
+						const eta = itemsLeft * averagePerItem;
+						suffix += `eta ${humanizeTime(eta)} `;
+					} else {
+						const ops = Math.round(1_000 / averagePerItem);
+						suffix += `${humanizeNumber(ops)} op/s `;
+					}
+				}
+			}
+
+			// Counter eg: 5/100
+			suffix += `${humanizeNumber(current)}`;
+			if (total !== undefined) {
+				suffix += "/";
+				if (this.approximateTotal) {
+					suffix += "~";
+				}
+				suffix += humanizeNumber(total);
+			}
+		}
+
+		return suffix;
+	}
+
+	private buildBar(stream: ReporterStream, suffix: string, columns: Number1) {
+		const {total, title} = this;
 
 		// Text ranges that we should make bold
 		const boldRanges: BoldRanges = [];
@@ -307,52 +375,6 @@ export default class Progress extends ProgressBase {
 				prefix += ": ";
 			}
 			prefix += text;
-		}
-
-		// Text to put at the end of the bar
-		let suffix = "";
-
-		// Total time since the progress bar was created
-		const elapsed = this.getElapsedTime();
-
-		// Time elapsed eg: elapsed 1m5s
-		if (this.opts.elapsed) {
-			suffix += `elapsed ${humanizeTime(elapsed)} `;
-		}
-
-		// Don't bother with a suffix if we haven't completed a single item
-		if (current > 0) {
-			// How many milliseconds spent per total items
-			const averagePerItem = elapsed / current;
-
-			// ETA eg: 1m5s
-			if (this.opts.eta) {
-				if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
-					// Approximate ETA
-					const left = elapsed - this.approximateETA;
-					suffix += `eta ~${humanizeTime(left)} `;
-				} else if (total !== undefined) {
-					// How many items we have left
-					const itemsLeft = total - current;
-
-					// Total estimated time left
-					const eta = itemsLeft * averagePerItem;
-					suffix += `eta ${humanizeTime(eta)} `;
-				} else {
-					const ops = Math.round(1_000 / averagePerItem);
-					suffix += `${humanizeNumber(ops)} op/s `;
-				}
-			}
-
-			// Counter eg: 5/100
-			suffix += `${humanizeNumber(current)}`;
-			if (total !== undefined) {
-				suffix += "/";
-				if (this.approximateTotal) {
-					suffix += "~";
-				}
-				suffix += humanizeNumber(total);
-			}
 		}
 
 		// Get the full width of the bar. We take off 3 for padding.
@@ -381,33 +403,87 @@ export default class Progress extends ProgressBase {
 		}
 	}
 
+	private logNoCursor(handle: ReporterStreamHandle, suffix: string) {
+		let text = "";
+
+		const {title} = this;
+		if (title !== undefined) {
+			text += title;
+			text += ": ";
+		}
+
+		text += suffix;
+
+		this.reporter.info(
+			markup`${text}`,
+			{
+				stderr: true,
+				handles: [handle],
+			},
+		);
+	}
+
 	public render() {
+		this._render(false);
+	}
+
+	private _render(force: boolean = false) {
 		if (this.closed) {
 			return;
 		}
 
 		this.endRender();
 
+		const {lastNoCursorRenderTime} = this;
+		const now = Date.now();
+
+		// If the stream isn't an ansi cursor stream, then every 5 seconds we'll output a regular log with some progress
+		// information
+		const isNoCursorDue =
+			force ||
+			lastNoCursorRenderTime === undefined ||
+			now - lastNoCursorRenderTime > 5_000;
+		if (isNoCursorDue) {
+			this.lastNoCursorRenderTime = now;
+		}
+
 		this.lastRenderCurrent = this.current;
-		this.lastRenderTime = Date.now();
+		this.lastRenderTime = now;
 
 		if (this.firstRenderLineSnapshot === undefined) {
 			this.firstRenderLineSnapshot = this.reporter.getLineSnapshot(false);
 		}
 
-		for (const {stream} of this.reporter.getStreamHandles()) {
+		if (!this.reporter.hasStreamHandles()) {
+			return;
+		}
+
+		// We can build this up front for all streams since it doesn't rely on any stream information
+		const suffix = this.buildBarSuffix();
+
+		for (const handle of this.reporter.getStreamHandles()) {
+			const {stream} = handle;
+			if (!stream.features.progress) {
+				continue;
+			}
+
 			if (
 				streamUtils.isANSICursorStream(stream) &&
 				stream.features.columns !== undefined
 			) {
 				streamUtils.log(
 					stream,
-					this.buildBar(stream, stream.features.columns),
+					this.buildBar(stream, suffix, stream.features.columns),
 					{
 						replaceLineSnapshot: this.firstRenderLineSnapshot,
 						preferNoNewline: true,
+						stderr: true,
 					},
 				);
+			} else {
+				if (isNoCursorDue) {
+					this.logNoCursor(handle, suffix);
+				}
 			}
 		}
 	}
