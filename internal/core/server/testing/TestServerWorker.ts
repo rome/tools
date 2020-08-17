@@ -17,7 +17,7 @@ import {markup} from "@internal/markup";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
-import {FilePathLocker} from "@internal/core/common/utils/lockers";
+import {FilePathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
 
 export default class TestServerWorker {

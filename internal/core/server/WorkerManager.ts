@@ -14,7 +14,7 @@ import {
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
 import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
-import {Locker} from "../common/utils/lockers";
+import {Locker} from "../../async/lockers";
 import {
 	Event,
 	createBridgeFromLocal,

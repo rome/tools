@@ -1,6 +1,6 @@
 import {EventSubscription} from "@internal/events/types";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
-import createDeferredPromise from "@internal/core/common/utils/createDeferredPromise";
+import createDeferredPromise from "@internal/async/createDeferredPromise";
 
 type EventQueueCallack<Value> = AsyncVoidCallback<[Array<Value>]>;
 

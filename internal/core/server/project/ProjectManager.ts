@@ -54,10 +54,7 @@ import {createDirectory, readFileText} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {consumeJSON} from "@internal/codec-json";
 import {VCSClient, getVCSClient} from "@internal/vcs";
-import {
-	FilePathLocker,
-	SingleLocker,
-} from "@internal/core/common/utils/lockers";
+import {FilePathLocker, SingleLocker} from "@internal/async/lockers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";

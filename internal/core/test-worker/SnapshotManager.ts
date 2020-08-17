@@ -18,7 +18,7 @@ import {createSnapshotParser, parseSnapshot} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
 import {Number0, Number1} from "@internal/ob1";
 import {prettyFormatToString} from "@internal/pretty-format";
-import {FilePathLocker} from "../common/utils/lockers";
+import {FilePathLocker} from "../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
 
 function cleanHeading(key: string): string {

@@ -11,7 +11,7 @@ import {
 	parsePathPattern,
 } from "@internal/path-match";
 import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
-import {SingleLocker} from "@internal/core/common/utils/lockers";
+import {SingleLocker} from "@internal/async/lockers";
 
 const GLOB_IGNORE: PathPatterns = [parsePathPattern({input: "node_modules"})];
 

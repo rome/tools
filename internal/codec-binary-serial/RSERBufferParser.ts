@@ -30,7 +30,7 @@ import {
 	setErrorFrames,
 	setNodeErrorProps,
 } from "@internal/v8";
-import {utf8Decode} from "@internal/codec-binary-serial/utf8";
+import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
