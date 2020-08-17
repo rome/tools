@@ -12,7 +12,7 @@ import {NodeSystemError} from "@internal/node";
 
 const TIMEOUT = 10_000;
 
-function extractFileList(out: string): Array<string> {
+export function extractFileList(out: string): Array<string> {
 	const lines = out.trim().split("\n");
 
 	const files: Array<string> = [];
