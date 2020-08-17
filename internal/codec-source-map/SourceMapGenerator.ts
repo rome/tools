@@ -258,7 +258,7 @@ export default class SourceMapGenerator {
 
 	public toComment(): string {
 		const jsonMap = this.toJSON();
-		const base64Map = new Buffer(jsonMap).toString("base64");
+		const base64Map = Buffer.from(jsonMap).toString("base64");
 		const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
 		return comment;
 	}
