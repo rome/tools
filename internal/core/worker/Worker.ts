@@ -51,6 +51,7 @@ type WorkerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
 	bridge: WorkerBridge;
+	id: number;
 };
 
 export default class Worker {
@@ -66,9 +67,9 @@ export default class Worker {
 		this.virtualModules = new VirtualModules();
 
 		this.logger = new Logger(
-			"worker",
 			{},
 			{
+				loggerType: "worker",
 				check: () => opts.bridge.log.hasSubscribers(),
 				write(chunk) {
 					opts.bridge.log.send(chunk.toString());
@@ -402,10 +403,6 @@ export default class Worker {
 					sourceTypeJS = "module";
 				}
 			}
-		}
-
-		if (project.config.bundler.mode === "legacy") {
-			sourceTypeJS = "module";
 		}
 
 		const cacheEnabled = options.cache !== false;

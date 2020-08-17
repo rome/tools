@@ -148,6 +148,7 @@ export default class WorkerManager {
 			},
 		);
 		const worker = new Worker({
+			id: 0,
 			userConfig: this.server.userConfig,
 			bridge,
 			dedicated: false,
@@ -261,7 +262,14 @@ export default class WorkerManager {
 		const fatalErrorSource = markup`worker ${workerId}`;
 		const start = Date.now();
 
-		const thread = forkThread("worker", {});
+		const thread = forkThread(
+			"worker",
+			{
+				workerData: {
+					id: workerId,
+				},
+			},
+		);
 
 		const bridge = createBridgeFromWorkerThread(
 			WorkerBridge,

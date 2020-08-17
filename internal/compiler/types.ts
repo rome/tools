@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnalyzeDependencyResult,
-	BundlerMode,
-	FileReference,
-} from "@internal/core";
+import {AnalyzeDependencyResult, FileReference} from "@internal/core";
 import {Path} from "@internal/compiler";
 import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
@@ -81,7 +77,6 @@ export type BundleCompileResolvedImports = {
 };
 
 export type BundleCompileOptions = {
-	mode: BundlerMode;
 	moduleAll: boolean;
 	moduleId: string;
 	analyze: AnalyzeDependencyResult;

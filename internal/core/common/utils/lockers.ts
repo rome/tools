@@ -113,6 +113,12 @@ export class SingleLocker extends LockerNormalized<void, void> {
 	protected normalizeKey(key: void): void {
 		return key;
 	}
+
+	public async wrapSingleLock(
+		callback: () => void | Promise<void>,
+	): Promise<void> {
+		return this.wrapLock(undefined, callback);
+	}
 }
 
 export class FilePathLocker extends LockerNormalized<AnyFilePath, string> {

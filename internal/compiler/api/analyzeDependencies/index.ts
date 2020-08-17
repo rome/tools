@@ -69,7 +69,7 @@ export default async function analyzeDependencies(
 	let firstTopAwaitLocation: undefined | SourceLocation;
 
 	// TODO description
-	let hasCJSRef = false;
+	//let hasCJSRef = false;
 
 	// Whether we have a default export, used to automatically add one for CJS
 	let hasDefaultExport = false;
@@ -171,7 +171,7 @@ export default async function analyzeDependencies(
 		} else if (record instanceof ExportRecord) {
 			exports.push(record.data);
 		} else if (record instanceof CJSVarRefRecord) {
-			hasCJSRef = true;
+			//hasCJSRef = true;
 		} else if (record instanceof CJSExportRecord) {
 			cjsExports.push(record.node);
 		} else if (record instanceof ESExportRecord) {
@@ -213,23 +213,10 @@ export default async function analyzeDependencies(
 		moduleType = ast.sourceType === "script" ? "cjs" : "es";
 	}
 
-	// Infer module type in legacy mode
-	if (project.config.bundler.mode === "legacy") {
-		if (cjsExports.length > 0) {
-			moduleType = "cjs";
-		} else if (esValueExports.length > 0) {
-			moduleType = "es";
-		} else if (hasCJSRef) {
-			moduleType = "cjs";
-		} else {
-			moduleType = "unknown";
-		}
-	}
-
 	//
 	for (const record of context.records) {
 		if (record instanceof CJSVarRefRecord) {
-			if (project.config.bundler.mode === "modern" && moduleType === "es") {
+			if (moduleType === "es") {
 				/*context.addNodeDiagnostic(record.node, {
           category: 'analyzeDependencies',
           message: `CommonJS variable <emphasis>${

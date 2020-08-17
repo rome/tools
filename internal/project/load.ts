@@ -212,13 +212,6 @@ export async function normalizeProjectConfig(
 
 	const bundler = consumer.get("bundler");
 	if (categoryExists(bundler)) {
-		if (bundler.has("mode")) {
-			config.bundler.mode = bundler.get("mode").asStringSetOrVoid([
-				"modern",
-				"legacy",
-			]);
-		}
-
 		if (bundler.has("externals")) {
 			config.bundler.externals = arrayOfStrings(bundler.get("externals"));
 		}

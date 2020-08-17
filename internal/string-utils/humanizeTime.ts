@@ -9,6 +9,14 @@ export function humanizeTime(
 	ms: number,
 	allowMilliseconds: boolean = false,
 ): string {
+	if (ms === 0) {
+		if (allowMilliseconds) {
+			return "0ms";
+		} else {
+			return "0s";
+		}
+	}
+
 	const s = Math.floor(ms / 1_000);
 	const m = Math.floor(s / 60);
 	const h = Math.floor(m / 60);

@@ -152,6 +152,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	}
 
 	const worker = new Worker({
+		id: 0,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
 
@@ -303,6 +304,8 @@ export function createIntegrationTest(
 	callback: (t: TestHelper, helper: IntegrationTestHelper) => Promise<void>,
 ): (t: TestHelper) => Promise<void> {
 	return async function(t: TestHelper) {
+		t.setTimeout(10_000);
+
 		const temp = await generateTempDirectory("rome-integration");
 
 		const projectPath = temp.append("project");
@@ -456,7 +459,11 @@ export function createIntegrationTest(
 							new AbsoluteFilePathMap([
 								[
 									absolute,
-									{content, mtime: server.memoryFs.maybeGetMtime(absolute)},
+									{
+										type: "WRITE",
+										content,
+										mtime: server.memoryFs.maybeGetMtime(absolute),
+									},
 								],
 							]),
 						);

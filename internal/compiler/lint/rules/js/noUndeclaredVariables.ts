@@ -57,6 +57,8 @@ const TS_VARIABLES = [
 	"ThisType",
 	"NodeJS",
 	"Iterable",
+	"IterableIterator",
+	"ArrayBufferView",
 	"Iterator",
 	"TemplateStringsArray",
 	"BufferEncoding",

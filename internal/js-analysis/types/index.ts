@@ -48,7 +48,8 @@ import UnknownImportE from "./errors/UnknownImportE";
 import MissingUnionE from "./errors/MissingUnionE";
 import {Class} from "@internal/typescript-helpers";
 
-const types: Map<string, Class<T>> = new Map();
+// rome-ignore lint/ts/noExplicitAny
+const types: Map<string, Class<T, Array<any>>> = new Map();
 export default types;
 
 types.set("AnyT", AnyT);

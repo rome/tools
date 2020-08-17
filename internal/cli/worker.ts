@@ -9,6 +9,7 @@ import setProcessTitle from "./utils/setProcessTitle";
 import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
 import {Worker, WorkerBridge} from "@internal/core";
 import {loadUserConfig} from "@internal/core/common/userConfig";
+import workerThreads = require("worker_threads");
 
 export default async function worker() {
 	setProcessTitle("worker");
@@ -19,8 +20,14 @@ export default async function worker() {
 		},
 	);
 
+	const {id} = workerThreads.workerData;
+	if (typeof id !== "number") {
+		throw new Error(`Expected id to be a number but got ${id}`);
+	}
+
 	const userConfig = await loadUserConfig();
 	const worker = new Worker({
+		id,
 		userConfig,
 		bridge,
 		dedicated: true,

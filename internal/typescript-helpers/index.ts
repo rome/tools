@@ -24,12 +24,9 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 	? I
 	: never;
 
-// rome-ignore lint/ts/noExplicitAny
-export type Class<T, Args extends Array<unknown> = Array<any>> = {
-	new (
-		...args: Args
-	): T;
-};
+export type Class<T, Args extends Array<unknown> = Array<unknown>> = new (
+	...args: Args
+) => T;
 
 export type Dict<T> = Record<string, T>;
 
@@ -68,9 +65,9 @@ export function isIterable(obj: unknown): obj is Iterable<unknown> {
 // https://github.com/microsoft/TypeScript/issues/13195
 // This means that places where we expect to receive a value when object spreading in a partial object
 // can actually have undefined values!
-export function mergeObjects<A extends object, B extends Partial<A>>(
+export function mergeObjects<A extends object>(
 	a: A,
-	b: undefined | B,
+	b: undefined | Partial<A>,
 ): A {
 	if (b === undefined) {
 		return a;
