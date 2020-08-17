@@ -35,14 +35,14 @@ $ rome init
 
 This file is used to configure Rome and indicates the boundaries of your project.
 
-See [Getting Started](https://romefrontend.dev/#getting-started) for more usage instructions.
+See [Getting Started](https://romefrontend.dev/#getting-started) guide for more usage instructions.
 
 ## Philosophy
 
-Project philosophy can be found on our [website](https://romefrontend.dev/#philosophy).
+The project philosophy can be found on our [website](https://romefrontend.dev/#philosophy).
 
 ## Community
 
-Contribution and development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
+Contribution and Development instructions can be found in [CONTRIBUTING](./CONTRIBUTING.md).
 
-Additional project coordination and realtime discussion happens on our [Discord server](https://discord.gg/9WxHa5d). Remember that all activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
+Additional project coordination and real-time discussion happens on our [Discord server](https://discord.gg/9WxHa5d). Remember that all activity on the Discord Server is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
