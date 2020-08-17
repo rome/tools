@@ -20,7 +20,7 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --h, -h                           Show this help screen
+  --help, -h                        Show this help screen
   --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
@@ -42,7 +42,7 @@ Object {}
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --h, -h                           Show this help screen
+  --help, -h                        Show this help screen
   --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
   --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
 
@@ -250,6 +250,47 @@ Object {}
   ℹ To see all available commands run
 
     test --help
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+## `do not allow invalid shorthand commands`
+
+### `help`
+
+```
+
+ Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  test [flags]
+
+ Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  --help, -h                        Show this help screen
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+
+ Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ℹ To view help for a specific command run
+  $ test command_name --help
+
+
+```
+
+### `output`
+
+```
+
+ argv:1:5 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The -help flag is not a valid shorthand flag at help
+
+    test -help
+         ^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

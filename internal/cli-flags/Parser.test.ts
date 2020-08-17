@@ -326,6 +326,24 @@ test(
 );
 
 test(
+	"do not allow invalid shorthand commands",
+	async (t) => {
+		await testParser(
+			t,
+			{
+				options: {
+					noProcessExit: true,
+				},
+				defineFlags: () => {
+					return {};
+				},
+				args: ["-help"],
+			},
+		);
+	},
+);
+
+test(
 	"command required with no command but with --help flag",
 	async (t) => {
 		await testParser(

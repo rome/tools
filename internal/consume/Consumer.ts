@@ -619,7 +619,7 @@ export default class Consumer {
 				? metadata.alternateName
 				: key;
 		this.markUsedProperty(valueKey);
-		return this.fork(valueKey, value[valueKey], metadata);
+		return this.fork(key, value[valueKey], metadata);
 	}
 
 	public getIndex(index: number): Consumer {
