@@ -33,12 +33,15 @@ import {
 import {TestServerRunnerOptions} from "../server/testing/types";
 import SnapshotManager, {
 	InlineSnapshotUpdate,
-	SnapshotCounts,
+	Snapshot,
 } from "./SnapshotManager";
 import TestAPI, {OnTimeout} from "./TestAPI";
 import executeMain from "../common/utils/executeMain";
-import {FileReference} from "../common/types/files";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	createAbsoluteFilePath,
+} from "@internal/path";
 import {
 	concatMarkup,
 	isEmptyMarkup,
@@ -53,8 +56,7 @@ import {
 	getErrorStructure,
 } from "@internal/v8";
 import prettyFormat from "@internal/pretty-format";
-
-const MAX_RUNNING_TESTS = 20;
+import {TestWorker} from "@internal/core";
 
 export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
@@ -87,7 +89,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
 				frame.filename !== undefined &&
-				frame.filename.includes("TestWorkerRunner")
+				frame.filename.includes("TestWorkerFile")
 			);
 		});
 	}
@@ -100,7 +102,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 }
 
 export type TestWorkerFileResult = {
-	snapshotCounts: SnapshotCounts;
+	snapshots: AbsoluteFilePathMap<Snapshot>;
 	inlineSnapshotUpdates: Array<InlineSnapshotUpdate>;
 };
 
@@ -112,38 +114,46 @@ type FoundTest = {
 };
 
 export type FocusedTest = {
-	testName: string;
+	ref: TestRef;
 	location: DiagnosticLocation;
 };
 
-export default class TestWorkerRunner {
-	constructor(opts: TestWorkerPrepareTestOptions, bridge: TestWorkerBridge) {
+export default class TestWorkerFile {
+	constructor(
+		worker: TestWorker,
+		bridge: TestWorkerBridge,
+		opts: TestWorkerPrepareTestOptions,
+	) {
 		this.opts = opts;
 		this.locked = false;
-		this.file = opts.file;
-		this.options = opts.options;
+		this.path = opts.path;
+		this.options = opts;
+		this.globalOptions = opts.globalOptions;
 		this.bridge = bridge;
+		this.worker = worker;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
 		this.snapshotManager = new SnapshotManager(
 			this,
-			createAbsoluteFilePath(opts.file.real),
+			createAbsoluteFilePath(opts.path),
 		);
 
+		this.onlyFocusedTests = false;
 		this.hasDiagnostics = false;
 		this.consoleAdvice = [];
-		this.hasFocusedTests = false;
 		this.focusedTests = [];
 		this.pendingDiagnostics = [];
 		this.foundTests = new Map();
 	}
 
-	public hasFocusedTests: boolean;
 	public hasDiagnostics: boolean;
-	public file: FileReference;
+	public onlyFocusedTests: boolean;
+	public path: AbsoluteFilePath;
 	public projectDirectory: AbsoluteFilePath;
-	public options: TestServerRunnerOptions;
+	public globalOptions: TestServerRunnerOptions;
+	public options: TestWorkerPrepareTestOptions;
 
+	private worker: TestWorker;
 	private foundTests: Map<string, FoundTest>;
 	private focusedTests: Array<FocusedTest>;
 	private bridge: TestWorkerBridge;
@@ -158,7 +168,7 @@ export default class TestWorkerRunner {
 	private createTestRef(test: FoundTest): TestRef {
 		return {
 			testName: test.name,
-			filename: this.file.real.join(),
+			path: this.path,
 		};
 	}
 
@@ -248,7 +258,7 @@ export default class TestWorkerRunner {
 	//  Global variables to expose to tests
 	private getEnvironment(): UnknownObject {
 		const testOptions: GlobalTestOptions = {
-			dirname: this.file.real.getParent().join(),
+			dirname: this.path.getParent().join(),
 			register: (
 				callsiteError: Error,
 				opts: TestOptions,
@@ -266,11 +276,11 @@ export default class TestWorkerRunner {
 
 	// execute the test file and discover tests
 	private async discoverTests() {
-		const {code} = this.opts;
+		const code = this.worker.serializeAssembled(this.opts.assembled);
 
 		try {
 			const res = await executeMain({
-				path: this.file.real,
+				path: this.path,
 				code,
 				globals: this.getEnvironment(),
 			});
@@ -288,7 +298,7 @@ export default class TestWorkerRunner {
 					},
 					location: {
 						...res.syntaxError.location,
-						filename: this.file.uid,
+						filename: this.path.join(),
 					},
 					tags: {
 						...res.syntaxError,
@@ -302,6 +312,17 @@ export default class TestWorkerRunner {
 				error: err,
 			});
 		}
+
+		// Emit error about no found tests. If we already have diagnostics then there was an issue
+		// during initialization.
+		if (this.foundTests.size === 0 && !this.hasDiagnostics) {
+			await this.emitDiagnostic({
+				location: {
+					filename: this.path.join(),
+				},
+				description: descriptions.TESTS.UNDECLARED,
+			});
+		}
 	}
 
 	private lockTests() {
@@ -309,7 +330,7 @@ export default class TestWorkerRunner {
 	}
 
 	private isFocusedTest({name, only}: TestOptions): boolean {
-		const {filter} = this.options;
+		const {filter} = this.globalOptions;
 		if (filter === undefined) {
 			return only === true;
 		} else {
@@ -341,25 +362,22 @@ export default class TestWorkerRunner {
 			callsiteStruct.frames[0],
 		);
 
-		this.foundTests.set(
-			testName,
-			{
-				callsiteLocation,
-				name: testName,
-				callback,
-				options,
-			},
-		);
+		const foundTest: FoundTest = {
+			callsiteLocation,
+			name: testName,
+			callback,
+			options,
+		};
+
+		this.foundTests.set(testName, foundTest);
 
 		if (this.isFocusedTest(options)) {
 			this.focusedTests.push({
-				testName,
+				ref: this.createTestRef(foundTest),
 				location: callsiteLocation,
 			});
 
-			this.hasFocusedTests = true;
-
-			if (!this.options.focusAllowed) {
+			if (!this.globalOptions.focusAllowed) {
 				const diag = this.deriveDiagnosticFromErrorStructure(callsiteStruct);
 
 				this.pendingDiagnostics.push({
@@ -389,7 +407,11 @@ export default class TestWorkerRunner {
 		};
 
 		this.hasDiagnostics = true;
-		await this.bridge.testDiagnostic.call({diagnostic: diag, origin: undefined});
+		await this.bridge.testDiagnostic.call({
+			diagnostic: diag,
+			origin: undefined,
+			testPath: this.path,
+		});
 	}
 
 	private deriveDiagnosticFromErrorStructure(
@@ -401,10 +423,10 @@ export default class TestWorkerRunner {
 				description: {
 					category: "tests/failure",
 				},
-				filename: this.file.real.join(),
+				filename: this.path.join(),
 				cleanFrames,
 				stackAdviceOptions: {
-					importantFilenames: [this.file.uid],
+					importantFilenames: [this.path.join()],
 				},
 			},
 		);
@@ -445,7 +467,7 @@ export default class TestWorkerRunner {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+					text: markup`Error occured while executing test file <filelink emphasis target="${this.path.join()}" />`,
 				});
 				break;
 			}
@@ -554,11 +576,11 @@ export default class TestWorkerRunner {
 		};
 
 		const api = new TestAPI({
-			file: this.file,
+			path: this.path,
 			testName,
 			onTimeout,
 			snapshotManager: this.snapshotManager,
-			options: this.options,
+			options: this.globalOptions,
 			emitDiagnostic,
 		});
 
@@ -596,65 +618,24 @@ export default class TestWorkerRunner {
 		}
 	}
 
-	public async run(
-		opts: TestWorkerRunTestOptions,
-	): Promise<TestWorkerFileResult> {
-		const promises: Set<Promise<void>> = new Set();
-
-		const {foundTests} = this;
-
-		// Emit error about no found tests. If we already have diagnostics then there was an issue
-		// during initialization.
-		if (foundTests.size === 0 && !this.hasDiagnostics) {
-			await this.emitDiagnostic({
-				location: {
-					filename: this.file.uid,
-				},
-				description: descriptions.TESTS.UNDECLARED,
-			});
-		}
-
-		// We could be pretending we have focused tests here but at least one file was execueted with
-		// focused tests
-		if (opts.onlyFocusedTests) {
-			this.hasFocusedTests = true;
-		}
-
-		// Execute all the tests
-		for (const test of foundTests.values()) {
-			const {options} = test;
-			if (this.hasFocusedTests && !this.isFocusedTest(test.options)) {
-				continue;
+	public async run(runOptions: TestWorkerRunTestOptions): Promise<void> {
+		for (const testName of runOptions.testNames) {
+			const test = this.foundTests.get(testName);
+			if (test === undefined) {
+				throw new Error();
 			}
+			const {options} = test;
 
 			this.bridge.testStart.send({
 				ref: this.createTestRef(test),
 				timeout: options.timeout,
 			});
 
-			const promise = this.runTest(test);
-
-			if (this.options.syncTests) {
-				await promise;
-			} else {
-				promise.then(() => {
-					promises.delete(promise);
-				});
-				promises.add(promise);
-
-				// if there's 5 promises, then wait for one of them to finish
-				if (promises.size > MAX_RUNNING_TESTS) {
-					await Promise.race(Array.from(promises));
-				}
-			}
+			await this.runTest(test);
 		}
+	}
 
-		// Execute the remaining tests
-		await Promise.all(Array.from(promises));
-
-		// Save the snapshot
-		await this.snapshotManager.save();
-
+	public async teardown(): Promise<TestWorkerFileResult> {
 		if (this.hasDiagnostics && this.consoleAdvice.length > 0) {
 			let advice: DiagnosticAdvice = [];
 			for (const factory of this.consoleAdvice) {
@@ -663,7 +644,7 @@ export default class TestWorkerRunner {
 			await this.emitDiagnostic({
 				description: descriptions.TESTS.LOGS(advice),
 				location: {
-					filename: this.file.uid,
+					filename: this.path.join(),
 				},
 			});
 		}
@@ -673,22 +654,9 @@ export default class TestWorkerRunner {
 		}
 
 		return {
+			snapshots: this.snapshotManager.getModifiedSnapshots(),
 			inlineSnapshotUpdates: this.snapshotManager.inlineSnapshotsUpdates,
-			snapshotCounts: this.snapshotManager.snapshotCounts,
 		};
-	}
-
-	private async emitFoundTests() {
-		const tests: Array<TestRef> = [];
-
-		for (const testName of this.foundTests.keys()) {
-			tests.push({
-				filename: this.file.real.join(),
-				testName,
-			});
-		}
-
-		await this.bridge.testsFound.call(tests);
 	}
 
 	private async wrap(callback: () => Promise<void>): Promise<void> {
@@ -712,9 +680,12 @@ export default class TestWorkerRunner {
 		await this.wrap(async () => {
 			await this.snapshotManager.init();
 			await this.discoverTests();
-			await this.emitFoundTests();
 			this.lockTests();
 		});
-		return {focusedTests: this.focusedTests};
+
+		return {
+			foundTests: Array.from(this.foundTests.keys()),
+			focusedTests: this.focusedTests,
+		};
 	}
 }

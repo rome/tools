@@ -203,7 +203,6 @@ export default class Server {
 		});
 
 		this.logger = new Logger(
-			"server",
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
@@ -230,6 +229,7 @@ export default class Server {
 				},
 			},
 			{
+				loggerType: "server",
 				write: (chunk) => {
 					this.emitServerLog(chunk);
 				},

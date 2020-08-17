@@ -5,33 +5,49 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Server, ServerRequest} from "@internal/core";
+import {AssembledBundle, Server, ServerRequest} from "@internal/core";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	BundleResult,
 	BundleResultBundle,
 	BundlerConfig,
 	BundlerFiles,
-	BundlerMode,
 } from "../../common/types/bundler";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import BundleRequest, {BundleOptions} from "./BundleRequest";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	createUnknownPath,
+} from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
 } from "@internal/codec-js-manifest";
-import {WorkerCompileResult} from "../../common/bridges/WorkerBridge";
+import {
+	WorkerBundleCompileOptions,
+	WorkerCompileResult,
+} from "../../common/bridges/WorkerBridge";
 import {Dict} from "@internal/typescript-helpers";
 import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";
 import {stringifyJSON} from "@internal/codec-json";
 import {markup} from "@internal/markup";
+import {BundleCompileResolvedImports} from "@internal/compiler";
+import {serializeAssembled} from "./utils";
+import crypto = require("crypto");
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;
 	resolvedEntry: AbsoluteFilePath;
+};
+
+type BundleCompileResult = WorkerCompileResult & {
+	asset?: {
+		path: string;
+		buffer: Buffer;
+	};
 };
 
 export default class Bundler {
@@ -41,11 +57,13 @@ export default class Bundler {
 		this.reporter = req.reporter;
 		this.request = req;
 
+		this.compiles = new AbsoluteFilePathMap();
 		this.entries = [];
 		this.graph = new DependencyGraph(req, config.resolver);
 	}
 
 	public config: BundlerConfig;
+	public compiles: AbsoluteFilePathMap<BundleCompileResult>;
 
 	private graph: DependencyGraph;
 	private server: Server;
@@ -98,29 +116,101 @@ export default class Bundler {
 		options: BundleOptions,
 		reporter: Reporter,
 	): BundleRequest {
-		const project = this.server.projectManager.assertProjectExisting(
-			resolvedEntry,
-		);
-		const mode: BundlerMode = project.config.bundler.mode;
-
 		this.entries.push(resolvedEntry);
 		return new BundleRequest({
 			request: this.request,
 			bundler: this,
 			graph: this.graph,
 			server: this.server,
-			mode,
 			resolvedEntry,
 			options,
 			reporter,
 		});
 	}
 
-	public async compile(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
+	public serializeAssembled(assembled: AssembledBundle): string {
+		return serializeAssembled(
+			assembled,
+			(path) => {
+				const compiled = this.compiles.get(path);
+				if (compiled === undefined) {
+					return undefined;
+				} else {
+					return compiled.compiledCode;
+				}
+			},
+		);
+	}
+
+	public async compileJS(path: AbsoluteFilePath): Promise<BundleCompileResult> {
+		const existing = this.compiles.get(path);
+		if (existing !== undefined) {
+			return existing;
+		}
+
+		const {graph} = this;
+		const mod = graph.getNode(path);
+
+		// Build a map of relative module sources to module id
+		const relativeSourcesToModuleId: Dict<string> = {};
+		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
+			const moduleId = graph.getNode(absolute).uid;
+			relativeSourcesToModuleId[relative] = moduleId;
+		}
+
+		// Diagnostics would have already been added during the initial DependencyGraph.seed
+		// We're doing the work of resolving everything again, maybe we should cache it?
+		const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
+
+		let asset: undefined | BundleCompileResult["asset"];
+		let assetPath: undefined | string;
+		if (mod.handler?.isAsset) {
+			const buffer = await readFile(mod.path);
+
+			// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
+			const hash = crypto.createHash("sha1").update(buffer).digest("hex");
+			const basename = mod.path.getExtensionlessBasename();
+			const exts = mod.path.getExtensions();
+
+			assetPath = `${basename}-${hash}${exts}`;
+			asset = {
+				path: assetPath,
+				buffer,
+			};
+		}
+
+		const opts: WorkerBundleCompileOptions = {
+			moduleAll: mod.all,
+			moduleId: mod.uid,
+			relativeSourcesToModuleId,
+			resolvedImports,
+			assetPath,
+		};
+
+		const res: WorkerCompileResult = await this.request.requestWorkerCompile(
+			path,
+			"compileForBundle",
+			{
+				bundle: opts,
+			},
+			{},
+		);
+
+		const bundleRes: BundleCompileResult = {
+			...res,
+			asset,
+		};
+		this.compiles.set(path, bundleRes);
+		return bundleRes;
+	}
+
+	public async compileSingle(
+		path: AbsoluteFilePath,
+	): Promise<WorkerCompileResult> {
 		const bundleRequest = this.createBundleRequest(path, {}, this.reporter);
 		await bundleRequest.stepAnalyze();
 		bundleRequest.diagnostics.maybeThrowDiagnosticsError();
-		return await bundleRequest.compileJS(path);
+		return await this.compileJS(path);
 	}
 
 	// This will take multiple entry points and do some magic to make them more efficient to build in parallel
@@ -157,6 +247,12 @@ export default class Bundler {
 		analyzeProgress.end();
 		processor.maybeThrowDiagnosticsError();
 
+		// Compile everything at the same time
+		const req = this.createBundleRequest(entries[0], {}, this.reporter);
+		await req.stepCompile(
+			Array.from(this.graph.getNodes(), (node) => node.path),
+		);
+
 		// Now actually bundle them
 		const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
@@ -175,6 +271,7 @@ export default class Bundler {
 
 			const promise = (async () => {
 				const progressId = progress.pushText(markup`${entry}`);
+
 				map.set(entry, await this.bundle(entry, options, silentReporter));
 				progress.popText(progressId);
 				progress.tick();
@@ -383,12 +480,20 @@ export default class Bundler {
 		const jsPath = `${prefix}index.js`;
 		const mapPath = `${jsPath}.map`;
 
+		let serialized: undefined | string;
+		const serializeAssembled = () => {
+			if (serialized === undefined) {
+				serialized = this.serializeAssembled(res.assembled);
+			}
+			return serialized;
+		};
+
 		const files: BundlerFiles = new Map();
 		files.set(
 			jsPath,
 			{
 				kind: "entry",
-				content: () => res.content,
+				content: serializeAssembled,
 			},
 		);
 
@@ -413,7 +518,8 @@ export default class Bundler {
 		const bundle: BundleResultBundle = {
 			js: {
 				path: jsPath,
-				content: res.content,
+				assembled: res.assembled,
+				content: serializeAssembled,
 			},
 			sourceMap: {
 				path: mapPath,
@@ -421,6 +527,7 @@ export default class Bundler {
 			},
 		};
 		return {
+			bundler: this,
 			entry: bundle,
 			bundles: [bundle],
 			files,

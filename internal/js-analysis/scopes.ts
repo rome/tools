@@ -163,7 +163,8 @@ export class Scope {
 		return new Scope({evaluator: this.evaluator, parentScope: this});
 	}
 
-	public find<S extends Scope>(klass: Class<S>): S {
+	// rome-ignore lint/ts/noExplicitAny
+	public find<S extends Scope>(klass: Class<S, Array<any>>): S {
 		const scope = this.findOptional(klass);
 		if (scope === undefined) {
 			throw new Error("Failed to find class");
@@ -172,7 +173,10 @@ export class Scope {
 		}
 	}
 
-	public findOptional<S extends Scope>(klass: Class<S>): undefined | S {
+	public findOptional<S extends Scope>(
+		// rome-ignore lint/ts/noExplicitAny
+		klass: Class<S, Array<any>>,
+	): undefined | S {
 		let scope: undefined | Scope = this;
 
 		do {

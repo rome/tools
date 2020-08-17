@@ -7,7 +7,6 @@
 
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {PathPatterns} from "@internal/path-match";
-import {BundlerMode} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -38,7 +37,6 @@ export type ProjectConfigObjects = {
 	compiler: {};
 	bundler: {
 		externals: Array<string>;
-		mode: BundlerMode;
 	};
 	lint: {
 		globals: Array<string>;
@@ -134,7 +132,6 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		},
 		bundler: {
 			externals: [],
-			mode: "modern",
 		},
 		compiler: {},
 		resolver: {},

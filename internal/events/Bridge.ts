@@ -297,7 +297,9 @@ export default class Bridge {
 		});
 
 		buf.valueEvent.subscribe((value) => {
-			this.handleMessage((value as BridgeMessage));
+			process.nextTick(() => {
+				this.handleMessage((value as BridgeMessage));
+			});
 		});
 
 		return buf;
@@ -511,17 +513,20 @@ export default class Bridge {
 				this.prioritizedResponses.add(id);
 			}
 
-			eventHandler.dispatchRequest(param).then((value) => {
-				this.sendMessage({
-					event,
-					id,
-					type: "response",
-					responseStatus: "success",
-					value,
-				});
-			}).catch((err) => {
-				this.sendMessage(this.buildErrorResponse(id, event, err));
-			}).catch((err) => this.endWithError(err));
+			eventHandler.dispatchRequest(param).then(
+				(value) => {
+					this.sendMessage({
+						event,
+						id,
+						type: "response",
+						responseStatus: "success",
+						value,
+					});
+				},
+				(err) => {
+					this.sendMessage(this.buildErrorResponse(id, event, err));
+				},
+			).catch((err) => this.endWithError(err));
 		}
 	}
 }

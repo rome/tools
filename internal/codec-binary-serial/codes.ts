@@ -16,7 +16,10 @@ import {
 	createURLPath,
 	createUnknownPath,
 } from "@internal/path";
-import {AnyRSERFilePathMap} from "@internal/codec-binary-serial/types";
+import {
+	AnyRSERFilePathMap,
+	RSERArrayBufferView,
+} from "@internal/codec-binary-serial/types";
 
 export function formatCode(code: number): string {
 	if (VALUE_CODES[code] === undefined) {
@@ -55,6 +58,8 @@ export enum VALUE_CODES {
 	TEMPLATED_OBJECT_ARRAY,
 	REFERENCE,
 	DECLARE_REFERENCE,
+	ARRAY_BUFFER,
+	ARRAY_BUFFER_VIEW,
 }
 
 export function validateValueCode(code: number): VALUE_CODES {
@@ -87,10 +92,126 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.TEMPLATED_OBJECT_ARRAY:
 		case VALUE_CODES.DECLARE_REFERENCE:
 		case VALUE_CODES.REFERENCE:
+		case VALUE_CODES.ARRAY_BUFFER_VIEW:
+		case VALUE_CODES.ARRAY_BUFFER:
 			return code;
 
 		default:
 			throw new Error(`Invalid value code ${code}`);
+	}
+}
+
+export enum ARRAY_BUFFER_VIEW_CODES {
+	DATA_VIEW,
+	INT_8,
+	UINT_8,
+	UINT_8_CLAMPED,
+	INT_16,
+	UINT_16,
+	INT_32,
+	UINT_32,
+	FLOAT_32,
+	FLOAT_64,
+	BIG_INT_64,
+	BIG_UINT_64,
+}
+
+export function validateArrayBufferViewCode(
+	code: number,
+): ARRAY_BUFFER_VIEW_CODES {
+	switch (code) {
+		case ARRAY_BUFFER_VIEW_CODES.DATA_VIEW:
+		case ARRAY_BUFFER_VIEW_CODES.INT_8:
+		case ARRAY_BUFFER_VIEW_CODES.UINT_8:
+		case ARRAY_BUFFER_VIEW_CODES.UINT_8_CLAMPED:
+		case ARRAY_BUFFER_VIEW_CODES.INT_16:
+		case ARRAY_BUFFER_VIEW_CODES.UINT_16:
+		case ARRAY_BUFFER_VIEW_CODES.INT_32:
+		case ARRAY_BUFFER_VIEW_CODES.UINT_32:
+		case ARRAY_BUFFER_VIEW_CODES.FLOAT_32:
+		case ARRAY_BUFFER_VIEW_CODES.FLOAT_64:
+		case ARRAY_BUFFER_VIEW_CODES.BIG_INT_64:
+		case ARRAY_BUFFER_VIEW_CODES.BIG_UINT_64:
+			return code;
+
+		default:
+			throw new Error(`Invalid typed array code ${code}`);
+	}
+}
+
+export function instanceToArrayBufferViewCode(
+	val: ArrayBufferView,
+): ARRAY_BUFFER_VIEW_CODES {
+	if (val instanceof Int8Array) {
+		return ARRAY_BUFFER_VIEW_CODES.INT_8;
+	} else if (val instanceof Uint8Array) {
+		return ARRAY_BUFFER_VIEW_CODES.UINT_8;
+	} else if (val instanceof Uint8ClampedArray) {
+		return ARRAY_BUFFER_VIEW_CODES.UINT_8_CLAMPED;
+	} else if (val instanceof Int16Array) {
+		return ARRAY_BUFFER_VIEW_CODES.INT_16;
+	} else if (val instanceof Uint16Array) {
+		return ARRAY_BUFFER_VIEW_CODES.UINT_16;
+	} else if (val instanceof Int32Array) {
+		return ARRAY_BUFFER_VIEW_CODES.INT_32;
+	} else if (val instanceof Uint32Array) {
+		return ARRAY_BUFFER_VIEW_CODES.UINT_32;
+	} else if (val instanceof Float32Array) {
+		return ARRAY_BUFFER_VIEW_CODES.FLOAT_32;
+	} else if (val instanceof Float64Array) {
+		return ARRAY_BUFFER_VIEW_CODES.FLOAT_64;
+	} else if (val instanceof BigInt64Array) {
+		return ARRAY_BUFFER_VIEW_CODES.BIG_INT_64;
+	} else if (val instanceof BigUint64Array) {
+		return ARRAY_BUFFER_VIEW_CODES.BIG_UINT_64;
+	} else if (val instanceof DataView) {
+		return ARRAY_BUFFER_VIEW_CODES.DATA_VIEW;
+	} else {
+		throw new Error("Unknown typed array instance");
+	}
+}
+export function arrayBufferViewCodeToInstance(
+	code: ARRAY_BUFFER_VIEW_CODES,
+	buffer: ArrayBuffer,
+	offset: number,
+	length: number,
+): RSERArrayBufferView {
+	switch (code) {
+		case ARRAY_BUFFER_VIEW_CODES.INT_8:
+			return new Int8Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.UINT_8:
+			return new Uint8Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.UINT_8_CLAMPED:
+			return new Uint8ClampedArray(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.INT_16:
+			return new Int16Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.UINT_16:
+			return new Uint16Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.INT_32:
+			return new Int32Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.UINT_32:
+			return new Uint32Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.FLOAT_32:
+			return new Float32Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.FLOAT_64:
+			return new Float64Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.BIG_INT_64:
+			return new BigInt64Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.BIG_UINT_64:
+			return new BigUint64Array(buffer, offset, length);
+
+		case ARRAY_BUFFER_VIEW_CODES.DATA_VIEW:
+			return new DataView(buffer, offset, length);
 	}
 }
 

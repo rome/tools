@@ -684,7 +684,7 @@ export default class Parser<T> {
 			() => {
 				if (description !== undefined) {
 					reporter.log(description);
-					reporter.br(true);
+					reporter.br({force: true});
 				}
 
 				const commandParts = [programName];
@@ -703,7 +703,7 @@ export default class Parser<T> {
 		const {reporter} = this;
 		const {name, usage, description, examples} = command;
 
-		reporter.br(true);
+		reporter.br({force: true});
 		await this.showUsageHelp(description, usage, name);
 		await this.showHelpExamples(examples, name);
 

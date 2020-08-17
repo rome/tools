@@ -9,6 +9,8 @@ import {Diagnostics} from "@internal/diagnostics";
 import {SourceMapGenerator} from "@internal/codec-source-map";
 import {AbsoluteFilePath} from "@internal/path";
 import {ResolverOptions} from "../../server/fs/Resolver";
+import BundleRequest from "@internal/core/server/bundler/BundleRequest";
+import Bundler from "@internal/core/server/bundler/Bundler";
 
 export type BundlerConfig = {
 	inlineSourceMap: boolean;
@@ -16,14 +18,13 @@ export type BundlerConfig = {
 	resolver: ResolverOptions;
 };
 
-export type BundlerMode = "modern" | "legacy";
-
-export const BUNDLER_MODES: Array<BundlerMode> = ["modern", "legacy"];
+export type AssembledBundle = Array<[0, string] | [1, AbsoluteFilePath]>;
 
 export type BundleRequestResult = {
+	request: BundleRequest;
 	cached: boolean;
 	diagnostics: Diagnostics;
-	content: string;
+	assembled: AssembledBundle;
 	sourceMap: SourceMapGenerator;
 	assets: Map<string, Buffer>;
 };
@@ -49,12 +50,14 @@ export type BundleResultBundle = {
 		map: SourceMapGenerator;
 	};
 	js: {
+		assembled: AssembledBundle;
 		path: string;
-		content: string;
+		content: () => string;
 	};
 };
 
 export type BundleResult = {
+	bundler: Bundler;
 	files: BundlerFiles;
 	bundles: Array<BundleResultBundle>;
 	entry: BundleResultBundle;

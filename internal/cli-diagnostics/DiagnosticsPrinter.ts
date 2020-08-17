@@ -90,10 +90,7 @@ function equalPosition(
 	return true;
 }
 
-type FooterPrintCallback = (
-	reporter: Reporter,
-	error: boolean,
-) => Promise<void | boolean>;
+type FooterPrintCallback = (reporter: Reporter, error: boolean) => Promise<void>;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 	auxiliaryDiagnosticFormat: undefined,
@@ -158,6 +155,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.filteredCount = 0;
 		this.truncatedCount = 0;
 
+		this.defaultFooterEnabled = true;
 		this.hasTruncatedDiagnostics = false;
 		this.missingFileSources = new UnknownPathSet();
 		this.fileSources = new UnknownPathMap();
@@ -167,6 +165,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	public processor: DiagnosticsProcessor;
 	public flags: DiagnosticsPrinterFlags;
+	public defaultFooterEnabled: boolean;
 
 	private options: DiagnosticsPrinterOptions;
 	private reporter: Reporter;
@@ -733,8 +732,14 @@ export default class DiagnosticsPrinter extends Error {
 				reporter.br();
 
 				await reporter.indent(async () => {
+					// Include a more specific "X problems found" for each command
+					const hasProblems = printer.hasProblems();
+					if (hasProblems) {
+						printer.defaultFooter();
+					}
+
 					for (const {callback} of onFooterPrintCallbacks) {
-						await callback(reporter, printer.problemCount > 0);
+						await callback(reporter, hasProblems);
 					}
 				});
 
@@ -752,6 +757,34 @@ export default class DiagnosticsPrinter extends Error {
 		return this.problemCount > 0;
 	}
 
+	public disableDefaultFooter() {
+		this.defaultFooterEnabled = false;
+	}
+
+	public defaultFooter() {
+		const {reporter} = this;
+		if (!this.defaultFooterEnabled) {
+			return;
+		}
+
+		if (this.hasProblems()) {
+			const {reporter, filteredCount} = this;
+
+			const displayableProblems = this.getDisplayedProblemsCount();
+			let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
+				displayableProblems,
+			)}</grammarNumber>`;
+
+			if (filteredCount > 0) {
+				str = markup`${str} <dim>(${filteredCount} filtered)</dim>`;
+			}
+
+			reporter.error(str);
+		} else {
+			reporter.success(markup`No known problems!`);
+		}
+	}
+
 	public async footer() {
 		await this.wrapError(
 			"footer",
@@ -765,10 +798,23 @@ export default class DiagnosticsPrinter extends Error {
 					reporter.redirectOutToErr(restoreRedirect);
 				}
 
+				const displayableProblems = this.getDisplayedProblemsCount();
+				if (this.truncatedCount > 0) {
+					const {maxDiagnostics} = this.flags;
+					reporter.warn(
+						markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems -
+						maxDiagnostics} errors`,
+					);
+				}
+
 				if (this.hasTruncatedDiagnostics) {
 					reporter.warn(
 						markup`Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.`,
 					);
+				}
+
+				if (this.hasTruncatedDiagnostics || this.truncatedCount > 0) {
+					reporter.br();
 				}
 
 				if (isError) {
@@ -781,25 +827,13 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let showDefault = true;
 				for (const {callback, after} of this.onFooterPrintCallbacks) {
-					if (after) {
-						continue;
-					}
-
-					const stop = await callback(reporter, isError);
-					if (stop) {
-						showDefault = false;
+					if (!after) {
+						await callback(reporter, isError);
 					}
 				}
 
-				if (showDefault) {
-					if (isError) {
-						this.footerError();
-					} else {
-						reporter.success(markup`No known problems!`);
-					}
-				}
+				this.defaultFooter();
 
 				for (const {callback, after} of this.onFooterPrintCallbacks) {
 					if (after) {
@@ -950,29 +984,6 @@ export default class DiagnosticsPrinter extends Error {
 
 				stream.write(`${line}\n`, false);
 			}
-		}
-	}
-
-	private footerError() {
-		const {reporter, filteredCount} = this;
-
-		const displayableProblems = this.getDisplayedProblemsCount();
-		let str = markup`Found <emphasis>${displayableProblems}</emphasis> <grammarNumber plural="problems" singular="problem">${String(
-			displayableProblems,
-		)}</grammarNumber>`;
-
-		if (filteredCount > 0) {
-			str = markup`${str} <dim>(${filteredCount} filtered)</dim>`;
-		}
-
-		reporter.error(str);
-
-		if (this.truncatedCount > 0) {
-			const {maxDiagnostics} = this.flags;
-			reporter.warn(
-				markup`Only <emphasis>${maxDiagnostics}</emphasis> errors shown. Add the <code>--show-all-diagnostics</code> flag or specify <code>--max-diagnostics ${"<num>"}</code> to view the remaining ${displayableProblems -
-				maxDiagnostics} errors`,
-			);
 		}
 	}
 }

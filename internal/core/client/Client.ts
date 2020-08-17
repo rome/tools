@@ -108,7 +108,7 @@ export default class Client {
 		this.options = opts;
 		this.userConfig = opts.userConfig;
 		this.queryCounter = 0;
-		this.flags = mergeObjects(DEFAULT_CLIENT_FLAGS, opts.flags);
+		this.flags = mergeObjects<ClientFlags>(DEFAULT_CLIENT_FLAGS, opts.flags);
 
 		this.requestResponseEvent = new Event({
 			name: "Client.requestResponseEvent",

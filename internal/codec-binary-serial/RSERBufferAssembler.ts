@@ -3,6 +3,7 @@ import {
 	filePathMapToCode,
 	filePathSetToCode,
 	filePathToCode,
+	instanceToArrayBufferViewCode,
 	instanceToErrorCode,
 } from "./codes";
 import {
@@ -32,6 +33,7 @@ import {
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
+import {utf8Count} from "@internal/codec-binary-serial/utf8";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
@@ -76,12 +78,12 @@ export default class RSERBufferAssembler {
 		this.totalSize += 8;
 	}
 
-	protected appendString(buf: string) {
-		this.totalSize += Buffer.byteLength(buf);
+	protected appendString(buf: string, size: number) {
+		this.totalSize += size;
 	}
 
-	public appendArray(buf: Uint8Array, offset: number) {
-		this.totalSize += buf.byteLength - offset;
+	public appendBytes(buf: Uint8Array) {
+		this.totalSize += buf.byteLength;
 	}
 
 	public encodeHeader(size: number) {
@@ -117,6 +119,7 @@ export default class RSERBufferAssembler {
 
 	private encodeTemplatedObjectArray<Value extends RSERObject &
 		UnionToIntersection<Value>>(arr: Array<Value>) {
+		// More compact form
 		if (arr.length === 0) {
 			this.writeCode(VALUE_CODES.ARRAY);
 			this.encodeInt(0);
@@ -124,6 +127,7 @@ export default class RSERBufferAssembler {
 		}
 
 		this.writeCode(VALUE_CODES.TEMPLATED_OBJECT_ARRAY);
+		this.encodeInt(arr.length);
 
 		// Encode keys
 		const keys: Array<string> = Object.keys(arr[0]);
@@ -133,7 +137,6 @@ export default class RSERBufferAssembler {
 		}
 
 		// Encode entries
-		this.encodeInt(arr.length);
 		for (const obj of arr) {
 			for (const key of keys) {
 				const val = obj[key];
@@ -206,8 +209,6 @@ export default class RSERBufferAssembler {
 		this.encodeValue(struct.stack);
 		this.encodePlainObject(struct.node);
 		this.encodeTemplatedObjectArray(struct.frames);
-
-		throw new Error("TODO");
 	}
 
 	private encodeNull() {
@@ -228,6 +229,20 @@ export default class RSERBufferAssembler {
 	private encodeDeclareReferenceHead(id: number) {
 		this.writeCode(VALUE_CODES.DECLARE_REFERENCE);
 		this.encodeInt(id);
+	}
+
+	private encodeArrayBuffer(val: ArrayBuffer) {
+		this.writeCode(VALUE_CODES.ARRAY_BUFFER);
+		this.encodeInt(val.byteLength);
+		this.appendBytes(new Uint8Array(val));
+	}
+
+	private encodeArrayBufferView(val: ArrayBufferView) {
+		this.writeCode(VALUE_CODES.ARRAY_BUFFER_VIEW);
+		this.writeByte(instanceToArrayBufferViewCode(val));
+		this.encodeInt(val.byteLength);
+		this.encodeInt(val.byteOffset);
+		this.encodeArrayBuffer(val.buffer);
 	}
 
 	private encodeObject(val: RSERValueObject) {
@@ -252,6 +267,14 @@ export default class RSERBufferAssembler {
 		}
 
 		this.seenObjects.add(val);
+
+		if (val instanceof ArrayBuffer) {
+			return this.encodeArrayBuffer(val);
+		}
+
+		if (ArrayBuffer.isView(val)) {
+			return this.encodeArrayBufferView(val);
+		}
 
 		if (
 			val instanceof UnknownPath ||
@@ -336,7 +359,7 @@ export default class RSERBufferAssembler {
 				continue;
 			}
 
-			this.encodeValue(key);
+			this.encodeStringValue(key);
 			this.encodeValue(v);
 		}
 	}
@@ -346,12 +369,13 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeStringValue(val: string) {
-		this.encodeInt(Buffer.byteLength(val));
-		this.appendString(val);
+		const byteLength = utf8Count(val);
+		this.encodeInt(byteLength);
+		this.appendString(val, byteLength);
 	}
 
 	private encodeNumber(val: bigint | number) {
-		if (typeof val === "bigint" || (isFinite(val) && Math.floor(val) === val)) {
+		if (typeof val === "bigint" || Number.isSafeInteger(val)) {
 			this.encodeInt(val);
 		} else {
 			this.encodeFloat(val);

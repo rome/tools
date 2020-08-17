@@ -31,6 +31,7 @@ export type TraceEvent = {
 
 export type Profile = {
 	pid: number;
+	tid: number;
 	cpuProfile: CPUProfile;
 	memorySamples: MemorySamples;
 };

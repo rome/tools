@@ -148,6 +148,7 @@ export default class WorkerManager {
 			},
 		);
 		const worker = new Worker({
+			id: 0,
 			userConfig: this.server.userConfig,
 			bridge,
 			dedicated: false,
@@ -261,7 +262,14 @@ export default class WorkerManager {
 		const fatalErrorSource = markup`worker ${workerId}`;
 		const start = Date.now();
 
-		const thread = forkThread("worker", {});
+		const thread = forkThread(
+			"worker",
+			{
+				workerData: {
+					id: workerId,
+				},
+			},
+		);
 
 		const bridge = createBridgeFromWorkerThread(
 			WorkerBridge,
@@ -285,7 +293,6 @@ export default class WorkerManager {
 		bridge.monitorHeartbeat(
 			LAG_INTERVAL,
 			({summary, totalTime, iterations}) => {
-				return;
 				const reporter = this.server.getImportantReporter();
 				reporter.warn(
 					markup`Worker <emphasis>${workerId}</emphasis> has not responded for <emphasis><duration>${String(

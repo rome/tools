@@ -94,6 +94,7 @@ function createDiagnosticsPrinter(
 				reporter.command("rome check --apply");
 				reporter.info(markup`To choose fix suggestions run`);
 				reporter.command("rome check --review");
+				reporter.br();
 			}
 		}
 
@@ -106,6 +107,7 @@ function createDiagnosticsPrinter(
 			reporter.info(
 				markup`You can revert these changes with the <code>rome recover pop</code> command`,
 			);
+			reporter.br();
 		}
 
 		if (!isError) {

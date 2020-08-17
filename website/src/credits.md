@@ -426,3 +426,8 @@ Rome contains code forked from other projects. They have been transformed in som
 	- **Original**: [nwoltman/string-natural-compare](https://github.com/nwoltman/string-natural-compare)
 	- **Author**: [Nathan Woltman](https://github.com/nwoltman)
 	- **License**: MIT
+
+- [`internal/codec-binary-serial/CachedKeyDecoder.ts`](https://github.com/romefrontend/rome/tree/main/internal/codec-binary-serial/CachedKeyDecoder.ts) [`internal/codec-binary-serial/utf8.ts`](https://github.com/romefrontend/rome/tree/main/internal/codec-binary-serial/utf8.ts)
+	- **Original**: [msgpack/msgpack-javascript](https://github.com/msgpack/msgpack-javascript)
+	- **Author**: [The MessagePack Community](https://msgpack.org/)
+	- **License**: ISC

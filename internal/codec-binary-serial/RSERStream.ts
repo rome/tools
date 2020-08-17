@@ -80,7 +80,7 @@ export default class RSERStream {
 				arr = arr.slice(0, remaining);
 			}
 
-			writer.appendArray(arr);
+			writer.appendBytes(arr);
 			this.process();
 		} catch (err) {
 			this.errorEvent.send(err);
@@ -104,7 +104,7 @@ export default class RSERStream {
 					this.overflow.shift();
 				}
 
-				writer.appendArray(entry);
+				writer.appendBytes(entry);
 
 				this.process();
 			}
@@ -131,7 +131,7 @@ export default class RSERStream {
 			const leftover = reader.getReadableSize();
 			const payloadWriter = RSERBufferWriter.allocate(payloadLength + leftover);
 			if (leftover > 0) {
-				payloadWriter.appendArray(writer.array.slice(reader.readOffset));
+				payloadWriter.appendBytes(writer.bytes.slice(reader.readOffset));
 			}
 
 			this.setState({

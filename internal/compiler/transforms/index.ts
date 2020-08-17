@@ -28,9 +28,9 @@ import assetTransform from "./compileForBundle/assetTransform";
 import cjsRootTransform from "./compileForBundle/modern/cjsRootTransform";
 import esToRefTransform from "./compileForBundle/modern/esToRefTransform";
 import requireRewriteTransform from "./compileForBundle/modern/requireRewriteTransform";
-import magicCJSTransform from "./compileForBundle/legacy/magicCJSTransform";
-import inlineRequiresTransform from "./compileForBundle/legacy/inlineRequiresTransform";
-import esToCJSTransform from "./compileForBundle/legacy/esToCJSTransform";
+//import magicCJSTransform from "./compileForBundle/legacy/magicCJSTransform";
+//import inlineRequiresTransform from "./compileForBundle/legacy/inlineRequiresTransform";
+//import esToCJSTransform from "./compileForBundle/legacy/esToCJSTransform";
 import metaPropertyTransform from "./compileForBundle/metaPropertyTransform";
 import scopedRomeTransform from "./compileForBundle/scopedRomeTransform";
 import asyncImportTransform from "./compileForBundle/asyncImportTransform";
@@ -77,16 +77,16 @@ export const stageTransforms: TransformStageFactories = {
 		transforms.push(scopedRomeTransform);
 		transforms.push(inlineEnv);
 
-		if (opts.mode === "modern") {
-			transforms.push(requireRewriteTransform);
-			transforms.push(
-				opts.analyze.moduleType === "cjs" ? cjsRootTransform : esToRefTransform,
-			);
-		} else {
-			transforms.push(inlineRequiresTransform);
-			transforms.push(esToCJSTransform);
-			transforms.push(magicCJSTransform);
-		}
+		//if (opts.mode === "modern") {
+		transforms.push(requireRewriteTransform);
+		transforms.push(
+			opts.analyze.moduleType === "cjs" ? cjsRootTransform : esToRefTransform,
+		);
+		//} else {
+		//transforms.push(inlineRequiresTransform);
+		//transforms.push(esToCJSTransform);
+		//transforms.push(magicCJSTransform);
+		//}
 
 		return transforms;
 	},

@@ -218,6 +218,7 @@ export default class WorkerAPI {
 		if (diags.length === 0) {
 			const formatted = formatAST(ast).code;
 			file = {
+				type: "WRITE",
 				content: formatted,
 				mtime,
 			};
@@ -469,6 +470,7 @@ export default class WorkerAPI {
 		if (options.save && needsSave) {
 			return {
 				save: {
+					type: "WRITE",
 					mtime,
 					content: formatted,
 				},

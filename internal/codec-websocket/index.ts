@@ -259,18 +259,6 @@ export async function createClient(
 		});
 
 		req.on(
-			"response",
-			(res) => {
-				if (res.statusCode && res.statusCode >= 400) {
-					process.stderr.write(`Unexpected HTTP code: ${res.statusCode}\n`);
-					res.pipe(process.stderr);
-				} else {
-					res.pipe(process.stderr);
-				}
-			},
-		);
-
-		req.on(
 			"upgrade",
 			(res, socket, head) => {
 				if (res.headers["sec-websocket-accept"] !== digest) {

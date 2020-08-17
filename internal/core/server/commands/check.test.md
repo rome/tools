@@ -21,6 +21,7 @@
 
 ✔ 1 file updated
 ℹ You can revert these changes with the rome recover pop command
+
 ✖ Found 1 problem
 
 ```
@@ -75,6 +76,7 @@ let foo;
 $ rome check --apply
 ℹ To choose fix suggestions run
 $ rome check --review
+
 ✖ Found 2 problems
 
 ```
@@ -123,6 +125,7 @@ unknownVariable
 
 ✔ 1 file updated
 ℹ You can revert these changes with the rome recover pop command
+
 ✖ Found 2 problems
 
 ```

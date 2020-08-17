@@ -12,8 +12,10 @@ import {Socket} from "net";
 import {Class} from "@internal/typescript-helpers";
 import workerThreads = require("worker_threads");
 
+type BridgeClass<B> = Class<B, ConstructorParameters<typeof Bridge>>;
+
 export function createBridgeFromWebSocketInterface<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	inf: WebSocketInterface,
 	opts: BridgeCreatorOptions,
 ): B {
@@ -57,7 +59,7 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
 }
 
 export function createBridgeFromBrowserWebSocket<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	socket: WebSocket,
 	opts: BridgeCreatorOptions,
 ): B {
@@ -96,7 +98,7 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 }
 
 export function createBridgeFromSocket<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	socket: Socket,
 	opts: BridgeCreatorOptions,
 ): B {
@@ -142,7 +144,7 @@ export function createBridgeFromSocket<B extends Bridge>(
 }
 
 export function createBridgeFromLocal<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	opts: Omit<BridgeCreatorOptions, "type">,
 ): B {
 	const bridge = new CustomBridge({
@@ -157,7 +159,7 @@ export function createBridgeFromLocal<B extends Bridge>(
 }
 
 export function createBridgeFromWorkerThread<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	worker: workerThreads.Worker,
 	opts: BridgeCreatorOptions,
 ): B {
@@ -210,7 +212,7 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 }
 
 export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
-	CustomBridge: Class<B>,
+	CustomBridge: BridgeClass<B>,
 	opts: BridgeCreatorOptions,
 ): B {
 	const {parentPort} = workerThreads;
@@ -233,6 +235,7 @@ export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 
 	bridge.endEvent.subscribe(() => {
 		parentPort.close();
+		process.exit();
 	});
 
 	parentPort.on(
