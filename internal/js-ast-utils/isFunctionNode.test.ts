@@ -10,7 +10,7 @@ import {
 
 test(
 	"returns true for all function node types",
-	async (t) => {
+	(t) => {
 		t.true(isFunctionNode(template.statement`function foo(){}`));
 		t.true(
 			isFunctionNode(
