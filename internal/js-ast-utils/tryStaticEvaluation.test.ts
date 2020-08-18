@@ -26,13 +26,12 @@ test(
 
 		t.false(tryStaticEvaluation(template.expression`~10`, TEST_SCOPE).bailed);
 		t.is(tryStaticEvaluation(template.expression`~10`, TEST_SCOPE).value, -11);
-	},
-);
 
-test(
-	"bails on boolean unary expressions",
-	(t) => {
-		t.true(tryStaticEvaluation(template.expression`!true`, TEST_SCOPE).bailed);
+		t.false(tryStaticEvaluation(template.expression`!true`, TEST_SCOPE).bailed);
+		t.is(
+			tryStaticEvaluation(template.expression`!true`, TEST_SCOPE).value,
+			false,
+		);
 	},
 );
 
