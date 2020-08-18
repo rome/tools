@@ -2,18 +2,22 @@ import {test} from "rome";
 import {isFunctionNode} from "./isFunctionNode";
 import {template} from "./template";
 import {createBuilder} from "@internal/ast/utils";
-import {AnyNode, jsVariableDeclarationStatement} from "@internal/ast";
-
-function helper(input: AnyNode): AnyNode {
-	return (jsVariableDeclarationStatement.assert(input).declaration.declarations[0].init as AnyNode);
-}
+import {
+	AnyNode,
+	jsClassDeclaration,
+	jsVariableDeclarationStatement,
+} from "@internal/ast";
 
 test(
 	"returns true for all function node types",
 	async (t) => {
 		t.true(isFunctionNode(template.statement`function foo(){}`));
 		t.true(
-			isFunctionNode(helper(template.statement`const foo = function () { }`)),
+			isFunctionNode(
+				(jsVariableDeclarationStatement.assert(
+					template.statement`const foo = function () { }`,
+				).declaration.declarations[0].init as AnyNode),
+			),
 		);
 		t.true(
 			isFunctionNode(
@@ -30,7 +34,21 @@ test(
 				).create({}),
 			),
 		);
-		t.true(isFunctionNode(helper(template.statement`const foo = () => {}`)));
+		t.true(
+			isFunctionNode(
+				(jsVariableDeclarationStatement.assert(
+					template.statement`const foo = () => {}`,
+				).declaration.declarations[0].init as AnyNode),
+			),
+		);
+		t.snapshot(
+			jsClassDeclaration.assert(template.statement`class foo(){ bar(){};}`),
+		);
+		t.true(
+			isFunctionNode(
+				jsClassDeclaration.assert(template.statement`class foo(){ bar(){};}`).meta.body[0],
+			),
+		);
 	},
 );
 
