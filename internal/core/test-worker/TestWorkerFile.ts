@@ -57,6 +57,7 @@ import {
 } from "@internal/v8";
 import prettyFormat from "@internal/pretty-format";
 import {TestWorker} from "@internal/core";
+import {ExtendedMap} from "@internal/collections";
 
 export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
@@ -143,7 +144,7 @@ export default class TestWorkerFile {
 		this.consoleAdvice = [];
 		this.focusedTests = [];
 		this.pendingDiagnostics = [];
-		this.foundTests = new Map();
+		this.foundTests = new ExtendedMap("foundTests");
 	}
 
 	public hasDiagnostics: boolean;
@@ -154,7 +155,7 @@ export default class TestWorkerFile {
 	public options: TestWorkerPrepareTestOptions;
 
 	private worker: TestWorker;
-	private foundTests: Map<string, FoundTest>;
+	private foundTests: ExtendedMap<string, FoundTest>;
 	private focusedTests: Array<FocusedTest>;
 	private bridge: TestWorkerBridge;
 	private snapshotManager: SnapshotManager;
@@ -620,10 +621,7 @@ export default class TestWorkerFile {
 
 	public async run(runOptions: TestWorkerRunTestOptions): Promise<void> {
 		for (const testName of runOptions.testNames) {
-			const test = this.foundTests.get(testName);
-			if (test === undefined) {
-				throw new Error();
-			}
+			const test = this.foundTests.assert(testName);
 			const {options} = test;
 
 			this.bridge.testStart.send({

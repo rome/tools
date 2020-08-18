@@ -33,7 +33,7 @@ import {
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
-import {utf8Count} from "@internal/codec-binary-serial/utf8";
+import {utf8Count} from "./utf8";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;

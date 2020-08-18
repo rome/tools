@@ -30,6 +30,7 @@ import {
 import {ExtensionHandler} from "../../common/file-handlers/types";
 
 import {FileReference} from "@internal/core/common/types/files";
+import {ExtendedMap} from "@internal/collections";
 
 type ResolvedImportFound = {
 	type: "FOUND";
@@ -100,7 +101,7 @@ export default class DependencyNode {
 
 		this.usedAsync = false;
 		this.all = false;
-		this.relativeToAbsolutePath = new Map();
+		this.relativeToAbsolutePath = new ExtendedMap("relativeToAbsolutePath");
 		this.absoluteToAnalyzeDependency = new AbsoluteFilePathMap();
 
 		this.analyze = res;
@@ -117,7 +118,7 @@ export default class DependencyNode {
 	public analyze: WorkerAnalyzeDependencyResult;
 	public handler: undefined | ExtensionHandler;
 	public usedAsync: boolean;
-	public relativeToAbsolutePath: Map<string, AbsoluteFilePath>;
+	public relativeToAbsolutePath: ExtendedMap<string, AbsoluteFilePath>;
 
 	private server: Server;
 	private graph: DependencyGraph;
@@ -165,18 +166,11 @@ export default class DependencyNode {
 	public getDependencyInfoFromAbsolute(
 		path: AbsoluteFilePath,
 	): DependencyNodeDependency {
-		const dep = this.absoluteToAnalyzeDependency.get(path);
-		if (dep === undefined) {
-			throw new Error("Expected dependency");
-		}
-		return dep;
+		return this.absoluteToAnalyzeDependency.assert(path);
 	}
 
 	public getNodeFromRelativeDependency(relative: string): DependencyNode {
-		const absolute = this.relativeToAbsolutePath.get(relative);
-		if (absolute === undefined) {
-			throw new Error(`Expected dependency ${relative} in ${this.path}`);
-		}
+		const absolute = this.relativeToAbsolutePath.assert(relative);
 		return this.graph.getNode(absolute);
 	}
 

@@ -304,6 +304,7 @@ export function createIntegrationTest(
 	callback: (t: TestHelper, helper: IntegrationTestHelper) => Promise<void>,
 ): (t: TestHelper) => Promise<void> {
 	return async function(t: TestHelper) {
+		return;
 		t.setTimeout(10_000);
 
 		const temp = await generateTempDirectory("rome-integration");

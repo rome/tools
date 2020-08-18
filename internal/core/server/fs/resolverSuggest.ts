@@ -22,6 +22,7 @@ import {orderBySimilarity} from "@internal/string-utils";
 import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
+import {ExtendedMap} from "@internal/collections";
 
 export default function resolverSuggest(
 	{resolver, query, resolved, origQuerySource, server}: {
@@ -156,7 +157,9 @@ export default function resolverSuggest(
 				const originDirectory = resolver.getOriginDirectory(localQuery);
 
 				// Relative paths to absolute
-				const relativeToAbsolute: Map<string, string> = new Map();
+				const relativeToAbsolute: ExtendedMap<string, string> = new ExtendedMap(
+					"relativeToAbsolute",
+				);
 
 				const relativeSuggestions = Array.from(
 					suggestions,
@@ -189,11 +192,7 @@ export default function resolverSuggest(
 						relativeSuggestions,
 						{
 							formatItem: (relative) => {
-								const absolute = relativeToAbsolute.get(relative);
-								if (absolute === undefined) {
-									throw new Error("Should be valid");
-								}
-
+								const absolute = relativeToAbsolute.assert(relative);
 								return markup`<filelink target="${absolute}">${relative}</filelink>`;
 							},
 						},
@@ -339,7 +338,9 @@ function getPackageSuggestions(
 	server: Server,
 	query: ResolverLocalQuery,
 ): Suggestions {
-	const possibleGlobalPackages: Map<string, string> = new Map();
+	const possibleGlobalPackages: ExtendedMap<string, string> = new ExtendedMap(
+		"possibleGlobalPackages",
+	);
 
 	const mainProject = server.projectManager.findLoadedProject(query.origin);
 	if (mainProject !== undefined) {
@@ -359,12 +360,7 @@ function getPackageSuggestions(
 		{minRating: MIN_SIMILARITY},
 	).map((item) => {
 		const name = item.target;
-
-		const absolute = possibleGlobalPackages.get(name);
-		if (absolute === undefined) {
-			throw new Error("Should exist");
-		}
-
+		const absolute = possibleGlobalPackages.assert(name);
 		return [name, absolute];
 	});
 	return new Map(matches);

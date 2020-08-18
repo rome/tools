@@ -4,11 +4,7 @@ import {parseCommit} from "./index";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
-
-	const inputFile = files.get("input.txt");
-	if (inputFile === undefined) {
-		throw new Error(`The fixture ${fixture.dir} did not have an input.txt`);
-	}
+	const inputFile = files.assert("input.txt");
 
 	const filename = inputFile.relative;
 

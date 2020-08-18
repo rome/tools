@@ -6,10 +6,12 @@
  */
 
 import {BuilderMethod} from "../Builder";
+import {ExtendedMap} from "@internal/collections";
 
 // rome-ignore lint/ts/noExplicitAny
-const builders: Map<string, BuilderMethod<any>> = new Map();
-
+const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
+	"builders",
+);
 export default builders;
 
 /* GENERATED:START(hash:daa41589ca37b1e553693a9480958c27f971592a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */

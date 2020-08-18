@@ -21,6 +21,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
+import {ExtendedMap} from "@internal/collections";
 
 type UniquePart =
 	| "filename"
@@ -49,7 +50,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 	["label", "category", "filename", "message", "start.line", "start.column"],
 ];
 
-type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
+type DiagnosticsByFilename = ExtendedMap<undefined | string, Diagnostics>;
 
 export default class DiagnosticsProcessor {
 	constructor(options: DiagnosticsProcessorOptions = {}) {
@@ -349,16 +350,15 @@ export default class DiagnosticsProcessor {
 	}
 
 	public getDiagnosticsByFilename(): DiagnosticsByFilename {
-		const byFilename: DiagnosticsByFilename = new Map();
+		const byFilename: DiagnosticsByFilename = new ExtendedMap(
+			"diagnosticsByFilename",
+			() => [],
+		);
 
 		for (const diag of this.getDiagnostics()) {
 			const {filename} = diag.location;
 
-			let filenameDiagnostics = byFilename.get(filename);
-			if (filenameDiagnostics === undefined) {
-				filenameDiagnostics = [];
-				byFilename.set(filename, filenameDiagnostics);
-			}
+			const filenameDiagnostics = byFilename.assert(filename);
 			filenameDiagnostics.push(diag);
 		}
 

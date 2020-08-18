@@ -1,0 +1,6 @@
+{
+  "name": "@internal/child-process",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
+}

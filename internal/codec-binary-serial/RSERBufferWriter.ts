@@ -1,6 +1,6 @@
 import {IntSize} from "./types";
 import RSERBufferAssembler from "./RSERBufferAssembler";
-import {utf8Encode} from "@internal/codec-binary-serial/utf8";
+import {utf8Encode} from "./utf8";
 
 export default class RSERBufferWriter extends RSERBufferAssembler {
 	constructor(buffer: ArrayBuffer, assembler: RSERBufferAssembler) {

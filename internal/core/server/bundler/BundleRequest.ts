@@ -120,30 +120,33 @@ export default class BundleRequest {
 		});
 		compilingSpinner.setTotal(paths.length);
 
-		const queue: WorkerQueue<void> = new WorkerQueue(server);
+		const queue: WorkerQueue<void> = new WorkerQueue(
+			server,
+			{
+				callback: async ({path}) => {
+					const progressId = compilingSpinner.pushText(markup`${path}`);
 
-		queue.addCallback(async (path) => {
-			const progressId = compilingSpinner.pushText(markup`${path}`);
+					const res = await this.bundler.compileJS(path);
 
-			const res = await this.bundler.compileJS(path);
+					if (res.asset !== undefined) {
+						this.assets.set(res.asset.path, res.asset.buffer);
+					}
 
-			if (res.asset !== undefined) {
-				this.assets.set(res.asset.path, res.asset.buffer);
-			}
+					if (!res.cached) {
+						this.cached = false;
+					}
 
-			if (!res.cached) {
-				this.cached = false;
-			}
+					this.diagnostics.addSuppressions(res.suppressions);
+					this.diagnostics.addDiagnostics(res.diagnostics);
 
-			this.diagnostics.addSuppressions(res.suppressions);
-			this.diagnostics.addDiagnostics(res.diagnostics);
-
-			compilingSpinner.popText(progressId);
-			compilingSpinner.tick();
-		});
+					compilingSpinner.popText(progressId);
+					compilingSpinner.tick();
+				},
+			},
+		);
 
 		for (const path of paths) {
-			await queue.pushQueue(path);
+			await queue.pushPath(path);
 		}
 
 		await queue.spin();
@@ -268,10 +271,7 @@ export default class BundleRequest {
 				declareCJS(this.graph.getNode(path));
 			}
 
-			const compileResult = this.bundler.compiles.get(path);
-			if (compileResult === undefined) {
-				throw new Error("Expected compile result");
-			}
+			const compileResult = this.bundler.compiles.assert(path);
 
 			push(`  // ${uid}`);
 

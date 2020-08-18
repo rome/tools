@@ -20,6 +20,7 @@ import OpenT from "./types/OpenT";
 import types from "./types/index";
 import evaluators from "./evaluators/index";
 import {ModuleSignatureType} from "./types";
+import {ExtendedMap} from "@internal/collections";
 
 export type HydrateTypeFactory = (id: unknown) => T;
 
@@ -39,7 +40,7 @@ export class ModuleSignatureManager {
 		this.topScope = topScope;
 		this.getModuleSignature = getModuleSignature;
 		this.graph = graph;
-		this.openTypes = new Map();
+		this.openTypes = new ExtendedMap("openTypes");
 		this.filename = graph.filename;
 
 		this.exportNamesToTypeId = new Map();
@@ -49,7 +50,7 @@ export class ModuleSignatureManager {
 	private getModuleSignature: GetModuleSignature;
 	private topScope: Scope;
 	private exportNamesToTypeId: Map<string, string>;
-	private openTypes: Map<string, OpenT>;
+	private openTypes: ExtendedMap<string, OpenT>;
 	private graph: ModuleSignature;
 
 	private addAll(manager: ModuleSignatureManager) {
@@ -61,10 +62,7 @@ export class ModuleSignatureManager {
 
 			this.exportNamesToTypeId.set(name, id);
 
-			const openType = manager.openTypes.get(id);
-			if (openType === undefined) {
-				throw new Error("Expected an open type");
-			}
+			const openType = manager.openTypes.assert(id);
 			this.openTypes.set(id, openType);
 		}
 	}
@@ -136,16 +134,10 @@ export class ModuleSignatureManager {
 			currGetType = node;
 
 			// Retrieve the open type
-			const openT = openTypes.get(id);
-			if (openT === undefined) {
-				throw new Error("Expected an open type");
-			}
+			const openT = openTypes.assert(id);
 
 			// Get the type constructor
-			const TConstructor = types.get(type);
-			if (TConstructor === undefined) {
-				throw new Error("Expected a valid internal type constructor name");
-			}
+			const TConstructor = types.assert(type);
 
 			// Create the type
 
@@ -186,10 +178,7 @@ export class ModuleSignatureManager {
 		}
 
 		// Retrieve the open type
-		const openT = this.openTypes.get(maybeExportId);
-		if (openT === undefined) {
-			throw new Error("Expected an open type");
-		}
+		const openT = this.openTypes.assert(maybeExportId);
 
 		// Link it to this type
 		type.setResolvedType(openT);
@@ -210,7 +199,7 @@ type Export =
 export default class Evaluator {
 	constructor(hub: Hub, filename: string) {
 		this.filename = filename;
-		this.nodeToType = new Map();
+		this.nodeToType = new ExtendedMap("nodeToType");
 		this.exports = [];
 		this.imports = [];
 		this.hub = hub;
@@ -223,7 +212,7 @@ export default class Evaluator {
 
 	public evaluatingType: undefined | string;
 	public filename: string;
-	private nodeToType: Map<AnyNode, T>;
+	private nodeToType: ExtendedMap<AnyNode, T>;
 	public hub: Hub;
 	public intrinsics: Intrinsics;
 	public exports: Array<Export>;
@@ -252,31 +241,21 @@ export default class Evaluator {
 			throw new Error("Expected node but received undefined");
 		}
 
-		const evaluator = evaluators.get(node.type);
-		if (evaluator === undefined) {
-			throw new Error(`what is this? ${node.type}`);
-		} else {
-			const oldEvaluatingType = this.evaluatingType;
-			this.evaluatingType = node.type;
-			let type = evaluator(node, scope, this.hub);
-			if (type === undefined) {
-				type = new EmptyT(scope, node);
-			}
-			this.evaluatingType = oldEvaluatingType;
-			this.nodeToType.set(node, type);
-			return type;
+		const evaluator = evaluators.assert(node.type);
+		const oldEvaluatingType = this.evaluatingType;
+		this.evaluatingType = node.type;
+		let type = evaluator(node, scope, this.hub);
+		if (type === undefined) {
+			type = new EmptyT(scope, node);
 		}
+		this.evaluatingType = oldEvaluatingType;
+		this.nodeToType.set(node, type);
+		return type;
 	}
 
 	public getTypeFromEvaluatedNode(node: AnyNode): T {
-		const type = this.nodeToType.get(node);
-		if (type === undefined) {
-			throw new Error(
-				"getTypeFromEvaluatedNode() called on a node that has not been validated yet",
-			);
-		} else {
-			return type;
-		}
+		const type = this.nodeToType.assert(node);
+		return type;
 	}
 
 	public addExport(name: string, type: T) {

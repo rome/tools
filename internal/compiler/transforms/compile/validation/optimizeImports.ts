@@ -19,6 +19,7 @@ import {
 	jsxIdentifier,
 } from "@internal/ast";
 import {isIdentifierish} from "@internal/js-ast-utils";
+import {ExtendedMap} from "@internal/collections";
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';
@@ -61,11 +62,13 @@ export default createVisitor({
 			{
 				binding: Binding;
 				names: Set<string>;
-				mappings: Map<string, string>;
+				mappings: ExtendedMap<string, string>;
 				references: Set<AnyNode>;
 			}
 		> = new Map();
-		const wildcardImportNodeToLocal: Map<JSImportDeclaration, string> = new Map();
+		const wildcardImportNodeToLocal: ExtendedMap<JSImportDeclaration, string> = new ExtendedMap(
+			"wildcardImportNodeToLocal",
+		);
 		for (const child of node.body) {
 			if (
 				child.type === "JSImportDeclaration" &&
@@ -78,7 +81,7 @@ export default createVisitor({
 					{
 						binding: path.scope.getBindingAssert(specifier.local.name.name),
 						names: new Set(),
-						mappings: new Map(),
+						mappings: new ExtendedMap("wildcard import mappings"),
 						references: new Set(),
 					},
 				);
@@ -160,11 +163,7 @@ export default createVisitor({
 							throw new Error("Expected name");
 						}
 
-						const newName = wildcardInfo.mappings.get(name);
-						if (newName === undefined) {
-							throw new Error("Expected newName");
-						}
-
+						const newName = wildcardInfo.mappings.assert(name);
 						if (node.type === "JSXMemberExpression") {
 							return signals.replace(jsxIdentifier.quick(newName));
 						} else {
@@ -178,10 +177,7 @@ export default createVisitor({
 					node.type === "JSImportDeclaration" &&
 					wildcardImportNodeToLocal.has(node)
 				) {
-					const local = wildcardImportNodeToLocal.get(node);
-					if (local === undefined) {
-						throw new Error("Expected local");
-					}
+					const local = wildcardImportNodeToLocal.assert(node);
 
 					const wildcardInfo = wildcardImports.get(local);
 					if (wildcardInfo === undefined) {

@@ -81,22 +81,14 @@ export default class TestWorker {
 		});
 
 		bridge.teardownTest.subscribe(async (path) => {
-			const runner = this.runners.get(path);
-			if (runner === undefined) {
-				throw new Error(`No runner ${path.join()} found`);
-			} else {
-				return await runner.teardown();
-			}
+			const runner = this.runners.assert(path);
+			return await runner.teardown();
 		});
 
 		bridge.runTest.subscribe(async (opts) => {
 			const {path} = opts;
-			const runner = this.runners.get(path);
-			if (runner === undefined) {
-				throw new Error(`No runner ${path.join()} found`);
-			} else {
-				return await runner.run(opts);
-			}
+			const runner = this.runners.assert(path);
+			return await runner.run(opts);
 		});
 
 		bridge.receiveCompiled.subscribe((map) => {

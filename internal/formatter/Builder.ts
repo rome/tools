@@ -73,7 +73,7 @@ export default class Builder {
 			return "";
 		}
 
-		const tokenizeNode = builders.get(node.type);
+		const tokenizeNode = builders.assert(node.type);
 		if (tokenizeNode === undefined) {
 			throw new Error(
 				`No known builder for node ${node.type} with parent ${parent.type}`,

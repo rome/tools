@@ -12,6 +12,7 @@ import Evaluator from "../Evaluator";
 import RefinedT from "../types/RefinedT";
 import UnionT from "../types/UnionT";
 import RefineTypeofT from "../types/RefineTypeofT";
+import {ExtendedMap} from "@internal/collections";
 
 type TypeDefinition = {
 	name: string;
@@ -199,14 +200,12 @@ export default function refine(
 
 	const rawTestTypes = genTypes(test, outerScope);
 
-	const testTypes: Map<string, Array<T>> = new Map();
+	const testTypes: ExtendedMap<string, Array<T>> = new ExtendedMap(
+		"testTypes",
+		() => [],
+	);
 	for (const {name, value} of rawTestTypes) {
-		let types = testTypes.get(name);
-		if (types === undefined) {
-			types = [];
-			testTypes.set(name, types);
-		}
-
+		const types = testTypes.assert(name);
 		types.push(value);
 	}
 

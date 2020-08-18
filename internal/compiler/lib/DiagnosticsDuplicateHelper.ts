@@ -12,6 +12,7 @@ import {
 	buildDuplicateLocationAdvice,
 } from "@internal/diagnostics";
 import CompilerContext from "./CompilerContext";
+import {ExtendedMap} from "@internal/collections";
 
 type DescriptionFactory = (key: string) => DiagnosticDescription;
 
@@ -20,12 +21,12 @@ export class DiagnosticsDuplicateHelper {
 		this.context = context;
 		this.category = descriptionFactory("").category;
 		this.descriptionFactory = descriptionFactory;
-		this.locations = new Map();
+		this.locations = new ExtendedMap("locations", () => []);
 	}
 
 	private category: DiagnosticCategory;
 	private descriptionFactory: DescriptionFactory;
-	private locations: Map<string, Array<undefined | DiagnosticLocation>>;
+	private locations: ExtendedMap<string, Array<undefined | DiagnosticLocation>>;
 	private context: CompilerContext;
 
 	public addLocation(
@@ -41,11 +42,7 @@ export class DiagnosticsDuplicateHelper {
 			return {duplicate: false};
 		}
 
-		let locations = this.locations.get(key);
-		if (locations === undefined) {
-			locations = [];
-			this.locations.set(key, locations);
-		}
+		let locations = this.locations.assert(key);
 		locations.push(location);
 		return {duplicate: locations.length > 1};
 	}

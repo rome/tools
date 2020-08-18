@@ -30,8 +30,9 @@ import {
 	setErrorFrames,
 	setNodeErrorProps,
 } from "@internal/v8";
-import {utf8Decode} from "@internal/codec-binary-serial/utf8";
+import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
+import {ExtendedMap} from "@internal/collections";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
 
@@ -40,10 +41,10 @@ export default class RSERBufferParser {
 		this.view = view;
 		this.bytes = new Uint8Array(view.buffer, view.byteOffset, view.byteLength);
 		this.readOffset = 0;
-		this.references = new Map();
+		this.references = new ExtendedMap("references");
 	}
 
-	private references: Map<number, RSERValueObject>;
+	private references: ExtendedMap<number, RSERValueObject>;
 	private view: DataView;
 	private bytes: Uint8Array;
 	public readOffset: number;
@@ -221,12 +222,7 @@ export default class RSERBufferParser {
 	public decodeReference(): RSERValueObject {
 		this.expectCode(VALUE_CODES.REFERENCE);
 		const id = this.decodeNumber();
-		const ref = this.references.get(id);
-		if (ref === undefined) {
-			throw new Error(`Invalid reference ${id} does not exist`);
-		} else {
-			return ref;
-		}
+		return this.references.assert(id);
 	}
 
 	public decodeValue(): RSERValue {
