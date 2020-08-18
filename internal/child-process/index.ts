@@ -1,6 +1,5 @@
 // Node does not offer any promise-like methods for interacting with child_process other than being able to use
 // util.promisify on exec and execFile
-
 import childProcess = require("child_process");
 import {AbsoluteFilePath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
@@ -11,10 +10,14 @@ interface ChildProcessOptions extends Omit<childProcess.SpawnOptions, "cwd"> {
 
 export class ChildProcess {
 	constructor(command: string, args: Array<string>, opts: ChildProcessOptions) {
-		this.process = childProcess.spawn(command, args, {
-			...opts,
-			cwd: opts.cwd === undefined ? undefined : opts.cwd.join(),
-		});
+		this.process = childProcess.spawn(
+			command,
+			args,
+			{
+				...opts,
+				cwd: opts.cwd === undefined ? undefined : opts.cwd.join(),
+			},
+		);
 		this.command = command;
 		this.args = args;
 		this.output = [];
@@ -22,15 +25,21 @@ export class ChildProcess {
 		const {stdout, stderr} = this.process;
 
 		if (stdout != null) {
-			stdout.on("data", (chunk) => {
-				this.output.push([0, chunk]);
-			});
+			stdout.on(
+				"data",
+				(chunk) => {
+					this.output.push([0, chunk]);
+				},
+			);
 		}
 
 		if (stderr != null) {
-			stderr.on("data", (chunk) => {
-				this.output.push([1, chunk]);
-			});
+			stderr.on(
+				"data",
+				(chunk) => {
+					this.output.push([1, chunk]);
+				},
+			);
 		}
 	}
 
@@ -62,11 +71,13 @@ export class ChildProcess {
 	}
 
 	public unexpected(message: string) {
-		throw new Error(dedent`
+		throw new Error(
+			dedent`
 			${message}
 			Command: ${this.getDisplayCommand()}
 			stderr: ${this.getOutput(false, true)}
-		`)
+		`,
+		);
 	}
 
 	public async waitSuccess(): Promise<this> {
@@ -79,13 +90,20 @@ export class ChildProcess {
 
 	public wait(): Promise<number> {
 		return new Promise((resolve) => {
-			this.process.on("close", (code) => {
-				resolve(code);
-			});
+			this.process.on(
+				"close",
+				(code) => {
+					resolve(code);
+				},
+			);
 		});
 	}
 }
 
-export function spawn(command: string, args: Array<string>, opts: ChildProcessOptions = {}): ChildProcess {
+export function spawn(
+	command: string,
+	args: Array<string>,
+	opts: ChildProcessOptions = {},
+): ChildProcess {
 	return new ChildProcess(command, args, opts);
 }

@@ -59,12 +59,19 @@ class GitVCSClient extends VCSClient {
 	}
 
 	public async getUncommittedFiles(): Promise<Array<string>> {
-		const stdout = (await spawn("git", ["status", "--short"], {cwd: this.root}).waitSuccess()).getOutput(true, false);
+		const stdout = (await spawn("git", ["status", "--short"], {cwd: this.root}).waitSuccess()).getOutput(
+			true,
+			false,
+		);
 		return extractFileList(stdout);
 	}
 
 	public async getModifiedFiles(branch: string): Promise<Array<string>> {
-		const stdout = (await spawn("git", ["diff", "--name-status", branch], {cwd: this.root}).waitSuccess()).getOutput(true, false);
+		const stdout = (await spawn(
+			"git",
+			["diff", "--name-status", branch],
+			{cwd: this.root},
+		).waitSuccess()).getOutput(true, false);
 		return extractFileList(stdout);
 	}
 }
