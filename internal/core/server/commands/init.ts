@@ -142,7 +142,7 @@ export default createServerCommand<Flags>({
 				outer: [
 					{
 						type: "LineComment",
-						value: " For configuration documentation see http://romefrontend.dev/#project-configuration",
+						value: " For configuration documentation see https://romefrontend.dev/#project-configuration",
 					},
 				],
 			},
