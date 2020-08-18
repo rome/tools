@@ -9,6 +9,7 @@ import {
 import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";
+import {ExtendedMap} from "@internal/collections";
 
 type GetPosition = () => Position;
 
@@ -35,7 +36,7 @@ export default class PositionTracker {
 
 		this.latestPosition = offsetPosition;
 
-		this.positionsToIndex = new Map();
+		this.positionsToIndex = new ExtendedMap("positionsToIndex");
 		this.positionsToIndex.set(derivePositionKey(offsetPosition), ob1Number0);
 
 		this.cachedPositions = new Map();
@@ -45,7 +46,7 @@ export default class PositionTracker {
 	private input: string;
 	private latestPosition: Position;
 	public cachedPositions: Map<Number0, Position>;
-	private positionsToIndex: Map<string, Number0>;
+	private positionsToIndex: ExtendedMap<string, Number0>;
 	private getPosition: undefined | GetPosition;
 
 	public getIndexFromPosition(
@@ -57,12 +58,9 @@ export default class PositionTracker {
 				pretty`PositionTracker filename mismatch. DiagnosticLocation filename ${filename} is different than the filename we're tracking of ${this.filename}. Position: ${pos}`,
 			);
 		}
-		const index = this.positionsToIndex.get(derivePositionKey(pos));
-		if (index === undefined) {
-			throw new Error(pretty`No index found for ${pos}`);
-		} else {
-			return index;
-		}
+
+		const index = this.positionsToIndex.assert(derivePositionKey(pos));
+		return index;
 	}
 
 	public getPositionFromIndex(index: Number0): Position {

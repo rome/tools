@@ -4,11 +4,7 @@ import {removeCarriageReturn} from "@internal/string-utils";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {files} = fixture;
-
-	const inputFile = files.get("input.css");
-	if (inputFile === undefined) {
-		throw new Error(`The fixture ${fixture.dir} did not have an input.css`);
-	}
+	const inputFile = files.assert("input.css");
 
 	const filename = inputFile.relative;
 

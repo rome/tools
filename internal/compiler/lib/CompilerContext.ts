@@ -55,6 +55,7 @@ import cleanTransform from "../transforms/cleanTransform";
 import {assertSingleNode} from "@internal/js-ast-utils";
 import VisitorState, {AnyVisitorState} from "./VisitorState";
 import {UnknownObject} from "@internal/typescript-helpers";
+import {ExtendedMap} from "@internal/collections";
 
 export type ContextArg = {
 	ast: AnyRoot;
@@ -125,10 +126,13 @@ export default class CompilerContext {
 		this.suppressions = suppressions;
 		this.visitSuppressions = arg.suppressions === undefined;
 
-		this.visitorStates = new Map();
+		this.visitorStates = new ExtendedMap(
+			"visitorStates",
+			() => new VisitorState(),
+		);
 	}
 
-	private visitorStates: Map<AnyVisitor, AnyVisitorState>;
+	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
 	public displayFilename: string;
 	public filename: string;
 	private mtime: undefined | number;
@@ -155,11 +159,7 @@ export default class CompilerContext {
 	public getVisitorState<State extends UnknownObject>(
 		visitor: Visitor<State>,
 	): VisitorState<State> {
-		let state = this.visitorStates.get(visitor);
-		if (state === undefined) {
-			state = new VisitorState();
-			this.visitorStates.set(visitor, state);
-		}
+		const state = this.visitorStates.assert(visitor);
 		return (state as VisitorState<State>);
 	}
 

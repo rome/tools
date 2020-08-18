@@ -27,6 +27,7 @@ import {
 } from "@internal/ob1";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
+import {ExtendedMap} from "@internal/collections";
 
 type MaterializeCallback = VoidCallback;
 
@@ -40,7 +41,7 @@ export default class SourceMapGenerator {
 		this.file = args.file;
 		this.sourceRoot = args.sourceRoot;
 
-		this.sourcesContents = new Map();
+		this.sourcesContents = new ExtendedMap("sourcesContents");
 		this.map = undefined;
 		this.sources = new ArraySet();
 		this.names = new ArraySet();
@@ -54,7 +55,7 @@ export default class SourceMapGenerator {
 	private sources: ArraySet;
 	private names: ArraySet;
 	private mappings: MappingList;
-	private sourcesContents: Map<string, string>;
+	private sourcesContents: ExtendedMap<string, string>;
 	private map: undefined | SourceMap;
 
 	private assertUnlocked() {
@@ -218,11 +219,7 @@ export default class SourceMapGenerator {
 			if (sourceRoot !== undefined) {
 				source = toRelativeUrl(sourceRoot, source);
 			}
-			const content = this.sourcesContents.get(source);
-			if (content === undefined) {
-				throw new Error("Expected content");
-			}
-			return content;
+			return this.sourcesContents.assert(source);
 		});
 	}
 

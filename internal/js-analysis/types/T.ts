@@ -13,6 +13,7 @@ import {Scope} from "../scopes";
 import Hub from "../Hub";
 import Utils, {HumanBuilder} from "../Utils";
 import {StaticMarkup} from "@internal/markup";
+import {ExtendedMap} from "@internal/collections";
 
 let counter = 0;
 
@@ -93,7 +94,7 @@ export default class T {
 	}
 
 	public clone() {
-		const idsToType: Map<string, T> = new Map();
+		const idsToType: ExtendedMap<string, T> = new ExtendedMap("idsToType");
 
 		const addType: SerialTypeFactory = (type: T) => {
 			const reduced = this.utils.reduce(type);
@@ -108,11 +109,7 @@ export default class T {
 				throw new Error("Expected id to be a string");
 			}
 
-			const type = idsToType.get(id);
-			if (type === undefined) {
-				throw new Error("Expected type");
-			}
-			return type;
+			return idsToType.assert(id);
 		};
 
 		return this.getConstructor().hydrate(

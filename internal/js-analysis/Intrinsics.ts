@@ -8,12 +8,13 @@
 import {Scope} from "./scopes";
 import T from "./types/T";
 import OpenIntrinsicT from "./types/OpenIntrinsicT";
+import {ExtendedMap} from "@internal/collections";
 
 export default class Intrinsics {
 	constructor(scope: Scope) {
 		this.scope = scope;
 
-		this.intrinsicByName = new Map();
+		this.intrinsicByName = new ExtendedMap("intrinsicByName");
 
 		this.NumberPrototype = this.createOpenT("NumberPrototype");
 		this.Number = this.createOpenT("Number");
@@ -32,7 +33,7 @@ export default class Intrinsics {
 	}
 
 	private scope: Scope;
-	private intrinsicByName: Map<string, T>;
+	private intrinsicByName: ExtendedMap<string, T>;
 
 	public String: T;
 	public StringPrototype: T;
@@ -50,11 +51,7 @@ export default class Intrinsics {
 	public NumberPrototype: T;
 
 	public get(name: string): T {
-		const t = this.intrinsicByName.get(name);
-		if (t === undefined) {
-			throw new Error(`No intrinsic found for ${name}`);
-		}
-		return t;
+		return this.intrinsicByName.assert(name);
 	}
 
 	private createOpenT(name: string) {

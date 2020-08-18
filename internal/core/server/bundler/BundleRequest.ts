@@ -271,10 +271,7 @@ export default class BundleRequest {
 				declareCJS(this.graph.getNode(path));
 			}
 
-			const compileResult = this.bundler.compiles.get(path);
-			if (compileResult === undefined) {
-				throw new Error("Expected compile result");
-			}
+			const compileResult = this.bundler.compiles.assert(path);
 
 			push(`  // ${uid}`);
 

@@ -51,6 +51,7 @@ import {
 } from "@internal/path";
 import TestServerWorker from "@internal/core/server/testing/TestServerWorker";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
+import {ExtendedMap} from "@internal/collections";
 
 export class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -125,7 +126,7 @@ export default class TestServer {
 		this.files = new AbsoluteFilePathMap();
 		this.focusedTests = [];
 		this.testFilesStack = [];
-		this.runningTests = new Map();
+		this.runningTests = new ExtendedMap("runningTests");
 
 		this.sourceMaps = new SourceMapConsumerCollection();
 		this.printer = opts.request.createDiagnosticsPrinter(
@@ -157,7 +158,7 @@ export default class TestServer {
 
 	public testFilesStack: Array<AbsoluteFilePath>;
 
-	private runningTests: Map<
+	private runningTests: ExtendedMap<
 		string,
 		{
 			ref: TestRef;
@@ -352,10 +353,7 @@ export default class TestServer {
 
 	private onTestFinished(ref: TestRef) {
 		const key = refToKey(ref);
-		const running = this.runningTests.get(key);
-		if (running === undefined) {
-			throw new Error("Expected there to be a running test");
-		}
+		const running = this.runningTests.assert(key);
 
 		this.logger.info(markup`Finished test ${key}`);
 		if (running.timeout !== undefined) {

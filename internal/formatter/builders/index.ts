@@ -8,8 +8,9 @@
 import {BuilderMethod} from "../Builder";
 
 // rome-ignore lint/ts/noExplicitAny
-const builders: Map<string, BuilderMethod<any>> = new Map();
-
+const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
+	"builders",
+);
 export default builders;
 
 /* GENERATED:START(hash:daa41589ca37b1e553693a9480958c27f971592a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
@@ -514,5 +515,6 @@ builders.set("TSUnionTypeAnnotation", TSUnionTypeAnnotation);
 import TSUnknownKeywordTypeAnnotation from "./js/typescript/TSUnknownKeywordTypeAnnotation";
 builders.set("TSUnknownKeywordTypeAnnotation", TSUnknownKeywordTypeAnnotation);
 import TSVoidKeywordTypeAnnotation from "./js/typescript/TSVoidKeywordTypeAnnotation";
+import {ExtendedMap} from "@internal/collections";
 builders.set("TSVoidKeywordTypeAnnotation", TSVoidKeywordTypeAnnotation);
 /* GENERATED:END(id:main) */

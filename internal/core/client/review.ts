@@ -19,6 +19,7 @@ import {ClientRequestFlags, ServerQueryResponse} from "@internal/core";
 import {Dict} from "@internal/typescript-helpers";
 import {EMPTY_SUCCESS_RESPONSE} from "../server/ServerRequest";
 import {markup} from "@internal/markup";
+import {ExtendedMap} from "@internal/collections";
 
 type State = {
 	initial: boolean;
@@ -114,7 +115,9 @@ async function ask(
 		},
 	};
 
-	const optionToAction: Map<string, DiagnosticAdviceAction> = new Map();
+	const optionToAction: ExtendedMap<string, DiagnosticAdviceAction> = new ExtendedMap(
+		"optionToAction",
+	);
 	const chosenShortcuts: Set<string> = new Set(["n", "escape"]);
 
 	const actionOptions: Dict<SelectOption> = {};
@@ -227,10 +230,7 @@ async function ask(
 		return EMPTY_SUCCESS_RESPONSE;
 	}
 
-	const action = optionToAction.get(answer);
-	if (action === undefined) {
-		throw new Error("Should have found an action for this option");
-	}
+	const action = optionToAction.assert(answer);
 
 	const requestFlags: Partial<ClientRequestFlags> = {
 		...action.requestFlags,

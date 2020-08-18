@@ -58,6 +58,7 @@ import {FilePathLocker, SingleLocker} from "@internal/async/lockers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import {ExtendedMap} from "@internal/collections";
 
 function cleanUidParts(parts: Array<string>): string {
 	let uid = "";
@@ -130,7 +131,7 @@ export default class ProjectManager {
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();
 		this.projectLoadingLocks = new FilePathLocker();
 		this.projectDirectoryToProject = new AbsoluteFilePathMap();
-		this.projects = new Map();
+		this.projects = new ExtendedMap("projects");
 
 		// We maintain these maps so we can reverse any uids, and protect against collisions
 		this.uidToFilename = new Map();
@@ -155,7 +156,7 @@ export default class ProjectManager {
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
 	private projectLoadingLocks: FilePathLocker;
 
-	private projects: Map<number, ProjectDefinition>;
+	private projects: ExtendedMap<number, ProjectDefinition>;
 	private projectDirectoryToProject: AbsoluteFilePathMap<ProjectDefinition>;
 	private projectConfigDependenciesToIds: AbsoluteFilePathMap<Set<number>>;
 	private projectIdCounter: number;
@@ -397,12 +398,7 @@ export default class ProjectManager {
 
 		for (const evictProjectId of projectIds) {
 			// Fetch the project
-			const project = this.projects.get(evictProjectId);
-			if (project === undefined) {
-				throw new Error(
-					`Expected project of id ${evictProjectId} since it was declared in projectConfigLocsToId`,
-				);
-			}
+			const project = this.projects.assert(evictProjectId);
 
 			// Add all parent projects
 			let topProject = project;

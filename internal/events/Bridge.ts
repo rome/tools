@@ -31,6 +31,7 @@ import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import prettyFormat from "@internal/pretty-format";
 import {NodeSystemError} from "@internal/node";
 import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
+import {ExtendedMap} from "@internal/collections";
 
 type ErrorSerial<Data extends RSERValue> = {
 	serialize: (err: Error) => Data;
@@ -48,7 +49,7 @@ export default class Bridge {
 		this.opts = opts;
 
 		this.messageIdCounter = 0;
-		this.events = new Map();
+		this.events = new ExtendedMap("events");
 
 		this.handshakeEvent = new Event({
 			name: "Bridge.handshake",
@@ -108,7 +109,7 @@ export default class Bridge {
 	private messageIdCounter: number;
 
 	// rome-ignore lint/ts/noExplicitAny
-	private events: Map<string, BridgeEvent<any, any>>;
+	private events: ExtendedMap<string, BridgeEvent<any, any>>;
 
 	public listeners: Set<string>;
 	public updatedListenersEvent: Event<Set<string>, void>;
@@ -485,11 +486,7 @@ export default class Bridge {
 			throw new Error("Expected event");
 		}
 
-		const eventHandler = this.events.get(event);
-		if (eventHandler === undefined) {
-			throw new Error("Unknown event");
-		}
-
+		const eventHandler = this.events.assert(event);
 		eventHandler.dispatchResponse(id, data);
 	}
 
@@ -499,10 +496,7 @@ export default class Bridge {
 			throw new Error("Expected event in message request but received none");
 		}
 
-		const eventHandler = this.events.get(event);
-		if (eventHandler === undefined) {
-			throw new Error(`Unknown event ${event}`);
-		}
+		const eventHandler = this.events.assert(event);
 
 		if (id === undefined) {
 			eventHandler.dispatchRequest(param).catch((err) => {

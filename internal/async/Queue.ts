@@ -7,6 +7,7 @@
 
 import createDeferredPromise from "./createDeferredPromise";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
+import {ExtendedMap} from "@internal/collections";
 
 type QueueThread<Metadata> = {
 	running: boolean;
@@ -29,7 +30,13 @@ export default class Queue<Metadata, Thread> {
 		this.runningThreads = [];
 		this.waitingThreads = [];
 
-		this.threads = new Map();
+		this.threads = new ExtendedMap(
+			"threads",
+			() => ({
+				running: false,
+				items: [],
+			}),
+		);
 
 		this.locked = false;
 		this.paused = false;
@@ -45,7 +52,7 @@ export default class Queue<Metadata, Thread> {
 	private runningThreads: Array<Promise<void>>;
 	private waitingThreads: Array<Thread>;
 	private callback: AsyncVoidCallback<[Metadata, Thread]>;
-	private threads: Map<Thread, QueueThread<Metadata>>;
+	private threads: ExtendedMap<Thread, QueueThread<Metadata>>;
 	private locked: boolean;
 	private paused: boolean;
 
@@ -61,14 +68,7 @@ export default class Queue<Metadata, Thread> {
 		const {resolve, promise} = createDeferredPromise<void>();
 
 		// Populate the worker queue for this item
-		let queue = this.threads.get(thread);
-		if (queue === undefined) {
-			queue = {
-				running: false,
-				items: [],
-			};
-			this.threads.set(thread, queue);
-		}
+		const queue = this.threads.assert(thread);
 		queue.items.push([metadata, resolve]);
 
 		if (!queue.running && !this.paused) {

@@ -22,6 +22,7 @@ import {
 	readFile,
 	readFileText,
 } from "@internal/fs";
+import {ExtendedMap} from "@internal/collections";
 
 const dirname = testOptions.dirname ?? "";
 
@@ -42,7 +43,7 @@ export type Fixture = {
 	name: Array<string>;
 	dir: AbsoluteFilePath;
 	options: Consumer;
-	files: Map<string, FixtureFile>;
+	files: ExtendedMap<string, FixtureFile>;
 };
 
 export type FixtureFile = {
@@ -127,7 +128,9 @@ async function _getFixtures(
 	}
 
 	// Get the contents of all the files
-	const fileContents: Map<string, FixtureFile> = new Map();
+	const fileContents: ExtendedMap<string, FixtureFile> = new ExtendedMap(
+		"fileContents",
+	);
 	for (const path of files) {
 		fileContents.set(
 			path.getBasename(),

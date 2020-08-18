@@ -20,6 +20,7 @@ import {Number0, Number1} from "@internal/ob1";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {FilePathLocker} from "../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
+import {ExtendedMap} from "@internal/collections";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -112,16 +113,15 @@ export default class SnapshotManager {
 		);
 		pushNewline();
 
-		const testNameToEntries: Map<string, Map<string, SnapshotEntry>> = new Map();
+		const testNameToEntries: ExtendedMap<string, Map<string, SnapshotEntry>> = new ExtendedMap(
+			"testNameToEntries",
+			() => new Map(),
+		);
 		for (const entry of entries) {
 			if (!entry.used) {
 				continue;
 			}
-			let entriesByTestName = testNameToEntries.get(entry.testName);
-			if (entriesByTestName === undefined) {
-				entriesByTestName = new Map();
-				testNameToEntries.set(entry.testName, entriesByTestName);
-			}
+			let entriesByTestName = testNameToEntries.assert(entry.testName);
 			entriesByTestName.set(entry.entryName, entry);
 		}
 

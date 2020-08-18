@@ -1,0 +1,6 @@
+{
+  "name": "@internal/collections",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
+}

@@ -25,6 +25,7 @@ import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import workerThreads = require("worker_threads");
+import {ExtendedMap} from "@internal/collections";
 
 export type WorkerContainer = {
 	id: number;
@@ -47,7 +48,7 @@ export default class WorkerManager {
 		});
 		this.selfWorker = true;
 		this.locker = new Locker();
-		this.workers = new Map();
+		this.workers = new ExtendedMap("workers");
 		this.idCounter = 0;
 
 		this.logger = server.logger.namespace(markup`[WorkerManager]`);
@@ -59,7 +60,7 @@ export default class WorkerManager {
 	private server: Server;
 	private logger: ReporterNamespace;
 	private selfWorker: boolean;
-	private workers: Map<number, WorkerContainer>;
+	private workers: ExtendedMap<number, WorkerContainer>;
 
 	// We use an idCounter rather than using workers.size due to race conditions
 	// If we use workers.size to generate the next id, then by the time we insert it
@@ -71,11 +72,7 @@ export default class WorkerManager {
 	}
 
 	public getWorkerAssert(id: number): WorkerContainer {
-		const worker = this.workers.get(id);
-		if (worker === undefined) {
-			throw new Error("Expected worker");
-		}
-		return worker;
+		return this.workers.assert(id);
 	}
 
 	public getWorkers(): Array<WorkerContainer> {
