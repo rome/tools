@@ -4,7 +4,7 @@ import {dedent} from "@internal/string-utils";
 import {getBindingIdentifiers} from "@internal/js-ast-utils/getBindingIdentifiers";
 
 test(
-	"test",
+	"verify identified names",
 	async (t) => {
 		const identifiers = getBindingIdentifiers(
 			parseJS({
