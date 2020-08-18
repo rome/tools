@@ -41,9 +41,6 @@ test(
 				).declaration.declarations[0].init as AnyNode),
 			),
 		);
-		t.snapshot(
-			jsClassDeclaration.assert(template.statement`class foo(){ bar(){};}`),
-		);
 		t.true(
 			isFunctionNode(
 				jsClassDeclaration.assert(template.statement`class foo(){ bar(){};}`).meta.body[0],
