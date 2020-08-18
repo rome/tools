@@ -9,6 +9,7 @@ import Hub from "../Hub";
 import {Scope} from "../scopes";
 import {AnyNode} from "@internal/ast";
 import T from "../types/T";
+import {ExtendedMap} from "@internal/collections";
 
 const evaluators: ExtendedMap<
 	string,
@@ -448,6 +449,5 @@ evaluators.set("TSUnionTypeAnnotation", TSUnionTypeAnnotation);
 import TSUnknownKeywordTypeAnnotation from "./typescript/TSUnknownKeywordTypeAnnotation";
 evaluators.set("TSUnknownKeywordTypeAnnotation", TSUnknownKeywordTypeAnnotation);
 import TSVoidKeywordTypeAnnotation from "./typescript/TSVoidKeywordTypeAnnotation";
-import {ExtendedMap} from "@internal/collections";
 evaluators.set("TSVoidKeywordTypeAnnotation", TSVoidKeywordTypeAnnotation);
 /* GENERATED:END(id:main) */

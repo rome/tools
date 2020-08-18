@@ -6,6 +6,7 @@
  */
 
 import {BuilderMethod} from "../Builder";
+import {ExtendedMap} from "@internal/collections";
 
 // rome-ignore lint/ts/noExplicitAny
 const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
@@ -515,6 +516,5 @@ builders.set("TSUnionTypeAnnotation", TSUnionTypeAnnotation);
 import TSUnknownKeywordTypeAnnotation from "./js/typescript/TSUnknownKeywordTypeAnnotation";
 builders.set("TSUnknownKeywordTypeAnnotation", TSUnknownKeywordTypeAnnotation);
 import TSVoidKeywordTypeAnnotation from "./js/typescript/TSVoidKeywordTypeAnnotation";
-import {ExtendedMap} from "@internal/collections";
 builders.set("TSVoidKeywordTypeAnnotation", TSVoidKeywordTypeAnnotation);
 /* GENERATED:END(id:main) */
