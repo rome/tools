@@ -7,10 +7,7 @@
 
 import {AbsoluteFilePath} from "@internal/path";
 import {exists} from "@internal/fs";
-import childProcess = require("child_process");
-import {NodeSystemError} from "@internal/node";
-
-const TIMEOUT = 10_000;
+import {spawn} from "@internal/child-process";
 
 function extractFileList(out: string): Array<string> {
 	const lines = out.trim().split("\n");
@@ -32,72 +29,7 @@ export class VCSClient {
 		this.root = root;
 	}
 
-	private root: AbsoluteFilePath;
-
-	public async exec(
-		command: string,
-		args: Array<string>,
-	): Promise<{
-		stdout: string;
-		exitCode: number;
-	}> {
-		return new Promise((resolve, reject) => {
-			const proc = childProcess.spawn(
-				command,
-				args,
-				{
-					cwd: this.root.join(),
-					timeout: TIMEOUT,
-				},
-			);
-			let stderr = "";
-			let stdout = "";
-
-			proc.stdout.on(
-				"data",
-				(data) => {
-					stdout += data;
-				},
-			);
-
-			proc.stderr.on(
-				"data",
-				(data) => {
-					stderr += data;
-				},
-			);
-
-			function error(message: string) {
-				reject(
-					new Error(
-						`Error while running ${command} ${args.join(" ")}: ${message}. stderr: ${stderr}`,
-					),
-				);
-			}
-
-			proc.on(
-				"error",
-				(err: NodeSystemError) => {
-					if (err.code === "ETIMEDOUT") {
-						error(`Timed out after ${TIMEOUT}ms`);
-					} else {
-						error(err.message);
-					}
-				},
-			);
-
-			proc.on(
-				"close",
-				(exitCode) => {
-					if (exitCode === 0) {
-						resolve({stdout, exitCode});
-					} else {
-						error(`Exited with code ${exitCode}`);
-					}
-				},
-			);
-		});
-	}
+	public root: AbsoluteFilePath;
 
 	public getDefaultBranch(): Promise<string> {
 		throw new Error("unimplemented");
@@ -118,20 +50,21 @@ class GitVCSClient extends VCSClient {
 	}
 
 	public async getDefaultBranch(): Promise<string> {
-		const {exitCode} = await this.exec(
+		const exitCode = await spawn(
 			"git",
 			["show-ref", "--verify", "--quiet", "refs/heads/main"],
-		);
+			{cwd: this.root},
+		).wait();
 		return exitCode === 0 ? "main" : "master";
 	}
 
 	public async getUncommittedFiles(): Promise<Array<string>> {
-		const {stdout} = await this.exec("git", ["status", "--short"]);
+		const stdout = (await spawn("git", ["status", "--short"], {cwd: this.root}).waitSuccess()).getOutput(true, false);
 		return extractFileList(stdout);
 	}
 
 	public async getModifiedFiles(branch: string): Promise<Array<string>> {
-		const {stdout} = await this.exec("git", ["diff", "--name-status", branch]);
+		const stdout = (await spawn("git", ["diff", "--name-status", branch], {cwd: this.root}).waitSuccess()).getOutput(true, false);
 		return extractFileList(stdout);
 	}
 }
