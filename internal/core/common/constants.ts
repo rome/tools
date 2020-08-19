@@ -9,7 +9,8 @@ import packageJson from "../../../package.json";
 import {
 	AbsoluteFilePath,
 	HOME_PATH,
-	createAbsoluteFilePath, TEMP_PATH,
+	TEMP_PATH,
+	createAbsoluteFilePath,
 } from "@internal/path";
 import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
@@ -50,7 +51,10 @@ export const LAG_INTERVAL = 3_000;
 // - https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 // - https://docs.racket-lang.org/basedir/index.html
 
-function getEnvironmentDirectory(key: string, append?: string): undefined | AbsoluteFilePath {
+function getEnvironmentDirectory(
+	key: string,
+	append?: string,
+): undefined | AbsoluteFilePath {
 	const env = process.env[key];
 	if (env === undefined) {
 		return undefined;
@@ -64,7 +68,10 @@ function getEnvironmentDirectory(key: string, append?: string): undefined | Abso
 }
 
 function getLocalAppDataDir(): AbsoluteFilePath {
-	return getEnvironmentDirectory("LOCALAPPDATA", "Rome") ?? HOME_PATH.append("AppData", "Local", "Rome");
+	return (
+		getEnvironmentDirectory("LOCALAPPDATA", "Rome") ??
+		HOME_PATH.append("AppData", "Local", "Rome")
+	);
 }
 
 // ## User config directory
@@ -79,7 +86,7 @@ function getUserConfigDirectory(): AbsoluteFilePath {
 		return XDG_CONFIG_HOME;
 	}
 
-	if (process.platform === 'win32') {
+	if (process.platform === "win32") {
 		return getLocalAppDataDir().append("Config");
 	}
 
@@ -97,7 +104,9 @@ export const USER_CONFIG_FILENAMES: Array<string> = [
 	"config.rjson",
 ];
 
-export const DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY = USER_CONFIG_DIRECTORY.append("recovery");
+export const DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY = USER_CONFIG_DIRECTORY.append(
+	"recovery",
+);
 
 // ## Cache
 // TODO
