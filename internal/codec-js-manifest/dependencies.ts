@@ -503,7 +503,11 @@ export function parseDependencyPattern(
 
 	const unsupportedMatch = pattern.match(UNSUPPORTED_PATTERN);
 	if (unsupportedMatch != null) {
-		throw consumer.unexpected(descriptions.MANIFEST.UNSUPPORTED_DEPENDENCY_PATTERN_PREFIX(unsupportedMatch[1]));
+		throw consumer.unexpected(
+			descriptions.MANIFEST.UNSUPPORTED_DEPENDENCY_PATTERN_PREFIX(
+				unsupportedMatch[1],
+			),
+		);
 	}
 
 	return parseSemver(pattern, consumer, loose);
