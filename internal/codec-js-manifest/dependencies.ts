@@ -77,6 +77,9 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 
 		case "link":
 			return `${LINK_PREFIX}${pattern.path.join()}`;
+
+		case "workspace":
+			return `${WORKSPACE_PREFIX}${pattern.path}`;
 	}
 }
 
@@ -298,7 +301,7 @@ const WORKSPACE_PREFIX = "workspace:";
 
 type WorkspacePattern = {
 	type: "workspace";
-	path: UnknownPath;
+	path: string;
 };
 
 function parseWorkspace(pattern: string): WorkspacePattern {
@@ -452,6 +455,9 @@ export function parseGitDependencyPattern(
 	return undefined;
 }
 
+// Check if we received something that looks like a pattern that we don't support
+const UNSUPPORTED_PATTERN = /^([a-z]+):/i;
+
 export function parseDependencyPattern(
 	consumer: Consumer,
 	loose: boolean,
@@ -493,6 +499,11 @@ export function parseDependencyPattern(
 
 	if (pattern.match(TAG_REGEX)) {
 		return parseTag(pattern);
+	}
+
+	const unsupportedMatch = pattern.match(UNSUPPORTED_PATTERN);
+	if (unsupportedMatch != null) {
+		throw consumer.unexpected(descriptions.MANIFEST.UNSUPPORTED_DEPENDENCY_PATTERN_PREFIX(unsupportedMatch[1]));
 	}
 
 	return parseSemver(pattern, consumer, loose);
