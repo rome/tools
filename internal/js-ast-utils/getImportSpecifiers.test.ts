@@ -14,9 +14,9 @@ test(
 		const imports = parseJS({
 			path: "unknown",
 			input: dedent`
-			import {foo} from "bar";
-			import Hello from "world";
-			import {one, two, three} from "words/numbers";
+				import {foo} from "bar";
+				import Hello from "world";
+				import {one, two, three} from "words/numbers";
 			`,
 		}).body;
 
