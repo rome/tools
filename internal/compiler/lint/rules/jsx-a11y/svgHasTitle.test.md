@@ -15,7 +15,7 @@
     <svg>foo</svg>
     ^^^^^^^^^^^^^^
 
-  ℹ For accessibility purposes, SVGs should have a title.
+  ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -36,18 +36,17 @@
 
 ```
 
- lint/jsx-a11y/svgHasTitle/reject/2/file.tsx:1 lint/jsx-a11y/svgHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/svgHasTitle/reject/2/file.tsx:2:8 lint/jsx-a11y/svgHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Provide title when using svg
+  ✖ Alternative text title element cannot be empty
 
-  > 1 │ <svg>
-      │ ^^^^^
+    1 │ <svg>
   > 2 │         <title></title>
-  > 3 │         <circle />
-  > 4 │     </svg>
-      │ ^^^^^^^^^^
+      │         ^^^^^^^^^^^^^^^
+    3 │         <circle />
+    4 │     </svg>
 
-  ℹ For accessibility purposes, SVGs should have a title.
+  ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

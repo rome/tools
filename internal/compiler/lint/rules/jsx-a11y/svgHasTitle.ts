@@ -1,7 +1,7 @@
-import {createVisitor, signals} from "@internal/compiler";
+import {createVisitor, signals, Path} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-import {cleanJSXText, isJSXElement} from "@internal/js-ast-utils";
-import {JSXElement} from "@internal/ast";
+import {cleanJSXText, isJSXElement, hasJSXAttribute} from "@internal/js-ast-utils";
+import {JSXElement, AnyNode} from "@internal/ast";
 
 const SVG_SHAPES = [
 	"circle",
@@ -14,30 +14,46 @@ const SVG_SHAPES = [
 ];
 const SVG_GROUP = "g";
 
-function hasSvgTitle(node: JSXElement): boolean {
+function hasSvgTitle(node: JSXElement, path: Path): boolean {
+
+
+
 	if (!node.children) {
 		return false;
 	}
-	const title = (node.children.find((child) => isJSXElement(child, "title")) as JSXElement);
 
-	return title
-		? title.children[0]?.type === "JSXText" &&
-			!!cleanJSXText(title.children[0].value)
-		: false;
+		if(hasJSXAttribute(node, 'aria-hidden')) {
+		return true;
+	}
+	const title = (node.children.find((child) => isJSXElement(child, "title")) as JSXElement);
+	const hasTitle = !!title;
+
+	if(hasTitle && (title.children[0]?.type !== "JSXText" || !cleanJSXText(title.children[0].value))) {
+		path.context.addNodeDiagnostic(
+			title,
+			descriptions.LINT.JSX_A11Y_SVG_TITLE_IS_EMPTY,
+		);
+		return true
+	}
+
+	return hasTitle;
 }
 
-function processChild(node: JSXElement): boolean {
-	const svgShape = SVG_SHAPES.find((shape) => isJSXElement(node, shape));
+function processChild(node: AnyNode, path: Path): boolean {
+	if(node.type !== "JSXElement") {
+		return false;
+	}
+	const hasSvgShape = SVG_SHAPES.some((shape) => isJSXElement(node, shape));
 	const isSvgGroup = isJSXElement(node, SVG_GROUP);
 	const svgGroupHasTitle =
 		isSvgGroup &&
-		!!node.children.find((child) => processChild((child as JSXElement)));
+		node.children.some((child) => processChild((child), path));
 	return (
-		hasSvgTitle(node) ||
+		hasSvgTitle(node, path) ||
 		(isSvgGroup && svgGroupHasTitle) ||
-		(!!svgShape &&
-		!!SVG_SHAPES.find((shape) => isJSXElement(node, shape)) &&
-		hasSvgTitle(node))
+		(hasSvgShape &&
+		SVG_SHAPES.some((shape) => isJSXElement(node, shape)) &&
+		hasSvgTitle(node, path))
 	);
 }
 
@@ -47,9 +63,9 @@ export default createVisitor({
 		const {node} = path;
 		if (
 			isJSXElement(node, "svg") &&
-			!hasSvgTitle(node) &&
-			!node.children.find((child) =>
-				child.type === "JSXElement" && processChild(child)
+			!hasSvgTitle(node, path) &&
+			!node.children.some((child) =>
+				child.type === "JSXElement" && processChild(child, path)
 			)
 		) {
 			path.context.addNodeDiagnostic(
