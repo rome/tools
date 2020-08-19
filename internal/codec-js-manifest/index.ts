@@ -37,6 +37,7 @@ import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
 import {ProjectDefinition} from "@internal/project";
+import ProjectManager from "@internal/core/server/project/ProjectManager";
 
 export * from "./types";
 
@@ -648,6 +649,7 @@ export async function normalizeManifest(
 
 	const name = normalizeRootName(consumer, loose);
 	const version = normalizeVersion(consumer, loose);
+	const source = projectManager.findLoadedProject(path);
 
 	if (loose) {
 		normalizeCompatManifest(consumer, name, version);
