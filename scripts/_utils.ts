@@ -1,7 +1,11 @@
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {
-	Dir,
-	openDirectory,
+  AbsoluteFilePath,
+  AbsoluteFilePathSet,
+  createAbsoluteFilePath
+} from "@internal/path";
+import {
+  lstat,
+  readDirectory,
 	readFileText,
 	writeFile as writeFileReal,
 } from "@internal/fs";
@@ -262,12 +266,12 @@ export async function execDev(args: Array<string>): Promise<void> {
 	);
 }
 
-async function getSubDirectories(dir: Dir): Promise<Array<string>> {
+async function getSubDirectories(files: AbsoluteFilePathSet): Promise<Array<string>> {
 	const subDirs: Array<string> = [];
 
-	for await (const dirent of dir) {
-		if (dirent.isDirectory()) {
-			subDirs.push(dirent.name);
+	for await (const file of files) {
+		if((await lstat(file)).isDirectory()) {
+			subDirs.push(file.getBasename());
 		}
 	}
 
@@ -276,7 +280,7 @@ async function getSubDirectories(dir: Dir): Promise<Array<string>> {
 
 export async function getLanguages(): Promise<Array<string>> {
 	const astPath = INTERNAL.append("ast");
-	const astDir = await openDirectory(astPath);
+	const astDir = await readDirectory(astPath);
 
 	return getSubDirectories(astDir);
 }
@@ -285,7 +289,7 @@ export async function getLanguageCategories(
 	language: string,
 ): Promise<Array<string>> {
 	const languagePath = INTERNAL.append("ast", language);
-	const languageDir = await openDirectory(languagePath);
+	const languageDir = await readDirectory(languagePath);
 
 	return getSubDirectories(languageDir);
 }
