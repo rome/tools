@@ -38,9 +38,7 @@ export async function main(
 
 		reporter.info(markup`The following languages are valid:`);
 
-		languages.forEach((languageName) => {
-			reporter.log(markup`${languageName}`);
-		});
+		reporter.list(languages.map((languageName) => markup`${languageName}`));
 		return 1;
 	}
 
