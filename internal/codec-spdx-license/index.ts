@@ -28,11 +28,11 @@ for (const license of data.licenses) {
 
 export {licenseNames};
 
-export {ExpressionNode as SPDXExpressionNode} from "./parse";
+export {ExpressionNode as SPDXExpressionNode} from "./types";
 
 export function getSPDXLicense(licenseId: string): undefined | License {
 	return idToLicense.get(licenseId.toLowerCase());
 }
 
-export {default as parseSPDXLicense} from "./parse";
 export {default as stringifySPDXLicense} from "./stringify";
+export {default as SpdxLicenseCodec} from "./SpdxLicenseCodec";

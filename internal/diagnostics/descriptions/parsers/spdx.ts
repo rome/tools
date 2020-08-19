@@ -4,7 +4,11 @@ import {buildSuggestionAdvice} from "../../helpers";
 
 // @internal/codec-spdx-license
 export const spdx = createDiagnosticsCategory({
-	UNKNOWN_LICENSE: (id: string, knownLicenses: Array<string>) => ({
+	UNKNOWN_LICENSE: (
+		id: string,
+		knownLicenses: Array<string>,
+		packageName?: string,
+	) => ({
 		message: markup`Unknown license <emphasis>${id}</emphasis>`,
 		advice: [
 			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
@@ -12,6 +16,15 @@ export const spdx = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information.`,
+			},
+			{
+				type: "log",
+				category: "info",
+				text: markup`To automatically add an exception for this license, run:`,
+			},
+			{
+				type: "command",
+				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${packageName}"`,
 			},
 		],
 	}),

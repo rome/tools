@@ -9,7 +9,7 @@ import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
 	SPDXExpressionNode,
-	parseSPDXLicense,
+	SpdxLicenseCodec,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -32,6 +32,8 @@ import {RelativeFilePathMap, createRelativeFilePath} from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
+import ProjectManager from "@internal/core/server/project/ProjectManager";
+import {ProjectDefinition} from "@internal/project";
 
 export * from "./types";
 
@@ -177,6 +179,7 @@ const INVALID_IGNORE_LICENSES = [
 function normalizeLicense(
 	consumer: Consumer,
 	loose: boolean,
+	source: ProjectDefinition | undefined,
 ): undefined | SPDXExpressionNode {
 	if (!consumer.has("license")) {
 		return undefined;
@@ -209,6 +212,10 @@ function normalizeLicense(
 	}
 
 	// Parse as a SPDX expression
+	const spdxLisenceCode = new SpdxLicenseCodec({
+		consumer,
+		source,
+	});
 	return tryParseWithOptionalOffsetPosition(
 		{
 			loose,
@@ -217,7 +224,7 @@ function normalizeLicense(
 		},
 		{
 			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
-			parse: (opts) => parseSPDXLicense(opts),
+			parse: (opts) => spdxLisenceCode.parse(opts),
 		},
 	);
 }
@@ -633,6 +640,7 @@ export async function normalizeManifest(consumer: Consumer): Promise<Manifest> {
 
 	const name = normalizeRootName(consumer, loose);
 	const version = normalizeVersion(consumer, loose);
+	const source = projectManager.findLoadedProject(path);
 
 	if (loose) {
 		normalizeCompatManifest(consumer, name, version);
@@ -643,7 +651,7 @@ export async function normalizeManifest(consumer: Consumer): Promise<Manifest> {
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(consumer, loose),
+		license: normalizeLicense(consumer, loose, source),
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),

@@ -18,6 +18,13 @@ lint: {
 	ignore: []
 	globals: []
 }
+dependencies: {
+	exceptions: {
+		invalidLicenses: {
+			"funky-licence": ["lib@1.0.0", "lib@1.1.0", "other-lib@2.0.0"]
+		}
+	}
+}
 ```
 
 ### Properties
@@ -74,6 +81,23 @@ Custom variables you want to declare as global.
 ```bash
 rome config push lint.globals SomeGlobal
 ```
+
+### `dependencies.exceptions`
+
+Custom exceptions that belong to the dependencies of the project.
+
+#### `dependencies.exceptions.invalidLicenses`
+
+Sometimes rome might complain that one or more of your dependencies has invalid license.
+
+Optionally, you can insert the name of this invalid license here:
+
+```bash
+rome config push dependencies.exceptions.invalidLicenses.invalid-license-name "third-party-lib@0.1.0"
+```
+
+If you are unsure about the license name of your library, rome will suggest the command for
+you when you try to run a command.
 
 ### Supported Locations
 

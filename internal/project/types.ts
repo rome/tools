@@ -30,6 +30,10 @@ export type ProjectDefinition = {
 	initialized: boolean;
 };
 
+export type DependenciesExceptions = {
+	invalidLicenses: Map<string, Array<string>>;
+};
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
 	cache: {};
@@ -62,6 +66,7 @@ export type ProjectConfigObjects = {
 	};
 	dependencies: {
 		enabled: boolean;
+		exceptions: DependenciesExceptions;
 	};
 	targets: Map<string, ProjectConfigTarget>;
 };
@@ -142,6 +147,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		},
 		dependencies: {
 			enabled: false,
+			exceptions: {
+				invalidLicenses: new Map(),
+			},
 		},
 		lint: {
 			ignore: [],

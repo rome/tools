@@ -240,7 +240,21 @@ export async function normalizeProjectConfig(
 	const dependencies = consumer.get("dependencies");
 	if (categoryExists(dependencies)) {
 		if (dependencies.has("enabled")) {
-			config.dependencies.enabled = dependencies.get("dependencies").asBoolean();
+			config.dependencies.enabled = dependencies.get("enabled").asBoolean();
+		}
+		if (dependencies.has("exceptions")) {
+			const exceptions = dependencies.get("exceptions").asMap();
+
+			const invalidLicenses = exceptions.get("invalidLicenses");
+			if (invalidLicenses) {
+				let licenses: Map<string, Array<string>> = new Map();
+				for (const [name, packages] of invalidLicenses.asMap()) {
+					licenses.set(name, packages.asMappedArray((c) => c.asString()));
+				}
+				config.dependencies.exceptions = {
+					invalidLicenses: licenses,
+				};
+			}
 		}
 	}
 
