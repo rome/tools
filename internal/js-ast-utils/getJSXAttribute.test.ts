@@ -20,8 +20,8 @@ test(
 			parseJS({
 				path: "unknown",
 				input: dedent`
-		<div className="foo" onClick={() => {alert("hello")}} custom={true} other={{one: "first", two: "second"}}/>
-		`,
+					<div className="foo" onClick={() => {alert("hello")}} custom={true} other={{one: "first", two: "second"}}/>
+				`,
 			}).body[0],
 		).expression as JSXElement);
 
