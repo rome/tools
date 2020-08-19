@@ -53,9 +53,7 @@ export async function main(
 
 		reporter.info(markup`The following categories are valid for ${language}:`);
 
-		categories.forEach((categoryName) => {
-			reporter.log(markup`${categoryName}`);
-		});
+		reporter.list(categories.map((categoryName) => markup`${categoryName}`);
 		return 1;
 	}
 
