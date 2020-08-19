@@ -9,7 +9,7 @@ import {AbsoluteFilePath} from "@internal/path";
 import {exists} from "@internal/fs";
 import {spawn} from "@internal/child-process";
 
-function extractFileList(out: string): Array<string> {
+export function extractFileList(out: string): Array<string> {
 	const lines = out.trim().split("\n");
 
 	const files: Array<string> = [];
