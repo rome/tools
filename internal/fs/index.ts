@@ -61,6 +61,7 @@ export type FileHandle = fs.promises.FileHandle;
 export type WriteStream = fs.WriteStream;
 export type ReadStream = fs.ReadStream;
 export type FSWatcher = fs.FSWatcher;
+export type Dir = fs.Dir;
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.

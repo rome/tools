@@ -1,4 +1,12 @@
-import {INTERNAL, reporter, writeFile} from "./_utils";
+import {
+	INTERNAL,
+	getLanguageCategories,
+	getLanguages,
+	languageCategoryExists,
+	languageExists,
+	reporter,
+	writeFile,
+} from "./_utils";
 import {exists} from "@internal/fs";
 import {dedent, toCamelCase} from "@internal/string-utils";
 import {markup} from "@internal/markup";
@@ -18,6 +26,36 @@ export async function main(
 		reporter.error(
 			markup`Node type argument "${nodeType}" must have the language prefix "${language}"`,
 		);
+		return 1;
+	}
+
+	if (!(await languageExists(language))) {
+		const languages = await getLanguages();
+
+		reporter.error(
+			markup`Language argument "${language}" is not a valid language`,
+		);
+
+		reporter.info(markup`The following languages are valid:`);
+
+		languages.forEach((languageName) => {
+			reporter.log(markup`${languageName}`);
+		});
+		return 1;
+	}
+
+	if (!(await languageCategoryExists(language, category))) {
+		const categories = await getLanguageCategories(language);
+
+		reporter.error(
+			markup`Category argument "${category}" is not a valid category for "${language}"`,
+		);
+
+		reporter.info(markup`The following categories are valid for ${language}:`);
+
+		categories.forEach((categoryName) => {
+			reporter.log(markup`${categoryName}`);
+		});
 		return 1;
 	}
 
