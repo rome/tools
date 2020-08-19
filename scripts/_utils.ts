@@ -1,11 +1,11 @@
 import {
-  AbsoluteFilePath,
-  AbsoluteFilePathSet,
-  createAbsoluteFilePath
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	createAbsoluteFilePath,
 } from "@internal/path";
 import {
-  lstat,
-  readDirectory,
+	lstat,
+	readDirectory,
 	readFileText,
 	writeFile as writeFileReal,
 } from "@internal/fs";
@@ -266,11 +266,13 @@ export async function execDev(args: Array<string>): Promise<void> {
 	);
 }
 
-async function getSubDirectories(files: AbsoluteFilePathSet): Promise<Array<string>> {
+async function getSubDirectories(
+	files: AbsoluteFilePathSet,
+): Promise<Array<string>> {
 	const subDirs: Array<string> = [];
 
 	for await (const file of files) {
-		if((await lstat(file)).isDirectory()) {
+		if ((await lstat(file)).isDirectory()) {
 			subDirs.push(file.getBasename());
 		}
 	}
