@@ -216,11 +216,11 @@ export default class Parser<T> {
 					this.setFlag(camelName, String(rawArgs.shift()));
 				}
 
-				this.flagToArgIndex.set(camelName, this.args.length);
-
 				if (arg[0] === "-" && arg[1] !== "-") {
 					this.shorthandFlags.add(camelName);
 				}
+
+				this.flagToArgIndex.set(camelName, this.args.length);
 			} else {
 				// Not a flag and hasn't been consumed already by a previous arg so it must be a file
 				this.args.push(arg);
@@ -375,10 +375,15 @@ export default class Parser<T> {
 			consumer.markUsedProperty(key);
 		}
 
-		for (const shorthandName of this.shorthandFlags) {
-			consumer.get(shorthandName).unexpected(
-				descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
-			);
+		for (const [key] of this.flags) {
+			if (this.shorthandFlags.has(key)) {
+				const def = this.declaredFlags.get(key)?.definition;
+				if (def && def.metadata?.alternateName !== key) {
+					consumer.get(key).unexpected(
+						descriptions.FLAGS.UNSUPPORTED_SHORTHAND(key),
+					);
+				}
+			}
 		}
 
 		for (const incorrectName of this.incorrectCaseFlags) {
@@ -530,6 +535,7 @@ export default class Parser<T> {
 			"help",
 			{
 				description: markup`Show this help screen`,
+				alternateName: "h",
 			},
 		).asBoolean(false);
 
@@ -550,9 +556,7 @@ export default class Parser<T> {
 				}
 			}
 
-			if (!shouldShowHelp) {
-				this.checkBadFlags(consumer, definedCommand);
-			}
+			this.checkBadFlags(consumer, definedCommand);
 
 			this.currentCommand = undefined;
 
@@ -624,6 +628,10 @@ export default class Parser<T> {
 				argCol += ` <${inputName}>`;
 			}
 
+			if (metadata.alternateName) {
+				argCol += `, -${metadata.alternateName}`;
+			}
+
 			// Set arg col length if we'll be longer
 			if (argColumnLength < argCol.length) {
 				argColumnLength = argCol.length;
@@ -654,7 +662,10 @@ export default class Parser<T> {
 
 			optionOutput.push({
 				argName,
-				arg: concatMarkup(highlightShell({input: argCol}), markup` `),
+				arg: concatMarkup(
+					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
+					markup` `,
+				),
 				description: descCol,
 			});
 		}

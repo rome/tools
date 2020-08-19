@@ -4,7 +4,9 @@ import {toKebabCase} from "@internal/string-utils";
 import {DiagnosticAdvice} from "../types";
 
 export const flags = createDiagnosticsCategory({
-	UNSUPPORTED_SHORTHANDS: {message: markup`Shorthand flags are not supported`},
+	UNSUPPORTED_SHORTHAND: (flag: string) => ({
+		message: markup`The <emphasis>-${flag}</emphasis> flag is not a valid shorthand flag`,
+	}),
 	INCORRECT_CASED_FLAG: (flag: string) => ({
 		message: markup`Incorrect cased flag name`,
 		advice: [

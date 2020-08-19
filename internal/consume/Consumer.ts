@@ -614,8 +614,12 @@ export default class Consumer {
 
 	public get(key: string, metadata?: ConsumePropertyMetadata): Consumer {
 		const value = this.asOriginalUnknownObject();
-		this.markUsedProperty(key);
-		return this.fork(key, value[key], metadata);
+		const valueKey =
+			metadata?.alternateName && this.has(metadata.alternateName)
+				? metadata.alternateName
+				: key;
+		this.markUsedProperty(valueKey);
+		return this.fork(key, value[valueKey], metadata);
 	}
 
 	public getIndex(index: number): Consumer {
