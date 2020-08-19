@@ -10,16 +10,16 @@ test(
 			parseJS({
 				path: "unknown",
 				input: dedent`
-			const foo = "bar";
+					const foo = "bar";
 
-			function hello() {
-				return "world";
-			}
+					function hello() {
+						return "world";
+					}
 
-			function test() {
-				return "passed";
-			}
-			`,
+					function test() {
+						return "passed";
+					}
+				`,
 			}).body,
 		);
 
