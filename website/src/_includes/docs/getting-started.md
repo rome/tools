@@ -5,13 +5,13 @@
 Rome is available for installation via [Yarn](https://yarnpkg.com/):
 
 ```bash
-yarn add rome
+yarn global add rome
 ```
 
 or [npm](https://www.npmjs.com/):
 
 ```bash
-npm install rome
+npm install -g rome
 ```
 
 ### Creating a Project
