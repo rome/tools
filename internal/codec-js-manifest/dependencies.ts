@@ -27,7 +27,8 @@ export type DependencyPattern =
 	| FilePattern
 	| TagPattern
 	| NpmPattern
-	| LinkPattern;
+	| LinkPattern
+	| WorkspacePattern;
 
 export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
 
@@ -100,7 +101,7 @@ function removePrefix(prefix: string, value: string): string {
 	}
 }
 
-//# GIST
+//# Gist
 
 const GIST_PREFIX = "gist:";
 
@@ -116,7 +117,7 @@ function parseGist(pattern: string): GistPattern {
 	};
 }
 
-//# HOSTED GIT
+//# Hosted Gist
 export type HostedGitHost = "bitbucket" | "github" | "gitlab";
 
 type IncompleteHostedGitPattern = {
@@ -196,7 +197,7 @@ export function getHostedGitURL(pattern: IncompleteHostedGitPattern): string {
 	}
 }
 
-//# REGULAR GIT
+//# Regular Git
 type GitPattern = UrlWithHash & {
 	type: "git";
 };
@@ -216,7 +217,7 @@ function parseGit(pattern: string, consumer: Consumer): GitPattern {
 	};
 }
 
-//# TARBALL
+//# HTTP Tarball
 type HTTPTarballPattern = UrlWithHash & {
 	type: "http-tarball";
 };
@@ -231,7 +232,7 @@ function parseHttpTarball(
 	};
 }
 
-//# SEMVER
+//# Semver Range
 type SemverPattern = {
 	type: "semver";
 	range: SemverRangeNode;
@@ -260,7 +261,7 @@ function parseSemver(
 	};
 }
 
-//# FILE
+//# File
 const FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
 type FilePattern = {
@@ -275,7 +276,7 @@ function parseFile(pattern: string): FilePattern {
 	};
 }
 
-//# TAG
+//# Tag
 
 // This regex will likely need to be refined, not sure what the allowable characters of a tag are
 const TAG_REGEX = /^[a-z]+$/g;
@@ -292,7 +293,22 @@ function parseTag(pattern: string): TagPattern {
 	};
 }
 
-//# LINK
+//# Workspace
+const WORKSPACE_PREFIX = "workspace:";
+
+type WorkspacePattern = {
+	type: "workspace";
+	path: UnknownPath;
+};
+
+function parseWorkspace(pattern: string): WorkspacePattern {
+	return {
+		type: "workspace",
+		path: pattern.slice(WORKSPACE_PREFIX.length),
+	};
+}
+
+//# Link
 const LINK_PREFIX = "link:";
 
 type LinkPattern = {
@@ -307,7 +323,7 @@ function parseLink(pattern: string): LinkPattern {
 	};
 }
 
-//# NPM
+//# Explicit npm
 const NPM_PREFIX = "npm:";
 
 type NpmPattern = {
@@ -449,6 +465,10 @@ export function parseDependencyPattern(
 
 	if (pattern.startsWith("http://") || pattern.startsWith("https://")) {
 		return parseHttpTarball(pattern, consumer);
+	}
+
+	if (pattern.startsWith(WORKSPACE_PREFIX)) {
+		return parseWorkspace(pattern);
 	}
 
 	if (pattern.startsWith(GIST_PREFIX)) {
