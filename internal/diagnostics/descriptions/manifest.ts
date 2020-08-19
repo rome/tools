@@ -37,4 +37,7 @@ export const manifest = createDiagnosticsCategory({
 	TYPO: (typoKey: string, correctKey: string) => ({
 		message: markup`${typoKey} is a typo of ${correctKey}`,
 	}),
+	UNSUPPORTED_DEPENDENCY_PATTERN_PREFIX: (prefix: string) => ({
+		message: markup`Unsupported dependency pattern prefix <emphasis>${prefix}</emphasis>`,
+	}),
 });
