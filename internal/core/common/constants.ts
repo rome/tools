@@ -90,7 +90,6 @@ function getUserConfigDirectory(): AbsoluteFilePath {
 		return getLocalAppDataDir().append("Config");
 	}
 
-	// TODO
 	if (process.platform === "darwin") {
 		return HOME_PATH.append("Library", "Preferences", "Rome");
 	}
@@ -109,7 +108,7 @@ export const DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY = USER_CONFIG_DIRECTORY.appe
 );
 
 // ## Cache
-// TODO
+// User specific non-essential data files
 
 // XDG/Linux: ~/.cache/rome
 // Windows: ~/AppData/Local/Temp/Rome
@@ -135,7 +134,7 @@ function getCacheDirectory(): AbsoluteFilePath {
 export const DEFAULT_CACHE_PATH = getCacheDirectory();
 
 // ## Data
-// TODO
+// User specific data files
 
 // XDG/Linux: ~/.local/share/rome
 // Windows: ~/AppData/Local/Rome/Data
