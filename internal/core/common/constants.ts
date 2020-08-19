@@ -60,7 +60,7 @@ function getEnvironmentDirectory(
 		return undefined;
 	}
 
-	let dir = createAbsoluteFilePath(key);
+	let dir = createAbsoluteFilePath(env);
 	if (append !== undefined) {
 		dir = dir.append(append);
 	}
