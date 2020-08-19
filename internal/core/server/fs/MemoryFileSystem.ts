@@ -8,6 +8,7 @@
 import Server from "../Server";
 import {
 	ManifestDefinition,
+	manifestNameToString,
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
@@ -651,11 +652,25 @@ export default class MemoryFileSystem {
 
 		const {
 			manifest,
-			diagnostics: normalizedDiagnostics,
+			diagnostics: rawDiagnostics,
 		} = await normalizeManifest(path, consumer);
 
 		// If manifest is undefined then we failed to validate and have diagnostics
-		if (normalizedDiagnostics.length > 0) {
+		if (rawDiagnostics.length > 0) {
+			const normalizedDiagnostics = rawDiagnostics.map((diag) => ({
+			...diag,
+			description: {
+				...diag.description,
+				advice: [
+					...diag.description.advice,
+					{
+						type: <'log'> "log",
+						category: <'info'> "info",
+						text: markup`Error occurred for package <emphasis>${manifestNameToString(manifest.name)}</emphasis> at <emphasis>${path.getParent()}</emphasis>`,
+					},
+				],
+			},
+		}));
 			diagnostics.addDiagnostics(normalizedDiagnostics);
 			return;
 		}
