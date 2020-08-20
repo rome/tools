@@ -30,8 +30,9 @@ export type ProjectDefinition = {
 	initialized: boolean;
 };
 
+export type  InvalidLicenses = Map<string, Array<{name: string, range: SemverRangeNode}>>
 export type DependenciesExceptions = {
-	invalidLicenses: Map<string, {name: string, range: SemverRange}>;
+	invalidLicenses: InvalidLicenses;
 };
 
 // Project config objects to categorize settings

@@ -816,6 +816,16 @@ export default class ProjectManager {
 		return this.projectDirectoryToProject.get(path);
 	}
 
+	/**
+	 * Given a path, it returns the list of projects
+	 * @param path
+	 */
+	public getProjectHierarchyFromPath(path: AbsoluteFilePath): ProjectDefinition[] {
+		return this.server.projectManager.getHierarchyFromProject(
+			this.server.projectManager.assertProjectExisting(path)
+		);
+	}
+
 	public findLoadedProject(
 		path: AbsoluteFilePath,
 	): undefined | ProjectDefinition {

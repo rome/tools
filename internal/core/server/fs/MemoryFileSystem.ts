@@ -653,8 +653,9 @@ export default class MemoryFileSystem {
 			consumeDiagnosticCategory: "parse/manifest",
 		});
 
+		const projects = this.server.projectManager.getProjectHierarchyFromPath(path);
 		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
-		const manifest = await normalizeManifest(normalizeConsumer);
+		const manifest = await normalizeManifest(path, normalizeConsumer, projects);
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {

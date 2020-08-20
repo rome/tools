@@ -3,12 +3,28 @@ import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../../helpers";
 
 // @internal/codec-spdx-license
+
+type UnknownLicense = {
+	id: string,
+	knownLicenses: Array<string>,
+	packageName: string,
+	packageVersion: string,
+}
+
+type UnknowLicenseInVersion = {
+	id: string,
+	packageVersionInConfig: string;
+	newPackageVersion: string;
+	packageName: string
+}
+
 export const spdx = createDiagnosticsCategory({
-	UNKNOWN_LICENSE: (
-		id: string,
-		knownLicenses: Array<string>,
-		packageName?: string,
-	) => ({
+	UNKNOWN_LICENSE: ({
+		id,
+		knownLicenses,
+		packageName,
+		packageVersion,
+	}: UnknownLicense) => ({
 		message: markup`Unknown license <emphasis>${id}</emphasis>`,
 		advice: [
 			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
@@ -24,7 +40,27 @@ export const spdx = createDiagnosticsCategory({
 			},
 			{
 				type: "command",
-				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${packageName}"`,
+				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${packageName}@${packageVersion}"`,
+			},
+		],
+	}),
+
+	UNKNOWN_LICENSE_IN_VERSION: ({
+		id,
+		packageName,
+	 	packageVersionInConfig,
+		newPackageVersion
+}: UnknowLicenseInVersion) => ({
+		message: markup`The dependency <emphasis>${packageName}@${newPackageVersion}</emphasis> doesn't satisfy the version inside your configuration file <emphasis>(${packageVersionInConfig})</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`To automatically update the exception for this license, run:`,
+			},
+			{
+				type: "command",
+				command: `rome config set dependencies.exceptions.invalidLicenses.${id} "${packageName}@${newPackageVersion}"`,
 			},
 		],
 	}),

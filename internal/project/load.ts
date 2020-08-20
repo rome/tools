@@ -16,7 +16,7 @@ import {
 	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
-	createDefaultProjectConfig,
+	createDefaultProjectConfig, InvalidLicenses,
 } from "./types";
 import {parsePathPatternsFile} from "@internal/path-match";
 import {
@@ -242,15 +242,24 @@ export async function normalizeProjectConfig(
 		if (dependencies.has("enabled")) {
 			config.dependencies.enabled = dependencies.get("enabled").asBoolean();
 		}
-		
+
 		if (dependencies.has("exceptions")) {
 			const exceptions = dependencies.get("exceptions").asMap();
 
 			const invalidLicenses = exceptions.get("invalidLicenses");
 			if (invalidLicenses) {
-				let licenses: Map<string, Array<string>> = new Map();
+				let licenses: InvalidLicenses = new Map();
 				for (const [name, packages] of invalidLicenses.asMap()) {
-					licenses.set(name, packages.asMappedArray((c) => c.asString()));
+					licenses.set(name, packages.asMappedArray((c) => {
+					 	const packageValue = c.asString();
+					 	// inside the config, we store packageName@version
+					 	const {0: name, 1: version} = packageValue.split("@");
+						return {
+							name,
+							// we might not have the version, so we assume that it is the latest
+							range: parseSemverRange({ input: version || "latest" })
+						}
+					}));
 				}
 				config.dependencies.exceptions = {
 					invalidLicenses: licenses,
