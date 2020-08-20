@@ -10,13 +10,14 @@
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
 import {Consumer} from "@internal/consume";
 import {
+	InvalidLicenses,
 	PartialProjectConfig,
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
-	createDefaultProjectConfig, InvalidLicenses,
+	createDefaultProjectConfig,
 } from "./types";
 import {parsePathPatternsFile} from "@internal/path-match";
 import {
@@ -250,16 +251,19 @@ export async function normalizeProjectConfig(
 			if (invalidLicenses) {
 				let licenses: InvalidLicenses = new Map();
 				for (const [name, packages] of invalidLicenses.asMap()) {
-					licenses.set(name, packages.asMappedArray((c) => {
-					 	const packageValue = c.asString();
-					 	// inside the config, we store packageName@version
-					 	const {0: name, 1: version} = packageValue.split("@");
-						return {
-							name,
-							// we might not have the version, so we assume that it is the latest
-							range: parseSemverRange({ input: version || "latest" })
-						}
-					}));
+					licenses.set(
+						name,
+						packages.asMappedArray((c) => {
+							const packageValue = c.asString();
+							// inside the config, we store packageName@version
+							const {0: name, 1: version} = packageValue.split("@");
+							return {
+								name,
+								// we might not have the version, so we assume that it is the latest
+								range: parseSemverRange({input: version || "latest"}),
+							};
+						}),
+					);
 				}
 				config.dependencies.exceptions = {
 					invalidLicenses: licenses,

@@ -820,10 +820,11 @@ export default class ProjectManager {
 	 * Given a path, it returns the list of projects
 	 * @param path
 	 */
-	public getProjectHierarchyFromPath(path: AbsoluteFilePath): ProjectDefinition[] {
-		return this.server.projectManager.getHierarchyFromProject(
-			this.server.projectManager.assertProjectExisting(path)
-		);
+	public getProjectHierarchyFromPath(
+		path: AbsoluteFilePath,
+	): Array<ProjectDefinition> {
+		const found = this.assertProjectExisting(path);
+		return this.getHierarchyFromProject(found);
 	}
 
 	public findLoadedProject(

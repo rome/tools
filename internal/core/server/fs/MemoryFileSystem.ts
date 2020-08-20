@@ -653,7 +653,9 @@ export default class MemoryFileSystem {
 			consumeDiagnosticCategory: "parse/manifest",
 		});
 
-		const projects = this.server.projectManager.getProjectHierarchyFromPath(path);
+		const projects = await this.server.projectManager.getProjectHierarchyFromPath(
+			path,
+		);
 		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
 		const manifest = await normalizeManifest(path, normalizeConsumer, projects);
 
