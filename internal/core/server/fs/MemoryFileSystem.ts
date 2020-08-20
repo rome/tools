@@ -8,6 +8,7 @@
 import Server from "../Server";
 import {
 	ManifestDefinition,
+	manifestNameToString,
 	normalizeManifest,
 } from "@internal/codec-js-manifest";
 import {
@@ -15,7 +16,11 @@ import {
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 } from "@internal/project";
-import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
+import {
+	Diagnostics,
+	DiagnosticsProcessor,
+	catchDiagnostics,
+} from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
 import {consumeJSON} from "@internal/codec-json";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
@@ -648,11 +653,27 @@ export default class MemoryFileSystem {
 			consumeDiagnosticCategory: "parse/manifest",
 		});
 
-		const {consumer: normalizeConsumer, diagnostics: normalizedDiagnostics} = consumer.capture();
+		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
 		const manifest = await normalizeManifest(normalizeConsumer);
 
 		// If manifest is undefined then we failed to validate and have diagnostics
-		if (normalizedDiagnostics.length > 0) {
+		if (rawDiagnostics.length > 0) {
+			const normalizedDiagnostics: Diagnostics = rawDiagnostics.map((diag) => ({
+				...diag,
+				description: {
+					...diag.description,
+					advice: [
+						...diag.description.advice,
+						{
+							type: "log",
+							category: "info",
+							text: markup`Error occurred for package <emphasis>${manifestNameToString(
+								manifest.name,
+							)}</emphasis> at <emphasis>${path.getParent()}</emphasis>`,
+						},
+					],
+				},
+			}));
 			diagnostics.addDiagnostics(normalizedDiagnostics);
 			return;
 		}
