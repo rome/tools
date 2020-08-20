@@ -91,7 +91,7 @@ type LicenseCodec = {
 	source: ProjectDefinition | undefined;
 };
 
-export default class SpdxLicenseCodec {
+export default class SPDXLicenseParser {
 	private consumer: Consumer;
 	private source: ProjectDefinition | undefined;
 	constructor({consumer, source}: LicenseCodec) {
