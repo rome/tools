@@ -1,8 +1,7 @@
 import {test} from "rome";
 import {isFunctionNode} from "./isFunctionNode";
 import {template} from "./template";
-import {jsClassDeclaration} from "@internal/ast";
-import {createBuilder} from "@internal/ast/utils";
+import {jsClassDeclaration, jsObjectExpression} from "@internal/ast";
 
 test(
 	"returns true for all function node types",
@@ -11,17 +10,7 @@ test(
 		t.true(isFunctionNode(template.expression`(()=>{})`));
 		t.true(
 			isFunctionNode(
-				createBuilder(
-					"JSObjectMethod",
-					{
-						bindingKeys: {},
-						visitorKeys: {
-							key: true,
-							head: true,
-							body: true,
-						},
-					},
-				).create({}),
+				jsObjectExpression.assert(template.expression`({foo() {}})`).properties[0],
 			),
 		);
 		t.true(isFunctionNode(template.expression`(function() {})`));
