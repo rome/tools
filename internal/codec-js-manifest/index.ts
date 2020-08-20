@@ -37,7 +37,6 @@ import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
 import {ProjectDefinition} from "@internal/project";
-import ProjectManager from "@internal/core/server/project/ProjectManager";
 
 export * from "./types";
 

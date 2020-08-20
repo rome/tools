@@ -827,8 +827,8 @@ export default class ProjectManager {
 		if (found === undefined) {
 			return [];
 		} else {
-  			return this.getHierarchyFromProject(found);
-  		}
+			return this.getHierarchyFromProject(found);
+		}
 	}
 
 	public findLoadedProject(
