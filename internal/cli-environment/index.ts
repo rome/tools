@@ -15,6 +15,7 @@ export type InferredTerminalFeatures = {
 
 export type TerminalFeatures = {
 	columns?: Number1;
+	progress: boolean;
 	isTTY: boolean;
 	background: "dark" | "light" | "unknown";
 	cursor: boolean;
@@ -27,6 +28,7 @@ export const DEFAULT_TERMINAL_FEATURES: TerminalFeatures = {
 	background: "unknown",
 	isTTY: false,
 	columns: ob1Coerce1(100),
+	progress: false,
 	cursor: false,
 	unicode: true,
 	hyperlinks: false,
@@ -104,8 +106,11 @@ export function inferTerminalFeatures(
 
 	const fancyAnsi = isTTY && !isCI;
 
+	const progress = fancyAnsi && getEnvVar("ROME_PROGRESS").type !== "DISABLED";
+
 	let features: TerminalFeatures = mergeObjects(
 		{
+			progress,
 			isTTY,
 			background,
 			columns,

@@ -28,10 +28,16 @@ import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
 
-export type RecoverySaveFile = {
-	mtime: undefined | number;
-	content: string;
-};
+export type RecoverySaveFile =
+	| {
+			type: "UNSAFE_WRITE";
+			content: string;
+		}
+	| {
+			type: "WRITE";
+			mtime: undefined | number;
+			content: string;
+		};
 
 type MemoryStore = {
 	storeId: string;
@@ -352,11 +358,14 @@ export default class RecoveryStore {
 				mtime = (await lstat(originalPath)).mtimeMs;
 			}
 
+			const content = await readFileText(artifactPath);
+
 			req.queueSaveFile(
 				originalPath,
 				{
+					type: "WRITE",
 					mtime,
-					content: await readFileText(artifactPath),
+					content,
 				},
 			);
 			entries.push(entry);
@@ -384,6 +393,83 @@ export default class RecoveryStore {
 				markup`Committed store index to <emphasis>${indexPath}</emphasis>`,
 			);
 		}
+	}
+
+	async writeFile(
+		path: AbsoluteFilePath,
+		op: RecoverySaveFile,
+		events: WriteFilesEvents,
+		registerFile: (paths: Array<AbsoluteFilePath>) => void,
+	): Promise<boolean> {
+		const {server} = this;
+		let fd: undefined | FileHandle;
+		let success = false;
+
+		try {
+			if (op.type === "UNSAFE_WRITE") {
+				await writeFile(path, op.content);
+				success = true;
+			} else if (op.type === "WRITE") {
+				const {mtime, content} = op;
+
+				if (mtime === undefined) {
+					const {content} = op;
+					try {
+						// `mtime === undefined` means we expect the file to not exist
+						// wx: Open file for writing. Fails if the path exists.
+						fd = await openFile(path, "wx");
+						await fd.writeFile(content);
+						success = true;
+					} catch (err) {
+						if (err.code === "EEXIST") {
+							events.unexpectedExists(path);
+						} else {
+							throw err;
+						}
+					}
+				} else {
+					try {
+						// `mtime !== undefined` means we expect the file to exist
+						// r+: Open file for reading and writing. An exception occurs if the file does not exist.
+						fd = await openFile(path, "r+");
+
+						// First verify the mtime
+						const stats = await fd.stat();
+						if (stats.mtimeMs === mtime) {
+							await events.beforeFileWrite(path, fd);
+							await fd.truncate(0);
+							await fd.write(content, 0);
+							success = true;
+						} else {
+							registerFile([path]);
+							events.unexpectedModified(path, mtime, stats.mtimeMs);
+						}
+					} catch (err) {
+						if (err.code === "ENOENT") {
+							events.expectedExists(path);
+						} else {
+							throw err;
+						}
+					}
+				}
+			}
+		} catch (err) {
+			registerFile([path]);
+		} finally {
+			// Close file descriptor
+			if (fd !== undefined) {
+				await fd.close();
+			}
+
+			// We want writeFiles to only return once all the refreshFileEvent handlers have ran
+			// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
+			// This mitigates slow watch events
+			server.wrapFatalPromise(
+				server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
+			);
+		}
+
+		return success;
 	}
 
 	// Utility to write a list of files and wait for all refresh events to be emitted
@@ -449,66 +535,10 @@ export default class RecoveryStore {
 			await Promise.all(
 				Array.from(
 					files,
-					async ([path, {mtime, content}]) => {
-						let fd: undefined | FileHandle;
-
-						try {
-							if (mtime === undefined) {
-								try {
-									// `mtime === undefined` means we expect the file to not exist
-									// wx: Open file for writing. Fails if the path exists.
-									fd = await openFile(path, "wx");
-									await fd.writeFile(content);
-									fileCount++;
-								} catch (err) {
-									registerFile([path]);
-
-									if (err.code === "EEXIST") {
-										events.unexpectedExists(path);
-									} else {
-										throw err;
-									}
-								}
-							} else {
-								try {
-									// `mtime !== undefined` means we expect the file to exist
-									// r+: Open file for reading and writing. An exception occurs if the file does not exist.
-									fd = await openFile(path, "r+");
-
-									// First verify the mtime
-									const stats = await fd.stat();
-									if (stats.mtimeMs !== mtime) {
-										registerFile([path]);
-										events.unexpectedModified(path, mtime, stats.mtimeMs);
-										return;
-									}
-
-									await events.beforeFileWrite(path, fd);
-
-									await fd.truncate(0);
-									await fd.write(content, 0);
-									fileCount++;
-								} catch (err) {
-									registerFile([path]);
-									if (err.code === "ENOENT") {
-										events.expectedExists(path);
-									} else {
-										throw err;
-									}
-								}
-							}
-						} finally {
-							// Close file descriptor
-							if (fd !== undefined) {
-								await fd.close();
-							}
-
-							// We want writeFiles to only return once all the refreshFileEvent handlers have ran
-							// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
-							// This mitigates slow watch events
-							server.wrapFatalPromise(
-								server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
-							);
+					async ([path, op]) => {
+						const success = await this.writeFile(path, op, events, registerFile);
+						if (success) {
+							fileCount++;
 						}
 					},
 				),
@@ -539,7 +569,7 @@ export default class RecoveryStore {
 			for (const teardown of teardowns) {
 				await teardown();
 			}
-			await this.server.memoryFs.flushFileEvents();
+			await this.server.memoryFs.processingLock.wait();
 		}
 
 		return fileCount;

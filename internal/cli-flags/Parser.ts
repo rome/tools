@@ -39,6 +39,7 @@ import {exists, readFileText, writeFile} from "@internal/fs";
 import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
+import {ExtendedMap} from "@internal/collections";
 
 export type Examples = Array<{
 	description: StaticMarkup;
@@ -125,7 +126,7 @@ export default class Parser<T> {
 		this.args = [];
 
 		// These are used to track where we should insert an argument for a boolean flag value
-		this.flagToArgIndex = new Map();
+		this.flagToArgIndex = new ExtendedMap("flagToArgIndex");
 		this.flagToArgOffset = 0;
 
 		this.consumeRawArgs(opts.args);
@@ -142,7 +143,7 @@ export default class Parser<T> {
 	private flags: Map<string, FlagValue>;
 	private defaultFlags: Map<string, unknown>;
 	private declaredFlags: Map<string, ArgDeclaration>;
-	private flagToArgIndex: Map<string, number>;
+	private flagToArgIndex: ExtendedMap<string, number>;
 	private flagToArgOffset: number;
 	private currentCommand: undefined | string;
 	private ranCommand: undefined | AnyCommandOptions;
@@ -215,11 +216,11 @@ export default class Parser<T> {
 					this.setFlag(camelName, String(rawArgs.shift()));
 				}
 
-				this.flagToArgIndex.set(camelName, this.args.length);
-
 				if (arg[0] === "-" && arg[1] !== "-") {
 					this.shorthandFlags.add(camelName);
 				}
+
+				this.flagToArgIndex.set(camelName, this.args.length);
 			} else {
 				// Not a flag and hasn't been consumed already by a previous arg so it must be a file
 				this.args.push(arg);
@@ -280,10 +281,7 @@ export default class Parser<T> {
 					value !== false &&
 					value !== undefined
 				) {
-					const argIndex = this.flagToArgIndex.get(key);
-					if (argIndex === undefined) {
-						throw new Error("No arg index. Should always exist.");
-					}
+					const argIndex = this.flagToArgIndex.assert(key);
 
 					// Insert the argument at the correct place
 					this.args.splice(argIndex + this.flagToArgOffset, 0, String(value));
@@ -377,10 +375,15 @@ export default class Parser<T> {
 			consumer.markUsedProperty(key);
 		}
 
-		for (const shorthandName of this.shorthandFlags) {
-			consumer.get(shorthandName).unexpected(
-				descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
-			);
+		for (const [key] of this.flags) {
+			if (this.shorthandFlags.has(key)) {
+				const def = this.declaredFlags.get(key)?.definition;
+				if (def && def.metadata?.alternateName !== key) {
+					consumer.get(key).unexpected(
+						descriptions.FLAGS.UNSUPPORTED_SHORTHAND(key),
+					);
+				}
+			}
 		}
 
 		for (const incorrectName of this.incorrectCaseFlags) {
@@ -532,6 +535,7 @@ export default class Parser<T> {
 			"help",
 			{
 				description: markup`Show this help screen`,
+				alternateName: "h",
 			},
 		).asBoolean(false);
 
@@ -552,9 +556,7 @@ export default class Parser<T> {
 				}
 			}
 
-			if (!shouldShowHelp) {
-				this.checkBadFlags(consumer, definedCommand);
-			}
+			this.checkBadFlags(consumer, definedCommand);
 
 			this.currentCommand = undefined;
 
@@ -626,6 +628,10 @@ export default class Parser<T> {
 				argCol += ` <${inputName}>`;
 			}
 
+			if (metadata.alternateName) {
+				argCol += `, -${metadata.alternateName}`;
+			}
+
 			// Set arg col length if we'll be longer
 			if (argColumnLength < argCol.length) {
 				argColumnLength = argCol.length;
@@ -656,7 +662,10 @@ export default class Parser<T> {
 
 			optionOutput.push({
 				argName,
-				arg: concatMarkup(highlightShell({input: argCol}), markup` `),
+				arg: concatMarkup(
+					highlightShell({input: argCol, isShorthand: !!metadata.alternateName}),
+					markup` `,
+				),
 				description: descCol,
 			});
 		}
@@ -684,7 +693,7 @@ export default class Parser<T> {
 			() => {
 				if (description !== undefined) {
 					reporter.log(description);
-					reporter.br(true);
+					reporter.br({force: true});
 				}
 
 				const commandParts = [programName];
@@ -703,7 +712,7 @@ export default class Parser<T> {
 		const {reporter} = this;
 		const {name, usage, description, examples} = command;
 
-		reporter.br(true);
+		reporter.br({force: true});
 		await this.showUsageHelp(description, usage, name);
 		await this.showHelpExamples(examples, name);
 
@@ -917,7 +926,10 @@ export default class Parser<T> {
 		await this.showGlobalFlags();
 
 		// Sort commands into their appropriate categories for output
-		const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
+		const commandsByCategory: ExtendedMap<
+			undefined | string,
+			Array<AnyCommandOptions>
+		> = new ExtendedMap("commandsByCategory", () => []);
 		const categoryNames: Set<string | undefined> = new Set();
 		for (const [name, command] of this.commands) {
 			if (name[0] === "_") {
@@ -925,11 +937,7 @@ export default class Parser<T> {
 			}
 
 			const {category} = command;
-			let commandsForCategory = commandsByCategory.get(category);
-			if (commandsForCategory === undefined) {
-				commandsForCategory = [];
-				commandsByCategory.set(category, commandsForCategory);
-			}
+			const commandsForCategory = commandsByCategory.assert(category);
 			commandsForCategory.push(command);
 			categoryNames.add(category);
 		}

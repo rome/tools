@@ -6,14 +6,12 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import {Diagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import TestServerRunner from "../testing/TestServerRunner";
-import Bundler from "../bundler/Bundler";
+import TestServer from "../testing/TestServer";
 import {JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {TestServerRunnerOptions, TestSources} from "../testing/types";
+import {TestServerRunnerOptions} from "../testing/types";
 import {markup} from "@internal/markup";
 
 type Flags = Omit<TestServerRunnerOptions, "verboseDiagnostics">;
@@ -63,40 +61,12 @@ export default createServerCommand({
 		});
 		const paths = await globber.get();
 
-		let addDiagnostics: Diagnostics = [];
-
-		const tests: TestSources = new Map();
-
-		const bundler = new Bundler(
-			req,
-			req.getBundlerConfigFromFlags({
-				mocks: true,
-			}),
-		);
-
-		for (const [path, res] of await bundler.bundleMultiple(
-			Array.from(paths),
-			{
-				deferredSourceMaps: true,
-			},
-		)) {
-			tests.set(
-				path.join(),
-				{
-					code: res.entry.js.content,
-					sourceMap: res.entry.sourceMap.map,
-					ref: req.server.projectManager.getFileReference(path),
-				},
-			);
-		}
-
-		const runner = new TestServerRunner({
-			addDiagnostics,
+		const runner = new TestServer({
 			options: {
 				...commandFlags,
 				verboseDiagnostics: req.query.requestFlags.verboseDiagnostics,
 			},
-			sources: tests,
+			paths,
 			request: req,
 		});
 		await runner.init();

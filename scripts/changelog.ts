@@ -1,6 +1,6 @@
 import {markup} from "@internal/markup";
 import {parseCommit} from "@internal/commit-parser";
-import {readFileText} from "@internal/fs";
+import {readFileTextMeta} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent} from "@internal/string-utils";
@@ -142,7 +142,7 @@ ${list}
  */
 async function getCurrentVersion(): Promise<string> {
 	const path = ROOT.append("package.json");
-	return consumeJSON({input: await readFileText(path), path}).get("version").asString();
+	return consumeJSON(await readFileTextMeta(path)).get("version").asString();
 }
 
 /**
@@ -305,7 +305,7 @@ function updateVersion(releaseType: string, cwd: AbsoluteFilePath): string {
 	).stdout.toString().trim();
 }
 
-export async function main(): Promise<void> {
+export async function main([version]: Array<string>): Promise<void> {
 	// Cache the current version for reverting
 	const currentVersion = await getCurrentVersion();
 
@@ -324,7 +324,7 @@ export async function main(): Promise<void> {
 	);
 
 	// Update the root package version
-	const targetReleaseType = getReleaseType();
+	const targetReleaseType = version || getReleaseType();
 	const newVersion = updateVersion(targetReleaseType, ROOT);
 	reporter.success(
 		markup`The root package version was updated to <emphasis>${newVersion}</emphasis>.`,

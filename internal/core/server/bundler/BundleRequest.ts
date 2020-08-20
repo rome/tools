@@ -6,33 +6,20 @@
  */
 
 import Bundler from "./Bundler";
-import DependencyNode from "../dependencies/DependencyNode";
 import {Mappings, SourceMapGenerator} from "@internal/codec-source-map";
-import {BundleRequestResult, BundlerMode} from "../../common/types/bundler";
-import {
-	WorkerBundleCompileOptions,
-	WorkerCompileResult,
-} from "../../common/bridges/WorkerBridge";
+import {AssembledBundle, BundleRequestResult} from "../../common/types/bundler";
 import {DependencyOrder} from "../dependencies/DependencyOrderer";
-import {
-	BundleCompileResolvedImports,
-	CompileResult,
-	getPrefixedBundleNamespace,
-} from "@internal/compiler";
-
-import {DiagnosticsProcessor, descriptions} from "@internal/diagnostics";
-import {AbsoluteFilePath} from "@internal/path";
-import {ob1Add} from "@internal/ob1";
-import {readFile} from "@internal/fs";
-import crypto = require("crypto");
-
-import {Dict} from "@internal/typescript-helpers";
+import {getPrefixedBundleNamespace} from "@internal/compiler";
+import {DiagnosticsProcessor} from "@internal/diagnostics";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import WorkerQueue from "../WorkerQueue";
-import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import {Server, ServerRequest} from "@internal/core";
+import {ob1Add} from "@internal/ob1";
+import {dedent} from "@internal/string-utils";
+import DependencyNode from "@internal/core/server/dependencies/DependencyNode";
 
 export type BundleOptions = {
 	prefix?: string;
@@ -47,7 +34,6 @@ export default class BundleRequest {
 			reporter,
 			graph,
 			request,
-			mode,
 			server,
 			resolvedEntry,
 			options,
@@ -56,20 +42,17 @@ export default class BundleRequest {
 			request: ServerRequest;
 			graph: DependencyGraph;
 			reporter: Reporter;
-			mode: BundlerMode;
 			resolvedEntry: AbsoluteFilePath;
 			options: BundleOptions;
 			server: Server;
 		},
 	) {
 		this.options = options;
-		this.request = request;
 		this.reporter = reporter;
 		this.bundler = bundler;
 		this.graph = graph;
 		this.server = server;
 		this.cached = true;
-		this.mode = mode;
 
 		this.resolvedEntry = resolvedEntry;
 		this.resolvedEntryUid = server.projectManager.getUid(resolvedEntry);
@@ -84,17 +67,16 @@ export default class BundleRequest {
 		});
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
-		this.compiles = new Map();
-		this.assets = new Map();
-
 		this.sourceMap = new SourceMapGenerator({
-			file: resolvedEntry.getBasename(),
+			file: this.resolvedEntry.getBasename(),
 		});
+
+		this.assets = new Map();
 	}
 
 	public diagnostics: DiagnosticsProcessor;
 
-	private request: ServerRequest;
+	private sourceMap: SourceMapGenerator;
 	private graph: DependencyGraph;
 	private server: Server;
 	private options: BundleOptions;
@@ -104,9 +86,6 @@ export default class BundleRequest {
 	private resolvedEntry: AbsoluteFilePath;
 	private resolvedEntryUid: string;
 	private assets: Map<string, Buffer>;
-	private compiles: Map<string, CompileResult>;
-	private sourceMap: SourceMapGenerator;
-	private mode: BundlerMode;
 
 	public async stepAnalyze(): Promise<DependencyOrder> {
 		const {reporter, graph} = this;
@@ -130,7 +109,7 @@ export default class BundleRequest {
 		return graph.getNode(this.resolvedEntry).getDependencyOrder();
 	}
 
-	private async stepCompile(paths: Array<AbsoluteFilePath>) {
+	public async stepCompile(paths: Array<AbsoluteFilePath>) {
 		const {server} = this;
 		const {reporter} = this;
 		this.diagnostics.setThrowAfter(undefined);
@@ -141,114 +120,72 @@ export default class BundleRequest {
 		});
 		compilingSpinner.setTotal(paths.length);
 
-		const queue: WorkerQueue<void> = new WorkerQueue(server);
+		const queue: WorkerQueue<void> = new WorkerQueue(
+			server,
+			{
+				callback: async ({path}) => {
+					const progressId = compilingSpinner.pushText(markup`${path}`);
 
-		queue.addCallback(async (path) => {
-			const progressId = compilingSpinner.pushText(markup`${path}`);
-			await this.compileJS(path);
-			compilingSpinner.popText(progressId);
-			compilingSpinner.tick();
-		});
+					const res = await this.bundler.compileJS(path);
+
+					if (res.asset !== undefined) {
+						this.assets.set(res.asset.path, res.asset.buffer);
+					}
+
+					if (!res.cached) {
+						this.cached = false;
+					}
+
+					this.diagnostics.addSuppressions(res.suppressions);
+					this.diagnostics.addDiagnostics(res.diagnostics);
+
+					compilingSpinner.popText(progressId);
+					compilingSpinner.tick();
+				},
+			},
+		);
 
 		for (const path of paths) {
-			await queue.pushQueue(path);
+			await queue.pushPath(path);
 		}
 
 		await queue.spin();
 		compilingSpinner.end();
 	}
 
-	public async compileJS(path: AbsoluteFilePath): Promise<WorkerCompileResult> {
-		const {graph} = this;
-
-		const source = path.join();
-		const mod = graph.getNode(path);
-
-		// Build a map of relative module sources to module id
-		const relativeSourcesToModuleId: Dict<string> = {};
-		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
-			const moduleId = graph.getNode(absolute).uid;
-			relativeSourcesToModuleId[relative] = moduleId;
-		}
-
-		// Diagnostics would have already been added during the initial DependencyGraph.seed
-		// We're doing the work of resolving everything again, maybe we should cache it?
-		const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
-
-		let assetPath: undefined | string;
-		if (mod.handler?.isAsset) {
-			const buffer = await readFile(mod.path);
-
-			// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
-			const hash = crypto.createHash("sha1").update(buffer).digest("hex");
-			const basename = mod.path.getExtensionlessBasename();
-			const exts = mod.path.getExtensions();
-
-			assetPath = `${basename}-${hash}${exts}`;
-			this.assets.set(assetPath, buffer);
-		}
-
-		const opts: WorkerBundleCompileOptions = {
-			mode: this.mode,
-			moduleAll: mod.all,
-			moduleId: mod.uid,
-			relativeSourcesToModuleId,
-			resolvedImports,
-			assetPath,
-		};
-
-		const res: WorkerCompileResult = await this.request.requestWorkerCompile(
-			path,
-			"compileForBundle",
-			{
-				bundle: opts,
-			},
-			{},
-		);
-
-		if (!res.cached) {
-			this.cached = false;
-		}
-
-		this.diagnostics.addSuppressions(res.suppressions);
-		this.diagnostics.addDiagnostics(res.diagnostics);
-
-		this.compiles.set(source, res);
-		return res;
-	}
-
 	private stepCombine(
 		order: DependencyOrder,
-		forceSourceMaps: boolean,
+		forceSourceMaps: boolean = false,
 	): BundleRequestResult {
-		const {files} = order;
-		const {inlineSourceMap} = this.bundler.config;
-		const {resolvedEntry, mode, sourceMap, graph} = this;
+		const {sourceMap} = this;
 
 		// We allow deferring the generation of source maps. We don't do this by default as it's slower than generating them upfront
 		// which is what most callers need. But for things like tests, we want to lazily compute the source map only when diagnostics
 		// are present.
-		let deferredSourceMaps =
-			!forceSourceMaps && this.options.deferredSourceMaps === true;
+		let deferredSourceMaps = !forceSourceMaps && this.options.deferredSourceMaps;
 		if (deferredSourceMaps) {
 			sourceMap.addMaterializer(() => {
 				this.stepCombine(order, true);
 			});
 		}
 
-		let content: string = "";
+		const assembled: AssembledBundle = [];
 		let lineOffset: number = 0;
 
-		function push(str: string) {
-			str += "\n";
-			content += str;
+		function track(str: string) {
 			if (!deferredSourceMaps) {
+				lineOffset++;
 				for (let cha of str) {
 					if (cha === "\n") {
 						lineOffset++;
 					}
 				}
 			}
+		}
+
+		function push(str: string) {
+			assembled.push([0, str]);
+			track(str);
 		}
 
 		function addMappings(
@@ -279,98 +216,77 @@ export default class BundleRequest {
 
 		push(
 			dedent`
-			(function(res) {
-				if (typeof module !== "undefined") {
-					module.exports = res;
-				}
-				return res;
-			})(`,
+		(function(res) {
+			if (typeof module !== "undefined") {
+				module.exports = res;
+			}
+			return res;
+		})(`,
 		);
 
 		// add on bootstrap
 		if (order.firstTopAwaitLocations.length > 0) {
-			if (mode === "legacy") {
-				for (const {loc, mtime} of order.firstTopAwaitLocations) {
-					this.diagnostics.addDiagnostic({
-						description: descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
-						location: {
-							...loc,
-							mtime,
-						},
-					});
-				}
-			}
-
 			push("(async function(global) {");
 		} else {
 			push("(function(global) {");
 		}
 
-		if (mode === "modern") {
-			push(`  'use strict';`);
-		}
+		push(`  'use strict';`);
 
 		// TODO prelude
 
 		/*
-    const path = createAbsoluteFilePath(loc);
-    const res = await this.bundler.request.requestWorkerCompile(
-      path,
-      'compile',
-    );
-    push('(function() {');
-    addMappings(
-      this.bundler.server.projectManager.getUid(path),
-      res.src,
-      res.mappings,
-    );
-    push(res.code);
-    push('})();');
-    */
-		const declaredCJS: Set<DependencyNode> = new Set();
-		function declareCJS(module: DependencyNode) {
-			if (mode !== "modern" || module.type !== "cjs" || declaredCJS.has(module)) {
+		const path = createAbsoluteFilePath(loc);
+		const res = await this.bundler.request.requestWorkerCompile(
+			path,
+			'compile',
+		);
+		push('(function() {');
+		addMappings(
+			this.bundler.server.projectManager.getUid(path),
+			res.src,
+			res.mappings,
+		);
+		push(res.code);
+		push('})();');
+		*/
+		const declaredCJS: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+		const declareCJS = (node: DependencyNode) => {
+			if (node.type !== "cjs" || declaredCJS.has(node.path)) {
 				return;
 			}
 
-			declaredCJS.add(module);
+			declaredCJS.add(node.path);
 
-			push(`  var ${getPrefixedBundleNamespace(module.uid)} = {};`);
-		}
+			const uid = this.server.projectManager.getUid(node.path);
+			push(`  var ${getPrefixedBundleNamespace(uid)} = {};`);
+		};
 
 		// Add on files
-		for (const source of files) {
-			const module = graph.getNode(source);
+		for (const path of order.files) {
+			const node = this.graph.getNode(path);
+			const uid = this.server.projectManager.getUid(path);
 
-			for (const path of module.getAbsoluteDependencies()) {
-				declareCJS(graph.getNode(path));
+			for (const path of node.getAbsoluteDependencies()) {
+				declareCJS(this.graph.getNode(path));
 			}
 
-			const compileResult = this.compiles.get(source.join());
-			if (compileResult === undefined) {
-				continue;
-				throw new Error("Expected compile result");
-			}
+			const compileResult = this.bundler.compiles.assert(path);
 
-			// Only do this in modern mode, the module id will already be in the wrapper otherwise
-			if (mode === "modern") {
-				push(`  // ${module.uid}`);
-			}
+			push(`  // ${uid}`);
 
-			declareCJS(module);
+			declareCJS(node);
 
-			addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
-			push(compileResult.compiledCode);
+			addMappings(uid, compileResult.sourceText, compileResult.mappings);
+
+			track(compileResult.compiledCode);
+			assembled.push([1, path]);
 			push("");
 		}
 
 		// push on initial entry require
-		const entryModule = graph.getNode(resolvedEntry);
-		if (mode === "modern") {
-			push(`  return ${getPrefixedBundleNamespace(entryModule.uid)};`);
-		} else {
-			push(`  return Rome.requireNamespace("${entryModule.uid}");`);
-		}
+		const entryModuleUid = this.server.projectManager.getUid(this.resolvedEntry);
+		push(`  return ${getPrefixedBundleNamespace(entryModuleUid)};`);
 
 		// push footer
 		push(
@@ -378,17 +294,18 @@ export default class BundleRequest {
 		);
 
 		//
-		if (inlineSourceMap) {
+		if (this.bundler.config.inlineSourceMap) {
 			const sourceMapComment = sourceMap.toComment();
-			content += sourceMapComment;
+			assembled.push([0, sourceMapComment]);
 		} else {
-			content += `//# sourceMappingURL=${this.sourceMap.file}.map`;
+			assembled.push([0, `//# sourceMappingURL=${this.sourceMap.file}.map`]);
 		}
 
 		return {
+			request: this,
 			diagnostics: this.diagnostics.getDiagnostics(),
-			content,
-			sourceMap: this.sourceMap,
+			assembled,
+			sourceMap,
 			cached: this.cached,
 			assets: this.assets,
 		};
@@ -400,15 +317,16 @@ export default class BundleRequest {
 
 	private abort(): BundleRequestResult {
 		return {
+			request: this,
 			sourceMap: this.sourceMap,
-			content: "",
+			assembled: [],
 			diagnostics: this.diagnostics.getDiagnostics(),
 			cached: false,
 			assets: this.assets,
 		};
 	}
 
-	public async bundle(): Promise<BundleRequestResult> {
+	public async bundle(combine: boolean = true): Promise<BundleRequestResult> {
 		const order = await this.stepAnalyze();
 		if (this.shouldAbort()) {
 			return this.abort();
@@ -416,11 +334,11 @@ export default class BundleRequest {
 
 		// Compile
 		await this.stepCompile(order.files);
-		if (this.shouldAbort()) {
+		if (this.shouldAbort() || !combine) {
 			return this.abort();
 		}
 
 		// Combine
-		return this.stepCombine(order, false);
+		return this.stepCombine(order);
 	}
 }

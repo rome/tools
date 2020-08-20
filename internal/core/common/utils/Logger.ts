@@ -12,14 +12,15 @@ import {
 } from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 import {AnyMarkup, markup} from "@internal/markup";
+import workerThreads = require("worker_threads");
 
 export default class Logger extends Reporter {
 	constructor(
-		loggerType: string,
 		opts: ReporterOptions,
-		{write, check}: {
+		{loggerType, write, check}: {
 			check: () => boolean;
 			write: (chunk: string) => void;
+			loggerType: string;
 		},
 	) {
 		super(opts);
@@ -46,7 +47,7 @@ export default class Logger extends Reporter {
 	}
 
 	protected getMessagePrefix(): AnyMarkup {
-		const inner = `${this.loggerType} ${process.pid}`;
+		const inner = `${this.loggerType} ${process.pid}:${workerThreads.threadId}`;
 		const timestamp = new Date().toISOString();
 		return markup`<dim>[${timestamp}] [${inner}]</dim> `;
 	}

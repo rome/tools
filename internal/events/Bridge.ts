@@ -31,6 +31,7 @@ import {AsyncVoidCallback} from "@internal/typescript-helpers";
 import prettyFormat from "@internal/pretty-format";
 import {NodeSystemError} from "@internal/node";
 import {RSERObject, RSERStream, RSERValue} from "@internal/codec-binary-serial";
+import {ExtendedMap} from "@internal/collections";
 
 type ErrorSerial<Data extends RSERValue> = {
 	serialize: (err: Error) => Data;
@@ -48,7 +49,7 @@ export default class Bridge {
 		this.opts = opts;
 
 		this.messageIdCounter = 0;
-		this.events = new Map();
+		this.events = new ExtendedMap("events");
 
 		this.handshakeEvent = new Event({
 			name: "Bridge.handshake",
@@ -108,7 +109,7 @@ export default class Bridge {
 	private messageIdCounter: number;
 
 	// rome-ignore lint/ts/noExplicitAny
-	private events: Map<string, BridgeEvent<any, any>>;
+	private events: ExtendedMap<string, BridgeEvent<any, any>>;
 
 	public listeners: Set<string>;
 	public updatedListenersEvent: Event<Set<string>, void>;
@@ -297,7 +298,9 @@ export default class Bridge {
 		});
 
 		buf.valueEvent.subscribe((value) => {
-			this.handleMessage((value as BridgeMessage));
+			process.nextTick(() => {
+				this.handleMessage((value as BridgeMessage));
+			});
 		});
 
 		return buf;
@@ -483,11 +486,7 @@ export default class Bridge {
 			throw new Error("Expected event");
 		}
 
-		const eventHandler = this.events.get(event);
-		if (eventHandler === undefined) {
-			throw new Error("Unknown event");
-		}
-
+		const eventHandler = this.events.assert(event);
 		eventHandler.dispatchResponse(id, data);
 	}
 
@@ -497,10 +496,7 @@ export default class Bridge {
 			throw new Error("Expected event in message request but received none");
 		}
 
-		const eventHandler = this.events.get(event);
-		if (eventHandler === undefined) {
-			throw new Error(`Unknown event ${event}`);
-		}
+		const eventHandler = this.events.assert(event);
 
 		if (id === undefined) {
 			eventHandler.dispatchRequest(param).catch((err) => {
@@ -511,17 +507,20 @@ export default class Bridge {
 				this.prioritizedResponses.add(id);
 			}
 
-			eventHandler.dispatchRequest(param).then((value) => {
-				this.sendMessage({
-					event,
-					id,
-					type: "response",
-					responseStatus: "success",
-					value,
-				});
-			}).catch((err) => {
-				this.sendMessage(this.buildErrorResponse(id, event, err));
-			}).catch((err) => this.endWithError(err));
+			eventHandler.dispatchRequest(param).then(
+				(value) => {
+					this.sendMessage({
+						event,
+						id,
+						type: "response",
+						responseStatus: "success",
+						value,
+					});
+				},
+				(err) => {
+					this.sendMessage(this.buildErrorResponse(id, event, err));
+				},
+			).catch((err) => this.endWithError(err));
 		}
 	}
 }

@@ -1,0 +1,6 @@
+{
+  "name": "@internal/async",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
+}

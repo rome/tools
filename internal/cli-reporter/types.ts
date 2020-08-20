@@ -9,7 +9,11 @@ import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {AnyMarkup, AnyMarkups, StaticMarkup} from "@internal/markup";
 import {Number0} from "@internal/ob1";
-import {VoidCallback} from "@internal/typescript-helpers";
+import {
+	AsyncCallback,
+	AsyncVoidCallback,
+	VoidCallback,
+} from "@internal/typescript-helpers";
 
 export type SelectOption = {
 	label: StaticMarkup;
@@ -30,6 +34,12 @@ export type SelectArguments<Options extends SelectOptions> = {
 	defaults?: Array<SelectOptionsKeys<Options>>;
 	radio?: boolean;
 	yes?: boolean;
+};
+
+export type ReporterStepCallback = {
+	message: AnyMarkup;
+	test?: AsyncCallback<boolean>;
+	callback: AsyncVoidCallback;
 };
 
 export interface ReporterListOptions {

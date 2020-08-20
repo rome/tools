@@ -7,11 +7,12 @@
 
 import {consumeJSON} from "@internal/codec-json";
 import {
+	DEFAULT_CACHE_PATH,
+	DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY,
 	USER_CONFIG_DIRECTORY,
 	USER_CONFIG_FILENAMES,
-	VERSION,
 } from "./constants";
-import {AbsoluteFilePath, TEMP_PATH} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 import {Consumer} from "@internal/consume";
 import {descriptions} from "@internal/diagnostics";
 import {exists, readFileText} from "@internal/fs";
@@ -25,8 +26,8 @@ export type UserConfig = {
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
 	configPath: undefined,
-	cachePath: TEMP_PATH.append(`rome-${VERSION}`),
-	recoveryPath: USER_CONFIG_DIRECTORY.append("recovery"),
+	cachePath: DEFAULT_CACHE_PATH,
+	recoveryPath: DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY,
 	syntaxTheme: undefined,
 };
 

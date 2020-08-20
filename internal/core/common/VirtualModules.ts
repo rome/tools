@@ -114,12 +114,8 @@ export default class VirtualModules {
 		path: AbsoluteFilePath,
 	): undefined | string {
 		if (this.isVirtualPath(path)) {
-			const entry = this.statMap.get(path);
-			if (entry === undefined) {
-				throw new Error("Given a virtual module path but no entry found");
-			} else {
-				return entry.content;
-			}
+			const entry = this.statMap.assert(path);
+			return entry.content;
 		}
 
 		return undefined;

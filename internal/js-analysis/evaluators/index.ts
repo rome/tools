@@ -9,11 +9,12 @@ import Hub from "../Hub";
 import {Scope} from "../scopes";
 import {AnyNode} from "@internal/ast";
 import T from "../types/T";
+import {ExtendedMap} from "@internal/collections";
 
-const evaluators: Map<
+const evaluators: ExtendedMap<
 	string,
 	(node: AnyNode, scope: Scope, hub: Hub) => void | undefined | T
-> = new Map();
+> = new ExtendedMap("evaluators");
 export default evaluators;
 
 /* GENERATED:START(hash:d0a409df473136fa1f0904bc4401b258c7f9020c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */

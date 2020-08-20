@@ -11,7 +11,7 @@ import {
 	parsePathPattern,
 } from "@internal/path-match";
 import MemoryFileSystem from "@internal/core/server/fs/MemoryFileSystem";
-import {SingleLocker} from "@internal/core/common/utils/lockers";
+import {GlobalLock} from "@internal/async";
 
 const GLOB_IGNORE: PathPatterns = [parsePathPattern({input: "node_modules"})];
 
@@ -184,7 +184,7 @@ class GlobberWatcher {
 
 		this.callback = callback;
 		this.args = args;
-		this.flushLock = new SingleLocker();
+		this.flushLock = new GlobalLock();
 
 		this.batchPaths = undefined;
 	}
@@ -196,7 +196,7 @@ class GlobberWatcher {
 
 	private batchPaths: undefined | AbsoluteFilePathSet;
 	private callback: WatchFilesCallback;
-	private flushLock: SingleLocker;
+	private flushLock: GlobalLock;
 
 	isDependentPath(path: AbsoluteFilePath): boolean {
 		for (const arg of this.args) {
@@ -227,20 +227,17 @@ class GlobberWatcher {
 	}
 
 	async flush(paths: AbsoluteFilePathSet, initial: boolean = false) {
-		const lock = await this.flushLock.getLock();
-		try {
+		await this.flushLock.wrap(async () => {
 			// We could be evicting a project as the result of a modification made inside of the watch callback
 			// Ensure it's complete before we decide to flush
-			await this.server.projectManager.evictingProjectLock.waitLockDrained();
+			await this.server.memoryFs.processingLock.wait();
 
 			if (paths.size === 0 && !initial) {
 				return;
 			}
 
 			await this.callback({paths, initial});
-		} finally {
-			lock.release();
-		}
+		});
 	}
 
 	setupEvents(): Array<EventSubscription> {
@@ -270,7 +267,7 @@ class GlobberWatcher {
 			...subs,
 			{
 				unsubscribe: async () => {
-					await this.flushLock.waitLockDrained();
+					await this.flushLock.wait();
 				},
 			},
 		]);

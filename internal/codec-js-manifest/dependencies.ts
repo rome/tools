@@ -13,7 +13,7 @@ import {
 } from "@internal/codec-semver";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {UnknownPath, createUnknownPath} from "@internal/path";
-import {normalizeName} from "./name";
+import {manifestNameToString, normalizeName} from "./name";
 import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
@@ -27,9 +27,10 @@ export type DependencyPattern =
 	| FilePattern
 	| TagPattern
 	| NpmPattern
-	| LinkPattern;
+	| LinkPattern
+	| WorkspacePattern;
 
-export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
+export type ManifestDependencies = Map<string, DependencyPattern>;
 
 type UrlWithHash = {
 	url: string;
@@ -76,6 +77,9 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 
 		case "link":
 			return `${LINK_PREFIX}${pattern.path.join()}`;
+
+		case "workspace":
+			return `${WORKSPACE_PREFIX}${pattern.path}`;
 	}
 }
 
@@ -100,7 +104,7 @@ function removePrefix(prefix: string, value: string): string {
 	}
 }
 
-//# GIST
+//# Gist
 
 const GIST_PREFIX = "gist:";
 
@@ -116,7 +120,7 @@ function parseGist(pattern: string): GistPattern {
 	};
 }
 
-//# HOSTED GIT
+//# Hosted Gist
 export type HostedGitHost = "bitbucket" | "github" | "gitlab";
 
 type IncompleteHostedGitPattern = {
@@ -196,7 +200,7 @@ export function getHostedGitURL(pattern: IncompleteHostedGitPattern): string {
 	}
 }
 
-//# REGULAR GIT
+//# Regular Git
 type GitPattern = UrlWithHash & {
 	type: "git";
 };
@@ -216,7 +220,7 @@ function parseGit(pattern: string, consumer: Consumer): GitPattern {
 	};
 }
 
-//# TARBALL
+//# HTTP Tarball
 type HTTPTarballPattern = UrlWithHash & {
 	type: "http-tarball";
 };
@@ -231,7 +235,7 @@ function parseHttpTarball(
 	};
 }
 
-//# SEMVER
+//# Semver Range
 type SemverPattern = {
 	type: "semver";
 	range: SemverRangeNode;
@@ -260,7 +264,7 @@ function parseSemver(
 	};
 }
 
-//# FILE
+//# File
 const FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
 type FilePattern = {
@@ -275,7 +279,7 @@ function parseFile(pattern: string): FilePattern {
 	};
 }
 
-//# TAG
+//# Tag
 
 // This regex will likely need to be refined, not sure what the allowable characters of a tag are
 const TAG_REGEX = /^[a-z]+$/g;
@@ -292,7 +296,22 @@ function parseTag(pattern: string): TagPattern {
 	};
 }
 
-//# LINK
+//# Workspace
+const WORKSPACE_PREFIX = "workspace:";
+
+type WorkspacePattern = {
+	type: "workspace";
+	path: string;
+};
+
+function parseWorkspace(pattern: string): WorkspacePattern {
+	return {
+		type: "workspace",
+		path: pattern.slice(WORKSPACE_PREFIX.length),
+	};
+}
+
+//# Link
 const LINK_PREFIX = "link:";
 
 type LinkPattern = {
@@ -307,7 +326,7 @@ function parseLink(pattern: string): LinkPattern {
 	};
 }
 
-//# NPM
+//# Explicit npm
 const NPM_PREFIX = "npm:";
 
 type NpmPattern = {
@@ -436,6 +455,9 @@ export function parseGitDependencyPattern(
 	return undefined;
 }
 
+// Check if we received something that looks like a pattern that we don't support
+const UNSUPPORTED_PATTERN = /^([a-z]+):/i;
+
 export function parseDependencyPattern(
 	consumer: Consumer,
 	loose: boolean,
@@ -449,6 +471,10 @@ export function parseDependencyPattern(
 
 	if (pattern.startsWith("http://") || pattern.startsWith("https://")) {
 		return parseHttpTarball(pattern, consumer);
+	}
+
+	if (pattern.startsWith(WORKSPACE_PREFIX)) {
+		return parseWorkspace(pattern);
 	}
 
 	if (pattern.startsWith(GIST_PREFIX)) {
@@ -475,6 +501,15 @@ export function parseDependencyPattern(
 		return parseTag(pattern);
 	}
 
+	const unsupportedMatch = pattern.match(UNSUPPORTED_PATTERN);
+	if (unsupportedMatch != null) {
+		throw consumer.unexpected(
+			descriptions.MANIFEST.UNSUPPORTED_DEPENDENCY_PATTERN_PREFIX(
+				unsupportedMatch[1],
+			),
+		);
+	}
+
 	return parseSemver(pattern, consumer, loose);
 }
 
@@ -497,7 +532,7 @@ export function normalizeDependencies(
 	}
 
 	for (const [rawName, value] of consumer.asMap()) {
-		const name = normalizeName({
+		const nameObj = normalizeName({
 			name: rawName,
 			loose,
 			unexpected: ({description, at}) => {
@@ -511,7 +546,10 @@ export function normalizeDependencies(
 			},
 		});
 
-		map.set(name, parseDependencyPattern(value, loose));
+		const name = manifestNameToString(nameObj);
+		if (name !== undefined) {
+			map.set(name, parseDependencyPattern(value, loose));
+		}
 	}
 
 	return map;

@@ -36,7 +36,7 @@ export default createServerCommand({
 		let res: WorkerCompileResult;
 		if (commandFlags.bundle) {
 			const bundler = Bundler.createFromServerRequest(req);
-			res = await bundler.compile(resolved);
+			res = await bundler.compileSingle(resolved);
 		} else {
 			res = await req.requestWorkerCompile(resolved, "compile", {}, {});
 		}

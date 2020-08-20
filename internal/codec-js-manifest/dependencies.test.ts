@@ -44,3 +44,12 @@ test(
 		);
 	},
 );
+
+test(
+	"can parse workspace patterns",
+	async (t) => {
+		t.snapshot(
+			parseDependencyPattern(consumeUnknown("workspace:*", "parse/json"), false),
+		);
+	},
+);

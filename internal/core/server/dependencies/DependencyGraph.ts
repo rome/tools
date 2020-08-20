@@ -17,7 +17,7 @@ import {ResolverOptions} from "../fs/Resolver";
 import WorkerQueue from "../WorkerQueue";
 import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@internal/cli-reporter";
-import {Locker} from "../../common/utils/lockers";
+import {Locker} from "../../../async/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 
@@ -181,53 +181,59 @@ export default class DependencyGraph {
 		},
 	): Promise<void> {
 		// Initialize sub dependency queue
-		const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.server);
-		await workerQueue.prepare(paths);
-
-		workerQueue.addCallback(async (path, item) => {
-			await this.resolve(
-				path,
-				{
-					workerQueue,
-					all: item.all,
-					async: item.async,
-					ancestry: item.ancestry,
-				},
-				diagnosticsProcessor,
-				analyzeProgress,
-			);
-		});
-
-		// Initialize roots
-		const rootQueue: WorkerQueue<void> = new WorkerQueue(this.server);
-		const roots: Array<MissingFileReturn<DependencyNode>> = [];
-
-		rootQueue.addCallback(async (path) => {
-			const ret = await FileNotFound.maybeAllowMissing(
-				allowFileNotFound,
-				path,
-				() => {
-					return this.resolve(
+		const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(
+			this.server,
+			{
+				callback: async ({path, item}) => {
+					await this.resolve(
 						path,
 						{
 							workerQueue,
-							all: true,
-							async: false,
-							ancestry: [],
+							all: item.all,
+							async: item.async,
+							ancestry: item.ancestry,
 						},
 						diagnosticsProcessor,
 						analyzeProgress,
 					);
 				},
-			);
-			roots.push(ret);
-		});
+			},
+		);
+		await workerQueue.prepare(paths);
+
+		// Initialize roots
+		const rootQueue: WorkerQueue<void> = new WorkerQueue(
+			this.server,
+			{
+				callback: async ({path}) => {
+					const ret = await FileNotFound.maybeAllowMissing(
+						allowFileNotFound,
+						path,
+						() => {
+							return this.resolve(
+								path,
+								{
+									workerQueue,
+									all: true,
+									async: false,
+									ancestry: [],
+								},
+								diagnosticsProcessor,
+								analyzeProgress,
+							);
+						},
+					);
+					roots.push(ret);
+				},
+			},
+		);
+		const roots: Array<MissingFileReturn<DependencyNode>> = [];
 
 		for (const path of paths) {
 			await FileNotFound.maybeAllowMissing(
 				allowFileNotFound,
 				path,
-				() => rootQueue.pushQueue(path, undefined),
+				() => rootQueue.pushPath(path),
 			);
 		}
 
@@ -386,7 +392,7 @@ export default class DependencyGraph {
 		const subAncestry = [...ancestry, filename];
 		for (const path of node.getAbsoluteDependencies()) {
 			const dep = node.getDependencyInfoFromAbsolute(path).analyze;
-			await opts.workerQueue.pushQueue(
+			await opts.workerQueue.pushPath(
 				path,
 				{
 					all: dep.all,

@@ -1,26 +1,28 @@
 import {IntSize} from "./types";
-import RSERBufferAssembler, {RSERBufferAssemblerReferences} from "./RSERBufferAssembler";
-
-const textEncoder = new TextEncoder();
+import RSERBufferAssembler from "./RSERBufferAssembler";
+import {utf8Encode} from "./utf8";
 
 export default class RSERBufferWriter extends RSERBufferAssembler {
-	constructor(buffer: ArrayBuffer, references: RSERBufferAssemblerReferences) {
+	constructor(buffer: ArrayBuffer, assembler: RSERBufferAssembler) {
 		super();
-		this.references = references;
+		this.references = assembler.references;
 		this.totalSize = buffer.byteLength;
 		this.writeOffset = 0;
 		this.buffer = buffer;
-		this.array = new Uint8Array(buffer);
+		this.bytes = new Uint8Array(buffer);
 		this.view = new DataView(buffer);
 	}
 
 	public writeOffset: number;
-	public array: Uint8Array;
+	public bytes: Uint8Array;
 	public buffer: ArrayBuffer;
 	public view: DataView;
 
 	static allocate(size: number): RSERBufferWriter {
-		return new RSERBufferWriter(new ArrayBuffer(size), new Map());
+		return new RSERBufferWriter(
+			new ArrayBuffer(size),
+			new RSERBufferAssembler(),
+		);
 	}
 
 	protected onReferenceCreate() {}
@@ -39,15 +41,16 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		}
 	}
 
-	public appendArray(buf: Uint8Array) {
+	public appendBytes(buf: Uint8Array) {
 		const size = buf.byteLength;
 		this.assertWritableSize(size);
-		this.array.set(buf, this.writeOffset);
+		this.bytes.set(buf, this.writeOffset);
 		this.writeOffset += size;
 	}
 
-	protected appendString(text: string) {
-		this.appendArray(textEncoder.encode(text));
+	protected appendString(text: string, size: number) {
+		utf8Encode(text, this.bytes, this.writeOffset, size);
+		this.writeOffset += size;
 	}
 
 	protected writeCode(code: number) {

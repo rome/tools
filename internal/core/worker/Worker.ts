@@ -36,6 +36,7 @@ import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
 import {BridgeError} from "@internal/events";
+import {ExtendedMap} from "@internal/collections";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -51,6 +52,7 @@ type WorkerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
 	bridge: WorkerBridge;
+	id: number;
 };
 
 export default class Worker {
@@ -58,7 +60,7 @@ export default class Worker {
 		this.bridge = opts.bridge;
 
 		this.userConfig = opts.userConfig;
-		this.partialManifests = new Map();
+		this.partialManifests = new ExtendedMap("partialManifests");
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
 		this.moduleSignatureCache = new UnknownPathMap();
@@ -66,9 +68,9 @@ export default class Worker {
 		this.virtualModules = new VirtualModules();
 
 		this.logger = new Logger(
-			"worker",
 			{},
 			{
+				loggerType: "worker",
 				check: () => opts.bridge.log.hasSubscribers(),
 				write(chunk) {
 					opts.bridge.log.send(chunk.toString());
@@ -116,18 +118,14 @@ export default class Worker {
 
 	private bridge: WorkerBridge;
 	private virtualModules: VirtualModules;
-	private partialManifests: Map<number, WorkerPartialManifest>;
+	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: Map<number, TransformProjectDefinition>;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
 	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<string>;
 
 	private getPartialManifest(id: number): WorkerPartialManifest {
-		const manifest = this.partialManifests.get(id);
-		if (manifest === undefined) {
-			throw new Error(`Requested manifest ${id} but we don't have it`);
-		}
-		return manifest;
+		return this.partialManifests.assert(id);
 	}
 
 	private end() {
@@ -271,10 +269,8 @@ export default class Worker {
 
 	private patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
 		this.logger.info(markup`Patched ${ref.real} buffer`);
-		let buffer = this.buffers.get(ref.real);
-		if (buffer === undefined) {
-			throw new Error(`Can't find buffer to patch for ${ref.real.join()}`);
-		}
+		let buffer: undefined | string = this.buffers.assert(ref.real);
+
 		// Patches must be applied sequentially
 		for (const patch of patches) {
 			buffer = applyWorkerBufferPatch(buffer, patch);
@@ -334,15 +330,9 @@ export default class Worker {
 					return resolveGraph(value.key);
 
 				case "USE_CACHED": {
-					const cached = this.moduleSignatureCache.get(
+					return this.moduleSignatureCache.assert(
 						createUnknownPath(value.filename),
 					);
-					if (cached === undefined) {
-						throw new Error(
-							`Server told us we have the export types for ${value.filename} cached but we dont!`,
-						);
-					}
-					return cached;
 				}
 			}
 		};
@@ -402,10 +392,6 @@ export default class Worker {
 					sourceTypeJS = "module";
 				}
 			}
-		}
-
-		if (project.config.bundler.mode === "legacy") {
-			sourceTypeJS = "module";
 		}
 
 		const cacheEnabled = options.cache !== false;

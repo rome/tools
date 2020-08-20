@@ -43,7 +43,7 @@ abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 		this.size = this.joinedToValue.size;
 	}
 
-	public *[Symbol.iterator](): Iterator<[FilePath, Value]> {
+	public *[Symbol.iterator](): IterableIterator<[FilePath, Value]> {
 		for (const [joined, value] of this.joinedToValue) {
 			const path = this.joinedToPath.get(joined)!;
 			yield [path, value];
@@ -56,23 +56,41 @@ abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 		this._updateSize();
 	}
 
-	public keys(): Iterable<FilePath> {
+	public entries(): IterableIterator<[FilePath, Value]> {
+		return this[Symbol.iterator]();
+	}
+
+	public keys(): IterableIterator<FilePath> {
 		return this.joinedToPath.values();
 	}
 
-	public values(): Iterable<Value> {
+	public values(): IterableIterator<Value> {
 		return this.joinedToValue.values();
 	}
 
-	public delete(path: FilePath) {
+	public delete(path: FilePath): boolean {
 		const joined = path.getUnique().join();
+		if (!this.joinedToValue.has(joined)) {
+			return false;
+		}
+
 		this.joinedToValue.delete(joined);
 		this.joinedToPath.delete(joined);
 		this._updateSize();
+		return true;
 	}
 
 	public has(path: FilePath): boolean {
 		return this.joinedToValue.has(path.getUnique().join());
+	}
+
+	public assert(path: FilePath): Value {
+		const item = this.get(path);
+		if (item === undefined) {
+			throw new Error(`Could not find element for ${path.join()}`);
+		} else {
+			return item;
+		}
 	}
 
 	public get(path: FilePath): undefined | Value {
@@ -83,12 +101,13 @@ abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 		this.set(this.createKey(path), value);
 	}
 
-	public set(path: FilePath, value: Value) {
+	public set(path: FilePath, value: Value): this {
 		const uniq = (path.getUnique() as FilePath);
 		const joined = uniq.join();
 		this.joinedToValue.set(joined, value);
 		this.joinedToPath.set(joined, uniq);
 		this._updateSize();
+		return this;
 	}
 }
 
@@ -120,7 +139,7 @@ abstract class BasePathSet<
 		this.size = this.map.size;
 	}
 
-	public [Symbol.iterator](): Iterator<FilePath> {
+	public [Symbol.iterator](): IterableIterator<FilePath> {
 		return this.map.keys()[Symbol.iterator]();
 	}
 
@@ -134,18 +153,24 @@ abstract class BasePathSet<
 		return this.map.has(path);
 	}
 
-	public add(path: FilePath) {
+	public add(path: FilePath): this {
 		this.map.set(path);
 		this._updateSize();
+		return this;
 	}
 
 	public addString(str: string) {
 		this.add(this.createKey(str));
 	}
 
-	public delete(path: FilePath) {
-		this.map.delete(path);
-		this._updateSize();
+	public delete(path: FilePath): boolean {
+		if (this.map.has(path)) {
+			this.map.delete(path);
+			this._updateSize();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public clear() {

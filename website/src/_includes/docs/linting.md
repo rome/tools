@@ -8,7 +8,7 @@ Rome stands out in the following ways:
 
 **Fixes:** We provide [fixes](#applying-fixes) for many lint errors, which can be applied automatically. If there are multiple ways to fix something then we [suggest](#suggested) multiple fixes that you can choose.
 
-**Reviewing:** We offer an [interactive CLI command](#reviewing) to make this process even easier. It allows you to go through each diagnostic and perform actions on them such inserting a suppression comment or applying a specific fix.
+**Reviewing:** We offer an [interactive CLI command](#reviewing) to make this process even easier. It allows you to go through each diagnostic and perform actions on them such as inserting a suppression comment or applying a specific fix.
 
 **Editor:** You can use an [editor integration](#editor-integration) to bring the power of Rome into your editor. This includes lint errors as you type, automatic formatting when saved, and code actions to select specific fixes.
 

@@ -14,7 +14,7 @@ import ClientRequest, {ClientRequestType} from "./ClientRequest";
 import Server, {ServerClient, ServerOptions} from "../server/Server";
 import {
 	CLI_SOCKET_PATH,
-	SOCKET_PATH,
+	SERVER_SOCKET_PATH,
 	ServerBridge,
 	ServerQueryResponse,
 	VERSION,
@@ -108,7 +108,7 @@ export default class Client {
 		this.options = opts;
 		this.userConfig = opts.userConfig;
 		this.queryCounter = 0;
-		this.flags = mergeObjects(DEFAULT_CLIENT_FLAGS, opts.flags);
+		this.flags = mergeObjects<ClientFlags>(DEFAULT_CLIENT_FLAGS, opts.flags);
 
 		this.requestResponseEvent = new Event({
 			name: "Client.requestResponseEvent",
@@ -765,7 +765,7 @@ export default class Client {
 		) => {
 			const socket = net.createConnection(
 				{
-					path: SOCKET_PATH.join(),
+					path: SERVER_SOCKET_PATH.join(),
 				},
 				() => {
 					resolve(socket);

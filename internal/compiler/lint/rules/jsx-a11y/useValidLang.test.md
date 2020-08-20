@@ -109,6 +109,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
+
 ✖ Found 1 problem
 
 ```
@@ -153,6 +154,7 @@
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
+
 ✖ Found 1 problem
 
 ```

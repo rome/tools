@@ -91,3 +91,9 @@ npm {
 	}
 }
 ```
+
+## `can parse workspace patterns`
+
+```javascript
+workspace {path: "*"}
+```

@@ -11,9 +11,14 @@ export type VoidCallback<Args extends Array<unknown> = []> = Args extends []
 	? ((arg?: VoidReturn) => VoidReturn)
 	: ((...args: Args) => VoidReturn);
 
-export type AsyncVoidCallback<Args extends Array<unknown> = []> = Args extends []
-	? ((arg?: VoidReturn) => VoidReturn | Promise<VoidReturn>)
-	: ((...args: Args) => VoidReturn | Promise<VoidReturn>);
+export type AsyncVoidCallback<Args extends Array<unknown> = []> = AsyncCallback<
+	VoidReturn,
+	Args
+>;
+
+export type AsyncCallback<Return, Args extends Array<unknown> = []> = Args extends []
+	? (() => Return | Promise<Return>)
+	: ((...args: Args) => Return | Promise<Return>);
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
@@ -24,12 +29,22 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
 	? I
 	: never;
 
+// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables
+type ClassConstructorParams<T> = T extends {
+	new (
+		...args: infer R
+	): any;
+}
+	? R
+	: never;
+
 // rome-ignore lint/ts/noExplicitAny
-export type Class<T, Args extends Array<unknown> = Array<any>> = {
+export interface Class<T, Args extends Array<any> = ClassConstructorParams<T>> {
 	new (
 		...args: Args
 	): T;
-};
+	prototype: T;
+}
 
 export type Dict<T> = Record<string, T>;
 
@@ -68,9 +83,9 @@ export function isIterable(obj: unknown): obj is Iterable<unknown> {
 // https://github.com/microsoft/TypeScript/issues/13195
 // This means that places where we expect to receive a value when object spreading in a partial object
 // can actually have undefined values!
-export function mergeObjects<A extends object, B extends Partial<A>>(
+export function mergeObjects<A extends object>(
 	a: A,
-	b: undefined | B,
+	b: undefined | Partial<A>,
 ): A {
 	if (b === undefined) {
 		return a;

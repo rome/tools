@@ -416,7 +416,7 @@ function printStacktrace(
 		const {title} = item;
 		if (title !== undefined) {
 			opts.reporter.info(markup`${title}`);
-			opts.reporter.br(true);
+			opts.reporter.br({force: true});
 		}
 	}
 

@@ -7,7 +7,7 @@
 
 import {
 	CLI_SOCKET_PATH,
-	SOCKET_PATH,
+	SERVER_SOCKET_PATH,
 	Server,
 	ServerBridge,
 } from "@internal/core";
@@ -41,12 +41,12 @@ export default async function server() {
 		server.attachToBridge(client);
 	});
 
-	if (await exists(SOCKET_PATH)) {
-		await removeFile(SOCKET_PATH);
+	if (await exists(SERVER_SOCKET_PATH)) {
+		await removeFile(SERVER_SOCKET_PATH);
 	}
 
 	socketServer.listen(
-		SOCKET_PATH.join(),
+		SERVER_SOCKET_PATH.join(),
 		() => {
 			const socket = net.createConnection(
 				CLI_SOCKET_PATH.join(),

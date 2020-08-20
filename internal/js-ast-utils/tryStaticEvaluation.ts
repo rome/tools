@@ -49,6 +49,9 @@ function evalUnaryExpression(
 
 			case "~":
 				return createResult(~value);
+
+			case "!":
+				return createResult(!value);
 		}
 	}
 

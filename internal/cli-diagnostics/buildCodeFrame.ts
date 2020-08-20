@@ -256,7 +256,7 @@ export default function buildCodeFrame(
 
 		maxVisibleLineNo = ob1Get0(i) + 1;
 
-		if (truncateLines !== undefined && maxVisibleLineNo >= truncateLines) {
+		if (truncateLines !== undefined && maxVisibleLineNo > truncateLines) {
 			truncated = true;
 			break;
 		}

@@ -59,7 +59,7 @@ import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@internal/string-utils";
-import {FilePathLocker} from "../common/utils/lockers";
+import {FilePathLocker} from "../../async/lockers";
 import {getEnvVar} from "@internal/cli-environment";
 import {StaticMarkup, markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
@@ -203,7 +203,6 @@ export default class Server {
 		});
 
 		this.logger = new Logger(
-			"server",
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
@@ -230,6 +229,7 @@ export default class Server {
 				},
 			},
 			{
+				loggerType: "server",
 				write: (chunk) => {
 					this.emitServerLog(chunk);
 				},

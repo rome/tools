@@ -119,7 +119,7 @@ export default class ProgressBase implements ReporterProgress {
 
 	public popText(id: string) {
 		// Find
-		const {textStack, textIdStack} = this;
+		const {textStack, textIdStack, textIds} = this;
 		const index = textIdStack.indexOf(id);
 		if (index === -1) {
 			throw new Error(`No pushed text for id ${id}`);
@@ -128,7 +128,7 @@ export default class ProgressBase implements ReporterProgress {
 		// Remove
 		textStack.splice(index, 1);
 		textIdStack.splice(index, 1);
-		this.textIds.delete(id);
+		textIds.delete(id);
 
 		// Set last
 		const last: undefined | AnyMarkup = textStack[textStack.length - 1];

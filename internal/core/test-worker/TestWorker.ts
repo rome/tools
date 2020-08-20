@@ -5,16 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	TestWorkerPrepareTestOptions,
-	TestWorkerPrepareTestResult,
-	TestWorkerRunTestOptions,
-} from "../common/bridges/TestWorkerBridge";
 import {deriveDiagnosticFromError} from "@internal/diagnostics";
 import {TestWorkerBridge} from "@internal/core";
 import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
-import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
+import TestWorkerFile from "./TestWorkerFile";
 import inspector = require("inspector");
+import {AbsoluteFilePathMap} from "@internal/path";
+import {serializeAssembled} from "../server/bundler/utils";
+import {AssembledBundle} from "../common/types/bundler";
 import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
 
 export type TestWorkerFlags = {
@@ -24,11 +22,22 @@ export type TestWorkerFlags = {
 export default class TestWorker {
 	constructor() {
 		this.bridge = this.buildBridge();
-		this.runners = new Map();
+		this.runners = new AbsoluteFilePathMap();
+		this.compiled = new AbsoluteFilePathMap();
 	}
 
-	private runners: Map<number, TestWorkerRunner>;
+	private runners: AbsoluteFilePathMap<TestWorkerFile>;
 	private bridge: TestWorkerBridge;
+	private compiled: AbsoluteFilePathMap<string>;
+
+	public serializeAssembled(assembled: AssembledBundle): string {
+		return serializeAssembled(
+			assembled,
+			(path) => {
+				return this.compiled.get(path);
+			},
+		);
+	}
 
 	public async init(flags: TestWorkerFlags) {
 		inspector.open(flags.inspectorPort);
@@ -46,6 +55,7 @@ export default class TestWorker {
 
 		setupGlobalErrorHandlers((err) => {
 			bridge.testDiagnostic.send({
+				testPath: undefined,
 				origin: undefined,
 				diagnostic: deriveDiagnosticFromError(
 					err,
@@ -64,34 +74,29 @@ export default class TestWorker {
 			};
 		});
 
-		bridge.prepareTest.subscribe((data) => {
-			return this.prepareTest(data);
+		bridge.prepareTest.subscribe(async (opts) => {
+			const runner = new TestWorkerFile(this, this.bridge, opts);
+			this.runners.set(opts.path, runner);
+			return await runner.prepare();
 		});
 
-		bridge.runTest.subscribe((opts) => {
-			return this.runTest(opts);
+		bridge.teardownTest.subscribe(async (path) => {
+			const runner = this.runners.assert(path);
+			return await runner.teardown();
+		});
+
+		bridge.runTest.subscribe(async (opts) => {
+			const {path} = opts;
+			const runner = this.runners.assert(path);
+			return await runner.run(opts);
+		});
+
+		bridge.receiveCompiled.subscribe((map) => {
+			for (const [path, content] of map) {
+				this.compiled.set(path, content);
+			}
 		});
 
 		return bridge;
-	}
-
-	private async runTest(
-		opts: TestWorkerRunTestOptions,
-	): Promise<TestWorkerFileResult> {
-		const {id} = opts;
-		const runner = this.runners.get(id);
-		if (runner === undefined) {
-			throw new Error(`No runner ${id} found`);
-		} else {
-			return await runner.run(opts);
-		}
-	}
-
-	private async prepareTest(
-		opts: TestWorkerPrepareTestOptions,
-	): Promise<TestWorkerPrepareTestResult> {
-		const runner = new TestWorkerRunner(opts, this.bridge);
-		this.runners.set(opts.id, runner);
-		return await runner.prepare();
 	}
 }

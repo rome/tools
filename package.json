@@ -17,9 +17,6 @@
   },
   "rome": {
     "root": true,
-    "bundler": {
-      "mode": "modern"
-    },
     "lint": {
       "ignore": [
         "build",

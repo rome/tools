@@ -20,7 +20,6 @@ import {Event} from "@internal/events";
 import stringDiff from "@internal/string-diff";
 import {getErrorStructure} from "@internal/v8";
 import {prettyFormatToString} from "@internal/pretty-format";
-import {FileReference} from "@internal/core";
 import {markup} from "@internal/markup";
 import {
 	ExpectedError,
@@ -28,8 +27,9 @@ import {
 	TestHelper,
 	TestSnapshotOptions,
 } from "@internal/virtual-rome/test";
-import {cleanFrames} from "./TestWorkerRunner";
+import {cleanFrames} from "./TestWorkerFile";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
+import {AbsoluteFilePath} from "@internal/path";
 
 function formatExpectedError(expected: ExpectedError): string {
 	if (typeof expected === "string") {
@@ -125,13 +125,13 @@ export default class TestAPI implements TestHelper {
 		{
 			testName,
 			onTimeout,
-			file,
+			path,
 			snapshotManager,
 			options,
 			emitDiagnostic,
 		}: {
 			emitDiagnostic: EmitDiagnostic;
-			file: FileReference;
+			path: AbsoluteFilePath;
 			testName: string;
 			onTimeout: OnTimeout;
 			snapshotManager: SnapshotManager;
@@ -142,7 +142,7 @@ export default class TestAPI implements TestHelper {
 		this.options = options;
 		this.snapshotManager = snapshotManager;
 		this.snapshotCounter = 0;
-		this.file = file;
+		this.path = path;
 		this.teardownEvent = new Event({name: "TestAPI.teardown"});
 		this.startTime = Date.now();
 		this.onTimeout = onTimeout;
@@ -157,7 +157,7 @@ export default class TestAPI implements TestHelper {
 
 	private startTime: number;
 	private options: TestServerRunnerOptions;
-	private file: FileReference;
+	private path: AbsoluteFilePath;
 	private emitDiagnostic: EmitDiagnostic;
 
 	private onTimeout: OnTimeout;
@@ -818,7 +818,7 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Run <code>rome test <filelink target="${this.file.uid}" /> --update-snapshots</code> to update this snapshot`,
+					text: markup`Run <code>rome test <filelink target="${this.path.join()}" /> --update-snapshots</code> to update this snapshot`,
 				});
 
 				await this.emitDiagnostic(

@@ -8,7 +8,7 @@
 import {Server} from "@internal/core";
 import {ChangedFileEventItem, Stats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
-import {FilePathLocker} from "../../common/utils/lockers";
+import {FilePathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";

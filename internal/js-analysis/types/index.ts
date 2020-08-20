@@ -47,8 +47,12 @@ import UnknownPropE from "./errors/UnknownPropE";
 import UnknownImportE from "./errors/UnknownImportE";
 import MissingUnionE from "./errors/MissingUnionE";
 import {Class} from "@internal/typescript-helpers";
+import {ExtendedMap} from "@internal/collections";
 
-const types: Map<string, Class<T>> = new Map();
+// rome-ignore lint/ts/noExplicitAny
+const types: ExtendedMap<string, Class<T, Array<any>>> = new ExtendedMap(
+	"types",
+);
 export default types;
 
 types.set("AnyT", AnyT);

@@ -53,6 +53,7 @@ function calculateBufferPosition(
 export function removeLine(
 	stream: ReporterStreamAttached,
 	snapshot: ReporterStreamLineSnapshot,
+	stderr: boolean = false,
 ) {
 	// See if this stream is included in the snapshot
 	const targetLine = stream.state.lineSnapshots.get(snapshot);
@@ -87,17 +88,17 @@ export function removeLine(
 	stream.state.currentLine = ob1Dec(stream.state.currentLine);
 
 	// Go to the line right above where we want to remove
-	stream.write(ansiEscapes.cursorUp(lineDiff + 1), false);
-	stream.write(ansiEscapes.cursorTo(0), false);
+	stream.write(ansiEscapes.cursorUp(lineDiff + 1), stderr);
+	stream.write(ansiEscapes.cursorTo(0), stderr);
 
 	// Sweeping down, starting rendering the next line
 	for (let i = 1; i <= lineDiff; i++) {
 		const line = stream.state.buffer[stream.state.buffer.length - lineDiff + i];
-		stream.write(ansiEscapes.cursorDown(), false);
-		stream.write(ansiEscapes.cursorTo(0), false);
-		stream.write(ansiEscapes.eraseLine, false);
+		stream.write(ansiEscapes.cursorDown(), stderr);
+		stream.write(ansiEscapes.cursorTo(0), stderr);
+		stream.write(ansiEscapes.eraseLine, stderr);
 		if (line !== undefined) {
-			stream.write(line, false);
+			stream.write(line, stderr);
 		}
 	}
 }

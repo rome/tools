@@ -4,8 +4,9 @@ import CompilerContext from "../lib/CompilerContext";
 import Scope from "./Scope";
 import {dedent} from "@internal/string-utils";
 import {signals} from "..";
+import {ExtendedMap} from "@internal/collections";
 
-type ChildScopeMap = Map<Scope, Set<Scope>>;
+type ChildScopeMap = ExtendedMap<Scope, Set<Scope>>;
 
 function indent(str: string): string {
 	return `	${str.split("\n").join("\n\t")}`;
@@ -39,7 +40,10 @@ function dumpScopeTree(input: string): string {
 	const context = new CompilerContext({ast});
 
 	// Collect a map of scope to child scopes
-	const scopeToChildScopes: ChildScopeMap = new Map();
+	const scopeToChildScopes: ChildScopeMap = new ExtendedMap(
+		"scopeToChildScopes",
+		() => new Set(),
+	);
 	context.reduceRoot({
 		name: "test",
 		enter({node, scope}) {
@@ -47,11 +51,7 @@ function dumpScopeTree(input: string): string {
 			if (scope.node === node) {
 				const {parentScope} = scope;
 				if (parentScope !== undefined) {
-					let childScopeNodes = scopeToChildScopes.get(parentScope);
-					if (childScopeNodes === undefined) {
-						childScopeNodes = new Set();
-						scopeToChildScopes.set(parentScope, childScopeNodes);
-					}
+					const childScopeNodes = scopeToChildScopes.assert(parentScope);
 					childScopeNodes.add(scope);
 				}
 			}

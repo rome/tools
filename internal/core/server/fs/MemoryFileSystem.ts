@@ -44,6 +44,7 @@ import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
 import {VoidCallback} from "@internal/typescript-helpers";
+import {GlobalLock} from "@internal/async";
 
 // Paths that we will under no circumstance want to include
 const DEFAULT_DENYLIST = [
@@ -149,11 +150,16 @@ export default class MemoryFileSystem {
 		this.changedFileEvent = new EventQueue();
 		this.deletedFileEvent = new EventQueue();
 		this.newFileEvent = new EventQueue();
+
+		this.processingLock = new GlobalLock();
+		this.processingLock.attachLock(this.changedFileEvent.lock);
+		this.processingLock.attachLock(this.deletedFileEvent.lock);
 	}
 
 	public changedFileEvent: EventQueue<ChangedFileEventItem>;
 	public deletedFileEvent: EventQueue<AbsoluteFilePath>;
 	public newFileEvent: EventQueue<AbsoluteFilePath>;
+	public processingLock: GlobalLock;
 
 	private manifestCounter: number;
 	private watcherCounter: number;
@@ -203,15 +209,6 @@ export default class MemoryFileSystem {
 				}
 			}
 		}
-	}
-
-	public async flushFileEvents() {
-		const {server} = this;
-		await server.refreshFileEvent.flush();
-		await this.newFileEvent.flush();
-		await this.changedFileEvent.flush();
-		await this.deletedFileEvent.flush();
-		await server.projectManager.evictingProjectLock.waitLockDrained();
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {
@@ -538,15 +535,17 @@ export default class MemoryFileSystem {
 		const promise = this.createWatcher(diagnostics, projectDirectory, id);
 		this.watchPromises.set(projectDirectory, promise);
 
-		const watcherClose = await promise;
-		this.watchers.set(
-			projectDirectory,
-			{
-				path: projectDirectory,
-				close: watcherClose,
-			},
-		);
-		this.watchPromises.delete(projectDirectory);
+		await this.processingLock.wrap(async () => {
+			const watcherClose = await promise;
+			this.watchers.set(
+				projectDirectory,
+				{
+					path: projectDirectory,
+					close: watcherClose,
+				},
+			);
+			this.watchPromises.delete(projectDirectory);
+		});
 
 		diagnostics.maybeThrowDiagnosticsError();
 	}
@@ -654,10 +653,8 @@ export default class MemoryFileSystem {
 			consumeDiagnosticCategory: "parse/manifest",
 		});
 
-		const {
-			manifest,
-			diagnostics: rawDiagnostics,
-		} = await normalizeManifest(path, consumer);
+		const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
+		const manifest = await normalizeManifest(normalizeConsumer);
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {

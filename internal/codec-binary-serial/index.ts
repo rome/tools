@@ -20,16 +20,13 @@ export {
 } from "./types";
 
 export function encodeRSERBuffer(val: RSERValue): ArrayBuffer {
-	const observer = new RSERBufferAssembler();
-	observer.encodeValue(val);
-	const payloadLength = observer.totalSize;
-	observer.encodeHeader(payloadLength);
-	const messageLength = observer.totalSize;
+	const assembler = new RSERBufferAssembler();
+	assembler.encodeValue(val);
+	const payloadLength = assembler.totalSize;
+	assembler.encodeHeader(payloadLength);
+	const messageLength = assembler.totalSize;
 
-	const buf = new RSERBufferWriter(
-		new ArrayBuffer(messageLength),
-		observer.references,
-	);
+	const buf = new RSERBufferWriter(new ArrayBuffer(messageLength), assembler);
 	buf.encodeHeader(payloadLength);
 	buf.encodeValue(val);
 	return buf.buffer;

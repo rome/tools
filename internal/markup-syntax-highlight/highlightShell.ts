@@ -11,12 +11,13 @@ import {markupTag} from "@internal/markup/escape";
 export default function highlightShell(
 	opts: {
 		input: string;
+		isShorthand?: boolean;
 	},
 ): HighlightCodeResult {
 	// TODO properly handle strings with spaces
 	const segments: Array<string> = opts.input.split(" ");
 
-	let firstCommandSegment = true;
+	let segmentCount = 0;
 
 	const parts = segments.map((segment, i) => {
 		if (i === 0) {
@@ -43,8 +44,9 @@ export default function highlightShell(
 			//return markupToken("operator", segment);
 		}
 
-		if (firstCommandSegment) {
-			firstCommandSegment = false;
+		segmentCount++;
+
+		if (segmentCount === 1 || (opts.isShorthand && segmentCount === 2)) {
 			return markupToken("function", segment);
 		}
 

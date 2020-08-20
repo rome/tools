@@ -132,10 +132,7 @@ function dependencyMapToObject(
 
 	const obj: Dict<string> = {};
 	for (const [name, pattern] of map) {
-		const key = manifestNameToString(name);
-		if (key !== undefined) {
-			obj[key] = stringifyDependencyPattern(pattern);
-		}
+		obj[name] = stringifyDependencyPattern(pattern);
 	}
 	return obj;
 }

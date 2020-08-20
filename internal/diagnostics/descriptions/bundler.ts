@@ -2,10 +2,6 @@ import {createDiagnosticsCategory} from "./index";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export const bundler = createDiagnosticsCategory({
-	TOP_LEVEL_AWAIT_IN_LEGACY: {
-		category: "bundler/topLevelAwait",
-		message: markup`This module contains a top level await which isn't supported in wrapper mode`,
-	},
 	DETECTED_CYCLE: (
 		localName: string,
 		target: string,

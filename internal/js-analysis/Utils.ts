@@ -11,6 +11,7 @@ import E from "./types/errors/E";
 import Hub from "./Hub";
 import T, {TypeCompatibilityReturn} from "./types/T";
 import {StaticMarkup, markup} from "@internal/markup";
+import {ExtendedMap} from "@internal/collections";
 
 class ReduceRecursionError extends Error {}
 
@@ -22,11 +23,11 @@ export class HumanBuilder {
 	constructor() {
 		this.stack = new Set();
 		this.usedAliases = new Set();
-		this.aliases = new Map();
+		this.aliases = new ExtendedMap("aliases");
 	}
 
 	private stack: Set<T>;
-	private aliases: Map<T, StaticMarkup>;
+	private aliases: ExtendedMap<T, StaticMarkup>;
 	public usedAliases: Set<string>;
 
 	private isRecursive(t: T): boolean {
@@ -53,11 +54,7 @@ export class HumanBuilder {
 
 		// Check if we have an already created alias
 		if (this.aliases.has(type)) {
-			const alias = this.aliases.get(type);
-			if (alias === undefined) {
-				throw new Error("Expected alias");
-			}
-			return alias;
+			return this.aliases.assert(type);
 		}
 
 		// Generate an alias if we've determined this as recursive

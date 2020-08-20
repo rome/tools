@@ -6,6 +6,9 @@
  */
 
 import {AnyFilePath} from "@internal/path";
+import {VoidCallback} from "@internal/typescript-helpers";
+import {createDeferredPromise} from "@internal/async/index";
+import {Event} from "@internal/events";
 
 type LockResolve<RawKey, MapKey> = (lock: Lock<RawKey, MapKey>) => void;
 
@@ -103,14 +106,10 @@ abstract class LockerNormalized<RawKey, MapKey> {
 	}
 }
 
+export type UnknownLocker = LockerNormalized<unknown, unknown>;
+
 export class Locker<Key> extends LockerNormalized<Key, Key> {
 	protected normalizeKey(key: Key): Key {
-		return key;
-	}
-}
-
-export class SingleLocker extends LockerNormalized<void, void> {
-	protected normalizeKey(key: void): void {
 		return key;
 	}
 }
@@ -118,5 +117,67 @@ export class SingleLocker extends LockerNormalized<void, void> {
 export class FilePathLocker extends LockerNormalized<AnyFilePath, string> {
 	protected normalizeKey(path: AnyFilePath): string {
 		return path.join();
+	}
+}
+
+export class GlobalLock {
+	constructor() {
+		this.resolves = [];
+		this.dependencies = 0;
+
+		this.incrementEvent = new Event({
+			name: "incrementEvent",
+		});
+
+		this.decrementEvent = new Event({
+			name: "decrementEvent",
+		});
+	}
+
+	private incrementEvent: Event<void, void>;
+	private decrementEvent: Event<void, void>;
+	private resolves: Array<VoidCallback>;
+	private dependencies: number;
+
+	attachLock(lock: GlobalLock) {
+		lock.incrementEvent.subscribe(() => {
+			this.dependencies++;
+		});
+
+		lock.decrementEvent.subscribe(() => {
+			this.dependencies--;
+
+			if (this.dependencies === 0) {
+				this.unlock();
+			}
+		});
+	}
+
+	private unlock() {
+		for (const resolve of this.resolves) {
+			resolve();
+		}
+		this.resolves = [];
+	}
+
+	public async wrap<T>(fn: () => Promise<T>): Promise<T> {
+		try {
+			this.dependencies++;
+			return await fn();
+		} finally {
+			this.dependencies--;
+
+			if (this.dependencies === 0) {
+				this.unlock();
+			}
+		}
+	}
+
+	public async wait() {
+		if (this.dependencies > 0) {
+			const {resolve, promise} = createDeferredPromise();
+			this.resolves.push(resolve);
+			await promise;
+		}
 	}
 }
