@@ -763,7 +763,7 @@ export default class ProjectManager {
 		}
 	}
 
-	private hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
+	public hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
 		return this.projectDirectoryToProject.has(path);
 	}
 
@@ -852,7 +852,6 @@ export default class ProjectManager {
 
 		// If not then let's access the file system and try to find one
 		for (const dir of parentDirectories.slice().reverse()) {
-			let foundProjectDirectory = false;
 			// Check for dedicated project configs
 			for (const configFilename of PROJECT_CONFIG_FILENAMES) {
 				// Check in root
@@ -860,24 +859,13 @@ export default class ProjectManager {
 
 				const hasProject = await this.server.memoryFs.existsHard(configPath);
 				if (hasProject) {
-					if (foundProjectDirectory) {
-						throw createSingleDiagnosticError({
-							description: descriptions.PROJECT_MANAGER.MULTIPLE_CONFIGS,
-							location: {
-								filename: configPath.join(),
-							},
-						});
-					}
-					foundProjectDirectory = true;
 					if (this.isLoadingBannedProjectPath(dir, configPath, processor)) {
 						// Would have emitted a diagnostic
 						return;
 					}
+					await this.server.memoryFs.watch(dir);
+					return this.assertProjectExisting(cwd);
 				}
-			}
-			if (foundProjectDirectory) {
-				await this.server.memoryFs.watch(dir);
-				return this.assertProjectExisting(cwd);
 			}
 			// Check for package.json
 			const packagePath = dir.append("package.json");

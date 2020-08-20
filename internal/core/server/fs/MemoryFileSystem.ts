@@ -20,6 +20,7 @@ import {
 	Diagnostics,
 	DiagnosticsProcessor,
 	catchDiagnostics,
+	descriptions,
 } from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
 import {consumeJSON} from "@internal/codec-json";
@@ -932,6 +933,15 @@ export default class MemoryFileSystem {
 			dirname.getBasename() === PROJECT_CONFIG_DIRECTORY &&
 			PROJECT_CONFIG_FILENAMES.includes(basename)
 		) {
+			if (projectManager.hasLoadedProjectDirectory(dirname.getParent())) {
+				opts.diagnostics.addDiagnostic({
+					description: descriptions.PROJECT_MANAGER.MULTIPLE_CONFIGS,
+					location: {
+						filename: path.join(),
+					},
+				});
+			}
+
 			await projectManager.addDiskProject({
 				// Get the directory above .config
 				projectDirectory: dirname.getParent(),
