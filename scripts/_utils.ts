@@ -1,5 +1,14 @@
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
-import {readFileText, writeFile as writeFileReal} from "@internal/fs";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	createAbsoluteFilePath,
+} from "@internal/path";
+import {
+	lstat,
+	readDirectory,
+	readFileText,
+	writeFile as writeFileReal,
+} from "@internal/fs";
 import {Reporter} from "@internal/cli-reporter";
 import {createMockWorker} from "@internal/test-helpers";
 
@@ -255,4 +264,49 @@ export async function execDev(args: Array<string>): Promise<void> {
 			},
 		),
 	);
+}
+
+async function getSubDirectories(
+	files: AbsoluteFilePathSet,
+): Promise<Array<string>> {
+	const subDirs: Array<string> = [];
+
+	for await (const file of files) {
+		if ((await lstat(file)).isDirectory()) {
+			subDirs.push(file.getBasename());
+		}
+	}
+
+	return subDirs;
+}
+
+export async function getLanguages(): Promise<Array<string>> {
+	const astPath = INTERNAL.append("ast");
+	const astDir = await readDirectory(astPath);
+
+	return getSubDirectories(astDir);
+}
+
+export async function getLanguageCategories(
+	language: string,
+): Promise<Array<string>> {
+	const languagePath = INTERNAL.append("ast", language);
+	const languageDir = await readDirectory(languagePath);
+
+	return getSubDirectories(languageDir);
+}
+
+export async function languageExists(language: string): Promise<boolean> {
+	const languages = await getLanguages();
+
+	return languages.includes(language);
+}
+
+export async function languageCategoryExists(
+	language: string,
+	category: string,
+): Promise<boolean> {
+	const categories = await getLanguageCategories(language);
+
+	return categories.includes(category);
 }
