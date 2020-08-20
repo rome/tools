@@ -35,4 +35,4 @@ export function getSPDXLicense(licenseId: string): undefined | License {
 }
 
 export {default as stringifySPDXLicense} from "./stringify";
-export {default as SpdxLicenseCodec} from "./SpdxLicenseCodec";
+export {default as SPDXLicenseParser} from "./SPDXLicenseParser";

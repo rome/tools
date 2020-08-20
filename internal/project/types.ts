@@ -31,7 +31,7 @@ export type ProjectDefinition = {
 };
 
 export type DependenciesExceptions = {
-	invalidLicenses: Map<string, Array<string>>;
+	invalidLicenses: Map<string, {name: string, range: SemverRange}>;
 };
 
 // Project config objects to categorize settings

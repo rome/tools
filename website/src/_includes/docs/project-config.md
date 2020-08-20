@@ -84,11 +84,11 @@ rome config push lint.globals SomeGlobal
 
 ### `dependencies.exceptions`
 
-Custom exceptions that belong to the dependencies of the project.
+Exception rules for your dependencies that don't pass validation.
 
 #### `dependencies.exceptions.invalidLicenses`
 
-Sometimes rome might complain that one or more of your dependencies has invalid license.
+Sometimes Rome might complain that one or more of your dependencies has an invalid license.
 
 Optionally, you can insert the name of this invalid license here:
 

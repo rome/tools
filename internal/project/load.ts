@@ -242,6 +242,7 @@ export async function normalizeProjectConfig(
 		if (dependencies.has("enabled")) {
 			config.dependencies.enabled = dependencies.get("enabled").asBoolean();
 		}
+		
 		if (dependencies.has("exceptions")) {
 			const exceptions = dependencies.get("exceptions").asMap();
 
