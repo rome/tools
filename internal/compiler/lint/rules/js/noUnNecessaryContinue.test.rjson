@@ -1,0 +1,26 @@
+filename: "filename.ts"
+invalid: [
+	"
+	while(1){
+		continue;
+	}
+	",
+	"
+	for(let i=0;i<10;i++){
+    if(i>5) {
+        console.log('sss');
+        continue;
+    }
+    else if(i>=5&&i<8){
+        console.log('s');
+    }
+    else {
+        console.log('dsd');
+    }
+	}
+	"
+]
+valid: [
+	"
+	"
+]
