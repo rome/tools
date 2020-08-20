@@ -28,7 +28,7 @@ import {
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
-import {RelativeFilePathMap, createRelativeFilePath} from "@internal/path";
+import {RelativeFilePathMap, createRelativeFilePath, AbsoluteFilePath} from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
