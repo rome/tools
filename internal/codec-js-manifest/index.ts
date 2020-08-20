@@ -649,7 +649,6 @@ export async function normalizeManifest(
 
 	const name = normalizeRootName(consumer, loose);
 	const version = normalizeVersion(consumer, loose);
-	const source = projectManager.findLoadedProject(path);
 
 	if (loose) {
 		normalizeCompatManifest(consumer, name, version);

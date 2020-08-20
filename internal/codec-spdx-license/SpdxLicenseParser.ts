@@ -93,7 +93,7 @@ type LicenseCodec = {
 	projects: Array<ProjectDefinition>;
 };
 
-export default class SpdxLicenseParser {
+export default class SPDXLicenseParser {
 	private readonly packageName: string;
 	private readonly packageVersion: string;
 	private readonly projects: Array<ProjectDefinition>;
@@ -172,21 +172,17 @@ export default class SpdxLicenseParser {
 
 	isLicenseValid(
 		id: string,
-	): {
-		inConfig: boolean;
-		satisfiesVersion: boolean;
-		packageVersionInConfig: string;
-	} {
+	):  { inConfig: boolean, satisfiesVersion: boolean, packageVersionInConfig: string } {
 		let inConfig = false;
 		let satisfiesVersion = false;
 		let packageVersionInConfig = "";
-		for (const project of this.projects) {
-			const {invalidLicenses} = project.config.dependencies.exceptions;
+		for ( const project of this.projects) {
+			const { invalidLicenses } = project.config.dependencies.exceptions;
 			const licenses = invalidLicenses.get(id);
 			if (licenses) {
-				for (const license of licenses) {
+				for (const license of  licenses) {
 					satisfiesVersion = satisfiesSemver(this.packageVersion, license.range);
-					inConfig = license.name === this.packageName && satisfiesVersion;
+					inConfig =  license.name === this.packageName && satisfiesVersion;
 					// there's at least a version of the dependency that doesn't satisfy the criteria
 					// so exit the loop and communicate to the user
 					if (!satisfiesVersion) {
@@ -194,10 +190,13 @@ export default class SpdxLicenseParser {
 						break;
 					}
 				}
+
 			}
+
 		}
 
-		return {inConfig, satisfiesVersion, packageVersionInConfig};
+			return {inConfig, satisfiesVersion, packageVersionInConfig};
+
 	}
 
 	parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
@@ -236,18 +235,17 @@ export default class SpdxLicenseParser {
 		let licenseId: string;
 
 		if (licenseInfo === undefined) {
-			const {inConfig, satisfiesVersion, packageVersionInConfig} = this.isLicenseValid(
-				possibleCorrectLicense || id,
-			);
+			const {inConfig, satisfiesVersion, packageVersionInConfig} = this.isLicenseValid(possibleCorrectLicense || id);
 
 			if (!inConfig) {
 				if (!satisfiesVersion) {
-					throw parser.unexpected({
+					throw  parser.unexpected({
 						description: descriptions.SPDX.UNKNOWN_LICENSE_IN_VERSION({
 							packageName: this.packageName,
 							packageVersionInConfig,
 							id: possibleCorrectLicense || id,
-							newPackageVersion: this.packageVersion,
+							newPackageVersion: this.packageVersion
+
 						}),
 						start: parser.getPositionFromIndex(token.start),
 						end: parser.getPositionFromIndex(token.end),
@@ -258,7 +256,7 @@ export default class SpdxLicenseParser {
 						id: possibleCorrectLicense || id,
 						knownLicenses: licenseNames,
 						packageName: this.packageName,
-						packageVersion: this.packageVersion,
+						packageVersion: this.packageVersion
 					}),
 					start: parser.getPositionFromIndex(token.start),
 					end: parser.getPositionFromIndex(token.end),
