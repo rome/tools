@@ -1,6 +1,7 @@
 import {EventSubscription} from "@internal/events/types";
 import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import createDeferredPromise from "@internal/async/createDeferredPromise";
+import {GlobalLock} from "@internal/async";
 
 type EventQueueCallack<Value> = AsyncVoidCallback<[Array<Value>]>;
 
@@ -11,39 +12,49 @@ export default class EventQueue<Value> {
 		this.queueKeys = new Set();
 		this.timeout = undefined;
 		this.debounce = debounce;
+		this.lock = new GlobalLock();
 	}
 
-	subscriptions: Set<EventQueueCallack<Value>>;
-	timeout: undefined | NodeJS.Timeout;
-	queueKeys: Set<string>;
-	queue: Array<{
+	private subscriptions: Set<EventQueueCallack<Value>>;
+	private timeout: undefined | [VoidCallback, NodeJS.Timeout];
+	private queueKeys: Set<string>;
+	private queue: Array<{
 		resolve: VoidCallback;
 		value: Value;
 	}>;
-	debounce: number;
+	private debounce: number;
+	public lock: GlobalLock;
 
-	async flush() {
-		if (this.timeout !== undefined) {
-			clearTimeout(this.timeout);
-			this.timeout = undefined;
-		}
+	public hasDebounce(): boolean {
+		return this.timeout !== undefined;
+	}
 
+	public async flush() {
 		const queue = this.queue;
 		this.queue = [];
 		this.queueKeys = new Set();
 
 		const queueValues = queue.map((item) => item.value);
 
-		for (const callback of this.subscriptions) {
-			await callback(queueValues);
-		}
+		await this.lock.wrap(async () => {
+			if (this.timeout !== undefined) {
+				const [callback, timeout] = this.timeout;
+				clearTimeout(timeout);
+				callback();
+				this.timeout = undefined;
+			}
 
-		for (const {resolve} of queue) {
-			resolve();
-		}
+			for (const callback of this.subscriptions) {
+				await callback(queueValues);
+			}
+
+			for (const {resolve} of queue) {
+				resolve();
+			}
+		});
 	}
 
-	async push(value: Value, key?: string) {
+	public async push(value: Value, key?: string) {
 		if (key !== undefined && this.queueKeys.has(key)) {
 			return;
 		}
@@ -56,13 +67,18 @@ export default class EventQueue<Value> {
 		}
 
 		if (this.timeout === undefined) {
-			this.timeout = setTimeout(() => this.flush(), this.debounce);
+			const timeout = setTimeout(() => this.flush(), this.debounce);
+			this.lock.wrap(async () => {
+				const {promise, resolve} = createDeferredPromise();
+				this.timeout = [resolve, timeout];
+				await promise;
+			});
 		}
 
 		await promise;
 	}
 
-	subscribe(callback: EventQueueCallack<Value>): EventSubscription {
+	public subscribe(callback: EventQueueCallack<Value>): EventSubscription {
 		this.subscriptions.add(callback);
 
 		return {

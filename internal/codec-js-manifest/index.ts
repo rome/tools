@@ -672,7 +672,7 @@ export async function normalizeManifest(consumer: Consumer): Promise<Manifest> {
 			...normalizeStringArray(consumer.get("bundleDependencies"), loose),
 		],
 		// People fields
-		author: consumer.has("author")
+		author: consumer.has("author") && !consumer.get("author").isEmpty()
 			? normalizePerson(consumer.get("author"), loose)
 			: undefined,
 		contributors: normalizePeople(consumer.get("contributors"), loose),

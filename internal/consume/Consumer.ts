@@ -294,8 +294,12 @@ export default class Consumer {
 		return !this.wasInSource() || this.value !== originalValue;
 	}
 
-	public wasInSource() {
-		return this.getDiagnosticLocation() !== undefined;
+	public wasInSource(): boolean {
+		const loc = this.getDiagnosticLocation();
+		return (
+			loc.filename !== undefined &&
+			(loc.start !== undefined || loc.end !== undefined)
+		);
 	}
 
 	public getKeyPathString(path: ConsumePath = this.keyPath): string {
@@ -377,7 +381,7 @@ export default class Consumer {
 
 		const {filename} = this;
 		let location = this.getDiagnosticLocation(target);
-		const fromSource = location !== undefined;
+		const fromSource = this.wasInSource();
 
 		const message = this.generateUnexpectedMessage(description.message, opts);
 		description = {
@@ -400,9 +404,8 @@ export default class Consumer {
 			// Go up the consumer tree and take the position from the first consumer found in the source
 			let consumer: undefined | Consumer = this;
 			do {
-				const possibleLocation = consumer.getDiagnosticLocation(target);
-				if (possibleLocation !== undefined) {
-					location = possibleLocation;
+				if (consumer.wasInSource()) {
+					location = consumer.getDiagnosticLocation(target);
 					break;
 				}
 				consumer = consumer.parent;
@@ -773,6 +776,24 @@ export default class Consumer {
 		return {
 			...this.asOriginalUnknownObject(optional),
 		};
+	}
+
+	public isEmpty(): boolean {
+		const value = this.asUnknown();
+
+		if (value == null) {
+			return true;
+		}
+
+		if (value === "") {
+			return true;
+		}
+
+		if (isPlainObject(value)) {
+			return Object.keys(value).length === 0;
+		}
+
+		return false;
 	}
 
 	public asOriginalUnknownObject(optional: boolean = false): UnknownObject {

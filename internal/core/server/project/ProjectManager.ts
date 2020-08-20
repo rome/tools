@@ -54,7 +54,7 @@ import {createDirectory, readFileText} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {consumeJSON} from "@internal/codec-json";
 import {VCSClient, getVCSClient} from "@internal/vcs";
-import {FilePathLocker, SingleLocker} from "@internal/async/lockers";
+import {FilePathLocker} from "@internal/async/lockers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
@@ -138,11 +138,7 @@ export default class ProjectManager {
 		this.filenameToUid = new AbsoluteFilePathMap();
 		this.remoteToLocalPath = new UnknownPathMap();
 		this.localPathToRemote = new AbsoluteFilePathMap();
-
-		this.evictingProjectLock = new SingleLocker();
 	}
-
-	public evictingProjectLock: SingleLocker;
 
 	private server: Server;
 	private logger: ReporterNamespace;
@@ -419,9 +415,7 @@ export default class ProjectManager {
 	}
 
 	public async evictProject(project: ProjectDefinition, reload: boolean) {
-		const lock = await this.evictingProjectLock.getLock();
-
-		try {
+		await this.server.memoryFs.processingLock.wrap(async () => {
 			const evictProjectId = project.id;
 
 			// Remove the config locs from our internal map that belong to this project
@@ -494,9 +488,7 @@ export default class ProjectManager {
 				);
 				await this.findProject(project.directory);
 			}
-		} finally {
-			lock.release();
-		}
+		});
 	}
 
 	public getProjects(): Array<ProjectDefinition> {
@@ -841,6 +833,8 @@ export default class ProjectManager {
 	public async findProject(
 		cwd: AbsoluteFilePath,
 	): Promise<undefined | ProjectDefinition> {
+		await this.server.memoryFs.processingLock.wait();
+
 		// Check if we have an existing project
 		const syncProject = this.findLoadedProject(cwd);
 		if (syncProject !== undefined) {
