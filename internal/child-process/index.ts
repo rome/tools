@@ -2,10 +2,15 @@
 // util.promisify on exec and execFile
 import childProcess = require("child_process");
 import {AbsoluteFilePath} from "@internal/path";
-import {dedent} from "@internal/string-utils";
+import {
+	DiagnosticCategory,
+	createSingleDiagnosticError,
+} from "@internal/diagnostics";
+import {StaticMarkup, markup} from "@internal/markup";
 
 interface ChildProcessOptions extends Omit<childProcess.SpawnOptions, "cwd"> {
-	cwd?: AbsoluteFilePath;
+	// Required `cwd`
+	cwd: AbsoluteFilePath;
 }
 
 export class ChildProcess {
@@ -15,9 +20,10 @@ export class ChildProcess {
 			args,
 			{
 				...opts,
-				cwd: opts.cwd === undefined ? undefined : opts.cwd.join(),
+				cwd: opts.cwd.join(),
 			},
 		);
+		this.cwd = opts.cwd;
 		this.command = command;
 		this.args = args;
 		this.output = [];
@@ -45,6 +51,7 @@ export class ChildProcess {
 
 	public process: childProcess.ChildProcess;
 	private command: string;
+	private cwd: AbsoluteFilePath;
 	private args: Array<string>;
 	private output: Array<[0 | 1, string]>;
 
@@ -70,20 +77,48 @@ export class ChildProcess {
 		}).join("");
 	}
 
-	public unexpected(message: string) {
-		throw new Error(
-			dedent`
-			${message}
-			Command: ${this.getDisplayCommand()}
-			stderr: ${this.getOutput(false, true)}
-		`,
-		);
+	public unexpected(
+		message: StaticMarkup,
+		category: DiagnosticCategory = "childProcess/failure",
+	) {
+		throw createSingleDiagnosticError({
+			description: {
+				category,
+				message,
+				advice: [
+					{
+						type: "log",
+						category: "info",
+						text: markup`Full command`,
+					},
+					{
+						type: "command",
+						command: this.getDisplayCommand(),
+					},
+					{
+						type: "log",
+						category: "info",
+						text: markup`Output`,
+					},
+					{
+						type: "code",
+						language: "text",
+						sourceText: this.getOutput(),
+					},
+				],
+			},
+			location: {
+				filename: this.cwd.join(),
+			},
+		});
 	}
 
 	public async waitSuccess(): Promise<this> {
 		const code = await this.wait();
 		if (code !== 0) {
-			throw this.unexpected(`Command failed. Exited with code ${code}`);
+			throw this.unexpected(
+				markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${code}.`,
+			);
 		}
 		return this;
 	}
@@ -103,7 +138,7 @@ export class ChildProcess {
 export function spawn(
 	command: string,
 	args: Array<string>,
-	opts: ChildProcessOptions = {},
+	opts: ChildProcessOptions,
 ): ChildProcess {
 	return new ChildProcess(command, args, opts);
 }

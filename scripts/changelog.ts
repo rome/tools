@@ -1,6 +1,6 @@
 import {markup} from "@internal/markup";
 import {parseCommit} from "@internal/commit-parser";
-import {readFileText} from "@internal/fs";
+import {readFileTextMeta} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent} from "@internal/string-utils";
@@ -142,7 +142,7 @@ ${list}
  */
 async function getCurrentVersion(): Promise<string> {
 	const path = ROOT.append("package.json");
-	return consumeJSON({input: await readFileText(path), path}).get("version").asString();
+	return consumeJSON(await readFileTextMeta(path)).get("version").asString();
 }
 
 /**

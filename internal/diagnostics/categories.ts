@@ -15,6 +15,7 @@ export type DiagnosticCategory =
 	| "args/invalid"
 	| "bundler/moduleCycle"
 	| "bundler/topLevelAwait"
+	| "childProcess/failure"
 	| "commands/init/uncommittedChanges"
 	| "commands/init/expectedRepo"
 	| "compile/classes"

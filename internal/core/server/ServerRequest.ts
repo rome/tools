@@ -789,11 +789,7 @@ export default class ServerRequest {
 		factory: (bridge: WorkerBridge, ref: FileReference) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
-		// Wait on any evicting projects in case it will change the FileReference
-		const {evictingProjectLock} = this.server.projectManager;
-		if (evictingProjectLock.hasLock()) {
-			await this.server.projectManager.evictingProjectLock.waitLockDrained();
-		}
+		await this.server.memoryFs.processingLock.wait();
 
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);

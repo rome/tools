@@ -27,12 +27,8 @@ import {
 } from "./types";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {normalizeName} from "./name";
-import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {
-	AbsoluteFilePath,
-	RelativeFilePathMap,
-	createRelativeFilePath,
-} from "@internal/path";
+import {descriptions} from "@internal/diagnostics";
+import {RelativeFilePathMap, createRelativeFilePath} from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
@@ -616,21 +612,10 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 	}
 }
 
-export async function normalizeManifest(
-	path: AbsoluteFilePath,
-	rawConsumer: Consumer,
-): Promise<{
-	manifest: Manifest;
-	diagnostics: Diagnostics;
-}> {
-	const loose = path.getSegments().includes("node_modules");
-
-	const {consumer, diagnostics} = rawConsumer.capture();
-
-	// FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
-	if (path.join().includes("resolve/test/resolver/invalid_main")) {
-		consumer.setValue({});
-	}
+export async function normalizeManifest(consumer: Consumer): Promise<Manifest> {
+	const loose =
+		consumer.path !== undefined &&
+		consumer.path.getSegments().includes("node_modules");
 
 	// Check for typos. Ignore them in loose mode.
 	if (!loose) {
@@ -653,7 +638,7 @@ export async function normalizeManifest(
 		normalizeCompatManifest(consumer, name, version);
 	}
 
-	const manifest: Manifest = {
+	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
@@ -687,16 +672,11 @@ export async function normalizeManifest(
 			...normalizeStringArray(consumer.get("bundleDependencies"), loose),
 		],
 		// People fields
-		author: consumer.has("author")
+		author: consumer.has("author") && !consumer.get("author").isEmpty()
 			? normalizePerson(consumer.get("author"), loose)
 			: undefined,
 		contributors: normalizePeople(consumer.get("contributors"), loose),
 		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
-	};
-
-	return {
-		manifest,
-		diagnostics,
 	};
 }

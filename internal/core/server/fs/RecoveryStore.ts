@@ -569,7 +569,7 @@ export default class RecoveryStore {
 			for (const teardown of teardowns) {
 				await teardown();
 			}
-			await this.server.memoryFs.flushFileEvents();
+			await this.server.memoryFs.processingLock.wait();
 		}
 
 		return fileCount;
