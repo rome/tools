@@ -16,7 +16,11 @@ import {
 	PROJECT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
 } from "@internal/project";
-import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
+import {
+	Diagnostics,
+	DiagnosticsProcessor,
+	catchDiagnostics,
+} from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
 import {consumeJSON} from "@internal/codec-json";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
@@ -657,15 +661,15 @@ export default class MemoryFileSystem {
 
 		// If manifest is undefined then we failed to validate and have diagnostics
 		if (rawDiagnostics.length > 0) {
-			const normalizedDiagnostics = rawDiagnostics.map((diag) => ({
+			const normalizedDiagnostics: Diagnostics = rawDiagnostics.map((diag) => ({
 				...diag,
 				description: {
 					...diag.description,
 					advice: [
 						...diag.description.advice,
 						{
-							type: (<"log">"log"),
-							category: (<"info">"info"),
+							type: "log",
+							category: "info",
 							text: markup`Error occurred for package <emphasis>${manifestNameToString(
 								manifest.name,
 							)}</emphasis> at <emphasis>${path.getParent()}</emphasis>`,
