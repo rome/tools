@@ -11,7 +11,7 @@ export {Event};
 
 export {default as EventQueue} from "./EventQueue";
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyEvent = Event<any, any>;
 
 export {default as Bridge} from "./Bridge";

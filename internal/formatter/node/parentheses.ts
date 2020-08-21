@@ -44,7 +44,7 @@ function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
 const parens: Map<
 	AnyNode["type"],
 	(
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		node: any,
 		parent: AnyNode,
 		printStack: Array<AnyNode>,

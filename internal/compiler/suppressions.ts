@@ -93,17 +93,19 @@ function extractSuppressionsFromComment(
 
 		const categories = lineWithoutPrefix.trim().split(" ");
 		const cleanCategories = categories.map((category) => category.trim());
+		let explanation;
 
-		for (let category of cleanCategories) {
+		for (let i = 0; i < cleanCategories.length; i++) {
+			let category = cleanCategories[i];
+
 			if (category === "") {
 				continue;
 			}
 
 			// If a category ends with a colon then all the things that follow it are an explanation
-			let shouldBreak = false;
 			if (category[category.length - 1] === ":") {
-				shouldBreak = true;
-				category = category.slice(-1);
+				category = category.slice(0, -1);
+				explanation = cleanCategories.slice(i + 1);
 			}
 			if (suppressedCategories.has(category)) {
 				diagnostics.push({
@@ -122,9 +124,16 @@ function extractSuppressionsFromComment(
 				});
 			}
 
-			if (shouldBreak) {
+			if (explanation !== undefined) {
 				break;
 			}
+		}
+
+		if (!explanation || explanation.length === 0) {
+			diagnostics.push({
+				description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
+				location: commentLocation,
+			});
 		}
 	}
 

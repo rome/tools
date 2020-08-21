@@ -68,6 +68,7 @@ export type WorkerLintOptions = {
 	compilerOptions?: LintCompilerOptions;
 	prefetchedModuleSignatures: PrefetchedModuleSignatures;
 	applySafeFixes: boolean;
+	suppressionExplanation?: string;
 	save: boolean;
 };
 

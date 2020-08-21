@@ -187,7 +187,7 @@ function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
 		return label;
 	}
 
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	return formatObject(label, (val as any), opts, []);
 }
 

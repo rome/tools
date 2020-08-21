@@ -86,7 +86,7 @@ export type PartialProjectConfig = Partial<ProjectConfigBase> & {
 	>
 };
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 type PartialProjectValue<Type> = Type extends Map<string, any>
 	? Type
 	: Partial<Type>;

@@ -21,9 +21,9 @@ export type LintResult = {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, project, applySafeFixes, options} = req;
+	const {ast, project, applySafeFixes, options, suppressionExplanation} = req;
 
-	const query = Cache.buildQuery(req, {applySafeFixes});
+	const query = Cache.buildQuery(req, {applySafeFixes, suppressionExplanation});
 	const cached = lintCache.get(query);
 	if (cached) {
 		return cached;
@@ -44,7 +44,11 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		});
 
 		formatAst = formatContext.reduceRoot(lintTransforms);
-		formatAst = addSuppressions(formatContext, formatAst);
+		formatAst = addSuppressions(
+			formatContext,
+			formatAst,
+			suppressionExplanation,
+		);
 	}
 	const formattedCode = formatAST(formatAst).code;
 

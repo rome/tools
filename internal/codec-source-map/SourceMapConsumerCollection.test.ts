@@ -70,7 +70,7 @@ test(
 			"file": "test2.js",
 			"sourceRoot": "..",
 			"sourcesContent": [
-				// rome-ignore lint/js/noTemplateCurlyInString
+				// rome-ignore lint/js/noTemplateCurlyInString: intentional string templates
 				'let firstName = "John";\r\nconst lastname = "Doe";\r\n\r\nfunction changeName() {\r\n  firstName = "Jane";\r\n}\r\n\r\nfunction fullName() {\r\n  return `${firstName} ${lastname}`;\r\n}\r\n',
 			],
 		};

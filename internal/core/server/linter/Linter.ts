@@ -51,6 +51,7 @@ export type LinterOptions = {
 	formatOnly?: boolean;
 	globalDecisions?: LintCompilerOptionsDecisions;
 	lintCompilerOptionsPerFile?: LinterCompilerOptionsPerFile;
+	suppressionExplanation?: string;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -220,6 +221,7 @@ class LintRunner {
 									save: shouldSave,
 									applySafeFixes,
 									compilerOptions,
+									suppressionExplanation: this.options.suppressionExplanation,
 								},
 							)
 						,

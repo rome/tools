@@ -66,6 +66,7 @@ export type DiagnosticCategory =
 	| "suppressions/incorrectPrefix"
 	| "suppressions/missingSpace"
 	| "suppressions/missingTarget"
+	| "suppressions/missingExplanation"
 	| "suppressions/unused"
 	| "tests/cancelled"
 	| "tests/disabled"

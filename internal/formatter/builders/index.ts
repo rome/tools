@@ -8,7 +8,7 @@
 import {BuilderMethod} from "../Builder";
 import {ExtendedMap} from "@internal/collections";
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 	"builders",
 );

@@ -42,7 +42,7 @@ export interface Visitor<State extends UnknownObject> {
 	exit?: (path: Path, state: VisitorStateExit<State>) => ExitSignal;
 }
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyVisitor = Visitor<any>;
 
 export type AnyVisitors = Array<AnyVisitor>;
@@ -53,6 +53,7 @@ export type CompileRequest = TransformRequest & {
 
 export type LintRequest = TransformRequest & {
 	applySafeFixes: boolean;
+	suppressionExplanation?: string;
 };
 
 export type TransformProjectDefinition = {

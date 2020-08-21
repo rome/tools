@@ -153,7 +153,7 @@ export default class Path {
 	}
 
 	public getChildPath(key: string): Path {
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const node = (this.node as any)[key];
 		if (node === undefined) {
 			throw new Error(
@@ -173,7 +173,7 @@ export default class Path {
 	}
 
 	public getChildPaths(key: string): Array<Path> {
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const nodes = (this.node as any)[key];
 
 		if (nodes === undefined) {

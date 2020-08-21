@@ -26,7 +26,10 @@ type Flags = {
 	apply: boolean;
 	changed: undefined | string;
 	formatOnly: boolean;
+	suppressionExplanation: undefined | string;
 };
+
+let cachedSuppressionExplanation: string;
 
 export default createServerCommand<Flags>({
 	category: commandCategories.CODE_QUALITY,
@@ -57,9 +60,19 @@ export default createServerCommand<Flags>({
 					description: markup`only include files that have changed from the specified branch/commit (defaults to main)`,
 				},
 			).asStringOrVoid(),
+			suppressionExplanation: consumer.get(
+				"suppressionExplanation",
+				{
+					description: markup`insert a predefined explanation for suppressions`,
+				},
+			).asStringOrVoid(),
 		};
 	},
 	async callback(req: ServerRequest, flags: Flags): Promise<void> {
+		if (flags.suppressionExplanation) {
+			cachedSuppressionExplanation = flags.suppressionExplanation;
+		}
+
 		const {reporter} = req;
 
 		let lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile = {};
@@ -119,9 +132,9 @@ export default createServerCommand<Flags>({
 			globalDecisions,
 			apply: flags.apply,
 			formatOnly: flags.formatOnly,
+			suppressionExplanation: cachedSuppressionExplanation,
 			args,
 		};
-
 		const linter = new Linter(req, opts);
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();

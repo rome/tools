@@ -71,7 +71,7 @@ export function addEmphasis(items: StaticMarkups): StaticMarkups {
 	return items.map((item) => markup`<emphasis>${item}</emphasis>`);
 }
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 type InputMessagesFactory = (
 	...params: Array<any>
 ) => Partial<DiagnosticDescription>;
@@ -110,14 +110,14 @@ type OutputMessagesCategory<Input extends InputMessagesCategory> = {
 export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 	input: Input,
 ): OutputMessagesCategory<Input> {
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	const category: OutputMessagesCategory<any> = {};
 
 	for (const key in input) {
 		const value = input[key];
 
 		if (typeof value === "function") {
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const callback: InputMessagesFactory = (value as any);
 
 			// @ts-ignore trust me lol
@@ -130,7 +130,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 				};
 			};
 		} else {
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const {message, advice = [], ...obj} = (value as any);
 			category[key] = {
 				...obj,

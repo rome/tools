@@ -362,7 +362,7 @@ export default class Server {
 		promise.catch(this.onFatalErrorBound);
 	}
 
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	public wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
 		return (((...args: Array<any>): any => {
 			try {

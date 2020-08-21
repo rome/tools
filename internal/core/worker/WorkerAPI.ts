@@ -523,6 +523,7 @@ export default class WorkerAPI {
 		// Run the compiler in lint-mode which is where all the rules are actually ran
 		const res = await lint({
 			applySafeFixes: options.applySafeFixes,
+			suppressionExplanation: options.suppressionExplanation,
 			ref,
 			options: {
 				lint: options.compilerOptions,

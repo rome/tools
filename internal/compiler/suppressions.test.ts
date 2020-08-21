@@ -37,20 +37,20 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore foo
+    // rome-ignore foo: explanation
     foo();
 
-    /** rome-ignore bar */
+    /** rome-ignore bar: explanation */
     bar();
 
     /**
-     * rome-ignore yes
+     * rome-ignore yes: explanation
      */
     yes();
 
     /**
      * hello
-     * rome-ignore wow
+     * rome-ignore wow: explanation
      */
     wow();
   `,
@@ -68,20 +68,20 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore foo dog
+    // rome-ignore foo dog: explanation
     foo();
 
-    /** rome-ignore bar cat */
+    /** rome-ignore bar cat: explanation */
     bar();
 
     /**
-     * rome-ignore yes frog
+     * rome-ignore yes frog: explanation
      */
     yes();
 
     /**
      * hello
-     * rome-ignore wow fish
+     * rome-ignore wow fish: explanation
      */
     wow();
   `,
@@ -99,10 +99,10 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore dog dog
+    // rome-ignore dog dog: explanation
     foo();
 
-    // rome-ignore dog cat dog
+    // rome-ignore dog cat dog: explanation
     bar();
   `,
 		);
@@ -122,9 +122,9 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       function foo_bar() {
-        // rome-ignore foo
+        // rome-ignore foo: explanation
         bar_foo;
       }
   `,
@@ -145,11 +145,11 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       function foo_bar() {
-        // rome-ignore bar
-        // rome-ignore baz
-        // rome-ignore foo
+        // rome-ignore bar: explanation
+        // rome-ignore baz: explanation
+        // rome-ignore foo: explanation
         bar_foo;
       }
   `,
@@ -170,13 +170,13 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       function foo_bar() {
-        // rome-ignore foo
+        // rome-ignore foo: explanation
         bar_foo;
       }
 
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       baz()
   `,
 		);
@@ -196,14 +196,14 @@ test(
 	async (t) => {
 		const suppressions = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       function foo_bar() {
-        // rome-ignore foo
-        // rome-ignore foo
+        // rome-ignore foo: explanation
+        // rome-ignore foo: explanation
         bar_foo;
       }
 
-      // rome-ignore foo
+      // rome-ignore foo: explanation
       baz()
   `,
 		);
@@ -253,6 +253,29 @@ test(
 				diagnostic.description.category,
 				"suppressions/incorrectSuppressionStart",
 			);
+		}
+
+		t.snapshot(suppressions);
+	},
+);
+
+test(
+	"missing explanation",
+	async (t) => {
+		const suppressions = extractSuppressionsFromSource(
+			dedent`
+			// rome-ignore foo
+			boo()
+
+			// rome-ignore foo:
+			boo()
+  		`,
+		);
+
+		t.is(suppressions.suppressions.length, 2);
+		t.is(suppressions.diagnostics.length, 2);
+		for (const diagnostic of suppressions.diagnostics) {
+			t.is(diagnostic.description.category, "suppressions/missingExplanation");
 		}
 
 		t.snapshot(suppressions);

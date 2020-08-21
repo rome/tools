@@ -31,6 +31,10 @@ export const suppressions = createDiagnosticsCategory({
 		category: "suppressions/missingTarget",
 		message: markup`We could not find a target for this suppression`,
 	},
+	MISSING_EXPLANATION: {
+		category: "suppressions/missingExplanation",
+		message: markup`Suppression comments must have an explanation`,
+	},
 	DUPLICATE: (category: string) => ({
 		category: "suppressions/duplicate",
 		message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,

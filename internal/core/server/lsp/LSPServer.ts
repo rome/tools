@@ -180,6 +180,7 @@ export default class LSPServer {
 				apply: false,
 				hasDecisions: false,
 				formatOnly: false,
+				suppressionExplanation: "suppressed via editor",
 			},
 		);
 

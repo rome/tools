@@ -23,7 +23,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 35
 					line: 1
 				}
 				start: Object {
@@ -48,7 +48,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 26
+					column: 39
 					line: 4
 				}
 				start: Object {
@@ -67,7 +67,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 35
 					line: 1
 				}
 				start: Object {
@@ -84,7 +84,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 26
+					column: 39
 					line: 4
 				}
 				start: Object {
@@ -101,7 +101,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 26
+					column: 39
 					line: 4
 				}
 				start: Object {
@@ -257,6 +257,89 @@ Object {
 }
 ```
 
+## `missing explanation`
+
+```javascript
+Object {
+	suppressions: Array [
+		Object {
+			category: "foo"
+			endLine: 2
+			filename: "unknown"
+			startLine: 2
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "foo"
+			endLine: 5
+			filename: "unknown"
+			startLine: 5
+			commentLocation: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					line: 4
+				}
+				start: Object {
+					column: 0
+					line: 4
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array []
+			description: Object {
+				advice: Array []
+				category: "suppressions/missingExplanation"
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Suppression comments must have an explanation"}]}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					line: 1
+				}
+			}
+		}
+		Object {
+			origins: Array []
+			description: Object {
+				advice: Array []
+				category: "suppressions/missingExplanation"
+				message: MARKUP {parts: Array [RAW_MARKUP {value: "Suppression comments must have an explanation"}]}
+			}
+			location: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					line: 4
+				}
+				start: Object {
+					column: 0
+					line: 4
+				}
+			}
+		}
+	]
+}
+```
+
 ## `multiple categories`
 
 ```javascript
@@ -271,7 +354,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 35
 					line: 1
 				}
 				start: Object {
@@ -288,7 +371,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 35
 					line: 1
 				}
 				start: Object {
@@ -305,7 +388,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 26
+					column: 39
 					line: 4
 				}
 				start: Object {
@@ -322,7 +405,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 26
+					column: 39
 					line: 4
 				}
 				start: Object {
@@ -424,7 +507,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -449,7 +532,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 4
 				}
 				start: Object {
@@ -468,7 +551,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 1
 				}
 				start: Object {
@@ -485,7 +568,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -502,7 +585,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 4
 				}
 				start: Object {
@@ -519,7 +602,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 8
 				}
 				start: Object {
@@ -553,7 +636,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -572,7 +655,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 1
 				}
 				start: Object {
@@ -589,7 +672,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -606,7 +689,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 7
 				}
 				start: Object {
@@ -640,7 +723,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -659,7 +742,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 1
 				}
 				start: Object {
@@ -676,7 +759,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -710,7 +793,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 5
 				}
 				start: Object {
@@ -729,7 +812,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 1
 				}
 				start: Object {
@@ -746,7 +829,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 3
 				}
 				start: Object {
@@ -763,7 +846,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 4
 				}
 				start: Object {
@@ -780,7 +863,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 33
 					line: 5
 				}
 				start: Object {
@@ -807,7 +890,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 31
 					line: 1
 				}
 				start: Object {
@@ -824,7 +907,7 @@ Object {
 			commentLocation: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 35
 					line: 4
 				}
 				start: Object {
