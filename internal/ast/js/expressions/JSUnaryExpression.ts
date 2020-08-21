@@ -15,15 +15,7 @@ export interface JSUnaryExpression extends NodeBaseWithComments {
 	readonly argument: AnyJSExpression;
 }
 
-export type UnaryOperator =
-	| "-"
-	| "+"
-	| "!"
-	| "~"
-	| "typeof"
-	| "void"
-	| "delete"
-	| "throw";
+export type UnaryOperator = "-" | "+" | "!" | "~" | "typeof" | "void" | "delete";
 
 export const jsUnaryExpression = createBuilder<JSUnaryExpression>(
 	"JSUnaryExpression",
