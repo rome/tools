@@ -1,4 +1,4 @@
-filename: "filename.ts"
+filename: "file.ts"
 invalid: [
 	"
 	while(1){
@@ -18,9 +18,27 @@ invalid: [
         console.log('dsd');
     }
 	}
+	",
+	"
+	for(let i=0;i<9;i++)
+	{
+		continue;
+	}
 	"
 ]
 valid: [
 	"
+	while(1){
+		if(i>5){
+		continue;
+		}
+		console.log(2);
+	}
+	",
+	"
+	while(1){
+		continue;
+		console.log(4);
+	}
 	"
 ]

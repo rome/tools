@@ -8,7 +8,7 @@
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/1/filename.ts:2:1 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
 
   ✖ INSERT MESSAGE HERE
 
@@ -28,6 +28,108 @@
 ```
 while (1) {
 	continue;
+}
+
+```
+
+### `1`
+
+```
+
+ lint/js/noUnNecessaryContinue/reject/2/file.ts:4:7 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
+
+  ✖ INSERT MESSAGE HERE
+
+    2 │    if(i>5) {
+    3 │        console.log('sss');
+  > 4 │        continue;
+      │        ^^^^^^^^^
+    5 │    }
+    6 │    else if(i>=5&&i<8){
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `1: formatted`
+
+```
+for (let i = 0; i < 10; i++) {
+	if (i > 5) {
+		console.log("sss");
+		continue;
+	} else if (i >= 5 && i < 8) {
+		console.log("s");
+	} else {
+		console.log("dsd");
+	}
+}
+
+```
+
+### `2`
+
+```
+
+ lint/js/noUnNecessaryContinue/reject/3/file.ts:3:1 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
+
+  ✖ INSERT MESSAGE HERE
+
+    1 │ for(let i=0;i<9;i++)
+    2 │ {
+  > 3 │   continue;
+      │   ^^^^^^^^^
+    4 │ }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+for (let i = 0; i < 9; i++) {
+	continue;
+}
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+while (1) {
+	if (i > 5) {
+		continue;
+	}
+	console.log(2);
+}
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+while (1) {
+	continue;
+	console.log(4);
 }
 
 ```

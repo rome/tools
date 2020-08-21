@@ -1,10 +1,10 @@
 import {createVisitor, signals, Path} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import { isFor } from "@internal/js-ast-utils";
-import { writeFileSync } from "fs";
+// import { writeFileSync } from "fs";
 
 function isInsideTheLoop(path:Path):boolean{
-	const arr:Path[] = [];
+	const arr: Path[] = [];
 	const parentPath = path.findAncestry((p)=> {
 		if(isFor(p.node)||p.node.type==="JSWhileStatement"){
 			return true;
@@ -15,35 +15,40 @@ function isInsideTheLoop(path:Path):boolean{
 		}
 	});
 	if(parentPath===undefined){return false;}
-	let k:string = "JSContinueStatement"; 
-	let flag = 1;
-	for(let i=0;i<arr.length;i++){
-		const {node} = arr[i];
-		// console.log('node', node.type, arr[i].node.loc);
-		writeFileSync('./test.txt',arr[i]);
-		console.log(node.loc);
-		if(node.type==="JSBlockStatement"){
-			if(node.body[node.body.length-1].type!==k){
-				flag=0;
-				k=node.type;
-				break;
-			}
-		}
-	}
-	if(flag===0){
-		return false;
-	}
-	else{
+	// for(let i=0;i<arr.length;i++){
+	// 	const a = arr[i];
+	// 	console.log('ppp',a.node);
+	// 	if(a.node.type==="JSWhileStatement"){
+	// 		console.log(a.node.body);
+	// 	}
+	// }
+	// if(arr[0].node.type==="JSB")
+	const length = arr.length;
+	// for(let i=0;i<arr.length;i++){
+	// 		const a = arr[i];
+	// 		console.log('ppp',a.node.type);
+	// }
+	// console.log('length',length);
+	// if(length>2&&arr[length-1].node===arr){}
+	if(length===0){return false};
+	const blockStatementNode = arr[length-1].node;
+	const continueBlockNode = arr[0].node;
+	if(length===1&&blockStatementNode.type==="JSBlockStatement"&&blockStatementNode.body[blockStatementNode.body.length-1]===path.node
+	&&(continueBlockNode.type==="JSBlockStatement"&&continueBlockNode.body[continueBlockNode.body.length-1]===path.node)){
+		// console.log('yayyy');
+		return true;
+	} 
+	else if(length>1&&(blockStatementNode.type==="JSBlockStatement"&&blockStatementNode.body[blockStatementNode.body.length-1]===arr[length-2].node)&&
+	(continueBlockNode.type==="JSBlockStatement"&&continueBlockNode.body[continueBlockNode.body.length-1]===path.node)){
+		// console.log('yayyy1');
 		return true;
 	}
-	// const p=path.ancestryPaths.map(({node})=> node.type);
-	// const y = p.join("");
-	// throw(Error(y));
-	// path.ancestryPaths.map(({node})=>{
-	// 	if(node.type === "JSBlockStatement"){
-	// 	}
-	// });
-	// return parentPath!==undefined;
+	else{
+		return false;
+	}
+
+	// throw(Error('nope'));
+	
 }
 
 
@@ -53,9 +58,10 @@ export default createVisitor({
 		const {node} = path;
 
 		if (
-			node.type === "JSContinueStatement" &&
-			isInsideTheLoop(path)
-			) {
+			node.type === "JSContinueStatement" 
+			&& isInsideTheLoop(path)
+			) 
+			{
 			path.context.addNodeDiagnostic(
 				node,
 				descriptions.LINT.JS_NO_UN_NECESSARY_CONTINUE,
