@@ -3,9 +3,12 @@ import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
 import {
 	jsArrowFunctionExpression,
+	jsBlockStatement,
 	jsBooleanLiteral,
+	jsCallExpression,
 	jsExpressionStatement,
 	jsObjectExpression,
+	jsReferenceIdentifier,
 	jsStringLiteral,
 	jsxAttribute,
 	jsxElement,
@@ -26,19 +29,31 @@ test(
 				}).body[0],
 			).expression,
 		);
+
 		t.is(
 			jsStringLiteral.assert(
 				jsxAttribute.assert(getJSXAttribute(jsx, "className")).value,
 			).value,
 			"foo",
 		);
-		t.notThrows(() => {
-			jsArrowFunctionExpression.assert(
-				jsxExpressionContainer.assert(
-					jsxAttribute.assert(getJSXAttribute(jsx, "onClick")).value,
-				).expression,
-			);
-		});
+
+		t.is(
+			jsReferenceIdentifier.assert(
+				jsCallExpression.assert(
+					jsExpressionStatement.assert(
+						jsBlockStatement.assert(
+							jsArrowFunctionExpression.assert(
+								jsxExpressionContainer.assert(
+									jsxAttribute.assert(getJSXAttribute(jsx, "onClick")).value,
+								).expression,
+							).body,
+						).body[0],
+					).expression,
+				).callee,
+			).name,
+			"alert",
+		);
+
 		t.is(
 			jsBooleanLiteral.assert(
 				jsxExpressionContainer.assert(
@@ -47,12 +62,14 @@ test(
 			).value,
 			true,
 		);
-		t.notThrows(() => {
+
+		t.is(
 			jsObjectExpression.assert(
 				jsxExpressionContainer.assert(
 					jsxAttribute.assert(getJSXAttribute(jsx, "other")).value,
 				).expression,
-			);
-		});
+			).properties.length,
+			2,
+		);
 	},
 );

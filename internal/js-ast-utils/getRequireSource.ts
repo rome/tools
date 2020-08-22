@@ -42,12 +42,12 @@ export function getRequireSource(
 		callee.name === "require" &&
 		scope.getBinding("require") === undefined;
 
-	const validRomeRequreCallee =
+	const validRomeRequireCallee =
 		(doesNodeMatchPattern(callee, "Rome.requireDefault") ||
 		doesNodeMatchPattern(callee, "Rome.requireNamespace")) &&
 		scope.getBinding("Rome") === undefined;
 
-	if (validRequireCallee || validRomeRequreCallee) {
+	if (validRequireCallee || validRomeRequireCallee) {
 		return firstArg.value;
 	}
 
