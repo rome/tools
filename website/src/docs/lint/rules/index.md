@@ -268,6 +268,13 @@ disallow unused variables
 require `let` or `const` instead of `var`
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="preferOptionalChaining">
+	<a href="/docs/lint/rules/js/preferOptionalChaining">preferOptionalChaining</a>
+	<a class="header-anchor" href="#preferOptionalChaining"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useBlockStatements">
 	<a href="/docs/lint/rules/js/useBlockStatements">useBlockStatements</a>
 	<a class="header-anchor" href="#useBlockStatements"></a>
