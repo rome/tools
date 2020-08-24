@@ -11,7 +11,7 @@ type DelimiterType = "Emphasis" | "Strong";
 type Delimiter = {
 	start: number;
 	end: number;
-	type: DelimiterType;
+	delimiterType: DelimiterType;
 };
 
 export class InlineState {
@@ -50,7 +50,7 @@ export class InlineState {
 	): false | number {
 		let found = undefined;
 		for (const [delimiter] of this.delimiters.entries()) {
-			if (possibleType === delimiter.type && delimiter.end === end) {
+			if (possibleType === delimiter.delimiterType && delimiter.end === end) {
 				found = delimiter.start;
 				break;
 			}
@@ -80,24 +80,25 @@ export class InlineState {
 				this.delimiters.add({
 					start: pinpoint.index,
 					end: endIndex,
-					type,
+					delimiterType: type,
 				});
+				// TODO: to review this part to avoid breaking changes or deleting wrong delimiters
 				// now we have to delete possible old delimiters
 				// Given the following string: Lorem _Ipsum is _simply dummy_ text of the_ printing
 				// When we connect the underscore in "the_", we still have a delimiter between
 				// _simply and dummy_ and we want to remove them because the new one will swallow the old one
-				for (const [delimiter] of this.delimiters.entries()) {
-					if (delimiter.type === type) {
-						if (delimiter.start > pinpoint.index) {
-							this.delimiters.delete(delimiter);
-							break;
-						}
-						if (delimiter.end < endIndex) {
-							this.delimiters.delete(delimiter);
-							break;
-						}
-					}
-				}
+				// for (const [delimiter] of this.delimiters.entries()) {
+				// 	if (delimiter.delimiterType === type) {
+				// 		if (delimiter.start > pinpoint.index) {
+				// 			this.delimiters.delete(delimiter);
+				// 			break;
+				// 		}
+				// 		if (delimiter.end < endIndex) {
+				// 			this.delimiters.delete(delimiter);
+				// 			break;
+				// 		}
+				// 	}
+				// }
 				// remove used pinpoint
 				this.pinpoints.delete(pinpoint);
 			} else {
@@ -106,7 +107,7 @@ export class InlineState {
 				// We finished the pinpoints but the_ can connect with _is,
 				// so we remove the old delimiter
 				for (const [delimiter] of this.delimiters.entries()) {
-					if (delimiter.type === type && delimiter.end < endIndex) {
+					if (delimiter.delimiterType === type && delimiter.end < endIndex) {
 						delimiter.end = endIndex;
 						break;
 					}

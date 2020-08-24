@@ -11,8 +11,8 @@ test(
 
 		state.connectDelimiter(6, "Strong");
 
-		t.truthy(state.isDelimiterClosed(3, "Strong"));
-		t.is(state.isDelimiterClosed(3, "Strong"), 6);
+		t.truthy(state.isDelimiterClosed(6, "Strong"));
+		t.is(state.isDelimiterClosed(6, "Strong"), 3);
 		t.falsy(state.isDelimiterClosed(1, "Emphasis"));
 	},
 );
@@ -32,8 +32,8 @@ test(
 		state.connectDelimiter(300, "Strong");
 		state.connectDelimiter(450, "Emphasis");
 
-		t.is(state.isDelimiterClosed(1, "Emphasis"), 450);
-		t.is(state.isDelimiterClosed(3, "Strong"), 300);
+		t.is(state.isDelimiterClosed(450, "Emphasis"), 1);
+		t.is(state.isDelimiterClosed(300, "Strong"), 3);
 		t.is(state.isDelimiterClosed(10, "Emphasis"), false);
 		t.is(state.isDelimiterClosed(24, "Strong"), false);
 	},
@@ -54,8 +54,8 @@ test(
 		state.connectDelimiter(300, "Emphasis");
 
 		t.is(state.isDelimiterClosed(1, "Emphasis"), false);
-		t.is(state.isDelimiterClosed(3, "Strong"), 100);
-		t.is(state.isDelimiterClosed(10, "Emphasis"), 300);
+		t.is(state.isDelimiterClosed(100, "Strong"), 3);
+		t.is(state.isDelimiterClosed(300, "Emphasis"), 10);
 		t.is(state.isDelimiterClosed(24, "Strong"), false);
 	},
 );
@@ -79,20 +79,21 @@ test(
 
 		const delimiters = Array.from(state.getDelimiters());
 
+		console.log(delimiters)
 		t.is(delimiters[0].start, 1);
 		t.is(delimiters[0].end, 50);
-		t.is(delimiters[0].type, "Asterisk");
+		t.is(delimiters[0].delimiterType, "Emphasis");
 
 		t.is(delimiters[1].start, 70);
 		t.is(delimiters[1].end, 100);
-		t.is(delimiters[1].type, "Underscore");
+		t.is(delimiters[1].delimiterType, "Strong");
 
 		t.is(delimiters[2].start, 150);
 		t.is(delimiters[2].end, 175);
-		t.is(delimiters[2].type, "Asterisk");
+		t.is(delimiters[2].delimiterType, "Emphasis");
 
 		t.is(delimiters[3].start, 179);
 		t.is(delimiters[3].end, 200);
-		t.is(delimiters[3].type, "Underscore");
+		t.is(delimiters[3].delimiterType, "Strong");
 	},
 );
