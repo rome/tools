@@ -1,69 +1,75 @@
-import {createVisitor, signals, Path} from "@internal/compiler";
+import {Path, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-import { isFor } from "@internal/js-ast-utils";
-// import { writeFileSync } from "fs";
+import {isFor} from "@internal/js-ast-utils";
 
-function isInsideTheLoop(path:Path):boolean{
-	const arr: Path[] = [];
-	const parentPath = path.findAncestry((p)=> {
-		if(isFor(p.node)||p.node.type==="JSWhileStatement"){
+function isContinueInsideLastAncestor(
+	ancestryArr: Array<Path>,
+	path: Path,
+): boolean {
+	const length = ancestryArr.length;
+	const node = ancestryArr[length - 1].node;
+	if (node.type === "JSBlockStatement" && node.body.length > 0) {
+		const bodySize = node.body.length;
+		const lastBodyNode = node.body[bodySize - 1];
+		if (length === 1 && lastBodyNode === path.node) {
+			return true;
+		} else if (length > 1 && lastBodyNode === ancestryArr[length - 2].node) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	return false;
+}
+
+function isContinueTheLastStatement(
+	ancestryArr: Array<Path>,
+	path: Path,
+): boolean {
+	const node = ancestryArr[0].node;
+	if (node.type === "JSBlockStatement") {
+		const bodySize = node.body.length;
+		if (node.body[bodySize - 1] === path.node) {
 			return true;
 		}
-		else{
-			arr.push(p);
+	}
+	return false;
+}
+
+function isInsideTheLoop(path: Path): boolean {
+	const ancestryArr: Array<Path> = [];
+	const parentPath = path.findAncestry((p) => {
+		if (isFor(p.node) || p.node.type === "JSWhileStatement") {
+			return true;
+		} else {
+			ancestryArr.push(p);
 			return false;
 		}
 	});
-	if(parentPath===undefined){return false;}
-	// for(let i=0;i<arr.length;i++){
-	// 	const a = arr[i];
-	// 	console.log('ppp',a.node);
-	// 	if(a.node.type==="JSWhileStatement"){
-	// 		console.log(a.node.body);
-	// 	}
-	// }
-	// if(arr[0].node.type==="JSB")
-	const length = arr.length;
-	// for(let i=0;i<arr.length;i++){
-	// 		const a = arr[i];
-	// 		console.log('ppp',a.node.type);
-	// }
-	// console.log('length',length);
-	// if(length>2&&arr[length-1].node===arr){}
-	if(length===0){return false};
-	const blockStatementNode = arr[length-1].node;
-	const continueBlockNode = arr[0].node;
-	if(length===1&&blockStatementNode.type==="JSBlockStatement"&&blockStatementNode.body[blockStatementNode.body.length-1]===path.node
-	&&(continueBlockNode.type==="JSBlockStatement"&&continueBlockNode.body[continueBlockNode.body.length-1]===path.node)){
-		// console.log('yayyy');
-		return true;
-	} 
-	else if(length>1&&(blockStatementNode.type==="JSBlockStatement"&&blockStatementNode.body[blockStatementNode.body.length-1]===arr[length-2].node)&&
-	(continueBlockNode.type==="JSBlockStatement"&&continueBlockNode.body[continueBlockNode.body.length-1]===path.node)){
-		// console.log('yayyy1');
-		return true;
-	}
-	else{
+	if (parentPath === undefined) {
 		return false;
 	}
-
-	// throw(Error('nope'));
-	
+	if (ancestryArr.length === 0) {
+		return true;
+	}
+	return (
+		isContinueTheLastStatement(ancestryArr, path) &&
+		isContinueInsideLastAncestor(ancestryArr, path)
+	);
 }
-
 
 export default createVisitor({
 	name: "js/noUnNecessaryContinue",
 	enter(path) {
 		const {node} = path;
-
-		if (
-			node.type === "JSContinueStatement" 
-			&& isInsideTheLoop(path)
-			) 
-			{
-			path.context.addNodeDiagnostic(
-				node,
+		if (node.type !== "JSContinueStatement") {
+			return signals.retain;
+		}
+		if (node.type === "JSContinueStatement" && isInsideTheLoop(path)) {
+			path.addFixableDiagnostic(
+				{
+					fixed: signals.remove,
+				},
 				descriptions.LINT.JS_NO_UN_NECESSARY_CONTINUE,
 			);
 		}
