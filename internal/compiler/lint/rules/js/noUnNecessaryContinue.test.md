@@ -8,14 +8,17 @@
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Unnecessary use of Continue statement at the end of the loop
 
-    1 │ while(1){
+    1 │ while(i--)
   > 2 │   continue;
       │   ^^^^^^^^^
-    3 │ }
+
+  ℹ Safe fix
+
+  - continue;
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -26,9 +29,7 @@
 ### `0: formatted`
 
 ```
-while (1) {
-	continue;
-}
+while (i--) {}
 
 ```
 
@@ -36,16 +37,18 @@ while (1) {
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/2/file.ts:4:7 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Unnecessary use of Continue statement at the end of the loop
 
-    2 │    if(i>5) {
-    3 │        console.log('sss');
-  > 4 │        continue;
-      │        ^^^^^^^^^
-    5 │    }
-    6 │    else if(i>=5&&i<8){
+    1 │ while(1){
+  > 2 │   continue;
+      │   ^^^^^^^^^
+    3 │ }
+
+  ℹ Safe fix
+
+  - continue;
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -56,16 +59,7 @@ while (1) {
 ### `1: formatted`
 
 ```
-for (let i = 0; i < 10; i++) {
-	if (i > 5) {
-		console.log("sss");
-		continue;
-	} else if (i >= 5 && i < 8) {
-		console.log("s");
-	} else {
-		console.log("dsd");
-	}
-}
+while (1) {}
 
 ```
 
@@ -73,15 +67,20 @@ for (let i = 0; i < 10; i++) {
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/3/file.ts:3:1 lint/js/noUnNecessaryContinue ━━━━━━━━━━━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/3/file.ts:4:7 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Unnecessary use of Continue statement at the end of the loop
 
-    1 │ for(let i=0;i<9;i++)
-    2 │ {
-  > 3 │   continue;
-      │   ^^^^^^^^^
-    4 │ }
+    2 │    if(i>5) {
+    3 │        console.log('sss');
+  > 4 │        continue;
+      │        ^^^^^^^^^
+    5 │    }
+    6 │    else if(i>=5&&i<8){
+
+  ℹ Safe fix
+
+  - continue;
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,8 +91,14 @@ for (let i = 0; i < 10; i++) {
 ### `2: formatted`
 
 ```
-for (let i = 0; i < 9; i++) {
-	continue;
+for (let i = 0; i < 10; i++) {
+	if (i > 5) {
+		console.log("sss");
+	} else if (i >= 5 && i < 8) {
+		console.log("s");
+	} else {
+		console.log("dsd");
+	}
 }
 
 ```
@@ -101,19 +106,31 @@ for (let i = 0; i < 9; i++) {
 ### `3`
 
 ```
-✔ No known problems!
+
+ lint/js/noUnNecessaryContinue/reject/4/file.ts:3:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
+
+  ✖ Unnecessary use of Continue statement at the end of the loop
+
+    1 │ for(let i=0;i<9;i++)
+    2 │ {
+  > 3 │   continue;
+      │   ^^^^^^^^^
+    4 │ }
+
+  ℹ Safe fix
+
+  - continue;
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `3: formatted`
 
 ```
-while (1) {
-	if (i > 5) {
-		continue;
-	}
-	console.log(2);
-}
+for (let i = 0; i < 9; i++) {}
 
 ```
 
@@ -125,6 +142,26 @@ while (1) {
 ```
 
 ### `4: formatted`
+
+```
+while (i) {
+	if (i > 5) {
+		continue;
+	}
+	console.log(i);
+	i--;
+}
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
 
 ```
 while (1) {

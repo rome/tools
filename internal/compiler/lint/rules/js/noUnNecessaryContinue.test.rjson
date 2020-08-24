@@ -1,10 +1,14 @@
 filename: "file.ts"
 invalid: [
 	"
+	while(i--)
+ 	continue;
+	"
+	"
 	while(1){
 		continue;
 	}
-	",
+	"
 	"
 	for(let i=0;i<10;i++){
     if(i>5) {
@@ -18,7 +22,7 @@ invalid: [
         console.log('dsd');
     }
 	}
-	",
+	"
 	"
 	for(let i=0;i<9;i++)
 	{
@@ -28,13 +32,14 @@ invalid: [
 ]
 valid: [
 	"
-	while(1){
+	while(i){
 		if(i>5){
 		continue;
 		}
-		console.log(2);
+		console.log(i);
+		i--;
 	}
-	",
+	"
 	"
 	while(1){
 		continue;
