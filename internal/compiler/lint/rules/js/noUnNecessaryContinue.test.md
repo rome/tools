@@ -10,7 +10,7 @@
 
  lint/js/noUnNecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ Unnecessary use of Continue statement at the end of the loop
+  ✖ INSERT MESSAGE HERE
 
     1 │ while(i--)
   > 2 │   continue;
@@ -39,7 +39,7 @@ while (i--) {}
 
  lint/js/noUnNecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ Unnecessary use of Continue statement at the end of the loop
+  ✖ INSERT MESSAGE HERE
 
     1 │ while(1){
   > 2 │   continue;
@@ -69,7 +69,7 @@ while (1) {}
 
  lint/js/noUnNecessaryContinue/reject/3/file.ts:4:7 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ Unnecessary use of Continue statement at the end of the loop
+  ✖ INSERT MESSAGE HERE
 
     2 │    if(i>5) {
     3 │        console.log('sss');
@@ -109,7 +109,7 @@ for (let i = 0; i < 10; i++) {
 
  lint/js/noUnNecessaryContinue/reject/4/file.ts:3:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
-  ✖ Unnecessary use of Continue statement at the end of the loop
+  ✖ INSERT MESSAGE HERE
 
     1 │ for(let i=0;i<9;i++)
     2 │ {
@@ -167,6 +167,31 @@ while (i) {
 while (1) {
 	continue;
 	console.log(4);
+}
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+while (someConditionX) {
+	if (someConditionY) {
+		if (someConditionZ) {
+			console.log("test");
+			continue;
+		}
+		console.log("test");
+		if (someCondition) {
+			console.log("test");
+		}
+	}
 }
 
 ```
