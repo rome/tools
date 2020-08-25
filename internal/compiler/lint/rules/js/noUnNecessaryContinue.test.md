@@ -12,6 +12,36 @@
 
   ✖ INSERT MESSAGE HERE
 
+    1 │ loop: for(let i=0;i<5;i++){
+  > 2 │   continue loop;
+      │   ^^^^^^^^^^^^^^
+    3 │ }
+
+  ℹ Safe fix
+
+  - continue·loop;
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `0: formatted`
+
+```
+loop: for (let i = 0; i < 5; i++) {}
+
+```
+
+### `1`
+
+```
+
+ lint/js/noUnNecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
+
+  ✖ INSERT MESSAGE HERE
+
     1 │ while(i--)
   > 2 │   continue;
       │   ^^^^^^^^^
@@ -26,18 +56,18 @@
 
 ```
 
-### `0: formatted`
+### `1: formatted`
 
 ```
 while (i--) {}
 
 ```
 
-### `1`
+### `2`
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/3/file.ts:2:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ INSERT MESSAGE HERE
 
@@ -56,18 +86,18 @@ while (i--) {}
 
 ```
 
-### `1: formatted`
+### `2: formatted`
 
 ```
 while (1) {}
 
 ```
 
-### `2`
+### `3`
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/3/file.ts:4:7 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/4/file.ts:4:7 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ INSERT MESSAGE HERE
 
@@ -88,7 +118,7 @@ while (1) {}
 
 ```
 
-### `2: formatted`
+### `3: formatted`
 
 ```
 for (let i = 0; i < 10; i++) {
@@ -103,11 +133,11 @@ for (let i = 0; i < 10; i++) {
 
 ```
 
-### `3`
+### `4`
 
 ```
 
- lint/js/noUnNecessaryContinue/reject/4/file.ts:3:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnNecessaryContinue/reject/5/file.ts:3:1 lint/js/noUnNecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ INSERT MESSAGE HERE
 
@@ -127,30 +157,10 @@ for (let i = 0; i < 10; i++) {
 
 ```
 
-### `3: formatted`
-
-```
-for (let i = 0; i < 9; i++) {}
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
 ### `4: formatted`
 
 ```
-while (i) {
-	if (i > 5) {
-		continue;
-	}
-	console.log(i);
-	i--;
-}
+for (let i = 0; i < 9; i++) {}
 
 ```
 
@@ -164,9 +174,12 @@ while (i) {
 ### `5: formatted`
 
 ```
-while (1) {
-	continue;
-	console.log(4);
+while (i) {
+	if (i > 5) {
+		continue;
+	}
+	console.log(i);
+	i--;
 }
 
 ```
@@ -181,15 +194,52 @@ while (1) {
 ### `6: formatted`
 
 ```
-while (someConditionX) {
-	if (someConditionY) {
-		if (someConditionZ) {
-			console.log("test");
+while (i) {
+	continue;
+	console.log(4);
+}
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+while (condition) {
+	if (conditionZ) {
+		if (conditionX) {
+			console.log("log");
 			continue;
 		}
-		console.log("test");
+		console.log("log");
+		if (conditionY) {
+			console.log("log");
+		}
+	}
+}
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+loop: while (1) {
+	forLoop: for (let i = 0; i < 5; i++) {
 		if (someCondition) {
-			console.log("test");
+			continue loop;
 		}
 	}
 }

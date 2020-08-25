@@ -7,14 +7,14 @@ function isContinueInsideLastAncestorPath(
 	path: Path,
 ): boolean {
 	const length = ancestryArr.length;
-	for (let i = length; i > 1; i--) {
-		const node = ancestryArr[i - 1].node;
+	for (let index = length; index > 1; index--) {
+		const node = ancestryArr[index - 1].node;
 		if (node.type === "JSBlockStatement" && node.body.length > 0) {
 			const bodySize = node.body.length;
 			const lastBodyNode = node.body[bodySize - 1];
 			if (
 				!(length === 1 && lastBodyNode === path.node) &&
-				!(length > 1 && lastBodyNode === ancestryArr[i - 2].node)
+				!(length > 1 && lastBodyNode === ancestryArr[index - 2].node)
 			) {
 				return false;
 			}
@@ -37,6 +37,20 @@ function isContinueTheLastStatement(
 	return false;
 }
 
+//return true if continue label is undefined or equal to its parent's looplabel
+function containsParentLoopLabel(path: Path, parentPath: Path): boolean {
+	if (path.node.type==="JSContinueStatement" && path.node.label !== undefined ){
+		if (parentPath.parent.type === "JSLabeledStatement" &&
+			path.node.label.name === parentPath.parent.label.name) {
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	return true;
+}
+
 function isContinueUnNecessary(path: Path): boolean {
 	const ancestryArr: Array<Path> = [];
 	const parentPath = path.findAncestry((p) => {
@@ -55,6 +69,7 @@ function isContinueUnNecessary(path: Path): boolean {
 	}
 	return (
 		isContinueTheLastStatement(ancestryArr, path) &&
+		containsParentLoopLabel(path, parentPath) &&
 		isContinueInsideLastAncestorPath(ancestryArr, path)
 	);
 }
@@ -65,8 +80,13 @@ export default createVisitor({
 		const {node} = path;
 		if (node.type !== "JSContinueStatement") {
 			return signals.retain;
-		}
-		if (node.type === "JSContinueStatement" && isContinueUnNecessary(path)) {
+		} else if (
+			// else if (node.type === "JSContinueStatement" && node.label !== undefined){
+			// 	return signals.retain;
+			// }
+			node.type === "JSContinueStatement" &&
+			isContinueUnNecessary(path)
+		) {
 			return path.addFixableDiagnostic(
 				{
 					fixed: signals.remove,

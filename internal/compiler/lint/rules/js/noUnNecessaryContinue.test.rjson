@@ -1,6 +1,11 @@
 filename: "file.ts"
 invalid: [
 	"
+	loop: for(let i=0;i<5;i++){
+		continue loop;
+	}
+	"
+	"
 	while(i--)
  	continue;
 	"
@@ -41,23 +46,42 @@ valid: [
 	}
 	"
 	"
-	while(1){
+	while(i){
 		continue;
 		console.log(4);
 	}
 	"
 	"
-	while(someConditionX){
-		if(someConditionY){
-			if(someConditionZ){
-				console.log('test');
+	while(condition){
+		if(conditionZ){
+			if(conditionX){
+				console.log('log');
 				continue;
 			}
-			console.log('test');
-			if(someCondition){
-				console.log('test');
+			console.log('log');
+			if(conditionY){
+				console.log('log');
 			}
 		}
+	}
+	"
+	"
+	loop: while(1){
+		forLoop: for(let i=0;i<5;i++){
+			if(someCondition){
+				continue loop;
+			}
+		}
+	}
+	"
+	"
+	loop: for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < byteLength; j++) {
+			if (condition) {
+				continue loop;
+			}
+		}
+		return value;
 	}
 	"
 ]
