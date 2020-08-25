@@ -81,7 +81,6 @@ valid: [
 				continue loop;
 			}
 		}
-		return value;
 	}
 	"
 ]

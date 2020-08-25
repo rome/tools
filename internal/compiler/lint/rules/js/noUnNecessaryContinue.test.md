@@ -245,3 +245,23 @@ loop: while (1) {
 }
 
 ```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+loop: for (let i = 0; i < 10; i++) {
+	for (let j = 0; j < byteLength; j++) {
+		if (condition) {
+			continue loop;
+		}
+	}
+}
+
+```
