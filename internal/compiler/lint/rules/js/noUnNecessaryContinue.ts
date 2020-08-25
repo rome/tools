@@ -39,12 +39,13 @@ function isContinueTheLastStatement(
 
 //return true if continue label is undefined or equal to its parent's looplabel
 function containsParentLoopLabel(path: Path, parentPath: Path): boolean {
-	if (path.node.type==="JSContinueStatement" && path.node.label !== undefined ){
-		if (parentPath.parent.type === "JSLabeledStatement" &&
-			path.node.label.name === parentPath.parent.label.name) {
+	if (path.node.type === "JSContinueStatement" && path.node.label !== undefined) {
+		if (
+			parentPath.parent.type === "JSLabeledStatement" &&
+			path.node.label.name === parentPath.parent.label.name
+		) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
