@@ -17,9 +17,11 @@ disallow the use of `debugger`
 **ESLint Equivalent:** [no-debugger](https://eslint.org/docs/rules/no-debugger)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:52d477da6933fdb483566ea334bad95cc4de6c6c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ef04ae4e36bde1970e7eba8dd919ad8d03d9e56f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noDebugger</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,7 +36,9 @@ disallow the use of `debugger`
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>debugger;</strong></span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">test</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token keyword">debugger</span><span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token variable">test</span><span class="token punctuation">.</span><span class="token keyword">debugger</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

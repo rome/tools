@@ -79,7 +79,6 @@ test(
 
 		const delimiters = Array.from(state.getDelimiters());
 
-		console.log(delimiters)
 		t.is(delimiters[0].start, 1);
 		t.is(delimiters[0].end, 50);
 		t.is(delimiters[0].delimiterType, "Emphasis");

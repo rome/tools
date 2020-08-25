@@ -21,9 +21,11 @@ It is generally bad practice to use `==` for comparison instead of `===`. Double
 
 For ergonomic reasons, this rule makes an exception for `== null` for comparing to both `null` and `undefined`.
 
-<!-- GENERATED:START(hash:63978d7a04d73b528b3f9cfe7dedc896ba06a9d4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e8f06c7c8dad4230981030fdba588dcc29d5490d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token variable">bar</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/noDoubleEquals</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -43,7 +45,9 @@ For ergonomic reasons, this rule makes an exception for `== null` for comparing 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This may be unsafe if you are relying on type coercion</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">==</span> <span class="token boolean">null</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token operator">!=</span> <span class="token boolean">null</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token boolean">null</span> <span class="token operator">==</span> <span class="token variable">foo</span></code></pre>{% endraw %}

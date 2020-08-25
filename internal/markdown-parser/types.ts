@@ -41,7 +41,6 @@ export type CodeProperties = {
  */
 export type DelimiterRun = {
 	// the index of the counter part that closes the delimiter
-	// this should be assigned only to delimiters that
 	closingIndexOfDelimiter?: Number0;
 	leftFlankingDelimiter?: boolean;
 	rightFlankingDelimiter?: boolean;
@@ -66,8 +65,8 @@ export type Tokens = BaseTokens & {
 	OpenBracket: SimpleToken<"OpenBracket">;
 	// )
 	CloseBracket: SimpleToken<"CloseBracket">;
-	// from * to _
+	// for * and _
 	Emphasis: Emphasis;
-	// from ** to __
+	// for ** and __
 	Strong: Strong;
 };
