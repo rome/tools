@@ -82,9 +82,6 @@ export default createVisitor({
 		if (node.type !== "JSContinueStatement") {
 			return signals.retain;
 		} else if (
-			// else if (node.type === "JSContinueStatement" && node.label !== undefined){
-			// 	return signals.retain;
-			// }
 			node.type === "JSContinueStatement" &&
 			isContinueUnNecessary(path)
 		) {
