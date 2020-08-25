@@ -2,24 +2,25 @@ import {Path, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {isFor} from "@internal/js-ast-utils";
 
-function isContinueInsideLastAncestor(
+function isContinueInsideLastAncestorPath(
 	ancestryArr: Array<Path>,
 	path: Path,
 ): boolean {
 	const length = ancestryArr.length;
-	const node = ancestryArr[length - 1].node;
-	if (node.type === "JSBlockStatement" && node.body.length > 0) {
-		const bodySize = node.body.length;
-		const lastBodyNode = node.body[bodySize - 1];
-		if (length === 1 && lastBodyNode === path.node) {
-			return true;
-		} else if (length > 1 && lastBodyNode === ancestryArr[length - 2].node) {
-			return true;
-		} else {
-			return false;
+	for (let i = length; i > 1; i--) {
+		const node = ancestryArr[i - 1].node;
+		if (node.type === "JSBlockStatement" && node.body.length > 0) {
+			const bodySize = node.body.length;
+			const lastBodyNode = node.body[bodySize - 1];
+			if (
+				!(length === 1 && lastBodyNode === path.node) &&
+				!(length > 1 && lastBodyNode === ancestryArr[i - 2].node)
+			) {
+				return false;
+			}
 		}
 	}
-	return false;
+	return true;
 }
 
 function isContinueTheLastStatement(
@@ -36,7 +37,7 @@ function isContinueTheLastStatement(
 	return false;
 }
 
-function isInsideTheLoop(path: Path): boolean {
+function isContinueUnNecessary(path: Path): boolean {
 	const ancestryArr: Array<Path> = [];
 	const parentPath = path.findAncestry((p) => {
 		if (isFor(p.node) || p.node.type === "JSWhileStatement") {
@@ -54,7 +55,7 @@ function isInsideTheLoop(path: Path): boolean {
 	}
 	return (
 		isContinueTheLastStatement(ancestryArr, path) &&
-		isContinueInsideLastAncestor(ancestryArr, path)
+		isContinueInsideLastAncestorPath(ancestryArr, path)
 	);
 }
 
@@ -65,8 +66,8 @@ export default createVisitor({
 		if (node.type !== "JSContinueStatement") {
 			return signals.retain;
 		}
-		if (node.type === "JSContinueStatement" && isInsideTheLoop(path)) {
-			path.addFixableDiagnostic(
+		if (node.type === "JSContinueStatement" && isContinueUnNecessary(path)) {
+			return path.addFixableDiagnostic(
 				{
 					fixed: signals.remove,
 				},

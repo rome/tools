@@ -46,4 +46,18 @@ valid: [
 		console.log(4);
 	}
 	"
+	"
+	while(someConditionX){
+		if(someConditionY){
+			if(someConditionZ){
+				console.log('test');
+				continue;
+			}
+			console.log('test');
+			if(someCondition){
+				console.log('test');
+			}
+		}
+	}
+	"
 ]
