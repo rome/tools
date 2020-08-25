@@ -59,7 +59,6 @@ async function tryManifest(root: string): Promise<undefined | string> {
 			}
 		} catch (err) {
 			if (err instanceof SyntaxError || err.code === "ENOENT") {
-				continue;
 			} else {
 				throw err;
 			}

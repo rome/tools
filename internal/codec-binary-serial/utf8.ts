@@ -32,7 +32,6 @@ export function utf8Count(str: string): number {
 		if ((value & 0xffffff80) === 0) {
 			// 1-byte
 			byteLength++;
-			continue;
 		} else if ((value & 0xfffff800) === 0) {
 			// 2-bytes
 			byteLength += 2;

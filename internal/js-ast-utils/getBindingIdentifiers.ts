@@ -35,7 +35,6 @@ export function getBindingIdentifiers(
 			// rome-ignore lint/ts/noExplicitAny
 			const val = (node as any)[key];
 			if (val === undefined) {
-				continue;
 			} else if (Array.isArray(val)) {
 				queue = queue.concat(val);
 			} else {

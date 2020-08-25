@@ -161,7 +161,6 @@ export default function match(
 			throw new Error("pathSegs.length already validated above");
 		}
 		if (matchSegment(pathSeg, patternSeg)) {
-			continue;
 		} else {
 			return false;
 		}
