@@ -3,7 +3,7 @@
 			title: Lint Rule js/noUnnecessaryContinue
 			layout: layouts/rule.liquid
 			showHero: false
-			description: MISSING DOCUMENTATION
+			description: unnecessary continue statement inside the loop
 			eleventyNavigation:
 				key: lint-rules/js/noUnnecessaryContinue
 				parent: lint-rules
@@ -12,7 +12,7 @@
 
 			# js/noUnnecessaryContinue
 
-			MISSING DOCUMENTATION
+			continue statement is unnecessary as the last statement inside the loop, can be safely removed
 
 <!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 
