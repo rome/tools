@@ -160,8 +160,7 @@ export default function match(
 		if (pathSeg === undefined) {
 			throw new Error("pathSegs.length already validated above");
 		}
-		if (matchSegment(pathSeg, patternSeg)) {
-		} else {
+		if (!matchSegment(pathSeg, patternSeg)) {
 			return false;
 		}
 	}

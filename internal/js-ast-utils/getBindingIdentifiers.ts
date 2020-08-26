@@ -34,11 +34,12 @@ export function getBindingIdentifiers(
 		for (const key of keys) {
 			// rome-ignore lint/ts/noExplicitAny
 			const val = (node as any)[key];
-			if (val === undefined) {
-			} else if (Array.isArray(val)) {
-				queue = queue.concat(val);
-			} else {
-				queue.push(val);
+			if (val !== undefined) {
+				if (Array.isArray(val)) {
+					queue = queue.concat(val);
+				} else {
+					queue.push(val);
+				}
 			}
 		}
 	}
