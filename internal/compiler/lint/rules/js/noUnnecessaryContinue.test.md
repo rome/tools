@@ -12,7 +12,7 @@
 
   ✖ Unnecessary continue statement
 
-    1 │ loop: for(let i=0;i<5;i++){
+    1 │ loop: for (let i = 0; i < 5; i++) {
   > 2 │   continue loop;
       │   ^^^^^^^^^^^^^^
     3 │ }
@@ -38,13 +38,13 @@ loop: for (let i = 0; i < 5; i++) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/2/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnnecessaryContinue/reject/2/file.ts:2:2 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
 
-    1 │ while(i--)
-  > 2 │   continue;
-      │   ^^^^^^^^^
+    1 │ while (i--)
+  > 2 │     continue;
+      │     ^^^^^^^^^
 
   ℹ Safe fix
 
@@ -71,7 +71,7 @@ while (i--) {}
 
   ✖ Unnecessary continue statement
 
-    1 │ while(1){
+    1 │ while (1) {
   > 2 │   continue;
       │   ^^^^^^^^^
     3 │ }
@@ -97,16 +97,16 @@ while (1) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/4/file.ts:4:7 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnnecessaryContinue/reject/4/file.ts:4:8 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
 
-    2 │    if(i>5) {
-    3 │        console.log('sss');
-  > 4 │        continue;
-      │        ^^^^^^^^^
-    5 │    }
-    6 │    else if(i>=5&&i<8){
+    2 │      if (i > 5) {
+    3 │          console.log('foo');
+  > 4 │          continue;
+      │          ^^^^^^^^^
+    5 │      }
+    6 │      else if (i >= 5 && i < 8) {
 
   ℹ Safe fix
 
@@ -123,11 +123,11 @@ while (1) {}
 ```
 for (let i = 0; i < 10; i++) {
 	if (i > 5) {
-		console.log("sss");
+		console.log("foo");
 	} else if (i >= 5 && i < 8) {
-		console.log("s");
+		console.log("test");
 	} else {
-		console.log("dsd");
+		console.log("test");
 	}
 }
 
@@ -137,15 +137,14 @@ for (let i = 0; i < 10; i++) {
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/5/file.ts:3:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint/js/noUnnecessaryContinue/reject/5/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
 
-    1 │ for(let i=0;i<9;i++)
-    2 │ {
-  > 3 │   continue;
+    1 │ for (let i = 0; i < 9; i++) {
+  > 2 │   continue;
       │   ^^^^^^^^^
-    4 │ }
+    3 │ }
 
   ℹ Safe fix
 
@@ -196,7 +195,7 @@ while (i) {
 ```
 while (i) {
 	continue;
-	console.log(4);
+	console.log(i);
 }
 
 ```
