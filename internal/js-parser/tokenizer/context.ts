@@ -65,11 +65,7 @@ tt.parenR.updateContext = tt.braceR.updateContext = function(parser) {
 		}
 	}
 
-	if (out === undefined) {
-		throw new Error("No context found");
-	}
-
-	parser.state.exprAllowed = !out.isExpr;
+	parser.state.exprAllowed = !out || !out.isExpr;
 };
 
 tt.name.updateContext = function(parser, prevType) {
