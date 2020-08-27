@@ -823,8 +823,12 @@ export default class ProjectManager {
 	public getProjectHierarchyFromPath(
 		path: AbsoluteFilePath,
 	): Array<ProjectDefinition> {
-		const found = this.assertProjectExisting(path);
-		return this.getHierarchyFromProject(found);
+		const found = this.findLoadedProject(path);
+		if (found === undefined) {
+			return [];
+		} else {
+  			return this.getHierarchyFromProject(found);
+  		}
 	}
 
 	public findLoadedProject(
