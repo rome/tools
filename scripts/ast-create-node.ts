@@ -72,7 +72,7 @@ export async function main(
 			import {NodeBaseWithComments} from "@internal/ast";
 			import {createBuilder} from "../../utils";
 
-			interface ${nodeType} extends NodeBaseWithComments {
+			export interface ${nodeType} extends NodeBaseWithComments {
 				readonly type: "${nodeType}";
 			}
 
