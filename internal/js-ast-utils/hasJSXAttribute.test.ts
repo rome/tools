@@ -1,21 +1,14 @@
 import {test} from "rome";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
-import {hasJSXAttribute} from "@internal/js-ast-utils/hasJSXAttribute";
+import {hasJSXAttribute, template} from "@internal/js-ast-utils";
 import {jsExpressionStatement, jsxElement} from "@internal/ast";
 
 test(
 	"verify hasJSXAttribute returns the correct value",
 	async (t) => {
 		const jsx = jsxElement.assert(
-			jsExpressionStatement.assert(
-				parseJS({
-					path: "unknown",
-					input: dedent`
-				<div className="class" other={true} onClick={() => { foo()}}/>
-			`,
-				}).body[0],
-			).expression,
+			template.expression`<div className="class" other={true} onClick={() => { foo()}}/>`,
 		);
 
 		t.true(hasJSXAttribute(jsx, "className"));
