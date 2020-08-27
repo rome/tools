@@ -96,12 +96,13 @@ const createSPDXLicenseParser = createParser<SPDXParserTypes>({
 
 		if (isWordChar(char)) {
 			const [value, end] = parser.readInputFrom(index, isWordChar);
+			const upperCasedValue = value.toUpperCase();
 
-			if (value === "AND") {
+			if (upperCasedValue === "AND") {
 				return parser.finishToken("And", end);
-			} else if (value === "OR") {
+			} else if (upperCasedValue === "OR") {
 				return parser.finishToken("Or", end);
-			} else if (value === "WITH") {
+			} else if (upperCasedValue === "WITH") {
 				return parser.finishToken("With", end);
 			} else {
 				return parser.finishValueToken("Word", value, end);
