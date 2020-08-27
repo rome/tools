@@ -35,10 +35,6 @@ export default function JSUnaryExpression(node: AnyNode, scope: Scope) {
 		// void
 		case "void":
 			return new VoidT(scope, node);
-
-		// empty!
-		case "throw":
-			break;
 	}
 
 	return undefined;
