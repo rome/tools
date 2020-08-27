@@ -1,8 +1,6 @@
 import {test} from "rome";
-import {parseJS} from "@internal/js-parser";
-import {dedent} from "@internal/string-utils";
 import {hasJSXAttribute, template} from "@internal/js-ast-utils";
-import {jsExpressionStatement, jsxElement} from "@internal/ast";
+import {jsxElement} from "@internal/ast";
 
 test(
 	"verify hasJSXAttribute returns the correct value",
