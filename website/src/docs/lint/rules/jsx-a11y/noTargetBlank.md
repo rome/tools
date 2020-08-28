@@ -17,9 +17,11 @@ Prevent usage of unsafe `target="_blank"`
 **ESLint Equivalent:** [jsx-no-target-blank](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:419e54f80dead03a83cef13cbdeac9dcfb6d5e1a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:29c2aef6e18e8afe38bb85bf32f999dbcd5ad449,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:31</span> <strong>lint/jsx-a11y/noTargetBlank</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
@@ -42,7 +44,7 @@ Prevent usage of unsafe `target="_blank"`
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">dynamicLink</span><span class="token punctuation">}</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -65,7 +67,9 @@ Prevent usage of unsafe `target="_blank"`
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>child
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">p</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">p</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">rel</span><span class="token operator">=</span><span class="token string">&apos;noreferrer&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">rel</span><span class="token operator">=</span><span class="token string">&apos;noopener noreferrer&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}

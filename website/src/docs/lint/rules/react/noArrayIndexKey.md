@@ -17,9 +17,11 @@ prevent usage of Array index in keys
 **ESLint Equivalent:** [no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8cee6792838b88fec576dac9620a09394353ebcd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a88978a3c4cdede17f544cff95058b63299a5435,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>{% endraw %}
@@ -45,7 +47,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -73,7 +75,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -103,7 +105,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -123,7 +125,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -143,7 +145,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -165,7 +167,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -192,7 +194,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -212,7 +214,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -239,7 +241,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -267,7 +269,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -297,7 +299,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -317,7 +319,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -337,7 +339,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -359,7 +361,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -386,7 +388,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -406,7 +408,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
@@ -426,7 +428,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -446,7 +448,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -473,7 +475,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -493,7 +495,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
@@ -513,7 +515,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -533,7 +535,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -553,7 +555,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -573,7 +575,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -593,7 +595,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -613,7 +615,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -633,7 +635,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -653,7 +655,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
@@ -673,7 +675,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
@@ -693,7 +695,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduceRight</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	<span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
@@ -713,7 +715,7 @@ prevent usage of Array index in keys
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduceRight</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
@@ -732,7 +734,9 @@ prevent usage of Array index in keys
     <span style="color: DodgerBlue;">information.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">thing</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
 <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}

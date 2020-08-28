@@ -17,9 +17,11 @@ disallow nested ternary expressions
 **ESLint Equivalent:** [no-nested-ternary](https://eslint.org/docs/rules/no-nested-ternary)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a642f910098c20cc0f5babcd1e4377236fecd39b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:82a5d21545ab5a3eeacfb9c08de15671ccad9174,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token variable">quxx</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:24</span> <strong>lint/js/noNestedTernary</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -32,7 +34,7 @@ disallow nested ternary expressions
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token punctuation">:</span> <span class="token variable">baz</span> <span class="token punctuation">?</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -51,7 +53,7 @@ disallow nested ternary expressions
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">baz</span> <span class="token operator">===</span> <span class="token variable">qux</span> <span class="token punctuation">?</span> <span class="token function">quxx</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">foobar</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -64,7 +66,9 @@ disallow nested ternary expressions
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token punctuation">:</span> <span class="token variable">foobar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">||</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">||</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">thing</span> <span class="token operator">=</span> <span class="token variable">foo</span> <span class="token punctuation">?</span> <span class="token variable">bar</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">boo</span> <span class="token punctuation">:</span> <span class="token variable">foo</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">bar</span><span class="token punctuation">;</span></code></pre>{% endraw %}

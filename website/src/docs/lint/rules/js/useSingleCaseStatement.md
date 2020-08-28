@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ca6d50044af7a6e31493f040b51188d578e3f427,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:82f673c150ae5fd6ae1daba8a857822b4957191d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
 	<span class="token keyword">case</span> <span class="token boolean">false</span><span class="token punctuation">:</span>
@@ -48,7 +50,9 @@ MISSING DOCUMENTATION
   <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>}</strong></span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token boolean">true</span><span class="token punctuation">:</span>
 	<span class="token keyword">case</span> <span class="token boolean">false</span><span class="token punctuation">:</span>

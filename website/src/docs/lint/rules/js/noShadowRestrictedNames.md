@@ -17,9 +17,11 @@ disallow identifiers from shadowing restricted names
 **ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d256ac0c799b4394bce551f12e38f3eb0bd8fe04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ef4dfdb4f9c186517c0f6fde3d96070e5e6d0bd7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:9</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,7 +36,7 @@ disallow identifiers from shadowing restricted names
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">Set</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -50,7 +52,7 @@ disallow identifiers from shadowing restricted names
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -66,7 +68,7 @@ disallow identifiers from shadowing restricted names
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -82,7 +84,7 @@ disallow identifiers from shadowing restricted names
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">

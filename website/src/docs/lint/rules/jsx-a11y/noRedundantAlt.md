@@ -17,9 +17,11 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 **ESLint Equivalent:** [img-redundant-alt](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/img-redundant-alt.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d3c8fb3bf3b565309a239bd2b8eaf87dcca2c443,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:32dfdc42003bb0a1d0846d78f272a96e6a71c9eb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;photo content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/noRedundantAlt</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,7 +37,7 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;picture content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -52,7 +54,7 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;image content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -69,7 +71,7 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;Photo content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -86,7 +88,7 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;Picture content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -103,7 +105,7 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;Image content&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -119,7 +121,9 @@ enforce `img` alt prop does not contain the word "image", "picture", or "photo"
     <span style="color: DodgerBlue;">necessary to redeclare this in alternative text.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;alt&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;src&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">photo</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
