@@ -45,6 +45,7 @@ function extractSuppressionsFromComment(
 		return undefined;
 	}
 
+	const {requireSuppressionExplanations} = context.project.config.lint;
 	const suppressedCategories: Set<string> = new Set();
 	const diagnostics: Diagnostics = [];
 	const suppressions: DiagnosticSuppressions = [];
@@ -129,7 +130,10 @@ function extractSuppressionsFromComment(
 			}
 		}
 
-		if (!explanation || explanation.length === 0) {
+		if (
+			requireSuppressionExplanations &&
+			(!explanation || explanation.length === 0)
+		) {
 			diagnostics.push({
 				description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
 				location: commentLocation,

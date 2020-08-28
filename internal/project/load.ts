@@ -253,6 +253,12 @@ export async function normalizeProjectConfig(
 		if (lint.has("globals")) {
 			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
+
+		if (lint.has("requireSuppressionExplanations")) {
+			config.lint.requireSuppressionExplanations = lint.get(
+				"requireSuppressionExplanations",
+			).asBoolean();
+		}
 	}
 
 	const tests = consumer.get("tests");

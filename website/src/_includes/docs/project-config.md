@@ -75,6 +75,14 @@ Custom variables you want to declare as global.
 rome config push lint.globals SomeGlobal
 ```
 
+#### `lint.requireSuppressionExplanations`
+
+Raise a diagnostic if a suppression does not have a [valid explanation](#explanation).
+
+```bash
+rome config push lint.globals SomeGlobal
+```
+
 ### Supported Locations
 
 You can specify your project config in a few different places.

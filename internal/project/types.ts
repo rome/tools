@@ -41,6 +41,7 @@ export type ProjectConfigObjects = {
 	lint: {
 		globals: Array<string>;
 		ignore: PathPatterns;
+		requireSuppressionExplanations: boolean;
 	};
 	typeCheck: {
 		enabled: boolean;
@@ -146,6 +147,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		lint: {
 			ignore: [],
 			globals: [],
+			requireSuppressionExplanations: true,
 		},
 		tests: {
 			ignore: [],
