@@ -38,8 +38,8 @@ export function reduce<Token extends TokenShape>(
 		// Print this token
 		// We need to break up the token text into lines, so that we can easily split the highlighted newlines and have the ansi codes be unbroken
 		const lines = splitLines(value);
-		for (let i = 0; i < lines.length; i++) {
-			const line = lines[i];
+		for (let j = 0; j < lines.length; j++) {
+			const line = lines[j];
 
 			if (line !== "") {
 				const prev = tokens[i - 1];
@@ -59,7 +59,7 @@ export function reduce<Token extends TokenShape>(
 			}
 
 			// Last element isn't a line break
-			const isLast = i === lines.length - 1;
+			const isLast = j === lines.length - 1;
 			if (!isLast) {
 				parts.push(markup`\n`);
 			}
