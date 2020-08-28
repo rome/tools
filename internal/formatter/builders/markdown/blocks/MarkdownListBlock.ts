@@ -1,12 +1,5 @@
 import {MarkdownListBlock} from "@internal/ast";
-import {
-	Builder,
-	Token,
-	Tokens,
-	concat,
-	hardline,
-	space,
-} from "@internal/formatter";
+import {Builder, Token, Tokens, concat, space} from "@internal/formatter";
 
 export default function MarkdownListBlock(
 	builder: Builder,
@@ -24,9 +17,6 @@ export default function MarkdownListBlock(
 				}
 			}
 			tokens.push(builder.tokenize(child, node));
-			if (index + 1 < node.children.length) {
-				tokens.push(hardline);
-			}
 
 			return tokens;
 		},

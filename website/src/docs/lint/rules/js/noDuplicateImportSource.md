@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:735dc4b177245f40c920be99feeb4f9b4a936c19,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ad8beff2daa866a16de37d52bbd700d4daa66915,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span>	<span class="token variable">foo</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span>	<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">import</span>	<span class="token variable">type</span>	<span class="token punctuation">{</span><span class="token variable">fooType</span><span class="token punctuation">}</span>	<span class="token keyword">from</span>	<span class="token string">&apos;./testdummy.ts&apos;</span><span class="token punctuation">;</span>

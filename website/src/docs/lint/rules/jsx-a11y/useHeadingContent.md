@@ -17,9 +17,11 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 **ESLint Equivalent:** [heading-has-content](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/heading-has-content.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:1e6934ecd8dd6c927a6fcd1e553c436fbaf5da34,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:dcf77f6a9e442502095e7f14ad15cb8e8b323117,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useHeadingContent</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,7 +36,7 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span>&gt;&lt;<span class="token variable">TextWrapper</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -50,7 +52,7 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span>&gt;&lt;<span class="token variable">div</span> <span class="token attr-name">aria-hidden</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -65,7 +67,9 @@ enforce heading (`h1`, `h2`, etc) elements contain accessible content
     <span style="color: DodgerBlue;">screen readers.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span>&gt;heading&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span>&gt;&lt;<span class="token variable">TextWrapper</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;heading&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}

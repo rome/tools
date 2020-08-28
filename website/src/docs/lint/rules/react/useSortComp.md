@@ -17,9 +17,11 @@ This rule enforces methods and properties order. When creating React components 
 **ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3542a91d59b6750d0dd19035aec39244bf1cb0ae,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5a8e0613a831a57a78cfa5e8ad9cebf1c63422a4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a lifecycle method to be placed before render</span>
 <span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
 	<span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -45,7 +47,7 @@ This rule enforces methods and properties order. When creating React components 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a custom method to be placed before render</span>
 <span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -72,7 +74,7 @@ This rule enforces methods and properties order. When creating React components 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must force a custom method to be placed before render, even in function</span>
 <span class="token keyword">var</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
@@ -101,7 +103,7 @@ This rule enforces methods and properties order. When creating React components 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Type Annotations should not be at the top by default</span>
 <span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
@@ -129,7 +131,9 @@ This rule enforces methods and properties order. When creating React components 
     <span style="color: DodgerBlue;">lifecycle methods, event handlers, etc.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token comment">// Must validate a full class</span>
 <span class="token keyword">class</span> <span class="token variable">Hello</span> <span class="token keyword">extends</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Component</span> <span class="token punctuation">{</span>
   <span class="token variable">displayName</span> <span class="token operator">=</span> <span class="token string">&apos;&apos;</span>

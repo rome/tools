@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8b4e11ff1fc529c0a260f2b26ecffb0f57ace95d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6703a3a2ac3ef83c9d46b2ccdf3191c8dc7eeaf9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/regex/noPosixInRegularExpression</strong> ━━━━━━━━━━━━━━━━━━━━━━━
@@ -31,7 +33,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">

@@ -17,9 +17,11 @@ disallow duplicate keys in object literals
 **ESLint Equivalent:** [no-dupe-keys](https://eslint.org/docs/rules/no-dupe-keys)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d420d85752497fe667e0cd3c33079b23cf4665d7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5dd7e94be1e573fa21ed69b1bcefbf111a2e9c92,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
 	<span class="token variable">test2</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>

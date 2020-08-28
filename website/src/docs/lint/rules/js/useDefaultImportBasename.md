@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3cd13079e8419984df2600934cee3cb1da3260db,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:eb24eba10af18c03e15ca0a45bec720f985d20ed,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">foo</span> <span class="token keyword">from</span> <span class="token string">&apos;./bar&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useDefaultImportBasename</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -31,6 +33,8 @@ MISSING DOCUMENTATION
     <span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token keyword">default</span> <span class="token variable">as</span> <span class="token variable">foo</span><span class="token punctuation">}</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token variable">foo</span> <span class="token keyword">from</span> <span class="token string">&apos;./foo&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

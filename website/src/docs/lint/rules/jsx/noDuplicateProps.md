@@ -17,9 +17,11 @@ enforce no duplicate props
 **ESLint Equivalent:** [jsx-no-duplicate-props](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:9e39fc311f39ea78ff320b37de1ed8a302317a73,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0687d5f434c190e8b5ee72e0b1134cbad6b9750d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx/noDuplicateProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -33,7 +35,7 @@ enforce no duplicate props
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -53,7 +55,9 @@ enforce no duplicate props
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span>  <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

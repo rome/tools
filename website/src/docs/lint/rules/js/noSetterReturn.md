@@ -17,9 +17,11 @@ disallow returning values from setters
 **ESLint Equivalent:** [no-setter-return](https://eslint.org/docs/rules/no-setter-return)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:444453ea2ba2b02933c3cc079d76fac95a31b7c5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:799963ddf523df75f554bbf0892c9e215f4fc2c3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -43,7 +45,7 @@ disallow returning values from setters
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">static</span> <span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -68,7 +70,7 @@ disallow returning values from setters
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">p</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -92,7 +94,9 @@ disallow returning values from setters
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setters that return values are either typos or should not be setters.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">class</span> <span class="token variable">p</span> <span class="token punctuation">{</span>
 	<span class="token variable">set</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">value</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>

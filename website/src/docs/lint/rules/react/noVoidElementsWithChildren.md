@@ -17,9 +17,11 @@ This rules prevents void elements (AKA self-closing elements) from have children
 **ESLint Equivalent:** [void-dom-elements-no-children](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/void-dom-elements-no-children.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:adaed51c5f50f2abaafdea585bc73a574cb443fc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:10836ff39f47aac9ae4248d4fd9c9d7ced29a85f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">br</span> <span class="token attr-name">className</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;dont-remove-class&apos;</span><span class="token punctuation">}</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token variable">br</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noVoidElementsWithChildren</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━
@@ -38,7 +40,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token variable">img</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -58,7 +60,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">hr</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;invalid children&apos;</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -76,7 +78,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">area</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">area</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -95,7 +97,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">&apos;invalid children&apos;</span><span class="token punctuation">}</span>&gt;invalid children&lt;<span class="token operator">/</span><span class="token variable">img</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -118,7 +120,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">children</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -135,7 +137,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">dangerouslySetInnerHTML</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -154,7 +156,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -172,7 +174,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">children</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -189,7 +191,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token variable">dangerouslySetInnerHTML</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -206,7 +208,7 @@ This rules prevents void elements (AKA self-closing elements) from have children
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&apos;img&apos;</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&apos;child&apos;</span><span class="token punctuation">)</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -223,7 +225,9 @@ This rules prevents void elements (AKA self-closing elements) from have children
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">createElement(&quot;img&quot;,</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">{})</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span>&gt;Children&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token attr-name">children</span><span class="token operator">=</span><span class="token string">&apos;Children&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token attr-name">dangerouslySetInnerHTML</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">{</span> <span class="token variable">__html</span><span class="token punctuation">:</span> <span class="token string">&apos;&apos;</span> <span class="token punctuation">}</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}

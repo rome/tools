@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:9a89c74c0b93822139c2e4fda175b6a1123b1de8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:eb5f2948aa35dc9c654af0115dc10c876adb33cc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:15</span> <strong>lint/regex/noEmptyCharacterClass</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -30,7 +32,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/foo[]bar/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -45,7 +47,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -60,7 +62,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/[]]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -75,7 +77,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/\[[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -90,7 +92,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/\[\[\]a-z[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -104,7 +106,9 @@ MISSING DOCUMENTATION
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc[a-zA-Z]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">regExp</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">RegExp</span><span class="token punctuation">(</span><span class="token string">&apos;^abc[]&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token variable">regExp</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}

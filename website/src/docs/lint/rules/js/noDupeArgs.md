@@ -17,9 +17,11 @@ disallow duplicate arguments in `function` definitions
 **ESLint Equivalent:** [no-dupe-args](https://eslint.org/docs/rules/no-dupe-args)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e6174dc8d96bf9a5442cab1b39fc22b0efc55906,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:da3e4b170d1e2085bb67129a1a97afb4b24b15bb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">//</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
@@ -35,7 +37,7 @@ disallow duplicate arguments in `function` definitions
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token comment">//</span>
@@ -54,7 +56,7 @@ disallow duplicate arguments in `function` definitions
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">hello</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">//</span>
@@ -70,7 +72,9 @@ disallow duplicate arguments in `function` definitions
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}

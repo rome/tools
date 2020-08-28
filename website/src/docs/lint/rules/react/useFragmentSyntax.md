@@ -17,9 +17,11 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 **ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fcdfcf9d0959a6d73f3527aeb878739771095c4f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:9dc71c7d92b56ccb6ac521f1c5970d912c6358ca,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/useFragmentSyntax</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,7 +46,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -70,7 +72,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -96,7 +98,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -123,7 +125,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -149,7 +151,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -175,7 +177,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">let</span> <span class="token variable">bar</span> <span class="token operator">=</span> &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;<span class="token punctuation">;</span>
@@ -207,7 +209,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">let</span> <span class="token variable">bar</span> <span class="token operator">=</span> &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;<span class="token punctuation">;</span>
@@ -239,7 +241,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;
@@ -269,7 +271,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Hello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 						<span class="token keyword">return</span> &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;
@@ -299,7 +301,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -325,7 +327,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -350,7 +352,9 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
   <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;/&gt;</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token string">&apos;id&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token string">&apos;id&apos;</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}

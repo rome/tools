@@ -17,9 +17,11 @@ report `this` being used in stateless components
 **ESLint Equivalent:** [no-this-in-sfc](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a4037f8618da009e9cbe12dd1b842d48a48016cd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:24c677e4d3be44451a918577832e434a95108b71,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token operator">&lt;</span><span class="token regex">/div&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:44</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -31,7 +33,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -55,7 +57,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
@@ -79,7 +81,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -103,7 +105,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
@@ -129,7 +131,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>
@@ -162,7 +164,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">context</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">foo</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">context</span><span class="token punctuation">;</span>
@@ -196,7 +198,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">state</span><span class="token punctuation">.</span><span class="token variable">loading</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -231,7 +233,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">loading</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">state</span><span class="token punctuation">;</span>
@@ -268,7 +270,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span>
 	<span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -294,7 +296,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
@@ -318,7 +320,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 	&lt;<span class="token variable">div</span>&gt;
@@ -342,7 +344,7 @@ report `this` being used in stateless components
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
 		&lt;<span class="token variable">div</span>&gt;
@@ -366,7 +368,9 @@ report `this` being used in stateless components
     <span style="color: DodgerBlue;">instead.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">bar</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">return</span> <span class="token punctuation">(</span>

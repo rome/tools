@@ -8,6 +8,7 @@ import {
 import {
 	AnyMarkdownInlineNode,
 	AnyMarkdownNode,
+	MarkdownCodeBlock,
 	MarkdownDividerBlock,
 	MarkdownHeadingBlock,
 	MarkdownListBlock,
@@ -19,35 +20,45 @@ import {
 } from "@internal/ast";
 import {Number0, ob1Add} from "@internal/ob1";
 import {isEscaped} from "@internal/string-utils";
-import {ListProperties, Tokens} from "./types";
-import {hasThematicBreak} from "./utils";
+import {CodeProperties, MarkdownParserState, Tokens} from "./types";
+import {hasThematicBreak, isBlockToken, isntInlineCharacter} from "./utils";
 import {descriptions} from "@internal/diagnostics";
+import {InlineState} from "@internal/markdown-parser/State";
+import {tokenizeListItem} from "@internal/markdown-parser/parser/listItem";
+import {
+	parseInline,
+	tokenizeInline,
+} from "@internal/markdown-parser/parser/inline";
 
 type MarkdownParserTypes = {
 	tokens: Tokens;
-	state: {};
+	state: MarkdownParserState;
 	options: ParserOptionsWithRequiredPath;
 	meta: void;
 };
 
-type MarkdownParser = ParserCore<MarkdownParserTypes>;
+export type MarkdownParser = ParserCore<MarkdownParserTypes>;
 
 const createMarkdownParser = createParser<MarkdownParserTypes>({
 	diagnosticCategory: "parse/markdown",
-	ignoreWhitespaceTokens: true,
-	getInitialState: () => ({isBlockHead: false}),
+	ignoreWhitespaceTokens: false,
+	getInitialState: () => ({
+		isBlockHead: false,
+		isParagraph: false,
+		inlineState: new InlineState(),
+	}),
 
 	tokenizeWithState(parser, index, state) {
 		const char = parser.getInputCharOnly(index);
 		const escaped = isEscaped(index, parser.input);
-		if (!escaped) {
+
+		if (!escaped && !state.isParagraph) {
 			if (char === "#") {
 				return {
 					token: consumeHeading(parser, index),
 					state,
 				};
 			}
-
 			if (char === "\n") {
 				const nextChar = parser.getInputCharOnly(index, 1);
 				if (nextChar === "#") {
@@ -56,58 +67,48 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 						state,
 					};
 				}
-				if (nextChar === "\n") {
-					return {
-						token: parser.finishToken("EndParagraph", ob1Add(index, 1)),
-						state,
-					};
+
+				if (nextChar === "`") {
+					const token = consumeCode(parser, ob1Add(index, 1));
+					if (token) {
+						return {state, token};
+					}
 				}
 
 				if (isDigit(nextChar)) {
-					const [, endIndex] = parser.readInputFrom(index, isDigit);
-					const nextChar = parser.getInputCharOnly(endIndex);
-					const nextNextChar = parser.getInputCharOnly(endIndex, 1);
-
-					if (nextChar === "." && nextNextChar === " ") {
+					const token = tokenizeListItem(parser, index);
+					if (token) {
 						return {
-							token: parser.finishComplexToken<"ListItem", ListProperties>(
-								"ListItem",
-								{
-									numeric: true,
-									checked: undefined,
-								},
-								ob1Add(endIndex, 2),
-							),
-							state,
+							token,
+							state: {
+								...state,
+								isParagraph: true,
+							},
 						};
 					}
 				}
 
 				return {
 					token: parser.finishToken("NewLine"),
-					state,
+					state: {
+						...state,
+						isParagraph: false,
+					},
 				};
 			}
-
-			// dividers
 			if (char === "-") {
 				const block = consumeBlock(parser, "-", index, char);
 				if (block) {
 					return {token: block, state};
 				}
-				const nextChar = parser.getInputCharOnly(index, 1);
-				if (nextChar === " ") {
+				const listItemToken = tokenizeListItem(parser, index, "-");
+				if (listItemToken) {
 					return {
-						token: parser.finishComplexToken<"ListItem", ListProperties>(
-							"ListItem",
-							{
-								numeric: false,
-								checked: undefined,
-								value: "-",
-							},
-							ob1Add(index, 2),
-						),
-						state,
+						token: listItemToken,
+						state: {
+							...state,
+							isParagraph: true,
+						},
 					};
 				}
 			}
@@ -116,54 +117,98 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 				if (block) {
 					return {token: block, state};
 				}
+
+				const result = tokenizeInline(parser, state, "_", index);
+				if (result) {
+					return result;
+				}
 			}
 			if (char === "*") {
 				const block = consumeBlock(parser, "*", index, char);
 				if (block) {
 					return {token: block, state};
 				}
-				const nextChar = parser.getInputCharOnly(index, 1);
-				if (nextChar === " ") {
+				const listItemToken = tokenizeListItem(parser, index, "*");
+				if (listItemToken) {
 					return {
-						token: parser.finishComplexToken<"ListItem", ListProperties>(
-							"ListItem",
-							{
-								numeric: false,
-								checked: undefined,
-								value: "*",
-							},
-							ob1Add(index, 2),
-						),
-						state,
+						token: listItemToken,
+						state: {
+							...state,
+							isParagraph: true,
+						},
 					};
+				}
+
+				const result = tokenizeInline(parser, state, "*", index);
+				if (result) {
+					return result;
+				}
+			}
+			if (char === "`") {
+				const token = consumeCode(parser, index);
+				if (token) {
+					return {state, token};
 				}
 			}
 
 			if (isDigit(char)) {
-				const [, endIndex] = parser.readInputFrom(index, isDigit);
-				const nextChar = parser.getInputCharOnly(endIndex);
-				const nextNextChar = parser.getInputCharOnly(endIndex, 1);
-				if (nextChar === "." && nextNextChar === " ") {
+				const listItemToken = tokenizeListItem(parser, index);
+
+				if (listItemToken) {
 					return {
-						token: parser.finishComplexToken<"ListItem", ListProperties>(
-							"ListItem",
-							{
-								numeric: true,
-								checked: undefined,
-							},
-							ob1Add(endIndex, 2),
-						),
-						state,
+						token: listItemToken,
+						state: {
+							...state,
+							isParagraph: true,
+						},
 					};
 				}
 			}
 		}
 
-		const [value, endIndex] = parser.readInputFrom(index, readUntilLineBreak);
+		if (!escaped && state.isParagraph) {
+			if (char === "*") {
+				const result = tokenizeInline(parser, state, "*", index);
+				if (result) {
+					return result;
+				}
+			}
+			if (char === "_") {
+				const result = tokenizeInline(parser, state, "_", index);
+				if (result) {
+					return result;
+				}
+			}
+
+			if (char === "\n") {
+				return {
+					token: parser.finishToken("NewLine"),
+					state: {
+						...state,
+						isParagraph: false,
+					},
+				};
+			}
+
+			const [value, endIndex] = parser.readInputFrom(index, isntInlineCharacter);
+
+			return {
+				token: parser.finishValueToken("Text", value, endIndex),
+				state: {
+					...state,
+					isParagraph: parser.getInputCharOnly(endIndex) !== "\n",
+				},
+			};
+		}
+
+		const [value, endIndex] = parser.readInputFrom(index, isntInlineCharacter);
 
 		return {
 			token: parser.finishValueToken("Text", value, endIndex),
-			state,
+			state: {
+				...state,
+				isParagraph: parser.getInputCharOnly(endIndex) !== "\n",
+			},
 		};
 	},
 });
@@ -243,26 +288,35 @@ function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: Array<AnyMarkdownInlineNode> = [];
-	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("EndParagraph") &&
-		!parser.matchToken("Break")
-	) {
+	while (!parser.matchToken("EOF") && !isBlockToken(parser)) {
 		const token = parser.getToken();
+
 		if (isList && token.type === "NewLine") {
 			parser.nextToken();
 			break;
 		}
 		switch (token.type) {
-			case "Break": {
+			case "Strong":
+			case "Emphasis": {
+				const nodes = parseInline(
+					parser,
+					token,
+					// TODO: to add support for more inline tokens: link, code inline block
+					() => {
+						return parseText(parser);
+					},
+				);
+				if (nodes) {
+					children.push(nodes);
+				}
+
+				parser.nextToken();
 				break;
 			}
-
 			case "Text": {
 				children.push(parseText(parser));
 				break;
 			}
-
 			case "NewLine": {
 				const pos = parser.getPosition();
 				children.push(
@@ -277,7 +331,6 @@ function parseParagraph(
 				parser.nextToken();
 				break;
 			}
-
 			default: {
 				// TODO: to remove once all cases are handled
 				parser.unexpectedDiagnostic({
@@ -318,6 +371,8 @@ function parseItem(parser: MarkdownParser): MarkdownListItem {
 	while (
 		!parser.matchToken("EOF") &&
 		!parser.matchToken("NewLine") &&
+		!parser.matchToken("ListItem") &&
+		!parser.matchToken("Break") &&
 		parser.matchToken("Text")
 	) {
 		children.push(parseParagraph(parser, true));
@@ -360,6 +415,31 @@ function parseListBlock(parser: MarkdownParser): MarkdownListBlock {
 	);
 }
 
+function parseCode(parser: MarkdownParser): MarkdownCodeBlock {
+	const token = parser.expectToken("Code");
+	const start = parser.getPosition();
+	let value;
+
+	while (!parser.matchToken("EOF") && !parser.matchToken("Code")) {
+		const token = parser.getToken();
+		if (token.type === "Text") {
+			value = parseText(parser);
+		}
+
+		parser.nextToken();
+	}
+	parser.nextToken();
+
+	return parser.finishNode(
+		start,
+		{
+			type: "MarkdownCodeBlock",
+			language: token.language,
+			value,
+		},
+	);
+}
+
 function parseBlock(parser: MarkdownParser): undefined | AnyMarkdownNode {
 	const token = parser.getToken();
 	switch (token.type) {
@@ -367,12 +447,6 @@ function parseBlock(parser: MarkdownParser): undefined | AnyMarkdownNode {
 			parser.nextToken();
 			return undefined;
 		}
-
-		case "EndParagraph": {
-			parser.nextToken();
-			return undefined;
-		}
-
 		case "HeadingLevel":
 			return parseHeading(parser);
 
@@ -384,9 +458,12 @@ function parseBlock(parser: MarkdownParser): undefined | AnyMarkdownNode {
 
 		case "Text":
 			return parseParagraph(parser);
+		case "Code":
+			return parseCode(parser);
 
-		default:
+		default: {
 			throw parser.unexpected();
+		}
 	}
 }
 
@@ -411,6 +488,27 @@ export function parseMarkdown(opts: ParserOptionsWithRequiredPath): MarkdownRoot
 			body,
 		}),
 	);
+}
+
+function consumeCode(parser: MarkdownParser, index: Number0) {
+	const nextChar = parser.getInputCharOnly(index, 1);
+	const nextNextChar = parser.getInputCharOnly(index, 2);
+	if (nextChar === "`" && nextNextChar === "`") {
+		const [languageValue, endIndex] = parser.readInputFrom(
+			ob1Add(index, 3),
+			readUntilLineBreak,
+		);
+
+		return parser.finishComplexToken<"Code", CodeProperties>(
+			"Code",
+			{
+				language: languageValue || "unknown",
+			},
+			endIndex,
+		);
+	}
+
+	return undefined;
 }
 
 export function tokenizeMarkdown(opts: ParserOptionsWithRequiredPath) {

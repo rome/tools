@@ -17,9 +17,11 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:443c4df2bd759f8ef888fde5777e1d5bfec4a5e1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:b78f7544b7a4c84ffe8121a11ada07184774b09a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;<span class="token punctuation">{</span><span class="token variable">foo</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
@@ -41,7 +43,7 @@ disallow unnecessary fragments
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">p</span>&gt;&lt;&gt;foo&lt;<span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">p</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -64,7 +66,7 @@ disallow unnecessary fragments
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;&lt;<span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -85,7 +87,7 @@ disallow unnecessary fragments
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -108,7 +110,7 @@ disallow unnecessary fragments
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Fragment</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -131,7 +133,7 @@ disallow unnecessary fragments
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">section</span>&gt;
 					&lt;&gt;
@@ -166,7 +168,9 @@ disallow unnecessary fragments
   <strong>  </strong><strong> </strong><strong> </strong><strong>2</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;div</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;&gt;
 	&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;
 	&lt;<span class="token variable">Bar</span> <span class="token operator">/</span>&gt;

@@ -172,6 +172,7 @@ export async function main() {
 				const lines = [];
 
 				lines.push("## Examples");
+				lines.push("\n");
 
 				let hasInvalid = false;
 				let hasValid = false;
@@ -186,14 +187,15 @@ export async function main() {
 
 				if (hasInvalid) {
 					lines.push("### Invalid");
+					lines.push("\n");
 
 					for (const {filename, invalid} of cases) {
 						if (invalid) {
 							for (let i = 0; i < invalid.length; i++) {
 								if (i > 0) {
-									lines.push("");
-									lines.push("---------------");
-									lines.push("");
+									lines.push("\n");
+									lines.push("---");
+									lines.push("\n");
 								}
 								lines.push(
 									await run(
@@ -209,7 +211,9 @@ export async function main() {
 				}
 
 				if (hasValid) {
+					lines.push("\n");
 					lines.push("### Valid");
+					lines.push("\n");
 					for (const {filename, valid} of cases) {
 						if (valid) {
 							for (const code of valid) {

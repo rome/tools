@@ -17,9 +17,11 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 **ESLint Equivalent:** [aria-unsupported-elements](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-unsupported-elements.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:182f4cec1e1ec6c7b59901f33927c9d00eb6cf36,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:854f811d9453ea8b7b7f16337790d8532000f00c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token attr-name">aria-hidden</span><span class="token operator">=</span><span class="token string">&apos;false&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/noAriaUnsupportedElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,7 +37,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;meta&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -52,7 +54,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">aria-required</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -69,7 +71,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;html&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -86,7 +88,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">script</span> <span class="token attr-name">aria-label</span><span class="token operator">=</span><span class="token string">&apos;script&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">script</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -103,7 +105,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">script</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;script&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">script</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -120,7 +122,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">style</span> <span class="token attr-name">aria-labelledby</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">style</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -137,7 +139,7 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">style</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;style&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">style</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -153,7 +155,9 @@ enforce that elements that do not support ARIA roles, states, and properties do 
     <span style="color: DodgerBlue;">with screen readers.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">meta</span> <span class="token attr-name">charset</span><span class="token operator">=</span><span class="token string">&apos;UTF-8&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">maria</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">script</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">script</span>&gt;</code></pre>{% endraw %}

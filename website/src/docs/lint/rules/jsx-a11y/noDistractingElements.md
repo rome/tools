@@ -17,9 +17,11 @@ enforce distracting elements are not used
 **ESLint Equivalent:** [no-distracting-elements](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-distracting-elements.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5b42552d0c9c615991be5c74cbacf53c560cbefd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:bc929f1894d0741af0eb8a3a7e418657d0b5f97d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">blink</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/noDistractingElements</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,7 +36,7 @@ enforce distracting elements are not used
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">marquee</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -49,6 +51,8 @@ enforce distracting elements are not used
     <span style="color: DodgerBlue;">from page content, especially for users with visual impairments.</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
