@@ -5,4 +5,5 @@ invalid: [
 ]
 valid: [
 	"<div />"
+	"<Marquee />"
 ]

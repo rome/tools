@@ -1,6 +1,7 @@
 import {descriptions} from "@internal/diagnostics";
 import {createVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
+import {isDomElement} from "@internal/js-ast-utils/isDomElement";
 
 export default createVisitor({
 	name: "jsx-a11y/noAccessKey",
@@ -8,7 +9,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement" && hasJSXAttribute(node, "accessKey")) {
+		if (isDomElement(node) && hasJSXAttribute(node, "accessKey")) {
 			return path.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "accessKey"),

@@ -846,3 +846,17 @@ aria-controls="123" />;
 <span role="menuitemradio" aria-checked="true" />;
 
 ```
+
+### `36`
+
+```
+✔ No known problems!
+
+```
+
+### `36: formatted`
+
+```
+<Span role="menuitemradio" />;
+
+```

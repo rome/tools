@@ -10,13 +10,14 @@ import {
 	isElementInteractive,
 	isRoleInteractive,
 } from "@internal/compiler/lint/utils/aria";
+import {isDomElement} from "@internal/js-ast-utils/isDomElement";
 
 export default createVisitor({
 	name: "jsx-a11y/noNoninteractiveElementToInteractiveRole",
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement" && hasJSXAttribute(node, "role")) {
+		if (isDomElement(node) && hasJSXAttribute(node, "role")) {
 			const name = getJSXElementName(node);
 			const roleAttribute = getJSXAttribute(node, "role");
 			if (

@@ -11,6 +11,7 @@ import {
 	elementsToConceptsMap,
 	isRoleInteractive,
 } from "@internal/compiler/lint/utils/aria";
+import {isDomElement} from "@internal/js-ast-utils/isDomElement";
 
 function hasValidTabIndexValue(
 	node: JSXAttribute | undefined,
@@ -48,12 +49,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement") {
-			// it's a component, we don't know how the tabIndex is handled
-			if (node.name && node.name.type === "JSXReferenceIdentifier") {
-				return signals.retain;
-			}
-
+		if (isDomElement(node)) {
 			// not tabIndex, no worth continuing
 			if (!hasJSXAttribute(node, "tabIndex")) {
 				return signals.retain;

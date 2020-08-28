@@ -15,4 +15,5 @@ valid: [
 	"<html lang=\"en\"></html>"
 	"<html lang={language}></html>"
 	"<html lang={() => language}></html>"
+	"<Html lang={42}></Html>"
 ]

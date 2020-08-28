@@ -2,6 +2,7 @@ import {descriptions} from "@internal/diagnostics";
 import {AnyNode} from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
+import {isDomElement} from "@internal/js-ast-utils/isDomElement";
 
 function jsxAnchorHasBlankTarget(node: AnyNode) {
 	return (
@@ -50,7 +51,7 @@ export default createVisitor({
 		const {node} = path;
 
 		if (
-			node.type === "JSXElement" &&
+			isDomElement(node) &&
 			jsxAnchorHasBlankTarget(node) &&
 			!jsxAnchorHasNoReferrer(node) &&
 			jsxAnchorHasExternalLink(node)

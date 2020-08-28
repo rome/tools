@@ -307,3 +307,17 @@ undefined
 <html lang={() => language} />;
 
 ```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+<Html lang={42} />;
+
+```

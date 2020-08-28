@@ -73,3 +73,17 @@
 <div onClick={() => {}} onKeyPress={this.handleKeyPress} />;
 
 ```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+<Button onClick={() => {}} />;
+
+```

@@ -12,4 +12,5 @@ invalid: [
 ]
 valid: [
 	"<iframe title='title' />"
+	"<Iframe title='title' />"
 ]

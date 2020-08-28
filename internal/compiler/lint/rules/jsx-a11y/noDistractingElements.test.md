@@ -71,3 +71,17 @@
 <div />;
 
 ```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+<Marquee />;
+
+```

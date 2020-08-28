@@ -175,3 +175,19 @@
 </div>;
 
 ```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+<Div onMouseOut={() => void 0}>
+	{props}
+</Div>;
+
+```

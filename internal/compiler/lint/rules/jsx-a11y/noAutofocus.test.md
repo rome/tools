@@ -127,3 +127,17 @@
 <input autoFocus={undefined} />;
 
 ```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+<Input autoFocus={"false"} />;
+
+```
