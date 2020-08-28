@@ -68,7 +68,6 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 		ROOT.append("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
 		`
 			---
-			
 			title: Lint Rule ${ruleName}
 			layout: layouts/rule.liquid
 			showHero: false
@@ -77,7 +76,6 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 				key: lint-rules/${ruleName}
 				parent: lint-rules
 				title: ${ruleName}
-				
 			---
 
 			# ${ruleName}
