@@ -17,12 +17,12 @@ disallow control flow statements in `finally` blocks
 **ESLint Equivalent:** [no-unsafe-finally](https://eslint.org/docs/rules/no-unsafe-finally)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6b5d47ff602c62f3547f7bf4fc5fea0863233e04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:99002d69a4ebc3db37d16d030b5f1115a0be4588,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">greet1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">greet1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">try</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
 	<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">throw</span> <span class="token variable">err</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
@@ -47,9 +47,9 @@ disallow control flow statements in `finally` blocks
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">greet2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">greet2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">try</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
 	<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">throw</span> <span class="token variable">err</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
@@ -72,9 +72,9 @@ disallow control flow statements in `finally` blocks
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">greet3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">greet3</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">try</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
 	<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">throw</span> <span class="token variable">err</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
@@ -97,13 +97,13 @@ disallow control flow statements in `finally` blocks
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">greet4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">greet4</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">try</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Try&apos;</span><span class="token punctuation">)</span>
 	<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">err</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		<span class="token keyword">throw</span> <span class="token variable">err</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Finally&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Finally&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -113,7 +113,7 @@ disallow control flow statements in `finally` blocks
 
   <strong>  5</strong><strong> │ </strong>    <span class="token keyword">throw</span> <span class="token variable">err</span><span class="token punctuation">;</span>
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 7</strong><strong> │ </strong>    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token variable">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Finally&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 7</strong><strong> │ </strong>    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token function">Error</span><span class="token punctuation">(</span><span class="token string">&apos;Finally&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  8</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  9</strong><strong> │ </strong><span class="token punctuation">}</span>

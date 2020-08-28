@@ -17,16 +17,16 @@ disallow identifiers from shadowing restricted names
 **ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:44d887a7eecb7450e7569ab7a731e1cf1a283158,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d256ac0c799b4394bce551f12e38f3eb0bd8fe04,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:9</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not shadow the global </span><span style="color: Tomato;"><strong>NaN</strong></span><span style="color: Tomato;"> property.</span>
 
-    <span class="token keyword">function</span> <span class="token variable">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
@@ -68,13 +68,13 @@ disallow identifiers from shadowing restricted names
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token keyword">function</span> <span class="token variable">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:10</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not shadow the global </span><span style="color: Tomato;"><strong>Array</strong></span><span style="color: Tomato;"> property.</span>
 
-    <span class="token operator">!</span><span class="token keyword">function</span> <span class="token variable">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
@@ -84,13 +84,13 @@ disallow identifiers from shadowing restricted names
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:14</span> <strong>lint/js/noShadowRestrictedNames</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not shadow the global </span><span style="color: Tomato;"><strong>JSON</strong></span><span style="color: Tomato;"> property.</span>
 
-    <span class="token keyword">function</span> <span class="token variable">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+    <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>

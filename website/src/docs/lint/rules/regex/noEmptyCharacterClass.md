@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:29027042ad86aedbf9bc8bb87654dae640d30d52,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:9a89c74c0b93822139c2e4fda175b6a1123b1de8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
@@ -47,13 +47,13 @@ MISSING DOCUMENTATION
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:20</span> <strong>lint/regex/noEmptyCharacterClass</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not use </span><span style="color: Tomato;"><strong>empty character classes in regular expressions</strong></span><span style="color: Tomato;">.</span>
 
-    <span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token variable">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
                         <span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
@@ -106,7 +106,7 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 ### Valid
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc[a-zA-Z]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">regExp</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token variable">RegExp</span><span class="token punctuation">(</span><span class="token string">&apos;^abc[]&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token variable">regExp</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">regExp</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">RegExp</span><span class="token punctuation">(</span><span class="token string">&apos;^abc[]&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token variable">regExp</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/[\[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/[\]]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span></code></pre>{% endraw %}

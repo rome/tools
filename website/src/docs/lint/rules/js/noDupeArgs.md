@@ -17,10 +17,10 @@ disallow duplicate arguments in `function` definitions
 **ESLint Equivalent:** [no-dupe-args](https://eslint.org/docs/rules/no-dupe-args)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:027b548f7703de7453760770069bf6586d1fc46f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e6174dc8d96bf9a5442cab1b39fc22b0efc55906,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token comment">//</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -28,7 +28,7 @@ disallow duplicate arguments in `function` definitions
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate function arguments. Check the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> argument.</span>
 
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token variable">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token function">hello</span><span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
      <strong> │ </strong>                  <span style="color: Tomato;"><strong>^</strong></span>
   <strong>  2</strong><strong> │ </strong>  <span class="token comment">//</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
@@ -71,11 +71,11 @@ disallow duplicate arguments in `function` definitions
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token variable">foo</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">function</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span>
-<span class="token keyword">function</span> <span class="token variable">bar</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token variable">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
+<span class="token keyword">function</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span>
 <span class="token punctuation">}</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

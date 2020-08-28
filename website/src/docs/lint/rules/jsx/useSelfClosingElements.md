@@ -18,17 +18,17 @@ prevent extra closing tags for components without children
 **ESLint Equivalent:** [self-closing-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:407bc4c05f4b8d535dd30253cc6e435ce622525b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d923bcb70bc804a864aebc0a55ff243faf5af6d8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>
 
-    &lt;<span class="token attr-name">div</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;
+    &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
@@ -41,14 +41,14 @@ prevent extra closing tags for components without children
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Component</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Component</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Component</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Component</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>
 
-    &lt;<span class="token attr-name">Component</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Component</span>&gt;
+    &lt;<span class="token variable">Component</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Component</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
@@ -61,14 +61,14 @@ prevent extra closing tags for components without children
 
 ---------------
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">filename.tsx:1</span> <strong>lint/jsx/useSelfClosingElements</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">JSX elements without children should be marked as self-closing. In</span>
     <span style="color: Tomato;">JSX, it is valid for any element to be self-closing.</span>
 
-    &lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;
+    &lt;<span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
@@ -79,10 +79,10 @@ prevent extra closing tags for components without children
 
 </code></pre>{% endraw %}
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">div</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">div</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Component</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Component</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">Component</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;child&lt;<span class="token operator">/</span><span class="token attr-name">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">div</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Component</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Component</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">Component</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">Foo</span><span class="token punctuation">.</span><span class="token attr-name">bar</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
