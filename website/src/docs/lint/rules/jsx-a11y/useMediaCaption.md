@@ -17,7 +17,7 @@ enforces that `audio` and `video` elements must have a `track` for captions
 **ESLint Equivalent:** [media-has-caption](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/media-has-caption.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3617f4877f5ec0ade78964f3198f56a8b0e04503,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c0070c60290d8339591e42bfa0e0c0d6cc9795f9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -73,16 +73,18 @@ enforces that `audio` and `video` elements must have a `track` for captions
 
 ---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">video</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">audio</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">video</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">video</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:1</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/useMediaCaption</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Expected a corresponding JSX closing tag for </span><span style="color: Tomato;"><strong>video</strong></span>
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>track</strong></span><span style="color: Tomato;"> for captions when using </span><span style="color: Tomato;"><strong>audio</strong></span><span style="color: Tomato;"> or </span><span style="color: Tomato;"><strong>video</strong></span><span style="color: Tomato;"> elements.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Originated from opening tag of </span><span style="color: DodgerBlue;"><strong>video</strong></span>
+    &lt;<span class="token variable">video</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">video</span>&gt;
+    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-    &lt;<span class="token variable">video</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">audio</span>&gt;
-     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Captions support users with hearing-impairments. They should be a</span>
+    <span style="color: DodgerBlue;">transcription or translation of the dialogue, sound effects, musica</span>l
+    <span style="color: DodgerBlue;">cues, and other relevant audio information.</span>
 
 </code></pre>{% endraw %}
 
@@ -91,4 +93,6 @@ enforces that `audio` and `video` elements must have a `track` for captions
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">audio</span>&gt;&lt;<span class="token variable">track</span> <span class="token attr-name">kind</span><span class="token operator">=</span><span class="token string">&apos;captions&apos;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">audio</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">video</span>&gt;&lt;<span class="token variable">track</span> <span class="token attr-name">kind</span><span class="token operator">=</span><span class="token string">&apos;captions&apos;</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">video</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">video</span> <span class="token attr-name">muted</span> <span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">props</span><span class="token punctuation">}</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">video</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Audio</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">Audio</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Video</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">Video</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

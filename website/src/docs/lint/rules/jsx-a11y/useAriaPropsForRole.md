@@ -17,7 +17,7 @@ enforce that elements with ARIA roles must have all required attributes for that
 **ESLint Equivalent:** [role-has-required-aria-props](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/role-has-required-aria-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3b5282cc6f2157b2574e20d82c4c1a5082e6c7a9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c5a46b13ea0751c4af8dfa6b6eda6f119c25e483,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -456,4 +456,5 @@ enforce that elements with ARIA roles must have all required attributes for that
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;combobox&apos;</span> <span class="token attr-name">aria-controls</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span> <span class="token attr-name">aria-expanded</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemcheckbox&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> <span class="token attr-name">aria-checked</span><span class="token operator">=</span><span class="token string">&apos;true&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Span</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;menuitemradio&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Span</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

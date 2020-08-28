@@ -17,7 +17,7 @@ enforce that the `accessKey` prop is not used on any element to avoid complicati
 **ESLint Equivalent:** [no-access-key](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4bd1925e16e9a96b396ec216c266353a2132be86,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:29837c29929345956cc71f83a60c08dda48954c9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -59,4 +59,5 @@ enforce that the `accessKey` prop is not used on any element to avoid complicati
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">accessKey</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">undefined</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Input</span> <span class="token attr-name">accessKey</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">key</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
