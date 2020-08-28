@@ -40,15 +40,16 @@ function highlightPre(filename: string, code: string): string {
 }
 
 // Extract the description field from the docs frontmatter
-export function extractESLintRuleInfo(
+export function extractLintRuleInfo(
 	content: string,
+	type: "eslint" | "tslint" = "eslint",
 ):
 	| undefined
 	| {
 			url: string;
 			name: string;
 		} {
-	const match = content.match(/eslint-rule:(.*)(\n|\r\n)/);
+	const match = content.match(new RegExp(`${type}-rule:(.*)(\n|\r\n)`));
 	if (match) {
 		const url = match[1].trim();
 
@@ -130,7 +131,8 @@ export async function main() {
 			},
 			async () => {
 				const content = await readFileText(docs);
-				const eslintInfo = extractESLintRuleInfo(content);
+				const eslintInfo = extractLintRuleInfo(content, "eslint");
+				const tslintInfo = extractLintRuleInfo(content, "tslint");
 
 				const lines = [];
 
@@ -142,6 +144,12 @@ export async function main() {
 				if (eslintInfo !== undefined) {
 					lines.push(
 						`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`,
+					);
+				}
+
+				if (tslintInfo !== undefined) {
+					lines.push(
+						`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
 					);
 				}
 
