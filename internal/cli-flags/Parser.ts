@@ -971,17 +971,17 @@ export default class Parser<T> {
 		caseString += "\n\tesac";
 
 		return dedent`
-function _${prg} {
-    local line
+			function _${prg} {
+			    local line
 
-    _arguments -C \ ${globalFlags}
-        "1: :(${commandNames.join(" ")})" \
-        "*::arg:->args"
+			    _arguments -C \ ${globalFlags}
+			        "1: :(${commandNames.join(" ")})" \
+			        "*::arg:->args"
 
-    ${caseString}
-    ${functions}
-}
-`;
+			    ${caseString}
+			    ${functions}
+			}
+		`;
 	}
 
 	public async showHelp(
