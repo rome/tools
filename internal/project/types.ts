@@ -16,6 +16,7 @@ import {
 import {Consumer} from "@internal/consume";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
+import {LintRuleName} from "@internal/compiler";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -61,7 +62,7 @@ export type ProjectConfigObjects = {
 		globals: Array<string>;
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
-		disabledRules: Array<string>;
+		disabledRules: Array<LintRuleName>;
 	};
 	typeCheck: {
 		enabled: boolean;

@@ -91,13 +91,29 @@ export async function main() {
 			for (const {basename, ruleName} of defs) {
 				lines.push(`import ${basename} from "./${ruleName}";`);
 			}
-			lines.push(`import {AnyVisitors} from "@internal/compiler";`);
+			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
+			lines.push(`import {Dict} from "@internal/typescript-helpers";`);
 			lines.push("");
-			lines.push("export const lintTransforms: AnyVisitors = [");
-			for (const {basename} of defs) {
-				lines.push(`	${basename},`);
+			lines.push("export const lintTransforms: Dict<AnyVisitor> = {");
+			for (const {basename, ruleName} of defs) {
+				lines.push(`	"${ruleName}": ${basename},`);
+			}
+			lines.push("};");
+			lines.push("");
+
+			lines.push("export const lintRuleNames: Array<LintRuleName> = [");
+			for (const {ruleName} of defs) {
+				lines.push(`	"${ruleName}",`);
 			}
 			lines.push("];");
+			lines.push("");
+
+			lines.push("export type LintRuleName = ");
+			for (const {ruleName} of defs) {
+				lines.push(`	| "${ruleName}"`);
+			}
+			lines.push(";");
+
 			return {lines};
 		},
 	);
@@ -109,7 +125,7 @@ export async function main() {
 			scriptName: "generated-files/lint-rules",
 		},
 		async () => {
-			const lines = ["type LintDiagnosticCategory ="];
+			const lines = ["export type DiagnosticLintCategory ="];
 			for (const {ruleName} of defs) {
 				lines.push(`	| "lint/${ruleName}"`);
 			}

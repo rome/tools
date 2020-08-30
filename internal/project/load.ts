@@ -34,6 +34,7 @@ import crypto = require("crypto");
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
+import {lintRuleNames} from "@internal/compiler";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
@@ -285,7 +286,7 @@ export async function normalizeProjectConfig(
 		}
 
 		if (lint.has("disabledRules")) {
-			config.lint.disabledRules = arrayOfStrings(lint.get("disabledRules"));
+			config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) => item.asStringSet(lintRuleNames));
 		}
 
 		if (lint.has("requireSuppressionExplanations")) {

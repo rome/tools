@@ -14,10 +14,12 @@ export {default as Path} from "./lib/Path";
 export {default as Record} from "./lib/Record";
 export {default as Cache} from "./lib/Cache";
 
-// methods
 export * from "./lint/decisions";
 export {default as lint} from "./lint/index";
+export {lintRuleNames, LintRuleName} from "./lint/rules/index";
+
 export {default as compile} from "./api/compile";
+
 export {
 	default as analyzeDependencies,
 	mergeAnalyzeDependencies,
