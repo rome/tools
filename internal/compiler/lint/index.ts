@@ -59,11 +59,12 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		return cached;
 	}
 
+	const shouldFormat = project.config.format.enabled;
 	const visitors = getVisitors(project.config);
 
 	// Perform fixes
 	let formatAst = ast;
-	if (project.config.format.enabled && applySafeFixes) {
+	if (shouldFormat && applySafeFixes) {
 		const formatContext = new CompilerContext({
 			ref: req.ref,
 			options,
@@ -82,7 +83,14 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 			suppressionExplanation,
 		);
 	}
-	const formattedCode = formatAST(formatAst).code;
+
+	let formattedCode = req.sourceText;
+
+	if (shouldFormat) {
+		formattedCode = formatAST(formatAst, {
+			projectConfig: project.config,
+		}).code;
+	}
 
 	// Run lints (could be with the autofixed AST)
 	const context = new CompilerContext({

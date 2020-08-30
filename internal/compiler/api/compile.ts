@@ -26,7 +26,7 @@ const compileCache: Cache<CompileResult> = new Cache();
 export default async function compile(
 	req: CompileRequest,
 ): Promise<CompileResult> {
-	const {sourceText, ast} = req;
+	const {sourceText, ast, project} = req;
 
 	const query = Cache.buildQuery(req);
 	const cached: undefined | CompileResult = compileCache.get(query);
@@ -44,6 +44,7 @@ export default async function compile(
 	const formatted = formatAST(
 		transformedAst,
 		{
+			projectConfig: project.config,
 			typeAnnotations: false,
 			indent: req.stage === "compileForBundle" ? 1 : 0,
 			sourceMaps: true,

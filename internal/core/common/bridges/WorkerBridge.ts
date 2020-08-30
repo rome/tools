@@ -72,6 +72,8 @@ export type WorkerLintOptions = {
 	save: boolean;
 };
 
+export type WorkerFormatOptions = Omit<FormatterOptions, "projectConfig">;
+
 export type WorkerParseOptions = {
 	sourceTypeJS?: ConstJSSourceType;
 	cache?: boolean;
@@ -201,7 +203,7 @@ export default class WorkerBridge extends Bridge {
 	public format = this.createEvent<
 		{
 			ref: FileReference;
-			options: FormatterOptions;
+			options: WorkerFormatOptions;
 			parseOptions: WorkerParseOptions;
 		},
 		undefined | WorkerFormatResult

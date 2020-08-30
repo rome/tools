@@ -24,7 +24,7 @@ import {
 	signals,
 } from "@internal/compiler";
 import {
-	WorkerCompilerOptions,
+	WorkerCompilerOptions, WorkerFormatOptions,
 	WorkerFormatResult,
 	WorkerLintOptions,
 	WorkerLintResult,
@@ -43,7 +43,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {FormatterOptions, formatAST} from "@internal/formatter";
+import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
@@ -225,7 +225,9 @@ export default class WorkerAPI {
 		let file: undefined | RecoverySaveFile;
 
 		if (diags.length === 0) {
-			const formatted = formatAST(ast).code;
+			const formatted = formatAST(ast, {
+				projectConfig: project.config,
+			}).code;
 			file = {
 				type: "WRITE",
 				content: formatted,
@@ -347,7 +349,7 @@ export default class WorkerAPI {
 
 	public async format(
 		ref: FileReference,
-		formatOptions: FormatterOptions,
+		formatOptions: WorkerFormatOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | WorkerFormatResult> {
 		const res = await this._format(ref, formatOptions, parseOptions);
@@ -365,7 +367,7 @@ export default class WorkerAPI {
 
 	private async _format(
 		ref: FileReference,
-		formatOptions: FormatterOptions,
+		formatOptions: WorkerFormatOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | ExtensionLintResult> {
 		const project = this.worker.getProject(ref.project);
@@ -393,7 +395,10 @@ export default class WorkerAPI {
 			parseOptions,
 		);
 
-		const out = formatAST(ast, formatOptions);
+		const out = formatAST(ast, {
+			...formatOptions,
+			projectConfig: project.config,
+		});
 
 		return this.interceptDiagnostics(
 			{
