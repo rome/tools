@@ -92,13 +92,11 @@ export async function main() {
 				lines.push(`import ${basename} from "./${ruleName}";`);
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
-			lines.push(`import {Dict} from "@internal/typescript-helpers";`);
 			lines.push("");
-			lines.push("export const lintTransforms: Dict<AnyVisitor> = {");
+			lines.push("export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();");
 			for (const {basename, ruleName} of defs) {
-				lines.push(`	"${ruleName}": ${basename},`);
+				lines.push(`lintTransforms.set("${ruleName}", ${basename});`);
 			}
-			lines.push("};");
 			lines.push("");
 
 			lines.push("export const lintRuleNames: Array<LintRuleName> = [");
