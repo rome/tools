@@ -284,10 +284,36 @@ export async function normalizeProjectConfig(
 			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
 
+		if (lint.has("disabledRules")) {
+			config.lint.disabledRules = arrayOfStrings(lint.get("disabledRules"));
+		}
+
 		if (lint.has("requireSuppressionExplanations")) {
 			config.lint.requireSuppressionExplanations = lint.get(
 				"requireSuppressionExplanations",
 			).asBoolean();
+		}
+	}
+
+	const format = consumer.get("format");
+	if (categoryExists(format)) {
+		if (lint.has("enabled")) {
+			config.format.enabled = format.get("enabled").asBoolean();
+		}
+
+		if (lint.has("indentStyle")) {
+			const indentStyle = format.get("indentStyle").asStringSet(["tab", "space"]);
+			config.format.indentStyle = indentStyle;
+
+			// If there was an indent style specified without a size, default to 2 for spaces, and 1 for tabs
+			if (!lint.has("indentSize")) {
+				config.format.indentSize = indentStyle === "space" ? 2 : 1;
+			}
+		}
+
+		if (lint.has("indentSize")) {
+			// Set a range to prevent wacky behaviour
+			config.format.indentSize = lint.get("indentSize").asNumberInRange({min: 0, max: 10});
 		}
 	}
 
@@ -425,6 +451,11 @@ async function extendProjectConfig(
 
 	const merged: PartialProjectConfig = mergePartialConfig(extendsObj, config);
 
+	const presets = mergeArrays(extendsObj.presets, config.presets);
+	if (presets !== undefined) {
+		merged.presets = presets;
+	}
+
 	const lintIgnore = mergeArrays(extendsObj.lint.ignore, config.lint.ignore);
 	if (lintIgnore !== undefined) {
 		merged.lint.ignore = lintIgnore;
@@ -433,6 +464,11 @@ async function extendProjectConfig(
 	const lintGlobals = mergeArrays(extendsObj.lint.globals, config.lint.globals);
 	if (lintGlobals !== undefined) {
 		merged.lint.globals = lintGlobals;
+	}
+
+	const lintDisabledRules = mergeArrays(extendsObj.lint.disabledRules, config.lint.disabledRules);
+	if (lintDisabledRules !== undefined) {
+		merged.lint.disabledRules = lintDisabledRules;
 	}
 
 	const testingIgnore = mergeArrays(
