@@ -40,15 +40,16 @@ function highlightPre(filename: string, code: string): string {
 }
 
 // Extract the description field from the docs frontmatter
-export function extractESLintRuleInfo(
+export function extractLintRuleInfo(
 	content: string,
+	type: "eslint" | "tslint" = "eslint",
 ):
 	| undefined
 	| {
 			url: string;
 			name: string;
 		} {
-	const match = content.match(/eslint-rule:(.*)(\n|\r\n)/);
+	const match = content.match(new RegExp(`${type}-rule:(.*)(\n|\r\n)`));
 	if (match) {
 		const url = match[1].trim();
 
@@ -130,7 +131,8 @@ export async function main() {
 			},
 			async () => {
 				const content = await readFileText(docs);
-				const eslintInfo = extractESLintRuleInfo(content);
+				const eslintInfo = extractLintRuleInfo(content, "eslint");
+				const tslintInfo = extractLintRuleInfo(content, "tslint");
 
 				const lines = [];
 
@@ -142,6 +144,12 @@ export async function main() {
 				if (eslintInfo !== undefined) {
 					lines.push(
 						`**ESLint Equivalent:** [${eslintInfo.name}](${eslintInfo.url})`,
+					);
+				}
+
+				if (tslintInfo !== undefined) {
+					lines.push(
+						`**TSLint Equivalent:** [${tslintInfo.name}](${tslintInfo.url})`,
 					);
 				}
 
@@ -164,6 +172,7 @@ export async function main() {
 				const lines = [];
 
 				lines.push("## Examples");
+				lines.push("\n");
 
 				let hasInvalid = false;
 				let hasValid = false;
@@ -178,14 +187,15 @@ export async function main() {
 
 				if (hasInvalid) {
 					lines.push("### Invalid");
+					lines.push("\n");
 
 					for (const {filename, invalid} of cases) {
 						if (invalid) {
 							for (let i = 0; i < invalid.length; i++) {
 								if (i > 0) {
-									lines.push("");
-									lines.push("---------------");
-									lines.push("");
+									lines.push("\n");
+									lines.push("---");
+									lines.push("\n");
 								}
 								lines.push(
 									await run(
@@ -201,7 +211,9 @@ export async function main() {
 				}
 
 				if (hasValid) {
+					lines.push("\n");
 					lines.push("### Valid");
+					lines.push("\n");
 					for (const {filename, valid} of cases) {
 						if (valid) {
 							for (const code of valid) {

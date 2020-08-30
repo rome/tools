@@ -14,9 +14,11 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a476ec8845577770208897218953bba045420e0d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:44424bb4f7e1d42dec5a46bdaec2a4e6f653ef1c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>lint/js/useSortedSpecifiers</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -34,7 +36,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -53,7 +55,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">import</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -72,7 +74,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -91,7 +93,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -110,7 +112,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&apos;mod&apos;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -129,7 +131,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">D</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -148,7 +150,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">A</span><span class="token punctuation">,</span> <span class="token variable">a</span> <span class="token variable">as</span> <span class="token variable">C</span><span class="token punctuation">,</span> <span class="token variable">B</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
@@ -167,7 +169,7 @@ MISSING DOCUMENTATION
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">export</span> <span class="token punctuation">{</span><span class="token variable">c</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b2</span><span class="token punctuation">,</span> <span class="token variable">b</span> <span class="token variable">as</span> <span class="token variable">b1</span><span class="token punctuation">,</span> <span class="token variable">b</span><span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">

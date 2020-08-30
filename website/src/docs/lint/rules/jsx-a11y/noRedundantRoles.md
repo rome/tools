@@ -17,16 +17,18 @@ enforce explicit role property is not the same as implicit/default role property
 **ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:1f58a4268d799ab326aa02a5011cb6b5814d3e69,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a51e7dd9a07885bcce72da6d010727788ae88d01,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">article</span>&gt;</code></pre>{% endraw %}
+
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:9</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>article</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>article</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">article</span>&gt;
+    &lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;article&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;
              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -39,15 +41,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">button</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">button</span>&gt;
+    &lt;<span class="token variable">button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">button</span>&gt;
             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -60,15 +62,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>h1</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;
+    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span> <span class="token attr-name">aria-level</span><span class="token operator">=</span><span class="token string">&apos;1&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute and ARIA attributes.
@@ -81,15 +83,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>heading</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>h1</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">h1</span>&gt;
+    &lt;<span class="token variable">h1</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;heading&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">h1</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -102,15 +104,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">dialog</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">dialog</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>dialog</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>dialog</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">dialog</span>&gt;
+    &lt;<span class="token variable">dialog</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;dialog&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">dialog</span>&gt;
             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -123,15 +125,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:24</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>checkbox</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>input</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;
+    &lt;<span class="token variable">input</span>  <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;checkbox&apos;</span> <span class="token operator">/</span>&gt;
                             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -143,15 +145,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">figure</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">figure</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:9</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>figure</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>figure</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">figure</span>&gt;
+    &lt;<span class="token variable">figure</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;figure&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">figure</span>&gt;
              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -164,15 +166,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">form</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">form</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>form</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>form</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">form</span>&gt;
+    &lt;<span class="token variable">form</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;form&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">form</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -185,15 +187,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">table</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>grid</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>table</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">table</span>&gt;
+    &lt;<span class="token variable">table</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;grid&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;
             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -206,15 +208,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">td</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">td</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>gridcell</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>td</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">td</span>&gt;
+    &lt;<span class="token variable">td</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;gridcell&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">td</span>&gt;
          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -227,15 +229,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">fieldset</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">fieldset</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:11</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>group</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>fieldset</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">fieldset</span>&gt;
+    &lt;<span class="token variable">fieldset</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;group&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">fieldset</span>&gt;
                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -248,15 +250,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:26</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>img</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;
+    &lt;<span class="token variable">img</span> <span class="token attr-name">src</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">alt</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span>  <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;img&apos;</span> <span class="token operator">/</span>&gt;
                               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -268,15 +270,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:3</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>link</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">a</span>&gt;
+    &lt;<span class="token variable">a</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;
        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -289,15 +291,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>link</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>link</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;
+    &lt;<span class="token variable">link</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;link&apos;</span> <span class="token operator">/</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -309,15 +311,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">ol</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ol</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>list</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>ol</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">ol</span>&gt;
+    &lt;<span class="token variable">ol</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ol</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -330,15 +332,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">ul</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ul</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>list</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>ul</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">ul</span>&gt;
+    &lt;<span class="token variable">ul</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;list&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">ul</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -351,15 +353,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">select</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">select</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>listbox</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>select</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">select</span>&gt;
+    &lt;<span class="token variable">select</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">select</span>&gt;
             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -372,15 +374,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">li</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">li</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>listitem</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>li</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">li</span>&gt;
+    &lt;<span class="token variable">li</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;listitem&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">li</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -393,15 +395,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">nav</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">nav</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:5</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>navigation</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>nav</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">nav</span>&gt;
+    &lt;<span class="token variable">nav</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;navigation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">nav</span>&gt;
          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -414,15 +416,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">option</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">option</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:8</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>option</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>option</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">option</span>&gt;
+    &lt;<span class="token variable">option</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;option&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">option</span>&gt;
             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -435,15 +437,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tr</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tr</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>row</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>tr</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tr</span>&gt;
+    &lt;<span class="token variable">tr</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tr</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -456,15 +458,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tbody</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tbody</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>rowgroup</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>tbody</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tbody</span>&gt;
+    &lt;<span class="token variable">tbody</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tbody</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -477,15 +479,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tfoot</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tfoot</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>rowgroup</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>tfoot</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">tfoot</span>&gt;
+    &lt;<span class="token variable">tfoot</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">tfoot</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -498,15 +500,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">thead</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">thead</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>rowgroup</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>thead</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">thead</span>&gt;
+    &lt;<span class="token variable">thead</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowgroup&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">thead</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -519,15 +521,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">th</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:16</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>rowheader</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>th</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">th</span>&gt;
+    &lt;<span class="token variable">th</span> <span class="token attr-name">scope</span><span class="token operator">=</span><span class="token string">&apos;row&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;rowheader&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">th</span>&gt;
                     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -540,15 +542,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:21</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>searchbox</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>input</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;
+    &lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;search&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;searchbox&apos;</span> <span class="token operator">/</span>&gt;
                          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -560,15 +562,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">table</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>table</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>table</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">table</span>&gt;
+    &lt;<span class="token variable">table</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;table&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">table</span>&gt;
            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -581,15 +583,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">dt</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">dt</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:4</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>term</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>dt</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">dt</span>&gt;
+    &lt;<span class="token variable">dt</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;term&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">dt</span>&gt;
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -602,16 +604,16 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">textarea</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">textarea</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:10</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>textbox</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>textarea</strong></span><span style="color: Tomato;"> element is</span>
     <span style="color: Tomato;">redundant.</span>
 
-    &lt;<span class="token attr-name">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">textarea</span>&gt;
+    &lt;<span class="token variable">textarea</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">textarea</span>&gt;
               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -624,15 +626,15 @@ enforce explicit role property is not the same as implicit/default role property
 
 </code></pre>{% endraw %}
 
----------------
+---
 
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:19</span> <strong>lint/jsx-a11y/noRedundantRoles</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using the role attribute </span><span style="color: Tomato;"><strong>textbox</strong></span><span style="color: Tomato;"> on the </span><span style="color: Tomato;"><strong>input</strong></span><span style="color: Tomato;"> element is redundant.</span>
 
-    &lt;<span class="token attr-name">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;
+    &lt;<span class="token variable">input</span> <span class="token attr-name">type</span><span class="token operator">=</span><span class="token string">&apos;text&apos;</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;textbox&apos;</span> <span class="token operator">/</span>&gt;
                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong>Suggested fix:</strong> Remove the role attribute.
@@ -643,8 +645,10 @@ enforce explicit role property is not the same as implicit/default role property
   <strong><span style="color: DodgerBlue;">ℹ </span></strong>
 
 </code></pre>{% endraw %}
+
 ### Valid
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;presentation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">article</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">Button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token attr-name">Button</span>&gt;</code></pre>{% endraw %}
-{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token attr-name">span</span>&gt;&lt;<span class="token operator">/</span><span class="token attr-name">span</span>&gt;</code></pre>{% endraw %}
+
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">article</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;presentation&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">article</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Button</span> <span class="token attr-name">role</span><span class="token operator">=</span><span class="token string">&apos;button&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">Button</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">span</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

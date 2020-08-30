@@ -17,9 +17,11 @@ disallow sparse arrays
 **ESLint Equivalent:** [no-sparse-arrays](https://eslint.org/docs/rules/no-sparse-arrays)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:de96ae471bbc32ba9470fe071c43c3a3bdce3c5f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ba8dfd7e8046e26b21ec57cae47e33c764911770,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:3</span> <strong>lint/js/noSparseArray</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

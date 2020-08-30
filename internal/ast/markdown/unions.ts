@@ -19,6 +19,7 @@ export type AnyMarkdownInlineNode =
 
 export type AnyMarkdownNode =
 	| n.MarkdownQuoteBlock
+	| n.MarkdownCodeBlock
 	| n.MarkdownDividerBlock
 	| n.MarkdownHeadingBlock
 	| n.MarkdownParagraph

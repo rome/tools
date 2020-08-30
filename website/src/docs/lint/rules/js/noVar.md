@@ -17,9 +17,11 @@ require `let` or `const` instead of `var`
 **ESLint Equivalent:** [no-var](https://eslint.org/docs/rules/no-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fe7ed66be1bfb4fa37bc5b55fe3a85366ee8f751,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f95dacde2889cd44f34c4d76095cc3096c790503,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">var</span> <span class="token variable">foobar</span><span class="token punctuation">;</span>
 <span class="token variable">foobar</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">

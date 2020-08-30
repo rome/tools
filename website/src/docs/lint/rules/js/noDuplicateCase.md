@@ -17,9 +17,11 @@ disallow duplicate case labels
 **ESLint Equivalent:** [no-duplicate-case](https://eslint.org/docs/rules/no-duplicate-case)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:19b5bdc5f66d87eba7033014ffab88e26fda1592,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ee411174a98503cf90356c30438c18d20b7bfa02,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
+
 ### Invalid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>
@@ -53,7 +55,7 @@ disallow duplicate case labels
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -86,7 +88,7 @@ disallow duplicate case labels
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -119,7 +121,7 @@ disallow duplicate case labels
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -148,7 +150,7 @@ disallow duplicate case labels
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -177,7 +179,7 @@ disallow duplicate case labels
 
 </code></pre>{% endraw %}
 
----------------
+---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token string">&apos;a&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -205,7 +207,9 @@ disallow duplicate case labels
   <strong>  7</strong><strong> │ </strong>  <span class="token keyword">default</span><span class="token punctuation">:</span>
 
 </code></pre>{% endraw %}
+
 ### Valid
+
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">const</span> <span class="token variable">expr</span> <span class="token operator">=</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">;</span>
 <span class="token keyword">switch</span> <span class="token punctuation">(</span><span class="token variable">expr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	<span class="token keyword">case</span> <span class="token string">&apos;a&apos;</span><span class="token punctuation">:</span>

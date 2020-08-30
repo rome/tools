@@ -1,9 +1,16 @@
 import {MarkdownCodeBlock} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat, hardline} from "@internal/formatter";
 
 export default function MarkdownCodeBlock(
 	builder: Builder,
 	node: MarkdownCodeBlock,
 ): Token {
-	throw new Error("unimplemented");
+	return concat([
+		"```",
+		node.language !== "unknown" ? node.language : "",
+		hardline,
+		builder.tokenize(node.value, node),
+		hardline,
+		"```",
+	]);
 }

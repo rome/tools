@@ -57,6 +57,7 @@ module.exports = function(eleventyConfig) {
 		{
 			permalink: true,
 			permalinkSymbol: "",
+			permalinkAttrs: (slug) => ({"aria-label": slug}),
 			slugify: (title) => {
 				return encodeURIComponent(
 					String(title).trim().toLowerCase().replace(/\s+/g, "-"),

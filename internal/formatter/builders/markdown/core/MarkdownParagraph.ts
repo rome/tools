@@ -1,5 +1,5 @@
 import {MarkdownParagraph} from "@internal/ast";
-import {Builder, Token, Tokens, concat} from "@internal/formatter";
+import {Builder, Token, Tokens, concat, hardline} from "@internal/formatter";
 
 export default function MarkdownParagraph(
 	builder: Builder,
@@ -8,5 +8,6 @@ export default function MarkdownParagraph(
 	const tokens: Tokens = node.children.map((child) => {
 		return builder.tokenize(child, node);
 	});
+	tokens.push(hardline);
 	return concat(tokens);
 }

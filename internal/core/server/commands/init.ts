@@ -177,9 +177,14 @@ export default createServerCommand<Flags>({
 		//
 		const manifestPath = cwd.append("package.json");
 		let manifest: undefined | Manifest;
+		const projects = await server.projectManager.getProjectHierarchyFromPath(
+			manifestPath,
+		);
 		if (await exists(manifestPath)) {
 			manifest = await normalizeManifest(
+				manifestPath,
 				consumeJSON(await readFileTextMeta(manifestPath)),
+				projects,
 			);
 		}
 

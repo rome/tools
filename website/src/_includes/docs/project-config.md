@@ -18,6 +18,13 @@ lint: {
 	ignore: []
 	globals: []
 }
+dependencies: {
+	exceptions: {
+		invalidLicenses: {
+			"funky-licence": ["lib@1.0.0", "lib@1.1.0", "other-lib@2.0.0"]
+		}
+	}
+}
 ```
 
 ### Properties
@@ -82,6 +89,23 @@ Raise a diagnostic if a suppression does not have a [valid explanation](#explana
 ```bash
 rome config enable lint.requireSuppressionExplanations
 ```
+
+### `dependencies.exceptions`
+
+Exception rules for your dependencies that don't pass validation.
+
+#### `dependencies.exceptions.invalidLicenses`
+
+Sometimes Rome might complain that one or more of your dependencies has an invalid license.
+
+Optionally, you can insert the name of this invalid license here:
+
+```bash
+rome config push dependencies.exceptions.invalidLicenses.invalid-license-name "third-party-lib@0.1.0"
+```
+
+If you are unsure about the license name of your library, rome will suggest the command for
+you when you try to run a command.
 
 ### Supported Locations
 
