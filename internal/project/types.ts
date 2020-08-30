@@ -41,18 +41,27 @@ export type DependenciesExceptions = {
 	invalidLicenses: InvalidLicenses;
 };
 
+export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
+	presets: Array<ProjectConfigPresetNames>;
 	cache: {};
 	resolver: {};
 	compiler: {};
 	bundler: {
 		externals: Array<string>;
 	};
+	format: {
+		enabled: boolean;
+		indentStyle: "tab" | "space";
+		indentSize: number;
+	};
 	lint: {
 		globals: Array<string>;
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
+		disabledRules: Array<string>;
 	};
 	typeCheck: {
 		enabled: boolean;
