@@ -448,29 +448,23 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 		return exports;
 	}
 
-	const dotConditions: ManifestExportConditions = new Map();
+	let dotConditionCount = 0;
 
 	for (const [relative, value] of consumer.asMap()) {
-		// If it's not a relative path then it's a platform for the root
 		if (relative[0] !== ".") {
 			if (exports.size > 0) {
 				value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
 			}
 
-			dotConditions.set(relative, createRelativeExportCondition(value));
-			continue;
-		}
-
-		if (dotConditions.size > 0) {
-			value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
+			dotConditionCount++;
 		}
 
 		const conditions = normalizeExportsConditions(value);
-		exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
+		exports.set(value.getKey().asRelativeFilePath(), conditions);
 	}
 
-	if (dotConditions.size > 0) {
-		exports.set(createRelativeFilePath("."), dotConditions);
+	if (dotConditionCount && dotConditionCount !== exports.size) {
+		consumer.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
 	}
 
 	return exports;
