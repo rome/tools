@@ -148,6 +148,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		name: "unknown",
 		root: false,
 		version: undefined,
+		presets: [],
 		cache: {},
 		develop: {
 			serveStatic: true,
@@ -168,10 +169,16 @@ export function createDefaultProjectConfig(): ProjectConfig {
 				invalidLicenses: new Map(),
 			},
 		},
+		format: {
+			enabled: true,
+			indentStyle: "tab",
+			indentSize: 1,
+		},
 		lint: {
 			ignore: [],
 			globals: [],
 			requireSuppressionExplanations: true,
+			disabledRules: [],
 		},
 		tests: {
 			ignore: [],

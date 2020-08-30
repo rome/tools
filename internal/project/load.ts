@@ -152,6 +152,8 @@ export async function normalizeProjectConfig(
 	const hash = crypto.createHash("sha256").update(configFile).digest("hex");
 
 	const config: PartialProjectConfig = {
+		presets: [],
+		format: {},
 		compiler: {},
 		bundler: {},
 		cache: {},
@@ -482,6 +484,10 @@ function mergePartialConfig<
 	B extends PartialProjectConfig
 >(a: A, b: B): MergedPartialConfig<A, B> {
 	return {
+		presets: [
+			...a.presets,
+			...b.presets,
+		],
 		cache: {
 			...a.cache,
 			...b.cache,
@@ -489,6 +495,10 @@ function mergePartialConfig<
 		compiler: {
 			...a.compiler,
 			...b.compiler,
+		},
+		format: {
+			...a.format,
+			...b.format,
 		},
 		lint: {
 			...a.lint,
