@@ -80,7 +80,7 @@ rome config push lint.globals SomeGlobal
 Raise a diagnostic if a suppression does not have a [valid explanation](#explanation).
 
 ```bash
-rome config push lint.globals SomeGlobal
+rome config enable lint.requireSuppressionExplanations
 ```
 
 ### Supported Locations
