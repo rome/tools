@@ -132,7 +132,16 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
-		let {ast, mtime} = await this.worker.parse(ref, parseOptions);
+		let {ast, mtime, project} = await this.worker.parse(ref, parseOptions);
+
+		if (!project.config.format.enabled) {
+			return {
+				file: undefined,
+				diagnostics: [
+					// TODO not enabled
+				],
+			}
+		}
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -364,7 +373,7 @@ export default class WorkerAPI {
 
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.capabilities.format) {
+		if (!handler.capabilities.format || !project.config.format.enabled) {
 			return;
 		}
 
@@ -464,7 +473,7 @@ export default class WorkerAPI {
 		);
 
 		// If the file has pending fixes
-		const needsSave = formatted !== sourceText;
+		const needsSave = project.config.format.enabled && formatted !== sourceText;
 
 		// Autofix if necessary
 		if (options.save && needsSave) {
