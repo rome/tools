@@ -1,18 +1,20 @@
 import {test} from "rome";
 import {LintRequest, LintResult, lint, lintRuleNames} from "@internal/compiler";
-import {template} from "@internal/js-ast-utils";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
-import {JSRoot} from "@internal/ast";
+import {parseJS} from "@internal/js-parser";
 
 function createLintTransformOptions(
-	ast: JSRoot,
+	sourceText: string,
 	mutateConfig: (config: ProjectConfig) => ProjectConfig,
 ): LintRequest {
 	return {
 		applySafeFixes: false,
 		suppressionExplanation: "",
-		sourceText: "",
-		ast,
+		sourceText,
+		ast: parseJS({
+			path: "unknown",
+			input: sourceText,
+		}),
 		options: {},
 		project: {
 			config: mutateConfig(createDefaultProjectConfig()),
@@ -35,14 +37,14 @@ test(
 
 		// Make sure when it's not disabled the diagnostic is present
 		const res = await lint(
-			createLintTransformOptions(template.root`foo;`, (config) => config),
+			createLintTransformOptions("foo;", (config) => config),
 		);
 		t.true(hasUndeclaredDiag(res));
 
 		// Make sure when it's not disabled the diagnostic it is not present
 		const res2 = await lint(
 			createLintTransformOptions(
-				template.root`foo;`,
+				"foo;",
 				(config) => ({
 					...config,
 					lint: {
@@ -61,7 +63,7 @@ test(
 	async (t) => {
 		const res = await lint(
 			createLintTransformOptions(
-				template.root`foo;`,
+				"foo;",
 				(config) => ({
 					...config,
 					lint: {
@@ -78,9 +80,10 @@ test(
 test(
 	"format disabled",
 	async (t) => {
+		const code = "wacky\n\tformatting( yes,\nok );";
 		const res = await lint(
 			createLintTransformOptions(
-				template.root`wacky\n\tformatting( yes,\nok );`,
+				code,
 				(config) => ({
 					...config,
 					format: {
@@ -90,6 +93,6 @@ test(
 				}),
 			),
 		);
-		t.inlineSnapshot(res.src);
+		t.is(res.src, code);
 	},
 );

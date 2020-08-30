@@ -10,22 +10,28 @@ import {formatAST} from "@internal/formatter/index";
 import {template} from "@internal/js-ast-utils";
 import {createDefaultProjectConfig} from "@internal/project";
 
-test("space indent", (t) => {
-	const config = createDefaultProjectConfig();
+test(
+	"space indent",
+	(t) => {
+		const config = createDefaultProjectConfig();
 
-	const formatted = formatAST(template.root`if (foo) {bar;}`, {
-		projectConfig: {
-			...config,
-			format: {
-				...config.format,
-				indentStyle: "space",
-				indentSize: 2,
+		const formatted = formatAST(
+			template.root`if (foo) {bar;}`,
+			{
+				projectConfig: {
+					...config,
+					format: {
+						...config.format,
+						indentStyle: "space",
+						indentSize: 2,
+					},
+				},
 			},
-		},
-	});
+		);
 
-	t.inlineSnapshot(formatted.code);
-});
+		t.inlineSnapshot(formatted.code, "if (foo) {\n  bar;\n}\n");
+	},
+);
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options} = fixture;

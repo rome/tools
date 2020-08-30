@@ -87,9 +87,12 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 	let formattedCode = req.sourceText;
 
 	if (shouldFormat) {
-		formattedCode = formatAST(formatAst, {
-			projectConfig: project.config,
-		}).code;
+		formattedCode = formatAST(
+			formatAst,
+			{
+				projectConfig: project.config,
+			},
+		).code;
 	}
 
 	// Run lints (could be with the autofixed AST)

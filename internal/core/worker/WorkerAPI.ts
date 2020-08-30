@@ -24,7 +24,8 @@ import {
 	signals,
 } from "@internal/compiler";
 import {
-	WorkerCompilerOptions, WorkerFormatOptions,
+	WorkerCompilerOptions,
+	WorkerFormatOptions,
 	WorkerFormatResult,
 	WorkerLintOptions,
 	WorkerLintResult,
@@ -225,9 +226,12 @@ export default class WorkerAPI {
 		let file: undefined | RecoverySaveFile;
 
 		if (diags.length === 0) {
-			const formatted = formatAST(ast, {
-				projectConfig: project.config,
-			}).code;
+			const formatted = formatAST(
+				ast,
+				{
+					projectConfig: project.config,
+				},
+			).code;
 			file = {
 				type: "WRITE",
 				content: formatted,
@@ -395,10 +399,13 @@ export default class WorkerAPI {
 			parseOptions,
 		);
 
-		const out = formatAST(ast, {
-			...formatOptions,
-			projectConfig: project.config,
-		});
+		const out = formatAST(
+			ast,
+			{
+				...formatOptions,
+				projectConfig: project.config,
+			},
+		);
 
 		return this.interceptDiagnostics(
 			{
