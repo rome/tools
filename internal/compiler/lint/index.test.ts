@@ -90,6 +90,6 @@ test(
 				}),
 			),
 		);
-		t.snapshot(res);
+		t.inlineSnapshot(res.src);
 	},
 );
