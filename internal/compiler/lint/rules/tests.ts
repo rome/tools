@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:91ad1102a06130294ccebd4b443466e7ece68e55,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:9079da4baf626c79c2d70dd6c3408e2d73320bd4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -71,6 +71,8 @@ import noSparseArray from "./js/noSparseArray.test.rjson";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString.test.rjson";
 // @ts-ignore
 import noUndeclaredVariables from "./js/noUndeclaredVariables.test.rjson";
+// @ts-ignore
+import noUnnecessaryContinue from "./js/noUnnecessaryContinue.test.rjson";
 // @ts-ignore
 import noUnsafeFinally from "./js/noUnsafeFinally.test.rjson";
 // @ts-ignore
@@ -252,6 +254,7 @@ export const tests: Tests = {
 	"js/noSparseArray": noSparseArray,
 	"js/noTemplateCurlyInString": noTemplateCurlyInString,
 	"js/noUndeclaredVariables": noUndeclaredVariables,
+	"js/noUnnecessaryContinue": noUnnecessaryContinue,
 	"js/noUnsafeFinally": noUnsafeFinally,
 	"js/noUnsafeNegation": noUnsafeNegation,
 	"js/noUnusedTemplateLiteral": noUnusedTemplateLiteral,

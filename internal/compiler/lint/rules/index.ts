@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:7eba8757b5c471ad06578872a5618edd56a74472,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:254eaafd384a85c1df99b048c790e5245392cfe6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -30,6 +30,7 @@ import noShoutyConstants from "./js/noShoutyConstants";
 import noSparseArray from "./js/noSparseArray";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
 import noUndeclaredVariables from "./js/noUndeclaredVariables";
+import noUnnecessaryContinue from "./js/noUnnecessaryContinue";
 import noUnsafeFinally from "./js/noUnsafeFinally";
 import noUnsafeNegation from "./js/noUnsafeNegation";
 import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
@@ -142,6 +143,7 @@ export const lintTransforms: AnyVisitors = [
 	noSparseArray,
 	noTemplateCurlyInString,
 	noUndeclaredVariables,
+	noUnnecessaryContinue,
 	noUnsafeFinally,
 	noUnsafeNegation,
 	noUnusedTemplateLiteral,

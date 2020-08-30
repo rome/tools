@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:ae42156f2940a763067781eed8f7d571e45c9179,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:22869eb04b5472c56f701f6c7af72a3420a701db,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -224,6 +224,13 @@ disallow template literal placeholder syntax in regular strings
 	<a class="header-anchor" href="#noUndeclaredVariables"></a>
 </h3>
 MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noUnnecessaryContinue">
+	<a href="/docs/lint/rules/js/noUnnecessaryContinue">noUnnecessaryContinue</a>
+	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
+</h3>
+unnecessary continue statement inside the loop
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">

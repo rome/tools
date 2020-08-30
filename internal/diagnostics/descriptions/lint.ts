@@ -17,6 +17,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JS_NO_UNNECESSARY_CONTINUE: {
+		category: "lint/js/noUnnecessaryContinue",
+		message: markup`Unnecessary <emphasis>continue</emphasis> statement`,
+	},
 	HTML_USE_CLOSING_NON_VOID: {
 		category: "lint/html/useClosingNonVoid",
 		message: markup`Non-void HTML elements cannot be self-closing. This is valid when using JSX, but not when using HTML.`,

@@ -58,9 +58,7 @@ async function tryManifest(root: string): Promise<undefined | string> {
 				return String(path.resolve(dir, json.romeLSPBin));
 			}
 		} catch (err) {
-			if (err instanceof SyntaxError || err.code === "ENOENT") {
-				continue;
-			} else {
+			if (!(err instanceof SyntaxError || err.code === "ENOENT")) {
 				throw err;
 			}
 		}
