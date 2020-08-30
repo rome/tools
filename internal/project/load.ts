@@ -387,14 +387,18 @@ export async function normalizeProjectConfig(
 	// Flag unknown properties
 	consumer.enforceUsedProperties("config property");
 
-	if (_extends.exists()) {
-		return await extendProjectConfig(projectDirectory, _extends, config, meta);
-	}
-
-	return {
+	let normalized: NormalizedPartial = {
 		partial: config,
 		meta,
 	};
+
+	if (_extends.exists()) {
+		for (const elem of _extends.asImplicitArray()) {
+			normalized = await extendProjectConfig(projectDirectory, elem, normalized);
+		}
+	}
+
+	return normalized;
 }
 
 async function normalizeTypeCheckingLibs(
@@ -433,8 +437,7 @@ async function normalizeTypeCheckingLibs(
 async function extendProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
-	config: PartialProjectConfig,
-	meta: ProjectConfigMetaHard,
+	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
 	const extendsRelative = extendsStrConsumer.asString();
 
