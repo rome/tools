@@ -9,7 +9,8 @@ import {
 	AnyJSExpression,
 	AnyJSIdentifier,
 	AnyJSStatement,
-	AnyNode, JSRoot,
+	AnyNode,
+	JSRoot,
 	jsRoot,
 } from "@internal/ast";
 import {CompilerContext, Path, signals} from "@internal/compiler";

@@ -285,6 +285,7 @@ export default class Path {
 		const {category} = description;
 		const advice = [...description.advice];
 		const loc = context.getLoc(target);
+		const canFormat = this.context.project.config.format.enabled;
 
 		let fixed: undefined | ExitSignal = defaultFixed;
 
@@ -311,36 +312,38 @@ export default class Path {
 				),
 			});
 
-			if (loc === undefined) {
-				advice.push({
-					type: "log",
-					category: "error",
-					text: markup`Unable to find target location`,
-				});
-			} else {
-				advice.push(
-					buildLintDecisionAdviceAction({
-						filename: context.displayFilename,
-						decision: buildLintDecisionString({
-							action: "fix",
+			if (canFormat) {
+				if (loc === undefined) {
+					advice.push({
+						type: "log",
+						category: "error",
+						text: markup`Unable to find target location`,
+					});
+				} else {
+					advice.push(
+						buildLintDecisionAdviceAction({
 							filename: context.displayFilename,
-							category,
-							start: loc.start,
+							decision: buildLintDecisionString({
+								action: "fix",
+								filename: context.displayFilename,
+								category,
+								start: loc.start,
+							}),
+							shortcut: "f",
+							noun: markup`Apply fix`,
+							instruction: markup`To apply this fix run`,
 						}),
-						shortcut: "f",
-						noun: markup`Apply fix`,
-						instruction: markup`To apply this fix run`,
-					}),
-				);
+					);
 
-				advice.push(
-					buildLintDecisionAdviceAction({
-						extra: true,
-						noun: markup`Apply fix for ALL files with this category`,
-						instruction: markup`To apply fix for ALL files with this category run`,
-						decision: buildLintDecisionGlobalString("fix", category),
-					}),
-				);
+					advice.push(
+						buildLintDecisionAdviceAction({
+							extra: true,
+							noun: markup`Apply fix for ALL files with this category`,
+							instruction: markup`To apply fix for ALL files with this category run`,
+							decision: buildLintDecisionGlobalString("fix", category),
+						}),
+					);
+				}
 			}
 		}
 
@@ -392,30 +395,32 @@ export default class Path {
 					text: suggestion.description,
 				});
 
-				if (loc === undefined) {
-					advice.push({
-						type: "log",
-						category: "error",
-						text: markup`Unable to find target location`,
-					});
-				} else {
-					advice.push(
-						buildLintDecisionAdviceAction({
-							noun: suggestions.length === 1
-								? markup`Apply suggested fix`
-								: markup`Apply suggested fix "${suggestion.title}"`,
-							shortcut: String(num),
-							instruction: markup`To apply this fix run`,
-							filename: context.displayFilename,
-							decision: buildLintDecisionString({
+				if (canFormat) {
+					if (loc === undefined) {
+						advice.push({
+							type: "log",
+							category: "error",
+							text: markup`Unable to find target location`,
+						});
+					} else {
+						advice.push(
+							buildLintDecisionAdviceAction({
+								noun: suggestions.length === 1
+									? markup`Apply suggested fix`
+									: markup`Apply suggested fix "${suggestion.title}"`,
+								shortcut: String(num),
+								instruction: markup`To apply this fix run`,
 								filename: context.displayFilename,
-								action: "fix",
-								category,
-								start: loc.start,
-								id: index,
+								decision: buildLintDecisionString({
+									filename: context.displayFilename,
+									action: "fix",
+									category,
+									start: loc.start,
+									id: index,
+								}),
 							}),
-						}),
-					);
+						);
+					}
 				}
 
 				index++;

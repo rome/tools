@@ -140,7 +140,7 @@ export default class WorkerAPI {
 				diagnostics: [
 					// TODO not enabled
 				],
-			}
+			};
 		}
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();

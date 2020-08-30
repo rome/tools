@@ -31,6 +31,7 @@ Object {
 	]
 	diagnostics: Array [
 		Object {
+			tags: undefined
 			origins: Array [Object {category: "analyzeDependencies"}]
 			location: Object {
 				filename: "unknown"

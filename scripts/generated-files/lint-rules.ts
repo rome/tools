@@ -93,7 +93,9 @@ export async function main() {
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
 			lines.push("");
-			lines.push("export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();");
+			lines.push(
+				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
+			);
 			for (const {basename, ruleName} of defs) {
 				lines.push(`lintTransforms.set("${ruleName}", ${basename});`);
 			}

@@ -9,7 +9,7 @@ import {AnyNode, MOCK_PARENT} from "@internal/ast";
 import Builder from "./Builder";
 import {PrinterOutput, printTokenToString} from "./Printer";
 import {isRoot} from "@internal/ast-utils";
-import {createDefaultProjectConfig, ProjectConfig} from "@internal/project";
+import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 
 export {Builder};
 export {BuilderMethod} from "./Builder";

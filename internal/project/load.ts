@@ -286,7 +286,9 @@ export async function normalizeProjectConfig(
 		}
 
 		if (lint.has("disabledRules")) {
-			config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) => item.asStringSet(lintRuleNames));
+			config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) =>
+				item.asStringSet(lintRuleNames)
+			);
 		}
 
 		if (lint.has("requireSuppressionExplanations")) {
@@ -314,7 +316,10 @@ export async function normalizeProjectConfig(
 
 		if (lint.has("indentSize")) {
 			// Set a range to prevent wacky behaviour
-			config.format.indentSize = lint.get("indentSize").asNumberInRange({min: 0, max: 10});
+			config.format.indentSize = lint.get("indentSize").asNumberInRange({
+				min: 0,
+				max: 10,
+			});
 		}
 	}
 
@@ -467,7 +472,10 @@ async function extendProjectConfig(
 		merged.lint.globals = lintGlobals;
 	}
 
-	const lintDisabledRules = mergeArrays(extendsObj.lint.disabledRules, config.lint.disabledRules);
+	const lintDisabledRules = mergeArrays(
+		extendsObj.lint.disabledRules,
+		config.lint.disabledRules,
+	);
 	if (lintDisabledRules !== undefined) {
 		merged.lint.disabledRules = lintDisabledRules;
 	}
@@ -521,10 +529,7 @@ function mergePartialConfig<
 	B extends PartialProjectConfig
 >(a: A, b: B): MergedPartialConfig<A, B> {
 	return {
-		presets: [
-			...a.presets,
-			...b.presets,
-		],
+		presets: [...a.presets, ...b.presets],
 		cache: {
 			...a.cache,
 			...b.cache,

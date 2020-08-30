@@ -24,7 +24,7 @@ const ruleVisitorCache: WeakMap<ProjectConfig, Array<AnyVisitor>> = new WeakMap(
 const allVisitors = Array.from(lintTransforms.values());
 
 function getVisitors(config: ProjectConfig): Array<AnyVisitor> {
-	const {disabledRules} = config.lint
+	const {disabledRules} = config.lint;
 
 	// Fast path
 	if (disabledRules.length === 0) {
