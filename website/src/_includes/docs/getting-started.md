@@ -1,6 +1,6 @@
 ## Getting Started
 
-### Installation and quickstart
+### Installation and Usage
 
 #### [Yarn](https://yarnpkg.com/):
 
@@ -15,10 +15,10 @@ yarn rome init
 npx rome init
 ```
 
-After running this command, Rome:
+After running this command, Rome will:
 
-- Iexecute a self-installation by adding itself to the `package.json` as dependency of your project (if there's a `package.json` already)
-- Generates a project configuration which creates `.config` folder, with `rome.rjson` which serves as a project config.
+- Add itself to `package.json` as dependency if it wasn't present, and run your package manager to install
+- Generate `.config/rome.rjson` that serves as your project config.
 
 If you're putting Rome into an already established project and you'd like to automatically apply formatting and fixes, you can use:
 
