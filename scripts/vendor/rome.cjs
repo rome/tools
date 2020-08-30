@@ -13967,7 +13967,7 @@ function ___R$project$rome$$internal$js$ast$utils$getBindingIdentifiers_ts$getBi
 			}
 
 			for (const key of keys) {
-				// rome-ignore lint/ts/noExplicitAny
+				// rome-ignore lint/ts/noExplicitAny: future cleanup
 				const val = (node)[key];
 				if (val === undefined) {
 					continue;
@@ -18825,7 +18825,7 @@ const ___R$$priv$project$rome$$internal$pretty$format$index_ts$DEFAULT_OPTIONS =
 			return label;
 		}
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		return ___R$$priv$project$rome$$internal$pretty$format$index_ts$formatObject(
 			label,
 			(val),
@@ -19436,7 +19436,7 @@ const ___R$$priv$project$rome$$internal$pretty$format$index_ts$DEFAULT_OPTIONS =
 
 				// Reduce the children
 				for (const key of visitorKeys) {
-					// rome-ignore lint/ts/noExplicitAny
+					// rome-ignore lint/ts/noExplicitAny: future cleanup
 					const oldVal = (node)[key];
 
 					if (Array.isArray(oldVal)) {
@@ -21065,17 +21065,19 @@ const ___R$project$rome$$internal$compiler$suppressions_ts$SUPPRESSION_START = "
 
 			const categories = lineWithoutPrefix.trim().split(" ");
 			const cleanCategories = categories.map((category) => category.trim());
+			let explanation;
 
-			for (let category of cleanCategories) {
+			for (let i = 0; i < cleanCategories.length; i++) {
+				let category = cleanCategories[i];
+
 				if (category === "") {
 					continue;
 				}
 
 				// If a category ends with a colon then all the things that follow it are an explanation
-				let shouldBreak = false;
 				if (category[category.length - 1] === ":") {
-					shouldBreak = true;
-					category = category.slice(-1);
+					category = category.slice(0, -1);
+					explanation = cleanCategories.slice(i + 1);
 				}
 				if (suppressedCategories.has(category)) {
 					diagnostics.push({
@@ -21096,9 +21098,16 @@ const ___R$project$rome$$internal$compiler$suppressions_ts$SUPPRESSION_START = "
 					});
 				}
 
-				if (shouldBreak) {
+				if (explanation !== undefined) {
 					break;
 				}
+			}
+
+			if (!explanation || explanation.length === 0) {
+				diagnostics.push({
+					description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
+					location: commentLocation,
+				});
 			}
 		}
 
@@ -48354,6 +48363,316 @@ function ___R$project$rome$$internal$async$createDeferredPromise_ts$default() {
 	}
 
 
+  // project-rome/@internal/async/lockers.ts
+const ___R$project$rome$$internal$async$lockers_ts = {
+		get Locker() {
+			return ___R$project$rome$$internal$async$lockers_ts$Locker;
+		},
+		get FilePathLocker() {
+			return ___R$project$rome$$internal$async$lockers_ts$FilePathLocker;
+		},
+		get GlobalLock() {
+			return ___R$project$rome$$internal$async$lockers_ts$GlobalLock;
+		},
+	};
+	class ___R$$priv$project$rome$$internal$async$lockers_ts$Lock {
+		constructor(locker, mapKey) {
+			this.locker = locker;
+			this.resolves = [];
+			this.mapKey = mapKey;
+		}
+
+		addResolve(resolve) {
+			this.resolves.push(resolve);
+		}
+
+		release() {
+			const {resolves} = this;
+
+			if (resolves.length === 0) {
+				this.locker.locks.delete(this.mapKey);
+			} else {
+				const resolve = resolves.shift();
+				if (resolve === undefined) {
+					throw new Error("Already validated resolved.length aboved");
+				}
+				resolve(this);
+			}
+		}
+	}
+
+	class ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
+		constructor() {
+			this.locks = new Map();
+		}
+
+		hasLock(key) {
+			return this.locks.has(this.normalizeKey(key));
+		}
+
+		getNewLock(rawKey) {
+			const mapKey = this.normalizeKey(rawKey);
+			if (this.locks.has(mapKey)) {
+				throw new Error("Expected no lock to exist");
+			}
+
+			const lock = new ___R$$priv$project$rome$$internal$async$lockers_ts$Lock(
+				this,
+				mapKey,
+			);
+			this.locks.set(mapKey, lock);
+			return lock;
+		}
+
+		async getLock(rawKey) {
+			const key = this.normalizeKey(rawKey);
+			const existingLock = this.locks.get(key);
+
+			if (existingLock === undefined) {
+				return this.getNewLock(rawKey);
+			} else {
+				return new Promise((resolve) => {
+					existingLock.addResolve(resolve);
+				});
+			}
+		}
+
+		async waitLockDrained(key) {
+			while (this.hasLock(key)) {
+				const lock = await this.getLock(key);
+				lock.release();
+			}
+		}
+
+		async waitLock(key) {
+			if (this.hasLock(key)) {
+				const lock = await this.getLock(key);
+				lock.release();
+			}
+		}
+
+		async wrapLock(key, callback) {
+			const lock = await this.getLock(key);
+			try {
+				return await callback();
+			} finally {
+				lock.release();
+			}
+		}
+	}
+
+	class ___R$project$rome$$internal$async$lockers_ts$Locker
+		extends ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
+		normalizeKey(key) {
+			return key;
+		}
+	}
+
+	class ___R$project$rome$$internal$async$lockers_ts$FilePathLocker
+		extends ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
+		normalizeKey(path) {
+			return path.join();
+		}
+	}
+
+	class ___R$project$rome$$internal$async$lockers_ts$GlobalLock {
+		constructor() {
+			this.resolves = [];
+			this.dependencies = 0;
+
+			this.incrementEvent = new ___R$project$rome$$internal$events$Event_ts$default({
+				name: "incrementEvent",
+			});
+
+			this.decrementEvent = new ___R$project$rome$$internal$events$Event_ts$default({
+				name: "decrementEvent",
+			});
+		}
+
+		attachLock(lock) {
+			lock.incrementEvent.subscribe(() => {
+				this.dependencies++;
+			});
+
+			lock.decrementEvent.subscribe(() => {
+				this.dependencies--;
+
+				if (this.dependencies === 0) {
+					this.unlock();
+				}
+			});
+		}
+
+		unlock() {
+			for (const resolve of this.resolves) {
+				resolve();
+			}
+			this.resolves = [];
+		}
+
+		async wrap(fn) {
+			try {
+				this.dependencies++;
+				return await fn();
+			} finally {
+				this.dependencies--;
+
+				if (this.dependencies === 0) {
+					this.unlock();
+				}
+			}
+		}
+
+		async wait() {
+			if (this.dependencies > 0) {
+				const {resolve, promise} = ___R$project$rome$$internal$async$createDeferredPromise_ts$default();
+				this.resolves.push(resolve);
+				await promise;
+			}
+		}
+	}
+
+
+  // project-rome/@internal/async/Queue.ts
+class ___R$project$rome$$internal$async$Queue_ts$default {
+		constructor({maxThreads = Infinity, maxPerThread = 2, callback}) {
+			this.runningThreads = [];
+			this.waitingThreads = [];
+
+			this.threads = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
+				"threads",
+				() => ({
+					running: false,
+					items: [],
+				}),
+			);
+
+			this.locked = false;
+			this.paused = false;
+
+			this.callback = callback;
+			this.maxThreads = maxThreads;
+			this.maxPerThread = maxPerThread;
+		}
+
+		async pushQueue(thread, metadata, wait = false) {
+			if (this.locked) {
+				throw new Error("Queue is locked and no longer accepts items");
+			}
+
+			const {resolve, promise} = ___R$project$rome$$internal$async$createDeferredPromise_ts$default();
+
+			// Populate the worker queue for this item
+			const queue = this.threads.assert(thread);
+			queue.items.push([metadata, resolve]);
+
+			if (!queue.running && !this.paused) {
+				this.startThread(thread, queue);
+			}
+
+			// If requested, wait on this queue item to finish
+			if (wait) {
+				await promise;
+			}
+		}
+
+		startThread(thread, queue) {
+			// Start this thread if it isn't already
+			if (this.runningThreads.length < this.maxThreads) {
+				const promise = this.processThread(thread, queue);
+				this.runningThreads.push(promise);
+
+				// Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
+				promise.catch(() => {});
+			} else {
+				// Otherwise when another thread has finished, we'll start
+				this.waitingThreads.push(thread);
+			}
+		}
+
+		async processThread(thread, queue) {
+			queue.running = true;
+
+			const {items} = queue;
+
+			const next = async () => {
+				if (this.paused) {
+					return;
+				}
+
+				const item = items.shift();
+				if (item === undefined) {
+					// Exhausted queue
+					return;
+				}
+
+				const [metadata, resolve] = item;
+				await this.callback(metadata, thread);
+				resolve();
+				await next();
+			};
+
+			const threads = [];
+			for (let i = 0; i < this.maxPerThread; i++) {
+				threads.push(next());
+			}
+			await Promise.all(threads);
+
+			queue.running = false;
+
+			if (this.waitingThreads.length > 0 && !this.paused) {
+				const nextThread = this.waitingThreads.shift();
+				const nextQueue = this.threads.get(nextThread);
+				await this.processThread(nextThread, nextQueue);
+			}
+		}
+
+		async pause() {
+			// Build promises of work that went complete, will indicate a completely paused queue
+			const promises = [];
+			for (const queue of this.threads.values()) {
+				for (const item of queue.items) {
+					promises.push(item[1]);
+				}
+			}
+			this.paused = true;
+			this.waitingThreads = [];
+			await Promise.all(promises);
+		}
+
+		resume() {
+			this.paused = false;
+
+			// Restart all threads
+			for (const [thread, queue] of this.threads) {
+				if (queue.items.length > 0) {
+					this.startThread(thread, queue);
+				}
+			}
+		}
+
+		lock() {
+			this.locked = true;
+		}
+
+		async spin() {
+			while (
+				// Keep consuming all the promises until we're exhausted
+				this.runningThreads.length >
+				0
+			) {
+				const {runningThreads} = this;
+				this.runningThreads = [];
+				await Promise.all(runningThreads);
+			}
+		}
+	}
+
+
+  // project-rome/@internal/async/index.ts
+
+
+
   // project-rome/@internal/events/EventQueue.ts
 class ___R$project$rome$$internal$events$EventQueue_ts$default {
 		constructor(debounce = 100) {
@@ -48362,27 +48681,36 @@ class ___R$project$rome$$internal$events$EventQueue_ts$default {
 			this.queueKeys = new Set();
 			this.timeout = undefined;
 			this.debounce = debounce;
+			this.lock = new ___R$project$rome$$internal$async$lockers_ts$GlobalLock();
+		}
+
+		hasDebounce() {
+			return this.timeout !== undefined;
 		}
 
 		async flush() {
-			if (this.timeout !== undefined) {
-				clearTimeout(this.timeout);
-				this.timeout = undefined;
-			}
-
 			const queue = this.queue;
 			this.queue = [];
 			this.queueKeys = new Set();
 
 			const queueValues = queue.map((item) => item.value);
 
-			for (const callback of this.subscriptions) {
-				await callback(queueValues);
-			}
+			await this.lock.wrap(async () => {
+				if (this.timeout !== undefined) {
+					const [callback, timeout] = this.timeout;
+					clearTimeout(timeout);
+					callback();
+					this.timeout = undefined;
+				}
 
-			for (const {resolve} of queue) {
-				resolve();
-			}
+				for (const callback of this.subscriptions) {
+					await callback(queueValues);
+				}
+
+				for (const {resolve} of queue) {
+					resolve();
+				}
+			});
 		}
 
 		async push(value, key) {
@@ -48398,7 +48726,12 @@ class ___R$project$rome$$internal$events$EventQueue_ts$default {
 			}
 
 			if (this.timeout === undefined) {
-				this.timeout = setTimeout(() => this.flush(), this.debounce);
+				const timeout = setTimeout(() => this.flush(), this.debounce);
+				this.lock.wrap(async () => {
+					const {promise, resolve} = ___R$project$rome$$internal$async$createDeferredPromise_ts$default();
+					this.timeout = [resolve, timeout];
+					await promise;
+				});
 			}
 
 			await promise;
@@ -48428,7 +48761,7 @@ class ___R$project$rome$$internal$events$BridgeError_ts$default extends Error {
 
   // project-rome/@internal/events/BridgeEvent.ts
 function ___R$$priv$project$rome$$internal$events$BridgeEvent_ts$validateDirection(
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		event,
 		invalidDirections,
 		verb,
@@ -51217,7 +51550,7 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 			);
 		}
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		addErrorTransport(name, transport) {
 			this.errorTransports.set(name, transport);
 		}
@@ -52020,6 +52353,13 @@ const ___R$$priv$project$rome$$internal$fs$index_ts$fs = require("fs");
 
 	async function ___R$project$rome$$internal$fs$index_ts$readFileText(path) {
 		return (await ___R$project$rome$$internal$fs$index_ts$readFile(path)).toString();
+	}
+
+	async function ___R$project$rome$$internal$fs$index_ts$readFileTextMeta(path) {
+		return {
+			input: (await ___R$project$rome$$internal$fs$index_ts$readFile(path)).toString(),
+			path,
+		};
 	}
 
 	function ___R$project$rome$$internal$fs$index_ts$writeFile(path, content) {
@@ -54045,11 +54385,11 @@ function ___R$$priv$project$rome$$internal$ast$utils$removeLoc_ts$removeProp(
 					);
 
 					// Also remove any `undefined` properties
-					// rome-ignore lint/ts/noExplicitAny
+					// rome-ignore lint/ts/noExplicitAny: future cleanup
 					const escaped = newNode;
 					for (const key in newNode) {
 						if (escaped[key] === undefined) {
-							// rome-ignore lint/js/noDelete
+							// rome-ignore lint/js/noDelete: future cleanup
 							delete escaped[key];
 						}
 					}
@@ -65939,7 +66279,7 @@ function ___R$project$rome$$internal$formatter$builders$js$typescript$TSVoidKeyw
 
 
   // project-rome/@internal/formatter/builders/index.ts
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 	const ___R$$priv$project$rome$$internal$formatter$builders$index_ts$builders = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
 		"builders",
 	);
@@ -68139,7 +68479,7 @@ function ___R$project$rome$$internal$formatter$index_ts$formatAST(
 		}
 
 		getChildPath(key) {
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const node = (this.node)[key];
 			if (node === undefined) {
 				throw new Error(
@@ -68159,7 +68499,7 @@ function ___R$project$rome$$internal$formatter$index_ts$formatAST(
 		}
 
 		getChildPaths(key) {
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const nodes = (this.node)[key];
 
 			if (nodes === undefined) {
@@ -68553,17 +68893,21 @@ function ___R$$priv$project$rome$$internal$compiler$lint$suppressions_ts$getStar
 
 	function ___R$$priv$project$rome$$internal$compiler$lint$suppressions_ts$buildSuppressionCommentValue(
 		categories,
+		explanation = "suppressed via --review",
 	) {
 		return (
 			___R$project$rome$$internal$compiler$suppressions_ts$SUPPRESSION_START +
 			" " +
-			Array.from(categories).join(" ")
+			Array.from(categories).join(" ") +
+			": " +
+			explanation
 		);
 	}
 
 	function ___R$project$rome$$internal$compiler$lint$suppressions_ts$addSuppressions(
 		context,
 		ast,
+		explanation,
 	) {
 		if (!context.hasLintDecisions()) {
 			return ast;
@@ -68606,6 +68950,7 @@ function ___R$$priv$project$rome$$internal$compiler$lint$suppressions_ts$getStar
 						value: " " +
 						___R$$priv$project$rome$$internal$compiler$lint$suppressions_ts$buildSuppressionCommentValue(
 							suppressionCategories,
+							explanation,
 						),
 					},
 				);
@@ -77946,11 +78291,11 @@ const ___R$project$rome$$internal$compiler$lint$rules$index_ts$lintTransforms = 
 const ___R$$priv$project$rome$$internal$compiler$lint$index_ts$lintCache = new ___R$project$rome$$internal$compiler$lib$Cache_ts$default();
 
 	async function ___R$project$rome$$internal$compiler$lint$index_ts$default(req) {
-		const {ast, project, applySafeFixes, options} = req;
+		const {ast, project, applySafeFixes, options, suppressionExplanation} = req;
 
 		const query = ___R$project$rome$$internal$compiler$lib$Cache_ts$default.buildQuery(
 			req,
-			{applySafeFixes},
+			{applySafeFixes, suppressionExplanation},
 		);
 		const cached = ___R$$priv$project$rome$$internal$compiler$lint$index_ts$lintCache.get(
 			query,
@@ -77979,6 +78324,7 @@ const ___R$$priv$project$rome$$internal$compiler$lint$index_ts$lintCache = new _
 			formatAst = ___R$project$rome$$internal$compiler$lint$suppressions_ts$addSuppressions(
 				formatContext,
 				formatAst,
+				suppressionExplanation,
 			);
 		}
 		const formattedCode = ___R$project$rome$$internal$formatter$index_ts$formatAST(
@@ -79951,7 +80297,7 @@ const ___R$$priv$project$rome$$internal$js$ast$utils$template_ts$templateCache =
 				substitutions[i],
 				type,
 			);
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			let target = newAst;
 
 			for (let i = 0; i < path.length; i++) {
@@ -80305,7 +80651,7 @@ const ___R$$priv$project$rome$$internal$js$ast$utils$tryStaticEvaluation_ts$BAIL
 
 		if (!res.bailed) {
 			// We do not care about TS protections
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			const value = (res.value);
 
 			switch (expr.operator) {
@@ -80358,9 +80704,9 @@ const ___R$$priv$project$rome$$internal$js$ast$utils$tryStaticEvaluation_ts$BAIL
 		}
 
 		// We do not care about TS protections
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const l = (left.value);
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const r = (right.value);
 
 		switch (expr.operator) {
@@ -80875,7 +81221,11 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 		}
 
 		wasInSource() {
-			return this.getDiagnosticLocation() !== undefined;
+			const loc = this.getDiagnosticLocation();
+			return (
+				loc.filename !== undefined &&
+				(loc.start !== undefined || loc.end !== undefined)
+			);
 		}
 
 		getKeyPathString(path = this.keyPath) {
@@ -80969,7 +81319,7 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 
 			const {filename} = this;
 			let location = this.getDiagnosticLocation(target);
-			const fromSource = location !== undefined;
+			const fromSource = this.wasInSource();
 
 			const message = this.generateUnexpectedMessage(description.message, opts);
 			description = Object.assign({}, description, {message});
@@ -80989,9 +81339,8 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 				// Go up the consumer tree and take the position from the first consumer found in the source
 				let consumer = this;
 				do {
-					const possibleLocation = consumer.getDiagnosticLocation(target);
-					if (possibleLocation !== undefined) {
-						location = possibleLocation;
+					if (consumer.wasInSource()) {
+						location = consumer.getDiagnosticLocation(target);
 						break;
 					}
 					consumer = consumer.parent;
@@ -81373,6 +81722,28 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 			return Object.assign({}, this.asOriginalUnknownObject(optional));
 		}
 
+		isEmpty() {
+			const value = this.asUnknown();
+
+			if (value == null) {
+				return true;
+			}
+
+			if (value === "") {
+				return true;
+			}
+
+			if (
+				___R$project$rome$$internal$typescript$helpers$index_ts$isPlainObject(
+					value,
+				)
+			) {
+				return Object.keys(value).length === 0;
+			}
+
+			return false;
+		}
+
 		asOriginalUnknownObject(optional = false) {
 			if (optional && !this.exists()) {
 				return {};
@@ -81563,7 +81934,7 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 				this.unexpected(
 					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 						value,
-						// rome-ignore lint/ts/noExplicitAny
+						// rome-ignore lint/ts/noExplicitAny: future cleanup
 						((validValues)),
 					),
 					{
@@ -81879,7 +82250,7 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 				this.unexpected(
 					___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
 						value,
-						// rome-ignore lint/ts/noExplicitAny
+						// rome-ignore lint/ts/noExplicitAny: future cleanup
 						((validValues)),
 					),
 					{
@@ -81909,7 +82280,7 @@ function ___R$$priv$project$rome$$internal$consume$Consumer_ts$isComputedPart(
 			return this.value;
 		}
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		asAny() {
 			return this.value;
 		}
@@ -86369,18 +86740,24 @@ const ___R$$priv$project$rome$$internal$cli$reporter$Reporter_ts$stream = requir
 		}
 
 		async steps(callbacks, clear = true) {
-			const total = callbacks.length;
+			let total = 0;
 			let current = 1;
-			for (const {message, callback} of callbacks) {
+
+			const filteredCallbacks = [];
+			for (const item of callbacks) {
+				if (item.test === undefined || (await item.test())) {
+					filteredCallbacks.push(item);
+					total++;
+				}
+			}
+
+			for (const {message, callback} of filteredCallbacks) {
 				const lineSnapshot = this.getLineSnapshot();
 
 				try {
 					this.step(current, total, message);
 
-					const res = await callback();
-					if (res === undefined || !res.skipped) {
-						current++;
-					}
+					await callback();
 
 					if (clear) {
 						this.removeLine(lineSnapshot);
@@ -103530,6 +103907,10 @@ const ___R$project$rome$$internal$diagnostics$descriptions$suppressions_ts$suppr
 			category: "suppressions/missingTarget",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`We could not find a target for this suppression`,
 		},
+		MISSING_EXPLANATION: {
+			category: "suppressions/missingExplanation",
+			message: ___R$project$rome$$internal$markup$escape_ts$markup`Suppression comments must have an explanation`,
+		},
 		DUPLICATE: (category) => ({
 			category: "suppressions/duplicate",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
@@ -106107,14 +106488,14 @@ const ___R$project$rome$$internal$diagnostics$descriptions$index_ts = {
 	function ___R$project$rome$$internal$diagnostics$descriptions$index_ts$createDiagnosticsCategory(
 		input,
 	) {
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const category = {};
 
 		for (const key in input) {
 			const value = input[key];
 
 			if (typeof value === "function") {
-				// rome-ignore lint/ts/noExplicitAny
+				// rome-ignore lint/ts/noExplicitAny: future cleanup
 				const callback = (value);
 
 				// @ts-ignore trust me lol
@@ -111416,130 +111797,6 @@ function ___R$project$rome$$internal$core$client$commands_ts$createLocalCommand(
 	);
 
 
-  // project-rome/@internal/async/lockers.ts
-const ___R$project$rome$$internal$async$lockers_ts = {
-		get Locker() {
-			return ___R$project$rome$$internal$async$lockers_ts$Locker;
-		},
-		get SingleLocker() {
-			return ___R$project$rome$$internal$async$lockers_ts$SingleLocker;
-		},
-		get FilePathLocker() {
-			return ___R$project$rome$$internal$async$lockers_ts$FilePathLocker;
-		},
-	};
-	class ___R$$priv$project$rome$$internal$async$lockers_ts$Lock {
-		constructor(locker, mapKey) {
-			this.locker = locker;
-			this.resolves = [];
-			this.mapKey = mapKey;
-		}
-
-		addResolve(resolve) {
-			this.resolves.push(resolve);
-		}
-
-		release() {
-			const {resolves} = this;
-
-			if (resolves.length === 0) {
-				this.locker.locks.delete(this.mapKey);
-			} else {
-				const resolve = resolves.shift();
-				if (resolve === undefined) {
-					throw new Error("Already validated resolved.length aboved");
-				}
-				resolve(this);
-			}
-		}
-	}
-
-	class ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
-		constructor() {
-			this.locks = new Map();
-		}
-
-		hasLock(key) {
-			return this.locks.has(this.normalizeKey(key));
-		}
-
-		getNewLock(rawKey) {
-			const mapKey = this.normalizeKey(rawKey);
-			if (this.locks.has(mapKey)) {
-				throw new Error("Expected no lock to exist");
-			}
-
-			const lock = new ___R$$priv$project$rome$$internal$async$lockers_ts$Lock(
-				this,
-				mapKey,
-			);
-			this.locks.set(mapKey, lock);
-			return lock;
-		}
-
-		async getLock(rawKey) {
-			const key = this.normalizeKey(rawKey);
-			const existingLock = this.locks.get(key);
-
-			if (existingLock === undefined) {
-				return this.getNewLock(rawKey);
-			} else {
-				return new Promise((resolve) => {
-					existingLock.addResolve(resolve);
-				});
-			}
-		}
-
-		async waitLockDrained(key) {
-			while (this.hasLock(key)) {
-				const lock = await this.getLock(key);
-				lock.release();
-			}
-		}
-
-		async waitLock(key) {
-			if (this.hasLock(key)) {
-				const lock = await this.getLock(key);
-				lock.release();
-			}
-		}
-
-		async wrapLock(key, callback) {
-			const lock = await this.getLock(key);
-			try {
-				return await callback();
-			} finally {
-				lock.release();
-			}
-		}
-	}
-
-	class ___R$project$rome$$internal$async$lockers_ts$Locker
-		extends ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
-		normalizeKey(key) {
-			return key;
-		}
-	}
-
-	class ___R$project$rome$$internal$async$lockers_ts$SingleLocker
-		extends ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
-		normalizeKey(key) {
-			return key;
-		}
-
-		async wrapSingleLock(callback) {
-			return this.wrapLock(undefined, callback);
-		}
-	}
-
-	class ___R$project$rome$$internal$async$lockers_ts$FilePathLocker
-		extends ___R$$priv$project$rome$$internal$async$lockers_ts$LockerNormalized {
-		normalizeKey(path) {
-			return path.join();
-		}
-	}
-
-
   // project-rome/@internal/core/server/fs/glob.ts
 const ___R$$priv$project$rome$$internal$core$server$fs$glob_ts$GLOB_IGNORE = [
 		___R$project$rome$$internal$path$match$parse_ts$parsePattern({
@@ -111705,7 +111962,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$glob_ts$GLOB_IGNORE = [
 
 			this.callback = callback;
 			this.args = args;
-			this.flushLock = new ___R$project$rome$$internal$async$lockers_ts$SingleLocker();
+			this.flushLock = new ___R$project$rome$$internal$async$lockers_ts$GlobalLock();
 
 			this.batchPaths = undefined;
 		}
@@ -111739,20 +111996,17 @@ const ___R$$priv$project$rome$$internal$core$server$fs$glob_ts$GLOB_IGNORE = [
 		}
 
 		async flush(paths, initial = false) {
-			const lock = await this.flushLock.getLock();
-			try {
+			await this.flushLock.wrap(async () => {
 				// We could be evicting a project as the result of a modification made inside of the watch callback
 				// Ensure it's complete before we decide to flush
-				await this.server.projectManager.evictingProjectLock.waitLockDrained();
+				await this.server.memoryFs.processingLock.wait();
 
 				if (paths.size === 0 && !initial) {
 					return;
 				}
 
 				await this.callback({paths, initial});
-			} finally {
-				lock.release();
-			}
+			});
 		}
 
 		setupEvents() {
@@ -111782,7 +112036,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$glob_ts$GLOB_IGNORE = [
 				...subs,
 				{
 					unsubscribe: async () => {
-						await this.flushLock.waitLockDrained();
+						await this.flushLock.wait();
 					},
 				},
 			]);
@@ -112494,11 +112748,7 @@ const ___R$$priv$project$rome$$internal$core$server$ServerRequest_ts$crypto = re
 		}
 
 		async wrapRequestDiagnostic(method, path, factory, opts = {}) {
-			// Wait on any evicting projects in case it will change the FileReference
-			const {evictingProjectLock} = this.server.projectManager;
-			if (evictingProjectLock.hasLock()) {
-				await this.server.projectManager.evictingProjectLock.waitLockDrained();
-			}
+			await this.server.memoryFs.processingLock.wait();
 
 			const {server} = this;
 			const owner = await server.fileAllocator.getOrAssignOwner(path);
@@ -113464,7 +113714,7 @@ class ___R$project$rome$$internal$core$client$ClientRequest_ts$default {
 		}
 
 		async initFromLocal(
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			localCommand,
 		) {
 			const {query} = this;
@@ -113521,146 +113771,6 @@ class ___R$project$rome$$internal$core$client$ClientRequest_ts$default {
 			}
 		}
 	}
-
-
-  // project-rome/@internal/async/Queue.ts
-class ___R$project$rome$$internal$async$Queue_ts$default {
-		constructor({maxThreads = Infinity, maxPerThread = 2, callback}) {
-			this.runningThreads = [];
-			this.waitingThreads = [];
-
-			this.threads = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
-				"threads",
-				() => ({
-					running: false,
-					items: [],
-				}),
-			);
-
-			this.locked = false;
-			this.paused = false;
-
-			this.callback = callback;
-			this.maxThreads = maxThreads;
-			this.maxPerThread = maxPerThread;
-		}
-
-		async pushQueue(thread, metadata, wait = false) {
-			if (this.locked) {
-				throw new Error("Queue is locked and no longer accepts items");
-			}
-
-			const {resolve, promise} = ___R$project$rome$$internal$async$createDeferredPromise_ts$default();
-
-			// Populate the worker queue for this item
-			const queue = this.threads.assert(thread);
-			queue.items.push([metadata, resolve]);
-
-			if (!queue.running && !this.paused) {
-				this.startThread(thread, queue);
-			}
-
-			// If requested, wait on this queue item to finish
-			if (wait) {
-				await promise;
-			}
-		}
-
-		startThread(thread, queue) {
-			// Start this thread if it isn't already
-			if (this.runningThreads.length < this.maxThreads) {
-				const promise = this.processThread(thread, queue);
-				this.runningThreads.push(promise);
-
-				// Add a `catch` so that we aren't considered an unhandled promise if it rejects before a handler is attached
-				promise.catch(() => {});
-			} else {
-				// Otherwise when another thread has finished, we'll start
-				this.waitingThreads.push(thread);
-			}
-		}
-
-		async processThread(thread, queue) {
-			queue.running = true;
-
-			const {items} = queue;
-
-			const next = async () => {
-				if (this.paused) {
-					return;
-				}
-
-				const item = items.shift();
-				if (item === undefined) {
-					// Exhausted queue
-					return;
-				}
-
-				const [metadata, resolve] = item;
-				await this.callback(metadata, thread);
-				resolve();
-				await next();
-			};
-
-			const threads = [];
-			for (let i = 0; i < this.maxPerThread; i++) {
-				threads.push(next());
-			}
-			await Promise.all(threads);
-
-			queue.running = false;
-
-			if (this.waitingThreads.length > 0 && !this.paused) {
-				const nextThread = this.waitingThreads.shift();
-				const nextQueue = this.threads.get(nextThread);
-				await this.processThread(nextThread, nextQueue);
-			}
-		}
-
-		async pause() {
-			// Build promises of work that went complete, will indicate a completely paused queue
-			const promises = [];
-			for (const queue of this.threads.values()) {
-				for (const item of queue.items) {
-					promises.push(item[1]);
-				}
-			}
-			this.paused = true;
-			this.waitingThreads = [];
-			await Promise.all(promises);
-		}
-
-		resume() {
-			this.paused = false;
-
-			// Restart all threads
-			for (const [thread, queue] of this.threads) {
-				if (queue.items.length > 0) {
-					this.startThread(thread, queue);
-				}
-			}
-		}
-
-		lock() {
-			this.locked = true;
-		}
-
-		async spin() {
-			while (
-				// Keep consuming all the promises until we're exhausted
-				this.runningThreads.length >
-				0
-			) {
-				const {runningThreads} = this;
-				this.runningThreads = [];
-				await Promise.all(runningThreads);
-			}
-		}
-	}
-
-
-  // project-rome/@internal/async/index.ts
-
 
 
   // project-rome/@internal/core/server/WorkerQueue.ts
@@ -120587,7 +120697,7 @@ function ___R$project$rome$$internal$codec$js$manifest$dependencies_ts$stringify
 		}
 
 		for (const [rawName, value] of consumer.asMap()) {
-			const name = ___R$project$rome$$internal$codec$js$manifest$name_ts$normalizeName({
+			const nameObj = ___R$project$rome$$internal$codec$js$manifest$name_ts$normalizeName({
 				name: rawName,
 				loose,
 				unexpected: ({description, at}) => {
@@ -120601,13 +120711,18 @@ function ___R$project$rome$$internal$codec$js$manifest$dependencies_ts$stringify
 				},
 			});
 
-			map.set(
-				name,
-				___R$project$rome$$internal$codec$js$manifest$dependencies_ts$parseDependencyPattern(
-					value,
-					loose,
-				),
+			const name = ___R$project$rome$$internal$codec$js$manifest$name_ts$manifestNameToString(
+				nameObj,
 			);
+			if (name !== undefined) {
+				map.set(
+					name,
+					___R$project$rome$$internal$codec$js$manifest$dependencies_ts$parseDependencyPattern(
+						value,
+						loose,
+					),
+				);
+			}
 		}
 
 		return map;
@@ -120823,14 +120938,9 @@ const ___R$project$rome$$internal$codec$js$manifest$convert_ts = {
 
 		const obj = {};
 		for (const [name, pattern] of map) {
-			const key = ___R$project$rome$$internal$codec$js$manifest$name_ts$manifestNameToString(
-				name,
+			obj[name] = ___R$project$rome$$internal$codec$js$manifest$dependencies_ts$stringifyDependencyPattern(
+				pattern,
 			);
-			if (key !== undefined) {
-				obj[key] = ___R$project$rome$$internal$codec$js$manifest$dependencies_ts$stringifyDependencyPattern(
-					pattern,
-				);
-			}
 		}
 		return obj;
 	}
@@ -121536,17 +121646,11 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 	}
 
 	async function ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
-		path,
-		rawConsumer,
+		consumer,
 	) {
-		const loose = path.getSegments().includes("node_modules");
-
-		const {consumer, diagnostics} = rawConsumer.capture();
-
-		// FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
-		if (path.join().includes("resolve/test/resolver/invalid_main")) {
-			consumer.setValue({});
-		}
+		const loose =
+			consumer.path !== undefined &&
+			consumer.path.getSegments().includes("node_modules");
 
 		// Check for typos. Ignore them in loose mode.
 		if (!loose) {
@@ -121589,7 +121693,7 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 			);
 		}
 
-		const manifest = {
+		return {
 			name,
 			version,
 			private: ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizeBoolean(
@@ -121688,7 +121792,7 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 				),
 			],
 			// People fields
-			author: consumer.has("author")
+			author: consumer.has("author") && !consumer.get("author").isEmpty()
 				? ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizePerson(
 						consumer.get("author"),
 						loose,
@@ -121703,11 +121807,6 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 				loose,
 			),
 			raw: consumer.asJSONObject(),
-		};
-
-		return {
-			manifest,
-			diagnostics,
 		};
 	}
 
@@ -122148,11 +122247,11 @@ const ___R$$priv$project$rome$$internal$core$server$bundler$Bundler_ts$crypto = 
 			}
 
 			// TODO `{type: "module"}` will always fail since we've produced CJS bundles
-			// rome-ignore lint/js/noDelete
+			// rome-ignore lint/js/noDelete: future cleanup
 			delete newManifest.type;
 
 			// Remove rome project config
-			// rome-ignore lint/js/noDelete
+			// rome-ignore lint/js/noDelete: future cleanup
 			delete newManifest.rome;
 
 			return newManifest;
@@ -124349,6 +124448,7 @@ function ___R$$priv$project$rome$$internal$core$server$linter$Linter_ts$createDi
 										save: shouldSave,
 										applySafeFixes,
 										compilerOptions,
+										suppressionExplanation: this.options.suppressionExplanation,
 									},
 								)
 							,
@@ -125435,6 +125535,7 @@ class ___R$project$rome$$internal$core$server$lsp$LSPServer_ts$default {
 					apply: false,
 					hasDecisions: false,
 					formatOnly: false,
+					suppressionExplanation: "suppressed via editor",
 				},
 			);
 
@@ -125859,7 +125960,8 @@ const ___R$project$rome$$internal$core$server$commands$lsp_ts$default = ___R$pro
 
 
   // project-rome/@internal/core/server/commands/check.ts
-const ___R$project$rome$$internal$core$server$commands$check_ts$default = ___R$project$rome$$internal$core$server$commands_ts$createServerCommand({
+let ___R$$priv$project$rome$$internal$core$server$commands$check_ts$cachedSuppressionExplanation;
+	const ___R$project$rome$$internal$core$server$commands$check_ts$default = ___R$project$rome$$internal$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$internal$core$common$commands_ts$commandCategories.CODE_QUALITY,
 		description: ___R$project$rome$$internal$markup$escape_ts$markup`run lint against a set of files`,
 		allowRequestFlags: ["watch", "review"],
@@ -125888,9 +125990,19 @@ const ___R$project$rome$$internal$core$server$commands$check_ts$default = ___R$p
 						description: ___R$project$rome$$internal$markup$escape_ts$markup`only include files that have changed from the specified branch/commit (defaults to main)`,
 					},
 				).asStringOrVoid(),
+				suppressionExplanation: consumer.get(
+					"suppressionExplanation",
+					{
+						description: ___R$project$rome$$internal$markup$escape_ts$markup`insert a predefined explanation for suppressions`,
+					},
+				).asStringOrVoid(),
 			};
 		},
 		async callback(req, flags) {
+			if (flags.suppressionExplanation) {
+				___R$$priv$project$rome$$internal$core$server$commands$check_ts$cachedSuppressionExplanation = flags.suppressionExplanation;
+			}
+
 			const {reporter} = req;
 
 			let lintCompilerOptionsPerFile = {};
@@ -125958,9 +126070,9 @@ const ___R$project$rome$$internal$core$server$commands$check_ts$default = ___R$p
 				globalDecisions,
 				apply: flags.apply,
 				formatOnly: flags.formatOnly,
+				suppressionExplanation: ___R$$priv$project$rome$$internal$core$server$commands$check_ts$cachedSuppressionExplanation,
 				args,
 			};
-
 			const linter = new ___R$project$rome$$internal$core$server$linter$Linter_ts$default(
 				req,
 				opts,
@@ -128131,6 +128243,7 @@ const ___R$project$rome$$internal$core$server$commands$ci_ts$default = ___R$proj
 									decisions: [],
 									apply: flags.fix,
 									changed: undefined,
+									suppressionExplanation: undefined,
 								},
 							);
 						},
@@ -128652,12 +128765,9 @@ const ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess = re
 			this.process = ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess.spawn(
 				command,
 				args,
-				Object.assign(
-					{},
-					opts,
-					{cwd: opts.cwd === undefined ? undefined : opts.cwd.join()},
-				),
+				Object.assign({}, opts, {cwd: opts.cwd.join()}),
 			);
+			this.cwd = opts.cwd;
 			this.command = command;
 			this.args = args;
 			this.output = [];
@@ -128705,20 +128815,45 @@ const ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess = re
 			}).join("");
 		}
 
-		unexpected(message) {
-			throw new Error(
-				___R$project$rome$$internal$string$utils$dedent_ts$dedent`
-			${message}
-			Command: ${this.getDisplayCommand()}
-			stderr: ${this.getOutput(false, true)}
-		`,
-			);
+		unexpected(message, category = "childProcess/failure") {
+			throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+				description: {
+					category,
+					message,
+					advice: [
+						{
+							type: "log",
+							category: "info",
+							text: ___R$project$rome$$internal$markup$escape_ts$markup`Full command`,
+						},
+						{
+							type: "command",
+							command: this.getDisplayCommand(),
+						},
+						{
+							type: "log",
+							category: "info",
+							text: ___R$project$rome$$internal$markup$escape_ts$markup`Output`,
+						},
+						{
+							type: "code",
+							language: "text",
+							sourceText: this.getOutput(),
+						},
+					],
+				},
+				location: {
+					filename: this.cwd.join(),
+				},
+			});
 		}
 
 		async waitSuccess() {
 			const code = await this.wait();
 			if (code !== 0) {
-				throw this.unexpected("Command failed. Exited with code " + code);
+				throw this.unexpected(
+					___R$project$rome$$internal$markup$escape_ts$markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${code}.`,
+				);
 			}
 			return this;
 		}
@@ -128738,7 +128873,7 @@ const ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess = re
 	function ___R$project$rome$$internal$child$process$index_ts$spawn(
 		command,
 		args,
-		opts = {},
+		opts,
 	) {
 		return new ___R$project$rome$$internal$child$process$index_ts$ChildProcess(
 			command,
@@ -128981,15 +129116,91 @@ const ___R$project$rome$$internal$core$server$commands$init_ts$default = ___R$pr
 			);
 			await updateConfig();
 
+			//
+			const manifestPath = cwd.append("package.json");
+			let manifest;
+			if (await ___R$project$rome$$internal$fs$index_ts$exists(manifestPath)) {
+				manifest = await ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
+					___R$project$rome$$internal$codec$json$index_ts$consumeJSON(
+						await ___R$project$rome$$internal$fs$index_ts$readFileTextMeta(
+							manifestPath,
+						),
+					),
+				);
+			}
+
 			// Generate files
 			await reporter.steps([
 				{
-					message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating lint config and apply formatting`,
+					message: ___R$project$rome$$internal$markup$escape_ts$markup`Installing Rome as a dependency`,
+					test() {
+						return (
+							manifest !== undefined &&
+							!manifest.dependencies.has("rome") &&
+							!manifest.devDependencies.has("rome")
+						);
+					},
 					async callback() {
-						if (!flags.apply) {
-							return {skipped: true};
+						if (manifest === undefined) {
+							// Should not be because of test()
+							return;
 						}
 
+						// Modify package.json
+						manifest.devDependencies.set(
+							"rome",
+							{
+								type: "semver",
+								range: ___R$project$rome$$internal$codec$semver$parse_ts$parseSemverRange({
+									input: "^" +
+									___R$project$rome$$internal$core$common$constants_ts$VERSION,
+								}),
+							},
+						);
+						await ___R$project$rome$$internal$fs$index_ts$writeFile(
+							manifestPath,
+							JSON.stringify(
+								___R$project$rome$$internal$codec$js$manifest$convert_ts$convertManifestToJSON(
+									manifest,
+								),
+								null,
+								"  ",
+							),
+						);
+
+						// Run package manager
+						let installCommand;
+						if (
+							await ___R$project$rome$$internal$fs$index_ts$exists(
+								cwd.append("yarn.lock"),
+							)
+						) {
+							installCommand = "yarn";
+						} else if (
+							await ___R$project$rome$$internal$fs$index_ts$exists(
+								cwd.append("package-lock.json"),
+							)
+						) {
+							installCommand = "npm";
+						}
+						if (installCommand !== undefined) {
+							const proc = ___R$project$rome$$internal$child$process$index_ts$spawn(
+								installCommand,
+								["install"],
+								{
+									cwd,
+								},
+							);
+							await proc.waitSuccess();
+						}
+					},
+				},
+				{
+					message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating lint config and apply formatting`,
+					test() {
+						return flags.apply;
+					},
+					async callback() {
 						const linter = new ___R$project$rome$$internal$core$server$linter$Linter_ts$default(
 							req,
 							{
@@ -129017,8 +129228,6 @@ const ___R$project$rome$$internal$core$server$commands$init_ts$default = ___R$pr
 								},
 							});
 						}
-
-						return {skipped: false};
 					},
 				},
 				{
@@ -129415,8 +129624,6 @@ function ___R$$priv$project$rome$$internal$core$server$project$ProjectManager_ts
 			this.filenameToUid = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 			this.remoteToLocalPath = new ___R$project$rome$$internal$path$collections_ts$UnknownPathMap();
 			this.localPathToRemote = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
-
-			this.evictingProjectLock = new ___R$project$rome$$internal$async$lockers_ts$SingleLocker();
 		}
 
 		async init() {
@@ -129679,9 +129886,7 @@ function ___R$$priv$project$rome$$internal$core$server$project$ProjectManager_ts
 		}
 
 		async evictProject(project, reload) {
-			const lock = await this.evictingProjectLock.getLock();
-
-			try {
+			await this.server.memoryFs.processingLock.wrap(async () => {
 				const evictProjectId = project.id;
 
 				// Remove the config locs from our internal map that belong to this project
@@ -129754,9 +129959,7 @@ function ___R$$priv$project$rome$$internal$core$server$project$ProjectManager_ts
 					);
 					await this.findProject(project.directory);
 				}
-			} finally {
-				lock.release();
-			}
+			});
 		}
 
 		getProjects() {
@@ -130087,6 +130290,8 @@ function ___R$$priv$project$rome$$internal$core$server$project$ProjectManager_ts
 
 		// Attempt to find a project on the real disk and seed it into the memory file system
 		async findProject(cwd) {
+			await this.server.memoryFs.processingLock.wait();
+
 			// Check if we have an existing project
 			const syncProject = this.findLoadedProject(cwd);
 			if (syncProject !== undefined) {
@@ -132175,6 +132380,10 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 			this.changedFileEvent = new ___R$project$rome$$internal$events$EventQueue_ts$default();
 			this.deletedFileEvent = new ___R$project$rome$$internal$events$EventQueue_ts$default();
 			this.newFileEvent = new ___R$project$rome$$internal$events$EventQueue_ts$default();
+
+			this.processingLock = new ___R$project$rome$$internal$async$lockers_ts$GlobalLock();
+			this.processingLock.attachLock(this.changedFileEvent.lock);
+			this.processingLock.attachLock(this.deletedFileEvent.lock);
 		}
 
 		isActiveWatcherId(id) {
@@ -132210,15 +132419,6 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 					}
 				}
 			}
-		}
-
-		async flushFileEvents() {
-			const {server} = this;
-			await server.refreshFileEvent.flush();
-			await this.newFileEvent.flush();
-			await this.changedFileEvent.flush();
-			await this.deletedFileEvent.flush();
-			await server.projectManager.evictingProjectLock.waitLockDrained();
 		}
 
 		hasBuffer(path) {
@@ -132541,15 +132741,17 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 			const promise = this.createWatcher(diagnostics, projectDirectory, id);
 			this.watchPromises.set(projectDirectory, promise);
 
-			const watcherClose = await promise;
-			this.watchers.set(
-				projectDirectory,
-				{
-					path: projectDirectory,
-					close: watcherClose,
-				},
-			);
-			this.watchPromises.delete(projectDirectory);
+			await this.processingLock.wrap(async () => {
+				const watcherClose = await promise;
+				this.watchers.set(
+					projectDirectory,
+					{
+						path: projectDirectory,
+						close: watcherClose,
+					},
+				);
+				this.watchPromises.delete(projectDirectory);
+			});
 
 			diagnostics.maybeThrowDiagnosticsError();
 		}
@@ -132675,16 +132877,37 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 				consumeDiagnosticCategory: "parse/manifest",
 			});
 
-			const {
-				manifest,
-				diagnostics: normalizedDiagnostics,
-			} = await ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
-				path,
-				consumer,
+			const {consumer: normalizeConsumer, diagnostics: rawDiagnostics} = consumer.capture();
+			const manifest = await ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
+				normalizeConsumer,
 			);
 
 			// If manifest is undefined then we failed to validate and have diagnostics
-			if (normalizedDiagnostics.length > 0) {
+			if (rawDiagnostics.length > 0) {
+				const normalizedDiagnostics = rawDiagnostics.map((diag) =>
+					Object.assign(
+						{},
+						diag,
+						{
+							description: Object.assign(
+								{},
+								diag.description,
+								{
+									advice: [
+										...diag.description.advice,
+										{
+											type: "log",
+											category: "info",
+											text: ___R$project$rome$$internal$markup$escape_ts$markup`Error occurred for package <emphasis>${___R$project$rome$$internal$codec$js$manifest$name_ts$manifestNameToString(
+												manifest.name,
+											)}</emphasis> at <emphasis>${path.getParent()}</emphasis>`,
+										},
+									],
+								},
+							),
+						},
+					)
+				);
 				diagnostics.addDiagnostics(normalizedDiagnostics);
 				return;
 			}
@@ -133974,7 +134197,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$RecoveryStore_ts$DEFAULT_
 				for (const teardown of teardowns) {
 					await teardown();
 				}
-				await this.server.memoryFs.flushFileEvents();
+				await this.server.memoryFs.processingLock.wait();
 			}
 
 			return fileCount;
@@ -134295,7 +134518,7 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 			promise.catch(this.onFatalErrorBound);
 		}
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		wrapFatal(callback) {
 			return (((...args) => {
 				try {
@@ -137248,7 +137471,7 @@ class ___R$project$rome$$internal$js$analysis$scopes_ts$Scope {
 			});
 		}
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		find(klass) {
 			const scope = this.findOptional(klass);
 			if (scope === undefined) {
@@ -137259,7 +137482,7 @@ class ___R$project$rome$$internal$js$analysis$scopes_ts$Scope {
 		}
 
 		findOptional(
-			// rome-ignore lint/ts/noExplicitAny
+			// rome-ignore lint/ts/noExplicitAny: future cleanup
 			klass,
 		) {
 			let scope = this;
@@ -138761,7 +138984,7 @@ const ___R$project$rome$$internal$js$analysis$types$index_ts = {
 			return ___R$project$rome$$internal$js$analysis$types$index_ts$default;
 		},
 	};
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	const ___R$$priv$project$rome$$internal$js$analysis$types$index_ts$types = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
 		"types",
 	);
@@ -145141,6 +145364,7 @@ const ___R$project$rome$$internal$js$analysis$index_ts = {
 			// Run the compiler in lint-mode which is where all the rules are actually ran
 			const res = await ___R$project$rome$$internal$compiler$lint$index_ts$default({
 				applySafeFixes: options.applySafeFixes,
+				suppressionExplanation: options.suppressionExplanation,
 				ref,
 				options: {
 					lint: options.compilerOptions,

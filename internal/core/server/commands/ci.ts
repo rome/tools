@@ -52,6 +52,7 @@ export default createServerCommand({
 								decisions: [],
 								apply: flags.fix,
 								changed: undefined,
+								suppressionExplanation: undefined,
 							},
 						);
 					},

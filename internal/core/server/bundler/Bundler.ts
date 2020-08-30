@@ -449,11 +449,11 @@ export default class Bundler {
 		}
 
 		// TODO `{type: "module"}` will always fail since we've produced CJS bundles
-		// rome-ignore lint/js/noDelete
+		// rome-ignore lint/js/noDelete: future cleanup
 		delete newManifest.type;
 
 		// Remove rome project config
-		// rome-ignore lint/js/noDelete
+		// rome-ignore lint/js/noDelete: future cleanup
 		delete newManifest.rome;
 
 		return newManifest;

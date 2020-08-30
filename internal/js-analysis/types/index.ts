@@ -49,7 +49,7 @@ import MissingUnionE from "./errors/MissingUnionE";
 import {Class} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 const types: ExtendedMap<string, Class<T, Array<any>>> = new ExtendedMap(
 	"types",
 );

@@ -92,7 +92,7 @@ export async function chainCommands(
 	}
 }
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export const serverCommands: Map<string, ServerCommand<any>> = new Map();
 serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);

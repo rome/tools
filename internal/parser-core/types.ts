@@ -15,7 +15,7 @@ import {
 import {default as ParserCore} from "./ParserCore";
 import {Dict} from "@internal/typescript-helpers";
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
 	tokens: TokensShape;
 	state: Dict<any>;

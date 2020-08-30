@@ -22,11 +22,18 @@ function getStartLine(node: AnyNode): undefined | Number1 {
 	}
 }
 
-function buildSuppressionCommentValue(categories: Set<string>): string {
-	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}`;
+function buildSuppressionCommentValue(
+	categories: Set<string>,
+	explanation = "suppressed via --review",
+): string {
+	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}: ${explanation}`;
 }
 
-export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot {
+export function addSuppressions(
+	context: CompilerContext,
+	ast: AnyRoot,
+	explanation?: string,
+): AnyRoot {
 	if (!context.hasLintDecisions()) {
 		return ast;
 	}
@@ -67,7 +74,10 @@ export function addSuppressions(context: CompilerContext, ast: AnyRoot): AnyRoot
 				path,
 				{
 					type: "CommentLine",
-					value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
+					value: ` ${buildSuppressionCommentValue(
+						suppressionCategories,
+						explanation,
+					)}`,
 				},
 			);
 

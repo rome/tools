@@ -9,7 +9,7 @@ test(
 	"nodes and their children should no longer have locations",
 	async (t) => {
 		// Needed to access non existing property body
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const jsNode: any = removeLoc(
 			parseJS({
 				path: "unknown",
@@ -17,7 +17,7 @@ test(
 			}),
 		);
 
-		// rome-ignore lint/ts/noExplicitAny
+		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const cssNode: any = removeLoc(
 			parseCSS({
 				path: "unknown",

@@ -82,6 +82,14 @@ Custom variables you want to declare as global.
 rome config push lint.globals SomeGlobal
 ```
 
+#### `lint.requireSuppressionExplanations`
+
+Raise a diagnostic if a suppression does not have a [valid explanation](#explanation).
+
+```bash
+rome config enable lint.requireSuppressionExplanations
+```
+
 ### `dependencies.exceptions`
 
 Exception rules for your dependencies that don't pass validation.

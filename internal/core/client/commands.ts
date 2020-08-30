@@ -31,7 +31,7 @@ export function createLocalCommand<Flags extends UnknownObject>(
 	return cmd;
 }
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export const localCommands: Map<string, LocalCommand<any>> = new Map();
 localCommands.set("start", start);
 localCommands.set("develop", develop);

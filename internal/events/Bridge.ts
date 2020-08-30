@@ -108,7 +108,7 @@ export default class Bridge {
 
 	private messageIdCounter: number;
 
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	private events: ExtendedMap<string, BridgeEvent<any, any>>;
 
 	public listeners: Set<string>;
@@ -116,7 +116,7 @@ export default class Bridge {
 
 	private opts: BridgeOptions;
 
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	private errorTransports: Map<string, ErrorSerial<any>>;
 
 	public attachEndSubscriptionRemoval(subscription: EventSubscription) {
@@ -410,7 +410,7 @@ export default class Bridge {
 		};
 	}
 
-	// rome-ignore lint/ts/noExplicitAny
+	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	public addErrorTransport(name: string, transport: ErrorSerial<any>) {
 		this.errorTransports.set(name, transport);
 	}

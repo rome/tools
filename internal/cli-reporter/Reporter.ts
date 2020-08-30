@@ -67,7 +67,7 @@ import {
 } from "@internal/typescript-helpers";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
-// rome-ignore lint/ts/noExplicitAny
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
 export type ReporterOptions = {
