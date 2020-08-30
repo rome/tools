@@ -763,7 +763,7 @@ export default class ProjectManager {
 		}
 	}
 
-	private hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
+	public hasLoadedProjectDirectory(path: AbsoluteFilePath): boolean {
 		return this.projectDirectoryToProject.has(path);
 	}
 
@@ -878,12 +878,10 @@ export default class ProjectManager {
 						// Would have emitted a diagnostic
 						return;
 					}
-
 					await this.server.memoryFs.watch(dir);
 					return this.assertProjectExisting(cwd);
 				}
 			}
-
 			// Check for package.json
 			const packagePath = dir.append("package.json");
 			if (await this.server.memoryFs.existsHard(packagePath)) {
