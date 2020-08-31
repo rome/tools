@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:e0895c5496d85be93b3037bf8f60fc84bc118e27,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:49f1686a9171b1b7902464c46816b4d0e930f7df,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -230,7 +230,7 @@ MISSING DOCUMENTATION
 	<a href="/docs/lint/rules/js/noUnnecessaryContinue">noUnnecessaryContinue</a>
 	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
 </h3>
-disallow unnecessary `continue` statement inside the loop
+disallow unnecessary `continue` statements inside loops
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
