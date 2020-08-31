@@ -861,6 +861,10 @@ export default class Consumer {
 		return Array.from(this.asIterable(), callback);
 	}
 
+	public asImplicitArray(): Array<Consumer> {
+		return this.asImplicitMappedArray((c) => c);
+	}
+
 	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);

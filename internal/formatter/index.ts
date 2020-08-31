@@ -9,12 +9,14 @@ import {AnyNode, MOCK_PARENT} from "@internal/ast";
 import Builder from "./Builder";
 import {PrinterOutput, printTokenToString} from "./Printer";
 import {isRoot} from "@internal/ast-utils";
+import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 
 export {Builder};
 export {BuilderMethod} from "./Builder";
 export * from "./tokens";
 
 export type FormatterOptions = {
+	projectConfig?: ProjectConfig;
 	typeAnnotations?: boolean;
 	format?: "pretty" | "compact";
 	indent?: number;
@@ -25,6 +27,7 @@ export type FormatterOptions = {
 export function formatAST(
 	ast: AnyNode,
 	{
+		projectConfig = createDefaultProjectConfig(),
 		format = "pretty",
 		typeAnnotations = true,
 		sourceMaps = false,
@@ -42,9 +45,14 @@ export function formatAST(
 		isRoot(ast) ? ast.comments : [],
 	);
 	const token = builder.tokenize(ast, MOCK_PARENT);
+
+	const indentChar = projectConfig.format.indentStyle === "tab" ? "\t" : " ";
+	const indentString = indentChar.repeat(projectConfig.format.indentSize);
+
 	const formatted = printTokenToString(
 		token,
 		{
+			indentString,
 			printWidth: format === "pretty" ? 80 : Infinity,
 			rootIndent: indent,
 			tabWidth: 2,

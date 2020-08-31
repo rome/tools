@@ -25,6 +25,7 @@ import {
 } from "@internal/compiler";
 import {
 	WorkerCompilerOptions,
+	WorkerFormatOptions,
 	WorkerFormatResult,
 	WorkerLintOptions,
 	WorkerLintResult,
@@ -43,7 +44,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {FormatterOptions, formatAST} from "@internal/formatter";
+import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
@@ -132,7 +133,16 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
-		let {ast, mtime} = await this.worker.parse(ref, parseOptions);
+		let {ast, mtime, project} = await this.worker.parse(ref, parseOptions);
+
+		if (!project.config.format.enabled) {
+			return {
+				file: undefined,
+				diagnostics: [
+					// TODO not enabled
+				],
+			};
+		}
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -216,7 +226,12 @@ export default class WorkerAPI {
 		let file: undefined | RecoverySaveFile;
 
 		if (diags.length === 0) {
-			const formatted = formatAST(ast).code;
+			const formatted = formatAST(
+				ast,
+				{
+					projectConfig: project.config,
+				},
+			).code;
 			file = {
 				type: "WRITE",
 				content: formatted,
@@ -338,7 +353,7 @@ export default class WorkerAPI {
 
 	public async format(
 		ref: FileReference,
-		formatOptions: FormatterOptions,
+		formatOptions: WorkerFormatOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | WorkerFormatResult> {
 		const res = await this._format(ref, formatOptions, parseOptions);
@@ -356,7 +371,7 @@ export default class WorkerAPI {
 
 	private async _format(
 		ref: FileReference,
-		formatOptions: FormatterOptions,
+		formatOptions: WorkerFormatOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | ExtensionLintResult> {
 		const project = this.worker.getProject(ref.project);
@@ -364,7 +379,7 @@ export default class WorkerAPI {
 
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.capabilities.format) {
+		if (!handler.capabilities.format || !project.config.format.enabled) {
 			return;
 		}
 
@@ -384,7 +399,13 @@ export default class WorkerAPI {
 			parseOptions,
 		);
 
-		const out = formatAST(ast, formatOptions);
+		const out = formatAST(
+			ast,
+			{
+				...formatOptions,
+				projectConfig: project.config,
+			},
+		);
 
 		return this.interceptDiagnostics(
 			{
@@ -464,7 +485,7 @@ export default class WorkerAPI {
 		);
 
 		// If the file has pending fixes
-		const needsSave = formatted !== sourceText;
+		const needsSave = project.config.format.enabled && formatted !== sourceText;
 
 		// Autofix if necessary
 		if (options.save && needsSave) {

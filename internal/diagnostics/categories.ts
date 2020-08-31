@@ -9,7 +9,7 @@
 // all category names are defined. This allows the naming scheme to be more easily reviewed and
 // made consistent.
 export type DiagnosticCategory =
-	| LintDiagnosticCategory
+	| DiagnosticLintCategory
 	| "analyzeDependencies/cjsExportInES"
 	| "args/fileNotFound"
 	| "args/invalid"
@@ -109,8 +109,8 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:e7ea2cc40417911f07ff42c3c5690adfb2497ac0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
-type LintDiagnosticCategory =
+/* GENERATED:START(hash:4fc28e881ad64941ef6ccfeb3edd1e9fa8b79578,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+export type DiagnosticLintCategory =
 	| "lint/html/useClosingNonVoid"
 	| "lint/js/noArguments"
 	| "lint/js/noAsyncPromiseExecutor"

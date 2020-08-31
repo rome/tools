@@ -16,6 +16,7 @@ import {
 import {Consumer} from "@internal/consume";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
+import {LintRuleName} from "@internal/compiler";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -41,18 +42,27 @@ export type DependenciesExceptions = {
 	invalidLicenses: InvalidLicenses;
 };
 
+export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
+	presets: Array<ProjectConfigPresetNames>;
 	cache: {};
 	resolver: {};
 	compiler: {};
 	bundler: {
 		externals: Array<string>;
 	};
+	format: {
+		enabled: boolean;
+		indentStyle: "tab" | "space";
+		indentSize: number;
+	};
 	lint: {
 		globals: Array<string>;
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
+		disabledRules: Array<LintRuleName>;
 	};
 	typeCheck: {
 		enabled: boolean;
@@ -139,6 +149,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		name: "unknown",
 		root: false,
 		version: undefined,
+		presets: [],
 		cache: {},
 		develop: {
 			serveStatic: true,
@@ -159,10 +170,16 @@ export function createDefaultProjectConfig(): ProjectConfig {
 				invalidLicenses: new Map(),
 			},
 		},
+		format: {
+			enabled: true,
+			indentStyle: "tab",
+			indentSize: 1,
+		},
 		lint: {
 			ignore: [],
 			globals: [],
 			requireSuppressionExplanations: true,
+			disabledRules: [],
 		},
 		tests: {
 			ignore: [],

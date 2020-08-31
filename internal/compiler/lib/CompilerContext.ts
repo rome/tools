@@ -344,9 +344,19 @@ export default class CompilerContext {
 			);
 		}
 
-		const {marker, ...diag} = contextDiag;
+		let {marker, tags, ...diag} = contextDiag;
+
+		// Only set `fixable` if formatting is enabled
+		if (tags !== undefined && tags.fixable) {
+			tags = {
+				...tags,
+				fixable: this.project.config.format.enabled,
+			};
+		}
+
 		const diagnostic = this.diagnostics.addDiagnostic({
 			...diag,
+			tags,
 			description: {
 				...description,
 				advice,

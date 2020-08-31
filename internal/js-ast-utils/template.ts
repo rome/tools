@@ -10,6 +10,7 @@ import {
 	AnyJSIdentifier,
 	AnyJSStatement,
 	AnyNode,
+	JSRoot,
 	jsRoot,
 } from "@internal/ast";
 import {CompilerContext, Path, signals} from "@internal/compiler";
@@ -198,4 +199,11 @@ template.statement = (
 		throw new Error("More than one statement isn't allowed for a template.");
 	}
 	return body[0];
+};
+
+template.root = (
+	strs: TemplateStringsArray,
+	...substitutions: TemplateSubstitions
+): JSRoot => {
+	return jsRoot.assert(template(strs, ...substitutions));
 };

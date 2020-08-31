@@ -10,9 +10,10 @@ import {Number0, Number1, ob1Inc, ob1Number0, ob1Number1} from "@internal/ob1";
 import {Token} from "./tokens";
 
 export type PrinterOptions = {
+	indentString: string;
+	tabWidth: number;
 	printWidth: number;
 	rootIndent: number;
-	tabWidth: number;
 };
 
 export type PrinterOutput = {
@@ -23,7 +24,7 @@ export type PrinterOutput = {
 type State = {
 	flat: boolean;
 	indent: Box<number>;
-	pendingTabs: Box<number>;
+	pendingIndent: Box<number>;
 	pendingSpaces: Box<number>;
 	generatedIndex: Box<Number0>;
 	generatedLine: Box<Number1>;
@@ -60,7 +61,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
 		generatedLine: new Box(parent.generatedLine.value),
 		generatedColumn: new Box(parent.generatedColumn.value),
 		pendingSpaces: new Box(parent.pendingSpaces.value),
-		pendingTabs: new Box(parent.pendingTabs.value),
+		pendingIndent: new Box(parent.pendingIndent.value),
 		lineWidth: new Box(parent.lineWidth.value),
 	};
 
@@ -85,7 +86,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
 	parent.generatedLine.value = state.generatedLine.value;
 	parent.generatedColumn.value = state.generatedColumn.value;
 	parent.pendingSpaces.value = state.pendingSpaces.value;
-	parent.pendingTabs.value = state.pendingTabs.value;
+	parent.pendingIndent.value = state.pendingIndent.value;
 	parent.lineWidth.value = state.lineWidth.value;
 }
 
@@ -117,9 +118,10 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 		if (typeof token === "string") {
 			if (token !== "") {
 				// Print pending tabs
-				if (state.pendingTabs.value > 0) {
-					write("\t".repeat(state.pendingTabs.value), state, options);
-					state.pendingTabs.value = 0;
+				if (state.pendingIndent.value > 0) {
+					const indent = options.indentString.repeat(state.pendingIndent.value);
+					write(indent, state, options);
+					state.pendingIndent.value = 0;
 				}
 
 				// Print pending spaces
@@ -242,9 +244,9 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 						} else {
 							write("\n", state, options);
 
-							// Enqueue the indentation
+							// Enqueue indentation
 							state.pendingSpaces.value = 0;
-							state.pendingTabs.value = state.indent.value;
+							state.pendingIndent.value = state.indent.value;
 						}
 					}
 					break;
@@ -301,7 +303,7 @@ export function printTokenToString(
 		flat: false,
 		indent: new Box(options.rootIndent),
 		pendingSpaces: new Box(0),
-		pendingTabs: new Box(0),
+		pendingIndent: new Box(0),
 		generatedIndex: new Box(ob1Number0),
 		generatedLine: new Box(ob1Number1),
 		generatedColumn: new Box(ob1Number0),

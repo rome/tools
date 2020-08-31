@@ -34,6 +34,7 @@ import crypto = require("crypto");
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
+import {lintRuleNames} from "@internal/compiler";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
@@ -152,6 +153,8 @@ export async function normalizeProjectConfig(
 	const hash = crypto.createHash("sha256").update(configFile).digest("hex");
 
 	const config: PartialProjectConfig = {
+		presets: [],
+		format: {},
 		compiler: {},
 		bundler: {},
 		cache: {},
@@ -282,10 +285,41 @@ export async function normalizeProjectConfig(
 			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
 
+		if (lint.has("disabledRules")) {
+			config.lint.disabledRules = lint.get("disabledRules").asMappedArray((item) =>
+				item.asStringSet(lintRuleNames)
+			);
+		}
+
 		if (lint.has("requireSuppressionExplanations")) {
 			config.lint.requireSuppressionExplanations = lint.get(
 				"requireSuppressionExplanations",
 			).asBoolean();
+		}
+	}
+
+	const format = consumer.get("format");
+	if (categoryExists(format)) {
+		if (lint.has("enabled")) {
+			config.format.enabled = format.get("enabled").asBoolean();
+		}
+
+		if (lint.has("indentStyle")) {
+			const indentStyle = format.get("indentStyle").asStringSet(["tab", "space"]);
+			config.format.indentStyle = indentStyle;
+
+			// If there was an indent style specified without a size, default to 2 for spaces, and 1 for tabs
+			if (!lint.has("indentSize")) {
+				config.format.indentSize = indentStyle === "space" ? 2 : 1;
+			}
+		}
+
+		if (lint.has("indentSize")) {
+			// Set a range to prevent wacky behaviour
+			config.format.indentSize = lint.get("indentSize").asNumberInRange({
+				min: 0,
+				max: 10,
+			});
 		}
 	}
 
@@ -353,14 +387,18 @@ export async function normalizeProjectConfig(
 	// Flag unknown properties
 	consumer.enforceUsedProperties("config property");
 
-	if (_extends.exists()) {
-		return await extendProjectConfig(projectDirectory, _extends, config, meta);
-	}
-
-	return {
+	let normalized: NormalizedPartial = {
 		partial: config,
 		meta,
 	};
+
+	if (_extends.exists()) {
+		for (const elem of _extends.asImplicitArray()) {
+			normalized = await extendProjectConfig(projectDirectory, elem, normalized);
+		}
+	}
+
+	return normalized;
 }
 
 async function normalizeTypeCheckingLibs(
@@ -399,8 +437,7 @@ async function normalizeTypeCheckingLibs(
 async function extendProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
-	config: PartialProjectConfig,
-	meta: ProjectConfigMetaHard,
+	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
 	const extendsRelative = extendsStrConsumer.asString();
 
@@ -423,6 +460,11 @@ async function extendProjectConfig(
 
 	const merged: PartialProjectConfig = mergePartialConfig(extendsObj, config);
 
+	const presets = mergeArrays(extendsObj.presets, config.presets);
+	if (presets !== undefined) {
+		merged.presets = presets;
+	}
+
 	const lintIgnore = mergeArrays(extendsObj.lint.ignore, config.lint.ignore);
 	if (lintIgnore !== undefined) {
 		merged.lint.ignore = lintIgnore;
@@ -431,6 +473,14 @@ async function extendProjectConfig(
 	const lintGlobals = mergeArrays(extendsObj.lint.globals, config.lint.globals);
 	if (lintGlobals !== undefined) {
 		merged.lint.globals = lintGlobals;
+	}
+
+	const lintDisabledRules = mergeArrays(
+		extendsObj.lint.disabledRules,
+		config.lint.disabledRules,
+	);
+	if (lintDisabledRules !== undefined) {
+		merged.lint.disabledRules = lintDisabledRules;
 	}
 
 	const testingIgnore = mergeArrays(
@@ -482,6 +532,7 @@ function mergePartialConfig<
 	B extends PartialProjectConfig
 >(a: A, b: B): MergedPartialConfig<A, B> {
 	return {
+		presets: [...a.presets, ...b.presets],
 		cache: {
 			...a.cache,
 			...b.cache,
@@ -489,6 +540,10 @@ function mergePartialConfig<
 		compiler: {
 			...a.compiler,
 			...b.compiler,
+		},
+		format: {
+			...a.format,
+			...b.format,
 		},
 		lint: {
 			...a.lint,
