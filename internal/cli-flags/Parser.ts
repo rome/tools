@@ -111,7 +111,7 @@ type _FlagValue = undefined | number | string | boolean;
 
 export type FlagValue = _FlagValue | Array<_FlagValue>;
 
-type SupportedCompletionShells = "bash" | "fish";
+type SupportedCompletionShells = "bash" | "fish" | "zsh";
 
 export default class Parser<T> {
 	constructor(opts: ParserOptions<T>) {
@@ -419,6 +419,11 @@ export default class Parser<T> {
 				);
 				break;
 			}
+
+			case "zsh": {
+				path = HOME_PATH.append(".zsh-completions", `_${programName}`);
+				break;
+			}
 		}
 
 		// Write completions
@@ -510,7 +515,7 @@ export default class Parser<T> {
 				description: markup`Write shell completion commands`,
 				inputName: "shell",
 			},
-		).asStringSetOrVoid(["fish", "bash"]);
+		).asStringSetOrVoid(["fish", "bash", "zsh"]);
 		if (writeShellCompletions !== undefined) {
 			await this.writeShellCompletions(
 				writeShellCompletions,
@@ -525,7 +530,7 @@ export default class Parser<T> {
 				description: markup`Generate shell completion commands`,
 				inputName: "shell",
 			},
-		).asStringSetOrVoid(["fish", "bash"]);
+		).asStringSetOrVoid(["fish", "bash", "zsh"]);
 		if (logShellCompletions !== undefined) {
 			await this.logShellCompletions(logShellCompletions);
 		}
@@ -782,6 +787,9 @@ export default class Parser<T> {
 			case "fish": {
 				return this.genFishCompletions(programName);
 			}
+			case "zsh": {
+				return this.genZshCompletions(programName);
+			}
 		}
 	}
 
@@ -909,6 +917,71 @@ export default class Parser<T> {
       ${romeFunc}
       complete -F __${prg}_gen_completions ${prg}
     `;
+	}
+
+	private genZshCompletions(prg: string): string {
+		// const globalFlags: Set<ConsumePropertyDefinition> = new Set();
+		let globalFlags = "";
+		const commandToFlags: Map<string, Set<ArgDeclaration>> = new Map();
+		for (let [, meta] of this.declaredFlags.entries()) {
+			if (meta.command === undefined) {
+				let desc = "";
+				if (meta.definition.metadata.description) {
+					desc = `[${readMarkup(meta.definition.metadata.description)}]`;
+				}
+				globalFlags += `\n\t"--${meta.name}${desc}" \\`;
+			} else {
+				if (commandToFlags.has(meta.command)) {
+					const flags = commandToFlags.get(meta.command);
+					if (flags) {
+						flags.add(meta);
+					}
+				} else {
+					const flags: Set<ArgDeclaration> = new Set();
+					flags.add(meta);
+					commandToFlags.set(meta.command, flags);
+				}
+			}
+		}
+		let functions = "";
+		const functionNames = new Set();
+		let commandNames = [];
+		let caseString = "case $line[1] in";
+		for (let [command, flags] of commandToFlags.entries()) {
+			const normalizedCommand = command.replace(/\s/, "_");
+			commandNames.push(`${normalizedCommand}`);
+			caseString += `\n\t ${normalizedCommand}) \n\t\t_${prg}_${normalizedCommand} \n\t;;`;
+			functionNames.add(`_${prg}_${normalizedCommand}`);
+			let functionToPrint = `\tfunction _${prg}_${normalizedCommand} {`;
+			if (flags.size > 0) {
+				functionToPrint += "\n\t\t _arguments";
+				for (let flag of flags.values()) {
+					let desc = "";
+					if (flag.definition.metadata.description) {
+						desc = `[${readMarkup(flag.definition.metadata.description)}]`;
+					}
+					functionToPrint += ` \\ \n\t\t\t"--${flag.name}${desc}"`;
+				}
+				functionToPrint += "\n\t}";
+			}
+
+			functions += "\n" + functionToPrint;
+		}
+
+		caseString += "\n\tesac";
+
+		return dedent`
+			function _${prg} {
+			    local line
+
+			    _arguments -C \ ${globalFlags}
+			        "1: :(${commandNames.join(" ")})" \
+			        "*::arg:->args"
+
+			    ${caseString}
+			    ${functions}
+			}
+		`;
 	}
 
 	public async showHelp(

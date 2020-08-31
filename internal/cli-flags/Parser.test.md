@@ -21,8 +21,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -43,8 +45,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -67,8 +71,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -118,8 +124,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -143,8 +151,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -170,8 +180,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -221,8 +233,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -270,8 +284,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -311,8 +327,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -354,8 +372,10 @@ Object {}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -401,9 +421,11 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -438,9 +460,11 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    the name of the coolest person in the world
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -475,9 +499,11 @@ Object {run: false}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -512,9 +538,11 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -549,9 +577,11 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -586,9 +616,11 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -623,9 +655,11 @@ Object {name: undefined}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -660,9 +694,11 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -697,9 +733,11 @@ Object {run: true}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --run                             no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -734,9 +772,11 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -765,9 +805,11 @@ Object {name: "sebastian"}
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   --help, -h                        Show this help screen
-  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash")
+  --log-shell-completions <shell>   Generate shell completion commands - values "fish" "bash"
+                                    "zsh")
   --name <input>                    no description found
-  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash")
+  --write-shell-completions <shell> Write shell completion commands - values "fish" "bash" "zsh"
+                                    )
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
