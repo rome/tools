@@ -1,7 +1,7 @@
 import {descriptions} from "@internal/diagnostics";
 import {createVisitor, signals} from "@internal/compiler";
 import {doesNodeMatchPattern, hasJSXAttribute} from "@internal/js-ast-utils";
-import {isDomElement} from "@internal/js-ast-utils/isDomElement";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 export default createVisitor({
 	name: "jsx-a11y/noHeaderScope",
@@ -10,7 +10,7 @@ export default createVisitor({
 		const {node} = path;
 
 		if (
-			isDomElement(node) &&
+			isJSXDOMElement(node) &&
 			hasJSXAttribute(node, "scope") &&
 			!doesNodeMatchPattern(node.name, "th")
 		) {

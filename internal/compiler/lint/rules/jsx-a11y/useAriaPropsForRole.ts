@@ -2,14 +2,14 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {ariaRolesMap} from "@internal/compiler/lint/utils/aria";
-import {isDomElement} from "@internal/js-ast-utils/isDomElement";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 export default createVisitor({
 	name: "jsx-a11y/useAriaPropsForRole",
 	enter(path) {
 		const {node} = path;
 
-		if (isDomElement(node) && hasJSXAttribute(node, "role")) {
+		if (isJSXDOMElement(node) && hasJSXAttribute(node, "role")) {
 			const attr = getJSXAttribute(node, "role");
 			if (attr && attr.value && attr.value.type === "JSStringLiteral") {
 				const role = ariaRolesMap.get(attr.value.value);

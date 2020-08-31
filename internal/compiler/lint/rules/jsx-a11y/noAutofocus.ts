@@ -1,7 +1,7 @@
 import {descriptions} from "@internal/diagnostics";
 import {createVisitor, signals} from "@internal/compiler";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
-import {isDomElement} from "@internal/js-ast-utils/isDomElement";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 export default createVisitor({
 	name: "jsx-a11y/noAutofocus",
@@ -9,7 +9,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (isDomElement(node) && hasJSXAttribute(node, "autoFocus")) {
+		if (isJSXDOMElement(node) && hasJSXAttribute(node, "autoFocus")) {
 			return path.addFixableDiagnostic(
 				{
 					target: getJSXAttribute(node, "autoFocus"),

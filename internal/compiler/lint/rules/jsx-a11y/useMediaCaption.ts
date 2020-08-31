@@ -2,7 +2,7 @@ import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {JSXElement} from "@internal/ast";
 import {hasJSXAttribute, isJSXElement} from "@internal/js-ast-utils";
-import {isDomElement} from "@internal/js-ast-utils/isDomElement";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 function hasMuted(node: JSXElement): boolean {
 	return hasJSXAttribute(node, "muted");
@@ -16,7 +16,7 @@ export default createVisitor({
 	name: "jsx-a11y/useMediaCaption",
 	enter(path) {
 		const {node} = path;
-		if (!isDomElement(node)) {
+		if (!isJSXDOMElement(node)) {
 			return signals.retain;
 		}
 
