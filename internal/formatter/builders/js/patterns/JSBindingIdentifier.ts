@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 import {JSBindingIdentifier} from "@internal/ast";
 import JSIdentifier from "../auxiliary/JSIdentifier";
@@ -21,6 +21,7 @@ export default function JSBindingIdentifier(
 	}
 
 	return concat([
+		node.meta?.accessibility ? concat([node.meta.accessibility, space]) : "",
 		JSIdentifier(builder, node),
 		printPatternMeta(builder, node, node.meta),
 	]);

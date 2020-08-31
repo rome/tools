@@ -212,6 +212,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
+										typeAnnotation: undefined
 										loc: Object {
 											filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 											end: Object {
