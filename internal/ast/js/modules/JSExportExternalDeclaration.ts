@@ -24,7 +24,7 @@ export interface JSExportExternalDeclaration extends NodeBaseWithComments {
 	readonly type: "JSExportExternalDeclaration";
 	readonly defaultSpecifier?: JSExportDefaultSpecifier;
 	readonly namespaceSpecifier?: JSExportNamespaceSpecifier;
-	readonly namedSpecifiers: Array<JSExportExternalSpecifier>;
+	readonly namedSpecifiers: JSExportExternalSpecifier[];
 	readonly source: JSStringLiteral;
 	readonly exportKind?: ConstJSExportModuleKind;
 }

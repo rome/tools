@@ -90,13 +90,13 @@ const createSPDXLicenseParser = createParser<SPDXParserTypes>({
 type LicenseCodec = {
 	packageName: string;
 	packageVersion: string;
-	projects: Array<ProjectDefinition>;
+	projects: ProjectDefinition[];
 };
 
 export default class SpdxLicenseParser {
 	private readonly packageName: string;
 	private readonly packageVersion: string;
-	private readonly projects: Array<ProjectDefinition>;
+	private readonly projects: ProjectDefinition[];
 	constructor({packageName, packageVersion, projects}: LicenseCodec) {
 		this.packageName = packageName;
 		this.packageVersion = packageVersion;

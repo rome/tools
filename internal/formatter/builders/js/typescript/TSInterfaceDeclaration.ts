@@ -14,7 +14,7 @@ export default function TSInterfaceDeclaration(
 	builder: Builder,
 	node: TSInterfaceDeclaration,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.declare) {
 		tokens.push("declare", space);

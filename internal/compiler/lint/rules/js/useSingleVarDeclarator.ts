@@ -22,7 +22,7 @@ export default createVisitor({
 			node.type === "JSVariableDeclarationStatement" &&
 			node.declaration.declarations.length > 1
 		) {
-			const fixed: Array<JSVariableDeclarationStatement> = [];
+			const fixed: JSVariableDeclarationStatement[] = [];
 			const {kind} = node.declaration;
 
 			for (const declarator of node.declaration.declarations) {

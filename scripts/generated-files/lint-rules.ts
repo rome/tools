@@ -23,8 +23,8 @@ type LintDefinition = {
 	ruleName: string;
 };
 
-export async function getLintDefs(): Promise<Array<LintDefinition>> {
-	let defs: Array<LintDefinition> = [];
+export async function getLintDefs(): Promise<LintDefinition[]> {
+	let defs: LintDefinition[] = [];
 
 	for (const categoryPath of await readDirectory(lintRulesFolder)) {
 		const category = categoryPath.getBasename();

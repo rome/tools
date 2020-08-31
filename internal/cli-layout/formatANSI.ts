@@ -118,7 +118,7 @@ type Theme = {
 	tokens: {[type in MarkupTokenType]?: TokenFormat};
 };
 
-const scopeToTokenTypes: Dict<Array<MarkupTokenType>> = {
+const scopeToTokenTypes: Dict<MarkupTokenType[]> = {
 	"constant": ["number", "boolean"],
 	"constant.numeric": ["number"],
 	"constant.language.boolean": ["boolean"],
@@ -270,7 +270,7 @@ function hexToRgb(hex: undefined | string): [number, number, number] {
 }
 
 // TODO fill this
-const ansiHighlightFactories: Array<(str: string) => string> = [
+const ansiHighlightFactories: ((str: string) => string)[] = [
 	formatAnsi.magenta,
 	formatAnsi.cyan,
 ];

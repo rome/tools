@@ -32,7 +32,7 @@
 
 export type Diff = [-1 | 0 | 1, string];
 
-export type Diffs = Array<Diff>;
+export type Diffs = Diff[];
 
 type HalfMatch = undefined | [string, string, string, string, string];
 
@@ -51,7 +51,7 @@ export const diffConstants = {
 };
 
 export type UnifiedDiff = {
-	diffsByLine: Array<GroupDiffsLine>;
+	diffsByLine: GroupDiffsLine[];
 	beforeLineCount: number;
 	afterLineCount: number;
 };
@@ -195,7 +195,7 @@ export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 		}
 	}
 
-	const diffsByLineWithBeforeAndShared: Array<GroupDiffsLine> = [];
+	const diffsByLineWithBeforeAndShared: GroupDiffsLine[] = [];
 
 	// Print before lines, including those that are shared
 	for (let beforeLine = 1; beforeLine <= beforeLineCount; beforeLine++) {
@@ -215,7 +215,7 @@ export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 	}
 
 	let lastPrintedAfter = 0;
-	let diffsByLine: Array<GroupDiffsLine> = [];
+	let diffsByLine: GroupDiffsLine[] = [];
 
 	function catchUpAfter(afterLine: number) {
 		for (let i = lastPrintedAfter + 1; i <= afterLine; i++) {

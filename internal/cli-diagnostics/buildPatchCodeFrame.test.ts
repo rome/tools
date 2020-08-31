@@ -10,7 +10,7 @@ type Test = {
 	after: string;
 };
 
-const tests: Array<Test> = [
+const tests: Test[] = [
 	// Single line removal
 	{
 		before: "foo",

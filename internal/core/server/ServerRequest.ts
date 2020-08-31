@@ -276,7 +276,7 @@ export default class ServerRequest {
 
 	private start: number;
 	private normalizedCommandFlags: NormalizedCommandFlags;
-	private markers: Array<ServerMarker>;
+	private markers: ServerMarker[];
 	private cancelledReason: undefined | string;
 	private toredown: boolean;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
@@ -896,7 +896,7 @@ export default class ServerRequest {
 
 	public async requestWorkerPatchBuffer(
 		path: AbsoluteFilePath,
-		patches: Array<WorkerBufferPatch>,
+		patches: WorkerBufferPatch[],
 	): Promise<string> {
 		this.checkCancelled();
 

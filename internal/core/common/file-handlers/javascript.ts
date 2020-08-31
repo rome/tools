@@ -18,11 +18,11 @@ import {parseJS} from "@internal/js-parser";
 export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 
 // Used when filtering files
-export const JS_EXTENSIONS: Array<string> = [];
+export const JS_EXTENSIONS: string[] = [];
 
 function buildJSHandler(
 	ext: string,
-	syntax: Array<ConstJSProgramSyntax>,
+	syntax: ConstJSProgramSyntax[],
 	sourceTypeJS?: ConstJSSourceType,
 ): PartialExtensionHandler {
 	JS_EXTENSIONS.push(ext);

@@ -134,7 +134,7 @@ type ResolverQueryResponseFoundType =
 
 export type ResolverQueryResponseFound = {
 	type: "FOUND";
-	types: Array<ResolverQueryResponseFoundType>;
+	types: ResolverQueryResponseFoundType[];
 	path: AbsoluteFilePath;
 	ref: FileReference;
 };
@@ -159,7 +159,7 @@ export type ResolverQueryResponseFetchError = {
 
 type FilenameVariant = {
 	path: AnyFilePath;
-	types: Array<ResolverQueryResponseFoundType>;
+	types: ResolverQueryResponseFoundType[];
 };
 
 const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
@@ -186,7 +186,7 @@ export function isPathLike(source: AnyFilePath): boolean {
 
 function appendTypeQueryResponse(
 	res: ResolverQueryResponse,
-	types: Array<ResolverQueryResponseFoundType>,
+	types: ResolverQueryResponseFoundType[],
 ): ResolverQueryResponse {
 	if (res.type === "FOUND") {
 		return {
@@ -498,7 +498,7 @@ export default class Resolver {
 	private *_getFilenameVariants(
 		query: ResolverLocalQuery,
 		path: AnyFilePath,
-		callees: Array<ResolverQueryResponseFoundType>,
+		callees: ResolverQueryResponseFoundType[],
 	): Iterable<FilenameVariant> {
 		const {platform} = query;
 
@@ -559,7 +559,7 @@ export default class Resolver {
 
 	private finishResolverQueryResponse(
 		path: AbsoluteFilePath,
-		types: Array<ResolverQueryResponseFoundType> = [],
+		types: ResolverQueryResponseFoundType[] = [],
 	): ResolverQueryResponse {
 		return {
 			type: "FOUND",
@@ -583,7 +583,7 @@ export default class Resolver {
 	private resolvePath(
 		query: ResolverLocalQuery,
 		checkVariants: boolean = true,
-		types?: Array<ResolverQueryResponseFoundType>,
+		types?: ResolverQueryResponseFoundType[],
 	): ResolverQueryResponse {
 		const {memoryFs} = this.server;
 
@@ -702,7 +702,7 @@ export default class Resolver {
 	private resolvePackage(
 		query: ResolverLocalQuery,
 		moduleName: string,
-		moduleNameParts: Array<string>,
+		moduleNameParts: string[],
 	): ResolverQueryResponse {
 		const manifestDef = this.resolvePackageDirectory(query, moduleName);
 		return this.resolveManifest(query, manifestDef, moduleNameParts);
@@ -711,7 +711,7 @@ export default class Resolver {
 	private resolveManifest(
 		query: ResolverLocalQuery,
 		manifestDef: undefined | ManifestDefinition,
-		moduleNameParts: Array<string>,
+		moduleNameParts: string[],
 	): ResolverQueryResponse {
 		if (manifestDef === undefined) {
 			return QUERY_RESPONSE_MISSING;
@@ -763,7 +763,7 @@ export default class Resolver {
 	private resolveMock(
 		query: ResolverLocalQuery,
 		project: ProjectDefinition | undefined,
-		parentDirectories: Array<AbsoluteFilePath>,
+		parentDirectories: AbsoluteFilePath[],
 	): ResolverQueryResponse {
 		if (project === undefined) {
 			return QUERY_RESPONSE_MISSING;
@@ -793,7 +793,7 @@ export default class Resolver {
 	}
 
 	// Given a reference to a module, extract the module name and any trailing relative paths
-	private splitModuleName(path: AnyFilePath): [string, Array<string>] {
+	private splitModuleName(path: AnyFilePath): [string, string[]] {
 		// fetch the first part of the path as that's the module name
 		// possible values of `moduleNameFull` could be `react` or `react/lib/whatever`
 		const [moduleName, ...moduleNameParts] = path.getSegments();

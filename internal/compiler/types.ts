@@ -34,7 +34,7 @@ export type Transform =
 	| AnyVisitor
 	| ((context: CompilerContext) => Visitor<UnknownObject>);
 
-export type Transforms = Array<Transform>;
+export type Transforms = Transform[];
 
 export interface Visitor<State extends UnknownObject> {
 	name: string;
@@ -45,7 +45,7 @@ export interface Visitor<State extends UnknownObject> {
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyVisitor = Visitor<any>;
 
-export type AnyVisitors = Array<AnyVisitor>;
+export type AnyVisitors = AnyVisitor[];
 
 export type CompileRequest = TransformRequest & {
 	inputSourceMap?: SourceMap;
@@ -92,7 +92,7 @@ export type LintCompilerOptions = {
 	decisionsByPosition?: Dict<LintCompilerOptionsDecisions>;
 };
 
-export type LintCompilerOptionsDecisions = Array<LintCompilerOptionsDecision>;
+export type LintCompilerOptionsDecisions = LintCompilerOptionsDecision[];
 
 export type LintCompilerOptionsDecisionAction = "suppress" | "fix" | "ignore";
 

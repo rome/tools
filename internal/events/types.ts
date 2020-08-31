@@ -30,7 +30,7 @@ export type EventSubscription = {
 	unsubscribe: () => Promise<void>;
 };
 
-export type EventSubscriptions = Array<EventSubscription>;
+export type EventSubscriptions = EventSubscription[];
 
 export type BridgeHeartbeatExceededOptions = {
 	summary: AnyMarkups;
@@ -41,12 +41,12 @@ export type BridgeHeartbeatExceededOptions = {
 export type BridgeHandshakeMessage = {
 	type: "handshake";
 	first: boolean;
-	subscriptions: Array<string>;
+	subscriptions: string[];
 };
 
 export type BridgeSubscriptionsMessage = {
 	type: "subscriptions";
-	names: Array<string>;
+	names: string[];
 };
 
 export type BridgeRequestMessage = {

@@ -4,7 +4,7 @@ import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSRule extends NodeBaseWithComments {
 	readonly type: "CSSRule";
-	readonly prelude: Array<AnyCSSValue>;
+	readonly prelude: AnyCSSValue[];
 	readonly block?: CSSBlock;
 }
 export const cssRule = createBuilder<CSSRule>(

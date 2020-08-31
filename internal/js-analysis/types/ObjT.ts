@@ -18,9 +18,9 @@ export default class ObjT extends T {
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		opts: {
-			props?: Array<T>;
+			props?: T[];
 			proto: undefined | T;
-			calls?: Array<T>;
+			calls?: T[];
 		},
 	) {
 		super(scope, originNode);
@@ -30,8 +30,8 @@ export default class ObjT extends T {
 	}
 
 	public static type = "ObjT";
-	public calls: Array<T>;
-	public props: Array<T>;
+	public calls: T[];
+	public props: T[];
 	public proto: undefined | T;
 
 	public serialize(addType: SerialTypeFactory): HydrateData {
@@ -70,8 +70,8 @@ export default class ObjT extends T {
 			return false;
 		}
 
-		const ourProps: Array<T> = this.props;
-		const theirProps: Array<T> = otherType.props;
+		const ourProps: T[] = this.props;
+		const theirProps: T[] = otherType.props;
 
 		// check that the other type has all of our props
 		for (const ourPropRaw of ourProps) {

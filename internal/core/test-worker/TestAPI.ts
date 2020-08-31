@@ -78,7 +78,7 @@ type SnapshotOptions = {
 
 type EmitDiagnostic = (diag: Diagnostic) => Promise<void>;
 
-function normalizeUserAdvice(advice: Array<UserAdviceItem>): DiagnosticAdvice {
+function normalizeUserAdvice(advice: UserAdviceItem[]): DiagnosticAdvice {
 	return advice.map((item) => {
 		if (typeof item === "function") {
 			return normalizeUserAdviceItem(item());
@@ -165,7 +165,7 @@ export default class TestAPI implements TestHelper {
 	private timeoutStart: undefined | number;
 	private timeoutMax: undefined | number;
 
-	private advice: Array<UserAdviceItem>;
+	private advice: UserAdviceItem[];
 	private testName: string;
 	private snapshotCounter: number;
 	private snapshotManager: SnapshotManager;

@@ -49,7 +49,7 @@ const dummyPart = (<StaticMarkup>{
 }).parts[0];
 type MarkupPart = typeof dummyPart;
 
-function makeStaticMarkup(parts: Array<MarkupPart>) {
+function makeStaticMarkup(parts: MarkupPart[]) {
 	return (<StaticMarkup>{
 		type: "MARKUP",
 		parts,

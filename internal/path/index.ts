@@ -47,7 +47,7 @@ export type AnyFilePath =
 	| RelativeFilePath
 	| URLPath;
 
-export type PathSegments = Array<string>;
+export type PathSegments = string[];
 
 export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 	constructor(parsed: ParsedPath, memo: FilePathMemo<Super>) {
@@ -428,7 +428,7 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 
 	public format(cwd?: AbsoluteFilePath): string {
 		const filename = this.join();
-		const names: Array<string> = [];
+		const names: string[] = [];
 		names.push(filename);
 
 		// Get a path relative to HOME
@@ -544,7 +544,7 @@ export class RelativeFilePath extends BasePath<RelativeFilePath> {
 export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 	protected type: "absolute" = "absolute";
 
-	private chain: undefined | Array<AbsoluteFilePath>;
+	private chain: undefined | (AbsoluteFilePath[]);
 
 	protected _assert(): AbsoluteFilePath {
 		return this;
@@ -561,12 +561,12 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		return this;
 	}
 
-	public getChain(): Array<AbsoluteFilePath> {
+	public getChain(): AbsoluteFilePath[] {
 		if (this.chain !== undefined) {
 			return this.chain;
 		}
 
-		const paths: Array<AbsoluteFilePath> = [];
+		const paths: AbsoluteFilePath[] = [];
 		this.chain = paths;
 
 		// We use getParent here so we can reuse as much memoized information as possible
@@ -816,13 +816,13 @@ function parsePathSegments(
 }
 
 function normalizeSegments(
-	segments: Array<string>,
+	segments: string[],
 	offset: number,
-	absoluteSegments: Array<string>,
+	absoluteSegments: string[],
 ): {
 	explicitDirectory: boolean;
 	explicitRelative: boolean;
-	segments: Array<string>;
+	segments: string[];
 } {
 	let explicitDirectory = false;
 	let explicitRelative = false;
@@ -879,7 +879,7 @@ function normalizeSegments(
 type CreationArg = AnyFilePath | string;
 
 export function createFilePathFromSegments(
-	segments: Array<string>,
+	segments: string[],
 	hint: PathTypeHint,
 ): UnknownPath {
 	const parsed = parsePathSegments(segments, hint);

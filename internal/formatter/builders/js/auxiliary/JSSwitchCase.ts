@@ -19,7 +19,7 @@ export default function JSSwitchCase(
 	builder: Builder,
 	node: JSSwitchCase,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.test) {
 		tokens.push("case", space, builder.tokenize(node.test, node), ":");

@@ -1,12 +1,12 @@
 import {Dict} from "@internal/typescript-helpers";
 
 type Test = {
-	invalid?: Array<string>;
-	valid?: Array<string>;
+	invalid?: string[];
+	valid?: string[];
 	filename: string;
 };
 
-type Tests = Dict<Test | Array<Test>>;
+type Tests = Dict<Test | (Test[])>;
 
 /* GENERATED:START(hash:f8d7eaaad1b865eb36a95f2667279352e3f4b51b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
@@ -61,8 +61,6 @@ import noRestrictedGlobals from "./js/noRestrictedGlobals.test.rjson";
 import noSetterReturn from "./js/noSetterReturn.test.rjson";
 // @ts-ignore
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames.test.rjson";
-// @ts-ignore
-import noShorthandArrayType from "./js/noShorthandArrayType.test.rjson";
 // @ts-ignore
 import noShoutyConstants from "./js/noShoutyConstants.test.rjson";
 // @ts-ignore
@@ -223,6 +221,8 @@ import noEmptyMatches from "./regex/noEmptyMatches.test.rjson";
 import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
 // @ts-ignore
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
+// @ts-ignore
+import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
 	"html/useClosingNonVoid": useClosingNonVoid,
@@ -251,7 +251,6 @@ export const tests: Tests = {
 	"js/noRestrictedGlobals": noRestrictedGlobals,
 	"js/noSetterReturn": noSetterReturn,
 	"js/noShadowRestrictedNames": noShadowRestrictedNames,
-	"js/noShorthandArrayType": noShorthandArrayType,
 	"js/noShoutyConstants": noShoutyConstants,
 	"js/noSparseArray": noSparseArray,
 	"js/noTemplateCurlyInString": noTemplateCurlyInString,
@@ -332,5 +331,6 @@ export const tests: Tests = {
 	"regex/noEmptyMatches": noEmptyMatches,
 	"regex/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
 	"regex/noPosixInRegularExpression": noPosixInRegularExpression,
+	"ts/preferShorthandArrayType": preferShorthandArrayType,
 };
 /* GENERATED:END(id:main) */

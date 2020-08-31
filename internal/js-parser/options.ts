@@ -9,7 +9,7 @@ import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
 import {ParserOptionsWithRequiredPath} from "@internal/parser-core";
 
 type UserOptionsBase = {
-	syntax?: Array<ConstJSProgramSyntax>;
+	syntax?: ConstJSProgramSyntax[];
 	sourceType?: ConstJSSourceType;
 	tokens?: boolean;
 	allowReturnOutsideFunction?: boolean;

@@ -119,4 +119,4 @@ export type UserVersion = AbsoluteVersionNode | string;
 
 export type UserRange = RangeNode | string;
 
-export type UserVersions = Array<UserVersion>;
+export type UserVersions = UserVersion[];

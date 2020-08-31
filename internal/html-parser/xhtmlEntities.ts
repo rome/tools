@@ -268,7 +268,7 @@ for (const key in xhtmlEntityNameToChar) {
 	xhtmlEntityCharToName[xhtmlEntityNameToChar[key]] = key;
 }
 
-export function escapeXHTMLEntities(value: string, only?: Array<string>): string {
+export function escapeXHTMLEntities(value: string, only?: string[]): string {
 	let escaped = "";
 	for (const char of value) {
 		const entity = xhtmlEntityCharToName[char];

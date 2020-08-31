@@ -10,7 +10,7 @@ export type RemoveSignal = {
 
 export type ReplaceSignal = {
 	type: "REPLACE";
-	value: AnyNode | Array<AnyNode>;
+	value: AnyNode | (AnyNode[]);
 };
 
 export type ParentSignal = {
@@ -57,7 +57,7 @@ export function maybeReplace(
 	}
 }
 
-export function replace(node: AnyNode | Array<AnyNode>): ReplaceSignal {
+export function replace(node: AnyNode | (AnyNode[])): ReplaceSignal {
 	return {
 		type: "REPLACE",
 		value: node,

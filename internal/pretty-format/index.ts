@@ -24,7 +24,7 @@ import {
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
 
-type RecursiveStack = Array<unknown>;
+type RecursiveStack = unknown[];
 
 type FormatOptions = {
 	allowCustom: boolean;
@@ -55,10 +55,7 @@ export function prettyFormatToString(value: unknown): string {
 	return markupToJoinedPlainText(markup`${prettyFormat(value)}`);
 }
 
-export function pretty(
-	strs: TemplateStringsArray,
-	...values: Array<unknown>
-): string {
+export function pretty(strs: TemplateStringsArray, ...values: unknown[]): string {
 	let out = "";
 
 	for (let i = 0; i < strs.length; i++) {
@@ -195,10 +192,10 @@ function getExtraObjectProps(
 	obj: Objectish,
 	opts: FormatOptions,
 ): {
-	props: Array<AnyMarkup>;
+	props: AnyMarkup[];
 	ignoreKeys: UnknownObject;
 } {
-	const props: Array<AnyMarkup> = [];
+	const props: AnyMarkup[] = [];
 	const ignoreKeys: UnknownObject = {};
 
 	if (isIterable(obj)) {
@@ -248,12 +245,12 @@ type KeyInfo = {
 	object: boolean;
 };
 
-function sortKeys(obj: Objectish): Array<KeyInfo> {
+function sortKeys(obj: Objectish): KeyInfo[] {
 	const sortedKeys: Set<string> = new Set(Object.keys(obj).sort(naturalCompare));
 
-	const priorityKeys: Array<KeyInfo> = [];
-	const otherKeys: Array<KeyInfo> = [];
-	const objectKeys: Array<KeyInfo> = [];
+	const priorityKeys: KeyInfo[] = [];
+	const otherKeys: KeyInfo[] = [];
+	const objectKeys: KeyInfo[] = [];
 
 	for (const key of PRIORITIZE_KEYS) {
 		if (sortedKeys.has(key)) {
@@ -299,7 +296,7 @@ function formatObject(
 	label: StaticMarkup,
 	obj: Objectish,
 	opts: FormatOptions,
-	labelKeys: Array<string>,
+	labelKeys: string[],
 ): AnyMarkup {
 	// Detect circular references, and create a pointer to the specific value
 	const {stack} = opts;
@@ -322,7 +319,7 @@ function formatObject(
 	const {ignoreKeys, props} = getExtraObjectProps(obj, nextOpts);
 
 	// For props that have object values, we always put them at the end, sorted by line count
-	const objProps: Array<AnyMarkup> = [];
+	const objProps: AnyMarkup[] = [];
 
 	// Get string props
 	for (const {key, object} of sortKeys(obj)) {
@@ -409,7 +406,7 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup 
 		return markupTag("color", str, {fg: "magenta"});
 	}
 
-	let labelKeys: Array<string> = [];
+	let labelKeys: string[] = [];
 
 	let label = markup`null`;
 

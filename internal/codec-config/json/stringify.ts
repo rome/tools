@@ -18,12 +18,7 @@ import {PRIORITIZE_KEYS, formatNumber} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
 
-function joinList(
-	open: string,
-	close: string,
-	indent: string,
-	items: Array<string>,
-) {
+function joinList(open: string, close: string, indent: string, items: string[]) {
 	if (items.length === 0) {
 		return open + close;
 	} else {
@@ -47,10 +42,7 @@ function stringifyKey(key: string): string {
 	}
 }
 
-export function stringifyComments(
-	indent: string,
-	comments: Comments,
-): Array<string> {
+export function stringifyComments(indent: string, comments: Comments): string[] {
 	return comments.map((node) => {
 		if (node.type === "BlockComment") {
 			return `${indent}/*${node.value}*/`;
@@ -168,7 +160,7 @@ function getComments(consumer: Consumer, opts: StringifyOptions): PathComments {
 function stringifyArray(consumer: Consumer, info: StringifyObjectOptions) {
 	const {level, prevIndent, nextIndent, stack} = info;
 
-	let buff: Array<string> = [];
+	let buff: string[] = [];
 
 	const arr = consumer.asIterable();
 	for (const consumer of arr) {
@@ -204,7 +196,7 @@ function stringifyPlainObject(
 	let {nextIndent} = info;
 
 	// Must be an object if we failed all the other conditions
-	let buff: Array<string> = [];
+	let buff: string[] = [];
 	const map = consumer.asMap();
 
 	// Remove function, symbol, and undefined properties

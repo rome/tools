@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 export interface MarkdownListBlock extends NodeBaseWithComments {
 	type: "MarkdownListBlock";
 	ordered: boolean;
-	children: Array<MarkdownListItem>;
+	children: MarkdownListItem[];
 }
 
 export const markdownListBlock = createBuilder<MarkdownListBlock>(

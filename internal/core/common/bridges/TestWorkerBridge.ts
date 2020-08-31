@@ -31,13 +31,13 @@ export type TestWorkerPrepareTestOptions = {
 };
 
 export type TestWorkerPrepareTestResult = {
-	foundTests: Array<string>;
-	focusedTests: Array<FocusedTest>;
+	foundTests: string[];
+	focusedTests: FocusedTest[];
 };
 
 export type TestWorkerRunTestOptions = {
 	path: AbsoluteFilePath;
-	testNames: Array<string>;
+	testNames: string[];
 };
 
 export default class TestWorkerBridge extends Bridge {

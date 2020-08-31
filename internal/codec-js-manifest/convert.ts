@@ -103,7 +103,7 @@ function exportConditionToObject(
 	return obj;
 }
 
-function maybeArray<T>(items: Array<T>): undefined | Array<T> {
+function maybeArray<T>(items: T[]): undefined | (T[]) {
 	if (items.length === 0) {
 		return undefined;
 	} else {

@@ -16,7 +16,7 @@ export default class Trace {
 		this.events = [];
 	}
 
-	private events: Array<TraceEvent>;
+	private events: TraceEvent[];
 	private eventId: number;
 
 	private getEventId(): number {

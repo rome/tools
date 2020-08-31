@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSIntersectionTypeAnnotation extends NodeBaseWithComments {
 	readonly type: "TSIntersectionTypeAnnotation";
-	readonly types: Array<AnyTSPrimary>;
+	readonly types: AnyTSPrimary[];
 }
 
 export const tsIntersectionTypeAnnotation = createBuilder<TSIntersectionTypeAnnotation>(

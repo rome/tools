@@ -23,7 +23,7 @@ export default function JSImportDeclaration(
 	builder: Builder,
 	node: JSImportDeclaration,
 ): Token {
-	const tokens: Array<Token> = ["import", space];
+	const tokens: Token[] = ["import", space];
 
 	if (node.importKind === "type" || node.importKind === "typeof") {
 		tokens.push(node.importKind);
@@ -51,7 +51,7 @@ export function printModuleSpecifiers(
 ): Token {
 	const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
-	const groups: Array<Token> = [];
+	const groups: Token[] = [];
 
 	if (defaultSpecifier !== undefined) {
 		groups.push(builder.tokenize(node.defaultSpecifier, node));
@@ -62,7 +62,7 @@ export function printModuleSpecifiers(
 	}
 
 	if (namedSpecifiers.length > 0) {
-		const specifiers: Array<Token> = [];
+		const specifiers: Token[] = [];
 
 		for (const specifier of namedSpecifiers) {
 			specifiers.push(builder.tokenize(specifier, node));

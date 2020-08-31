@@ -43,8 +43,8 @@ function transformClass(
 	context: CompilerContext,
 ): {
 	_constructor: JSFunctionDeclaration;
-	prependDeclarations: Array<AnyJSStatement>;
-	declarations: Array<AnyJSStatement>;
+	prependDeclarations: AnyJSStatement[];
+	declarations: AnyJSStatement[];
 } {
 	const {scope} = path;
 
@@ -317,7 +317,7 @@ export default createVisitor({
 				path.getChildPath("declaration"),
 				context,
 			);
-			const nodes: Array<AnyNode> = [
+			const nodes: AnyNode[] = [
 				...prependDeclarations,
 				{
 					...node,

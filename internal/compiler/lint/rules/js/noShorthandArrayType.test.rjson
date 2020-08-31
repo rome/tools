@@ -1,7 +1,0 @@
-filename: "file.ts"
-invalid: [
-	"
-						let valid: Array<foo>;
-						let invalid: bar[];
-					"
-]

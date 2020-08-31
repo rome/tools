@@ -3,7 +3,7 @@ import {descriptions} from "@internal/diagnostics";
 import {isFor} from "@internal/js-ast-utils";
 
 function isContinueInsideLastAncestorPath(
-	ancestryArr: Array<Path>,
+	ancestryArr: Path[],
 	path: Path,
 ): boolean {
 	const length = ancestryArr.length;
@@ -23,10 +23,7 @@ function isContinueInsideLastAncestorPath(
 	return true;
 }
 
-function isContinueTheLastStatement(
-	ancestryArr: Array<Path>,
-	path: Path,
-): boolean {
+function isContinueTheLastStatement(ancestryArr: Path[], path: Path): boolean {
 	const node = ancestryArr[0].node;
 	if (node.type === "JSBlockStatement") {
 		const bodySize = node.body.length;
@@ -53,7 +50,7 @@ function containsParentLoopLabel(path: Path, parentPath: Path): boolean {
 }
 
 function isContinueUnNecessary(path: Path): boolean {
-	const ancestryArr: Array<Path> = [];
+	const ancestryArr: Path[] = [];
 	const parentPath = path.findAncestry((p) => {
 		if (isFor(p.node) || p.node.type === "JSWhileStatement") {
 			return true;

@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSModuleBlock extends NodeBaseWithComments {
 	readonly type: "TSModuleBlock";
-	readonly body: Array<AnyJSStatement>;
+	readonly body: AnyJSStatement[];
 }
 
 export const tsModuleBlock = createBuilder<TSModuleBlock>(

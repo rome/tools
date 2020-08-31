@@ -9,8 +9,8 @@ import {AnyImportSpecifier, JSImportDeclaration} from "@internal/ast";
 
 export function getImportSpecifiers(
 	node: JSImportDeclaration,
-): Array<AnyImportSpecifier> {
-	let specifiers: Array<AnyImportSpecifier> = [];
+): AnyImportSpecifier[] {
+	let specifiers: AnyImportSpecifier[] = [];
 
 	if (node.defaultSpecifier !== undefined) {
 		specifiers.push(node.defaultSpecifier);

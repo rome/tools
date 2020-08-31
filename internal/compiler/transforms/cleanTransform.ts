@@ -7,7 +7,7 @@
 
 import {createVisitor, signals} from "@internal/compiler";
 
-function isEmpty(arr: undefined | Array<unknown>): boolean {
+function isEmpty(arr: undefined | (unknown[])): boolean {
 	return arr === undefined || arr.length === 0;
 }
 

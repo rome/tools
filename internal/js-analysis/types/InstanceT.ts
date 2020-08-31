@@ -20,7 +20,7 @@ export default class InstanceT extends ObjT {
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		target: T,
-		typeParameters: Array<T>,
+		typeParameters: T[],
 	) {
 		const prototype = new GetPropT(
 			scope,
@@ -42,7 +42,7 @@ export default class InstanceT extends ObjT {
 		this.target = target;
 	}
 
-	private typeParameters: Array<T>;
+	private typeParameters: T[];
 	private target: T;
 
 	public static type = "InstanceT";

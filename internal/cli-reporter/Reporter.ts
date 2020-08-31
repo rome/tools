@@ -68,10 +68,10 @@ import {
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
+type WrapperFactory = <T extends (...args: any[]) => any>(callback: T) => T;
 
 export type ReporterOptions = {
-	streams?: Array<ReporterStreamAttached>;
+	streams?: ReporterStreamAttached[];
 	stdin?: NodeJS.ReadStream;
 	markupOptions?: MarkupFormatOptions;
 	wrapperFactory?: WrapperFactory;
@@ -79,7 +79,7 @@ export type ReporterOptions = {
 
 export type LogOptions = {
 	replaceLineSnapshot?: ReporterStreamLineSnapshot;
-	handles?: Array<ReporterStreamHandle>;
+	handles?: ReporterStreamHandle[];
 	stderr?: boolean;
 	noNewline?: boolean;
 	preferNoNewline?: boolean;
@@ -149,7 +149,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	// Produce a new Reporter with all the streams of the input reporters. Streams will NOT be in sync.
-	public static concat(reporters: Array<Reporter>): Reporter {
+	public static concat(reporters: Reporter[]): Reporter {
 		const reporter = new Reporter();
 		for (const otherReporter of reporters) {
 			for (const {stream} of otherReporter.getStreamHandles()) {
@@ -540,7 +540,7 @@ export default class Reporter implements ReporterNamespace {
 		});
 	}
 
-	public table(head: AnyMarkups, rawBody: Array<AnyMarkups>) {
+	public table(head: AnyMarkups, rawBody: AnyMarkups[]) {
 		let body: AnyMarkups = [];
 
 		if (head.length > 0) {
@@ -647,14 +647,11 @@ export default class Reporter implements ReporterNamespace {
 		}
 	}
 
-	public async steps(
-		callbacks: Array<ReporterStepCallback>,
-		clear: boolean = true,
-	) {
+	public async steps(callbacks: ReporterStepCallback[], clear: boolean = true) {
 		let total = 0;
 		let current = 1;
 
-		const filteredCallbacks: Array<ReporterStepCallback> = [];
+		const filteredCallbacks: ReporterStepCallback[] = [];
 		for (const item of callbacks) {
 			if (item.test === undefined || (await item.test())) {
 				filteredCallbacks.push(item);
@@ -712,7 +709,7 @@ export default class Reporter implements ReporterNamespace {
 		return markupToJoinedPlainText(str, this.markupOptions);
 	}
 
-	private format(stream: ReporterStreamAttached, str: AnyMarkup): Array<string> {
+	private format(stream: ReporterStreamAttached, str: AnyMarkup): string[] {
 		if (isEmptyMarkup(str)) {
 			return [""];
 		}
@@ -910,7 +907,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public processedList<T>(
-		items: Array<T>,
+		items: T[],
 		callback: (reporter: Reporter, item: T) => void | AnyMarkup,
 		opts: ReporterListOptions = {},
 	): {

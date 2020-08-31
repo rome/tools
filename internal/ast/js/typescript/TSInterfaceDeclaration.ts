@@ -19,7 +19,7 @@ export interface TSInterfaceDeclaration extends NodeBaseWithComments {
 	readonly id: JSBindingIdentifier;
 	readonly body: TSInterfaceBody;
 	readonly typeParameters?: TSTypeParameterDeclaration;
-	readonly extends?: Array<TSExpressionWithTypeArguments>;
+	readonly extends?: TSExpressionWithTypeArguments[];
 	readonly declare?: boolean;
 }
 

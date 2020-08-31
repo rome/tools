@@ -81,7 +81,7 @@ export type ClientProfileOptions = {
 	includeWorkers: boolean;
 };
 
-type ProfileCallback = (profile: Array<TraceEvent>) => Promise<void>;
+type ProfileCallback = (profile: TraceEvent[]) => Promise<void>;
 
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
@@ -246,7 +246,7 @@ export default class Client {
 
 			//
 			const trace = new Trace();
-			const fetchers: Array<[string, () => Promise<Profile>]> = [];
+			const fetchers: [string, () => Promise<Profile>][] = [];
 
 			// CLI
 			if (cliProfiler !== undefined) {
@@ -337,7 +337,7 @@ export default class Client {
 	}
 
 	public async generateRageSummary(): Promise<AnyMarkup> {
-		let summary: Array<AnyMarkup> = [];
+		let summary: AnyMarkup[] = [];
 
 		function push(name: string, value: unknown) {
 			const formatted =
@@ -354,7 +354,7 @@ export default class Client {
 			);
 		}
 
-		const envVars: Array<string> = [
+		const envVars: string[] = [
 			"ROME_CACHE",
 			"LANG",
 			"COLORFGBG",
@@ -436,7 +436,7 @@ export default class Client {
 		// Collect CPU profile
 		// Callback will be called later once it has been collected
 		// Initial async work is just connecting to the processes and setting up handlers
-		let profileEvents: Array<TraceEvent> = [];
+		let profileEvents: TraceEvent[] = [];
 		await this._profile(
 			profileOpts,
 			async (_profileEvents) => {
@@ -445,7 +445,7 @@ export default class Client {
 		);
 
 		// Collect all responses
-		const responses: Array<ClientRequestResponseResult> = [];
+		const responses: ClientRequestResponseResult[] = [];
 		this.requestResponseEvent.subscribe((result) => {
 			responses.push(result);
 		});

@@ -6,7 +6,7 @@ import isCreateElement from "./isCreateElement";
 export default function getCreateElementChildren(
 	node: AnyNode,
 	scope: Scope,
-): AnyNode | Array<AnyNode> | undefined {
+): AnyNode | (AnyNode[]) | undefined {
 	if (!isCreateElement(node, scope)) {
 		return;
 	}

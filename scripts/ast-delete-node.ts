@@ -4,7 +4,7 @@ import {removeFile} from "@internal/fs";
 import {createUnknownPath} from "@internal/path";
 import {markup} from "@internal/markup";
 
-export async function main([filename]: Array<string>) {
+export async function main([filename]: string[]) {
 	if (filename === undefined) {
 		reporter.error(
 			markup`./rome run ast-delete-node [language]/[category]/[nodeType]`,

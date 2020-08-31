@@ -15,7 +15,7 @@ import {createBuilder} from "../../utils";
 export interface JSSwitchStatement extends NodeBaseWithComments {
 	readonly type: "JSSwitchStatement";
 	readonly discriminant: AnyJSExpression;
-	readonly cases: Array<JSSwitchCase>;
+	readonly cases: JSSwitchCase[];
 }
 
 export const jsSwitchStatement = createBuilder<JSSwitchStatement>(

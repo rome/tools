@@ -37,7 +37,7 @@ import asyncImportTransform from "./compileForBundle/asyncImportTransform";
 import inlineEnv from "./compileForBundle/inlineEnv";
 import {commentInjectorVisitor, variableInjectorVisitor} from "./helpers";
 
-export const stageOrder: Array<TransformStageName> = [
+export const stageOrder: TransformStageName[] = [
 	"pre",
 	"compile",
 	"compileForBundle",

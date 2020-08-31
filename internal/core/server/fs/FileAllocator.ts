@@ -36,7 +36,7 @@ export default class FileAllocator {
 		});
 	}
 
-	public getAllOwnedFilenames(): Array<AbsoluteFilePath> {
+	public getAllOwnedFilenames(): AbsoluteFilePath[] {
 		return Array.from(this.fileToWorker.keys());
 	}
 
@@ -109,7 +109,7 @@ export default class FileAllocator {
 		);
 	}
 
-	private async handleDeleted(paths: Array<AbsoluteFilePath>) {
+	private async handleDeleted(paths: AbsoluteFilePath[]) {
 		for (const path of paths) {
 			// Find owner
 			const workerId = this.getOwnerId(path);
@@ -129,7 +129,7 @@ export default class FileAllocator {
 		}
 	}
 
-	private async handleChange(events: Array<ChangedFileEventItem>) {
+	private async handleChange(events: ChangedFileEventItem[]) {
 		const {workerManager} = this.server;
 
 		for (const {path, oldStats, newStats} of events) {

@@ -8,7 +8,7 @@ import {readFileText} from "@internal/fs";
 import {markup} from "@internal/markup";
 
 async function runNPMVersion(
-	args: Array<string>,
+	args: string[],
 	cwd: AbsoluteFilePath,
 ): Promise<string> {
 	const res = child.spawnSync(
@@ -29,7 +29,7 @@ async function runNPMVersion(
 	return res.stdout.toString().trim();
 }
 
-export async function main(args: Array<string>) {
+export async function main(args: string[]) {
 	// Ensure we're on the main branch
 	const branchRes = child.spawnSync(
 		"git",

@@ -90,7 +90,7 @@ async function ask(
 	// Extract actions and remove them from the diagnostic
 	let {advice = []} = diag.description;
 	let hasExtraOptions = false;
-	const actions: Array<DiagnosticAdviceAction> = [];
+	const actions: DiagnosticAdviceAction[] = [];
 	for (const item of advice) {
 		if (item.type === "action") {
 			// Only show extra items and hide all non-extra items when `more === true`

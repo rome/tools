@@ -7,7 +7,7 @@ test(
 		{},
 		async (t, h) => {
 			const req = await h.createRequest();
-			const basenames: Array<string> = [];
+			const basenames: string[] = [];
 			const globber = await req.glob({
 				extensions: ["txt"],
 				ignoreArgumentMisses: true,
@@ -36,7 +36,7 @@ test(
 		async (t, h) => {
 			const req = await h.createRequest({commandName: "check"});
 
-			const events: Array<string> = [];
+			const events: string[] = [];
 
 			const beforeProject = await h.server.projectManager.assertProject(h.cwd);
 			const globber = await req.glob({});

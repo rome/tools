@@ -14,7 +14,7 @@ export default function JSExportExternalDeclaration(
 	builder: Builder,
 	node: JSExportExternalDeclaration,
 ): Token {
-	const tokens: Array<Token> = ["export", space];
+	const tokens: Token[] = ["export", space];
 
 	if (node.exportKind === "type") {
 		if (!builder.options.typeAnnotations) {

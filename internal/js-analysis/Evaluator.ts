@@ -215,13 +215,13 @@ export default class Evaluator {
 	private nodeToType: ExtendedMap<AnyNode, T>;
 	public hub: Hub;
 	public intrinsics: Intrinsics;
-	public exports: Array<Export>;
-	public imports: Array<{
+	public exports: Export[];
+	public imports: {
 		relative: string;
 		importedName: undefined | string;
 		source: string;
 		type: ImportT;
-	}>;
+	}[];
 	private topScope: Scope;
 	public graph: Graph<T>;
 

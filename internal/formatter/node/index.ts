@@ -51,7 +51,7 @@ export function getLinesBetween(aNode: AnyNode, bNode: AnyNode): number {
 export function needsParens(
 	node: AnyNode,
 	parent: undefined | AnyNode,
-	printStack: Array<AnyNode>,
+	printStack: AnyNode[],
 ): boolean {
 	if (!parent) {
 		return false;

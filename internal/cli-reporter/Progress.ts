@@ -19,9 +19,9 @@ import {Number1, ob1Get1} from "@internal/ob1";
 import * as streamUtils from "./stream";
 import {VoidCallback} from "@internal/typescript-helpers";
 
-type BoldRanges = Array<[number, number]>;
+type BoldRanges = [number, number][];
 
-type SplitBar = Array<[number, string]>;
+type SplitBar = [number, string][];
 
 // 30 columns a second
 const BOUNCER_INTERVAL = 1_000 / 30;

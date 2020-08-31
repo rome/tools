@@ -22,7 +22,7 @@ export type StringObject = Dict<string>;
 
 export type MString = undefined | string;
 
-export type MStringArray = undefined | Array<string>;
+export type MStringArray = undefined | (string[]);
 
 export type MStringObject = undefined | StringObject;
 
@@ -87,12 +87,12 @@ export type Manifest = {
 	main: MString;
 	exports: boolean | ManifestExports;
 	author: undefined | ManifestPerson;
-	contributors: undefined | Array<ManifestPerson>;
-	maintainers: undefined | Array<ManifestPerson>;
+	contributors: undefined | (ManifestPerson[]);
+	maintainers: undefined | (ManifestPerson[]);
 	files: PathPatterns;
-	keywords: Array<string>;
-	cpu: Array<string>;
-	os: Array<string>;
+	keywords: string[];
+	cpu: string[];
+	os: string[];
 	bin: ManifestMap;
 	scripts: ManifestMap;
 	engines: ManifestMap;
@@ -100,7 +100,7 @@ export type Manifest = {
 	devDependencies: ManifestDependencies;
 	optionalDependencies: ManifestDependencies;
 	peerDependencies: ManifestDependencies;
-	bundledDependencies: Array<string>;
+	bundledDependencies: string[];
 	raw: JSONObject;
 };
 

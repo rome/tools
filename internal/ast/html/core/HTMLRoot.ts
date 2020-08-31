@@ -5,7 +5,7 @@ import {AnyHTMLChildNode} from "@internal/ast";
 export interface HTMLRoot extends NodeBaseWithComments,
 RootBase {
 	readonly type: "HTMLRoot";
-	readonly body: Array<AnyHTMLChildNode>;
+	readonly body: AnyHTMLChildNode[];
 }
 
 export const htmlRoot = createBuilder<HTMLRoot>(

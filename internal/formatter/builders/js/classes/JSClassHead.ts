@@ -19,8 +19,8 @@ import {JSClassHead} from "@internal/ast";
 import {printCommaList} from "../utils";
 
 export default function JSClassHead(builder: Builder, node: JSClassHead): Token {
-	const tokens: Array<Token> = [];
-	const tokenGroups: Array<Token> = [];
+	const tokens: Token[] = [];
+	const tokenGroups: Token[] = [];
 
 	tokens.push(builder.tokenize(node.typeParameters, node));
 

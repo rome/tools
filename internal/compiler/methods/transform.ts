@@ -16,10 +16,10 @@ type TransformResult = {
 	ast: AnyRoot;
 	suppressions: DiagnosticSuppressions;
 	diagnostics: Diagnostics;
-	cacheDependencies: Array<string>;
+	cacheDependencies: string[];
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
+const transformCaches: Cache<TransformResult>[] = stageOrder.map(() =>
 	new Cache()
 );
 
@@ -43,7 +43,7 @@ export default async function transform(
 	}
 
 	let prevStageDiagnostics: Diagnostics = [];
-	let prevStageCacheDeps: Array<string> = [];
+	let prevStageCacheDeps: string[] = [];
 	let suppressions: undefined | DiagnosticSuppressions;
 
 	// Run the previous stage

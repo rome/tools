@@ -138,8 +138,8 @@ export default class DependencyNode {
 		this.all = all;
 	}
 
-	public getDependents(): Array<DependencyNode> {
-		const dependents: Array<DependencyNode> = [];
+	public getDependents(): DependencyNode[] {
+		const dependents: DependencyNode[] = [];
 		for (const node of this.graph.getNodes()) {
 			if (node.absoluteToAnalyzeDependency.has(this.path)) {
 				dependents.push(node);
@@ -174,7 +174,7 @@ export default class DependencyNode {
 		return this.graph.getNode(absolute);
 	}
 
-	public getAbsoluteDependencies(): Array<AbsoluteFilePath> {
+	public getAbsoluteDependencies(): AbsoluteFilePath[] {
 		return Array.from(this.relativeToAbsolutePath.values());
 	}
 
@@ -384,7 +384,7 @@ export default class DependencyNode {
 		name: string,
 		loc: undefined | SourceLocation,
 		ignoreDefault: boolean = false,
-		ancestry: Array<DependencyNode> = [],
+		ancestry: DependencyNode[] = [],
 	): ResolvedImport {
 		if (ancestry.includes(this)) {
 			return {
@@ -395,7 +395,7 @@ export default class DependencyNode {
 			};
 		}
 
-		const subAncestry: Array<DependencyNode> = [...ancestry, this];
+		const subAncestry: DependencyNode[] = [...ancestry, this];
 
 		// We always want to resolve exports from the bottom up
 		const exports = this.analyze.exports.reverse();

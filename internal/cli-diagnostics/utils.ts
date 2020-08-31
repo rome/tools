@@ -152,7 +152,7 @@ export function cleanEquivalentString(safe: string | StaticMarkup): string {
 	return str;
 }
 
-export type ToLines = Array<[string, AnyMarkup]>;
+export type ToLines = [string, AnyMarkup][];
 
 export function toLines(opts: AnsiHighlightOptions): ToLines {
 	const input = removeCarriageReturn(opts.input);

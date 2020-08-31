@@ -33,7 +33,7 @@ export default class RSERStream {
 	public sendEvent: Event<ArrayBuffer, void>;
 	public valueEvent: Event<RSERValue, void>;
 
-	private overflow: Array<Uint8Array>;
+	private overflow: Uint8Array[];
 	private state: State;
 
 	private createWaitingState(): State {

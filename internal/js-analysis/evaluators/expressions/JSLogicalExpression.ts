@@ -10,7 +10,7 @@ import {AnyNode, JSLogicalExpression, jsLogicalExpression} from "@internal/ast";
 import T from "../../types/T";
 import UnionT from "../../types/UnionT";
 
-function uniq(args: Array<string>): Array<string> {
+function uniq(args: string[]): string[] {
 	return [...new Set(args)];
 }
 

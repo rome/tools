@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSInterfaceBody extends NodeBaseWithComments {
 	readonly type: "TSInterfaceBody";
-	readonly body: Array<AnyTSTypeElement>;
+	readonly body: AnyTSTypeElement[];
 }
 
 export const tsInterfaceBody = createBuilder<TSInterfaceBody>(

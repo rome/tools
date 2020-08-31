@@ -12,7 +12,7 @@ import {Dict} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
 
 export type CheckProvider = {
-	libs?: Array<JSRoot>;
+	libs?: JSRoot[];
 	getExportTypes: (
 		origin: string,
 		relative: string,
@@ -41,6 +41,6 @@ export type ModuleSignatureExport =
 
 export type ModuleSignature = {
 	filename: string;
-	exports: Array<ModuleSignatureExport>;
+	exports: ModuleSignatureExport[];
 	types: Dict<ModuleSignatureType>;
 };

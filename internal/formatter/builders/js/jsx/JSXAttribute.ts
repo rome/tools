@@ -13,7 +13,7 @@ export default function JSXAttribute(
 	builder: Builder,
 	node: JSXAttribute,
 ): Token {
-	const tokens: Array<Token> = [builder.tokenize(node.name, node)];
+	const tokens: Token[] = [builder.tokenize(node.name, node)];
 
 	if (node.value) {
 		return concat([concat(tokens), "=", builder.tokenize(node.value, node)]);

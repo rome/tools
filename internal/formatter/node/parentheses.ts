@@ -47,7 +47,7 @@ const parens: Map<
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		node: any,
 		parent: AnyNode,
-		printStack: Array<AnyNode>,
+		printStack: AnyNode[],
 	) => boolean
 > = new Map();
 export default parens;
@@ -112,18 +112,14 @@ parens.set(
 
 parens.set(
 	"JSObjectExpression",
-	(
-		node: JSObjectExpression,
-		parent: AnyNode,
-		printStack: Array<AnyNode>,
-	): boolean => {
+	(node: JSObjectExpression, parent: AnyNode, printStack: AnyNode[]): boolean => {
 		return isFirstInStatement(printStack, {considerArrow: true});
 	},
 );
 
 parens.set(
 	"JSDoExpression",
-	(node: JSDoExpression, parent: AnyNode, printStack: Array<AnyNode>): boolean => {
+	(node: JSDoExpression, parent: AnyNode, printStack: AnyNode[]): boolean => {
 		return isFirstInStatement(printStack);
 	},
 );
@@ -277,11 +273,7 @@ parens.set(
 
 parens.set(
 	"JSClassExpression",
-	(
-		node: JSClassExpression,
-		parent: AnyNode,
-		printStack: Array<AnyNode>,
-	): boolean => {
+	(node: JSClassExpression, parent: AnyNode, printStack: AnyNode[]): boolean => {
 		return isFirstInStatement(printStack, {considerDefaultExports: true});
 	},
 );
@@ -313,7 +305,7 @@ parens.set("JSSpreadProperty", needsParenUnaryExpression);
 
 parens.set(
 	"JSFunctionExpression",
-	(node: AnyNode, parent: AnyNode, printStack: Array<AnyNode>): boolean => {
+	(node: AnyNode, parent: AnyNode, printStack: AnyNode[]): boolean => {
 		return isFirstInStatement(printStack, {considerDefaultExports: true});
 	},
 );
@@ -395,7 +387,7 @@ parens.set(
 // Walk up the print stack to deterimine if our node can come first
 // in statement.
 function isFirstInStatement(
-	printStack: Array<AnyNode>,
+	printStack: AnyNode[],
 	{considerArrow = false, considerDefaultExports = false} = {},
 ): boolean {
 	let i = printStack.length - 1;

@@ -20,8 +20,8 @@ export default class UnknownPropE extends E {
 			object: T;
 			property: T;
 			key: string;
-			thisKeys: Array<string>;
-			protoKeys: Array<string>;
+			thisKeys: string[];
+			protoKeys: string[];
 		},
 	) {
 		super(scope, originNode);
@@ -34,14 +34,14 @@ export default class UnknownPropE extends E {
 	}
 
 	public static type = "UnknownPropE";
-	private allProps: Array<string>;
-	private thisKeys: Array<string>;
-	private protoKeys: Array<string>;
+	private allProps: string[];
+	private thisKeys: string[];
+	private protoKeys: string[];
 	private property: T;
 	private object: T;
 	private key: string;
 
-	public sortProps(props: Array<string>): Array<string> {
+	public sortProps(props: string[]): string[] {
 		if (props.length === 0) {
 			return props;
 		}

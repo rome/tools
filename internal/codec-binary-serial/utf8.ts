@@ -130,7 +130,7 @@ export function utf8Decode(
 	let offset = inputOffset;
 	const end = offset + byteLength;
 
-	const units: Array<number> = [];
+	const units: number[] = [];
 	let result = "";
 	while (offset < end) {
 		const byte1 = bytes[offset++];

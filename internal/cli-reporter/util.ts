@@ -12,7 +12,7 @@ import {AnyMarkup, markup} from "@internal/markup";
 import {VoidCallback} from "@internal/typescript-helpers";
 
 export function mergeProgresses(
-	progresses: Array<ReporterProgress>,
+	progresses: ReporterProgress[],
 ): ReporterProgress {
 	if (progresses.length === 1) {
 		return progresses[0];

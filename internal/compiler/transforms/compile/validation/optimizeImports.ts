@@ -186,7 +186,7 @@ export default createVisitor({
 					}
 
 					// Remove wildcard specifier
-					let namedSpecifiers: Array<JSImportSpecifier> = [
+					let namedSpecifiers: JSImportSpecifier[] = [
 						...(node.namedSpecifiers || []),
 					];
 

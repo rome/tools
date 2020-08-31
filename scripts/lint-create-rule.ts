@@ -6,7 +6,7 @@ import {markup} from "@internal/markup";
 
 const rulesPath = INTERNAL.append("compiler", "lint", "rules");
 
-export async function main([ruleName]: Array<string>): Promise<number> {
+export async function main([ruleName]: string[]): Promise<number> {
 	if (ruleName === undefined) {
 		reporter.error(
 			markup`./rome run scripts/ast-create-node scripts/lint/add.cjs [ruleName]`,

@@ -9,10 +9,10 @@ import {AbsoluteFilePath} from "@internal/path";
 import {exists} from "@internal/fs";
 import {spawn} from "@internal/child-process";
 
-export function extractFileList(out: string): Array<string> {
+export function extractFileList(out: string): string[] {
 	const lines = out.trim().split("\n");
 
-	const files: Array<string> = [];
+	const files: string[] = [];
 
 	for (const line of lines) {
 		const match = line.trim().match(/^(?:[AM]|\?\?)\s+(.*?)$/);
@@ -35,11 +35,11 @@ export class VCSClient {
 		throw new Error("unimplemented");
 	}
 
-	public getModifiedFiles(branch: string): Promise<Array<string>> {
+	public getModifiedFiles(branch: string): Promise<string[]> {
 		throw new Error("unimplemented");
 	}
 
-	public getUncommittedFiles(): Promise<Array<string>> {
+	public getUncommittedFiles(): Promise<string[]> {
 		throw new Error("unimplemented");
 	}
 }
@@ -58,7 +58,7 @@ class GitVCSClient extends VCSClient {
 		return exitCode === 0 ? "main" : "master";
 	}
 
-	public async getUncommittedFiles(): Promise<Array<string>> {
+	public async getUncommittedFiles(): Promise<string[]> {
 		const stdout = (await spawn("git", ["status", "--short"], {cwd: this.root}).waitSuccess()).getOutput(
 			true,
 			false,
@@ -66,7 +66,7 @@ class GitVCSClient extends VCSClient {
 		return extractFileList(stdout);
 	}
 
-	public async getModifiedFiles(branch: string): Promise<Array<string>> {
+	public async getModifiedFiles(branch: string): Promise<string[]> {
 		const stdout = (await spawn(
 			"git",
 			["diff", "--name-status", branch],

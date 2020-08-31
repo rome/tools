@@ -13,7 +13,7 @@ export default function JSRegExpGroupCapture(
 	builder: Builder,
 	node: JSRegExpGroupCapture,
 ): Token {
-	const tokens: Array<Token> = ["("];
+	const tokens: Token[] = ["("];
 
 	if (node.name !== undefined) {
 		tokens.push("?<");

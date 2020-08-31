@@ -56,7 +56,7 @@ export function printExportDeclaration(
 			throw new Error("Expected specifiers since there was no declaration");
 		}
 
-		const tokens: Array<Token> = [];
+		const tokens: Token[] = [];
 
 		if (node.exportKind === "type") {
 			tokens.push("type", space);

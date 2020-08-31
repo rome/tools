@@ -114,11 +114,11 @@ export default class Consumer {
 
 	public capture(): {
 		consumer: Consumer;
-		definitions: Array<ConsumePropertyDefinition>;
+		definitions: ConsumePropertyDefinition[];
 		diagnostics: Diagnostics;
 	} {
 		let diagnostics: Diagnostics = [];
-		const definitions: Array<ConsumePropertyDefinition> = [];
+		const definitions: ConsumePropertyDefinition[] = [];
 
 		const consumer = this.cloneConsumer({
 			onDefinition: (def, consumer) => {
@@ -828,7 +828,7 @@ export default class Consumer {
 		return map;
 	}
 
-	public asPlainArray(optional: boolean = false): Array<unknown> {
+	public asPlainArray(optional: boolean = false): unknown[] {
 		this.declareDefinition({
 			type: "array",
 			default: undefined,
@@ -857,7 +857,7 @@ export default class Consumer {
 		});
 	}
 
-	public asMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
+	public asMappedArray<T>(callback: (c: Consumer) => T): T[] {
 		return Array.from(this.asIterable(), callback);
 	}
 
@@ -865,7 +865,7 @@ export default class Consumer {
 		return this.asImplicitMappedArray((c) => c);
 	}
 
-	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): Array<T> {
+	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): T[] {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);
 		} else if (this.exists()) {
@@ -959,7 +959,7 @@ export default class Consumer {
 	}
 
 	public asStringSet<ValidValue extends string>(
-		validValues: Array<ValidValue>,
+		validValues: ValidValue[],
 		def?: ValidValue,
 	): ValidValue {
 		this.declareDefinition({
@@ -980,7 +980,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as Array<string>),
+					((validValues as any) as string[]),
 				),
 				{
 					target: "value",
@@ -991,7 +991,7 @@ export default class Consumer {
 	}
 
 	public asStringSetOrVoid<ValidValue extends string>(
-		validValues: Array<ValidValue>,
+		validValues: ValidValue[],
 	): undefined | ValidValue {
 		this.declareDefinition({
 			type: "string",
@@ -1268,7 +1268,7 @@ export default class Consumer {
 	}
 
 	public asNumberSet<ValidValue extends number>(
-		validValues: Array<ValidValue>,
+		validValues: ValidValue[],
 		def?: ValidValue,
 	): ValidValue {
 		this.declareDefinition({
@@ -1289,7 +1289,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as Array<number>),
+					((validValues as any) as number[]),
 				),
 				{
 					target: "value",
@@ -1300,7 +1300,7 @@ export default class Consumer {
 	}
 
 	public asNumberSetOrVoid<ValidValue extends number>(
-		validValues: Array<ValidValue>,
+		validValues: ValidValue[],
 	): undefined | ValidValue {
 		this.declareDefinition({
 			type: "number",

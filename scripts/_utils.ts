@@ -53,7 +53,7 @@ export async function modifyGeneratedFile(
 		id?: string;
 	},
 	callback: () => Promise<{
-		lines: Array<string>;
+		lines: string[];
 		hash?: string;
 	}>,
 ): Promise<void> {
@@ -232,7 +232,7 @@ export function waitChildProcess(
 
 export async function exec(
 	cmd: string,
-	args: Array<string>,
+	args: string[],
 	opts: child.SpawnOptions = {},
 ): Promise<void> {
 	reporter.command(`${cmd} ${args.join(" ")}`);
@@ -254,7 +254,7 @@ export async function exec(
 	}
 }
 
-export async function execDev(args: Array<string>): Promise<void> {
+export async function execDev(args: string[]): Promise<void> {
 	await waitChildProcess(
 		child.spawn(
 			process.execPath,
@@ -266,10 +266,8 @@ export async function execDev(args: Array<string>): Promise<void> {
 	);
 }
 
-async function getSubDirectories(
-	files: AbsoluteFilePathSet,
-): Promise<Array<string>> {
-	const subDirs: Array<string> = [];
+async function getSubDirectories(files: AbsoluteFilePathSet): Promise<string[]> {
+	const subDirs: string[] = [];
 
 	for await (const file of files) {
 		if ((await lstat(file)).isDirectory()) {
@@ -280,16 +278,14 @@ async function getSubDirectories(
 	return subDirs;
 }
 
-export async function getLanguages(): Promise<Array<string>> {
+export async function getLanguages(): Promise<string[]> {
 	const astPath = INTERNAL.append("ast");
 	const astDir = await readDirectory(astPath);
 
 	return getSubDirectories(astDir);
 }
 
-export async function getLanguageCategories(
-	language: string,
-): Promise<Array<string>> {
+export async function getLanguageCategories(language: string): Promise<string[]> {
 	const languagePath = INTERNAL.append("ast", language);
 	const languageDir = await readDirectory(languagePath);
 

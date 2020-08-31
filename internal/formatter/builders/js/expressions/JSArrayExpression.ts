@@ -45,10 +45,10 @@ export default function JSArrayExpression(
 		}
 	}
 
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (hasContents) {
-		const elements: Array<Token> = [];
+		const elements: Token[] = [];
 
 		for (let i = 0; i < node.elements.length; i++) {
 			const element = node.elements[i];

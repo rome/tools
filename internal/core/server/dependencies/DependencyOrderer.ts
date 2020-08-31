@@ -12,15 +12,15 @@ import {AnalyzeDependencyImportUsageItem} from "@internal/core";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 
-type FirstTopAwaitLocations = Array<{
+type FirstTopAwaitLocations = {
 	mtime: number;
 	loc: SourceLocation;
-}>;
+}[];
 
 export type DependencyOrder = {
 	diagnostics: Diagnostics;
 	firstTopAwaitLocations: FirstTopAwaitLocations;
-	files: Array<AbsoluteFilePath>;
+	files: AbsoluteFilePath[];
 };
 
 export default class DependencyOrderer {
@@ -36,14 +36,14 @@ export default class DependencyOrderer {
 	private firstTopAwaitLocations: FirstTopAwaitLocations;
 	private orderedNodes: Set<DependencyNode>;
 	private visitedNodes: Set<DependencyNode>;
-	private possibleCyclePaths: Map<DependencyNode, Array<string>>;
+	private possibleCyclePaths: Map<DependencyNode, string[]>;
 	private diagnostics: Diagnostics;
 	private graph: DependencyGraph;
 
 	private handleAlreadyVisitedFile(
 		node: DependencyNode,
 		path: AbsoluteFilePath,
-		ancestry: Array<string>,
+		ancestry: string[],
 	) {
 		const filename = path.join();
 
@@ -64,7 +64,7 @@ export default class DependencyOrderer {
 		}
 	}
 
-	private addFile(path: AbsoluteFilePath, ancestry: Array<string>): void {
+	private addFile(path: AbsoluteFilePath, ancestry: string[]): void {
 		const node = this.graph.getNode(path);
 
 		if (this.visitedNodes.has(node)) {

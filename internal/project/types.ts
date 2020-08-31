@@ -33,10 +33,10 @@ export type ProjectDefinition = {
 
 export type InvalidLicenses = Map<
 	string,
-	Array<{
+	{
 		name: string;
 		range: SemverRangeNode;
-	}>
+	}[]
 >;
 export type DependenciesExceptions = {
 	invalidLicenses: InvalidLicenses;
@@ -51,7 +51,7 @@ export type ProjectConfigObjects = {
 	resolver: {};
 	compiler: {};
 	bundler: {
-		externals: Array<string>;
+		externals: string[];
 	};
 	format: {
 		enabled: boolean;
@@ -59,7 +59,7 @@ export type ProjectConfigObjects = {
 		indentSize: number;
 	};
 	lint: {
-		globals: Array<string>;
+		globals: string[];
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
 		disabledRules: Array<LintRuleName>;
@@ -78,7 +78,7 @@ export type ProjectConfigObjects = {
 		root: AbsoluteFilePath;
 	};
 	files: {
-		assetExtensions: Array<string>;
+		assetExtensions: string[];
 		maxSize: number;
 		vendorPath: AbsoluteFilePath;
 	};
@@ -92,7 +92,7 @@ export type ProjectConfigObjects = {
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
 
 export type ProjectConfigTarget = {
-	constraints: Array<string>;
+	constraints: string[];
 };
 
 // Base of a project config without any objects
@@ -117,11 +117,11 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 export type ProjectConfigMeta = {
 	projectDirectory: undefined | AbsoluteFilePath;
 	configPath: undefined | AbsoluteFilePath;
-	configHashes: Array<string>;
+	configHashes: string[];
 	configDependencies: AbsoluteFilePathSet;
 	consumer: undefined | Consumer;
 	configSourceSubKey: undefined | string;
-	consumersChain: Array<Consumer>;
+	consumersChain: Consumer[];
 };
 
 export type ProjectConfigMetaHard = RequiredProps<

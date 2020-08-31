@@ -48,7 +48,7 @@ export default class CoverageCollector {
 		string,
 		{
 			code: string;
-			ranges: Array<CoverageRangeWithMetadata>;
+			ranges: CoverageRangeWithMetadata[];
 			map: SourceMapConsumer;
 		}
 	>;
@@ -64,7 +64,7 @@ export default class CoverageCollector {
 		);
 	}
 
-	public addCoverage(entries: Array<inspector.Profiler.ScriptCoverage>) {
+	public addCoverage(entries: inspector.Profiler.ScriptCoverage[]) {
 		for (const entry of entries) {
 			const filename = urlToFilename(entry.url);
 
@@ -93,9 +93,9 @@ export default class CoverageCollector {
 		}
 	}
 
-	public generate(): Array<CoverageFile> {
+	public generate(): CoverageFile[] {
 		const insertedLocs: Map<string, CoverageLocationRange> = new Map();
-		const locs: Array<CoverageLocationRange> = [];
+		const locs: CoverageLocationRange[] = [];
 
 		for (const data of this.sourceMaps.values()) {
 			const {ranges, code, map} = data;
@@ -141,7 +141,7 @@ export default class CoverageCollector {
 			}
 
 			// Prefetch all sorted indexes
-			const offsets: Array<Number0> = [];
+			const offsets: Number0[] = [];
 			for (const {startOffset, endOffset} of ranges) {
 				offsets.push(ob1Coerce0(startOffset));
 				offsets.push(ob1Coerce0(endOffset));
@@ -208,7 +208,7 @@ export default class CoverageCollector {
 		}
 
 		// Assemble files
-		const rangesByFile: Map<string, Array<CoverageLocationRange>> = new Map();
+		const rangesByFile: Map<string, CoverageLocationRange[]> = new Map();
 		for (const loc of locs) {
 			let ranges = rangesByFile.get(loc.filename);
 			if (ranges === undefined) {
@@ -218,7 +218,7 @@ export default class CoverageCollector {
 			ranges.push(loc);
 		}
 
-		const files: Array<CoverageFile> = [];
+		const files: CoverageFile[] = [];
 		for (const [filename, ranges] of rangesByFile) {
 			const coveredLines: Set<Number1> = new Set();
 			const uncoveredLines: Set<Number1> = new Set();

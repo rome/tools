@@ -12,7 +12,7 @@ export default function JSClassPrivateProperty(
 	builder: Builder,
 	node: JSClassPrivateProperty,
 ): Token {
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		builder.tokenize(node.meta, node),
 		builder.tokenize(node.key, node),
 	];

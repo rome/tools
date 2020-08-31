@@ -12,7 +12,7 @@ export default function TSModuleDeclaration(
 	builder: Builder,
 	node: TSModuleDeclaration,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.declare) {
 		tokens.push("declare");

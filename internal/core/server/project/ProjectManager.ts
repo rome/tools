@@ -60,7 +60,7 @@ import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
 
-function cleanUidParts(parts: Array<string>): string {
+function cleanUidParts(parts: string[]): string {
 	let uid = "";
 
 	let lastPart = "";
@@ -196,7 +196,7 @@ export default class ProjectManager {
 		});
 	}
 
-	private handleDeleted(paths: Array<AbsoluteFilePath>) {
+	private handleDeleted(paths: AbsoluteFilePath[]) {
 		for (const path of paths) {
 			const filename = path.join();
 
@@ -304,7 +304,7 @@ export default class ProjectManager {
 		const project = this.assertProjectExisting(path);
 
 		// Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
-		const parts: Array<string> = [];
+		const parts: string[] = [];
 
 		let root = project.directory;
 
@@ -367,9 +367,7 @@ export default class ProjectManager {
 		return this.getFileReference(local);
 	}
 
-	public async maybeEvictProjects(
-		paths: Array<AbsoluteFilePath>,
-	): Promise<boolean> {
+	public async maybeEvictProjects(paths: AbsoluteFilePath[]): Promise<boolean> {
 		// Check if this filename is a rome config dependency
 		let projectIds: Set<number> = new Set();
 		for (const path of paths) {
@@ -385,7 +383,7 @@ export default class ProjectManager {
 		const projectsToEvict: Set<ProjectDefinition> = new Set();
 
 		function getAllProjects(project: ProjectDefinition) {
-			let children: Array<ProjectDefinition> = [];
+			let children: ProjectDefinition[] = [];
 			for (const child of project.children) {
 				children = children.concat(getAllProjects(child));
 			}
@@ -462,7 +460,7 @@ export default class ProjectManager {
 			this.server.memoryFs.close(project.directory);
 
 			// Evict all files that belong to this project and delete their project mapping
-			const ownedFiles: Array<AbsoluteFilePath> = Array.from(
+			const ownedFiles: AbsoluteFilePath[] = Array.from(
 				this.server.memoryFs.glob(project.directory),
 			);
 			this.handleDeleted(ownedFiles);
@@ -491,7 +489,7 @@ export default class ProjectManager {
 		});
 	}
 
-	public getProjects(): Array<ProjectDefinition> {
+	public getProjects(): ProjectDefinition[] {
 		return Array.from(this.projects.values());
 	}
 
@@ -699,8 +697,8 @@ export default class ProjectManager {
 	}
 
 	public async notifyWorkersOfProjects(
-		workers: Array<WorkerContainer>,
-		projects?: Array<ProjectDefinition>,
+		workers: WorkerContainer[],
+		projects?: ProjectDefinition[],
 	): Promise<void> {
 		if (projects === undefined) {
 			projects = Array.from(this.projects.values());
@@ -779,8 +777,8 @@ export default class ProjectManager {
 
 	public getHierarchyFromProject(
 		project: ProjectDefinition,
-	): Array<ProjectDefinition> {
-		const projects: Array<ProjectDefinition> = [];
+	): ProjectDefinition[] {
+		const projects: ProjectDefinition[] = [];
 
 		let currProject: undefined | ProjectDefinition = project;
 		while (currProject !== undefined) {
@@ -822,7 +820,7 @@ export default class ProjectManager {
 	 */
 	public getProjectHierarchyFromPath(
 		path: AbsoluteFilePath,
-	): Array<ProjectDefinition> {
+	): ProjectDefinition[] {
 		const found = this.findLoadedProject(path);
 		if (found === undefined) {
 			return [];

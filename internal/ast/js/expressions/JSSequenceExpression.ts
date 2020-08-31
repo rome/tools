@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface JSSequenceExpression extends NodeBaseWithComments {
 	readonly type: "JSSequenceExpression";
-	readonly expressions: Array<AnyJSExpression>;
+	readonly expressions: AnyJSExpression[];
 }
 
 export const jsSequenceExpression = createBuilder<JSSequenceExpression>(

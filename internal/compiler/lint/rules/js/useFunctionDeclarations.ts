@@ -19,7 +19,7 @@ import {isFunctionNode} from "@internal/js-ast-utils";
 import {descriptions} from "@internal/diagnostics";
 
 type State = {
-	declarators: Array<JSVariableDeclarator>;
+	declarators: JSVariableDeclarator[];
 };
 
 export default createVisitor<State>({

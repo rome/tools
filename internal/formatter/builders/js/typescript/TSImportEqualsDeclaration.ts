@@ -12,7 +12,7 @@ export default function TSImportEqualsDeclaration(
 	builder: Builder,
 	node: TSImportEqualsDeclaration,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 	if (node.isExport) {
 		tokens.push("export");
 		tokens.push(space);

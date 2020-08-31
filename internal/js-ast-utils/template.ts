@@ -22,12 +22,12 @@ import {Dict} from "@internal/typescript-helpers";
 
 type Placeholder = {
 	type: AnyJSIdentifier["type"];
-	path: Array<string>;
+	path: string[];
 };
 
 type BuiltTemplate = {
 	ast: AnyNode;
-	placeholderPaths: Array<Placeholder>;
+	placeholderPaths: Placeholder[];
 };
 
 type TemplatePlaceholders = Dict<undefined | Placeholder>;
@@ -45,7 +45,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 
 	// create path ids
 	let placeholders: TemplatePlaceholders = {};
-	const placeholderIds: Array<string> = [];
+	const placeholderIds: string[] = [];
 	for (let i = 0; i < pathCount; i++) {
 		const id = `__${String(i)}__`;
 		placeholderIds.push(id);

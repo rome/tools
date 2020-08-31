@@ -16,7 +16,7 @@ import {createBuilder} from "../../utils";
 export interface JSAssignmentObjectPattern extends NodeBaseWithComments {
 	readonly type: "JSAssignmentObjectPattern";
 	readonly meta?: JSPatternMeta;
-	readonly properties: Array<JSAssignmentObjectPatternProperty>;
+	readonly properties: JSAssignmentObjectPatternProperty[];
 	readonly rest: undefined | JSAssignmentIdentifier;
 }
 

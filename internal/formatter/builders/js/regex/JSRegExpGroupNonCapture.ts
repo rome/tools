@@ -13,7 +13,7 @@ export default function JSRegExpGroupNonCapture(
 	builder: Builder,
 	node: JSRegExpGroupNonCapture,
 ): Token {
-	const tokens: Array<Token> = ["(?"];
+	const tokens: Token[] = ["(?"];
 
 	switch (node.kind) {
 		case "positive-lookahead": {

@@ -13,13 +13,13 @@ import {HumanBuilder} from "../Utils";
 import {StaticMarkup, concatMarkup, markup} from "@internal/markup";
 
 export default class UnionT extends T {
-	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
+	constructor(scope: Scope, originNode: undefined | AnyNode, types: T[]) {
 		super(scope, originNode);
 		this.types = [...new Set(types)];
 	}
 
 	public static type = "UnionT";
-	private types: Array<T>;
+	private types: T[];
 
 	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {
@@ -67,8 +67,8 @@ export default class UnionT extends T {
 		}
 	}
 
-	public explodeUnion(): Array<T> {
-		let types: Array<T> = [];
+	public explodeUnion(): T[] {
+		let types: T[] = [];
 		const visited: Set<T> = new Set([this]);
 
 		for (const type of this.types) {
@@ -94,7 +94,7 @@ export default class UnionT extends T {
 		}
 
 		const otherTypes = this.utils.explodeUnion(otherType);
-		const missing: Array<T> = [];
+		const missing: T[] = [];
 
 		for (const type of ourTypes) {
 			let compatible = false;

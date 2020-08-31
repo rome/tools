@@ -14,7 +14,7 @@ import {InterfaceToObject} from "@internal/typescript-helpers";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 
-export type MemorySamples = Array<[number, number]>;
+export type MemorySamples = [number, number][];
 
 export type TraceEvent = {
 	ts: number;
@@ -79,4 +79,4 @@ export type ErrorFrame = {
 	resolvedLocation: boolean;
 };
 
-export type ErrorFrames = Array<ErrorFrame>;
+export type ErrorFrames = ErrorFrame[];

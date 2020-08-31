@@ -19,7 +19,7 @@ import {AnyMarkups} from "@internal/markup/escape";
 
 export function reduce<Token extends TokenShape>(
 	input: string,
-	tokens: Array<Token>,
+	tokens: Token[],
 	callback: ReduceCallback<Token>,
 ): HighlightCodeResult {
 	let prevEnd = 0;
@@ -92,7 +92,7 @@ export function reduceParserCore<Token extends TokenShape & {
 	type: string;
 }>(
 	input: string,
-	tokens: Array<Token>,
+	tokens: Token[],
 	callback: ReduceCallback<Token>,
 ): HighlightCodeResult {
 	return reduce(

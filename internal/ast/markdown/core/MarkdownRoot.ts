@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 export interface MarkdownRoot extends NodeBaseWithComments,
 RootBase {
 	type: "MarkdownRoot";
-	body: Array<AnyMarkdownNode>;
+	body: AnyMarkdownNode[];
 }
 
 export const markdownRoot = createBuilder<MarkdownRoot>(

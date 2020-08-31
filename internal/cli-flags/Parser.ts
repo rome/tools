@@ -41,10 +41,10 @@ import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
 
-export type Examples = Array<{
+export type Examples = {
 	description: StaticMarkup;
 	command: string;
-}>;
+}[];
 
 type FlagsConsumer = {
 	flags: Consumer;
@@ -58,7 +58,7 @@ type CommandOptions<T extends RSERObject> = {
 	description?: StaticMarkup;
 	usage?: string;
 	examples?: Examples;
-	ignoreFlags?: Array<string>;
+	ignoreFlags?: string[];
 	hidden?: boolean;
 	defineFlags?: (consumer: Consumer) => T;
 	callback: (flags: T) => void | Promise<void>;
@@ -81,14 +81,14 @@ export type ParserOptions<T> = {
 	reporter: Reporter;
 	programName: string;
 	cwd: AbsoluteFilePath;
-	args: Array<string>;
+	args: string[];
 	defineFlags: (consumer: Consumer) => T;
 
 	examples?: Examples;
 	usage?: string;
 	description?: StaticMarkup;
 	version?: string;
-	ignoreFlags?: Array<string>;
+	ignoreFlags?: string[];
 	noProcessExit?: boolean;
 	commandRequired?: boolean;
 	commandSuggestions?: Dict<{
@@ -98,7 +98,7 @@ export type ParserOptions<T> = {
 	shellCompletionDirectory?: AbsoluteFilePath;
 };
 
-function splitCommandName(cmd: string): Array<string> {
+function splitCommandName(cmd: string): string[] {
 	return cmd.split(" ");
 }
 
@@ -109,7 +109,7 @@ function isDisplayableHelpValue(value: unknown): value is string | number {
 
 type _FlagValue = undefined | number | string | boolean;
 
-export type FlagValue = _FlagValue | Array<_FlagValue>;
+export type FlagValue = _FlagValue | (_FlagValue[]);
 
 type SupportedCompletionShells = "bash" | "fish" | "zsh";
 
@@ -148,7 +148,7 @@ export default class Parser<T> {
 	private currentCommand: undefined | string;
 	private ranCommand: undefined | AnyCommandOptions;
 	private commands: Map<string, AnyCommandOptions>;
-	public args: Array<string>;
+	public args: string[];
 
 	private looksLikeFlag(flag: undefined | string): boolean {
 		return flag?.[0] === "-";
@@ -178,7 +178,7 @@ export default class Parser<T> {
 		this.flags.set(key, newValue);
 	}
 
-	private consumeRawArgs(rawArgs: Array<string>) {
+	private consumeRawArgs(rawArgs: string[]) {
 		while (rawArgs.length > 0) {
 			const arg: string = String(rawArgs.shift());
 
@@ -365,7 +365,7 @@ export default class Parser<T> {
 		definedCommand: undefined | DefinedCommand,
 	) {
 		// Ignore flags from command and root parser options
-		const ignoreFlags: Array<string> = [
+		const ignoreFlags: string[] = [
 			...((!!definedCommand && definedCommand.command.ignoreFlags) || []),
 			...(this.opts.ignoreFlags || []),
 		];
@@ -593,12 +593,12 @@ export default class Parser<T> {
 		return rootFlags;
 	}
 
-	private buildOptionsHelp(keys: Array<string>): Array<AnyMarkups> {
-		const optionOutput: Array<{
+	private buildOptionsHelp(keys: string[]): AnyMarkups[] {
+		const optionOutput: {
 			argName: string;
 			arg: StaticMarkup;
 			description: StaticMarkup;
-		}> = [];
+		}[] = [];
 		let argColumnLength: number = 0;
 
 		// Build up options, we need to do this to line up the columns correctly
@@ -1001,7 +1001,7 @@ export default class Parser<T> {
 		// Sort commands into their appropriate categories for output
 		const commandsByCategory: ExtendedMap<
 			undefined | string,
-			Array<AnyCommandOptions>
+			AnyCommandOptions[]
 		> = new ExtendedMap("commandsByCategory", () => []);
 		const categoryNames: Set<string | undefined> = new Set();
 		for (const [name, command] of this.commands) {
@@ -1107,7 +1107,7 @@ export default class Parser<T> {
 		const {programName, commandSuggestions} = this.opts;
 		let {args} = this;
 		let commandName = args.join(" ");
-		let displayArgs: Array<string> = [];
+		let displayArgs: string[] = [];
 
 		const opts: Parameters<typeof descriptions.FLAGS.UNKNOWN_COMMAND>[0] = {
 			programName,
@@ -1237,7 +1237,7 @@ export class ParserInterface<T> {
 		return this.parser.showHelp();
 	}
 
-	public getArgs(): Array<string> {
+	public getArgs(): string[] {
 		return this.parser.args;
 	}
 

@@ -39,7 +39,7 @@ function defineFlags(c: Consumer): Flags {
 async function runCommand(
 	req: ServerRequest,
 	flags: Flags,
-	value: boolean | string | Array<string>,
+	value: boolean | string | (string[]),
 	action: string,
 ) {
 	const {reporter} = req;

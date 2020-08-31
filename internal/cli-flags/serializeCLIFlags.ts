@@ -15,7 +15,7 @@ import {AbsoluteFilePath} from "@internal/path";
 
 export type SerializeCLIOptions = {
 	programName: string;
-	args: Array<string>;
+	args: string[];
 	flags: Dict<FlagValue>;
 
 	// Optional
@@ -56,7 +56,7 @@ function isObjectTarget(
 }
 
 // Used to determine if we should output a -- to disambiguate raw CLI args
-function hasConfusingArgs(args: Array<string>): boolean {
+function hasConfusingArgs(args: string[]): boolean {
 	for (const arg of args) {
 		if (arg[0] === "-") {
 			return true;

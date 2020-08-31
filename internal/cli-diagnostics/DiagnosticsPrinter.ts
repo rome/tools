@@ -47,7 +47,7 @@ import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-ha
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 
 type RawBanner = {
-	palettes: Array<MarkupRGB>;
+	palettes: MarkupRGB[];
 	rows: Array<Array<number | MarkupRGB>>;
 };
 
@@ -169,12 +169,12 @@ export default class DiagnosticsPrinter extends Error {
 
 	private options: DiagnosticsPrinterOptions;
 	private reporter: Reporter;
-	private onFooterPrintCallbacks: Array<{
+	private onFooterPrintCallbacks: {
 		callback: FooterPrintCallback;
 		after: boolean;
-	}>;
+	}[];
 	private cwd: AbsoluteFilePath;
-	private fileReaders: Array<DiagnosticsFileReaders>;
+	private fileReaders: DiagnosticsFileReaders[];
 	private hasTruncatedDiagnostics: boolean;
 	private missingFileSources: UnknownPathSet;
 	private fileSources: DiagnosticsPrinterFileSources;
@@ -290,8 +290,8 @@ export default class DiagnosticsPrinter extends Error {
 
 	private getDependenciesFromDiagnostics(
 		diagnostics: Diagnostics,
-	): Array<FileDependency> {
-		const deps: Array<FileDependency> = [];
+	): FileDependency[] {
+		const deps: FileDependency[] = [];
 
 		for (const diag of diagnostics) {
 			const {
@@ -851,11 +851,11 @@ export default class DiagnosticsPrinter extends Error {
 			let height = 0;
 			let width = 0;
 
-			let image: Array<Array<MarkupRGB>> = [];
+			let image: (MarkupRGB[])[] = [];
 
 			// Decompress banner
 			for (const row of banner.rows) {
-				const unpackedRow: Array<MarkupRGB> = [];
+				const unpackedRow: MarkupRGB[] = [];
 
 				for (const field of row) {
 					let palleteIndex;
@@ -888,7 +888,7 @@ export default class DiagnosticsPrinter extends Error {
 				scale = 1;
 			}
 
-			function averageColors(colors: Array<MarkupRGB>): MarkupRGB {
+			function averageColors(colors: MarkupRGB[]): MarkupRGB {
 				let averageColor: MarkupRGB = [0, 0, 0];
 
 				for (const color of colors) {
@@ -908,7 +908,7 @@ export default class DiagnosticsPrinter extends Error {
 			if (scale < 1) {
 				const scaledHeight = Math.floor(height * scale);
 				const scaledWidth = Math.floor(width * scale);
-				const scaledImage: Array<Array<MarkupRGB>> = [];
+				const scaledImage: (MarkupRGB[])[] = [];
 
 				const heightRatio = width / scaledHeight;
 				const widthRatio = width / scaledWidth;
@@ -918,9 +918,9 @@ export default class DiagnosticsPrinter extends Error {
 					const end = Math.ceil(i * heightRatio);
 
 					// Scale height
-					const scaledHeightRow: Array<MarkupRGB> = [];
+					const scaledHeightRow: MarkupRGB[] = [];
 					for (let i = 0; i < width; i++) {
-						const colors: Array<MarkupRGB> = [];
+						const colors: MarkupRGB[] = [];
 
 						for (let x = start; x <= end; x++) {
 							const color = image[x - 1][i];
@@ -933,12 +933,12 @@ export default class DiagnosticsPrinter extends Error {
 					}
 
 					// Scale width
-					const scaledRow: Array<MarkupRGB> = [];
+					const scaledRow: MarkupRGB[] = [];
 					for (let i = 1; i <= scaledWidth; i++) {
 						const start = Math.floor(i * widthRatio);
 						const end = Math.ceil(i * widthRatio);
 
-						const colors: Array<MarkupRGB> = [];
+						const colors: MarkupRGB[] = [];
 						for (let i = start; i <= end; i++) {
 							colors.push(scaledHeightRow[i - 1]);
 						}

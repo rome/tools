@@ -13,7 +13,7 @@ export default function JSFunctionExpression(
 	builder: Builder,
 	node: JSFunctionDeclaration | JSFunctionExpression,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.head.async === true) {
 		tokens.push("async");

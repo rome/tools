@@ -36,17 +36,17 @@ import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {WatchFilesEvent} from "../fs/glob";
 
-type LintWatchChanges = Array<{
+type LintWatchChanges = {
 	type: "absolute" | "unknown";
 	filename: undefined | string;
 	diagnostics: Diagnostics;
-}>;
+}[];
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
 export type LinterOptions = {
 	apply?: boolean;
-	args?: Array<string>;
+	args?: string[];
 	hasDecisions?: boolean;
 	formatOnly?: boolean;
 	globalDecisions?: LintCompilerOptionsDecisions;

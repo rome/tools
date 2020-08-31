@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSTypeParameterDeclaration extends NodeBaseWithComments {
 	readonly type: "TSTypeParameterDeclaration";
-	readonly params: Array<TSTypeParameter>;
+	readonly params: TSTypeParameter[];
 }
 
 export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(

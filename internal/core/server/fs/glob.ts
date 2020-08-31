@@ -28,7 +28,7 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
 
 export interface GlobOptions {
 	args: Iterable<AbsoluteFilePath>;
-	extensions?: Array<string>;
+	extensions?: string[];
 	overrideIgnore?: PathPatterns;
 	configCategory?: ProjectConfigCategoriesWithIgnore;
 	test?: (path: AbsoluteFilePath) => boolean;
@@ -85,10 +85,10 @@ export class Globber {
 
 		const matches: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let queue: Array<{
+		let queue: {
 			cwd: AbsoluteFilePath;
 			path: AbsoluteFilePath;
-		}> = [{cwd, path: cwd}];
+		}[] = [{cwd, path: cwd}];
 
 		while (queue.length > 0) {
 			const {path, cwd} = queue.pop()!;
@@ -207,7 +207,7 @@ class GlobberWatcher {
 		return false;
 	}
 
-	async flushPaths(paths: Array<AbsoluteFilePath>) {
+	async flushPaths(paths: AbsoluteFilePath[]) {
 		let pendingPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		for (const path of paths) {
 			if (this.isDependentPath(path)) {
@@ -240,9 +240,9 @@ class GlobberWatcher {
 		});
 	}
 
-	setupEvents(): Array<EventSubscription> {
+	setupEvents(): EventSubscription[] {
 		const {memoryFs, server} = this;
-		const subscriptions: Array<EventSubscription> = [];
+		const subscriptions: EventSubscription[] = [];
 
 		// Emitted when a file appears for the first time
 		subscriptions.push(
@@ -273,7 +273,7 @@ class GlobberWatcher {
 		]);
 
 		try {
-			const promises: Array<Promise<unknown>> = [];
+			const promises: Promise<unknown>[] = [];
 			const batchPaths = new AbsoluteFilePathSet();
 			this.batchPaths = batchPaths;
 

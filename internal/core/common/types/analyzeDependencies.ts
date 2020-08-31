@@ -53,7 +53,7 @@ export type AnyAnalyzeExport =
 		};
 
 export type AnalyzeDependency = {
-	names: Array<AnalyzeDependencyName>;
+	names: AnalyzeDependencyName[];
 	async: boolean;
 	kind: ConstJSImportModuleKind;
 	type: AnalyzeModuleType;
@@ -71,7 +71,7 @@ export type AnalyzeDependencyImportUsageItem = {
 	kind: ConstJSImportModuleKind;
 };
 
-export type AnalyzeDependencyImportFirstUsage = Array<AnalyzeDependencyImportUsageItem>;
+export type AnalyzeDependencyImportFirstUsage = AnalyzeDependencyImportUsageItem[];
 
 export type AnalyzeDependencyTopLevelLocalBindings = Dict<
 	undefined | SourceLocation
@@ -83,8 +83,8 @@ export type AnalyzeDependencyResult = {
 	topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;
 	firstTopAwaitLocation: undefined | SourceLocation;
 	importFirstUsage: AnalyzeDependencyImportFirstUsage;
-	exports: Array<AnyAnalyzeExport>;
-	dependencies: Array<AnalyzeDependency>;
+	exports: AnyAnalyzeExport[];
+	dependencies: AnalyzeDependency[];
 };
 
 export const UNKNOWN_ANALYZE_DEPENDENCIES_RESULT: AnalyzeDependencyResult = {

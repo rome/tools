@@ -32,7 +32,7 @@ export const stringMarkup = createDiagnosticsCategory({
 	INVALID_ATTRIBUTE_NAME_FOR_TAG: (
 		tagName: string,
 		attributeName: string,
-		validAttributes: Array<string>,
+		validAttributes: string[],
 	) => ({
 		message: markup`<emphasis>${attributeName}</emphasis> is not a valid attribute name for <emphasis>${tagName}</emphasis>`,
 		advice: buildSuggestionAdvice(attributeName, validAttributes),
@@ -42,7 +42,7 @@ export const stringMarkup = createDiagnosticsCategory({
 	}),
 	RESTRICTED_CHILD: (
 		tagName: string,
-		allowedParents: Array<string>,
+		allowedParents: string[],
 		gotParentName: string = "none",
 	) => ({
 		message: markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${orJoin(
@@ -51,7 +51,7 @@ export const stringMarkup = createDiagnosticsCategory({
 	}),
 	RESTRICTED_PARENT: (
 		tagName: string,
-		allowedChildren: Array<string>,
+		allowedChildren: string[],
 		gotChildName: string,
 	) => ({
 		message: markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${orJoin(

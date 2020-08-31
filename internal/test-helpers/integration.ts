@@ -487,8 +487,8 @@ export function createIntegrationTest(
 				t.namedSnapshot("console", clientStream.read());
 
 				// Files
-				const files: Array<string> = [];
-				let queue: Array<AbsoluteFilePath> = [projectPath];
+				const files: string[] = [];
+				let queue: AbsoluteFilePath[] = [projectPath];
 				while (queue.length > 0) {
 					const path = queue.pop()!;
 					const stat = await lstat(path);

@@ -32,11 +32,11 @@ import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {ProjectConfig} from "@internal/project";
 
-export type WorkerProjects = Array<{
+export type WorkerProjects = {
 	id: number;
 	directory: AbsoluteFilePath;
 	config: undefined | ProjectConfig;
-}>;
+}[];
 
 export type WorkerCompileResult = CompileResult & {
 	cached: boolean;
@@ -47,10 +47,10 @@ export type WorkerPartialManifest = {
 	type: Manifest["type"];
 };
 
-export type WorkerPartialManifests = Array<{
+export type WorkerPartialManifests = {
 	id: number;
 	manifest: undefined | WorkerPartialManifest;
-}>;
+}[];
 
 // Omit analyze value as the worker will fetch it itself, skips sending over a large payload that it already has in memory
 export type WorkerCompilerOptions = {
@@ -273,10 +273,10 @@ export default class WorkerBridge extends Bridge {
 
 	public getFileBuffers = this.createEvent<
 		void,
-		Array<{
+		{
 			filename: string;
 			content: string;
-		}>
+		}[]
 	>({
 		name: "getFileBuffers",
 		direction: "server->client",
@@ -306,7 +306,7 @@ export default class WorkerBridge extends Bridge {
 	public patchBuffer = this.createEvent<
 		{
 			ref: FileReference;
-			patches: Array<WorkerBufferPatch>;
+			patches: WorkerBufferPatch[];
 		},
 		string
 	>({
