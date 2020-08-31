@@ -230,7 +230,7 @@ MISSING DOCUMENTATION
 	<a href="/docs/lint/rules/js/noUnnecessaryContinue">noUnnecessaryContinue</a>
 	<a class="header-anchor" href="#noUnnecessaryContinue"></a>
 </h3>
-disallow unnecessary continue statement inside the loop
+disallow unnecessary continue `statement` inside the loop
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnsafeFinally">
