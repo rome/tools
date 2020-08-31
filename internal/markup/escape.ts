@@ -22,18 +22,18 @@ export type LazyMarkupFactory = () => AnyMarkup;
 
 export type StaticMarkup = {
 	type: "MARKUP";
-	parts: Array<MarkupPart>;
+	parts: MarkupPart[];
 };
 
-export type StaticMarkups = Array<StaticMarkup>;
+export type StaticMarkups = StaticMarkup[];
 
 export type AnyMarkup = StaticMarkup | LazyMarkup | LazyMarkupFactory;
 
-export type AnyMarkups = Array<AnyMarkup>;
+export type AnyMarkups = AnyMarkup[];
 
 type LazyMarkup = {
 	type: "LAZY_MARKUP";
-	parts: Array<LazyMarkupPart>;
+	parts: LazyMarkupPart[];
 };
 
 type RawMarkup = {
@@ -106,7 +106,7 @@ export function markup(
 		}
 	}
 
-	const parts: Array<LazyMarkupPart> = [];
+	const parts: LazyMarkupPart[] = [];
 	let hasLazy = false;
 
 	for (let i = 0; i < strs.length; i++) {
@@ -244,14 +244,14 @@ export function concatMarkup(
 	separator?: StaticMarkup,
 ): StaticMarkup;
 export function concatMarkup(
-	items: Array<AnyMarkup>,
+	items: AnyMarkup[],
 	separator?: AnyMarkup,
 ): AnyMarkup;
 export function concatMarkup(
-	items: Array<AnyMarkup>,
+	items: AnyMarkup[],
 	separator: AnyMarkup = markup``,
 ): AnyMarkup {
-	const parts: Array<LazyMarkupPart> = [];
+	const parts: LazyMarkupPart[] = [];
 	let hasLazy = isLazyMarkup(separator);
 
 	for (let i = 0; i < items.length; i++) {

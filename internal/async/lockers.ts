@@ -20,7 +20,7 @@ class Lock<RawKey, MapKey> {
 	}
 
 	private locker: LockerNormalized<RawKey, MapKey>;
-	private resolves: Array<LockResolve<RawKey, MapKey>>;
+	private resolves: LockResolve<RawKey, MapKey>[];
 	private mapKey: MapKey;
 
 	public addResolve(resolve: LockResolve<RawKey, MapKey>) {
@@ -136,7 +136,7 @@ export class GlobalLock {
 
 	private incrementEvent: Event<void, void>;
 	private decrementEvent: Event<void, void>;
-	private resolves: Array<VoidCallback>;
+	private resolves: VoidCallback[];
 	private dependencies: number;
 
 	attachLock(lock: GlobalLock) {

@@ -38,7 +38,7 @@ export function parseInline(
 	token: Emphasis | Strong,
 	onUnknownToken: OnUnknownToken,
 ): MarkdownEmphasisInline | MarkdownText | MarkdownBoldInline | undefined {
-	let children: Array<AnyMarkdownInlineNode> = [];
+	let children: AnyMarkdownInlineNode[] = [];
 
 	// let inlineNode: MarkdownEmphasisInline | undefined = undefined;
 	const {leftFlankingDelimiter, closingIndexOfDelimiter} = token;

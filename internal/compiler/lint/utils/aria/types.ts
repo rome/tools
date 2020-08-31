@@ -154,7 +154,7 @@ export type ARIAConcept = {
 	// sometimes W3C specifies some attributes in relation of the role
 	// For example, the role="checkbox" is like <input type="checkbox" />
 	// attributes is needed to capture the _type="checkbox"_ part
-	attributes?: Array<ARIAConceptAttribute>;
+	attributes?: ARIAConceptAttribute[];
 };
 
 export type ARIABaseConcept = {
@@ -171,9 +171,9 @@ export type ARIARole =
  * Table reference example: https://www.w3.org/TR/wai-aria-1.1/#checkbox
  */
 export type ARIARoleDefinition = {
-	props: Array<ARIAProperty>;
-	requiredProps: Array<ARIAProperty>;
-	superClassRole: Array<ARIARole>;
+	props: ARIAProperty[];
+	requiredProps: ARIAProperty[];
+	superClassRole: ARIARole[];
 	/**
      * Having a concept means that a role can be directly mapped to a HTML element
      * For example:
@@ -181,5 +181,5 @@ export type ARIARoleDefinition = {
      * - role checkbox => <input type="checkbox" />
      * - role button => <button />
      */
-	baseConcepts?: Array<ARIABaseConcept>;
+	baseConcepts?: ARIABaseConcept[];
 };

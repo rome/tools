@@ -15,7 +15,7 @@ export default class UnknownImportE extends E {
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		opts: {
-			possibleNames: Array<string>;
+			possibleNames: string[];
 			importedName: string;
 			source: string;
 		},
@@ -29,7 +29,7 @@ export default class UnknownImportE extends E {
 	public static type = "UnknownImportE";
 	private importedName: string;
 	private source: string;
-	private possibleNames: Array<string>;
+	private possibleNames: string[];
 
 	public getError(): ErrorDefinition {
 		return {

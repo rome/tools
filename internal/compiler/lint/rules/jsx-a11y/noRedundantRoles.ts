@@ -26,7 +26,7 @@ type CreateFixableDiagnostic = {
 function createFixableDiagnostic(
 	{path, node, mappedRole, roleAttribute, elementName, roleName}: CreateFixableDiagnostic,
 ) {
-	let ariaAttributesToRemove: Array<AnyNode> = [];
+	let ariaAttributesToRemove: AnyNode[] = [];
 	if (mappedRole) {
 		// here we retrieve the aria-* attributes that are not needed
 		// e.g. role="heading" aria-level="1"
@@ -38,7 +38,7 @@ function createFixableDiagnostic(
 				}
 				return nodes;
 			},
-			([] as Array<AnyNode>),
+			([] as AnyNode[]),
 		);
 	}
 	const titleSuggestion =

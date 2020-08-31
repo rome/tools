@@ -350,7 +350,7 @@ function getPackageSuggestions(
 	}
 
 	// TODO Add node_modules
-	const matches: Array<[string, string]> = orderBySimilarity(
+	const matches: [string, string][] = orderBySimilarity(
 		query.source.join(),
 		Array.from(possibleGlobalPackages.keys()),
 		{minRating: MIN_SIMILARITY},

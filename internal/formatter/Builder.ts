@@ -36,7 +36,7 @@ export type BuilderOptions = {
 };
 
 export default class Builder {
-	constructor(opts: BuilderOptions, comments: Array<AnyComment> = []) {
+	constructor(opts: BuilderOptions, comments: AnyComment[] = []) {
 		this.options = opts;
 		this.comments = new CommentsConsumer(comments);
 		this.printedComments = new Set();
@@ -48,7 +48,7 @@ export default class Builder {
 	public options: BuilderOptions;
 	private comments: CommentsConsumer;
 	private printedComments: Set<string>;
-	private printStack: Array<AnyNode>;
+	private printStack: AnyNode[];
 
 	private getLanguage(): DiagnosticLanguage {
 		const {language} = this;
@@ -151,12 +151,12 @@ export default class Builder {
 		return concat(tokens);
 	}
 
-	public tokenizeStatementList(nodes: Array<AnyNode>, parent: AnyNode): Token {
+	public tokenizeStatementList(nodes: AnyNode[], parent: AnyNode): Token {
 		if (nodes.length === 0) {
 			return "";
 		}
 
-		const tokens: Array<Token> = [];
+		const tokens: Token[] = [];
 
 		for (let i = 0; i < nodes.length; i++) {
 			const isLast = i === nodes.length - 1;
@@ -191,7 +191,7 @@ export default class Builder {
 			return "";
 		}
 
-		const tokens: Array<Token> = [];
+		const tokens: Token[] = [];
 
 		for (const comment of innerComments) {
 			this.printedComments.add(comment.id);
@@ -207,7 +207,7 @@ export default class Builder {
 		kind: "leadingComments" | "trailingComments" | "innerComments",
 		node: AnyNode,
 		all: boolean = false,
-	): undefined | Array<AnyComment> {
+	): undefined | (AnyComment[]) {
 		if (!node) {
 			return undefined;
 		}

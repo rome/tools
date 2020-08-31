@@ -600,7 +600,7 @@ export function toFunctionParamsBindingList(
 // type casts that we've found that are illegal in this context
 export function toReferencedList(
 	parser: JSParser,
-	exprList: Array<ToReferencedItem>,
+	exprList: ToReferencedItem[],
 	isParenthesizedExpr?: boolean,
 ): Array<JSSpreadElement | AnyJSExpression> {
 	for (let i = 0; i < exprList.length; i++) {
@@ -723,7 +723,7 @@ export function filterSpread<T extends AnyNode>(
 
 export function toReferencedListDeep(
 	parser: JSParser,
-	exprList: Array<ToReferencedItem>,
+	exprList: ToReferencedItem[],
 	isParenthesizedExpr?: boolean,
 ): Array<AnyJSExpression | JSSpreadElement> {
 	const refList = toReferencedList(parser, exprList, isParenthesizedExpr);
@@ -886,7 +886,7 @@ export function parseBindingListNonEmpty(
 	openContext: OpeningContext,
 	allowTSModifiers?: boolean,
 ): {
-	list: Array<AnyJSBindingPattern>;
+	list: AnyJSBindingPattern[];
 	rest: undefined | AnyJSTargetBindingPattern;
 } {
 	const list = parseBindingList(parser, openContext, false, allowTSModifiers);

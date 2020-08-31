@@ -20,7 +20,7 @@ import {
 import {JSXElement} from "@internal/ast";
 
 export default function JSXElement(builder: Builder, node: JSXElement): Token {
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		"<",
 		builder.tokenize(node.name, node),
 		builder.tokenize(node.typeArguments, node),

@@ -94,7 +94,7 @@ export const projectManager = createDiagnosticsCategory({
 			},
 		],
 	}),
-	TYPO_CONFIG_FILENAME: (invalidFilename: string, validFilenames: Array<string>) => ({
+	TYPO_CONFIG_FILENAME: (invalidFilename: string, validFilenames: string[]) => ({
 		category: "projectManager/typoConfigFilename",
 		message: markup`Invalid Rome config filename <emphasis>${invalidFilename}</emphasis>`,
 		advice: buildSuggestionAdvice(invalidFilename, validFilenames),

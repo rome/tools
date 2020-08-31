@@ -10,8 +10,8 @@ export interface HTMLElement extends NodeBaseWithComments {
 	readonly type: "HTMLElement";
 	readonly name: HTMLIdentifier;
 	readonly selfClosing?: boolean;
-	readonly attributes: Array<HTMLAttribute>;
-	readonly children: Array<AnyHTMLChildNode>;
+	readonly attributes: HTMLAttribute[];
+	readonly children: AnyHTMLChildNode[];
 }
 
 export const htmlElement = createBuilder<HTMLElement>(

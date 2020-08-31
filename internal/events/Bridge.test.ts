@@ -79,7 +79,7 @@ test(
 			await barBridge.handshake();
 		}
 
-		let fooMessages: Array<string> = [];
+		let fooMessages: string[] = [];
 
 		foo();
 		await bar();

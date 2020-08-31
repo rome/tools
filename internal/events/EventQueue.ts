@@ -3,7 +3,7 @@ import {AsyncVoidCallback, VoidCallback} from "@internal/typescript-helpers";
 import createDeferredPromise from "@internal/async/createDeferredPromise";
 import {GlobalLock} from "@internal/async";
 
-type EventQueueCallack<Value> = AsyncVoidCallback<[Array<Value>]>;
+type EventQueueCallack<Value> = AsyncVoidCallback<[Value[]]>;
 
 export default class EventQueue<Value> {
 	constructor(debounce: number = 100) {
@@ -18,10 +18,10 @@ export default class EventQueue<Value> {
 	private subscriptions: Set<EventQueueCallack<Value>>;
 	private timeout: undefined | [VoidCallback, NodeJS.Timeout];
 	private queueKeys: Set<string>;
-	private queue: Array<{
+	private queue: {
 		resolve: VoidCallback;
 		value: Value;
-	}>;
+	}[];
 	private debounce: number;
 	public lock: GlobalLock;
 

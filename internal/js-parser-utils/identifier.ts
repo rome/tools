@@ -728,7 +728,7 @@ export function getFullCharCodeAt(str: string, offset: number) {
 // This has a complexity linear to the value of the code. The
 // assumption is that looking up astral identifier characters is
 // rare.
-function isInAstralSet(code: number, set: Array<number>): boolean {
+function isInAstralSet(code: number, set: number[]): boolean {
 	let pos = 65_536;
 	for (let i = 0; i < set.length; i += 2) {
 		pos += set[i];

@@ -138,7 +138,6 @@ export type DiagnosticLintCategory =
 	| "lint/js/noRestrictedGlobals"
 	| "lint/js/noSetterReturn"
 	| "lint/js/noShadowRestrictedNames"
-	| "lint/js/noShorthandArrayType"
 	| "lint/js/noShoutyConstants"
 	| "lint/js/noSparseArray"
 	| "lint/js/noTemplateCurlyInString"
@@ -222,5 +221,6 @@ export type DiagnosticLintCategory =
 	| "lint/regex/noPosixInRegularExpression"
 	| "lint/regex/noReferenceToNonExistingGroup"
 	| "lint/ts/noExplicitAny"
+	| "lint/ts/preferShorthandArrayType"
 	| "lint/ts/useInterfaces";
 /* GENERATED:END(id:main) */

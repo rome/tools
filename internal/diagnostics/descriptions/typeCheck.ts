@@ -36,18 +36,18 @@ export const typeCheck = createDiagnosticsCategory({
 	UNKNOWN_IMPORT: (
 		importedName: string,
 		source: string,
-		possibleNames: Array<string>,
+		possibleNames: string[],
 	) => ({
 		category: "typeCheck/unknownImport",
 		message: markup`Unknown import '${importedName}' in '${source}'`,
 		advice: buildSuggestionAdvice(importedName, possibleNames),
 	}),
-	UNKNOWN_PROP: (key: string, possibleNames: Array<string>) => ({
+	UNKNOWN_PROP: (key: string, possibleNames: string[]) => ({
 		message: markup`Property ${key} not found in`,
 		category: "typeCheck/unknownProperty",
 		advice: buildSuggestionAdvice(key, possibleNames),
 	}),
-	UNDECLARED_VARIABLE: (name: string, possibleNames: Array<string>) => ({
+	UNDECLARED_VARIABLE: (name: string, possibleNames: string[]) => ({
 		category: "typeCheck/undeclaredVariable",
 		message: markup`Undeclared variable ${name}`,
 		advice: buildSuggestionAdvice(name, possibleNames),

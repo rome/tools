@@ -50,9 +50,7 @@ export function parseJSON(opts: JSONParserOptions): JSONValue {
 	return parseJSONExtra(opts).value;
 }
 
-export function tokenizeJSON(
-	opts: JSONParserOptions,
-): Array<TokenValues<Tokens>> {
+export function tokenizeJSON(opts: JSONParserOptions): TokenValues<Tokens>[] {
 	return createJSONParser(opts).tokenizeAll();
 }
 

@@ -76,7 +76,7 @@ export type ScopeType =
 	| "STRICT"
 	| "FLOW_COMMENT";
 
-const SCOPE_TYPES: Array<ScopeType> = [
+const SCOPE_TYPES: ScopeType[] = [
 	"FUNCTION_LOC",
 	"NON_ARROW_FUNCTION",
 	"FUNCTION",

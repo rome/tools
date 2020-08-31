@@ -13,7 +13,7 @@ const splitCache: Map<string, SplitResult> = new Map();
 
 type SplitResult = {
 	hasDoubleStar: boolean;
-	parts: Array<string>;
+	parts: string[];
 };
 
 function split(str: string): SplitResult {

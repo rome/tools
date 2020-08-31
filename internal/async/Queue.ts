@@ -11,7 +11,7 @@ import {ExtendedMap} from "@internal/collections";
 
 type QueueThread<Metadata> = {
 	running: boolean;
-	items: Array<[Metadata, VoidCallback]>;
+	items: [Metadata, VoidCallback][];
 };
 
 export type QueueOptions<Metadata, Thread> = {
@@ -49,8 +49,8 @@ export default class Queue<Metadata, Thread> {
 	private maxPerThread: number;
 	private maxThreads: number;
 
-	private runningThreads: Array<Promise<void>>;
-	private waitingThreads: Array<Thread>;
+	private runningThreads: Promise<void>[];
+	private waitingThreads: Thread[];
 	private callback: AsyncVoidCallback<[Metadata, Thread]>;
 	private threads: ExtendedMap<Thread, QueueThread<Metadata>>;
 	private locked: boolean;

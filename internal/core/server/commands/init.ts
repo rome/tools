@@ -252,7 +252,7 @@ export default createServerCommand<Flags>({
 					const {printer, savedCount} = await linter.runSingle();
 					savedCheckFiles = savedCount;
 
-					const globals: Array<string> = [];
+					const globals: string[] = [];
 					remainingCheckErrors = 0;
 					for (const diag of printer.processor.getDiagnostics()) {
 						if (diag.description.category === "lint/js/noUndeclaredVariables") {
@@ -294,7 +294,7 @@ export default createServerCommand<Flags>({
 						}
 					}
 
-					let editorConfigTabExtensions: Array<string> = [];
+					let editorConfigTabExtensions: string[] = [];
 					for (const [ext, handler] of uniqueHandlers) {
 						if (handler.hasTabs) {
 							editorConfigTabExtensions.push(`*.${ext}`);

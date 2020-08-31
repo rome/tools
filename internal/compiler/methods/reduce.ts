@@ -242,7 +242,7 @@ function _reduceSignal(
 		if (visitorKeys !== undefined) {
 			// Build the ancestry paths that we'll pass to each child path
 			const ancestryPaths = pathOpts.ancestryPaths || [];
-			let childAncestryPaths: Array<Path> = [path].concat(ancestryPaths);
+			let childAncestryPaths: Path[] = [path].concat(ancestryPaths);
 
 			// Reduce the children
 			for (const key of visitorKeys) {
@@ -250,7 +250,7 @@ function _reduceSignal(
 				const oldVal = (node as any)[key];
 
 				if (Array.isArray(oldVal)) {
-					let children: Array<AnyNode> = oldVal;
+					let children: AnyNode[] = oldVal;
 
 					// When removing items from the children array, we decrement this offset and subtract it
 					// whenever looking up to get the correct position

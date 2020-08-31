@@ -74,7 +74,7 @@ export class Scope {
 		return binding;
 	}
 
-	public query(paths: Array<string>): T {
+	public query(paths: string[]): T {
 		let initial = this.getBinding(paths[0]);
 		if (initial === undefined) {
 			throw new Error(
@@ -133,7 +133,7 @@ export class Scope {
 		);
 	}
 
-	public getBindingNames(): Array<string> {
+	public getBindingNames(): string[] {
 		const names: Set<string> = new Set(
 			this.parentScope ? this.parentScope.getBindingNames() : [],
 		);
@@ -145,11 +145,11 @@ export class Scope {
 		return Array.from(names);
 	}
 
-	public getOwnBindingNames(): Array<string> {
+	public getOwnBindingNames(): string[] {
 		return Array.from(this.bindings.keys());
 	}
 
-	public createUnion(types: Array<T>, originNode?: AnyNode): T {
+	public createUnion(types: T[], originNode?: AnyNode): T {
 		if (types.length === 0) {
 			return new UnknownT(this, originNode);
 		} else if (types.length === 1) {
@@ -164,7 +164,7 @@ export class Scope {
 	}
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	public find<S extends Scope>(klass: Class<S, Array<any>>): S {
+	public find<S extends Scope>(klass: Class<S, any[]>): S {
 		const scope = this.findOptional(klass);
 		if (scope === undefined) {
 			throw new Error("Failed to find class");
@@ -175,7 +175,7 @@ export class Scope {
 
 	public findOptional<S extends Scope>(
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
-		klass: Class<S, Array<any>>,
+		klass: Class<S, any[]>,
 	): undefined | S {
 		let scope: undefined | Scope = this;
 

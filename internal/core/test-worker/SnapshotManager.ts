@@ -61,7 +61,7 @@ export type InlineSnapshotUpdate = {
 	snapshot: boolean | number | string | null;
 };
 
-export type InlineSnapshotUpdates = Array<InlineSnapshotUpdate>;
+export type InlineSnapshotUpdates = InlineSnapshotUpdate[];
 
 function stringOrPrettyFormat(value: unknown): string {
 	if (typeof value === "string") {
@@ -83,7 +83,7 @@ export default class SnapshotManager {
 		this.inlineSnapshotsUpdates = [];
 	}
 
-	public inlineSnapshotsUpdates: Array<InlineSnapshotUpdate>;
+	public inlineSnapshotsUpdates: InlineSnapshotUpdate[];
 	public snapshots: AbsoluteFilePathMap<Snapshot>;
 	private defaultSnapshotPath: AbsoluteFilePath;
 	private fileLocker: FilePathLocker;
@@ -98,7 +98,7 @@ export default class SnapshotManager {
 		},
 	): string {
 		// Build the snapshot
-		let lines: Array<string> = [];
+		let lines: string[] = [];
 
 		function pushNewline() {
 			if (lines[lines.length - 1] !== "") {

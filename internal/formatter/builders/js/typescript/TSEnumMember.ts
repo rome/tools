@@ -12,7 +12,7 @@ export default function TSEnumMember(
 	builder: Builder,
 	node: TSEnumMember,
 ): Token {
-	const tokens: Array<Token> = [builder.tokenize(node.id, node)];
+	const tokens: Token[] = [builder.tokenize(node.id, node)];
 
 	if (node.initializer) {
 		tokens.push(space, "=", space, builder.tokenize(node.initializer, node));

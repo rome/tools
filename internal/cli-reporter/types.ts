@@ -31,7 +31,7 @@ export type SelectOptions = {
 
 export type SelectArguments<Options extends SelectOptions> = {
 	options: Options;
-	defaults?: Array<SelectOptionsKeys<Options>>;
+	defaults?: SelectOptionsKeys<Options>[];
 	radio?: boolean;
 	yes?: boolean;
 };
@@ -58,7 +58,7 @@ export type ReporterStreamLineSnapshot = {
 export type ReporterStreamState = {
 	lineSnapshots: Map<ReporterStreamLineSnapshot, Number0>;
 	currentLine: Number0;
-	buffer: Array<string>;
+	buffer: string[];
 	leadingNewline: boolean;
 	nextLineInsertLeadingNewline: boolean;
 };

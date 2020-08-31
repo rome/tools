@@ -178,7 +178,7 @@ export function copyFile(
 // readdir
 function createReaddirReturn(
 	directory: AbsoluteFilePath,
-	files: Array<string>,
+	files: string[],
 ): AbsoluteFilePathSet {
 	return new AbsoluteFilePathSet(
 		files.sort().map((basename) => {

@@ -37,7 +37,7 @@ function compareExportSpecifiers<T extends
 	}
 }
 
-function shouldReorder<T>(a: Array<T>, b: Array<T>) {
+function shouldReorder<T>(a: T[], b: T[]) {
 	for (let i = 0; i < a.length && i < b.length; i++) {
 		if (a[i] !== b[i]) {
 			return true;

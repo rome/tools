@@ -405,13 +405,13 @@ async function normalizeTypeCheckingLibs(
 	projectDirectory: AbsoluteFilePath,
 	consumer: Consumer,
 ): Promise<{
-	directories: Array<AbsoluteFilePath>;
+	directories: AbsoluteFilePath[];
 	files: AbsoluteFilePathSet;
 }> {
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Normalize library directories
-	const directories: Array<AbsoluteFilePath> = arrayOfStrings(consumer).map((
+	const directories: AbsoluteFilePath[] = arrayOfStrings(consumer).map((
 		libDirectory,
 	) => projectDirectory.resolve(libDirectory));
 

@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSTupleType extends NodeBaseWithComments {
 	readonly type: "TSTupleType";
-	readonly elementTypes: Array<TSTupleElement>;
+	readonly elementTypes: TSTupleElement[];
 	readonly rest?: TSTupleElement;
 }
 

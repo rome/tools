@@ -177,7 +177,7 @@ export default class TestServerWorker {
 
 		const params = await inspector.wait("Debugger.paused");
 
-		const frames: Array<ErrorFrame> = [];
+		const frames: ErrorFrame[] = [];
 
 		const callFrames = Array.from(params.get("callFrames").asIterable()).slice(
 			0,
@@ -240,7 +240,7 @@ export default class TestServerWorker {
 
 	public async prepareAll(
 		progress: ReporterProgress,
-		fileQueue: Array<TestServerFile>,
+		fileQueue: TestServerFile[],
 	): Promise<void> {
 		const {inspector, runner} = this;
 		const {options: opts} = runner;
@@ -381,7 +381,7 @@ export default class TestServerWorker {
 		const {options: opts} = runner;
 
 		try {
-			const promises: Array<Promise<void>> = [];
+			const promises: Promise<void>[] = [];
 			for (let i = 0; i < 10; i++) {
 				promises.push(this.runTest());
 			}

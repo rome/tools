@@ -11,7 +11,7 @@ type ASTDefinition = {
 };
 
 export async function main() {
-	let defs: Array<ASTDefinition> = [];
+	let defs: ASTDefinition[] = [];
 
 	for (const languageFolder of await readDirectory(astFolder)) {
 		const language = languageFolder.getBasename();
@@ -42,10 +42,10 @@ export async function main() {
 
 	async function readIndexFile(
 		path: AbsoluteFilePath,
-		handlers: Array<{
+		handlers: {
 			iterator: (def: ASTDefinition) => string;
 			wrapCallback?: (buff: string) => string;
-		}>,
+		}[],
 	) {
 		await modifyGeneratedFile(
 			{

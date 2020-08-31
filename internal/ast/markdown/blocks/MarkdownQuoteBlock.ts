@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 // > this quote
 export interface MarkdownQuoteBlock extends NodeBaseWithComments {
 	type: "MarkdownQuoteBlock";
-	children: Array<MarkdownQuoteChildren>;
+	children: MarkdownQuoteChildren[];
 }
 
 export const markdownQuoteBlock = createBuilder<MarkdownQuoteBlock>(

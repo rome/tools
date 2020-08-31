@@ -612,7 +612,7 @@ function consumeURLToken(
 	throw new Error("Unrecoverable state due to bad URL");
 }
 
-export function tokenizeCSS(opts: CSSParserOptions): Array<TokenValues<Tokens>> {
+export function tokenizeCSS(opts: CSSParserOptions): TokenValues<Tokens>[] {
 	return createCSSParser(opts).tokenizeAll();
 }
 
@@ -687,7 +687,7 @@ function parseRules(
 
 function parseRule(parser: CSSParser): CSSRule | undefined {
 	const start = parser.getPosition();
-	const prelude: Array<AnyCSSValue> = [];
+	const prelude: AnyCSSValue[] = [];
 	while (!parser.matchToken("EOF")) {
 		if (parser.matchToken("LeftCurlyBracket")) {
 			return parser.finishNode(
@@ -713,7 +713,7 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 function parseAtRule(parser: CSSParser): CSSAtRule {
 	const start = parser.getPosition();
 	const token = parser.expectToken("AtKeyword");
-	const prelude: Array<AnyCSSValue> = [];
+	const prelude: AnyCSSValue[] = [];
 	const name = token.value;
 	let block = undefined;
 	while (true) {

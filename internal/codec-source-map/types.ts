@@ -7,7 +7,7 @@
 
 import {Number0, Number1} from "@internal/ob1";
 
-export type Mappings = Array<Mapping>;
+export type Mappings = Mapping[];
 
 export type ParsedMapping = {
 	generated: {
@@ -46,9 +46,9 @@ export type SourceMapGeneratorOptions = {
 export type SourceMap = {
 	version: number;
 	file: string;
-	names: Array<string>;
+	names: string[];
 	mappings: string;
 	sourceRoot: undefined | string;
-	sources: Array<string>;
-	sourcesContent: Array<string>;
+	sources: string[];
+	sourcesContent: string[];
 };

@@ -48,7 +48,7 @@ function hasClassProps(node: JSClassDeclaration | JSClassExpression): boolean {
 
 function createConstructor(
 	rest: undefined | JSFunctionHead["rest"],
-	body: Array<AnyJSStatement>,
+	body: AnyJSStatement[],
 ) {
 	return jsClassMethod.create({
 		kind: "constructor",
@@ -60,8 +60,8 @@ function createConstructor(
 }
 
 function toExpressionStatements(
-	expressions: Array<AnyJSExpression>,
-): Array<AnyJSStatement> {
+	expressions: AnyJSExpression[],
+): AnyJSStatement[] {
 	return expressions.map((expr) => {
 		return jsExpressionStatement.create({expression: expr});
 	});
@@ -78,10 +78,10 @@ function transformClass(
 ): {
 	newClass: JSClassDeclaration;
 	className: string;
-	declarations: Array<AnyNode>;
+	declarations: AnyNode[];
 } {
-	const bodyReplacements: Array<AnyJSStatement> = [];
-	const constructorAssignments: Array<AnyJSExpression> = [];
+	const bodyReplacements: AnyJSStatement[] = [];
+	const constructorAssignments: AnyJSExpression[] = [];
 	const className: string =
 		node.id === undefined ? scope.generateUid("class") : node.id.name;
 
@@ -163,7 +163,7 @@ function transformClass(
 									visited.add(node);
 
 									return signals.replace(
-										([node, ...toExpressionStatements(constructorAssignments)] as Array<AnyNode>),
+										([node, ...toExpressionStatements(constructorAssignments)] as AnyNode[]),
 									);
 								}
 

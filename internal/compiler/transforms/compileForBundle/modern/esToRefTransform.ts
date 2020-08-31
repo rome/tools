@@ -307,7 +307,7 @@ export default createVisitor({
 			} else {
 				// Check if any of the specifiers reference a global or import
 				// If so, we need to insert declarations for them
-				const nodes: Array<AnyNode> = [];
+				const nodes: AnyNode[] = [];
 
 				for (const specifier of specifiers) {
 					if (specifier.type === "JSExportLocalSpecifier") {

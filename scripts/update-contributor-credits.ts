@@ -10,7 +10,7 @@ type Contributor = {
 	avatar: string;
 };
 
-type Contributors = Array<Contributor>;
+type Contributors = Contributor[];
 
 function get(
 	url: string,
@@ -98,7 +98,7 @@ async function getContributors(
 	}
 }
 
-export async function main(args: Array<string>) {
+export async function main(args: string[]) {
 	const {token} = await parseCLIFlagsFromProcess({
 		args,
 		defineFlags(c) {
@@ -118,7 +118,7 @@ export async function main(args: Array<string>) {
 				"https://api.github.com/repos/romefrontend/rome/contributors",
 				token,
 			);
-			const lines: Array<string> = [];
+			const lines: string[] = [];
 
 			lines.push(`<ul class="team-list credits">`);
 

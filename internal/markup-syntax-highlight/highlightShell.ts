@@ -15,7 +15,7 @@ export default function highlightShell(
 	},
 ): HighlightCodeResult {
 	// TODO properly handle strings with spaces
-	const segments: Array<string> = opts.input.split(" ");
+	const segments: string[] = opts.input.split(" ");
 
 	let segmentCount = 0;
 

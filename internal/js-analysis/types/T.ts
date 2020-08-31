@@ -85,7 +85,7 @@ export default class T {
 		return this.graph.hasConnections(this);
 	}
 
-	public explodeUnion(): Array<T> {
+	public explodeUnion(): T[] {
 		return [this];
 	}
 

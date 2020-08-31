@@ -20,7 +20,7 @@ type BuildSuggestionAdviceOptions = {
 
 export function buildSuggestionAdvice(
 	value: string,
-	items: Array<string>,
+	items: string[],
 	{minRating = 0.5, ignoreCase, formatItem}: BuildSuggestionAdviceOptions = {},
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];

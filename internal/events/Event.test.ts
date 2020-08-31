@@ -7,7 +7,7 @@ test(
 	"Event basic",
 	async (t) => {
 		const event = new Event<string, void>({name: "testEvent"});
-		const fooCalls: Array<string> = [];
+		const fooCalls: string[] = [];
 		const foo: Callback<string, void> = (param) => {
 			fooCalls.push(param);
 		};
@@ -47,7 +47,7 @@ test(
 	"Event send void",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
-		const fooCalls: Array<string> = [];
+		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
 			return "foo returns";
@@ -71,12 +71,12 @@ test(
 	"Event subscription order",
 	async (t) => {
 		const event = new Event<string, string>({name: "testEvent"});
-		const fooCalls: Array<string> = [];
+		const fooCalls: string[] = [];
 		const foo: Callback<string, string> = (param) => {
 			fooCalls.push(param);
 			return "foo returns";
 		};
-		const barCalls: Array<string> = [];
+		const barCalls: string[] = [];
 		const bar: Callback<string, string> = (param) => {
 			barCalls.push(param);
 			return "bar returns";

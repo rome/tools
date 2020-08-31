@@ -87,7 +87,7 @@ function isRJSONStringValueChar(
 }
 
 // Turn a path into a string key we can use
-export function toPathKey(parts: Array<string>) {
+export function toPathKey(parts: string[]) {
 	// Right now this could conflict weirdly with properties with dots in them if they cause collisions
 	// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
 	return parts.join(".");
@@ -530,7 +530,7 @@ function eatComments(parser: JSONParser): Comments {
 	return comments;
 }
 
-function parseArray(parser: JSONParser): Array<JSONValue> {
+function parseArray(parser: JSONParser): JSONValue[] {
 	parser.expectToken("BracketOpen");
 
 	const arr = [];

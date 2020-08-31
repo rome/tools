@@ -118,7 +118,7 @@ function inRange(
 	return compareOp(">=", version, left) && compareOp("<=", version, right);
 }
 
-function collectVersions(range: RangeNode): Array<VersionNode> {
+function collectVersions(range: RangeNode): VersionNode[] {
 	switch (range.type) {
 		case "AbsoluteVersion":
 		case "WildcardVersion":

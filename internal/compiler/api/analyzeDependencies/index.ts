@@ -61,11 +61,11 @@ export default async function analyzeDependencies(
 	const seenImportFirstUsage: Set<string> = new Set();
 
 	// Extract records
-	const exports: Array<AnyAnalyzeExport> = [];
+	const exports: AnyAnalyzeExport[] = [];
 	const dependenciesBySource: Map<string, AnalyzeDependency> = new Map();
 
-	const esValueExports: Array<AnyNode> = [];
-	const cjsExports: Array<AnyNode> = [];
+	const esValueExports: AnyNode[] = [];
+	const cjsExports: AnyNode[] = [];
 	let firstTopAwaitLocation: undefined | SourceLocation;
 
 	// TODO description
@@ -123,7 +123,7 @@ export default async function analyzeDependencies(
 				data.kind === "value" &&
 				sourcesUsedAsType.has(data.source)
 			) {
-				const names: Array<AnalyzeDependencyName> = [];
+				const names: AnalyzeDependencyName[] = [];
 
 				for (const name of data.names) {
 					names.push({
@@ -202,7 +202,7 @@ export default async function analyzeDependencies(
 	}
 
 	// Build dependencies
-	const dependencies: Array<AnalyzeDependency> = Array.from(
+	const dependencies: AnalyzeDependency[] = Array.from(
 		dependenciesBySource.values(),
 	);
 
@@ -269,7 +269,7 @@ export function mergeAnalyzeDependencies(
 	main: AnalyzeDependencyResult,
 	second: AnalyzeDependencyResult,
 ): AnalyzeDependencyResult {
-	const exports: Array<AnyAnalyzeExport> = [...main.exports];
+	const exports: AnyAnalyzeExport[] = [...main.exports];
 
 	// Take only local type exports
 	for (const exp of second.exports) {

@@ -24,7 +24,7 @@ export default async function buildGraph(
 	const hub = new Hub(ast, project);
 	const {evaluator} = hub;
 	if (provider.libs !== undefined) {
-		let body: Array<AnyJSStatement> = [];
+		let body: AnyJSStatement[] = [];
 		for (const ast of provider.libs) {
 			body = [...body, ...ast.body];
 		}

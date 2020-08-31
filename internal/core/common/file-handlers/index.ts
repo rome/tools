@@ -53,7 +53,7 @@ export function inferDiagnosticLanguageFromFilename(
 
 export function getFileHandlerExtensions(
 	projectConfig: undefined | ProjectConfig,
-): Array<string> {
+): string[] {
 	if (projectConfig === undefined) {
 		return [...DEFAULT_HANDLERS.keys()];
 	} else {
@@ -124,10 +124,10 @@ const assetHandler: ExtensionHandler = {
 };
 
 // Extensions that have a `lint` handler
-export const LINTABLE_EXTENSIONS: Array<string> = [];
+export const LINTABLE_EXTENSIONS: string[] = [];
 
 // Extensions that have a `format` handler
-export const FORMATTABLE_EXTENSIONS: Array<string> = [];
+export const FORMATTABLE_EXTENSIONS: string[] = [];
 
 function setHandler(handler: ExtensionHandler) {
 	const {ext} = handler;

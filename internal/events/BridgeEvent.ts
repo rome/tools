@@ -34,7 +34,7 @@ export type BridgeEventOptions = EventOptions & {
 function validateDirection(
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	event: BridgeEvent<any, any>,
-	invalidDirections: Array<[BridgeEventDirection, BridgeType]>,
+	invalidDirections: [BridgeEventDirection, BridgeType][],
 	verb: string,
 ) {
 	invalidDirections.push(["server<->client", "server&client"]);

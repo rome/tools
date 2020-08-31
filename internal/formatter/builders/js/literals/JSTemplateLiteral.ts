@@ -12,7 +12,7 @@ export default function JSTemplateLiteral(
 	builder: Builder,
 	node: JSTemplateLiteral,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 	const quasis = node.quasis;
 
 	for (let i = 0; i < quasis.length; i++) {

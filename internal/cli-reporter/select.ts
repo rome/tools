@@ -34,7 +34,7 @@ export default async function select<Options extends SelectOptions>(
 		yes = false,
 	}: SelectArguments<Options>,
 ): Promise<Set<SelectOptionsKeys<Options>>> {
-	const optionNames: Array<SelectOptionsKeys<Options>> = [];
+	const optionNames: SelectOptionsKeys<Options>[] = [];
 	const seenShortcuts: Set<string> = new Set();
 
 	// Verify there's no shortcut collisions and remove empty options
@@ -103,7 +103,7 @@ export default async function select<Options extends SelectOptions>(
 	}
 
 	function render() {
-		const optionNames = (Object.keys(options) as Array<SelectOptionsKeys<Options>>);
+		const optionNames = (Object.keys(options) as SelectOptionsKeys<Options>[]);
 		for (let i = 0; i < optionNames.length; i++) {
 			const key = optionNames[i];
 			const option = options[key]!;

@@ -26,7 +26,7 @@ export type TestDiagnosticAdviceInspect = {
 
 export type TestDiagnosticAdviceList = {
 	type: "list";
-	list: Array<string>;
+	list: string[];
 };
 
 export type TestDiagnosticAdviceCode = {
@@ -95,7 +95,7 @@ export interface TestHelper {
 	): string;
 }
 
-export type TestName = string | Array<string>;
+export type TestName = string | (string[]);
 
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 

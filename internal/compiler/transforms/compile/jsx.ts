@@ -145,7 +145,7 @@ function convertAttribute(node: JSXAttribute): JSObjectProperty {
 
 function pushProps(
 	_props: JSObjectProperties,
-	objs: Array<AnyJSExpression>,
+	objs: AnyJSExpression[],
 ): JSObjectProperties {
 	if (!_props.length) {
 		return _props;
@@ -157,7 +157,7 @@ function pushProps(
 
 function buildOpeningElementAttributes(attribs: JSXElement["attributes"]) {
 	let _props: JSObjectProperties = [];
-	const objs: Array<AnyJSExpression> = [];
+	const objs: AnyJSExpression[] = [];
 
 	for (const prop of attribs) {
 		if (prop.type === "JSXSpreadAttribute") {

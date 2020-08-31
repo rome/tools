@@ -13,7 +13,7 @@ export default function JSYieldExpression(
 	builder: Builder,
 	node: JSYieldExpression,
 ): Token {
-	const tokens: Array<Token> = ["yield"];
+	const tokens: Token[] = ["yield"];
 
 	if (node.delegate === true) {
 		tokens.push("*");

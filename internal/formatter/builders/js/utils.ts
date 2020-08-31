@@ -39,7 +39,7 @@ export function buildLabelStatementBuilder(
 	prefix: string,
 ): BuilderMethod<JSBreakStatement | JSContinueStatement> {
 	return (builder, node): Token => {
-		const tokens: Array<Token> = [prefix];
+		const tokens: Token[] = [prefix];
 
 		if (node.label) {
 			tokens.push(space, builder.tokenize(node.label, node));
@@ -55,7 +55,7 @@ export function buildThrowAndReturnStatementBuilder(
 	prefix: string,
 ): BuilderMethod<JSReturnStatement | JSThrowStatement> {
 	return (builder, node): Token => {
-		const tokens: Array<Token> = [prefix];
+		const tokens: Token[] = [prefix];
 
 		if (node.argument) {
 			tokens.push(space);
@@ -92,7 +92,7 @@ export function printMethod(
 ): Token {
 	const kind = node.kind;
 
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (kind === "method" && node.head.generator === true) {
 		tokens.push("*");
@@ -124,7 +124,7 @@ export function printMethod(
 export function printBindingPatternParams(
 	builder: Builder,
 	node: AnyNode,
-	params: Array<AnyJSBindingPattern>,
+	params: AnyJSBindingPattern[],
 	rest: undefined | AnyJSBindingPattern,
 ): Token {
 	if (params.length === 0 && rest === undefined) {
@@ -140,7 +140,7 @@ export function printBindingPatternParams(
 		}
 	}
 
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		softline,
 		join(
 			concat([",", lineOrSpace]),
@@ -165,7 +165,7 @@ export function printBindingPatternParams(
 export function printTSBraced(
 	builder: Builder,
 	node: AnyNode,
-	members: Array<AnyNode>,
+	members: AnyNode[],
 ): Token {
 	if (members.length === 0) {
 		return group(
@@ -209,7 +209,7 @@ export function printPatternMeta(
 	meta: undefined | JSPatternMeta,
 ): Token {
 	if (builder.options.typeAnnotations && meta !== undefined) {
-		const tokens: Array<Token> = [];
+		const tokens: Token[] = [];
 
 		if (meta.optional) {
 			tokens.push("?");
@@ -243,7 +243,7 @@ export function printClause(
 
 export function printCommaList(
 	builder: Builder,
-	nodes: Array<AnyNode>,
+	nodes: AnyNode[],
 	parent: AnyNode,
 ): Token {
 	return join(

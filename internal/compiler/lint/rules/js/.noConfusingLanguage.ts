@@ -13,12 +13,12 @@ import {DiagnosticAdvice, descriptions} from "@internal/diagnostics";
 import {preserveCasing} from "@internal/string-utils";
 import {StaticMarkup, markup} from "@internal/markup";
 
-type ConfusingLanguage = Array<{
+type ConfusingLanguage = {
 	description: StaticMarkup;
 	word: string;
 	suggestion: string;
 	advice: DiagnosticAdvice;
-}>;
+}[];
 
 export const confusingLanguage: ConfusingLanguage = [
 	{
@@ -68,7 +68,7 @@ function check(
 	input: string,
 ): {
 	fixed: string;
-	results: Array<CheckResult>;
+	results: CheckResult[];
 } {
 	let fixed = input;
 	if (!regex.test(input)) {
@@ -84,7 +84,7 @@ function check(
 		input: lower,
 		offsetPosition: loc.start,
 	});
-	const results: Array<CheckResult> = [];
+	const results: CheckResult[] = [];
 
 	// This is a bit more complicated since we try to do the minimal amount of work
 	for (let i = 0; i < lower.length; i++) {

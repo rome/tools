@@ -19,7 +19,7 @@ type TypeDefinition = {
 	value: T;
 };
 
-type TypeDefinitions = Array<TypeDefinition>;
+type TypeDefinitions = TypeDefinition[];
 
 function typesToMap(types: TypeDefinitions): Map<string, T> {
 	const map: Map<string, T> = new Map();
@@ -41,7 +41,7 @@ function isTypeofNode(
 	);
 }
 
-function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
+function genTypes(node: AnyNode, scope: Scope): TypeDefinition[] {
 	const evaluator: Evaluator = scope.evaluator;
 	let types = [];
 
@@ -200,7 +200,7 @@ export default function refine(
 
 	const rawTestTypes = genTypes(test, outerScope);
 
-	const testTypes: ExtendedMap<string, Array<T>> = new ExtendedMap(
+	const testTypes: ExtendedMap<string, T[]> = new ExtendedMap(
 		"testTypes",
 		() => [],
 	);

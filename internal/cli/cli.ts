@@ -342,7 +342,7 @@ export default async function cli() {
 	let command = "";
 	let overrideCLIFlags: Partial<CLIFlags> = {};
 	let commandFlags: RSERObject = {};
-	let args: Array<string> = [];
+	let args: string[] = [];
 
 	const isRelease = getEnvVar("ROME_DEV").type !== "ENABLED";
 

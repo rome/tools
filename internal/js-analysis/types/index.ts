@@ -50,9 +50,7 @@ import {Class} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-const types: ExtendedMap<string, Class<T, Array<any>>> = new ExtendedMap(
-	"types",
-);
+const types: ExtendedMap<string, Class<T, any[]>> = new ExtendedMap("types");
 export default types;
 
 types.set("AnyT", AnyT);

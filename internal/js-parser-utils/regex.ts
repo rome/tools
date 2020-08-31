@@ -7,7 +7,7 @@
 
 import {DiagnosticDescription, descriptions} from "@internal/diagnostics";
 
-const VALID_REGEX_FLAGS: Array<string> = "gmsiyu".split("");
+const VALID_REGEX_FLAGS: string[] = "gmsiyu".split("");
 
 // This is used by both rome-json and rome-js-parser to validate regex flags
 export function validateRegexFlags(

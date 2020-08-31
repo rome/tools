@@ -16,7 +16,7 @@ export type CompileResult = {
 	mappings: Mappings;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	cacheDependencies: Array<string>;
+	cacheDependencies: string[];
 	compiledCode: string;
 	sourceText: string;
 };

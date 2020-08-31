@@ -24,7 +24,7 @@ import {ob1Coerce1, ob1Number0} from "@internal/ob1";
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
 	code: string;
-	args?: Array<string>;
+	args?: string[];
 	sourceMap?: SourceMapConsumer;
 	globals?: UnknownObject;
 };

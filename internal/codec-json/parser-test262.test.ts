@@ -355,7 +355,7 @@ test(
 test(
 	"parse - parsing an object where property value middles with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -404,7 +404,7 @@ test(
 test(
 	"parse - parsing an object where property name is a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -453,7 +453,7 @@ test(
 test(
 	"parse - parsing an object where property name starts with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -501,7 +501,7 @@ test(
 test(
 	"parse - parsing an object where property name ends with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -550,7 +550,7 @@ test(
 test(
 	"parse - parsing an object where property name starts and ends with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -598,7 +598,7 @@ test(
 test(
 	"parse - parsing an object where property name middles with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -646,7 +646,7 @@ test(
 test(
 	"parse - parsing an object where property value is a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -694,7 +694,7 @@ test(
 test(
 	"parse - parsing an object where property value starts with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -742,7 +742,7 @@ test(
 test(
 	"parse - parsing an object where property value ends with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';
@@ -790,7 +790,7 @@ test(
 test(
 	"parse - parsing an object where property value starts and ends with a null character",
 	(t) => {
-		let nullChars: Array<string> = [];
+		let nullChars: string[] = [];
 		nullChars[0] = '"\0"';
 		nullChars[1] = '"\x01"';
 		nullChars[2] = '"\x02"';

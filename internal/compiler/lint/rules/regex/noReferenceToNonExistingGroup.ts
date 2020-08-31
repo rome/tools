@@ -9,14 +9,14 @@ import {Path, createVisitor, signals} from "@internal/compiler";
 import {JSRegExpGroupCapture} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
-function findCaptureGroups(path: Path): Array<JSRegExpGroupCapture> | undefined {
+function findCaptureGroups(path: Path): (JSRegExpGroupCapture[]) | undefined {
 	const regexLiteral = path.findAncestry((path) =>
 		path.node.type === "JSRegExpLiteral"
 	);
 	if (regexLiteral === undefined) {
 		return regexLiteral;
 	}
-	let captureGroups: Array<JSRegExpGroupCapture> = [];
+	let captureGroups: JSRegExpGroupCapture[] = [];
 	regexLiteral.traverse(
 		"JSRegExpLiteral",
 		(path) => {

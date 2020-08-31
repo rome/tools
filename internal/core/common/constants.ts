@@ -98,10 +98,7 @@ function getUserConfigDirectory(): AbsoluteFilePath {
 }
 
 export const USER_CONFIG_DIRECTORY = getUserConfigDirectory();
-export const USER_CONFIG_FILENAMES: Array<string> = [
-	"config.json",
-	"config.rjson",
-];
+export const USER_CONFIG_FILENAMES: string[] = ["config.json", "config.rjson"];
 
 export const DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY = USER_CONFIG_DIRECTORY.append(
 	"recovery",

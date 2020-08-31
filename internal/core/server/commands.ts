@@ -56,11 +56,11 @@ export function createServerCommand<Flags extends UnknownObject>(
 
 export async function chainCommands(
 	req: ServerRequest,
-	fns: Array<{
+	fns: {
 		title: StaticMarkup;
 		progress: StaticMarkup;
 		callback: () => Promise<void>;
-	}>,
+	}[],
 ): Promise<void> {
 	let printer: undefined | DiagnosticsPrinter;
 

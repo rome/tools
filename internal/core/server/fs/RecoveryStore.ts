@@ -54,7 +54,7 @@ export type RecoveryDiskStore = {
 	storeId: string;
 	timestamp: string;
 	command: string;
-	entries: Array<DiskStoreEntry>;
+	entries: DiskStoreEntry[];
 };
 
 type DiskStoreEntry = {
@@ -122,7 +122,7 @@ export default class RecoveryStore {
 	private recoveryDirectoryPath: AbsoluteFilePath;
 	private requestIdToStore: Map<number, MemoryStore>;
 	private blockSave: undefined | Promise<unknown>;
-	private evictableStoreIds: Array<string>;
+	private evictableStoreIds: string[];
 	private server: Server;
 	private logger: ReporterNamespace;
 	private shouldTruncate: boolean;
@@ -140,7 +140,7 @@ export default class RecoveryStore {
 	}
 
 	private async readRecoveryDirectory(): Promise<AbsoluteFilePathSet> {
-		const paths: Array<[AbsoluteFilePath, number]> = [];
+		const paths: [AbsoluteFilePath, number][] = [];
 
 		for (const path of await readDirectory(this.recoveryDirectoryPath)) {
 			const basename = path.getBasename();
@@ -209,9 +209,9 @@ export default class RecoveryStore {
 
 	public async getAllStores(): Promise<{
 		diagnostics: Diagnostics;
-		stores: Array<RecoveryDiskStore>;
+		stores: RecoveryDiskStore[];
 	}> {
-		const stores: Array<RecoveryDiskStore> = [];
+		const stores: RecoveryDiskStore[] = [];
 		let diagnostics: Diagnostics = [];
 
 		for (const path of await this.readRecoveryDirectory()) {
@@ -258,7 +258,7 @@ export default class RecoveryStore {
 			path: indexPath,
 		});
 
-		const entries: Array<DiskStoreEntry> = [];
+		const entries: DiskStoreEntry[] = [];
 
 		for (const [key, value] of index.get("files").asMap()) {
 			entries.push({
@@ -335,13 +335,13 @@ export default class RecoveryStore {
 		req: ServerRequest,
 		storeId: string,
 		location: DiagnosticLocation = {},
-		filter?: (store: RecoveryDiskStore) => Promise<undefined | Array<string>>,
-	): Promise<Array<DiskStoreEntry>> {
+		filter?: (store: RecoveryDiskStore) => Promise<undefined | (string[])>,
+	): Promise<DiskStoreEntry[]> {
 		const store = await this.getStore(storeId, location);
 
-		let entries: Array<DiskStoreEntry> = [];
+		let entries: DiskStoreEntry[] = [];
 
-		let fileIdsAllowlist: undefined | Array<string>;
+		let fileIdsAllowlist: undefined | (string[]);
 		if (filter !== undefined) {
 			fileIdsAllowlist = await filter(store);
 		}
@@ -399,7 +399,7 @@ export default class RecoveryStore {
 		path: AbsoluteFilePath,
 		op: RecoverySaveFile,
 		events: WriteFilesEvents,
-		registerFile: (paths: Array<AbsoluteFilePath>) => void,
+		registerFile: (paths: AbsoluteFilePath[]) => void,
 	): Promise<boolean> {
 		const {server} = this;
 		let fd: undefined | FileHandle;
@@ -498,13 +498,13 @@ export default class RecoveryStore {
 		}
 
 		const paths: AbsoluteFilePathSet = new AbsoluteFilePathSet(files.keys());
-		const teardowns: Array<() => Promise<void>> = [];
+		const teardowns: (() => Promise<void>)[] = [];
 		const {server} = this;
 
 		// Files successfully written
 		let fileCount = 0;
 
-		let registerFile: (paths: Array<AbsoluteFilePath>) => void = (paths) => {
+		let registerFile: (paths: AbsoluteFilePath[]) => void = (paths) => {
 			throw new Error("Function should have been replaced");
 		};
 

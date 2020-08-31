@@ -82,7 +82,7 @@ function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns
 	);
 }
 
-function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string> {
+function normalizeStringArray(consumer: Consumer, loose: boolean): string[] {
 	if (consumer.exists()) {
 		// When we are loose and expect an array but got a string, consider it to be a single element
 		if (loose) {
@@ -182,7 +182,7 @@ const INVALID_IGNORE_LICENSES = [
 function normalizeLicense(
 	consumer: Consumer,
 	loose: boolean,
-	projects: Array<ProjectDefinition>,
+	projects: ProjectDefinition[],
 ): undefined | SPDXExpressionNode {
 	if (!consumer.has("license")) {
 		return undefined;
@@ -336,7 +336,7 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
 function normalizePeople(
 	consumer: Consumer,
 	loose: boolean,
-): undefined | Array<ManifestPerson> {
+): undefined | (ManifestPerson[]) {
 	if (!consumer.exists()) {
 		return;
 	}
@@ -351,7 +351,7 @@ function normalizePeople(
 		return;
 	}
 
-	const people: Array<ManifestPerson> = [];
+	const people: ManifestPerson[] = [];
 
 	for (const item of consumer.asIterable()) {
 		people.push(normalizePerson(item, loose));
@@ -620,7 +620,7 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: Array<ProjectDefinition>,
+	projects: ProjectDefinition[],
 ): Promise<Manifest> {
 	const loose =
 		consumer.path !== undefined &&

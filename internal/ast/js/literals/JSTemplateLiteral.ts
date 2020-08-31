@@ -14,8 +14,8 @@ import {createBuilder} from "../../utils";
 
 export interface JSTemplateLiteral extends NodeBaseWithComments {
 	readonly type: "JSTemplateLiteral";
-	readonly quasis: Array<JSTemplateElement>;
-	readonly expressions: Array<AnyJSExpression>;
+	readonly quasis: JSTemplateElement[];
+	readonly expressions: AnyJSExpression[];
 }
 
 export const jsTemplateLiteral = createBuilder<JSTemplateLiteral>(

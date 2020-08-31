@@ -12,7 +12,7 @@ export default function TSDeclareFunction(
 	builder: Builder,
 	node: TSDeclareFunction,
 ): Token {
-	let tokens: Array<Token> = [];
+	let tokens: Token[] = [];
 
 	if (node.declare) {
 		tokens.push("declare", space);

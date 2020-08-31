@@ -31,7 +31,7 @@ export type DiagnosticSuppression = {
 	commentLocation: SourceLocation;
 };
 
-export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
+export type DiagnosticSuppressions = DiagnosticSuppression[];
 
 export type DiagnosticFilterWithTest = DiagnosticFilter & {
 	test?: (diagnostic: Diagnostic) => boolean;
@@ -82,16 +82,16 @@ export type Diagnostic = {
 	description: DiagnosticDescription;
 	location: DiagnosticLocation;
 	label?: StaticMarkup;
-	origins?: Array<DiagnosticOrigin>;
-	dependencies?: Array<{
+	origins?: DiagnosticOrigin[];
+	dependencies?: {
 		filename: string;
 		mtime: number;
-	}>;
+	}[];
 	meta?: DiagnosticsMeta;
 	tags?: DiagnosticTags;
 };
 
-export type Diagnostics = Array<Diagnostic>;
+export type Diagnostics = Diagnostic[];
 
 export type DiagnosticDescription = {
 	category: DiagnosticCategory;
@@ -137,7 +137,7 @@ export type DiagnosticAdviceLog = {
 
 export type DiagnosticAdviceList = {
 	type: "list";
-	list: Array<StaticMarkup>;
+	list: StaticMarkup[];
 	truncate?: boolean;
 	reverse?: boolean;
 	ordered?: boolean;
@@ -156,9 +156,9 @@ export type DiagnosticAdviceAction = {
 	instruction: StaticMarkup;
 	noun: StaticMarkup;
 	command: string;
-	commandFlags?: Dict<boolean | string | Array<string>>;
+	commandFlags?: Dict<boolean | string | (string[])>;
 	requestFlags?: ClientRequestFlags;
-	args?: Array<string>;
+	args?: string[];
 };
 
 export type DiagnosticAdviceCode = {
@@ -188,11 +188,11 @@ export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
 	title?: StaticMarkup;
 	truncate?: boolean;
-	importantFilenames?: Array<string>;
-	frames: Array<DiagnosticAdviceStackFrame>;
+	importantFilenames?: string[];
+	frames: DiagnosticAdviceStackFrame[];
 };
 
-export type DiagnosticAdvice = Array<DiagnosticAdviceItem>;
+export type DiagnosticAdvice = DiagnosticAdviceItem[];
 
 export type DiagnosticAdviceStackFrame = {
 	prefix?: string;

@@ -339,7 +339,7 @@ export default class MemoryFileSystem {
 		// Go through and clear all files and directories from our internal maps
 		// NOTE: We deliberately do not call 'deletedFileEvent' as the code that
 		// calls us will already be cleaning up
-		let queue: Array<AbsoluteFilePath> = [dirPath];
+		let queue: AbsoluteFilePath[] = [dirPath];
 		while (queue.length > 0) {
 			const path = queue.pop()!;
 

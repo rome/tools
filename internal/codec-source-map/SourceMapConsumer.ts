@@ -75,7 +75,7 @@ export default class SourceMapConsumer {
 		let previousName = 0;
 		let length = rawStr.length;
 		let index: number = 0;
-		let cachedSegments: Dict<Array<number>> = {};
+		let cachedSegments: Dict<number[]> = {};
 		let value;
 
 		while (index < length) {

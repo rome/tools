@@ -451,7 +451,7 @@ export default class RSERBufferParser {
 	private decodeTemplateObjectArrayValues(arr: RSERArray) {
 		// Decode keys
 		const keyCount = this.decodeInt();
-		const keys: Array<string> = [];
+		const keys: string[] = [];
 		for (let i = 0; i < keyCount; ++i) {
 			keys.push(this.readString());
 		}

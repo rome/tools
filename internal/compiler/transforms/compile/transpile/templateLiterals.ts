@@ -25,7 +25,7 @@ export default createVisitor({
 			node.type === "JSTemplateLiteral" &&
 			parent.type !== "JSTaggedTemplateExpression"
 		) {
-			const nodes: Array<AnyJSExpression> = [];
+			const nodes: AnyJSExpression[] = [];
 			const {expressions, quasis} = node;
 
 			let index = 0;

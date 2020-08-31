@@ -24,7 +24,7 @@ export interface JSImportDeclaration extends NodeBaseWithComments {
 	readonly type: "JSImportDeclaration";
 	readonly defaultSpecifier?: JSImportDefaultSpecifier;
 	readonly namespaceSpecifier?: JSImportNamespaceSpecifier;
-	readonly namedSpecifiers: Array<JSImportSpecifier>;
+	readonly namedSpecifiers: JSImportSpecifier[];
 	readonly source: JSStringLiteral;
 	readonly importKind?: ConstJSImportModuleKind;
 }

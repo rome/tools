@@ -21,7 +21,7 @@ import {
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
 abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
-	constructor(entries?: Array<[FilePath, Value]>) {
+	constructor(entries?: [FilePath, Value][]) {
 		this.joinedToValue = new Map();
 		this.joinedToPath = new Map();
 		this.size = 0;
@@ -145,7 +145,7 @@ abstract class BasePathSet<
 
 	public toJoined(
 		callback: (path: string) => string = (filename) => filename,
-	): Array<string> {
+	): string[] {
 		return Array.from(this.map.joinedToPath.keys(), callback);
 	}
 

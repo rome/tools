@@ -65,10 +65,10 @@ function createTag(version: string): void {
  * @returns - Map of version names to commits within a version
  */
 function createTagMap(
-	commits: Array<Commit>,
+	commits: Commit[],
 	currentVersion: string,
-): Record<string, Array<Commit>> {
-	const versionMap: Record<string, Array<Commit>> = {
+): Record<string, Commit[]> {
+	const versionMap: Record<string, Commit[]> = {
 		[currentVersion]: [],
 	};
 	let currentTag = currentVersion;
@@ -93,8 +93,8 @@ function createTagMap(
  * @param tagMap - Map of version names to commits within them
  * @returns - Markdown string
  */
-function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
-	function renderItems(items: Array<Commit>, title: string, expandable = false) {
+function generateMarkdown(tagMap: Record<string, Commit[]>): string {
+	function renderItems(items: Commit[], title: string, expandable = false) {
 		let result = `## ${title}\n\n`;
 		if (expandable) {
 			result += "<details><summary>Click to expand</summary>\n\n";
@@ -229,7 +229,7 @@ function parseCommitLog(
 		from: string;
 		to: string;
 	},
-): Array<Commit> {
+): Commit[] {
 	const keys = Object.keys(config);
 
 	const cmd = keys.reduce(
@@ -305,7 +305,7 @@ function updateVersion(releaseType: string, cwd: AbsoluteFilePath): string {
 	).stdout.toString().trim();
 }
 
-export async function main([version]: Array<string>): Promise<void> {
+export async function main([version]: string[]): Promise<void> {
 	// Cache the current version for reverting
 	const currentVersion = await getCurrentVersion();
 

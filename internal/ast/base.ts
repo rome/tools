@@ -10,13 +10,13 @@ import {Diagnostics} from "@internal/diagnostics";
 import {NodeBase} from "@internal/parser-core";
 
 export interface NodeBaseWithComments extends NodeBase {
-	leadingComments?: Array<string>;
-	trailingComments?: Array<string>;
-	innerComments?: Array<string>;
+	leadingComments?: string[];
+	trailingComments?: string[];
+	innerComments?: string[];
 }
 
 export interface RootBase {
-	comments: Array<AnyComment>;
+	comments: AnyComment[];
 	filename: string;
 	diagnostics: Diagnostics;
 	mtime: undefined | number;

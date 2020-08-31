@@ -127,7 +127,7 @@ export const lint = createDiagnosticsCategory({
 						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
 						return str;
 					},
-					([] as Array<string>),
+					([] as string[]),
 				).join(", ")}`,
 			});
 		}
@@ -362,7 +362,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_LANG: (value: string, suggestions: Array<string>) => ({
+	JSX_A11Y_LANG: (value: string, suggestions: string[]) => ({
 		category: "lint/jsx-a11y/useValidLang",
 		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
 		advice: buildSuggestionAdvice(value, suggestions),
@@ -490,7 +490,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
 		roleName: string,
-		missingAttributes: Array<string>,
+		missingAttributes: string[],
 	) => ({
 		category: "lint/jsx-a11y/useAriaPropsForRole",
 		message: markup`The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
@@ -624,16 +624,13 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/react/noRenderReturnValue",
 		message: markup`Do not depend on the return value from <emphasis>ReactDOM.render()</emphasis>.`,
 	},
-	REACT_NO_VOID_ELEMENTS_WITH_CHILDREN: (
-		element: string,
-		properties: Array<string>,
-	) => ({
+	REACT_NO_VOID_ELEMENTS_WITH_CHILDREN: (element: string, properties: string[]) => ({
 		category: "lint/react/noVoidElementsWithChildren",
 		message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
 			properties.map((name) => markup`${name}`),
 		)}</emphasis>.`,
 	}),
-	JS_USE_DEFAULT_IMPORT_BASENAME: (prev: string, basenames: Array<string>) => ({
+	JS_USE_DEFAULT_IMPORT_BASENAME: (prev: string, basenames: string[]) => ({
 		category: "lint/js/useDefaultImportBasename",
 		message: markup`Use the basename ${orJoin(
 			addEmphasis(basenames.map((basename) => markup`${basename}`)),
@@ -708,7 +705,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: Array<string>) => ({
+	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: string[]) => ({
 		category: "lint/js/noUndeclaredVariables",
 		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 		advice: buildSuggestionAdvice(name, bindingsInScope),
@@ -811,9 +808,9 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JS_NO_SHORTHAND_ARRAY_TYPE: {
-		category: "lint/js/noShorthandArrayType",
-		message: markup`Use <emphasis>Array${"<T>"} syntax</emphasis> instead of <emphasis>shorthand T[] syntax</emphasis>.`,
+	TS_PREFER_SHORTHAND_ARRAY_TYPE: {
+		category: "lint/ts/preferShorthandArrayType",
+		message: markup`Use <emphasis>shorthand T[] syntax</emphasis> instead of <emphasis>Array${"<T>"} syntax</emphasis>.`,
 	},
 	JS_NO_UNSAFE_FINALLY: (type: string) => ({
 		category: "lint/js/noUnsafeFinally",

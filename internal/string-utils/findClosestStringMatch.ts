@@ -9,7 +9,7 @@ import {orderBySimilarity} from "./orderBySimilarity";
 
 export function findClosestStringMatch(
 	name: string,
-	matches: Array<string>,
+	matches: string[],
 	minRating: number = 0.8,
 ): undefined | string {
 	if (matches.length === 0) {

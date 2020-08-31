@@ -8,8 +8,8 @@
 import {naturalCompare} from "./naturalCompare";
 
 export function orderByNatural(
-	strs: Array<string>,
+	strs: string[],
 	insensitive: boolean = true,
-): Array<string> {
+): string[] {
 	return strs.sort((a, b) => naturalCompare(a, b, insensitive));
 }

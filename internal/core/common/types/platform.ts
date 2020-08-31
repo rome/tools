@@ -13,7 +13,7 @@ export type Platform =
 	| "web"
 	| "node";
 
-export const PLATFORMS: Array<Platform> = [
+export const PLATFORMS: Platform[] = [
 	"ios",
 	"android",
 	"mobile",

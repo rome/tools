@@ -53,7 +53,7 @@ export default async function getModuleSignature(
 		provider,
 	});
 	const types: Dict<ModuleSignatureType> = {};
-	const exportMap: Array<ModuleSignatureExport> = [];
+	const exportMap: ModuleSignatureExport[] = [];
 
 	const added: Set<T> = new Set();
 

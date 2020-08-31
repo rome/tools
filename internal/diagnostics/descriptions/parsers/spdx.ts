@@ -6,7 +6,7 @@ import {buildSuggestionAdvice} from "../../helpers";
 
 type UnknownLicense = {
 	id: string;
-	knownLicenses: Array<string>;
+	knownLicenses: string[];
 	packageName: string;
 	packageVersion: string;
 };

@@ -21,7 +21,7 @@ class ENotExhaustive extends E {
 		originNode: undefined | AnyNode,
 		target: T,
 		only: T,
-		extraenous: Array<T>,
+		extraenous: T[],
 	) {
 		super(scope, originNode);
 		this.target = target;
@@ -31,7 +31,7 @@ class ENotExhaustive extends E {
 
 	private target: T;
 	private only: T;
-	public extraenous: Array<T>;
+	public extraenous: T[];
 
 	public static type = "ENotExhaustive";
 

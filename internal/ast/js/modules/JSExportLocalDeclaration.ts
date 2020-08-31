@@ -32,7 +32,7 @@ export interface JSExportLocalDeclaration extends NodeBaseWithComments {
 		| TSTypeAlias
 		| TSInterfaceDeclaration
 		| TSDeclareFunction;
-	readonly specifiers?: Array<JSExportLocalSpecifier>;
+	readonly specifiers?: JSExportLocalSpecifier[];
 	readonly exportKind?: ConstJSExportModuleKind;
 	readonly declare?: boolean;
 }

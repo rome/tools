@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 export interface MarkdownListItem extends NodeBaseWithComments {
 	type: "MarkdownListItem";
 	checked: boolean | undefined;
-	children: Array<MarkdownListChildren>;
+	children: MarkdownListChildren[];
 	// the value of ordered list: 1./-/*
 	value: string | undefined;
 }

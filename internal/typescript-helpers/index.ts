@@ -7,16 +7,16 @@
 
 type VoidReturn = void | undefined;
 
-export type VoidCallback<Args extends Array<unknown> = []> = Args extends []
+export type VoidCallback<Args extends unknown[] = []> = Args extends []
 	? ((arg?: VoidReturn) => VoidReturn)
 	: ((...args: Args) => VoidReturn);
 
-export type AsyncVoidCallback<Args extends Array<unknown> = []> = AsyncCallback<
+export type AsyncVoidCallback<Args extends unknown[] = []> = AsyncCallback<
 	VoidReturn,
 	Args
 >;
 
-export type AsyncCallback<Return, Args extends Array<unknown> = []> = Args extends []
+export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 	? (() => Return | Promise<Return>)
 	: ((...args: Args) => Return | Promise<Return>);
 
@@ -39,7 +39,7 @@ type ClassConstructorParams<T> = T extends {
 	: never;
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export interface Class<T, Args extends Array<any> = ClassConstructorParams<T>> {
+export interface Class<T, Args extends any[] = ClassConstructorParams<T>> {
 	new (
 		...args: Args
 	): T;

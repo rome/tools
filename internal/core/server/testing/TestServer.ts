@@ -145,7 +145,7 @@ export default class TestServer {
 	public sourceMaps: SourceMapConsumerCollection;
 	public printer: DiagnosticsPrinter;
 	public coverageCollector: CoverageCollector;
-	public focusedTests: Array<FocusedTest>;
+	public focusedTests: FocusedTest[];
 	public options: TestServerRunnerOptions;
 	public files: AbsoluteFilePathMap<TestServerFile>;
 
@@ -156,7 +156,7 @@ export default class TestServer {
 	private server: Server;
 	private ignoreBridgeEndError: Set<Bridge>;
 
-	public testFilesStack: Array<AbsoluteFilePath>;
+	public testFilesStack: AbsoluteFilePath[];
 
 	private runningTests: ExtendedMap<
 		string,
@@ -207,9 +207,9 @@ export default class TestServer {
 		}
 	}
 
-	private async setupWorkers(): Promise<Array<TestServerWorker>> {
+	private async setupWorkers(): Promise<TestServerWorker[]> {
 		// TODO some smarter logic. we may not need all these workers
-		const workers: Array<Promise<TestServerWorker>> = [];
+		const workers: Promise<TestServerWorker>[] = [];
 		for (let i = 0; i < MAX_WORKER_COUNT; i++) {
 			const inspectorPort = await findAvailablePort();
 			const worker = new TestServerWorker({
@@ -224,7 +224,7 @@ export default class TestServer {
 	}
 
 	public async init() {
-		const fileQueue: Array<TestServerFile> = [];
+		const fileQueue: TestServerFile[] = [];
 		const workers = await this.setupWorkers();
 
 		await this.reporter.steps([
@@ -363,7 +363,7 @@ export default class TestServer {
 		this.progress.finishedTests++;
 	}
 
-	private setupRunProgress(workers: Array<TestServerWorker>): TestProgress {
+	private setupRunProgress(workers: TestServerWorker[]): TestProgress {
 		const progress = this.request.reporter.progress({
 			persistent: true,
 			title: markup`Running`,
@@ -376,7 +376,7 @@ export default class TestServer {
 
 			bridge.endEvent.subscribe((error) => {
 				// Cancel all currently running tests
-				const cancelTests: Array<TestRef> = [];
+				const cancelTests: TestRef[] = [];
 
 				for (const key of ourRunningTests) {
 					const test = this.runningTests.get(key);
@@ -548,7 +548,7 @@ export default class TestServer {
 			};
 		}
 
-		const rows: Array<AnyMarkups> = [];
+		const rows: AnyMarkups[] = [];
 
 		// If there's more than 15 files to show, and we don't have the explicit showAllCoverage flag
 		// then truncate the output
@@ -656,11 +656,11 @@ export default class TestServer {
 			updatedInlineSnapshots,
 		} = this.progress;
 
-		let snapshotCounts: Array<{
+		let snapshotCounts: {
 			inline: boolean;
 			count: number;
 			noun: string;
-		}> = [
+		}[] = [
 			{inline: false, count: createdSnapshots, noun: "created"},
 			{inline: false, count: updatedSnapshots, noun: "updated"},
 			{inline: false, count: deletedSnapshots, noun: "deleted"},

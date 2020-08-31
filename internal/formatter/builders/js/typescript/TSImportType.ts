@@ -12,7 +12,7 @@ export default function TSImportType(
 	builder: Builder,
 	node: TSImportType,
 ): Token {
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		"import(",
 		builder.tokenize(node.argument, node),
 		")",

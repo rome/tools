@@ -9,7 +9,7 @@ import "@internal/cli-layout";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {test} from "rome";
 
-const looseOnly: Array<[string, string]> = [
+const looseOnly: [string, string][] = [
 	["||", "1.3.4"],
 	["", "1.0.0"],
 	["1.2.3pre+asdf - 2.4.3-pre+asdf", "1.2.3"],

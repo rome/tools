@@ -9,7 +9,7 @@ import {AnyJSStatement, JSVariableDeclarator} from "@internal/ast";
 import {ConstBinding, createVisitor, signals} from "@internal/compiler";
 import {getRequireSource, isInTypeAnnotation} from "@internal/js-ast-utils";
 
-const NON_INLINED_REQUIRES: Array<string> = [];
+const NON_INLINED_REQUIRES: string[] = [];
 
 export default createVisitor({
 	name: "inlineRequiresTransform",
@@ -39,7 +39,7 @@ export default createVisitor({
 		const {node} = path;
 
 		if (node.type === "JSRoot" || node.type === "JSBlockStatement") {
-			const body: Array<AnyJSStatement> = [];
+			const body: AnyJSStatement[] = [];
 			let hadRequires = false;
 
 			// Remove all require declarations that could have been inlined
@@ -49,7 +49,7 @@ export default createVisitor({
 					bodyNode.declaration.kind === "const"
 				) {
 					let hadRequireDeclarators = false;
-					const declarators: Array<JSVariableDeclarator> = [];
+					const declarators: JSVariableDeclarator[] = [];
 
 					for (const decl of bodyNode.declaration.declarations) {
 						if (decl.id.type !== "JSBindingIdentifier") {

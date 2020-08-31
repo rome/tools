@@ -106,7 +106,7 @@ export default class LSPServer {
 			return;
 		}
 
-		const lines: Array<string> = [];
+		const lines: string[] = [];
 		const date = new Date();
 
 		lines.push(`[Diagnostics - ${date.toTimeString()}] ${path.join()}`);
@@ -120,7 +120,7 @@ export default class LSPServer {
 
 	private createFakeServerRequest(
 		commandName: string,
-		args: Array<string> = [],
+		args: string[] = [],
 	): ServerRequest {
 		return new ServerRequest({
 			client: this.client,
@@ -305,7 +305,7 @@ export default class LSPServer {
 				const path = getPathFromTextDocument(params.get("textDocument"));
 				const codeActionRange = getLSPRange(params.get("range"));
 
-				const codeActions: Array<LSPCodeAction> = [];
+				const codeActions: LSPCodeAction[] = [];
 				const seenDecisions = new Set<string>();
 
 				const diagnostics = this.pathToDiagnostics.get(path);

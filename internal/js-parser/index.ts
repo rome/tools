@@ -25,7 +25,7 @@ export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	return parseRoot(parser);
 }
 
-export function tokenizeJS(userOptions: JSParserUserOptions): Array<PublicToken> {
+export function tokenizeJS(userOptions: JSParserUserOptions): PublicToken[] {
 	const options: JSParserOptions = {
 		...normalizeOptions(userOptions),
 		tokens: true,
@@ -34,7 +34,7 @@ export function tokenizeJS(userOptions: JSParserUserOptions): Array<PublicToken>
 	const parser = createJSParser(options, meta);
 	parseRoot(parser);
 
-	let tokens: Array<PublicToken> = [];
+	let tokens: PublicToken[] = [];
 
 	for (const token of parser.state.tokens) {
 		tokens.push({

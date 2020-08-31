@@ -25,7 +25,6 @@ import noNestedTernary from "./js/noNestedTernary";
 import noRestrictedGlobals from "./js/noRestrictedGlobals";
 import noSetterReturn from "./js/noSetterReturn";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
-import noShorthandArrayType from "./js/noShorthandArrayType";
 import noShoutyConstants from "./js/noShoutyConstants";
 import noSparseArray from "./js/noSparseArray";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
@@ -109,6 +108,7 @@ import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpace
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
+import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
 import {AnyVisitor} from "@internal/compiler";
 
