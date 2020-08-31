@@ -2,7 +2,7 @@
 title: Lint Rule js/noUnnecessaryContinue
 layout: layouts/rule.liquid
 showHero: false
-description: disallow unnecessary continue statement inside the loop
+description: disallow unnecessary `continue` statements inside loops
 eleventyNavigation:
 	key: lint-rules/js/noUnnecessaryContinue
 	parent: lint-rules
