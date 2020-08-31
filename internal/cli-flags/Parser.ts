@@ -421,7 +421,7 @@ export default class Parser<T> {
 			}
 
 			case "zsh": {
-				path = HOME_PATH.append(".zsh-completions",`_${programName}`);
+				path = HOME_PATH.append(".zsh-completions", `_${programName}`);
 				break;
 			}
 		}
