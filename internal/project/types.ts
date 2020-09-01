@@ -46,7 +46,7 @@ export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
 
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
-	presets: Array<ProjectConfigPresetNames>;
+	presets: ProjectConfigPresetNames[];
 	cache: {};
 	resolver: {};
 	compiler: {};
@@ -62,7 +62,7 @@ export type ProjectConfigObjects = {
 		globals: string[];
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
-		disabledRules: Array<LintRuleName>;
+		disabledRules: LintRuleName[];
 	};
 	typeCheck: {
 		enabled: boolean;

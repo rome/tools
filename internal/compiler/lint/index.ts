@@ -19,11 +19,11 @@ export type LintResult = {
 	src: string;
 };
 
-const ruleVisitorCache: WeakMap<ProjectConfig, Array<AnyVisitor>> = new WeakMap();
+const ruleVisitorCache: WeakMap<ProjectConfig, AnyVisitor[]> = new WeakMap();
 
 const allVisitors = Array.from(lintTransforms.values());
 
-function getVisitors(config: ProjectConfig): Array<AnyVisitor> {
+function getVisitors(config: ProjectConfig): AnyVisitor[] {
 	const {disabledRules} = config.lint;
 
 	// Fast path
@@ -36,7 +36,7 @@ function getVisitors(config: ProjectConfig): Array<AnyVisitor> {
 		return cached;
 	}
 
-	const visitors: Array<AnyVisitor> = [];
+	const visitors: AnyVisitor[] = [];
 	ruleVisitorCache.set(config, visitors);
 
 	for (const [ruleName, visitor] of lintTransforms) {

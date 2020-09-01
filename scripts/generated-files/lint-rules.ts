@@ -101,7 +101,7 @@ export async function main() {
 			}
 			lines.push("");
 
-			lines.push("export const lintRuleNames: Array<LintRuleName> = [");
+			lines.push("export const lintRuleNames: LintRuleName[] = [");
 			for (const {ruleName} of defs) {
 				lines.push(`	"${ruleName}",`);
 			}
