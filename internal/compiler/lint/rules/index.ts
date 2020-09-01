@@ -139,7 +139,6 @@ lintTransforms.set("js/noNestedTernary", noNestedTernary);
 lintTransforms.set("js/noRestrictedGlobals", noRestrictedGlobals);
 lintTransforms.set("js/noSetterReturn", noSetterReturn);
 lintTransforms.set("js/noShadowRestrictedNames", noShadowRestrictedNames);
-lintTransforms.set("js/noShorthandArrayType", noShorthandArrayType);
 lintTransforms.set("js/noShoutyConstants", noShoutyConstants);
 lintTransforms.set("js/noSparseArray", noSparseArray);
 lintTransforms.set("js/noTemplateCurlyInString", noTemplateCurlyInString);
@@ -250,9 +249,10 @@ lintTransforms.set(
 	noReferenceToNonExistingGroup,
 );
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
+lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
 
-export const lintRuleNames: Array<LintRuleName> = [
+export const lintRuleNames: LintRuleName[] = [
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -279,7 +279,6 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"js/noRestrictedGlobals",
 	"js/noSetterReturn",
 	"js/noShadowRestrictedNames",
-	"js/noShorthandArrayType",
 	"js/noShoutyConstants",
 	"js/noSparseArray",
 	"js/noTemplateCurlyInString",
@@ -363,6 +362,7 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"regex/noPosixInRegularExpression",
 	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
+	"ts/preferShorthandArrayType",
 	"ts/useInterfaces",
 ];
 
@@ -393,7 +393,6 @@ export type LintRuleName =
 	| "js/noRestrictedGlobals"
 	| "js/noSetterReturn"
 	| "js/noShadowRestrictedNames"
-	| "js/noShorthandArrayType"
 	| "js/noShoutyConstants"
 	| "js/noSparseArray"
 	| "js/noTemplateCurlyInString"
@@ -477,5 +476,6 @@ export type LintRuleName =
 	| "regex/noPosixInRegularExpression"
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
+	| "ts/preferShorthandArrayType"
 	| "ts/useInterfaces";
 /* GENERATED:END(id:main) */
