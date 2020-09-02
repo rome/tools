@@ -39,7 +39,7 @@
 		transition-duration: 150ms;
 		height: calc(100% - 5px);
 		margin-top: 0;
-		max-width: 280px;
+		width: 280px;
 	}
 
 	@include mobile-only() {
