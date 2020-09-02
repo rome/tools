@@ -411,6 +411,7 @@ class Manager {
 
 		if (this.scrollToHeading(href)) {
 			event.preventDefault();
+			location.hash = href;
 		}
 	}
 
