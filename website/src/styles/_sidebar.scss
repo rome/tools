@@ -39,7 +39,7 @@
 		transition-duration: 150ms;
 		height: calc(100% - 5px);
 		margin-top: 0;
-		min-width: 280px;
+		max-width: 280px;
 	}
 
 	@include mobile-only() {
@@ -67,7 +67,8 @@
 
 	a {
 		text-decoration: none;
-
+		text-overflow: ellipsis;
+		overflow: hidden;
 		&:hover {
 			text-decoration: underline;
 		}
