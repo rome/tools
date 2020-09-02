@@ -219,6 +219,7 @@ class Manager {
 
 		if (activating) {
 			document.title = `${titles.join(": ")} — ${originalTitle}`;
+			window.location.hash = link.getAttribute("href");
 		} else {
 			document.title = originalTitle;
 		}
