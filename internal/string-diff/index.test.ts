@@ -1,5 +1,5 @@
 /**
- * This tests are taken from the origianl source code and adapted
+ * This tests are taken from the original source code and adapted
  * for our modified version.
  *
  * ===
