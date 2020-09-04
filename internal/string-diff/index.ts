@@ -41,9 +41,9 @@ type HalfMatch = undefined | [string, string, string, string, string];
  * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
  * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
  */
-const DIFF_DELETE: -1 = -1;
-const DIFF_INSERT: 1 = 1;
-const DIFF_EQUAL: 0 = 0;
+export const DIFF_DELETE: -1 = -1;
+export const DIFF_INSERT: 1 = 1;
+export const DIFF_EQUAL: 0 = 0;
 export const diffConstants = {
 	DELETE: DIFF_DELETE,
 	EQUAL: DIFF_EQUAL,
@@ -62,7 +62,7 @@ export type GroupDiffsLine = {
 	diffs: Diffs;
 };
 
-function generateLineKey(beforeLine?: number, afterLine?: number) {
+export function generateLineKey(beforeLine?: number, afterLine?: number) {
 	return `${beforeLine || ""}:${afterLine || ""}`;
 }
 
@@ -186,7 +186,11 @@ export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 			insertedLines.delete(generateLineKey(undefined, afterLine));
 			insertedLines.set(
 				generateLineKey(beforeLine, afterLine),
-				{beforeLine, afterLine, diffs: line.diffs},
+				{
+					beforeLine,
+					afterLine,
+					diffs: line.diffs,
+				},
 			);
 		}
 	}
@@ -256,7 +260,11 @@ export default function stringDiff(text1: string, text2: string): Diffs {
  * @param {Int|Object} [cursor_pos] Edit position in text1 or object with more info
  * @return {Array} Array of diff tuples.
  */
-function main(text1: string, text2: string, fixUnicode: boolean = false): Diffs {
+export function main(
+	text1: string,
+	text2: string,
+	fixUnicode: boolean = false,
+): Diffs {
 	// Check for equality
 	if (text1 === text2) {
 		if (text1) {
@@ -362,7 +370,7 @@ function compute(text1: string, text2: string): Diffs {
  * @return {Array} Array of diff tuples.
  * @private
  */
-function bisect(text1: string, text2: string): Diffs {
+export function bisect(text1: string, text2: string): Diffs {
 	// Cache the text lengths to prevent multiple calls.
 	let text1Length = text1.length;
 	let text2Length = text2.length;
@@ -507,7 +515,7 @@ function bisectSplit(text1: string, text2: string, x: number, y: number): Diffs 
  * @return {number} The number of characters common to the start of each
  *     string.
  */
-function commonPrefix(text1: string, text2: string): number {
+export function commonPrefix(text1: string, text2: string): number {
 	// Quick check for common null cases.
 	if (!text1 || !text2 || text1.charAt(0) !== text2.charAt(0)) {
 		return 0;
@@ -545,7 +553,7 @@ function commonPrefix(text1: string, text2: string): number {
  * @param {string} text2 Second string.
  * @return {number} The number of characters common to the end of each string.
  */
-function commonSuffix(text1: string, text2: string): number {
+export function commonSuffix(text1: string, text2: string): number {
 	// Quick check for common null cases.
 	if (!text1 || !text2 || text1.slice(-1) !== text2.slice(-1)) {
 		return 0;
@@ -588,7 +596,7 @@ function commonSuffix(text1: string, text2: string): number {
  *     text1, the suffix of text1, the prefix of text2, the suffix of
  *     text2 and the common middle.  Or null if there was no match.
  */
-function halfMatch(text1: string, text2: string): undefined | HalfMatch {
+export function halfMatch(text1: string, text2: string): undefined | HalfMatch {
 	let longtext = text1.length > text2.length ? text1 : text2;
 	let shorttext = text1.length > text2.length ? text2 : text1;
 	if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
@@ -703,7 +711,7 @@ function halfMatchI(
  * @param {Array} diffs Array of diff tuples.
  * @param {boolean} fix_unicode Whether to normalize to a unicode-correct diff
  */
-function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
+export function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
 	diffs.push([DIFF_EQUAL, ""]); // Add a dummy entry at the end.
 	let pointer = 0;
 	let countDelete = 0;
