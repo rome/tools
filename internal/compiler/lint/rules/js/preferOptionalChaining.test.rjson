@@ -97,4 +97,8 @@ valid: [
 			bar();
 		}
 	"
+	"
+		let foo = {};
+		foo?.bar().zoo();
+	"
 ]

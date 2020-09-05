@@ -58,13 +58,36 @@ parens.set("TSAssignmentAsExpression", () => true);
 
 parens.set("TSTypeAssertion", () => true);
 
+function deepHasOptionalProp(arg: JSMemberExpression): boolean {
+	let node = arg;
+	while (true) {
+		if (node.type === "JSMemberExpression") {
+			if (node.property.optional === true) {
+				return true;
+			}
+
+			if (node.object.type === "JSMemberExpression") {
+				node = node.object;
+				continue;
+			}
+			return false;
+		} else {
+			return false;
+		}
+	}
+}
+
 parens.set(
 	"JSMemberExpression",
 	(node: JSMemberExpression, parent: AnyNode): boolean => {
+		if (parent.type === "JSCallExpression" && parent.callee === node) {
+			return false;
+		}
 		if (node.property.optional) {
 			return (
-				(parent.type === "JSCallExpression" && parent.callee === node) ||
-				(parent.type === "JSMemberExpression" && parent.object === node)
+				parent.type === "JSMemberExpression" &&
+				parent.object === node &&
+				!deepHasOptionalProp(node)
 			);
 		} else {
 			return false;

@@ -51,9 +51,9 @@ function memberExpressionToArray(
 	arg: JSMemberExpression | JSReferenceIdentifier,
 ):
 	| Array<{
-		name: string;
-		optional?: boolean;
-	}>
+			name: string;
+			optional?: boolean;
+		}>
 	| null {
 	let node: AnyJSExpression = arg;
 	const result = [];
@@ -74,7 +74,10 @@ function memberExpressionToArray(
 			return null;
 		}
 
-		result.unshift({name: property.value.name, optional: property.optional});
+		result.unshift({
+			name: property.value.name,
+			optional: property.optional,
+		});
 		node = node.object;
 	}
 }
@@ -87,9 +90,9 @@ function mergeMemberExpressions(
 	},
 ):
 	| {
-		node: JSMemberExpression | JSReferenceIdentifier;
-		sameLength: boolean;
-	}
+			node: JSMemberExpression | JSReferenceIdentifier;
+			sameLength: boolean;
+		}
 	| null {
 	const leftArr = memberExpressionToArray(left);
 	const rightArr = memberExpressionToArray(right);
@@ -178,9 +181,9 @@ function getVerifiedRight(node: AnyJSExpression): null | VerifiedRight {
 	if (
 		node.type === "JSBinaryExpression" &&
 		(node.operator === "!==" ||
-			node.operator === "===" ||
-			node.operator === "!=" ||
-			node.operator === "==")
+		node.operator === "===" ||
+		node.operator === "!=" ||
+		node.operator === "==")
 	) {
 		if (node.left.type === "JSMemberExpression") {
 			return {
