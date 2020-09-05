@@ -13,7 +13,7 @@ export default function JSRoot(builder: Builder, node: JSRoot): Token {
 		builder.tokenizeStatementList(node.directives, node),
 	];
 
-	if (node.directives && node.directives.length) {
+	if (node.directives?.length) {
 		tokens.push(hardline);
 	}
 

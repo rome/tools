@@ -42,7 +42,7 @@ export function normalizeCompatManifest(
 	if (version !== undefined && name === "didyoumean") {
 		const license = PACKAGE_LICENSE_ALIASES.get(name);
 		if (
-			license !== undefined &&
+			!!license &&
 			consumer.get("license").asUnknown() === license.badLicense &&
 			satisfiesSemver(version, license.range)
 		) {

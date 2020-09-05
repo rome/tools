@@ -416,7 +416,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
 		if (description === undefined) {
-			if (currentToken !== undefined && start === currentToken.start) {
+			if (start === currentToken?.start) {
 				description = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
 			} else {
 				if (this.isEOF(start)) {

@@ -15,7 +15,7 @@ export default createVisitor({
 
 		if (node.type === "JSReferenceIdentifier" && node.name === "arguments") {
 			const args = scope.getBinding("arguments");
-			if (args && args.kind === "arguments") {
+			if (args?.kind === "arguments") {
 				path.context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_ARGUMENTS);
 			}
 		}

@@ -366,7 +366,7 @@ export default class Parser<T> {
 	) {
 		// Ignore flags from command and root parser options
 		const ignoreFlags: Array<string> = [
-			...((definedCommand !== undefined && definedCommand.command.ignoreFlags) || []),
+			...((!!definedCommand && definedCommand.command.ignoreFlags) || []),
 			...(this.opts.ignoreFlags || []),
 		];
 		for (const key of ignoreFlags) {

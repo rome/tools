@@ -89,17 +89,13 @@ export default createVisitor({
 			const elementName = getJSXElementName(node);
 
 			const roleAttribute = getJSXAttribute(node, "role");
-			if (
-				roleAttribute &&
-				roleAttribute.value &&
-				roleAttribute.value.type === "JSStringLiteral"
-			) {
+			if (roleAttribute?.value?.type === "JSStringLiteral") {
 				let elementHasARole;
 
 				const mappedRole = ariaRolesMap.get(roleAttribute.value.value);
 				// here we cover cases where "role" attribute and the element name differs in naming
 				// e.g. h1 and role="heading"
-				if (mappedRole && mappedRole.baseConcepts) {
+				if (mappedRole?.baseConcepts) {
 					elementHasARole = mappedRole.baseConcepts.some(({concept, module}) => {
 						if (module === "HTML") {
 							// here we should also match additional attributes
@@ -108,9 +104,7 @@ export default createVisitor({
 								return concept.attributes.every(({name, value}) => {
 									const attr = getJSXAttribute(node, name);
 									return (
-										attr &&
-										attr.value &&
-										attr.value.type === "JSStringLiteral" &&
+										attr?.value?.type === "JSStringLiteral" &&
 										attr.value.value === value
 									);
 								});

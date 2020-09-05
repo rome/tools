@@ -16,7 +16,7 @@ export default createVisitor({
 		if (node.type === "JSTryStatement") {
 			const {finalizer} = node;
 
-			if (finalizer && finalizer.type === "JSBlockStatement") {
+			if (finalizer?.type === "JSBlockStatement") {
 				for (const statement of finalizer.body) {
 					if (
 						statement.type === "JSThrowStatement" ||

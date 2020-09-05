@@ -553,11 +553,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
 		const firstAdvice = advice[0];
-		if (
-			firstAdvice !== undefined &&
-			firstAdvice.type === "stacktrace" &&
-			firstAdvice.frames.length === 1
-		) {
+		if (firstAdvice?.type === "stacktrace" && firstAdvice.frames.length === 1) {
 			const frame = firstAdvice.frames[0];
 			if (frame.filename === filename && equalPosition(frame, start)) {
 				advice.shift();

@@ -35,7 +35,7 @@ export default class Graph<Value> {
 
 	public hasConnections(value: Value) {
 		const node = this.nodesByValue.get(value);
-		return node !== undefined && (node?.lines).length > 0;
+		return node !== undefined && node?.lines.length > 0;
 	}
 
 	public addLine(startValue: Value, endValue: Value) {

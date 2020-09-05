@@ -3437,7 +3437,7 @@ export function checkFunctionNameAndParams(
 		body.directives !== undefined
 	) {
 		const firstDirective = body.directives[0];
-		if (firstDirective !== undefined && firstDirective.value === "use strict") {
+		if (firstDirective?.value === "use strict") {
 			unexpectedDiagnostic(
 				parser,
 				{

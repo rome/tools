@@ -72,8 +72,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 			// Now check for Script.runInContext
 			const nextFrame = frames[i + 1];
 			if (
-				nextFrame !== undefined &&
-				nextFrame.typeName === "Script" &&
+				nextFrame?.typeName === "Script" &&
 				nextFrame.methodName === "runInContext"
 			) {
 				// Yes!

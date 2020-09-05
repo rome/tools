@@ -16,7 +16,7 @@ export default createVisitor({
 		if (node.type === "JSAssignmentIdentifier") {
 			const binding = scope.getBinding(node.name);
 
-			if (binding !== undefined && binding.kind === "catch") {
+			if (binding?.kind === "catch") {
 				context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_CATCH_ASSIGN);
 			}
 		}

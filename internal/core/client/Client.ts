@@ -538,7 +538,7 @@ export default class Client {
 
 	private async _shutdownServer() {
 		const status = this.bridgeStatus;
-		if (status !== undefined && status.bridge.alive) {
+		if (status?.bridge.alive) {
 			try {
 				await status.bridge.endServer.call();
 			} catch (err) {
@@ -556,7 +556,7 @@ export default class Client {
 
 		const status = this.bridgeStatus;
 
-		if (status !== undefined && status.bridge.alive) {
+		if (status?.bridge.alive) {
 			if (status.dedicated) {
 				status.socket.end();
 			} else {

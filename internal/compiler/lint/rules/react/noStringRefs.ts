@@ -19,8 +19,8 @@ function containsStringContainer(attribute: JSXAttribute): boolean {
 	}
 
 	return (
-		(attribute.value?.expression).type === "JSStringLiteral" ||
-		(attribute.value?.expression).type === "JSTemplateLiteral"
+		attribute.value?.expression.type === "JSStringLiteral" ||
+		attribute.value?.expression.type === "JSTemplateLiteral"
 	);
 }
 

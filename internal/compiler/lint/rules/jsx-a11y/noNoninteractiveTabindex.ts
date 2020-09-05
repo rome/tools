@@ -1,28 +1,28 @@
-import {createVisitor, signals} from "@internal/compiler";
-import {descriptions} from "@internal/diagnostics";
+import { createVisitor, signals } from "@internal/compiler";
+import { descriptions } from "@internal/diagnostics";
 import {
 	getJSXAttribute,
 	getJSXElementName,
 	hasJSXAttribute,
 } from "@internal/js-ast-utils";
-import {JSXAttribute} from "@internal/ast";
+import { JSXAttribute } from "@internal/ast";
 import {
 	ariaRolesMap,
 	elementsToConceptsMap,
 	isRoleInteractive,
 } from "@internal/compiler/lint/utils/aria";
-import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
+import { isJSXDOMElement } from "@internal/js-ast-utils/isJSXDOMElement";
 
 function hasValidTabIndexValue(
-	node: JSXAttribute | undefined,
+	node: JSXAttribute | undefined
 ): number | undefined {
-	if (node && node.value && node.value.type === "JSStringLiteral") {
+	if (node?.value?.type === "JSStringLiteral") {
 		const value = Number(node.value.value);
 		if (value < 1) {
 			return value;
 		}
 	}
-	if (node && node.value && node.value.type === "JSXExpressionContainer") {
+	if (node?.value?.type === "JSXExpressionContainer") {
 		const expression = node.value.expression;
 
 		if (
@@ -47,7 +47,7 @@ function hasValidTabIndexValue(
 export default createVisitor({
 	name: "jsx-a11y/noNoninteractiveTabindex",
 	enter(path) {
-		const {node} = path;
+		const { node } = path;
 
 		if (isJSXDOMElement(node)) {
 			// not tabIndex, no worth continuing
@@ -75,7 +75,7 @@ export default createVisitor({
 						if (!elementToRole.has("widget") && tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
 								tabIndexAttribute,
-								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
+								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX
 							);
 						}
 					} else {
@@ -87,13 +87,13 @@ export default createVisitor({
 						if (tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
 								tabIndexAttribute,
-								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
+								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX
 							);
 						}
 					}
 				}
 				const attr = getJSXAttribute(node, "role");
-				if (attr && attr.value && attr.value.type === "JSStringLiteral") {
+				if (attr?.value?.type === "JSStringLiteral") {
 					const role = ariaRolesMap.get(attr.value.value);
 					if (role) {
 						/**
@@ -105,7 +105,7 @@ export default createVisitor({
 						if (!isRoleInteractive(role) && tabIndexValue > -1) {
 							path.context.addNodeDiagnostic(
 								attr,
-								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX,
+								descriptions.LINT.JSX_A11Y_NO_NONINTERACTIVE_TABINDEX
 							);
 						}
 					}

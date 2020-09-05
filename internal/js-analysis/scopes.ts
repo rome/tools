@@ -116,7 +116,7 @@ export class Scope {
 		}
 
 		const existingBinding = this.bindings.get(name);
-		if (existingBinding !== undefined && existingBinding.status === "declared") {
+		if (existingBinding?.status === "declared") {
 			if (!(existingBinding.type instanceof OpenT)) {
 				throw new Error("expected OpenT");
 			}

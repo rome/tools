@@ -60,7 +60,7 @@ export default createVisitor<State>({
 			});
 
 			// We'll only return an JSArrowFunctionExpression if it was inside of a JSVariableDeclarator
-			if (func !== undefined && func.node.type === "JSArrowFunctionExpression") {
+			if (!!func && func.node.type === "JSArrowFunctionExpression") {
 				const declarator = jsVariableDeclarator.assert(func.parent);
 				state.set(
 					(state) => {

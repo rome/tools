@@ -32,7 +32,7 @@ export default function TSModuleDeclaration(
 	}
 
 	let body: undefined | TSModuleBlock | TSModuleDeclaration = node.body;
-	while (body !== undefined && body.type === "TSModuleDeclaration") {
+	while (body?.type === "TSModuleDeclaration") {
 		tokens.push(".", builder.tokenize(body.id, body));
 		body = body.body;
 	}

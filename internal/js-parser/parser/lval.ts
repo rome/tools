@@ -487,7 +487,7 @@ export function toAssignableList(
 	if (end > 0) {
 		let last = exprList[end - 1];
 
-		if (last !== undefined && last.type === "JSSpreadElement") {
+		if (last?.type === "JSSpreadElement") {
 			const arg = toTargetAssignmentPattern(
 				parser,
 				last.argument,
@@ -498,8 +498,7 @@ export function toAssignableList(
 		}
 
 		if (
-			last !== undefined &&
-			last.type === "JSAmbiguousFlowTypeCastExpression" &&
+			last?.type === "JSAmbiguousFlowTypeCastExpression" &&
 			last.expression.type === "JSSpreadElement"
 		) {
 			rest = ambiguousTypeCastToParameter(

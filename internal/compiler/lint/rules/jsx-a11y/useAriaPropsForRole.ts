@@ -11,7 +11,7 @@ export default createVisitor({
 
 		if (isJSXDOMElement(node) && hasJSXAttribute(node, "role")) {
 			const attr = getJSXAttribute(node, "role");
-			if (attr && attr.value && attr.value.type === "JSStringLiteral") {
+			if (attr?.value?.type === "JSStringLiteral") {
 				const role = ariaRolesMap.get(attr.value.value);
 				if (role) {
 					const hasAllProps = role.requiredProps.every((prop) => {

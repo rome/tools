@@ -531,7 +531,7 @@ export default class Consumer {
 		// We require this cache as we sometimes want to store state about a forked property such as used items
 		const cached = this.forkCache.get(String(key));
 		if (
-			cached !== undefined &&
+			!!cached &&
 			cached.value === value &&
 			(cached.propertyMetadata === undefined ||
 			cached.propertyMetadata === propertyMetadata)

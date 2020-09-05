@@ -1668,7 +1668,7 @@ export function parseFunction(
 	popScope(parser, "GENERATOR");
 	popScope(parser, "ASYNC");
 
-	if (!!body && body.type !== "JSBlockStatement") {
+	if (body !== undefined && body.type !== "JSBlockStatement") {
 		throw new Error("Expected block statement for functions");
 	}
 

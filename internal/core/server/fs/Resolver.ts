@@ -543,11 +543,7 @@ export default class Resolver {
 		}
 
 		// Check with appended `scale`, other.filename
-		if (
-			handler !== undefined &&
-			handler.canHaveScale === true &&
-			!callees.includes("implicitScale")
-		) {
+		if (handler?.canHaveScale === true && !callees.includes("implicitScale")) {
 			const scale = query.scale ?? 3;
 			for (let i = scale; i >= 1; i--) {
 				yield* this._getFilenameVariants(
