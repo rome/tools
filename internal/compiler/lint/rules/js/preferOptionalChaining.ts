@@ -1,14 +1,11 @@
 import {
 	AnyJSExpression,
-	AnyNode,
 	JSBinaryExpression,
-	JSCallExpression,
 	JSMemberExpression,
 	JSNullLiteral,
 	JSReferenceIdentifier,
 	jsIdentifier,
 	jsMemberExpression,
-	jsOptionalCallExpression,
 	jsStaticMemberProperty,
 } from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
@@ -212,104 +209,16 @@ function getVerifiedRight(node: AnyJSExpression): null | VerifiedRight {
 	return null;
 }
 
-function getVerifiedConsequent(node: AnyNode): null | JSCallExpression {
-	if (
-		node.type === "JSExpressionStatement" &&
-		node.expression.type === "JSCallExpression"
-	) {
-		return node.expression;
-	}
-
-	if (
-		node.type === "JSBlockStatement" &&
-		node.body.length === 1 &&
-		node.body[0].type === "JSExpressionStatement" &&
-		node.body[0].expression.type === "JSCallExpression"
-	) {
-		return node.body[0].expression;
-	}
-
-	return null;
-}
-
 export default createVisitor({
 	name: "js/preferOptionalChaining",
 	enter(path) {
 		const {node} = path;
 
 		/**
-		 * Optional call expression
-		 * `if (foo) foo()` --> `foo?.()`
-		 */
-		if (node.type === "JSIfStatement" && node.alternate === undefined) {
-			const consequent = getVerifiedConsequent(node.consequent);
-			const left = getVerifiedLeft(node.test);
-			if (
-				left !== null &&
-				consequent !== null &&
-				isReferenceOrMemberExpression(consequent.callee)
-			) {
-				const newCallee = mergeMemberExpressions(
-					left,
-					consequent.callee,
-					{inclusive: true},
-				);
-				if (newCallee) {
-					const callExpression = {
-						...consequent,
-						callee: newCallee.node,
-					};
-					return path.addFixableDiagnostic(
-						{
-							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create(callExpression)
-									: callExpression,
-							),
-						},
-						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
-					);
-				}
-			}
-		}
-
-		/**
-		 * `foo ? foo() : undefined` --> `foo?.()`
 		 * `foo ? foo.bar : undefined` --> `foo?.bar`
 		 */
 		if (node.type === "JSConditionalExpression" && isUndefined(node.alternate)) {
 			const left = getVerifiedLeft(node.test);
-			/**
-			 * optional call expr
-			 * `foo ? foo() : undefined` --> `foo?.()`
-			 */
-			if (
-				node.consequent.type === "JSCallExpression" &&
-				isReferenceOrMemberExpression(node.consequent.callee) &&
-				left !== null
-			) {
-				const newCallee = mergeMemberExpressions(
-					left,
-					node.consequent.callee,
-					{inclusive: true},
-				);
-				if (newCallee) {
-					const callExpression = {
-						...node.consequent,
-						callee: newCallee.node,
-					};
-					return path.addFixableDiagnostic(
-						{
-							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create(callExpression)
-									: callExpression,
-							),
-						},
-						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
-					);
-				}
-			}
 			/**
 			 * optional member expr
 			 * `foo ? foo.bar : undefined` --> `foo?.bar`
@@ -341,39 +250,11 @@ export default createVisitor({
 		/**
 		 * Optional member expression and call expression
 		 * `foo && foo.bar` --> `foo?.bar`
-		 * `foo.bar && foo.bar()` --> `foo.bar?.()`
 		 */
 		if (node.type === "JSLogicalExpression" && node.operator === "&&") {
 			const left = getVerifiedLeft(node.left);
 			if (!left) {
 				return signals.retain;
-			}
-
-			if (
-				node.right.type === "JSCallExpression" &&
-				isReferenceOrMemberExpression(node.right.callee)
-			) {
-				const newCallee = mergeMemberExpressions(
-					left,
-					node.right.callee,
-					{inclusive: true},
-				);
-				if (newCallee) {
-					const callExpression = {
-						...node.right,
-						callee: newCallee.node,
-					};
-					return path.addFixableDiagnostic(
-						{
-							fixed: signals.replace(
-								newCallee.sameLength
-									? jsOptionalCallExpression.create(callExpression)
-									: callExpression,
-							),
-						},
-						descriptions.LINT.JS_PREFER_OPTIONAL_CHAINING,
-					);
-				}
 			}
 
 			const right = getVerifiedRight(node.right);

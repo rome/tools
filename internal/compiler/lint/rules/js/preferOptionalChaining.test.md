@@ -329,7 +329,7 @@ foo?.bar;
   ℹ Safe fix
 
   - foo·?·foo.bar.baz·:·undefined
-  + (foo?.bar).baz
+  + foo?.bar.baz
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -341,7 +341,7 @@ foo?.bar;
 
 ```
 let foo = {};
-(foo?.bar).baz;
+foo?.bar.baz;
 
 ```
 
@@ -349,44 +349,7 @@ let foo = {};
 
 ```
 
- lint/js/preferOptionalChaining/reject/12/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
-
-  ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ if (foo) {
-      │ ^^^^^^^^^^
-  > 3 │   foo(1, 2, 3);
-  > 4 │ }
-      │ ^
-
-  ℹ Safe fix
-
-    1   │ - if·(foo)·{
-    2   │ - → foo(1,·2,·3);
-    3   │ - }
-      1 │ + foo?.(1,·2,·3)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `11: formatted`
-
-```
-let foo = {};
-
-foo?.(1, 2, 3)
-
-```
-
-### `12`
-
-```
-
- lint/js/preferOptionalChaining/reject/13/filename.ts:2:4 lint/js/preferOptionalChaining  FIXABLE  ━
+ lint/js/preferOptionalChaining/reject/12/filename.ts:2:4 lint/js/preferOptionalChaining  FIXABLE  ━
 
   ✖ Prefer optional chaining to manual checks.
 
@@ -407,12 +370,28 @@ foo?.(1, 2, 3)
 
 ```
 
+### `11: formatted`
+
+```
+let foo = {};
+if (foo?.bar != null) {
+	foo.bar("baz");
+}
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
 ### `12: formatted`
 
 ```
 let foo = {};
-
-foo?.bar?.("baz")
+foo?.bar;
 
 ```
 
@@ -427,7 +406,8 @@ foo?.bar?.("baz")
 
 ```
 let foo = {};
-foo?.bar;
+let bar = "";
+foo && bar.foo;
 
 ```
 
@@ -443,7 +423,7 @@ foo?.bar;
 ```
 let foo = {};
 let bar = "";
-foo && bar.foo;
+bar in foo && foo.bar;
 
 ```
 
@@ -458,8 +438,7 @@ foo && bar.foo;
 
 ```
 let foo = {};
-let bar = "";
-bar in foo && foo.bar;
+foo?.[bar];
 
 ```
 
@@ -474,7 +453,7 @@ bar in foo && foo.bar;
 
 ```
 let foo = {};
-foo?.[bar];
+foo ? foo.bar.baz : null;
 
 ```
 
@@ -489,58 +468,6 @@ foo?.[bar];
 
 ```
 let foo = {};
-foo ? foo.bar.baz : null;
-
-```
-
-### `18`
-
-```
-✔ No known problems!
-
-```
-
-### `18: formatted`
-
-```
-let foo = {};
 foo ? foo.bar.baz : "anything else";
-
-```
-
-### `19`
-
-```
-✔ No known problems!
-
-```
-
-### `19: formatted`
-
-```
-let foo;
-if (typeof foo === "function") {
-	foo();
-}
-
-```
-
-### `20`
-
-```
-✔ No known problems!
-
-```
-
-### `20: formatted`
-
-```
-let foo;
-let bar = () => {};
-if (foo) {
-	foo();
-} else {
-	bar();
-}
 
 ```

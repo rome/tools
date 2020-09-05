@@ -46,12 +46,6 @@ invalid: [
 	"
 	"
 		let foo = {};
-		if (foo) {
-			foo(1, 2, 3);
-		}
-	"
-	"
-		let foo = {};
 		if (foo != undefined && foo.bar != null) {
 			foo.bar('baz');
 		}
@@ -81,24 +75,5 @@ valid: [
 	"
 		let foo = {};
 		foo ? foo.bar.baz : \"anything else\";
-	"
-	"
-		let foo;
-		if (typeof foo === \"function\") {
-			foo();
-		}
-	"
-	"
-		let foo;
-		let bar = () => {};
-		if (foo) {
-			foo();
-		} else {
-			bar();
-		}
-	"
-	"
-		let foo = {};
-		foo?.bar().zoo();
 	"
 ]
