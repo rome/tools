@@ -180,9 +180,12 @@ function getVerifiedRight(node: AnyJSExpression): null | VerifiedRight {
 
 	if (
 		node.type === "JSBinaryExpression" &&
-		(node.operator === "!==" ||
+		// we cannot automatically replace
+		// `foo !== undefined && foo.bar !== 'some_var'`
+		// for false positives reason
+		(((node.operator === "!==" || node.operator === "!=") &&
+		(isNullOrUndefined(node.left) || isNullOrUndefined(node.right))) ||
 		node.operator === "===" ||
-		node.operator === "!=" ||
 		node.operator === "==")
 	) {
 		if (node.left.type === "JSMemberExpression") {
