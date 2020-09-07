@@ -66,6 +66,7 @@
 	}
 
 	a {
+		max-width: calc(100% - 16px);
 		text-decoration: none;
 		text-overflow: ellipsis;
 		overflow: hidden;
