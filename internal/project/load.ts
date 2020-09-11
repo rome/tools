@@ -300,23 +300,23 @@ export async function normalizeProjectConfig(
 
 	const format = consumer.get("format");
 	if (categoryExists(format)) {
-		if (lint.has("enabled")) {
+		if (format.has("enabled")) {
 			config.format.enabled = format.get("enabled").asBoolean();
 		}
 
-		if (lint.has("indentStyle")) {
+		if (format.has("indentStyle")) {
 			const indentStyle = format.get("indentStyle").asStringSet(["tab", "space"]);
 			config.format.indentStyle = indentStyle;
 
 			// If there was an indent style specified without a size, default to 2 for spaces, and 1 for tabs
-			if (!lint.has("indentSize")) {
+			if (!format.has("indentSize")) {
 				config.format.indentSize = indentStyle === "space" ? 2 : 1;
 			}
 		}
 
-		if (lint.has("indentSize")) {
+		if (format.has("indentSize")) {
 			// Set a range to prevent wacky behaviour
-			config.format.indentSize = lint.get("indentSize").asNumberInRange({
+			config.format.indentSize = format.get("indentSize").asNumberInRange({
 				min: 0,
 				max: 10,
 			});
