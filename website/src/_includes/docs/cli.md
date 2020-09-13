@@ -140,11 +140,12 @@ You can explicitly start a daemon with the [`rome start`](#rome-start) command a
 
 ### Shell Completions
 
-Completions commands are available for `bash` and `fish`. To automatically install them run:
+Completions commands are available for `bash`, `fish` and `zsh`. To automatically install them run:
 
 ```bash
 rome --write-shell-completions bash
 rome --write-shell-completions fish
+rome --write-shell-completions zsh
 ```
 
 This will automatically write the completions to a file and add it to your shell profile if necessary.
@@ -156,14 +157,21 @@ Alternatively you can run:
 ```bash
 rome --log-shell-completions bash
 rome --log-shell-completions fish
+rome --log-shell-completions zsh
 ```
 
 which instead will output the completions to `stdout` rather than a file.
+
+
+##### `bash`
+
+We will write the completions to `~/.rome/rome-completions.sh`. We will add this file as a `source` to either `~/.bashrc` or `~/.bash_profile`, whatever we can find first.
 
 ##### `fish`
 
 We will write the completions to `~/.config/fish/completions/rome.fish`. No profile modification is necessary as they are automatically loaded.
 
-##### `bash`
+##### `zsh`
 
-We will write the completions to `~/.rome/rome-completions.sh`. We will add this file as a `source` to either `~/.bashrc` or `~/.bash_profile`, whatever we can find first.
+We will write the completions to `~/.zsh-completions/_rome`.
+
