@@ -66,7 +66,7 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 	// Write docs
 	await writeFile(
 		ROOT.append("website", "src", "docs", "lint", "rules", `${ruleName}.md`),
-		`
+		dedent`
 			---
 			title: Lint Rule ${ruleName}
 			layout: layouts/rule.liquid
@@ -91,11 +91,12 @@ export async function main([ruleName]: Array<string>): Promise<number> {
 		"lint.ts",
 	);
 	let descriptions = await readFileText(diagDescriptionsPath);
+	let message = "markup`INSERT MESSAGE HERE`";
 	descriptions = descriptions.replace(
 		"createDiagnosticsCategory({",
 		`createDiagnosticsCategory({\n	${descriptionKey}: {
 			category: "${categoryName}",
-			message: "INSERT MESSAGE HERE",
+			message: ${message},
 		},`,
 	);
 	await writeFile(diagDescriptionsPath, descriptions);
