@@ -278,6 +278,7 @@ html[data-theme='dark'] {
 	flex-shrink: 0;
 	cursor: pointer;
 	display: flex;
+	border: none;
 
 	svg {
 		pointer-events: none;
