@@ -20,6 +20,7 @@ export type MarkdownParserState = {
 	isBlockHead: boolean;
 	isParagraph: boolean;
 	inlineState: InlineState;
+	isListItem: boolean;
 };
 
 export type ListProperties = {
@@ -44,6 +45,7 @@ export type DelimiterRun = {
 	closingIndexOfDelimiter?: Number0;
 	leftFlankingDelimiter?: boolean;
 	rightFlankingDelimiter?: boolean;
+	value: string;
 };
 
 export type Emphasis = ComplexToken<"Emphasis", DelimiterRun>;

@@ -180,11 +180,11 @@ export * from "./markdown/blocks/MarkdownDividerBlock";
 export * from "./markdown/inline/MarkdownEmphasisInline";
 export * from "./markdown/blocks/MarkdownHeadingBlock";
 export * from "./markdown/inline/MarkdownImageInline";
-export * from "./markdown/inline/MarkdownLinkInline";
 export * from "./markdown/blocks/MarkdownListBlock";
 export * from "./markdown/core/MarkdownListItem";
 export * from "./markdown/core/MarkdownParagraph";
 export * from "./markdown/blocks/MarkdownQuoteBlock";
+export * from "./markdown/inline/MarkdownReferenceInline";
 export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
@@ -439,11 +439,11 @@ export type AnyNode =
 	| n.MarkdownEmphasisInline
 	| n.MarkdownHeadingBlock
 	| n.MarkdownImageInline
-	| n.MarkdownLinkInline
 	| n.MarkdownListBlock
 	| n.MarkdownListItem
 	| n.MarkdownParagraph
 	| n.MarkdownQuoteBlock
+	| n.MarkdownReferenceInline
 	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
