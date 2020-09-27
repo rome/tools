@@ -358,7 +358,9 @@ function parseCode(parser: MarkdownParser): MarkdownCodeBlock {
 	);
 }
 
-function parseBlock(parser: MarkdownParser): undefined | AnyMarkdownNode | Array<AnyMarkdownNode> {
+function parseBlock(
+	parser: MarkdownParser,
+): undefined | AnyMarkdownNode | Array<AnyMarkdownNode> {
 	const token = parser.getToken();
 	switch (token.type) {
 		case "NewLine": {
@@ -398,10 +400,9 @@ export function parseMarkdown(opts: ParserOptionsWithRequiredPath): MarkdownRoot
 		const child = parseBlock(parser);
 		if (child !== undefined) {
 			if (Array.isArray(child)) {
-				body.push(...child)
+				body.push(...child);
 			} else {
 				body.push(child);
-
 			}
 		}
 	}

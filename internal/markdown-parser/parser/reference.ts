@@ -1,16 +1,22 @@
 import {MarkdownParser} from "@internal/markdown-parser";
-import {AnyMarkdownInlineNode, MarkdownReference, MarkdownReferenceInline} from "@internal/ast";
+import {
+	AnyMarkdownInlineNode,
+	MarkdownReference,
+	MarkdownReferenceInline,
+} from "@internal/ast";
 import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 
-export function parseReference(parser: MarkdownParser): MarkdownReferenceInline | Array<AnyMarkdownInlineNode> {
+export function parseReference(
+	parser: MarkdownParser,
+): MarkdownReferenceInline | Array<AnyMarkdownInlineNode> {
 	const pos = parser.getPosition();
 	let reference: MarkdownReference | Array<AnyMarkdownInlineNode> = [];
 	let unwantedTokens = false;
 
 	while (!parser.matchToken("EOF")) {
-		if (parser.matchToken("CloseSquareBracket") ){
+		if (parser.matchToken("CloseSquareBracket")) {
 			if (unwantedTokens) {
 				parser.unexpectedDiagnostic({
 					description: descriptions.MARKDOWN_PARSER.ONLY_TEXT_INSIDE_DEFINITIONS,
@@ -22,7 +28,7 @@ export function parseReference(parser: MarkdownParser): MarkdownReferenceInline 
 				{
 					type: "MarkdownReferenceInline",
 					value: "",
-					reference: reference as MarkdownReference,
+					reference: (reference as MarkdownReference),
 				},
 			);
 		}
@@ -40,7 +46,6 @@ export function parseReference(parser: MarkdownParser): MarkdownReferenceInline 
 					}
 					if (unknownToken.type !== "Text") {
 						unwantedTokens = true;
-
 					}
 
 					return parseText(parser);
@@ -54,11 +59,13 @@ export function parseReference(parser: MarkdownParser): MarkdownReferenceInline 
 	}
 
 	return [
-		parser.finishNode(pos, {
-			type: "MarkdownText",
-			value: "["
-		}),
-		...reference as Array<AnyMarkdownInlineNode>
-	]
-
+		parser.finishNode(
+			pos,
+			{
+				type: "MarkdownText",
+				value: "[",
+			},
+		),
+		...(reference as Array<AnyMarkdownInlineNode>),
+	];
 }
