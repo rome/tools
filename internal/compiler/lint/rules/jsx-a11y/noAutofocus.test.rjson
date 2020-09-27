@@ -7,4 +7,5 @@ invalid: [
 valid: [
 	"<input />"
 	"<input autoFocus={undefined} />"
+	"<Input autoFocus={\"false\"} />"
 ]

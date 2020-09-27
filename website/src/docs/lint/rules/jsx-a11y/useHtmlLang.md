@@ -17,7 +17,7 @@ This rule make sure that the `html` tag has the `lang` attribute.
 **ESLint Equivalent:** [html-has-lang](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/html-has-lang.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e07ac11132771b636c3b0fa183f7fff82e7fb5e5,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:272a1b499d65691d4cb9161bec78bc4edb2a9955,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -180,4 +180,5 @@ This rule make sure that the `html` tag has the `lang` attribute.
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&quot;en&quot;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">language</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token variable">language</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">42</span><span class="token punctuation">}</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Html</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

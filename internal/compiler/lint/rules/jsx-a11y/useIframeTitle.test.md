@@ -251,3 +251,17 @@
 <iframe title="title" />;
 
 ```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+<Iframe title="title" />;
+
+```

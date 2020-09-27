@@ -38,4 +38,5 @@ valid: [
 	"<span role='combobox' aria-controls='true' aria-expanded='true'></span>"
 	"<span role='menuitemcheckbox' aria-checked='true'></span>"
 	"<span role='menuitemradio' aria-checked='true'></span>"
+	"<Span role='menuitemradio' ></Span>"
 ]

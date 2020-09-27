@@ -6,4 +6,5 @@ invalid: [
 valid: [
 	"<input />"
 	"<input accessKey={undefined} />"
+	"<Input accessKey={key} />"
 ]

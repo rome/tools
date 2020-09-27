@@ -1,13 +1,14 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 export default createVisitor({
 	name: "jsx-a11y/useKeyWithMouseEvents",
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement") {
+		if (isJSXDOMElement(node)) {
 			if (
 				hasJSXAttribute(node, "onMouseOver") &&
 				!hasJSXAttribute(node, "onFocus")

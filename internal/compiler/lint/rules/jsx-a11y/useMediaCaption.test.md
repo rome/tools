@@ -91,14 +91,15 @@
 
 ```
 
- lint/jsx-a11y/useMediaCaption/reject/4/file.tsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useMediaCaption/reject/4/file.tsx:1 lint/jsx-a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━
 
-  ✖ Expected a corresponding JSX closing tag for video
+  ✖ Provide a track for captions when using audio or video elements.
 
-  ℹ Originated from opening tag of video
+    <video>child</video>
+    ^^^^^^^^^^^^^^^^^^^^
 
-    <video>child</audio>
-     ^^^^^
+  ℹ Captions support users with hearing-impairments. They should be a transcription or translation
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -108,8 +109,11 @@
 
 ### `3: formatted`
 
-```javascript
-undefined
+```
+<video>
+	child
+</video>;
+
 ```
 
 ### `4`
@@ -155,5 +159,37 @@ undefined
 
 ```
 <video muted={true} {...props} />;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+<Audio>
+	child
+</Audio>;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+<Video>
+	child
+</Video>;
 
 ```

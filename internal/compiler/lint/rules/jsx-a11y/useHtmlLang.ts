@@ -7,6 +7,7 @@ import {
 	isEmptyTemplateLiteral,
 	isJSXElement,
 } from "@internal/js-ast-utils";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 function validLang(node: JSXElement) {
 	if (hasJSXAttribute(node, "lang")) {
@@ -35,7 +36,7 @@ export default createVisitor({
 
 	enter(path) {
 		const {node} = path;
-		if (isJSXElement(node, "html")) {
+		if (isJSXDOMElement(node) && isJSXElement(node, "html")) {
 			if (!hasJSXAttribute(node, "lang") || !validLang(node)) {
 				path.context.addNodeDiagnostic(
 					node,

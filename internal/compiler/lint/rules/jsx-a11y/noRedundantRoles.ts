@@ -12,6 +12,7 @@ import {
 	ariaRolesMap,
 } from "@internal/compiler/lint/utils/aria";
 import {markup} from "@internal/markup";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 type CreateFixableDiagnostic = {
 	path: Path;
@@ -84,7 +85,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement" && hasJSXAttribute(node, "role")) {
+		if (isJSXDOMElement(node) && hasJSXAttribute(node, "role")) {
 			const elementName = getJSXElementName(node);
 
 			const roleAttribute = getJSXAttribute(node, "role");

@@ -2,6 +2,7 @@ import {Path, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {getJSXAttribute, hasJSXAttribute} from "@internal/js-ast-utils";
 import {JSXAttribute, JSXElement} from "@internal/ast";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute) {
 	return path.addFixableDiagnostic(
@@ -24,7 +25,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (node.type === "JSXElement" && hasJSXAttribute(node, "tabIndex")) {
+		if (isJSXDOMElement(node) && hasJSXAttribute(node, "tabIndex")) {
 			const attribute = getJSXAttribute(node, "tabIndex");
 			if (
 				attribute &&

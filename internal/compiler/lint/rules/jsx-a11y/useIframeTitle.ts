@@ -7,9 +7,10 @@ import {
 } from "@internal/js-ast-utils";
 import {JSXElement} from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 function validTitle(node: JSXElement) {
-	if (hasJSXAttribute(node, "title")) {
+	if (isJSXDOMElement(node) && hasJSXAttribute(node, "title")) {
 		const attr = getJSXAttribute(node, "title");
 		if (attr && attr.value) {
 			if (attr.value.type === "JSXExpressionContainer") {

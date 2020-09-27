@@ -17,7 +17,7 @@ enforce `iframe` elements have a title attribute
 **ESLint Equivalent:** [iframe-has-title](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/iframe-has-title.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8c17614471a621d73ff6b6d0eb40449ccd5fefaa,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f564513b17d9f2921c44538349109e75fe311af4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -167,4 +167,5 @@ enforce `iframe` elements have a title attribute
 ### Valid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Iframe</span> <span class="token attr-name">title</span><span class="token operator">=</span><span class="token string">&apos;title&apos;</span> <span class="token operator">/</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

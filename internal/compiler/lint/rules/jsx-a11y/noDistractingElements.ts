@@ -1,6 +1,7 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 const DISTRACTING_TYPES = ["blink", "marquee"];
 
@@ -11,7 +12,7 @@ export default createVisitor({
 		const {node} = path;
 
 		const distractingType =
-			node.type === "JSXElement" &&
+			isJSXDOMElement(node) &&
 			DISTRACTING_TYPES.find((name) => doesNodeMatchPattern(node.name, name));
 
 		if (distractingType) {

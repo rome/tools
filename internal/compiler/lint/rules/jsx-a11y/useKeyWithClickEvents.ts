@@ -1,6 +1,7 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 import {hasJSXAttribute} from "@internal/js-ast-utils";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 export default createVisitor({
 	name: "jsx-a11y/useKeyWithClickEvents",
@@ -8,7 +9,7 @@ export default createVisitor({
 		const {node} = path;
 
 		if (
-			node.type === "JSXElement" &&
+			isJSXDOMElement(node) &&
 			hasJSXAttribute(node, "onClick") &&
 			!(hasJSXAttribute(node, "onKeyUp") ||
 			hasJSXAttribute(node, "onKeyDown") ||

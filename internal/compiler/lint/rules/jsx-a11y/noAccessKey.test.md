@@ -87,3 +87,17 @@ undefined
 <input accessKey={undefined} />;
 
 ```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+<Input accessKey={key} />;
+
+```
