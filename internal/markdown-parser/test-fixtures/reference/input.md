@@ -10,3 +10,5 @@
 
 [lorem* ipsum**]
 
+[*lorem **ipsum]
+

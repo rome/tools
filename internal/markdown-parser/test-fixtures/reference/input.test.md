@@ -17,7 +17,7 @@ MarkdownRoot {
 		filename: "reference/input.md"
 		end: Object {
 			column: 0
-			line: 12
+			line: 14
 		}
 		start: Object {
 			column: 0
@@ -302,6 +302,78 @@ MarkdownRoot {
 						start: Object {
 							column: 13
 							line: 11
+						}
+					}
+				}
+			]
+		}
+		MarkdownReferenceInline {
+			value: ""
+			loc: Object {
+				filename: "reference/input.md"
+				end: Object {
+					column: 16
+					line: 13
+				}
+				start: Object {
+					column: 0
+					line: 13
+				}
+			}
+			reference: Array [
+				MarkdownText {
+					value: "*"
+					loc: Object {
+						filename: "reference/input.md"
+						end: Object {
+							column: 1
+							line: 13
+						}
+						start: Object {
+							column: 1
+							line: 13
+						}
+					}
+				}
+				MarkdownText {
+					value: "lorem "
+					loc: Object {
+						filename: "reference/input.md"
+						end: Object {
+							column: 2
+							line: 13
+						}
+						start: Object {
+							column: 2
+							line: 13
+						}
+					}
+				}
+				MarkdownText {
+					value: "**"
+					loc: Object {
+						filename: "reference/input.md"
+						end: Object {
+							column: 8
+							line: 13
+						}
+						start: Object {
+							column: 8
+							line: 13
+						}
+					}
+				}
+				MarkdownText {
+					value: "ipsum"
+					loc: Object {
+						filename: "reference/input.md"
+						end: Object {
+							column: 10
+							line: 13
+						}
+						start: Object {
+							column: 10
+							line: 13
 						}
 					}
 				}

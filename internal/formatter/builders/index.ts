@@ -342,6 +342,8 @@ import JSXText from "./js/jsx/JSXText";
 builders.set("JSXText", JSXText);
 import JSYieldExpression from "./js/expressions/JSYieldExpression";
 builders.set("JSYieldExpression", JSYieldExpression);
+import MarkdownAutomaticLinkInline from "./markdown/inline/MarkdownAutomaticLinkInline";
+builders.set("MarkdownAutomaticLinkInline", MarkdownAutomaticLinkInline);
 import MarkdownBoldInline from "./markdown/inline/MarkdownBoldInline";
 builders.set("MarkdownBoldInline", MarkdownBoldInline);
 import MarkdownCodeBlock from "./markdown/blocks/MarkdownCodeBlock";
