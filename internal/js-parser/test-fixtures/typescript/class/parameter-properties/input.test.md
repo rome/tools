@@ -205,6 +205,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										accessibility: undefined
 										readonly: true
+										typeAnnotation: undefined
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
@@ -245,6 +246,19 @@ JSRoot {
 												line: 4
 											}
 										}
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: Object {
+												filename: "typescript/class/parameter-properties/input.ts"
+												end: Object {
+													column: 25
+													line: 4
+												}
+												start: Object {
+													column: 19
+													line: 4
+												}
+											}
+										}
 									}
 								}
 								JSBindingIdentifier {
@@ -263,6 +277,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										accessibility: "protected"
 										readonly: false
+										typeAnnotation: undefined
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
@@ -303,6 +318,19 @@ JSRoot {
 												line: 6
 											}
 										}
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: Object {
+												filename: "typescript/class/parameter-properties/input.ts"
+												end: Object {
+													column: 27
+													line: 6
+												}
+												start: Object {
+													column: 21
+													line: 6
+												}
+											}
+										}
 									}
 								}
 								JSBindingIdentifier {
@@ -321,6 +349,7 @@ JSRoot {
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: true
+										typeAnnotation: undefined
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
@@ -366,6 +395,7 @@ JSRoot {
 										accessibility: undefined
 										leadingComments: undefined
 										readonly: true
+										typeAnnotation: undefined
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
@@ -423,6 +453,21 @@ JSRoot {
 											line: 10
 										}
 									}
+									right: JSNumericLiteral {
+										value: 0
+										format: undefined
+										loc: Object {
+											filename: "typescript/class/parameter-properties/input.ts"
+											end: Object {
+												column: 29
+												line: 10
+											}
+											start: Object {
+												column: 28
+												line: 10
+											}
+										}
+									}
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
@@ -437,19 +482,17 @@ JSRoot {
 												line: 10
 											}
 										}
-									}
-									right: JSNumericLiteral {
-										value: 0
-										format: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties/input.ts"
-											end: Object {
-												column: 29
-												line: 10
-											}
-											start: Object {
-												column: 28
-												line: 10
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: Object {
+												filename: "typescript/class/parameter-properties/input.ts"
+												end: Object {
+													column: 25
+													line: 10
+												}
+												start: Object {
+													column: 19
+													line: 10
+												}
 											}
 										}
 									}

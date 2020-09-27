@@ -948,6 +948,7 @@ export function parseBindingListItem(
 						type: "JSPatternMeta",
 						accessibility,
 						readonly,
+						typeAnnotation: left.meta?.typeAnnotation,
 					},
 				),
 			},
