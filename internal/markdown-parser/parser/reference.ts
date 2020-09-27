@@ -1,19 +1,32 @@
 import {MarkdownParser} from "@internal/markdown-parser";
-import {MarkdownReference, MarkdownReferenceInline} from "@internal/ast";
+import {AnyMarkdownInlineNode, MarkdownReference, MarkdownReferenceInline} from "@internal/ast";
 import {parseInline} from "@internal/markdown-parser/parser/inline";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 
-export function parseReference(parser: MarkdownParser): MarkdownReferenceInline {
+export function parseReference(parser: MarkdownParser): MarkdownReferenceInline | Array<AnyMarkdownInlineNode> {
 	const pos = parser.getPosition();
-	let reference: MarkdownReference = [];
+	let reference: MarkdownReference | Array<AnyMarkdownInlineNode> = [];
+	let unwantedTokens = false;
 
 	while (!parser.matchToken("EOF")) {
-		const token = parser.getToken();
-		if (token.type === "CloseSquareBracket") {
-			parser.nextToken();
-			break;
+		if (parser.matchToken("CloseSquareBracket") ){
+			if (unwantedTokens) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.MARKDOWN_PARSER.ONLY_TEXT_INSIDE_DEFINITIONS,
+				});
+			}
+			parser.eatToken("CloseSquareBracket");
+			return parser.finishNode(
+				pos,
+				{
+					type: "MarkdownReferenceInline",
+					value: "",
+					reference: reference as MarkdownReference,
+				},
+			);
 		}
+		const token = parser.getToken();
 		if (token.type === "Text") {
 			reference.push(parseText(parser));
 		}
@@ -26,9 +39,8 @@ export function parseReference(parser: MarkdownParser): MarkdownReferenceInline 
 						return undefined;
 					}
 					if (unknownToken.type !== "Text") {
-						parser.unexpectedDiagnostic({
-							description: descriptions.MARKDOWN_PARSER.ONLY_TEXT_INSIDE_DEFINITIONS,
-						});
+						unwantedTokens = true;
+
 					}
 
 					return parseText(parser);
@@ -41,12 +53,12 @@ export function parseReference(parser: MarkdownParser): MarkdownReferenceInline 
 		parser.nextToken();
 	}
 
-	return parser.finishNode(
-		pos,
-		{
-			type: "MarkdownReferenceInline",
-			value: "",
-			reference,
-		},
-	);
+	return [
+		parser.finishNode(pos, {
+			type: "MarkdownText",
+			value: "["
+		}),
+		...reference as Array<AnyMarkdownInlineNode>
+	]
+
 }

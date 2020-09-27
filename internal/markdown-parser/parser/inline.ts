@@ -10,7 +10,7 @@ import {
 	canBeRightFlankingDelimiter,
 	hasBlockTokens,
 } from "@internal/markdown-parser";
-import {Number0, ob1Add, ob1Get, ob1Get0, ob1Sub} from "@internal/ob1";
+import {Number0, ob1Add, ob1Get0, ob1Sub} from "@internal/ob1";
 import {
 	AnyMarkdownInlineNode,
 	MarkdownBoldInline,
@@ -20,7 +20,7 @@ import {
 
 type OnUnknownToken = (
 	token: TokenValues<Tokens>,
-) => AnyMarkdownInlineNode | undefined;
+) => AnyMarkdownInlineNode | Array<AnyMarkdownInlineNode> | undefined;
 
 // TODO: to handle the case of **something **else** is** broken
 // NOTE: at the moment the code detects the first closing tag, the one beside "else**"
@@ -66,12 +66,14 @@ export function parseInline(
 
 				parser.nextToken();
 			} else {
-				const node = onUnknownToken(currentToken);
+				const nodeOrNodes = onUnknownToken(currentToken);
 				parser.nextToken();
-				if (node === undefined) {
+				if (nodeOrNodes === undefined) {
 					exit = true;
+				} else if (Array.isArray(nodeOrNodes)) {
+					children.push(...nodeOrNodes);
 				} else {
-					children.push(node);
+					children.push(nodeOrNodes);
 				}
 			}
 		}
@@ -132,7 +134,7 @@ export function tokenizeInline(
 	if (leftFlankingDelimiter) {
 		let rightFlankingDelimiterFound = false;
 		let isEndOfParagraph = false;
-		const [value, closingIndex, endOfInput] = parser.readInputFrom(
+		const [, closingIndex, endOfInput] = parser.readInputFrom(
 			index,
 			(char, indexToCheck, input) => {
 				if (hasBlockTokens(char, indexToCheck, input)) {
@@ -172,7 +174,11 @@ export function tokenizeInline(
 
 		if (!rightFlankingDelimiterFound || endOfInput) {
 			return {
-				token: parser.finishValueToken("Text", value, closingIndex),
+				token: parser.finishValueToken(
+					"Text",
+					valueOfInlineToken,
+					endIndexOfDelimiter,
+				),
 				state: {
 					...state,
 					isParagraph: endOfInput || isEndOfParagraph
@@ -183,8 +189,6 @@ export function tokenizeInline(
 		}
 
 		const nextChar = parser.getInputCharOnly(ob1Add(closingIndex, 2));
-		// let's register the start of delimiter
-		state.inlineState.registerStartOfDelimiter(ob1Get(closingIndex), tokenType);
 		const [, closingIndexOfDelimiter] = parser.readInputFrom(
 			closingIndex,
 			(char1, index, input) => {
@@ -216,7 +220,6 @@ export function tokenizeInline(
 	if (rightFlankingDelimiter) {
 		const nextChar = parser.getInputCharOnly(ob1Add(endIndexOfDelimiter, 2));
 
-		state.inlineState.connectDelimiter(ob1Get(endIndexOfDelimiter), tokenType);
 		return {
 			state: {
 				...state,

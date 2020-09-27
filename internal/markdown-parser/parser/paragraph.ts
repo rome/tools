@@ -59,7 +59,12 @@ export function parseParagraph(
 				break;
 			}
 			case "OpenSquareBracket": {
-				children.push(parseReference(parser));
+				const reference = parseReference(parser);
+				if (Array.isArray(reference)) {
+					children.push(...reference);
+				} else {
+					children.push(reference);
+				}
 				parser.nextToken();
 				break;
 			}

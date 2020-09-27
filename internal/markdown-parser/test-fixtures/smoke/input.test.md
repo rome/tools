@@ -549,8 +549,8 @@ MarkdownRoot {
 			loc: Object {
 				filename: "smoke/input.md"
 				end: Object {
-					column: 0
-					line: 22
+					column: 10
+					line: 21
 				}
 				start: Object {
 					column: 0
@@ -559,7 +559,7 @@ MarkdownRoot {
 			}
 			children: Array [
 				MarkdownText {
-					value: "*paragraph\n"
+					value: "*"
 					loc: Object {
 						filename: "smoke/input.md"
 						end: Object {
@@ -568,6 +568,20 @@ MarkdownRoot {
 						}
 						start: Object {
 							column: 0
+							line: 21
+						}
+					}
+				}
+				MarkdownText {
+					value: "paragraph"
+					loc: Object {
+						filename: "smoke/input.md"
+						end: Object {
+							column: 1
+							line: 21
+						}
+						start: Object {
+							column: 1
 							line: 21
 						}
 					}
