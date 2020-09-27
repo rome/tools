@@ -30,5 +30,11 @@ export type AnyMarkdownNode =
 	| n.MarkdownHeadingBlock
 	| n.MarkdownParagraph
 	| n.MarkdownListBlock
+	| n.MarkdownDefinitionInline
+	| n.MarkdownText
+	| n.MarkdownBoldInline
+	| n.MarkdownCodeInline
+	| n.MarkdownAutomaticLinkInline
 	| n.MarkdownReferenceInline
-	| n.MarkdownDefinitionInline;
+	| n.MarkdownImageInline
+	| n.MarkdownEmphasisInline;
