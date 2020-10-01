@@ -39,7 +39,7 @@ function helper(node: AnyNode): boolean {
 }
 
 test(
-	"test",
+	"returns true if the js statement has a potential side effect",
 	async (t) => {
 		t.false(helper(jsExportLocalDeclaration.create({}, undefined)));
 
