@@ -11,10 +11,10 @@ import {
 	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "../types";
-import {StaticMarkup, markup} from "@internal/markup";
+import { StaticMarkup, markup } from "@internal/markup";
 import stringDiff from "@internal/string-diff";
-import {buildSuggestionAdvice} from "../helpers";
-import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
+import { buildSuggestionAdvice } from "../helpers";
+import { addEmphasis, createDiagnosticsCategory, orJoin } from "./index";
 
 export const lint = createDiagnosticsCategory({
 	JS_NO_UNNECESSARY_CONTINUE: {
@@ -111,20 +111,19 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_ARIA_PROPTYPES: (
 		attributeName: string,
-		values?: Array<string | boolean>,
+		values?: Array<string | boolean>
 	) => {
 		let advice: DiagnosticAdvice = [];
 		if (values) {
 			advice.push({
 				type: "log",
 				category: "info",
-				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
-					(str, value) => {
+				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values
+					.reduce((str, value) => {
 						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
 						return str;
-					},
-					([] as Array<string>),
-				).join(", ")}`,
+					}, [] as Array<string>)
+					.join(", ")}`,
 			});
 		}
 		return {
@@ -134,7 +133,9 @@ export const lint = createDiagnosticsCategory({
 		};
 	},
 
-	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (
+		element: string
+	) => ({
 		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
 		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
 		advice: [
@@ -302,7 +303,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
 		mouseEvent: string,
-		keyboardEvent: string,
+		keyboardEvent: string
 	) => ({
 		category: "lint/jsx-a11y/useKeyWithMouseEvents",
 		message: markup`Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
@@ -486,7 +487,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (
 		roleName: string,
-		missingAttributes: Array<string>,
+		missingAttributes: Array<string>
 	) => ({
 		category: "lint/jsx-a11y/useAriaPropsForRole",
 		message: markup`The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
@@ -589,7 +590,7 @@ export const lint = createDiagnosticsCategory({
 	REACT_USE_SORT_COMP: (
 		right: string,
 		wrong: string,
-		position: "before" | "after",
+		position: "before" | "after"
 	) => ({
 		category: "lint/react/useSortComp",
 		message: markup`<emphasis>${wrong}</emphasis> should be placed ${position} <emphasis>${right}</emphasis>.`,
@@ -622,17 +623,17 @@ export const lint = createDiagnosticsCategory({
 	},
 	REACT_NO_VOID_ELEMENTS_WITH_CHILDREN: (
 		element: string,
-		properties: Array<string>,
+		properties: Array<string>
 	) => ({
 		category: "lint/react/noVoidElementsWithChildren",
 		message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
-			properties.map((name) => markup`${name}`),
+			properties.map((name) => markup`${name}`)
 		)}</emphasis>.`,
 	}),
 	JS_USE_DEFAULT_IMPORT_BASENAME: (prev: string, basenames: Array<string>) => ({
 		category: "lint/js/useDefaultImportBasename",
 		message: markup`Use the basename ${orJoin(
-			addEmphasis(basenames.map((basename) => markup`${basename}`)),
+			addEmphasis(basenames.map((basename) => markup`${basename}`))
 		)} when importing the default.`,
 		advice: [
 			{
@@ -704,7 +705,10 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: Array<string>) => ({
+	JS_NO_UNDECLARED_VARIABLES: (
+		name: string,
+		bindingsInScope: Array<string>
+	) => ({
 		category: "lint/js/noUndeclaredVariables",
 		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 		advice: buildSuggestionAdvice(name, bindingsInScope),
@@ -852,7 +856,7 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {${String(
-					count,
+					count
 				)}}/`,
 			},
 		],
@@ -1040,19 +1044,17 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/regex/noReferenceToNonExistingGroup",
 		message: markup`Avoid nonexistent group names. Check the <emphasis>${name}</emphasis> group.`,
 	}),
-	JS_USE_DEFAULT_EXPORT_BASENAME: (
-		{
-			defaultName,
-			defaultType,
-			actualFilename,
-			correctFilename,
-		}: {
-			defaultName: string;
-			defaultType: string;
-			actualFilename: string;
-			correctFilename: string;
-		},
-	) => {
+	JS_USE_DEFAULT_EXPORT_BASENAME: ({
+		defaultName,
+		defaultType,
+		actualFilename,
+		correctFilename,
+	}: {
+		defaultName: string;
+		defaultType: string;
+		actualFilename: string;
+		correctFilename: string;
+	}) => {
 		let adviceMessage;
 
 		if (defaultName === "*default*") {
@@ -1098,7 +1100,7 @@ export const lint = createDiagnosticsCategory({
 		relativeFilename: string,
 		language: DiagnosticLanguage,
 		original: string,
-		formatted: string,
+		formatted: string
 	) => ({
 		category: "lint/pendingFixes",
 		message: markup`Pending formatting and safe fixes`,
@@ -1108,7 +1110,7 @@ export const lint = createDiagnosticsCategory({
 				language,
 				diff: stringDiff(original, formatted),
 			},
-			({
+			{
 				type: "action",
 				command: "check",
 				shortcut: "f",
@@ -1118,8 +1120,8 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			} as DiagnosticAdviceAction),
-			({
+			} as DiagnosticAdviceAction,
+			{
 				type: "action",
 				hidden: true,
 				command: "check",
@@ -1130,7 +1132,7 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					format: true,
 				},
-			} as DiagnosticAdviceAction),
+			} as DiagnosticAdviceAction,
 		],
 	}),
 	TS_NO_EXPLICIT_ANY: {
@@ -1143,5 +1145,9 @@ export const lint = createDiagnosticsCategory({
 				text: markup`Using nonspecific types defeats the purpose of using TypeScript.`,
 			},
 		],
+	},
+	JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION: {
+		category: "lint/js/useSimplifiedBooleanExpression",
+		message: markup`Boolean expression contains unnecessary complexity.`,
 	},
 });

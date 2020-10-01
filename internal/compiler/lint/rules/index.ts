@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:036ee9bf2f9cb7e3d500cfd8a09b87829de06088,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:975209047ce41adf41a399951c4d0e439e9f6633,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -41,6 +41,7 @@ import useCamelCase from "./js/useCamelCase";
 import useDefaultExportBasename from "./js/useDefaultExportBasename";
 import useDefaultImportBasename from "./js/useDefaultImportBasename";
 import useFunctionDeclarations from "./js/useFunctionDeclarations";
+import useSimplifiedBooleanExpression from "./js/useSimplifiedBooleanExpression";
 import useSingleCaseStatement from "./js/useSingleCaseStatement";
 import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
@@ -154,6 +155,10 @@ lintTransforms.set("js/useCamelCase", useCamelCase);
 lintTransforms.set("js/useDefaultExportBasename", useDefaultExportBasename);
 lintTransforms.set("js/useDefaultImportBasename", useDefaultImportBasename);
 lintTransforms.set("js/useFunctionDeclarations", useFunctionDeclarations);
+lintTransforms.set(
+	"js/useSimplifiedBooleanExpression",
+	useSimplifiedBooleanExpression,
+);
 lintTransforms.set("js/useSingleCaseStatement", useSingleCaseStatement);
 lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
@@ -293,6 +298,7 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"js/useDefaultExportBasename",
 	"js/useDefaultImportBasename",
 	"js/useFunctionDeclarations",
+	"js/useSimplifiedBooleanExpression",
 	"js/useSingleCaseStatement",
 	"js/useSingleVarDeclarator",
 	"js/useSortedSpecifiers",
@@ -406,6 +412,7 @@ export type LintRuleName =
 	| "js/useDefaultExportBasename"
 	| "js/useDefaultImportBasename"
 	| "js/useFunctionDeclarations"
+	| "js/useSimplifiedBooleanExpression"
 	| "js/useSingleCaseStatement"
 	| "js/useSingleVarDeclarator"
 	| "js/useSortedSpecifiers"
