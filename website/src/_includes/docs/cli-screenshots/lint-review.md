@@ -24,4 +24,4 @@
   ◯ Exit <span style="opacity: 0.8;">(shortcut escape)</span>
   ◯ More options... <span style="opacity: 0.8;">(shortcut m)</span>
 
-</code><div aria-hidden="true" class="expand">Click to Expand</div></pre>
+</code><button aria-hidden="true" class="expand">Click to Expand</button></pre>

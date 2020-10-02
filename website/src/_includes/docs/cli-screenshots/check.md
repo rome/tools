@@ -45,4 +45,4 @@
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Found </span><span style="color: Tomato;"><strong>3</strong></span><span style="color: Tomato;"> </span><span style="color: Tomato;">problems</span></code><div aria-hidden="true" class="expand">Click to Expand</div></pre>
+<strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Found </span><span style="color: Tomato;"><strong>3</strong></span><span style="color: Tomato;"> </span><span style="color: Tomato;">problems</span></code><button aria-hidden="true" class="expand">Click to Expand</button></pre>
