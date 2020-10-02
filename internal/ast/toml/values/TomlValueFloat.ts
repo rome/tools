@@ -5,7 +5,7 @@ export interface TomlValueFloat extends NodeBaseWithComments {
 	readonly type: "TomlValueFloat";
 }
 
-export const TomlValueFloat = createBuilder<TomlValueFloat>(
+export const tomlValueFloat = createBuilder<TomlValueFloat>(
 	"TomlValueFloat",
 	{
 		bindingKeys: {},

@@ -6,7 +6,7 @@ export interface TomlTable extends NodeBaseWithComments {
 	readonly value: Array<TomlKeyValue>;
 }
 
-export const TomlTable = createBuilder<TomlTable>(
+export const tomlTable = createBuilder<TomlTable>(
 	"TomlTable",
 	{
 		bindingKeys: {},

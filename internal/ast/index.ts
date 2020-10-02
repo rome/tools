@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | Array<AnyNode>;
 
-/* GENERATED:START(hash:48cc86dbe7cb7e15dc042c0068c523e73809877e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:2d5bcaa89456bb53aa3e947ca8cf49166fb0df36,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -188,6 +188,7 @@ export * from "./markdown/blocks/MarkdownQuoteBlock";
 export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
+export * from "./toml/core/TomlKey";
 export * from "./toml/core/TomlKeyValue";
 export * from "./toml/core/TomlRoot";
 export * from "./toml/core/TomlTable";
@@ -446,6 +447,7 @@ export type AnyNode =
 	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
+	| n.TomlKey
 	| n.TomlKeyValue
 	| n.TomlRoot
 	| n.TomlTable

@@ -1,45 +1,117 @@
 import {
 	ParserOptionsWithRequiredPath,
 	createParser,
-	readUntilLineBreak,
+	isAlpha,
+	isDigit,
 } from "@internal/parser-core";
 import {TomlRoot} from "@internal/ast";
 import {isEscaped} from "@internal/string-utils";
 import {TomlParser, TomlParserTypes} from "./types";
-import {parseText} from "@internal/toml-parser/parser/text";
 import {AnyTomlNode} from "@internal/ast/toml/unions";
+import {parseKeyValue} from "@internal/toml-parser/parser/keyValue";
 
 const createTomlParser = createParser<TomlParserTypes>({
 	diagnosticCategory: "parse/toml",
 	ignoreWhitespaceTokens: false,
-	getInitialState: () => ({}),
+	getInitialState: () => ({
+		inValue: false,
+	}),
 	tokenizeWithState(parser, index, state) {
 		const char = parser.getInputCharOnly(index);
 		const escaped = isEscaped(index, parser.input);
 
-		if (!escaped) {
+		if (!escaped && !state.inValue) {
+			if (char === '"') {
+				return {
+					state: {
+						...state,
+						inValue: true,
+					},
+					token: parser.finishToken("Quote"),
+				};
+			}
+
 			if (char === "[") {
 				return {
 					state,
-					token: parser.finishToken("OpenSquareBracket", index),
+					token: parser.finishToken("OpenSquareBracket"),
 				};
 			}
 			if (char === "]") {
 				return {
 					state,
-					token: parser.finishToken("CloseSquareBracket", index),
+					token: parser.finishToken("CloseSquareBracket"),
 				};
 			}
 
 			if (char === "=") {
 				return {
 					state,
-					token: parser.finishToken("Equals", index),
+					token: parser.finishToken("Equals"),
+				};
+			}
+
+			if (char === "{") {
+				return {
+					state,
+					token: parser.finishToken("OpenCurlyBracket"),
+				};
+			}
+
+			if (char === "}") {
+				return {
+					state,
+					token: parser.finishToken("CloseCurlyBracket"),
+				};
+			}
+
+			if (char === "") {
+				return {
+					state,
+					token: parser.finishToken("Equals"),
+				};
+			}
+
+			if (char === "\n") {
+				return {
+					state,
+					token: parser.finishToken("NewLine"),
 				};
 			}
 		}
 
-		const [value, endIndex] = parser.readInputFrom(index, readUntilLineBreak);
+		if (!escaped && state.inValue) {
+			if (char === '"') {
+				return {
+					state: {
+						...state,
+						inValue: false,
+					},
+					token: parser.finishToken("Quote"),
+				};
+			}
+		}
+
+		if (state.inValue) {
+			const [value, endIndex] = parser.readInputFrom(
+				index,
+				(char) => {
+					return char !== '"';
+				},
+			);
+
+			return {
+				state,
+				token: parser.finishValueToken("Text", value, endIndex),
+			};
+		}
+
+		const [value, endIndex] = parser.readInputFrom(
+			index,
+			(char) => {
+				return isAlpha(char) || isDigit(char) || char === " ";
+			},
+		);
 
 		return {
 			state,
@@ -53,10 +125,12 @@ function parseChild(parser: TomlParser) {
 
 	switch (token.type) {
 		case "Text": {
-			return parseText(parser);
+			return parseKeyValue(parser);
 		}
 		default: {
-			throw parser.unexpected();
+			parser.unexpectedDiagnostic();
+			parser.nextToken();
+			return undefined;
 		}
 	}
 }

@@ -17,6 +17,8 @@ export type Tokens = BaseTokens & {
 	CloseCurlyBracket: SimpleToken<"CloseCurlyBracket">;
 	// =
 	Equals: SimpleToken<"Equals">;
+	NewLine: SimpleToken<"NewLine">;
+	Space: SimpleToken<"Space">;
 	// "
 	Quote: SimpleToken<"Quote">;
 	// .
@@ -31,8 +33,15 @@ export type Tokens = BaseTokens & {
 export type TomlParserTypes = {
 	tokens: Tokens;
 	options: ParserOptions;
-	state: {};
+	state: State;
 	meta: void;
+};
+
+export type State = {
+	/**
+	 * Reading the value
+	 */
+	inValue: boolean;
 };
 
 export type TomlParser = ParserCore<TomlParserTypes>;

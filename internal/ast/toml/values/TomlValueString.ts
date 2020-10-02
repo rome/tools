@@ -6,7 +6,7 @@ export interface TomlValueString extends NodeBaseWithComments {
 	readonly value: string;
 }
 
-export const TomlValueString = createBuilder<TomlValueString>(
+export const tomlValueString = createBuilder<TomlValueString>(
 	"TomlValueString",
 	{
 		bindingKeys: {},

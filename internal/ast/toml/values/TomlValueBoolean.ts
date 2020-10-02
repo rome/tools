@@ -5,7 +5,7 @@ export interface TomlValueBoolean extends NodeBaseWithComments {
 	readonly type: "TomlValueBoolean";
 }
 
-export const TomlValueBoolean = createBuilder<TomlValueBoolean>(
+export const tomlValueBoolean = createBuilder<TomlValueBoolean>(
 	"TomlValueBoolean",
 	{
 		bindingKeys: {},

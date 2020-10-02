@@ -22,6 +22,7 @@ import {htmHandler, htmlHandler} from "./html";
 import {parseJS} from "@internal/js-parser";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
+import {tomlHandler} from "@internal/core/common/file-handlers/toml";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -186,3 +187,4 @@ setHandler(rjsonHandler);
 setHandler(htmlHandler);
 setHandler(htmHandler);
 setHandler(markdownHandler);
+setHandler(tomlHandler);

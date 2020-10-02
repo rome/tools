@@ -6,7 +6,7 @@ export interface TomlValueInteger extends NodeBaseWithComments {
 	readonly value: string;
 }
 
-export const TomlValueInteger = createBuilder<TomlValueInteger>(
+export const tomlValueInteger = createBuilder<TomlValueInteger>(
 	"TomlValueInteger",
 	{
 		bindingKeys: {},

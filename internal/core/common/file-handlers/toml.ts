@@ -1,7 +1,7 @@
 import {ExtensionHandler} from "./types";
 import {parseToml} from "@internal/toml-parser";
 
-export const markdownHandler: ExtensionHandler = {
+export const tomlHandler: ExtensionHandler = {
 	ext: "toml",
 	language: "toml",
 	hasTabs: true,

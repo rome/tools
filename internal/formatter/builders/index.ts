@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:75b9e26c61cafe59892d722b3473d423c8a3fef2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:512b5a2d6c70edc3b240ea6446e16a80eeb649d3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -376,6 +376,8 @@ import MarkdownText from "./markdown/core/MarkdownText";
 builders.set("MarkdownText", MarkdownText);
 import MockParent from "./common/core/MockParent";
 builders.set("MockParent", MockParent);
+import TomlKey from "./toml/core/TomlKey";
+builders.set("TomlKey", TomlKey);
 import TomlKeyValue from "./toml/core/TomlKeyValue";
 builders.set("TomlKeyValue", TomlKeyValue);
 import TomlRoot from "./toml/core/TomlRoot";

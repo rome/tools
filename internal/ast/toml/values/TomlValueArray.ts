@@ -7,7 +7,7 @@ export interface TomlValueArray extends NodeBaseWithComments {
 	readonly value: Array<AnyTomlValue>;
 }
 
-export const TomlValueArray = createBuilder<TomlValueArray>(
+export const tomlValueArray = createBuilder<TomlValueArray>(
 	"TomlValueArray",
 	{
 		bindingKeys: {},

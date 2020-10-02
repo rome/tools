@@ -1,13 +1,13 @@
 import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
-export interface TomlText extends NodeBaseWithComments {
-	readonly type: "TomlText";
+export interface TomlKey extends NodeBaseWithComments {
+	readonly type: "TomlKey";
 	readonly value: string;
 }
 
-export const tomlText = createBuilder<TomlText>(
-	"TomlText",
+export const tomlKey = createBuilder<TomlKey>(
+	"TomlKey",
 	{
 		bindingKeys: {},
 		visitorKeys: {},
