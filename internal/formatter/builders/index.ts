@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:daa41589ca37b1e553693a9480958c27f971592a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:75b9e26c61cafe59892d722b3473d423c8a3fef2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -376,6 +376,28 @@ import MarkdownText from "./markdown/core/MarkdownText";
 builders.set("MarkdownText", MarkdownText);
 import MockParent from "./common/core/MockParent";
 builders.set("MockParent", MockParent);
+import TomlKeyValue from "./toml/core/TomlKeyValue";
+builders.set("TomlKeyValue", TomlKeyValue);
+import TomlRoot from "./toml/core/TomlRoot";
+builders.set("TomlRoot", TomlRoot);
+import TomlTable from "./toml/core/TomlTable";
+builders.set("TomlTable", TomlTable);
+import TomlText from "./toml/core/TomlText";
+builders.set("TomlText", TomlText);
+import TomlValueArray from "./toml/values/TomlValueArray";
+builders.set("TomlValueArray", TomlValueArray);
+import TomlValueBoolean from "./toml/values/TomlValueBoolean";
+builders.set("TomlValueBoolean", TomlValueBoolean);
+import TomlValueDateTime from "./toml/values/TomlValueDateTime";
+builders.set("TomlValueDateTime", TomlValueDateTime);
+import TomlValueFloat from "./toml/values/TomlValueFloat";
+builders.set("TomlValueFloat", TomlValueFloat);
+import TomlValueInlineTable from "./toml/values/TomlValueInlineTable";
+builders.set("TomlValueInlineTable", TomlValueInlineTable);
+import TomlValueInteger from "./toml/values/TomlValueInteger";
+builders.set("TomlValueInteger", TomlValueInteger);
+import TomlValueString from "./toml/values/TomlValueString";
+builders.set("TomlValueString", TomlValueString);
 import TSAnyKeywordTypeAnnotation from "./js/typescript/TSAnyKeywordTypeAnnotation";
 builders.set("TSAnyKeywordTypeAnnotation", TSAnyKeywordTypeAnnotation);
 import TSArrayType from "./js/typescript/TSArrayType";
