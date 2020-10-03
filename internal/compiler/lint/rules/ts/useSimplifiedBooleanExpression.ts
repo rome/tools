@@ -1,13 +1,13 @@
-import { AnyJSExpression, AnyNode } from "@internal/ast";
-import { createVisitor, Path, Scope, signals } from "@internal/compiler";
-import { descriptions } from "@internal/diagnostics";
-import { JSBooleanLiteral } from "@internal/ast";
-import { resolveIndirection } from "@internal/js-ast-utils";
+import {AnyJSExpression, AnyNode, JSBooleanLiteral} from "@internal/ast";
+import {Path, Scope, createVisitor, signals} from "@internal/compiler";
+import {descriptions} from "@internal/diagnostics";
+
+import {resolveIndirection} from "@internal/js-ast-utils";
 
 export default createVisitor({
 	name: "ts/useSimplifiedBooleanExpression",
 	enter(path) {
-		const { node, scope } = path;
+		const {node, scope} = path;
 
 		if (node.type === "JSBinaryExpression") {
 			if (node.operator === "===" || node.operator === "!==") {
@@ -26,7 +26,7 @@ export default createVisitor({
 							path,
 							node.left,
 							node.right,
-							negated
+							negated,
 						);
 					}
 				}
@@ -41,7 +41,7 @@ export default createVisitor({
 							path,
 							node.right,
 							node.left,
-							negated
+							negated,
 						);
 					}
 				}
@@ -53,16 +53,16 @@ export default createVisitor({
 			node.argument.operator === "!"
 		) {
 			const realArgument = node.argument.argument;
-			const { node: resolvedNode, scope: resolvedScope } = resolveIndirection(
+			const {node: resolvedNode, scope: resolvedScope} = resolveIndirection(
 				realArgument,
-				scope
+				scope,
 			);
 			if (isBooleanType(resolvedNode, resolvedScope)) {
 				return path.addFixableDiagnostic(
 					{
-						fixed: signals.replace({ ...node.argument.argument }),
+						fixed: signals.replace({...node.argument.argument}),
 					},
-					descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+					descriptions.LINT.TS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION,
 				);
 			}
 		}
@@ -75,44 +75,50 @@ function simplifyBinaryExpression(
 	path: Path,
 	toRemove: JSBooleanLiteral,
 	expression: AnyJSExpression,
-	negated: boolean
+	negated: boolean,
 ) {
 	const shouldNegate = xor(negated, !toRemove.value);
 	return path.addFixableDiagnostic(
 		{
 			fixed: signals.replace(createSimpleExpression(expression, shouldNegate)),
 		},
-		descriptions.LINT.TS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+		descriptions.LINT.TS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION,
 	);
 }
 
 function createSimpleExpression(
 	expression: AnyJSExpression,
-	shouldNegate: boolean
+	shouldNegate: boolean,
 ): AnyJSExpression {
 	return shouldNegate
 		? {
 				type: "JSUnaryExpression",
 				operator: "!",
 				argument: expression,
-		  }
+			}
 		: {
 				...expression,
-		  };
+			};
 }
 
 function isBooleanType(node: AnyNode, scope: Scope): boolean {
-	if (node.type === "JSBooleanLiteral") return true;
-	if (node.type === "JSLogicalExpression") return true;
+	if (node.type === "JSBooleanLiteral") {
+		return true;
+	}
+	if (node.type === "JSLogicalExpression") {
+		return true;
+	}
 
 	if (node.type === "JSReferenceIdentifier") {
 		const binding = scope.getBinding(node.name);
 		return (
-			binding?.node.type === "JSBindingIdentifier" &&
-			(binding.node.meta?.typeAnnotation?.type ===
-				"TSBooleanKeywordTypeAnnotation" ||
-				binding.node.meta?.typeAnnotation?.type ===
-					"TSBooleanLiteralTypeAnnotation")
+			binding !== undefined &&
+			(binding?.node).type === "JSBindingIdentifier" &&
+			binding.node.meta?.optional !== true &&
+			((binding.node.meta?.typeAnnotation)?.type ===
+			"TSBooleanKeywordTypeAnnotation" ||
+			(binding.node.meta?.typeAnnotation)?.type ===
+			"TSBooleanLiteralTypeAnnotation")
 		);
 	}
 

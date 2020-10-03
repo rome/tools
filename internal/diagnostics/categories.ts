@@ -109,7 +109,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:b0511b655f548dfe017bf72d78ef1f822d359eba,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:1e077744ab1325ad812d397d002c68764a5a97e5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| "lint/html/useClosingNonVoid"
 	| "lint/js/noArguments"
@@ -153,7 +153,7 @@ export type DiagnosticLintCategory =
 	| "lint/js/useDefaultExportBasename"
 	| "lint/js/useDefaultImportBasename"
 	| "lint/js/useFunctionDeclarations"
-	| "lint/js/useSimplifiedBooleanExpression"
+	| "lint/js/useSimplifiedLogicalExpression"
 	| "lint/js/useSingleCaseStatement"
 	| "lint/js/useSingleVarDeclarator"
 	| "lint/js/useSortedSpecifiers"

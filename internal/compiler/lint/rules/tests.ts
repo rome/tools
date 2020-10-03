@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:1f918a6fdde78d80ad8778847105378ec2cb90d6,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:5c373e4d80013d28386f30234efc3397af15ec8d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -92,7 +92,7 @@ import useDefaultImportBasename from "./js/useDefaultImportBasename.test.rjson";
 // @ts-ignore
 import useFunctionDeclarations from "./js/useFunctionDeclarations.test.rjson";
 // @ts-ignore
-import useSimplifiedBooleanExpression from "./js/useSimplifiedBooleanExpression.test.rjson";
+import useSimplifiedLogicalExpression from "./js/useSimplifiedLogicalExpression.test.rjson";
 // @ts-ignore
 import useSingleCaseStatement from "./js/useSingleCaseStatement.test.rjson";
 // @ts-ignore
@@ -266,7 +266,7 @@ export const tests: Tests = {
 	"js/useDefaultExportBasename": useDefaultExportBasename,
 	"js/useDefaultImportBasename": useDefaultImportBasename,
 	"js/useFunctionDeclarations": useFunctionDeclarations,
-	"js/useSimplifiedBooleanExpression": useSimplifiedBooleanExpression,
+	"js/useSimplifiedLogicalExpression": useSimplifiedLogicalExpression,
 	"js/useSingleCaseStatement": useSingleCaseStatement,
 	"js/useSingleVarDeclarator": useSingleVarDeclarator,
 	"js/useSortedSpecifiers": useSortedSpecifiers,

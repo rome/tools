@@ -4,14 +4,14 @@ import {
 	JSLogicalExpression,
 	JSUnaryExpression,
 } from "@internal/ast";
-import { Path, signals } from "@internal/compiler";
-import { createVisitor } from "@internal/compiler/utils";
-import { descriptions } from "@internal/diagnostics";
+import {Path, signals} from "@internal/compiler";
+import {createVisitor} from "@internal/compiler/utils";
+import {descriptions} from "@internal/diagnostics";
 
 export default createVisitor({
-	name: "js/useSimplifiedBooleanExpression",
+	name: "js/useSimplifiedLogicalExpression",
 	enter(path) {
-		const { node } = path;
+		const {node} = path;
 
 		if (node.type === "JSLogicalExpression") {
 			if (node.operator === "&&") {
@@ -43,7 +43,7 @@ export default createVisitor({
 							...node.right,
 						}),
 					},
-					descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+					descriptions.LINT.JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION,
 				);
 			}
 		}
@@ -61,7 +61,7 @@ export default createVisitor({
 function simplifyAndExpression(
 	path: Path,
 	literal: JSBooleanLiteral,
-	expression: AnyJSExpression
+	expression: AnyJSExpression,
 ) {
 	return keepExpressionIfLiteral(path, expression, literal, true);
 }
@@ -69,7 +69,7 @@ function simplifyAndExpression(
 function simplifyOrExpression(
 	path: Path,
 	literal: JSBooleanLiteral,
-	expression: AnyJSExpression
+	expression: AnyJSExpression,
 ) {
 	return keepExpressionIfLiteral(path, expression, literal, false);
 }
@@ -78,23 +78,23 @@ function keepExpressionIfLiteral(
 	path: Path,
 	expression: AnyJSExpression,
 	literal: JSBooleanLiteral,
-	expectedValue: boolean
+	expectedValue: boolean,
 ) {
 	if (literal.value === expectedValue) {
 		return path.addFixableDiagnostic(
-			{ fixed: signals.replace({ ...expression }) },
-			descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+			{fixed: signals.replace({...expression})},
+			descriptions.LINT.JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION,
 		);
 	}
 	return path.addFixableDiagnostic(
-		{ fixed: signals.replace({ ...literal }) },
-		descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+		{fixed: signals.replace({...literal})},
+		descriptions.LINT.JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION,
 	);
 }
 
 // https://en.wikipedia.org/wiki/De_Morgan%27s_laws
 function couldApplyDeMorgan(
-	node: JSLogicalExpression
+	node: JSLogicalExpression,
 ): node is DeMorganExpression {
 	return (
 		node.left.type === "JSUnaryExpression" &&
@@ -118,7 +118,7 @@ function simplifyDeMorgan(path: Path, node: DeMorganExpression) {
 				},
 			}),
 		},
-		descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
+		descriptions.LINT.JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION,
 	);
 }
 

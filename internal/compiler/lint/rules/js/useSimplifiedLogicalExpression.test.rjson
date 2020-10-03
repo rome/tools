@@ -1,35 +1,21 @@
 filename: "file.ts"
 invalid: [
-    "
-        const boolExp = true;
-        const r = boolExp === true;
-    "
-    "
-        const boolExp = true;
-        const r = true !== boolExp;
-    "
-    "
-        const boolExp = true;
-        const r = !!boolExp;
-    "
-    "
+	"
         const boolExp = true;
         const r = true && boolExp;
     "
-    "
+	"
         const boolExp = true;
         const r = boolExp || true;
     "
-    "
+	"
         const nonNullExp = 123;
         const r = null ?? nonNullExp;
     "
-    "
+	"
         const boolExpr1 = true;
         const boolExpr2 = false;
         const r = (!boolExpr1) || (!boolExpr2);
     "
 ]
-valid: [
-
-]
+valid: []
