@@ -13,47 +13,7 @@ export default createVisitor({
 	enter(path) {
 		const { node } = path;
 
-		if (node.type === "JSBinaryExpression") {
-			if (
-				node.operator === "===" ||
-				node.operator === "==" ||
-				node.operator === "!==" ||
-				node.operator === "!="
-			) {
-				// if the operator is "not equal" (exclusive) or one of the operands is "false"
-				// we consider the expression to be "negated"
-				let negated = node.operator === "!==" || node.operator === "!=";
-
-				if (node.left.type === "JSBooleanLiteral") {
-					return simplifyBinaryExpressionDiagnostic(
-						path,
-						node.left,
-						node.right,
-						negated
-					);
-				}
-				if (node.right.type === "JSBooleanLiteral") {
-					return simplifyBinaryExpressionDiagnostic(
-						path,
-						node.right,
-						node.left,
-						negated
-					);
-				}
-			}
-		} else if (
-			node.type === "JSUnaryExpression" &&
-			node.operator === "!" &&
-			node.argument.type === "JSUnaryExpression" &&
-			node.argument.operator === "!"
-		) {
-			return path.addFixableDiagnostic(
-				{
-					fixed: signals.replace({ ...node.argument.argument }),
-				},
-				descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
-			);
-		} else if (node.type === "JSLogicalExpression") {
+		if (node.type === "JSLogicalExpression") {
 			if (node.operator === "&&") {
 				if (node.left.type === "JSBooleanLiteral") {
 					return simplifyAndExpression(path, node.left, node.right);
@@ -97,36 +57,6 @@ export default createVisitor({
 		return signals.retain;
 	},
 });
-
-function simplifyBinaryExpressionDiagnostic(
-	path: Path,
-	toRemove: JSBooleanLiteral,
-	expression: AnyJSExpression,
-	negated: boolean
-) {
-	const shouldNegate = xor(negated, !toRemove.value);
-	return path.addFixableDiagnostic(
-		{
-			fixed: signals.replace(createSimpleExpression(expression, shouldNegate)),
-		},
-		descriptions.LINT.JS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION
-	);
-}
-
-function createSimpleExpression(
-	expression: AnyJSExpression,
-	shouldNegate: boolean
-): AnyJSExpression {
-	return shouldNegate
-		? {
-				type: "JSUnaryExpression",
-				operator: "!",
-				argument: expression,
-		  }
-		: {
-				...expression,
-		  };
-}
 
 function simplifyAndExpression(
 	path: Path,
@@ -199,8 +129,4 @@ interface NegatedExpression extends JSUnaryExpression {
 interface DeMorganExpression extends JSLogicalExpression {
 	left: NegatedExpression;
 	right: NegatedExpression;
-}
-
-function xor(x: boolean, y: boolean) {
-	return x ? !y : y;
 }

@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:975209047ce41adf41a399951c4d0e439e9f6633,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:067905d26092d9f43a3792c9d668e05b7c1656fc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -110,6 +110,7 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
 import useInterfaces from "./ts/useInterfaces";
+import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
@@ -254,6 +255,10 @@ lintTransforms.set(
 );
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
+lintTransforms.set(
+	"ts/useSimplifiedBooleanExpression",
+	useSimplifiedBooleanExpression,
+);
 
 export const lintRuleNames: Array<LintRuleName> = [
 	"html/useClosingNonVoid",
@@ -367,6 +372,7 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
 	"ts/useInterfaces",
+	"ts/useSimplifiedBooleanExpression",
 ];
 
 export type LintRuleName =
@@ -480,5 +486,6 @@ export type LintRuleName =
 	| "regex/noPosixInRegularExpression"
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
-	| "ts/useInterfaces";
+	| "ts/useInterfaces"
+	| "ts/useSimplifiedBooleanExpression";
 /* GENERATED:END(id:main) */
