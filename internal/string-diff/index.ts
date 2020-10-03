@@ -610,17 +610,19 @@ export function halfMatch(text1: string, text2: string): undefined | HalfMatch {
 	let hm2 = halfMatchI(longtext, shorttext, Math.ceil(longtext.length / 2));
 
 	let hm: undefined | HalfMatch;
-	if (!(hm1 || hm2)) {
-		return undefined;
-	} else if (hm2) {
-		if (hm1) {
-			// Both matched.  Select the longest.
-			hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+	if (hm1 || hm2) {
+		if (hm2) {
+			if (hm1) {
+				// Both matched.  Select the longest.
+				hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+			} else {
+				hm = hm2;
+			}
 		} else {
-			hm = hm2;
+			hm = hm1;
 		}
 	} else {
-		hm = hm1;
+		return undefined;
 	}
 
 	if (hm === undefined) {
