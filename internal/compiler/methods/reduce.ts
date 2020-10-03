@@ -289,7 +289,7 @@ function _reduceSignal(
 							}
 
 							// If this item has been changed then...
-							if (!isRetainSignal(child, newSignal) && !context.frozen) {
+							if (!(isRetainSignal(child, newSignal) || context.frozen)) {
 								// Clone the children array
 								children = children.slice();
 
@@ -359,7 +359,7 @@ function _reduceSignal(
 					}
 
 					// If this value has been changed then...
-					if (!isRetainSignal(oldVal, newSignal) && !context.frozen) {
+					if (!(isRetainSignal(oldVal, newSignal) || context.frozen)) {
 						let newValue = undefined;
 						if (newSignal.type === "REPLACE") {
 							newValue = newSignal.value;

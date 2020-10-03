@@ -450,8 +450,7 @@ export default class Worker {
 
 		// Sometimes we may want to allow the "fixed" AST
 		if (
-			!options.allowParserDiagnostics &&
-			!options.allowCorrupt &&
+			!(options.allowParserDiagnostics || options.allowCorrupt) &&
 			ast.diagnostics.length > 0
 		) {
 			throw new DiagnosticsError(

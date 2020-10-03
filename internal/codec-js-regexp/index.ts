@@ -643,7 +643,7 @@ function parseCharSet(parser: RegExpParser): JSRegExpCharSet {
 	const body: JSRegExpCharSet["body"] = [];
 	const invert = eatOperator(parser, "^");
 
-	while (!parser.matchToken("EOF") && !matchOperator(parser, "]")) {
+	while (!(parser.matchToken("EOF") || matchOperator(parser, "]"))) {
 		const part = parseCharacterOrRange(parser);
 		body.push(part);
 	}

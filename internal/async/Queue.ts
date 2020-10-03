@@ -71,7 +71,7 @@ export default class Queue<Metadata, Thread> {
 		const queue = this.threads.assert(thread);
 		queue.items.push([metadata, resolve]);
 
-		if (!queue.running && !this.paused) {
+		if (!(queue.running || this.paused)) {
 			this.startThread(thread, queue);
 		}
 

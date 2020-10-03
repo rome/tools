@@ -170,7 +170,7 @@ export function log(
 	}
 
 	// If a newline was requested consider us moved
-	if (!opts.noNewline && !opts.preferNoNewline) {
+	if (!(opts.noNewline || opts.preferNoNewline)) {
 		newline(stream, stderr);
 	}
 }

@@ -141,7 +141,7 @@ export default class Event<Param, Ret = void> {
 
 		if (this.rootSubscription === undefined) {
 			this.rootSubscription = callback;
-		} else if (makeRoot === true) {
+		} else if (makeRoot) {
 			this.subscriptions.add(this.rootSubscription);
 			this.rootSubscription = callback;
 		} else {

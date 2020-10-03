@@ -379,7 +379,7 @@ export default class WorkerAPI {
 
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.capabilities.format || !project.config.format.enabled) {
+		if (!(handler.capabilities.format && project.config.format.enabled)) {
 			return;
 		}
 
@@ -430,7 +430,7 @@ export default class WorkerAPI {
 		// Get the extension handler
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!handler.capabilities.lint && !handler.capabilities.format) {
+		if (!(handler.capabilities.lint || handler.capabilities.format)) {
 			return {
 				save: undefined,
 				diagnostics: [],

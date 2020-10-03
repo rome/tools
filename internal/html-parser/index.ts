@@ -256,9 +256,9 @@ function parseTag(parser: HTMLParser): HTMLElement {
 
 	// Parse attributes
 	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("TagSelfClosing") &&
-		!parser.matchToken("TagEnd")
+		!(parser.matchToken("EOF") ||
+		parser.matchToken("TagSelfClosing") ||
+		parser.matchToken("TagEnd"))
 	) {
 		const keyToken = parser.getToken();
 
@@ -282,9 +282,8 @@ function parseTag(parser: HTMLParser): HTMLElement {
 	// Verify closing tag
 	if (!selfClosing) {
 		while (
-			// Build children
-			!parser.matchToken("EOF") &&
-			!parser.matchToken("TagEndOpen")
+			!// Build children
+			(parser.matchToken("EOF") || parser.matchToken("TagEndOpen"))
 		) {
 			const child = parseChild(parser);
 			if (child !== undefined) {

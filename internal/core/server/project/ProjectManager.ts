@@ -285,7 +285,7 @@ export default class ProjectManager {
 		// We maintain a map of file paths to UIDs
 		// We clear the UID when a path is deleted.
 		// If getUid is called on a file that doesn't exist then we'll populate it and it will exist forever.
-		if (!this.server.memoryFs.exists(path) && !allowMissing) {
+		if (!(this.server.memoryFs.exists(path) || allowMissing)) {
 			throw new FileNotFound(path);
 		}
 

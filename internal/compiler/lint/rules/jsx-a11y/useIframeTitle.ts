@@ -37,7 +37,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 		if (isJSXElement(node, "iframe")) {
-			if (!hasJSXAttribute(node, "title") || !validTitle(node)) {
+			if (!(hasJSXAttribute(node, "title") && validTitle(node))) {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.JSX_A11Y_IFRAME_HAS_TITLE,

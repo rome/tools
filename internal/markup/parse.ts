@@ -224,7 +224,7 @@ function parseTag(
 	let selfClosing = false;
 
 	// Parse attributes
-	while (!parser.matchToken("EOF") && !parser.matchToken("Greater")) {
+	while (!(parser.matchToken("EOF") || parser.matchToken("Greater"))) {
 		const keyToken = parser.getToken();
 
 		let valueToken: TokenValues<Tokens>;
@@ -324,9 +324,8 @@ function parseTag(
 	// Verify closing tag
 	if (!selfClosing) {
 		while (
-			// Build children
-			!parser.matchToken("EOF") &&
-			!atTagEnd(parser)
+			!// Build children
+			(parser.matchToken("EOF") || atTagEnd(parser))
 		) {
 			const child = parseChild(parser, tagName);
 			if (child !== undefined) {

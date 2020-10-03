@@ -35,7 +35,7 @@ export default function JSArrayExpression(
 		node.type === "JSAssignmentArrayPattern") &&
 		node.rest !== undefined;
 
-	if (!hasContents && !hasRest) {
+	if (!(hasContents || hasRest)) {
 		if (hasInnerComments(node)) {
 			return group(
 				concat(["[", builder.tokenizeInnerComments(node, true), softline, "]"]),

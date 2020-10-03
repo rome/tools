@@ -976,7 +976,7 @@ function parseDeclarations(
 		if (parser.matchToken("Ident")) {
 			const declaration = parseDeclaration(parser);
 			declaration && declarations.push(declaration);
-			while (!parser.matchToken("Semi") && !parser.matchToken("EOF")) {
+			while (!(parser.matchToken("Semi") || parser.matchToken("EOF"))) {
 				const declaration = parseDeclaration(parser);
 				declaration && declarations.push(declaration);
 			}
@@ -985,7 +985,7 @@ function parseDeclarations(
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.INVALID_DECLARATION,
 		});
-		while (!parser.matchToken("Semi") && !parser.matchToken("EOF")) {
+		while (!(parser.matchToken("Semi") || parser.matchToken("EOF"))) {
 			parseComponentValue(parser);
 		}
 	}

@@ -39,7 +39,7 @@ export default function TSIntersectionTypeAnnotation(
 			//     d: string;
 			//   };
 			parts.push(space, "&", space, shouldIndent ? indent(printed) : printed);
-		} else if (!isObjectType(previous) && !isObjectType(type)) {
+		} else if (!(isObjectType(previous) || isObjectType(type))) {
 			//   let foo: XXXX &
 			//     YYYY &&
 			//     ZZZZ;

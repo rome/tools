@@ -419,7 +419,7 @@ function getSuggestions() {
 function jsxSupportedLang(node: JSXElement): undefined | string {
 	const attr = getJSXAttribute(node, "lang");
 
-	if (!attr || !attr.value) {
+	if (!(attr && attr.value)) {
 		return "undefined";
 	}
 

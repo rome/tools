@@ -949,7 +949,7 @@ export function parseTryStatement(
 
 	const finalizer = eat(parser, tt._finally) ? parseBlock(parser) : undefined;
 
-	if (!handler && !finalizer) {
+	if (!(handler || finalizer)) {
 		unexpectedDiagnostic(
 			parser,
 			{

@@ -180,7 +180,7 @@ export function stringDiffUnified(rawDiffs: Diffs): UnifiedDiff {
 	// Merge identical lines
 	for (let beforeLine = 1; beforeLine <= beforeLineCount; beforeLine++) {
 		let afterLine = beforeLineToAfter.get(beforeLine)!;
-		if (!hasModifiedLine(beforeLine) && !hasModifiedLine(undefined, afterLine)) {
+		if (!(hasModifiedLine(beforeLine) || hasModifiedLine(undefined, afterLine))) {
 			const line = getLine(beforeLine);
 			insertedLines.delete(generateLineKey(beforeLine, undefined));
 			insertedLines.delete(generateLineKey(undefined, afterLine));
@@ -517,7 +517,7 @@ function bisectSplit(text1: string, text2: string, x: number, y: number): Diffs 
  */
 export function commonPrefix(text1: string, text2: string): number {
 	// Quick check for common null cases.
-	if (!text1 || !text2 || text1.charAt(0) !== text2.charAt(0)) {
+	if (!(text1 && text2) || text1.charAt(0) !== text2.charAt(0)) {
 		return 0;
 	}
 
@@ -555,7 +555,7 @@ export function commonPrefix(text1: string, text2: string): number {
  */
 export function commonSuffix(text1: string, text2: string): number {
 	// Quick check for common null cases.
-	if (!text1 || !text2 || text1.slice(-1) !== text2.slice(-1)) {
+	if (!(text1 && text2) || text1.slice(-1) !== text2.slice(-1)) {
 		return 0;
 	}
 
@@ -610,7 +610,7 @@ export function halfMatch(text1: string, text2: string): undefined | HalfMatch {
 	let hm2 = halfMatchI(longtext, shorttext, Math.ceil(longtext.length / 2));
 
 	let hm: undefined | HalfMatch;
-	if (!hm1 && !hm2) {
+	if (!(hm1 || hm2)) {
 		return undefined;
 	} else if (hm2) {
 		if (hm1) {

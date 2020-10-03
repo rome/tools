@@ -7,7 +7,7 @@ export default function getCreateElementType(
 	node: AnyNode,
 	scope: Scope,
 ): string | undefined {
-	if (!isCreateElement(node, scope) || !node.arguments[0]) {
+	if (!(isCreateElement(node, scope) && node.arguments[0])) {
 		return;
 	}
 	const {bailed, value} = tryStaticEvaluation(node.arguments[0], scope);

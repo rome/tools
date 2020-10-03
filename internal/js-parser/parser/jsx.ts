@@ -343,9 +343,7 @@ function parseJSXOpeningElementAt(
 
 	// into an unusual state for: <foo<bar>></foo>
 	while (
-		!match(parser, tt.slash) &&
-		!match(parser, tt.jsxTagEnd) &&
-		!atEOF(parser)
+		!(match(parser, tt.slash) || match(parser, tt.jsxTagEnd) || atEOF(parser))
 	) {
 		attributes.push(parseJSXAttribute(parser));
 	}

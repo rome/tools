@@ -363,7 +363,7 @@ function parseObject(
 
 		// If there's no property key indicator then delegate any comments we have to object
 		const hasKey = isFirstProp && firstKey !== undefined;
-		if (!hasKey && !parser.matchToken("String") && !parser.matchToken("Word")) {
+		if (!(hasKey || parser.matchToken("String") || parser.matchToken("Word"))) {
 			innerComments = [...innerComments, ...leadingComments];
 			break;
 		}
@@ -403,7 +403,7 @@ function parseObject(
 
 		// If the next token isn't a comma or closing brace then we've just stolen
 		// the leading comments of the next property
-		if (!parser.matchToken("Comma") && !parser.matchToken("BraceClose")) {
+		if (!(parser.matchToken("Comma") || parser.matchToken("BraceClose"))) {
 			nextLeadingComments = trailingValueComments;
 			trailingValueComments = [];
 		}

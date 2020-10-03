@@ -42,7 +42,7 @@ export default class Graph<Value> {
 		const startNode = this.find(startValue);
 		const endNode = this.find(endValue);
 
-		if (!startNode || !endNode) {
+		if (!(startNode && endNode)) {
 			throw new Error("Both nodes need to exist");
 		}
 

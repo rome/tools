@@ -282,7 +282,7 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 	}
 
 	public isImplicitRelative(): boolean {
-		return !this.isExplicitRelative() && !this.isAbsolute() && !this.isURL();
+		return !(this.isExplicitRelative() || this.isAbsolute() || this.isURL());
 	}
 
 	public isExplicitRelative(): boolean {
@@ -330,9 +330,7 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 
 		// If we don't satisfy the below conditions then we're already unique
 		if (
-			!this.isRoot() &&
-			!this.isExplicitRelative() &&
-			!this.isExplicitDirectory()
+			!(this.isRoot() || this.isExplicitRelative() || this.isExplicitDirectory())
 		) {
 			return this._assert();
 		}

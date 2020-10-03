@@ -52,7 +52,7 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 		const char = parser.getInputCharOnly(index);
 		const escaped = isEscaped(index, parser.input);
 
-		if (!escaped && !state.isParagraph) {
+		if (!(escaped || state.isParagraph)) {
 			if (char === "#") {
 				return {
 					token: consumeHeading(parser, index),
@@ -288,7 +288,7 @@ function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: Array<AnyMarkdownInlineNode> = [];
-	while (!parser.matchToken("EOF") && !isBlockToken(parser)) {
+	while (!(parser.matchToken("EOF") || isBlockToken(parser))) {
 		const token = parser.getToken();
 
 		if (isList && token.type === "NewLine") {
@@ -369,10 +369,10 @@ function parseItem(parser: MarkdownParser): MarkdownListItem {
 	const children: Array<MarkdownListChildren> = [];
 
 	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("NewLine") &&
-		!parser.matchToken("ListItem") &&
-		!parser.matchToken("Break") &&
+		!(parser.matchToken("EOF") ||
+		parser.matchToken("NewLine") ||
+		parser.matchToken("ListItem") ||
+		parser.matchToken("Break")) &&
 		parser.matchToken("Text")
 	) {
 		children.push(parseParagraph(parser, true));
@@ -420,7 +420,7 @@ function parseCode(parser: MarkdownParser): MarkdownCodeBlock {
 	const start = parser.getPosition();
 	let value;
 
-	while (!parser.matchToken("EOF") && !parser.matchToken("Code")) {
+	while (!(parser.matchToken("EOF") || parser.matchToken("Code"))) {
 		const token = parser.getToken();
 		if (token.type === "Text") {
 			value = parseText(parser);

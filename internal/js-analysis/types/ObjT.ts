@@ -95,7 +95,7 @@ export default class ObjT extends T {
 				}
 			}
 
-			if (!ourProp || !theirProp) {
+			if (!(ourProp && theirProp)) {
 				return false;
 			}
 
