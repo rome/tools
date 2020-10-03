@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:49f1686a9171b1b7902464c46816b4d0e930f7df,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:579e653f7964ce9bc83036ca3af2f1de7fbc00fe,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -303,6 +303,13 @@ MISSING DOCUMENTATION
 MISSING DOCUMENTATION
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useSimplifiedLogicalExpression">
+	<a href="/docs/lint/rules/js/useSimplifiedLogicalExpression">useSimplifiedLogicalExpression</a>
+	<a class="header-anchor" href="#useSimplifiedLogicalExpression"></a>
+</h3>
+discard redundant terms from logical expressions
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSingleCaseStatement">
 	<a href="/docs/lint/rules/js/useSingleCaseStatement">useSingleCaseStatement</a>
 	<a class="header-anchor" href="#useSingleCaseStatement"></a>
@@ -353,6 +360,13 @@ it bans the use of `any`
 	<a class="header-anchor" href="#useInterfaces"></a>
 </h3>
 MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useSimplifiedBooleanExpression">
+	<a href="/docs/lint/rules/ts/useSimplifiedBooleanExpression">useSimplifiedBooleanExpression</a>
+	<a class="header-anchor" href="#useSimplifiedBooleanExpression"></a>
+</h3>
+discard redundant terms or operators in boolean expressions
 </div>
 </section>
 <section>
