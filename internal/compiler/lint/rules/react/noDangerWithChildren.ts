@@ -45,8 +45,8 @@ function jsxDangerWithPropChildren(node: AnyNode) {
 
 function createElementDangerWithChildren(node: AnyNode, scope: Scope): boolean {
 	return (
-		getCreateElementChildren(node, scope) &&
-		getCreateElementProp(node, scope, "dangerouslySetInnerHTML")
+		!!getCreateElementChildren(node, scope) &&
+		!!getCreateElementProp(node, scope, "dangerouslySetInnerHTML")
 	);
 }
 

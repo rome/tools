@@ -100,7 +100,9 @@ function couldApplyDeMorgan(
 		node.left.type === "JSUnaryExpression" &&
 		node.right.type === "JSUnaryExpression" &&
 		node.left.operator === "!" &&
-		node.right.operator === "!"
+		node.right.operator === "!" &&
+		node.left.argument.type !== "JSUnaryExpression" &&
+		node.right.argument.type !== "JSUnaryExpression"
 	);
 }
 

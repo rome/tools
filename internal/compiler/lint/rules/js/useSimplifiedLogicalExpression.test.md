@@ -149,3 +149,19 @@ const boolExpr2 = false;
 const r = !(boolExpr1 && boolExpr2);
 
 ```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+const boolExpr1 = true;
+const boolExpr2 = false;
+const r = boolExpr1 || boolExpr2;
+
+```
