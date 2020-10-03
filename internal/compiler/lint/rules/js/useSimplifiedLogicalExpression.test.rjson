@@ -18,4 +18,10 @@ invalid: [
         const r = (!boolExpr1) || (!boolExpr2);
     "
 ]
-valid: []
+valid: [
+	"
+        const boolExpr1 = true;
+        const boolExpr2 = false;
+        const r = !(boolExpr1 && boolExpr2);
+    "
+]

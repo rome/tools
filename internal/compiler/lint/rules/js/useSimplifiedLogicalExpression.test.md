@@ -11,7 +11,7 @@
  lint/js/useSimplifiedLogicalExpression/reject/1/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Boolean expression contains unnecessary complexity.
+  ✖ Logical expression contains unnecessary complexity.
 
     1 │ const boolExp = true;
   > 2 │ const r = true && boolExp;
@@ -43,7 +43,7 @@ const r = boolExp;
  lint/js/useSimplifiedLogicalExpression/reject/2/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Boolean expression contains unnecessary complexity.
+  ✖ Logical expression contains unnecessary complexity.
 
     1 │ const boolExp = true;
   > 2 │ const r = boolExp || true;
@@ -75,7 +75,7 @@ const r = true;
  lint/js/useSimplifiedLogicalExpression/reject/3/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Boolean expression contains unnecessary complexity.
+  ✖ Logical expression contains unnecessary complexity.
 
     1 │ const nonNullExp = 123;
   > 2 │ const r = null ?? nonNullExp;
@@ -107,7 +107,7 @@ const r = nonNullExp;
  lint/js/useSimplifiedLogicalExpression/reject/4/file.ts:3:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Boolean expression contains unnecessary complexity.
+  ✖ Logical expression contains unnecessary complexity.
 
     1 │ const boolExpr1 = true;
     2 │ const boolExpr2 = false;
@@ -126,6 +126,22 @@ const r = nonNullExp;
 ```
 
 ### `3: formatted`
+
+```
+const boolExpr1 = true;
+const boolExpr2 = false;
+const r = !(boolExpr1 && boolExpr2);
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
 
 ```
 const boolExpr1 = true;
