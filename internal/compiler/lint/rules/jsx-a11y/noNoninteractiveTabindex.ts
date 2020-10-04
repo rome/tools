@@ -11,7 +11,7 @@ import {
 	elementsToConceptsMap,
 	isRoleInteractive,
 } from "@internal/compiler/lint/utils/aria";
-import { isJSXDOMElement } from "@internal/js-ast-utils/isJSXDOMElement";
+import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 
 function hasValidTabIndexValue(
 	node: JSXAttribute | undefined,
@@ -47,7 +47,7 @@ function hasValidTabIndexValue(
 export default createVisitor({
 	name: "jsx-a11y/noNoninteractiveTabindex",
 	enter(path) {
-		const { node } = path;
+		const {node} = path;
 
 		if (isJSXDOMElement(node)) {
 			// not tabIndex, no worth continuing
