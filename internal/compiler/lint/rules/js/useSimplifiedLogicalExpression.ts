@@ -3,6 +3,7 @@ import {
 	JSBooleanLiteral,
 	JSLogicalExpression,
 	JSUnaryExpression,
+	jsUnaryExpression,
 } from "@internal/ast";
 import {Path, signals} from "@internal/compiler";
 import {createVisitor} from "@internal/compiler/utils";
@@ -109,16 +110,17 @@ function couldApplyDeMorgan(
 function simplifyDeMorgan(path: Path, node: DeMorganExpression) {
 	return path.addFixableDiagnostic(
 		{
-			fixed: signals.replace({
-				type: "JSUnaryExpression",
-				operator: "!",
-				argument: {
-					...node,
-					left: node.left.argument,
-					right: node.right.argument,
-					operator: node.operator === "||" ? "&&" : "||",
-				},
-			}),
+			fixed: signals.replace(
+				jsUnaryExpression.create({
+					operator: "!",
+					argument: {
+						...node,
+						left: node.left.argument,
+						right: node.right.argument,
+						operator: node.operator === "||" ? "&&" : "||",
+					},
+				}),
+			),
 		},
 		descriptions.LINT.JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION,
 	);

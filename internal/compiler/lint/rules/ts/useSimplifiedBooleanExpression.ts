@@ -1,4 +1,9 @@
-import {AnyJSExpression, AnyNode, JSBooleanLiteral} from "@internal/ast";
+import {
+	AnyJSExpression,
+	AnyNode,
+	JSBooleanLiteral,
+	jsUnaryExpression,
+} from "@internal/ast";
 import {Path, Scope, createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
@@ -91,11 +96,10 @@ function createSimpleExpression(
 	shouldNegate: boolean,
 ): AnyJSExpression {
 	return shouldNegate
-		? {
-				type: "JSUnaryExpression",
+		? jsUnaryExpression.create({
 				operator: "!",
 				argument: expression,
-			}
+			})
 		: {
 				...expression,
 			};
