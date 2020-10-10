@@ -14,6 +14,16 @@ cd rome
 ./rome --help
 ```
 
+### Online one-click setup for contributing
+
+You can use Gitpod(an Online Open Source VS Code like IDE which is free for Open Source) for working on issues and making PRs to this repo. With a single click it will start a workspace and automatically:
+
+- clone the `rome` repo.
+- install the dependencies in `/website`.
+- run `npm start` in `/website`.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
 ## Developing on Windows
 
 You need to use the backslash (`\`) to run any `rome` command on Windows instead of the slash (`/`); Windows uses backslashes for file paths.
