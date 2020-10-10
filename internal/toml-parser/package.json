@@ -1,0 +1,6 @@
+{
+  "name": "@internal/toml-parser",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
+}

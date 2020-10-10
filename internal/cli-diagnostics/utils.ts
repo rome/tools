@@ -186,5 +186,8 @@ export function inferDiagnosticLanguageFromRootAST(
 
 		case "CommitRoot":
 			return "commit";
+
+		case "TomlRoot":
+			return "toml";
 	}
 }
