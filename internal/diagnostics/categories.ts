@@ -44,6 +44,7 @@ export type DiagnosticCategory =
 	| "parse/snapshots"
 	| "parse/spdxLicense"
 	| "parse/stringMarkup"
+	| "parse/toml"
 	| "parse/url"
 	| "parse/url/query"
 	| "parse/vscodeTheme"

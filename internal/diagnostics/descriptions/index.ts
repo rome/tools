@@ -44,6 +44,7 @@ import {
 	concatMarkup,
 	markup,
 } from "@internal/markup";
+import {tomlParser} from "./parsers/tomlParser";
 
 export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
 	if (items.length === 0) {
@@ -176,4 +177,5 @@ export const descriptions = {
 	MARKDOWN_PARSER: markdownParser,
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
+	TOML_PARSER: tomlParser,
 };
