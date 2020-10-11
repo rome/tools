@@ -4,7 +4,7 @@ import {AnyTomlValue} from "@internal/ast/toml/unions";
 
 export interface TomlValueArray extends NodeBaseWithComments {
 	readonly type: "TomlValueArray";
-	readonly value: Array<AnyTomlValue>;
+	readonly value: AnyTomlValue[];
 }
 
 export const tomlValueArray = createBuilder<TomlValueArray>(

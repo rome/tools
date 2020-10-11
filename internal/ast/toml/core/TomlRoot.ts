@@ -5,7 +5,7 @@ import {AnyTomlNode} from "@internal/ast/toml/unions";
 export interface TomlRoot extends NodeBaseWithComments,
 RootBase {
 	readonly type: "TomlRoot";
-	readonly body: Array<AnyTomlNode>;
+	readonly body: AnyTomlNode[];
 }
 
 export const tomlRoot = createBuilder<TomlRoot>(

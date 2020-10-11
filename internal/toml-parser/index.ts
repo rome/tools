@@ -157,7 +157,7 @@ function parseChild(parser: TomlParser) {
 export function parseToml(opts: ParserOptionsWithRequiredPath): TomlRoot {
 	const parser = createTomlParser(opts);
 	const start = parser.getPosition();
-	const body: Array<AnyTomlNode> = [];
+	const body: AnyTomlNode[] = [];
 
 	while (!parser.matchToken("EOF")) {
 		const child = parseChild(parser);

@@ -3,7 +3,7 @@ import {createBuilder} from "../../utils";
 
 export interface TomlTable extends NodeBaseWithComments {
 	readonly type: "TomlTable";
-	readonly value: Array<TomlKeyValue>;
+	readonly value: TomlKeyValue[];
 }
 
 export const tomlTable = createBuilder<TomlTable>(
