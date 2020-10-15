@@ -1238,7 +1238,7 @@ export default class Grid {
 
 		const subAncestry: Ancestry = [...ancestry, tag];
 
-		if (hook !== undefined && hook.before !== undefined) {
+		if (hook?.before !== undefined) {
 			hook.before(tag, this, ancestry);
 		}
 
@@ -1270,7 +1270,7 @@ export default class Grid {
 			}
 		}
 
-		if (hook !== undefined && hook.after !== undefined) {
+		if (hook?.after !== undefined) {
 			hook.after(tag, this, ancestry);
 		}
 	}

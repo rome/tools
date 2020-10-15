@@ -95,7 +95,7 @@ export default function highlightJS(
 					return {type: "punctuation"};
 
 				case "name": {
-					if (next !== undefined && next.type === "(") {
+					if (next?.type === "(") {
 						return {type: "function"};
 					}
 

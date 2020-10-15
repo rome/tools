@@ -13,11 +13,11 @@ function hrefValue(attr: JSXAttribute | undefined, value: string): boolean {
 		return false;
 	}
 	return (
-		((attr?.value)?.type === "JSStringLiteral" && attr.value.value === value) ||
-		((attr?.value)?.type === "JSXExpressionContainer" &&
+		(attr?.value?.type === "JSStringLiteral" && attr.value.value === value) ||
+		(attr?.value?.type === "JSXExpressionContainer" &&
 		attr.value.expression.type === "JSStringLiteral" &&
 		attr.value.expression.value === value) ||
-		((attr?.value)?.type === "JSXExpressionContainer" &&
+		(attr?.value?.type === "JSXExpressionContainer" &&
 		attr.value.expression.type === "JSTemplateLiteral" &&
 		attr.value.expression.quasis.some((element) => element.raw === value))
 	);

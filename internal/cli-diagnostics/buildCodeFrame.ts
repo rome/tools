@@ -136,10 +136,10 @@ export default function buildCodeFrame(
 	if (type === "pointer" && (start === undefined || end === undefined)) {
 		shouldBail = true;
 	}
-	if (start !== undefined && start.line === ob1Number1Neg1) {
+	if (start?.line === ob1Number1Neg1) {
 		shouldBail = true;
 	}
-	if (end !== undefined && end.line === ob1Number1Neg1) {
+	if (end?.line === ob1Number1Neg1) {
 		shouldBail = true;
 	}
 	if (shouldBail) {
@@ -305,11 +305,7 @@ export default function buildCodeFrame(
 			const text = line[0].slice(ob1Get0(start.column), ob1Get0(end.column));
 			if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
 				for (const selection of formattedLines) {
-					if (
-						selection !== undefined &&
-						selection.marker !== undefined &&
-						selection.marker.message === markerMessage
-					) {
+					if (selection?.marker?.message === markerMessage) {
 						selection.marker.message = markup``;
 					}
 				}

@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:49f1686a9171b1b7902464c46816b4d0e930f7df,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:38de9fef344f855161f75df6cf3d8860284ebee9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -266,6 +266,13 @@ disallow unused variables
 	<a class="header-anchor" href="#noVar"></a>
 </h3>
 require `let` or `const` instead of `var`
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="preferOptionalChaining">
+	<a href="/docs/lint/rules/js/preferOptionalChaining">preferOptionalChaining</a>
+	<a class="header-anchor" href="#preferOptionalChaining"></a>
+</h3>
+MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useBlockStatements">

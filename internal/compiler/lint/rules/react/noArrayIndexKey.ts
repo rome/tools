@@ -19,8 +19,7 @@ function getKeyValue(path: Path): string | undefined {
 		callExpression = path.parent;
 	}
 	if (
-		callExpression &&
-		callExpression.type === "JSCallExpression" &&
+		callExpression?.type === "JSCallExpression" &&
 		callExpression.arguments.length > 1
 	) {
 		const obj = callExpression.arguments[1];
@@ -175,8 +174,7 @@ export default createVisitor({
 			const keyAttribute = getJSXAttribute(node, "key");
 			if (keyAttribute) {
 				if (
-					keyAttribute.value &&
-					keyAttribute.value.type === "JSXExpressionContainer" &&
+					keyAttribute.value?.type === "JSXExpressionContainer" &&
 					keyAttribute.value.expression.type === "JSReferenceIdentifier" &&
 					keyAttribute.value.expression.name
 				) {

@@ -60,7 +60,7 @@ tt.parenR.updateContext = tt.braceR.updateContext = function(parser) {
 	let out = parser.state.context.pop();
 	if (out === types.braceStatement) {
 		const context = getCurContext(parser);
-		if (context !== undefined && context.token === "function") {
+		if (context?.token === "function") {
 			out = parser.state.context.pop();
 		}
 	}

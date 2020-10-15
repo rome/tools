@@ -12,7 +12,7 @@ import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 function validLang(node: JSXElement) {
 	if (hasJSXAttribute(node, "lang")) {
 		const attr = getJSXAttribute(node, "lang");
-		if (attr && attr.value) {
+		if (attr?.value) {
 			if (attr.value.type === "JSXExpressionContainer") {
 				const expression = attr.value.expression;
 				if (expression.type === "JSTemplateLiteral") {

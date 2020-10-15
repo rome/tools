@@ -68,10 +68,7 @@ export default class DiagnosticsNormalizer {
 		return {
 			...markupOptions,
 			normalizePosition: (filename, line, column) => {
-				if (
-					markupOptions !== undefined &&
-					markupOptions.normalizePosition !== undefined
-				) {
+				if (markupOptions?.normalizePosition !== undefined) {
 					({filename, line, column} = markupOptions.normalizePosition(
 						filename,
 						line,

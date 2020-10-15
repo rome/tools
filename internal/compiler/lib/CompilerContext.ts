@@ -272,7 +272,7 @@ export default class CompilerContext {
 
 	public hasLintDecisions(): boolean {
 		const {lint} = this.options;
-		return lint !== undefined && lint.hasDecisions === true;
+		return lint?.hasDecisions === true;
 	}
 
 	public getLintDecisions(
@@ -318,7 +318,7 @@ export default class CompilerContext {
 
 		const {category} = description;
 		const advice = [...description.advice];
-		if (loc !== undefined && loc.start !== undefined) {
+		if (loc?.start !== undefined) {
 			advice.push(
 				buildLintDecisionAdviceAction({
 					noun: markup`Add suppression comment`,
@@ -347,7 +347,7 @@ export default class CompilerContext {
 		let {marker, tags, ...diag} = contextDiag;
 
 		// Only set `fixable` if formatting is enabled
-		if (tags !== undefined && tags.fixable) {
+		if (tags?.fixable) {
 			tags = {
 				...tags,
 				fixable: this.project.config.format.enabled,

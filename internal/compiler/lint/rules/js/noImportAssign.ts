@@ -34,7 +34,7 @@ export default createVisitor({
 			path.parentPath.node.type === "JSUpdateExpression")
 		) {
 			const binding = scope.getBinding(node.name);
-			if (binding !== undefined && binding.kind === "import") {
+			if (binding?.kind === "import") {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.JS_NO_IMPORT_ASSIGN(node.name),

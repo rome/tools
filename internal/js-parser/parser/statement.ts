@@ -555,7 +555,7 @@ export function parseBreakContinueStatement(
 			parser,
 			{
 				start,
-				description: descriptions.JS_PARSER.UNKNOWN_LABEL(label && label.name),
+				description: descriptions.JS_PARSER.UNKNOWN_LABEL(label?.name),
 			},
 		);
 	}
@@ -1690,11 +1690,7 @@ export function splitFunctionParams(
 	thisType: undefined | JSBindingIdentifier;
 } {
 	const firstParam = params[0];
-	if (
-		firstParam !== undefined &&
-		firstParam.type === "JSBindingIdentifier" &&
-		firstParam.name === "this"
-	) {
+	if (firstParam?.type === "JSBindingIdentifier" && firstParam.name === "this") {
 		return {
 			thisType: firstParam,
 			params: params.slice(1),
