@@ -1,20 +1,19 @@
 import {
 	ParserOptionsWithRequiredPath,
 	createParser,
-	isAlpha,
-	isDigit,
 } from "@internal/parser-core";
 import {TomlRoot} from "@internal/ast";
 import {isEscaped} from "@internal/string-utils";
 import {TomlParser, TomlParserTypes} from "./types";
 import {AnyTomlNode} from "@internal/ast/toml/unions";
 import {parseKeyValue} from "@internal/toml-parser/parser/keyValue";
+import {allowedCharacterForKey} from "@internal/toml-parser/utils";
 
 const createTomlParser = createParser<TomlParserTypes>({
 	diagnosticCategory: "parse/toml",
 	ignoreWhitespaceTokens: false,
 	getInitialState: () => ({
-		inValue: false,
+		inValue: undefined,
 	}),
 	tokenizeWithState(parser, index, state) {
 		const char = parser.getInputCharOnly(index);
@@ -25,9 +24,19 @@ const createTomlParser = createParser<TomlParserTypes>({
 				return {
 					state: {
 						...state,
-						inValue: true,
+						inValue: '"',
 					},
-					token: parser.finishToken("Quote"),
+					token: parser.finishToken("DoubleQuote"),
+				};
+			}
+
+			if (char === "'") {
+				return {
+					state: {
+						...state,
+						inValue: "'",
+					},
+					token: parser.finishToken("SingleQuote"),
 				};
 			}
 
@@ -65,17 +74,16 @@ const createTomlParser = createParser<TomlParserTypes>({
 				};
 			}
 
-			if (char === "") {
-				return {
-					state,
-					token: parser.finishToken("Equals"),
-				};
-			}
-
 			if (char === "\n") {
 				return {
 					state,
 					token: parser.finishToken("NewLine"),
+				};
+			}
+			if (char === " ") {
+				return {
+					state,
+					token: parser.finishToken("Space"),
 				};
 			}
 		}
@@ -85,9 +93,18 @@ const createTomlParser = createParser<TomlParserTypes>({
 				return {
 					state: {
 						...state,
-						inValue: false,
+						inValue: undefined,
 					},
-					token: parser.finishToken("Quote"),
+					token: parser.finishToken("DoubleQuote"),
+				};
+			}
+			if (char === "'") {
+				return {
+					state: {
+						...state,
+						inValue: undefined,
+					},
+					token: parser.finishToken("SingleQuote"),
 				};
 			}
 		}
@@ -96,7 +113,7 @@ const createTomlParser = createParser<TomlParserTypes>({
 			const [value, endIndex] = parser.readInputFrom(
 				index,
 				(char) => {
-					return char !== '"';
+					return char !== state.inValue;
 				},
 			);
 
@@ -109,7 +126,7 @@ const createTomlParser = createParser<TomlParserTypes>({
 		const [value, endIndex] = parser.readInputFrom(
 			index,
 			(char) => {
-				return isAlpha(char) || isDigit(char) || char === " ";
+				return allowedCharacterForKey(char);
 			},
 		);
 
@@ -124,6 +141,8 @@ function parseChild(parser: TomlParser) {
 	const token = parser.getToken();
 
 	switch (token.type) {
+		case "DoubleQuote":
+		case "SingleQuote":
 		case "Text": {
 			return parseKeyValue(parser);
 		}

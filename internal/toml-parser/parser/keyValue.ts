@@ -15,10 +15,10 @@ export function parseKeyValue(parser: TomlParser): TomlKeyValue | undefined {
 
 	parser.nextToken();
 
-	const valueToken = parser.nextToken();
+	const valueToken = parser.getToken();
 
 	switch (valueToken.type) {
-		case "Quote": {
+		case "DoubleQuote": {
 			value = parseText(parser);
 			if (!value) {
 				return undefined;

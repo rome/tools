@@ -8,9 +8,9 @@
 
 ```javascript
 TomlRoot {
-	body: Array []
 	comments: Array []
 	corrupt: false
+	diagnostics: Array []
 	filename: "smoke/input.toml"
 	mtime: undefined
 	loc: Object {
@@ -24,29 +24,44 @@ TomlRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse/toml"}]
-			description: Object {
-				advice: Array []
-				category: "parse/toml"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unable to parse the value associated to key "}
-						"foo "
-					]
+	body: Array [
+		TomlKeyValue {
+			key: TomlKey {
+				value: "foo"
+				loc: Object {
+					filename: "smoke/input.toml"
+					end: Object {
+						column: 5
+						line: 1
+					}
+					start: Object {
+						column: 0
+						line: 1
+					}
 				}
 			}
-			location: Object {
+			value: TomlValueString {
+				value: "bar"
+				loc: Object {
+					filename: "smoke/input.toml"
+					end: Object {
+						column: 11
+						line: 1
+					}
+					start: Object {
+						column: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
 				filename: "smoke/input.toml"
-				mtime: undefined
-				sourceText: undefined
 				end: Object {
-					column: 7
+					column: 11
 					line: 1
 				}
 				start: Object {
-					column: 7
+					column: 0
 					line: 1
 				}
 			}
@@ -58,16 +73,6 @@ TomlRoot {
 ### `diagnostics`
 
 ```
-
- smoke/input.toml:1:7 parse/toml ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unable to parse the value associated to key foo
-
-    foo = "bar"
-           ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```

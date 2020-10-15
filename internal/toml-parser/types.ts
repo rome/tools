@@ -20,7 +20,9 @@ export type Tokens = BaseTokens & {
 	NewLine: SimpleToken<"NewLine">;
 	Space: SimpleToken<"Space">;
 	// "
-	Quote: SimpleToken<"Quote">;
+	DoubleQuote: SimpleToken<"DoubleQuote">;
+	// '
+	SingleQuote: SimpleToken<"SingleQuote">;
 	// .
 	Dot: SimpleToken<"Dot">;
 	// ,
@@ -41,7 +43,7 @@ export type State = {
 	/**
 	 * Reading the value
 	 */
-	inValue: boolean;
+	inValue: undefined | "'" | '"';
 };
 
 export type TomlParser = ParserCore<TomlParserTypes>;
