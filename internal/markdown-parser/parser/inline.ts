@@ -10,7 +10,7 @@ import {
 	canBeRightFlankingDelimiter,
 	hasBlockTokens,
 } from "@internal/markdown-parser";
-import {Number0, ob1Add, ob1Get, ob1Sub} from "@internal/ob1";
+import {Number0, ob1Add, ob1Get0, ob1Sub} from "@internal/ob1";
 import {
 	AnyMarkdownInlineNode,
 	MarkdownBoldInline,
@@ -18,7 +18,9 @@ import {
 	MarkdownText,
 } from "@internal/ast";
 
-type OnUnknownToken = (token: TokenValues<Tokens>) => AnyMarkdownInlineNode;
+type OnUnknownToken = (
+	token: TokenValues<Tokens>,
+) => AnyMarkdownInlineNode | Array<AnyMarkdownInlineNode> | undefined;
 
 // TODO: to handle the case of **something **else** is** broken
 // NOTE: at the moment the code detects the first closing tag, the one beside "else**"
@@ -47,9 +49,12 @@ export function parseInline(
 		const start = parser.getPosition();
 
 		parser.nextToken();
+		let exit = false;
 		while (
 			!parser.matchToken("EOF") &&
-			parser.getToken().start <= closingIndexOfDelimiter
+			!(parser.matchToken("Emphasis") || parser.matchToken("Strong")) &&
+			parser.getToken().start <= closingIndexOfDelimiter &&
+			!exit
 		) {
 			const currentToken = parser.getToken();
 			if (currentToken.type === "Emphasis" || currentToken.type === "Strong") {
@@ -61,11 +66,18 @@ export function parseInline(
 
 				parser.nextToken();
 			} else {
-				const node = onUnknownToken(currentToken);
-				children.push(node);
+				const nodeOrNodes = onUnknownToken(currentToken);
+				parser.nextToken();
+				if (nodeOrNodes === undefined) {
+					exit = true;
+				} else if (Array.isArray(nodeOrNodes)) {
+					children.push(...nodeOrNodes);
+				} else {
+					children.push(nodeOrNodes);
+				}
 			}
 		}
-		if (token.type === "Emphasis") {
+		if (token.type === "Emphasis" || token.type === "Strong") {
 			return parser.finishNode(
 				start,
 				{
@@ -74,7 +86,6 @@ export function parseInline(
 				},
 			);
 		}
-
 		return parser.finishNode(
 			start,
 			{
@@ -83,8 +94,13 @@ export function parseInline(
 			},
 		);
 	}
-
-	return undefined;
+	return parser.finishNode(
+		parser.getPosition(),
+		{
+			type: "MarkdownText",
+			value: token.value,
+		},
+	);
 }
 
 type TokenizeInline = {
@@ -102,6 +118,7 @@ export function tokenizeInline(
 		index,
 		(char1) => char1 === charToCheck,
 	);
+
 	const leftFlankingDelimiter = canBeLeftFlankingDelimiter({
 		startIndex: index,
 		endIndex: ob1Sub(endIndexOfDelimiter, 1),
@@ -117,7 +134,7 @@ export function tokenizeInline(
 	if (leftFlankingDelimiter) {
 		let rightFlankingDelimiterFound = false;
 		let isEndOfParagraph = false;
-		const [value, closingIndex, endOfInput] = parser.readInputFrom(
+		const [, closingIndex, endOfInput] = parser.readInputFrom(
 			index,
 			(char, indexToCheck, input) => {
 				if (hasBlockTokens(char, indexToCheck, input)) {
@@ -157,7 +174,11 @@ export function tokenizeInline(
 
 		if (!rightFlankingDelimiterFound || endOfInput) {
 			return {
-				token: parser.finishValueToken("Text", value, closingIndex),
+				token: parser.finishValueToken(
+					"Text",
+					valueOfInlineToken,
+					endIndexOfDelimiter,
+				),
 				state: {
 					...state,
 					isParagraph: endOfInput || isEndOfParagraph
@@ -168,20 +189,28 @@ export function tokenizeInline(
 		}
 
 		const nextChar = parser.getInputCharOnly(ob1Add(closingIndex, 2));
-		// let's register the start of delimiter
-		state.inlineState.registerStartOfDelimiter(ob1Get(closingIndex), tokenType);
+		const [, closingIndexOfDelimiter] = parser.readInputFrom(
+			closingIndex,
+			(char1, index, input) => {
+				const prevChar = input[ob1Get0(index) - 1];
+				return !(prevChar !== " " && char1 === charToCheck);
+			},
+		);
+
 		return {
 			state: {
 				...state,
 				// if next after two characters we still have a new line, it means we need to start a new paragraph
 				isParagraph: nextChar === "\n" ? false : state.isParagraph,
 			},
+
 			token: parser.finishComplexToken<typeof tokenType, DelimiterRun>(
 				tokenType,
 				{
-					closingIndexOfDelimiter: endIndexOfDelimiter,
+					closingIndexOfDelimiter,
 					leftFlankingDelimiter,
 					rightFlankingDelimiter,
+					value: valueOfInlineToken,
 				},
 				endIndexOfDelimiter,
 			),
@@ -191,7 +220,6 @@ export function tokenizeInline(
 	if (rightFlankingDelimiter) {
 		const nextChar = parser.getInputCharOnly(ob1Add(endIndexOfDelimiter, 2));
 
-		state.inlineState.connectDelimiter(ob1Get(endIndexOfDelimiter), tokenType);
 		return {
 			state: {
 				...state,
@@ -203,6 +231,7 @@ export function tokenizeInline(
 				{
 					leftFlankingDelimiter,
 					rightFlankingDelimiter,
+					value: valueOfInlineToken,
 				},
 				endIndexOfDelimiter,
 			),
