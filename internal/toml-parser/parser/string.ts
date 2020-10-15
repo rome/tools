@@ -4,9 +4,10 @@ import {descriptions} from "@internal/diagnostics";
 
 export function parseText(parser: TomlParser): TomlValueString | undefined {
 	const pos = parser.getPosition();
-	const token = parser.eatToken("Quote");
+	const token = parser.eatToken("DoubleQuote");
 	if (token && token.type === "Text") {
-		const quote = parser.eatToken("Quote");
+		parser.nextToken();
+		const quote = parser.eatToken("DoubleQuote");
 		if (!quote) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.TOML_PARSER.UNCLOSED_VALUE(token.value),
