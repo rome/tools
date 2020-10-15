@@ -38,7 +38,7 @@ export default class ClientRequest {
 
 	public async init(): Promise<ServerQueryResponse> {
 		const {requestFlags} = this.query;
-		if (requestFlags !== undefined && requestFlags.review) {
+		if (requestFlags?.review) {
 			return await this.initReview();
 		} else {
 			return await this.initCommand();

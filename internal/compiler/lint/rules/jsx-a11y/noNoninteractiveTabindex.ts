@@ -16,13 +16,13 @@ import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 function hasValidTabIndexValue(
 	node: JSXAttribute | undefined,
 ): number | undefined {
-	if (node && node.value && node.value.type === "JSStringLiteral") {
+	if (node?.value?.type === "JSStringLiteral") {
 		const value = Number(node.value.value);
 		if (value < 1) {
 			return value;
 		}
 	}
-	if (node && node.value && node.value.type === "JSXExpressionContainer") {
+	if (node?.value?.type === "JSXExpressionContainer") {
 		const expression = node.value.expression;
 
 		if (
@@ -93,7 +93,7 @@ export default createVisitor({
 					}
 				}
 				const attr = getJSXAttribute(node, "role");
-				if (attr && attr.value && attr.value.type === "JSStringLiteral") {
+				if (attr?.value?.type === "JSStringLiteral") {
 					const role = ariaRolesMap.get(attr.value.value);
 					if (role) {
 						/**

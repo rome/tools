@@ -17,9 +17,7 @@ function jsxImgRedundantAlt(node: AnyNode) {
 
 	const attr = getJSXAttribute(node, "alt");
 	return (
-		attr !== undefined &&
-		attr.value &&
-		attr.value.type === "JSStringLiteral" &&
+		attr?.value?.type === "JSStringLiteral" &&
 		/(image)|(picture)|(photo)/i.test(attr.value.value)
 	);
 }

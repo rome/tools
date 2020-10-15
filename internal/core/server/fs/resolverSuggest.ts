@@ -131,11 +131,7 @@ export default function resolverSuggest(
 		}
 
 		// Hint on any indirection
-		if (
-			origQuerySource !== undefined &&
-			origQuerySource.location !== undefined &&
-			resolved.source !== undefined
-		) {
+		if (origQuerySource?.location !== undefined && resolved.source !== undefined) {
 			advice.push({
 				type: "log",
 				category: "info",

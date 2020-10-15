@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:85c9da9226b18c99e88a90f91952180f414ab8dc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:e56437371df83618255c4186dd04ab56602325cd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -36,6 +36,7 @@ import noUnsafeNegation from "./js/noUnsafeNegation";
 import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
 import noUnusedVariables from "./js/noUnusedVariables";
 import noVar from "./js/noVar";
+import preferOptionalChaining from "./js/preferOptionalChaining";
 import useBlockStatements from "./js/useBlockStatements";
 import useCamelCase from "./js/useCamelCase";
 import useDefaultExportBasename from "./js/useDefaultExportBasename";
@@ -151,6 +152,7 @@ lintTransforms.set("js/noUnsafeNegation", noUnsafeNegation);
 lintTransforms.set("js/noUnusedTemplateLiteral", noUnusedTemplateLiteral);
 lintTransforms.set("js/noUnusedVariables", noUnusedVariables);
 lintTransforms.set("js/noVar", noVar);
+lintTransforms.set("js/preferOptionalChaining", preferOptionalChaining);
 lintTransforms.set("js/useBlockStatements", useBlockStatements);
 lintTransforms.set("js/useCamelCase", useCamelCase);
 lintTransforms.set("js/useDefaultExportBasename", useDefaultExportBasename);
@@ -298,6 +300,7 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"js/noUnusedTemplateLiteral",
 	"js/noUnusedVariables",
 	"js/noVar",
+	"js/preferOptionalChaining",
 	"js/useBlockStatements",
 	"js/useCamelCase",
 	"js/useDefaultExportBasename",
@@ -413,6 +416,7 @@ export type LintRuleName =
 	| "js/noUnusedTemplateLiteral"
 	| "js/noUnusedVariables"
 	| "js/noVar"
+	| "js/preferOptionalChaining"
 	| "js/useBlockStatements"
 	| "js/useCamelCase"
 	| "js/useDefaultExportBasename"

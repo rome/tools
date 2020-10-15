@@ -12,7 +12,7 @@ import {isJSXDOMElement} from "@internal/js-ast-utils/isJSXDOMElement";
 function validTitle(node: JSXElement) {
 	if (isJSXDOMElement(node) && hasJSXAttribute(node, "title")) {
 		const attr = getJSXAttribute(node, "title");
-		if (attr && attr.value) {
+		if (attr?.value) {
 			if (attr.value.type === "JSXExpressionContainer") {
 				const expression = attr.value.expression;
 				if (expression.type === "JSTemplateLiteral") {

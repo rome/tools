@@ -212,7 +212,7 @@ function transformClass(
 
 	const newClass: JSClassDeclaration = {
 		...node,
-		id: node.id !== undefined && node.id.name === className
+		id: node.id?.name === className
 			? node.id
 			: jsBindingIdentifier.create({
 					name: className,

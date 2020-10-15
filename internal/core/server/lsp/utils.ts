@@ -191,7 +191,7 @@ export function getWorkerBufferPatches(
 export function getDecisionFromAdviceAction(
 	advice: DiagnosticAdviceAction,
 ): string | undefined {
-	const decisions = (advice?.commandFlags)?.decisions;
+	const decisions = advice?.commandFlags?.decisions;
 	if (Array.isArray(decisions)) {
 		return decisions[0];
 	}

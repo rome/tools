@@ -56,7 +56,7 @@ export default class ParserBranchFinder<T> {
 		const topBranch = this.branch;
 
 		// If we already have a branch that produced no errors then no point continuing
-		if (topBranch !== undefined && topBranch.optimal) {
+		if (topBranch?.optimal) {
 			return this;
 		}
 

@@ -20,11 +20,7 @@ export default createVisitor({
 		if (isJSXDOMElement(node) && hasJSXAttribute(node, "role")) {
 			const name = getJSXElementName(node);
 			const roleAttribute = getJSXAttribute(node, "role");
-			if (
-				roleAttribute &&
-				roleAttribute.value &&
-				roleAttribute.value.type === "JSStringLiteral"
-			) {
+			if (roleAttribute?.value?.type === "JSStringLiteral") {
 				const role = ariaRolesMap.get(roleAttribute.value.value);
 				if (role) {
 					if (!isElementInteractive(name) && isRoleInteractive(role)) {

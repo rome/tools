@@ -27,22 +27,14 @@ export default createVisitor({
 
 		if (isJSXDOMElement(node) && hasJSXAttribute(node, "tabIndex")) {
 			const attribute = getJSXAttribute(node, "tabIndex");
-			if (
-				attribute &&
-				attribute.value &&
-				attribute.value.type === "JSStringLiteral"
-			) {
+			if (attribute?.value?.type === "JSStringLiteral") {
 				const tabIndexValue = attribute.value.value;
 				if (Number(tabIndexValue) > 0) {
 					createDiagnostic(path, node, attribute);
 				}
 			}
 
-			if (
-				attribute &&
-				attribute.value &&
-				attribute.value.type === "JSXExpressionContainer"
-			) {
+			if (attribute?.value?.type === "JSXExpressionContainer") {
 				const expression = attribute.value.expression;
 				if (
 					expression.type === "JSNumericLiteral" ||

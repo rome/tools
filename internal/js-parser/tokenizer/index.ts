@@ -228,7 +228,7 @@ export function nextToken(parser: JSParser): void {
 		return undefined;
 	}
 
-	if (curContext !== undefined && curContext.override) {
+	if (curContext?.override) {
 		curContext.override(parser);
 	} else {
 		readToken(parser, fullCharCodeAtPos(parser));

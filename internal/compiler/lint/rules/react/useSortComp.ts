@@ -55,8 +55,7 @@ const numberLifecycle = 25;
 function isReactComponent(node: JSClassHead): boolean {
 	// Check if it extends React.Component or Component, and React.PureCompnent and PureComponent
 	return (
-		node !== undefined &&
-		node.superClass !== undefined &&
+		node?.superClass !== undefined &&
 		(doesNodeMatchPattern(node.superClass, "React.Component") ||
 		doesNodeMatchPattern(node.superClass, "Component") ||
 		doesNodeMatchPattern(node.superClass, "React.PureComponent") ||

@@ -18,11 +18,7 @@ import {descriptions} from "@internal/diagnostics";
 function isSpaceChar(
 	node: undefined | AnyJSRegExpBodyItem,
 ): node is JSRegExpCharacter {
-	return (
-		node !== undefined &&
-		node.type === "JSRegExpCharacter" &&
-		node.value === " "
-	);
+	return node?.type === "JSRegExpCharacter" && node.value === " ";
 }
 
 function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {

@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | Array<Test>>;
 
-/* GENERATED:START(hash:5c373e4d80013d28386f30234efc3397af15ec8d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:f8d7eaaad1b865eb36a95f2667279352e3f4b51b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -83,6 +83,8 @@ import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral.test.rjson";
 import noUnusedVariables from "./js/noUnusedVariables.test.rjson";
 // @ts-ignore
 import noVar from "./js/noVar.test.rjson";
+// @ts-ignore
+import preferOptionalChaining from "./js/preferOptionalChaining.test.rjson";
 // @ts-ignore
 import useBlockStatements from "./js/useBlockStatements.test.rjson";
 // @ts-ignore
@@ -262,6 +264,7 @@ export const tests: Tests = {
 	"js/noUnusedTemplateLiteral": noUnusedTemplateLiteral,
 	"js/noUnusedVariables": noUnusedVariables,
 	"js/noVar": noVar,
+	"js/preferOptionalChaining": preferOptionalChaining,
 	"js/useBlockStatements": useBlockStatements,
 	"js/useDefaultExportBasename": useDefaultExportBasename,
 	"js/useDefaultImportBasename": useDefaultImportBasename,

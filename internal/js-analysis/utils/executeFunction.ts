@@ -43,18 +43,14 @@ export default function executeFunction(
 	const params = [];
 	let rest;
 	for (let paramNode of head.params) {
-		let optional =
-			paramNode.meta !== undefined && paramNode.meta.optional === true;
+		let optional = paramNode.meta?.optional === true;
 		if (paramNode.type === "JSBindingAssignmentPattern") {
 			optional = false;
 			paramNode = paramNode.left;
 		}
 
 		let paramType;
-		if (
-			paramNode.meta !== undefined &&
-			paramNode.meta.typeAnnotation !== undefined
-		) {
+		if (paramNode.meta?.typeAnnotation !== undefined) {
 			paramType = scope.evaluate(paramNode.meta.typeAnnotation);
 		} else {
 			paramType = new OpenT(scope, paramNode);

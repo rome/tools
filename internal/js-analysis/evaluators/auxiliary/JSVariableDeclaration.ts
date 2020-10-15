@@ -31,7 +31,7 @@ export default function JSVariableDeclaration(node: AnyNode, scope: Scope) {
 
 		let actualType = inferredType;
 
-		if (id.meta !== undefined && id.meta.typeAnnotation !== undefined) {
+		if (id.meta?.typeAnnotation !== undefined) {
 			const annotatedType = scope.evaluate(id.meta.typeAnnotation);
 			inferredType.shouldMatch(annotatedType);
 			actualType = annotatedType;

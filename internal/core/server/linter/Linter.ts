@@ -83,7 +83,7 @@ function createDiagnosticsPrinter(
 			let hasPendingFixes = false;
 
 			for (const {tags} of processor.getDiagnostics()) {
-				if (tags !== undefined && tags.fixable) {
+				if (tags?.fixable) {
 					hasPendingFixes = true;
 				}
 			}

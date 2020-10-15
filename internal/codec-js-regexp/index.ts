@@ -618,7 +618,7 @@ function parseGroupCapture(
 		});
 	}
 
-	if (modifiers !== undefined && modifiers.type === "NON_CAPTURE") {
+	if (!!modifiers && modifiers.type === "NON_CAPTURE") {
 		return {
 			type: "JSRegExpGroupNonCapture",
 			expression,
@@ -626,7 +626,7 @@ function parseGroupCapture(
 			loc: parser.finishLoc(start),
 		};
 	} else {
-		let name = modifiers !== undefined ? modifiers.name : undefined;
+		let name = modifiers?.name;
 		return {
 			type: "JSRegExpGroupCapture",
 			expression,

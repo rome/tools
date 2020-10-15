@@ -225,7 +225,7 @@ function formatToken(
 		return value;
 	}
 
-	const theme = getTokenColors((grid.options?.userConfig)?.syntaxTheme);
+	const theme = getTokenColors(grid.options?.userConfig?.syntaxTheme);
 
 	// Only use our default syntax theme when we are confident the terminal has a dark background
 	if (theme.kind === "default" && grid.features.background !== "dark") {

@@ -325,9 +325,7 @@ export default class Reporter implements ReporterNamespace {
 		unattached: ReporterStream,
 		state?: Partial<ReporterStreamState>,
 	): ReporterStreamHandle {
-		if (unattached.init !== undefined) {
-			unattached.init();
-		}
+		unattached.init?.();
 
 		const stream: ReporterStreamAttached = {
 			...unattached,
@@ -505,7 +503,7 @@ export default class Reporter implements ReporterNamespace {
 	}
 
 	public hasStreamHandles(opts?: LogCategoryUserOptions): boolean {
-		if (opts !== undefined && opts.handles !== undefined) {
+		if (opts?.handles !== undefined) {
 			return opts.handles.length > 0;
 		}
 
@@ -515,7 +513,7 @@ export default class Reporter implements ReporterNamespace {
 	public getStreamHandles(
 		opts?: LogCategoryUserOptions,
 	): Iterable<ReporterStreamHandle> {
-		if (opts !== undefined && opts.handles !== undefined) {
+		if (opts?.handles !== undefined) {
 			return opts.handles;
 		}
 
@@ -645,11 +643,7 @@ export default class Reporter implements ReporterNamespace {
 		opts?: LogCategoryUserOptions,
 	) {
 		for (const {stream} of this.getStreamHandles(opts)) {
-			streamUtils.removeLine(
-				stream,
-				snapshot,
-				opts !== undefined && opts.stderr,
-			);
+			streamUtils.removeLine(stream, snapshot, opts?.stderr);
 		}
 	}
 
@@ -697,7 +691,7 @@ export default class Reporter implements ReporterNamespace {
 			force?: boolean;
 		},
 	) {
-		const force = opts !== undefined && opts.force;
+		const force = opts?.force;
 		for (const {stream} of this.getStreamHandles(opts)) {
 			if (streamUtils.getLeadingNewlineCount(stream) < 2 || force) {
 				this._logMarkup(stream, markup``, opts);
@@ -995,9 +989,8 @@ export default class Reporter implements ReporterNamespace {
 			opts,
 			() => {
 				this.activeElements.delete(bar);
-				if (onEnd !== undefined) {
-					onEnd();
-				}
+
+				onEnd?.();
 			},
 		);
 		this.activeElements.add(bar);

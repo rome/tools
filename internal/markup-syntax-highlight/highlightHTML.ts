@@ -21,9 +21,7 @@ export default function highlightHTML(
 
 				case "Identifier":
 					return {
-						type: prev !== undefined && prev.type === "TagStartOpen"
-							? "tag"
-							: "attr-name",
+						type: prev?.type === "TagStartOpen" ? "tag" : "attr-name",
 					};
 
 				case "String":
