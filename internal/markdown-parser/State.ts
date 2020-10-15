@@ -132,5 +132,6 @@ export function createMarkdownInitialState(): MarkdownParserState {
 		isParagraph: false,
 		isBlockHead: false,
 		inlineState: new InlineState(),
+		isListItem: false,
 	};
 }

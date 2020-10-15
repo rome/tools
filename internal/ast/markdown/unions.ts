@@ -7,13 +7,19 @@ export type MarkdownQuoteChildren =
 	| n.MarkdownParagraph
 	| n.MarkdownHeadingBlock;
 
-export type MarkdownReference = n.MarkdownParagraph | n.MarkdownDefinitionInline;
+export type MarkdownReference = Array<
+	| n.MarkdownText
+	| n.MarkdownEmphasisInline
+	| n.MarkdownBoldInline
+	| n.MarkdownDefinitionInline
+>;
 
 export type AnyMarkdownInlineNode =
 	| n.MarkdownText
 	| n.MarkdownBoldInline
 	| n.MarkdownCodeInline
 	| n.MarkdownAutomaticLinkInline
+	| n.MarkdownReferenceInline
 	| n.MarkdownImageInline
 	| n.MarkdownEmphasisInline;
 
@@ -24,4 +30,11 @@ export type AnyMarkdownNode =
 	| n.MarkdownHeadingBlock
 	| n.MarkdownParagraph
 	| n.MarkdownListBlock
-	| n.MarkdownDefinitionInline;
+	| n.MarkdownDefinitionInline
+	| n.MarkdownText
+	| n.MarkdownBoldInline
+	| n.MarkdownCodeInline
+	| n.MarkdownAutomaticLinkInline
+	| n.MarkdownReferenceInline
+	| n.MarkdownImageInline
+	| n.MarkdownEmphasisInline;
