@@ -5,7 +5,7 @@ import {descriptions} from "@internal/diagnostics";
 export function parseText(parser: TomlParser): TomlValueString | undefined {
 	const pos = parser.getPosition();
 	const token = parser.eatToken("DoubleQuote");
-	if (token && token.type === "Text") {
+	if (token?.type === "Text") {
 		parser.nextToken();
 		const quote = parser.eatToken("DoubleQuote");
 		if (!quote) {
