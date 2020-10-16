@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:38de9fef344f855161f75df6cf3d8860284ebee9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:2b48445b06cb7bb9472592a085bacc6f3ddcd3fc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -191,13 +191,6 @@ disallow returning values from setters
 disallow identifiers from shadowing restricted names
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noShorthandArrayType">
-	<a href="/docs/lint/rules/js/noShorthandArrayType">noShorthandArrayType</a>
-	<a class="header-anchor" href="#noShorthandArrayType"></a>
-</h3>
-MISSING DOCUMENTATION
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/docs/lint/rules/js/noShoutyConstants">noShoutyConstants</a>
 	<a class="header-anchor" href="#noShoutyConstants"></a>
@@ -353,6 +346,13 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#noExplicitAny"></a>
 </h3>
 it bans the use of `any`
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="preferShorthandArrayType">
+	<a href="/docs/lint/rules/ts/preferShorthandArrayType">preferShorthandArrayType</a>
+	<a class="header-anchor" href="#preferShorthandArrayType"></a>
+</h3>
+MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useInterfaces">

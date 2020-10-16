@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:e56437371df83618255c4186dd04ab56602325cd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3a4f40cacd3ea5c2e64a99ffda6c92eb43abc3c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";

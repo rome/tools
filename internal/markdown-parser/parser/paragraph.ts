@@ -10,7 +10,7 @@ export function parseParagraph(
 	isList?: boolean,
 ): MarkdownParagraph {
 	const start = parser.getPosition();
-	const children: Array<AnyMarkdownInlineNode> = [];
+	const children: AnyMarkdownInlineNode[] = [];
 	while (!parser.matchToken("EOF") && !isBlockToken(parser)) {
 		const token = parser.getToken();
 
