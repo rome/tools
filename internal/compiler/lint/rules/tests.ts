@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[])>;
 
-/* GENERATED:START(hash:f8d7eaaad1b865eb36a95f2667279352e3f4b51b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:80a5154fc8cfb423e0040786f53f490830fc49ca,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore

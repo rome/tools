@@ -10,9 +10,9 @@ import {parseText} from "@internal/markdown-parser/parser/text";
 
 export function parseReference(
 	parser: MarkdownParser,
-): MarkdownReferenceInline | Array<AnyMarkdownInlineNode> {
+): MarkdownReferenceInline | (AnyMarkdownInlineNode[]) {
 	const pos = parser.getPosition();
-	let reference: MarkdownReference | Array<AnyMarkdownInlineNode> = [];
+	let reference: MarkdownReference | (AnyMarkdownInlineNode[]) = [];
 	let unwantedTokens = false;
 
 	while (!parser.matchToken("EOF")) {
@@ -66,6 +66,6 @@ export function parseReference(
 				value: "[",
 			},
 		),
-		...(reference as Array<AnyMarkdownInlineNode>),
+		...(reference as AnyMarkdownInlineNode[]),
 	];
 }

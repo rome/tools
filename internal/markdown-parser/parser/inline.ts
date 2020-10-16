@@ -20,7 +20,7 @@ import {
 
 type OnUnknownToken = (
 	token: TokenValues<Tokens>,
-) => AnyMarkdownInlineNode | Array<AnyMarkdownInlineNode> | undefined;
+) => AnyMarkdownInlineNode | (AnyMarkdownInlineNode[]) | undefined;
 
 // TODO: to handle the case of **something **else** is** broken
 // NOTE: at the moment the code detects the first closing tag, the one beside "else**"
@@ -40,7 +40,6 @@ export function parseInline(
 ): MarkdownEmphasisInline | MarkdownText | MarkdownBoldInline | undefined {
 	let children: AnyMarkdownInlineNode[] = [];
 
-	// let inlineNode: MarkdownEmphasisInline | undefined = undefined;
 	const {leftFlankingDelimiter, closingIndexOfDelimiter} = token;
 
 	// the token can potentially open an inline style, let's start checking the next tokens

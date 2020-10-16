@@ -44,14 +44,15 @@ function isReferenceOrMemberExpression(
  * output
  * `null`
  */
+
+type Output = {
+	name: string;
+	optional?: boolean;
+};
+
 function memberExpressionToArray(
 	arg: JSMemberExpression | JSReferenceIdentifier,
-):
-	| Array<{
-			name: string;
-			optional?: boolean;
-		}>
-	| null {
+): Output[] | null {
 	let node: AnyJSExpression = arg;
 	const result = [];
 	while (true) {
