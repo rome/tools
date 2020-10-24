@@ -10,7 +10,7 @@ All members must follow the [Code of Conduct](CODE_OF_CONDUCT.md). Consequences 
 
 Core Contributors are those with a history of consistent contributions, including but not limited to pull requests, project management, or support. These privileges include:
 
-- Push access to the [Rome GitHub org](https://github.com/romefrontend), this includes all repos
+- Push access to the [Rome GitHub org](https://github.com/rome), this includes all repos
 - Contributor status on the [Rome Discord server](https://discord.gg/rome)
 - Ability to [vote](#voting) on project decisions
 
@@ -28,11 +28,11 @@ In the event of a rejection the nominated person will be privately given the req
 
 Stewards have additional privileges over core contributors. Stewards control and maintain sensitive project assets, and act as tiebreakers in the event of disagreements. These additional privileges include:
 
-- Access to the [@rometools Twitter account](https://twitter.com/romefrontend)
-- Administration privileges on the [Rome GitHub org](https://github.com/romefrontend)
+- Access to the [@rometools Twitter account](https://twitter.com/rometools)
+- Administration privileges on the [Rome GitHub org](https://github.com/rome)
 - Administration privileges on the [Rome Discord server](https://discord.gg/rome)
 - Publish access to the [`rome` npm package](https://www.npmjs.com/package/rome)
-- Domain registrar and DNS access to all `romefrontend.*` domains
+- Domain registrar and DNS access to `rome.tools` and all other domains
 - Administration access to the `rome.tools` Netlify account
 - Ability to initiate a [vote](#voting)
 - Ability to veto [votes](#voting) and resolve voting deadlocks
