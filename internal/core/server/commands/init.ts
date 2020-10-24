@@ -136,7 +136,7 @@ export default createServerCommand<Flags>({
 		const files: AbsoluteFilePathMap<StaticMarkup> = new AbsoluteFilePathMap();
 		files.set(
 			configPath,
-			markup`Your project configuration. Documentation: <hyperlink target="https://romefrontend.dev/#project-configuration" />`,
+			markup`Your project configuration. Documentation: <hyperlink target="https://rome.tools/#project-configuration" />`,
 		);
 
 		// We are only using JSONObject here because we don't have an accurate type definition for what
@@ -155,7 +155,7 @@ export default createServerCommand<Flags>({
 				outer: [
 					{
 						type: "LineComment",
-						value: " For configuration documentation see https://romefrontend.dev/#project-configuration",
+						value: " For configuration documentation see https://rome.tools/#project-configuration",
 					},
 				],
 			},
@@ -366,10 +366,10 @@ export default createServerCommand<Flags>({
 			() => {
 				reporter.list(
 					[
-						markup`<emphasis>Setup an editor extension</emphasis>\nGet live errors as you type and format when you save. Learn more: <hyperlink target="https://romefrontend.dev/#editor-integration" />`,
+						markup`<emphasis>Setup an editor extension</emphasis>\nGet live errors as you type and format when you save. Learn more: <hyperlink target="https://rome.tools/#editor-integration" />`,
 						markup`<emphasis>Try a command</emphasis>\n<code>rome check</code> is used to validate your code, verify formatting, and check for lint errors. Run <code>rome --help</code> for a full list of commands and flags.`,
-						markup`<emphasis>Read documentation</emphasis>\nOur website serves as a comprehensive source of guides and documentation <hyperlink target="https://romefrontend.dev/" />`,
-						markup`<emphasis>Get involved in the community</emphasis>\nAsk questions, get support, or contribute by participating on GitHub (<hyperlink target="https://github.com/romefrontend/rome"/>) or our community Discord (<hyperlink target="https://discord.gg/rome" />)`,
+						markup`<emphasis>Read documentation</emphasis>\nOur website serves as a comprehensive source of guides and documentation <hyperlink target="https://rome.tools/" />`,
+						markup`<emphasis>Get involved in the community</emphasis>\nAsk questions, get support, or contribute by participating on GitHub (<hyperlink target="https://github.com/rome/tools"/>) or our community Discord (<hyperlink target="https://discord.gg/rome" />)`,
 					],
 					{
 						ordered: true,

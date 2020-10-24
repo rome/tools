@@ -116,7 +116,7 @@ function generateMarkdown(tagMap: Record<string, Array<Commit>>): string {
 		const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
 		return dedent`
 
-			## [${tag}](https://github.com/romefrontend/rome/releases/tag/${tag})
+			## [${tag}](https://github.com/rome/tools/releases/tag/${tag})
 
 ${renderItems(features, "Features")}
 ${renderItems(fixes, "Bug fixes")}
@@ -131,7 +131,7 @@ ${renderItems(misc, "Miscellaneous", true)}
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 ${list}
 <br><br><br><br>
-<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/romefrontend/rome/raw/main/assets/PNG/logomark_transparent.png" width="128px">
+<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/rome/tools/raw/main/assets/PNG/logomark_transparent.png" width="128px">
 	`;
 }
 

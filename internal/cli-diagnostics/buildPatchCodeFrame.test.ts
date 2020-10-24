@@ -96,7 +96,7 @@ const tests: Array<Test> = [
 			}
 		`,
 	},
-	// https://github.com/romefrontend/rome/issues/679
+	// https://github.com/rome/tools/issues/679
 	{
 		before: dedent`
 			<section>
