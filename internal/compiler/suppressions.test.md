@@ -187,7 +187,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 27
+					column: 24
 					line: 10
 				}
 				start: Object {
@@ -225,7 +225,7 @@ Object {
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 28
+					column: 25
 					line: 16
 				}
 				start: Object {
