@@ -11,7 +11,7 @@
 	2. Verify that tests pass: `./rome test`
 	3. Ensure there are no TypeScript errors: `./node_modules/.bin/tsc`
 
-	Learn more about contributing: https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md
+	Learn more about contributing: https://github.com/rome/tools/blob/main/CONTRIBUTING.md
 -->
 
 ## Summary

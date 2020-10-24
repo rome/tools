@@ -21,11 +21,11 @@ export async function main() {
 
 			// Replace absolute URLs
 			intro = intro.replace(
-				new RegExp(escapeRegex("https://romefrontend.dev/#"), "g"),
+				new RegExp(escapeRegex("https://rome.tools/#"), "g"),
 				"#",
 			);
 			intro = intro.replace(
-				new RegExp(escapeRegex("https://romefrontend.dev/"), "g"),
+				new RegExp(escapeRegex("https://rome.tools/"), "g"),
 				"/",
 			);
 

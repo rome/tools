@@ -232,13 +232,13 @@ test(
 			// @rome-disable foo
 			boo()
 
-			// @romefrontend-ignore foo
+			// @rometools-ignore foo
 			boo()
 
 			// romefrontend-ignore foo
 			boo()
 
-			// @romefrontend-disable foo
+			// @rometools-disable foo
 			boo()
 
 			// romefrontend-disable foo

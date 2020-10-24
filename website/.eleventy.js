@@ -218,7 +218,7 @@ module.exports = function(eleventyConfig) {
 				if (title !== "") {
 					title += " \u2014 ";
 				}
-				title += "Rome Frontend Toolchain";
+				title += "Rome Toolchain";
 			}
 			return title;
 		},

@@ -24,7 +24,7 @@ function get(
 			url,
 			{
 				headers: {
-					"User-Agent": "@romefrontend",
+					"User-Agent": "@rometools",
 					Authorization: `token ${token}`,
 				},
 			},
@@ -115,7 +115,7 @@ export async function main(args: Array<string>) {
 		},
 		async () => {
 			const contributors = await getContributors(
-				"https://api.github.com/repos/romefrontend/rome/contributors",
+				"https://api.github.com/repos/rome/tools/contributors",
 				token,
 			);
 			const lines: Array<string> = [];
@@ -124,7 +124,7 @@ export async function main(args: Array<string>) {
 
 			for (const {username, avatar} of contributors) {
 				lines.push(
-					`<li><a href="https://github.com/romefrontend/rome/commits?author=${encodeURIComponent(
+					`<li><a href="https://github.com/rome/tools/commits?author=${encodeURIComponent(
 						username,
 					)}">`,
 				);
