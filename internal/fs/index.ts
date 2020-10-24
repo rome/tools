@@ -248,7 +248,7 @@ export function removeFile(path: AbsoluteFilePath): Promise<void> {
 
 // We previously just use fs.rmdir with the `recursive: true` flag but it was added in Node 12.10 and we need to support 12.8.1
 // NB: There are probably race conditions, we could switch to openFile and openDirectory if it's a problem
-// https://github.com/romefrontend/rome/issues/1001
+// https://github.com/rome/tools/issues/1001
 export async function removeDirectory(path: AbsoluteFilePath): Promise<void> {
 	// Delete all inner files
 	for (const subpath of await readDirectory(path)) {

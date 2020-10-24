@@ -11,9 +11,9 @@
 
 **Rome** is written in [TypeScript](https://www.typescriptlang.org/) and runs on [Node.js](https://nodejs.org/en/). **Rome** has zero dependencies, and has largely been written from scratch. See [credits](/credits) for more information.
 
-**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/romefrontend/rome/blob/main/GOVERNANCE.md).
+**Rome** is maintained by a [team of volunteers](/credits#team) under an established [governance model](https://github.com/rome/tools/blob/main/GOVERNANCE.md).
 
-**Rome** is [MIT licensed](https://github.com/romefrontend/rome/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/romefrontend/rome/tree/main/CODE_OF_CONDUCT.md).
+**Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
 <!-- GENERATED:END(id:main) -->
 
 {% include action-links.liquid %}
@@ -47,6 +47,6 @@ We plan on covering the following areas:
 | &mdash; JSX  | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | JSON | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
 | &mdash; [RJSON](#rome-json) | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Supported" role="img">✅</span> |
-| HTML [#983](https://github.com/romefrontend/rome/issues/983) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
-| CSS [#984](https://github.com/romefrontend/rome/issues/984) | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
-| Markdown [#985](https://github.com/romefrontend/rome/issues/985) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
+| HTML [#983](https://github.com/rome/tools/issues/983) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
+| CSS [#984](https://github.com/rome/tools/issues/984) | <span aria-label="Supported" role="img">✅</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |
+| Markdown [#985](https://github.com/rome/tools/issues/985) | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> | <span aria-label="Work in Progress" role="img">⌛</span> |

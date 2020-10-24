@@ -57,10 +57,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/romefrontend/rome.git"
+    "url": "https://github.com/rome/tools.git"
   },
   "bugs": {
-    "url": "https://github.com/romefrontend/rome/issues"
+    "url": "https://github.com/rome/tools/issues"
   },
   "rome": {
     "extends": "../../package.json",
