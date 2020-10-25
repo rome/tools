@@ -4,7 +4,7 @@ import {
 	MarkdownReference,
 	MarkdownReferenceInline,
 } from "@internal/ast";
-import {parseInline} from "@internal/markdown-parser/parser/inline";
+import {parseTextWrapping} from "@internal/markdown-parser/parser/textwrapping";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 
@@ -37,7 +37,7 @@ export function parseReference(
 			reference.push(parseText(parser));
 		}
 		if (token.type === "Emphasis" || token.type === "Strong") {
-			const inline = parseInline(
+			const textWrapping = parseTextWrapping(
 				parser,
 				token,
 				(unknownToken) => {
@@ -51,8 +51,8 @@ export function parseReference(
 					return parseText(parser);
 				},
 			);
-			if (inline) {
-				reference.push(inline);
+			if (textWrapping) {
+				reference.push(textWrapping);
 			}
 		}
 		parser.nextToken();

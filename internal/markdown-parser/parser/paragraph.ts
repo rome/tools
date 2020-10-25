@@ -1,6 +1,6 @@
 import {AnyMarkdownInlineNode, MarkdownParagraph} from "@internal/ast";
 import {MarkdownParser, isBlockToken} from "@internal/markdown-parser";
-import {parseInline} from "@internal/markdown-parser/parser/inline";
+import {parseTextWrapping} from "@internal/markdown-parser/parser/textwrapping";
 import {descriptions} from "@internal/diagnostics";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
@@ -26,7 +26,7 @@ export function parseParagraph(
 		switch (token.type) {
 			case "Strong":
 			case "Emphasis": {
-				const nodes = parseInline(
+				const nodes = parseTextWrapping(
 					parser,
 					token,
 					// TODO: to add support for more inline tokens: link, code inline block

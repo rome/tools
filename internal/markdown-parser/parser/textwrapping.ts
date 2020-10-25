@@ -33,7 +33,7 @@ type OnUnknownToken = (
  * @param token
  * @param onUnknownToken
  */
-export function parseInline(
+export function parseTextWrapping(
 	parser: MarkdownParser,
 	token: Emphasis | Strong,
 	onUnknownToken: OnUnknownToken,
@@ -58,7 +58,7 @@ export function parseInline(
 		) {
 			const currentToken = parser.getToken();
 			if (currentToken.type === "Emphasis" || currentToken.type === "Strong") {
-				const possibleChild = parseInline(parser, currentToken, onUnknownToken);
+				const possibleChild = parseTextWrapping(parser, currentToken, onUnknownToken);
 
 				if (possibleChild) {
 					children.push(possibleChild);
@@ -108,7 +108,7 @@ type TokenizeInline = {
 	token: Tokens["Text"] | Tokens["Emphasis"] | Tokens["Strong"];
 };
 
-export function tokenizeInline(
+export function tokenizeTextWrapping(
 	parser: MarkdownParser,
 	state: MarkdownParserState,
 	charToCheck: "*" | "_",

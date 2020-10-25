@@ -24,7 +24,7 @@ import {
 	parseListItem,
 	tokenizeListItem,
 } from "@internal/markdown-parser/parser/listItem";
-import {tokenizeInline} from "@internal/markdown-parser/parser/inline";
+import {tokenizeTextWrapping} from "@internal/markdown-parser/parser/textwrapping";
 import {parseParagraph} from "@internal/markdown-parser/parser/paragraph";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
@@ -151,7 +151,7 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 					return {token: block, state};
 				}
 
-				const result = tokenizeInline(parser, state, "_", index);
+				const result = tokenizeTextWrapping(parser, state, "_", index);
 				if (result) {
 					return result;
 				}
@@ -172,7 +172,7 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 					};
 				}
 
-				const result = tokenizeInline(parser, state, "*", index);
+				const result = tokenizeTextWrapping(parser, state, "*", index);
 				if (result) {
 					return result;
 				}
@@ -201,13 +201,13 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 
 		if (!escaped && state.isParagraph) {
 			if (char === "*") {
-				const result = tokenizeInline(parser, state, "*", index);
+				const result = tokenizeTextWrapping(parser, state, "*", index);
 				if (result) {
 					return result;
 				}
 			}
 			if (char === "_") {
-				const result = tokenizeInline(parser, state, "_", index);
+				const result = tokenizeTextWrapping(parser, state, "_", index);
 				if (result) {
 					return result;
 				}
