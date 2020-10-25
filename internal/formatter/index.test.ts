@@ -49,7 +49,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 			sourceText: content,
 		},
 		async (ref) => {
-			return await worker.api.format(ref, {format}, {});
+			return await worker.api.format(ref, {format, forceFormat: true}, {});
 		},
 	);
 	if (res === undefined) {
