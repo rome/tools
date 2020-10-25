@@ -7,7 +7,7 @@ export const markdownHandler: ExtensionHandler = {
 	hasTabs: true,
 	capabilities: {
 		lint: false,
-		format: false,
+		format: true,
 	},
 
 	async parse({mtime, path, file, worker}) {

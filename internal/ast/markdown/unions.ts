@@ -30,6 +30,9 @@ export type AnyMarkdownNode =
 	| n.MarkdownHeadingBlock
 	| n.MarkdownParagraph
 	| n.MarkdownListBlock
+	| n.MarkdownTable
+	| n.MarkdownTableRow
+	| n.MarkdownTableCell
 	| n.MarkdownDefinitionInline
 	| n.MarkdownText
 	| n.MarkdownBoldInline

@@ -8,6 +8,7 @@ import {parseReference} from "@internal/markdown-parser/parser/reference";
 export function parseParagraph(
 	parser: MarkdownParser,
 	isList?: boolean,
+	isTable?: boolean
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: Array<AnyMarkdownInlineNode> = [];
@@ -18,6 +19,10 @@ export function parseParagraph(
 			parser.nextToken();
 			break;
 		}
+		if (isTable && token.type === "TablePipe") {
+			break;
+		}
+
 		switch (token.type) {
 			case "Strong":
 			case "Emphasis": {

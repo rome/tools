@@ -1,9 +1,10 @@
-import {AnyMarkdownInlineNode, NodeBaseWithComments} from "@internal/ast";
+import { MarkdownParagraph } from './../core/MarkdownParagraph';
+import {NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface MarkdownTableCell extends NodeBaseWithComments {
 	type: "MarkdownTableCell";
-	children: Array<AnyMarkdownInlineNode>;
+	children: Array<MarkdownParagraph>;
 }
 
 export const markdownTableCell = createBuilder<MarkdownTableCell>(

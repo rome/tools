@@ -71,4 +71,5 @@ export type Tokens = BaseTokens & {
 	Emphasis: Emphasis;
 	// for ** and __
 	Strong: Strong;
+	TablePipe: SimpleToken<"TablePipe">;
 };

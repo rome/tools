@@ -28,6 +28,7 @@ import {tokenizeInline} from "@internal/markdown-parser/parser/inline";
 import {parseParagraph} from "@internal/markdown-parser/parser/paragraph";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
+import { parseTable, tokenizeTable } from "./parser/table";
 
 type MarkdownParserTypes = {
 	tokens: Tokens;
@@ -72,6 +73,13 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 					token: parser.finishToken("CloseBracket"),
 					state,
 				};
+			}
+
+			if (char === "|") {
+				const token = tokenizeTable(parser, index);
+				if (token) {
+					return { token, state };
+				}
 			}
 		}
 
@@ -227,7 +235,6 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 		}
 
 		const [value, endIndex] = parser.readInputFrom(index, isntInlineCharacter);
-
 		return {
 			token: parser.finishValueToken("Text", value, endIndex),
 			state: {
@@ -384,6 +391,9 @@ function parseBlock(
 
 		case "Code":
 			return parseCode(parser);
+
+		case "TablePipe":
+			return parseTable(parser);
 
 		default: {
 			throw parser.unexpected();
