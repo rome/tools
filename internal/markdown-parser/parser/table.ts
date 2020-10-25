@@ -1,6 +1,6 @@
-import { MarkdownParagraph } from './../../ast/markdown/core/MarkdownParagraph';
+import { parseInline } from '@internal/markdown-parser/parser/inline';
+import { AnyMarkdownInlineNode } from '@internal/ast';
 import { MarkdownTableCell } from '@internal/ast';
-import { parseParagraph } from '@internal/markdown-parser/parser/paragraph';
 import { MarkdownTable } from './../../ast/markdown/tables/MarkdownTable';
 import { Number0, ob1Add } from "@internal/ob1";
 import { TokenValues } from "@internal/parser-core";
@@ -35,9 +35,15 @@ export function parseTable(parser: MarkdownParser): MarkdownTable {
     parser.nextToken();
     const cells: Array<MarkdownTableCell> = [];
     while (!parser.matchToken("NewLine")) {
-      const cellChildrens: Array<MarkdownParagraph> = [];
+      const cellChildrens: Array<AnyMarkdownInlineNode> = [];
       while (!parser.matchToken("TablePipe")) {
-        cellChildrens.push(parseParagraph(parser, false, true))
+        const inline = parseInline(parser)
+        if (Array.isArray(inline)) {
+          cellChildrens.push(...inline)
+        } else if (inline !== undefined) {
+          cellChildrens.push(inline)
+        }
+        parser.nextToken();
       }
       cells.push({
         type: "MarkdownTableCell",

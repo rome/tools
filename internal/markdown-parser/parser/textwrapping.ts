@@ -37,7 +37,7 @@ export function parseTextWrapping(
 	parser: MarkdownParser,
 	token: Emphasis | Strong,
 	onUnknownToken: OnUnknownToken,
-): MarkdownEmphasisInline | MarkdownText | MarkdownBoldInline | undefined {
+): MarkdownEmphasisInline | MarkdownText | MarkdownBoldInline {
 	let children: Array<AnyMarkdownInlineNode> = [];
 
 	// let inlineNode: MarkdownEmphasisInline | undefined = undefined;
