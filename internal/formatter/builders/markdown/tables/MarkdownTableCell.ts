@@ -5,5 +5,5 @@ export default function MarkdownTableCell(
 	builder: Builder,
 	node: MarkdownTableCell,
 ): Token {
-  throw Error("Must be rendered through MarkdownTable.")
+	throw Error("Must be rendered through MarkdownTable.");
 }

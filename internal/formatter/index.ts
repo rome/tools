@@ -43,7 +43,7 @@ export function formatAST(
 		printWidth: format === "pretty" ? 80 : Infinity,
 		rootIndent: indent,
 		tabWidth: 2,
-	}
+	};
 
 	const builder = new Builder(
 		{

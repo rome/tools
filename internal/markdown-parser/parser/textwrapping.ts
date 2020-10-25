@@ -58,7 +58,11 @@ export function parseTextWrapping(
 		) {
 			const currentToken = parser.getToken();
 			if (currentToken.type === "Emphasis" || currentToken.type === "Strong") {
-				const possibleChild = parseTextWrapping(parser, currentToken, onUnknownToken);
+				const possibleChild = parseTextWrapping(
+					parser,
+					currentToken,
+					onUnknownToken,
+				);
 
 				if (possibleChild) {
 					children.push(possibleChild);

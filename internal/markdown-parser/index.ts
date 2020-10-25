@@ -28,7 +28,7 @@ import {tokenizeTextWrapping} from "@internal/markdown-parser/parser/textwrappin
 import {parseParagraph} from "@internal/markdown-parser/parser/paragraph";
 import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
-import { parseTable, tokenizeTable } from "./parser/table";
+import {parseTable, tokenizeTable} from "./parser/table";
 
 type MarkdownParserTypes = {
 	tokens: Tokens;
@@ -78,7 +78,7 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 			if (char === "|") {
 				const token = tokenizeTable(parser, index);
 				if (token) {
-					return { token, state };
+					return {token, state};
 				}
 			}
 		}

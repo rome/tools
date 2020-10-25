@@ -1,4 +1,4 @@
-import { PrinterOptions } from './Printer';
+import {PrinterOptions, printTokenToString} from "./Printer";
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -21,7 +21,6 @@ import {ob1Get1} from "@internal/ob1";
 import {isRoot} from "@internal/ast-utils";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics";
-import { printTokenToString } from "./Printer";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,
@@ -38,7 +37,11 @@ export type BuilderOptions = {
 };
 
 export default class Builder {
-	constructor(opts: BuilderOptions, printOpts: PrinterOptions, comments: Array<AnyComment> = []) {
+	constructor(
+		opts: BuilderOptions,
+		printOpts: PrinterOptions,
+		comments: Array<AnyComment> = [],
+	) {
 		this.options = opts;
 		this.printOptions = printOpts;
 		this.comments = new CommentsConsumer(comments);
@@ -294,9 +297,13 @@ export default class Builder {
 		const printed = printTokenToString(token, this.printOptions).code;
 		const diff = width - printed.length;
 		if (diff > 0) {
-			return " ".repeat(Math.floor(diff / 2)) + printed + " ".repeat(Math.ceil(diff / 2))
+			return (
+				" ".repeat(Math.floor(diff / 2)) +
+				printed +
+				" ".repeat(Math.ceil(diff / 2))
+			);
 		} else {
-			return printed
+			return printed;
 		}
 	}
 }

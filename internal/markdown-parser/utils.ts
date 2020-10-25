@@ -40,7 +40,17 @@ const PUNCTUATION_CHARACTERS = new Set([
 	"~",
 ]);
 
-const INLINE_HOT_CHARACTERS = new Set(["*", "_", "`", "[", "]", "(", ")", "\n", "|"]);
+const INLINE_HOT_CHARACTERS = new Set([
+	"*",
+	"_",
+	"`",
+	"[",
+	"]",
+	"(",
+	")",
+	"\n",
+	"|",
+]);
 
 export function hasThematicBreak(input: string): boolean {
 	return THEMATIC_BREAKS.has(input);
