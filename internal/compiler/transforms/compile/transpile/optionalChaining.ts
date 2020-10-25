@@ -27,7 +27,7 @@ export default createVisitor({
 			}
 		}
 
-		if (node.type === "JSOptionalCallExpression") {
+		if (node.type === "JSOptionalCallExpression" && node.optional === true) {
 			// TODO assign `node.callee` to a variable and use it as a reference
 			return signals.replace(
 				template.expression`${node.callee} == null ? undefined : ${jsCallExpression.create({
