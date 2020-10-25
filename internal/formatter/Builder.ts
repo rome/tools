@@ -285,4 +285,13 @@ export default class Builder {
 
 		return bStartLine - aEndLine;
 	}
+
+	public alignCenter(text: string, width: number): string {
+		const diff = width - text.length;
+		if (diff > 0) {
+			return " ".repeat(Math.floor(diff / 2)) + text + "".repeat(Math.ceil(diff / 2))
+		} else {
+			return text
+		}
+	}
 }
