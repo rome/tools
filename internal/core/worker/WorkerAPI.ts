@@ -379,7 +379,10 @@ export default class WorkerAPI {
 
 		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
 
-		if (!formatOptions.forceFormat && (!handler.capabilities.format || !project.config.format.enabled)) {
+		if (
+			!formatOptions.forceFormat &&
+			(!handler.capabilities.format || !project.config.format.enabled)
+		) {
 			return;
 		}
 
