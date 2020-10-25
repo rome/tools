@@ -30,12 +30,24 @@ MarkdownRoot {
 				MarkdownTableRow {
 					children: Array [
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 7
+									line: 1
+								}
+								start: Object {
+									column: 1
+									line: 1
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownText {
+									value: "head 1"
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 7
+											column: 1
 											line: 1
 										}
 										start: Object {
@@ -43,32 +55,28 @@ MarkdownRoot {
 											line: 1
 										}
 									}
-									children: Array [
-										MarkdownText {
-											value: "head 1"
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 1
-													line: 1
-												}
-												start: Object {
-													column: 1
-													line: 1
-												}
-											}
-										}
-									]
 								}
 							]
 						}
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 14
+									line: 1
+								}
+								start: Object {
+									column: 8
+									line: 1
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownText {
+									value: "head 2"
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 14
+											column: 8
 											line: 1
 										}
 										start: Object {
@@ -76,22 +84,6 @@ MarkdownRoot {
 											line: 1
 										}
 									}
-									children: Array [
-										MarkdownText {
-											value: "head 2"
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 8
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
-										}
-									]
 								}
 							]
 						}
@@ -100,12 +92,24 @@ MarkdownRoot {
 				MarkdownTableRow {
 					children: Array [
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 13
+									line: 2
+								}
+								start: Object {
+									column: 1
+									line: 2
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownText {
+									value: " with space "
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 13
+											column: 1
 											line: 2
 										}
 										start: Object {
@@ -113,32 +117,28 @@ MarkdownRoot {
 											line: 2
 										}
 									}
-									children: Array [
-										MarkdownText {
-											value: " with space "
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 1
-													line: 2
-												}
-												start: Object {
-													column: 1
-													line: 2
-												}
-											}
-										}
-									]
 								}
 							]
 						}
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 21
+									line: 2
+								}
+								start: Object {
+									column: 14
+									line: 2
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownText {
+									value: "ddadada"
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 21
+											column: 14
 											line: 2
 										}
 										start: Object {
@@ -146,22 +146,6 @@ MarkdownRoot {
 											line: 2
 										}
 									}
-									children: Array [
-										MarkdownText {
-											value: "ddadada"
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
-										}
-									]
 								}
 							]
 						}
@@ -170,12 +154,39 @@ MarkdownRoot {
 				MarkdownTableRow {
 					children: Array [
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 9
+									line: 3
+								}
+								start: Object {
+									column: 1
+									line: 3
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownEmphasisInline {
+									value: Array [
+										MarkdownText {
+											value: "bold"
+											loc: Object {
+												filename: "tables/input.md"
+												end: Object {
+													column: 3
+													line: 3
+												}
+												start: Object {
+													column: 3
+													line: 3
+												}
+											}
+										}
+									]
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 9
+											column: 7
 											line: 3
 										}
 										start: Object {
@@ -183,47 +194,28 @@ MarkdownRoot {
 											line: 3
 										}
 									}
-									children: Array [
-										MarkdownEmphasisInline {
-											value: Array [
-												MarkdownText {
-													value: "bold"
-													loc: Object {
-														filename: "tables/input.md"
-														end: Object {
-															column: 3
-															line: 3
-														}
-														start: Object {
-															column: 3
-															line: 3
-														}
-													}
-												}
-											]
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 7
-													line: 3
-												}
-												start: Object {
-													column: 1
-													line: 3
-												}
-											}
-										}
-									]
 								}
 							]
 						}
 						MarkdownTableCell {
+							loc: Object {
+								filename: "tables/input.md"
+								end: Object {
+									column: 16
+									line: 3
+								}
+								start: Object {
+									column: 10
+									line: 3
+								}
+							}
 							children: Array [
-								MarkdownParagraph {
+								MarkdownText {
+									value: "italic"
 									loc: Object {
 										filename: "tables/input.md"
 										end: Object {
-											column: 16
+											column: 10
 											line: 3
 										}
 										start: Object {
@@ -231,22 +223,6 @@ MarkdownRoot {
 											line: 3
 										}
 									}
-									children: Array [
-										MarkdownText {
-											value: "italic"
-											loc: Object {
-												filename: "tables/input.md"
-												end: Object {
-													column: 10
-													line: 3
-												}
-												start: Object {
-													column: 10
-													line: 3
-												}
-											}
-										}
-									]
 								}
 							]
 						}
