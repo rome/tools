@@ -35,6 +35,7 @@ export function parseTable(parser: MarkdownParser): MarkdownTable {
     parser.nextToken();
     const cells: Array<MarkdownTableCell> = [];
     while (!parser.matchToken("NewLine")) {
+      const startPos = parser.getPosition();
       const cellChildrens: Array<AnyMarkdownInlineNode> = [];
       while (!parser.matchToken("TablePipe")) {
         const inline = parseInline(parser)
@@ -47,7 +48,8 @@ export function parseTable(parser: MarkdownParser): MarkdownTable {
       }
       cells.push({
         type: "MarkdownTableCell",
-        children: cellChildrens
+        children: cellChildrens,
+        loc: parser.finishLoc(startPos)
       })
       parser.nextToken();
     }

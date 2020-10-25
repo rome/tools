@@ -18,10 +18,9 @@ export default function MarkdownTable(
   })
 
   const rowTokens = node.children.map((row) => {
-    const cellTokens = row.children.map((cell) => {
-      console.log(cell.children)
+    const cellTokens = row.children.map((cell, index) => {
       const contents = cell.children.map((child) => builder.tokenize(child, cell))
-      return concat(contents)
+      return builder.alignCenter(concat(contents), columnWidthMap[index])
     })
     return concat(["|", join("|", cellTokens), "|"])
   })
@@ -35,6 +34,5 @@ function getCellWidth(cell: MarkdownTableCell): number {
   if (cell.loc == null) {
     return 0;
   }
-
   return ob1Get(ob1Sub(cell.loc.end.column, cell.loc.start.column))
 }

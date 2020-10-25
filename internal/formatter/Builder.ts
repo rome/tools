@@ -1,3 +1,4 @@
+import { PrinterOptions } from './Printer';
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -20,6 +21,7 @@ import {ob1Get1} from "@internal/ob1";
 import {isRoot} from "@internal/ast-utils";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {inferDiagnosticLanguageFromRootAST} from "@internal/cli-diagnostics";
+import { printTokenToString } from "./Printer";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,
@@ -36,8 +38,9 @@ export type BuilderOptions = {
 };
 
 export default class Builder {
-	constructor(opts: BuilderOptions, comments: Array<AnyComment> = []) {
+	constructor(opts: BuilderOptions, printOpts: PrinterOptions, comments: Array<AnyComment> = []) {
 		this.options = opts;
+		this.printOptions = printOpts;
 		this.comments = new CommentsConsumer(comments);
 		this.printedComments = new Set();
 		this.printStack = [];
@@ -46,6 +49,7 @@ export default class Builder {
 
 	private language: undefined | DiagnosticLanguage;
 	public options: BuilderOptions;
+	private printOptions: PrinterOptions;
 	private comments: CommentsConsumer;
 	private printedComments: Set<string>;
 	private printStack: Array<AnyNode>;
@@ -286,12 +290,13 @@ export default class Builder {
 		return bStartLine - aEndLine;
 	}
 
-	public alignCenter(text: string, width: number): string {
-		const diff = width - text.length;
+	public alignCenter(token: Token, width: number): Token {
+		const printed = printTokenToString(token, this.printOptions).code;
+		const diff = width - printed.length;
 		if (diff > 0) {
-			return " ".repeat(Math.floor(diff / 2)) + text + "".repeat(Math.ceil(diff / 2))
+			return " ".repeat(Math.floor(diff / 2)) + printed + " ".repeat(Math.ceil(diff / 2))
 		} else {
-			return text
+			return printed
 		}
 	}
 }

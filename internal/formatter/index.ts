@@ -35,6 +35,16 @@ export function formatAST(
 		allowInterpreterDirective = true,
 	}: FormatterOptions = {},
 ): PrinterOutput {
+	const indentChar = projectConfig.format.indentStyle === "tab" ? "\t" : " ";
+	const indentString = indentChar.repeat(projectConfig.format.indentSize);
+
+	const printOpts = {
+		indentString,
+		printWidth: format === "pretty" ? 80 : Infinity,
+		rootIndent: indent,
+		tabWidth: 2,
+	}
+
 	const builder = new Builder(
 		{
 			format,
@@ -42,12 +52,10 @@ export function formatAST(
 			typeAnnotations,
 			allowInterpreterDirective,
 		},
+		printOpts,
 		isRoot(ast) ? ast.comments : [],
 	);
 	const token = builder.tokenize(ast, MOCK_PARENT);
-
-	const indentChar = projectConfig.format.indentStyle === "tab" ? "\t" : " ";
-	const indentString = indentChar.repeat(projectConfig.format.indentSize);
 
 	const formatted = printTokenToString(
 		token,
