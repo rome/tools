@@ -2,6 +2,7 @@
 title: Lint Rule js/useBlockStatements
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
+eslint-rule: https://eslint.org/docs/rules/curly
 eleventyNavigation:
 	key: lint-rules/js/useBlockStatements
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/useBlockStatements
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:806175be8c74cc6c0c07f11da6b2951d85900c98,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+
+**ESLint Equivalent:** [curly](https://eslint.org/docs/rules/curly)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:63324dc5e515146c59eea3cdda75bc0e7ccf05f8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

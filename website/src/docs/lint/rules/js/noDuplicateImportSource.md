@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noDuplicateImportSource
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow several import statements for a module
+eslint-rule: https://eslint.org/docs/rules/no-duplicate-imports
 eleventyNavigation:
 	key: lint-rules/js/noDuplicateImportSource
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/noDuplicateImportSource
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:98220578e1b2d57969926f0ffe3485b15d23df8e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow several import statements for a module
+
+**ESLint Equivalent:** [no-duplicate-imports](https://eslint.org/docs/rules/no-duplicate-imports)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:ad8beff2daa866a16de37d52bbd700d4daa66915,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
