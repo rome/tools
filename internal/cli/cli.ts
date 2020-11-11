@@ -35,7 +35,7 @@ import {
 	joinMarkupLines,
 	markup,
 } from "@internal/markup";
-import {stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {getEnvVar} from "@internal/cli-environment";
 import {satisfiesSemver} from "@internal/codec-semver";
 import {Reporter} from "@internal/cli-reporter";
@@ -508,7 +508,7 @@ export default async function cli() {
 							: profilePath,
 					);
 
-					const str = stringifyJSON(events);
+					const str = json.stringify(events);
 					await writeFile(resolvedProfilePath, str);
 
 					client.reporter.success(
@@ -575,7 +575,7 @@ export default async function cli() {
 				: cliFlags.markersPath,
 		);
 
-		await writeFile(markersPath, stringifyJSON(res.markers));
+		await writeFile(markersPath, json.stringify(res.markers));
 
 		client.reporter.success(
 			markup`Wrote markers to <emphasis>${markersPath}</emphasis>`,

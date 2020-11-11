@@ -1,5 +1,5 @@
 import {Event} from "@internal/events";
-import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {LSPRequestMessage, LSPResponseMessage} from "./types";
 import {Reporter} from "@internal/cli-reporter";

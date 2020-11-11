@@ -16,7 +16,7 @@ import {
 	writeFile,
 } from "@internal/fs";
 import {Dict} from "@internal/typescript-helpers";
-import {consumeJSON, stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {
 	DiagnosticLocation,
 	Diagnostics,
@@ -253,7 +253,7 @@ export default class RecoveryStore {
 		}
 
 		const indexContent = await readFileText(indexPath);
-		const index = consumeJSON({
+		const index = json.consumeValue({
 			input: indexContent,
 			path: indexPath,
 		});
@@ -388,7 +388,7 @@ export default class RecoveryStore {
 		const store = this.requestIdToStore.get(req.id);
 		if (store !== undefined) {
 			const indexPath = this.getStoreIndexPath(store.storeId);
-			await writeFile(indexPath, stringifyJSON(store.index));
+			await writeFile(indexPath, json.stringify(store.index));
 			this.logger.info(
 				markup`Committed store index to <emphasis>${indexPath}</emphasis>`,
 			);

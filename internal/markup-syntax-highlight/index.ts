@@ -12,6 +12,7 @@ import highlightJS from "./highlightJS";
 import highlightHTML from "./highlightHTML";
 import highlightJSON from "./highlightJSON";
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
+import {CONFIG_HANDLERS} from "@internal/codec-config";
 
 // Max file size to avoid doing expensive highlighting for massive files - 100KB
 // NB: This should probably be lower
@@ -34,11 +35,14 @@ export function highlightCode(opts: AnsiHighlightOptions): HighlightCodeResult {
 			case "html":
 				return highlightHTML(opts);
 
-			case "json":
-				return highlightJSON(opts);
-
 			case "shell":
 				return highlightShell(opts);
+		}
+	}
+
+	for (const handler of CONFIG_HANDLERS) {
+		if (handler.jsonSuperset && opts.language === handler.language) {
+			return highlightJSON(opts, handler);
 		}
 	}
 

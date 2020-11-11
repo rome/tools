@@ -14,6 +14,7 @@ import {
 } from "@internal/path";
 import {getEnvVar} from "@internal/cli-environment";
 import os = require("os");
+import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 
 // Node flags to pass to all forked processes
 export const CHILD_ARGS = ["--max-old-space-size=8192", "--trace-warnings"];
@@ -98,10 +99,10 @@ function getUserConfigDirectory(): AbsoluteFilePath {
 }
 
 export const USER_CONFIG_DIRECTORY = getUserConfigDirectory();
-export const USER_CONFIG_FILENAMES: Array<string> = [
-	"config.json",
-	"config.rjson",
-];
+export const USER_CONFIG_FILENAMES: Array<string> = [];
+for (const ext of CONFIG_EXTENSIONS) {
+	USER_CONFIG_FILENAMES.push(`config.${ext}`);
+}
 
 export const DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY = USER_CONFIG_DIRECTORY.append(
 	"recovery",

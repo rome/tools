@@ -6,7 +6,7 @@
  */
 
 import {Number0} from "@internal/ob1";
-import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-config";
 
 export type LSPRequestMessage = {
 	/**

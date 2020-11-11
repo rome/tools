@@ -5,7 +5,6 @@ export type AnyRoot =
 	| n.CSSRoot
 	| n.HTMLRoot
 	| n.MarkdownRoot
-	| n.CommitRoot
-	| n.TomlRoot;
+	| n.CommitRoot;
 
 export type AnyComment = n.CommentBlock | n.CommentLine;

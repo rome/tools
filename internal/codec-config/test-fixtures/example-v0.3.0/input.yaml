@@ -1,0 +1,107 @@
+Table:
+  key: value
+dog:
+  tater:
+    type: pug
+x:
+  'y':
+    z:
+      w: {}
+String:
+  basic: "I'm a string. \"You can quote me\". Name\tJosé\nLocation\tSF."
+  Multiline:
+    key1: |-
+      One
+      Two
+    key2: |-
+      One
+      Two
+    key3: |-
+      One
+      Two
+  Multilined:
+    Singleline:
+      key1: The quick brown fox jumps over the lazy dog.
+      key2: The quick brown fox jumps over the lazy dog.
+      key3: The quick brown fox jumps over the lazy dog.
+  Literal:
+    winpath: 'C:\Users\nodejs\templates'
+    winpath2: \\ServerX\admin$\system32\
+    quoted: Tom "Dubs" Preston-Werner
+    regex: <\i\c*\s*>
+    Multiline:
+      regex2: 'I [dw]on''t need \d{2} apples'
+      lines: |
+        The first newline is
+        trimmed in raw strings.
+           All other whitespace
+           is preserved.
+Integer:
+  key1: 99
+  key2: 42
+  key3: 0
+  key4: -17
+Float:
+  fractional:
+    key1: 1
+    key2: 3.1415
+    key3: -0.01
+  exponent:
+    key1: 5e+22
+    key2: 1000000
+    key3: -0.02
+  both:
+    key: 6.626e-34
+Booleans:
+  'True': true
+  'False': false
+Datetime:
+  key1: 1979-05-27T07:32:00.000Z
+  key2: 1979-05-27T07:32:00.000Z
+  key3: 1979-05-27T07:32:00.999Z
+Array:
+  key1:
+    - 1
+    - 2
+    - 3
+  key2:
+    - red
+    - yellow
+    - green
+  key3:
+    - - 1
+      - 2
+    - - 3
+      - 4
+      - 5
+  key4:
+    - - 1
+      - 2
+    - - a
+      - b
+      - c
+  key5:
+    - 1
+    - 2
+    - 3
+  key6:
+    - 1
+    - 2
+products:
+  - name: Hammer
+    sku: 738594937
+  - {}
+  - name: Nail
+    sku: 284758393
+    color: gray
+fruit:
+  - name: apple
+    physical:
+      color: red
+      shape: round
+    variety:
+      - name: red delicious
+      - name: granny smith
+  - name: banana
+    variety:
+      - name: plantain

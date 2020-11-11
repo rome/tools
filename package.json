@@ -1,39 +1,39 @@
 {
-  "name": "rome-root",
-  "license": "MIT",
-  "version": "10.0.4-beta",
-  "engines": {
-    "node": ">=12.8.1"
-  },
-  "//": "Look! No deps!",
-  "dependencies": {},
-  "///": "Only used for static type checking",
-  "devDependencies": {
-    "@types/node": "^14.0.14",
-    "@types/react": "^16.9.41",
-    "@types/react-dom": "^16.9.8",
-    "@types/vscode": "^1.46.0",
-    "typescript": "^4.0.0-beta"
-  },
-  "rome": {
-    "name": "project-rome",
-    "root": true,
-    "lint": {
-      "ignore": [
-        "build",
-        "coverage",
-        "node_modules",
-        "core/static",
-        "resources",
-        "test-fixtures",
-        "vendor",
-        "type-libs",
-        "lib/modules.js",
-        "prelude.ts",
-        "internal/web-ui",
-        "out",
-        "vscode/node_modules"
-      ]
-    }
-  }
+	"name": "rome-root",
+	"license": "MIT",
+	"version": "10.0.4-beta",
+	"engines": {
+		"node": ">=12.8.1"
+	},
+	"//": "Look! No deps!",
+	"dependencies": {},
+	"///": "Only used for static type checking",
+	"devDependencies": {
+		"@types/node": "^14.0.14",
+		"@types/react": "^16.9.41",
+		"@types/react-dom": "^16.9.8",
+		"@types/vscode": "^1.46.0",
+		"typescript": "^4.0.0-beta"
+	},
+	"rome": {
+		"name": "project-rome",
+		"root": true,
+		"lint": {
+			"ignore": [
+				"build",
+				"coverage",
+				"node_modules",
+				"core/static",
+				"resources",
+				"test-fixtures",
+				"vendor",
+				"type-libs",
+				"lib/modules.js",
+				"prelude.ts",
+				"internal/web-ui",
+				"out",
+				"vscode/node_modules"
+			]
+		}
+	}
 }

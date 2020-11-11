@@ -31,13 +31,12 @@ import {
 } from "@internal/events";
 import {Reporter, ReporterDerivedStreams} from "@internal/cli-reporter";
 import prettyFormat from "@internal/pretty-format";
-
 import {TarWriter} from "@internal/codec-tar";
 import {Profile, Profiler, Trace, TraceEvent} from "@internal/v8";
 import {PartialServerQueryRequest} from "../common/bridges/ServerBridge";
 import {UserConfig, getUserConfigFile} from "../common/userConfig";
 import {createWriteStream, removeFile} from "@internal/fs";
-import {stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import stream = require("stream");
 import net = require("net");
 import zlib = require("zlib");
@@ -463,7 +462,7 @@ export default class Client {
 
 			const writer = new TarWriter(stream);
 
-			writer.append({name: "profile.json"}, stringifyJSON(profileEvents));
+			writer.append({name: "profile.json"}, json.stringify(profileEvents));
 			writer.append({name: "logs.txt"}, logsPlain);
 			writer.append({name: "logs.html"}, `<pre><code>${logsHTML}</code></pre>`);
 			writer.append({name: "output.txt"}, output);
@@ -476,10 +475,10 @@ export default class Client {
 				// If there are multiple responses then use a directory otherwise just dump it in the root
 				const dirname =
 					responses.length === 1 ? "" : `requests/${i}-${request.commandName}/`;
-				writer.append({name: `${dirname}request.json`}, stringifyJSON(request));
+				writer.append({name: `${dirname}request.json`}, json.stringify(request));
 				writer.append(
 					{name: `${dirname}response.json`},
-					stringifyJSON(response),
+					json.stringify(response),
 				);
 			}
 

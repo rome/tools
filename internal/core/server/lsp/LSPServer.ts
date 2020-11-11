@@ -21,7 +21,7 @@ import {
 import Linter from "../linter/Linter";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@internal/core/common/types/client";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-config";
 import {
 	ReporterProgress,
 	ReporterProgressOptions,

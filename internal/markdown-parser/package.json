@@ -1,6 +1,6 @@
 {
-  "name": "@internal/markdown-parser",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@internal/markdown-parser",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }

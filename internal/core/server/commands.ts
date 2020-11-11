@@ -34,7 +34,7 @@ import _projectDump from "./commands/_projectDump";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-config";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";

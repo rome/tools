@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONObject} from "@internal/codec-json";
+import {JSONObject} from "@internal/codec-config";
 import T from "./types/T";
 import {AnyNode} from "@internal/ast";
 import {ModuleSignature} from "./index";

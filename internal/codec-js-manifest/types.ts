@@ -14,7 +14,7 @@ import {
 	RelativeFilePath,
 	RelativeFilePathMap,
 } from "@internal/path";
-import {JSONObject, JSONPropertyValue} from "@internal/codec-json";
+import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
 import {PathPatterns} from "@internal/path-match";
 

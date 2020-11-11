@@ -46583,11 +46583,11 @@ const ___R$project$rome$$internal$project$utils_ts = {
 	}
 
 
-  // project-rome/@internal/codec-json/types.ts
+  // project-rome/@internal/codec-config/types.ts
 
 
 
-  // project-rome/@internal/codec-json/parse.ts
+  // project-rome/@internal/codec-config/parse.ts
 // Words can't start with a digit
 	function ___R$$priv$project$rome$$internal$codec$json$parse_ts$isWordStartChar(
 		char,
@@ -47704,7 +47704,7 @@ const ___R$project$rome$$internal$project$utils_ts = {
 	}
 
 
-  // project-rome/@internal/codec-json/stringify.ts
+  // project-rome/@internal/codec-config/stringify.ts
 function ___R$$priv$project$rome$$internal$codec$json$stringify_ts$joinList(
 		open,
 		close,
@@ -48105,7 +48105,7 @@ function ___R$$priv$project$rome$$internal$codec$json$stringify_ts$joinList(
 	}
 
 
-  // project-rome/@internal/codec-json/index.ts
+  // project-rome/@internal/codec-config/index.ts
 function ___R$project$rome$$internal$codec$json$index_ts$consumeJSON(opts) {
 		return ___R$project$rome$$internal$codec$json$index_ts$consumeJSONExtra(
 			opts,
@@ -133567,7 +133567,7 @@ const ___R$project$rome$$internal$core$common$virtual$modules_ts$modules = new M
 				"types.ts",
 				{
 					"mtime": 1_596_271_135_840.0615,
-					"content": "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from internal/codec-json/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n\nexport type VoidCallback = () => void | undefined;\n\nexport type AsyncVoidCallback = () =>\n\t| void\n\t| undefined\n\t| Promise<void | undefined>;\n",
+					"content": "/**\n * Copyright (c) Facebook, Inc. and its affiliates.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\n\n// These are copied from internal/codec-config/types.ts\nexport type JSONValue =\n\t| null\n\t| string\n\t| number\n\t| boolean\n\t| JSONObject\n\t| JSONArray;\n\nexport type JSONPropertyValue = undefined | void | JSONValue;\n\nexport type JSONObject = {\n\t[x: string]: JSONPropertyValue;\n};\n\nexport type JSONArray = Array<JSONValue>;\n\nexport type VoidCallback = () => void | undefined;\n\nexport type AsyncVoidCallback = () =>\n\t| void\n\t| undefined\n\t| Promise<void | undefined>;\n",
 				},
 			],
 		]),

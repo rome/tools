@@ -6,7 +6,7 @@ import {
 	Position,
 	SourceLocation,
 } from "./types";
-import {catchDiagnosticsSync} from "@internal/diagnostics";
+import {DiagnosticCategory, catchDiagnosticsSync} from "@internal/diagnostics";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -34,9 +34,17 @@ export function readUntilLineBreak(char: string): boolean {
 
 export function createParser<Types extends ParserCoreTypes>(
 	impl: ParserCoreImplementation<Types>,
-): (opts: Types["options"], meta: Types["meta"]) => ParserCore<Types> {
-	return (opts: Types["options"], meta: Types["meta"]) => {
-		return new ParserCore(impl, opts, meta);
+): (
+	opts: Types["options"],
+	meta: Types["meta"],
+	diagnosticCategory?: DiagnosticCategory,
+) => ParserCore<Types> {
+	return (
+		opts: Types["options"],
+		meta: Types["meta"],
+		diagnosticCategory?: DiagnosticCategory,
+	) => {
+		return new ParserCore(impl, opts, meta, diagnosticCategory);
 	};
 }
 
