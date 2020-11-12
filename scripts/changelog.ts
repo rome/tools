@@ -4,7 +4,7 @@ import {readFileTextMeta} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent} from "@internal/string-utils";
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import child = require("child_process");
 import https = require("https");
 import http = require("http");
@@ -142,7 +142,7 @@ ${list}
  */
 async function getCurrentVersion(): Promise<string> {
 	const path = ROOT.append("package.json");
-	return consumeJSON(await readFileTextMeta(path)).get("version").asString();
+	return json.consumeValue(await readFileTextMeta(path)).get("version").asString();
 }
 
 /**

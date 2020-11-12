@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | Array<AnyNode>;
 
-/* GENERATED:START(hash:da60f7dc757d18ac19150ca202ff795fc9a007ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:52a01c652b90aff283bc92bbb3f34791b1668346,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -188,18 +188,6 @@ export * from "./markdown/inline/MarkdownReferenceInline";
 export * from "./markdown/core/MarkdownRoot";
 export * from "./markdown/core/MarkdownText";
 export * from "./common/core/MockParent";
-export * from "./toml/core/TomlKey";
-export * from "./toml/core/TomlKeyValue";
-export * from "./toml/core/TomlRoot";
-export * from "./toml/core/TomlTable";
-export * from "./toml/core/TomlText";
-export * from "./toml/values/TomlValueArray";
-export * from "./toml/values/TomlValueBoolean";
-export * from "./toml/values/TomlValueDateTime";
-export * from "./toml/values/TomlValueFloat";
-export * from "./toml/values/TomlValueInlineTable";
-export * from "./toml/values/TomlValueInteger";
-export * from "./toml/values/TomlValueString";
 export * from "./js/typescript/TSAnyKeywordTypeAnnotation";
 export * from "./js/typescript/TSArrayType";
 export * from "./js/typescript/TSAsExpression";
@@ -447,18 +435,6 @@ export type AnyNode =
 	| n.MarkdownRoot
 	| n.MarkdownText
 	| n.MockParent
-	| n.TomlKey
-	| n.TomlKeyValue
-	| n.TomlRoot
-	| n.TomlTable
-	| n.TomlText
-	| n.TomlValueArray
-	| n.TomlValueBoolean
-	| n.TomlValueDateTime
-	| n.TomlValueFloat
-	| n.TomlValueInlineTable
-	| n.TomlValueInteger
-	| n.TomlValueString
 	| n.TSAnyKeywordTypeAnnotation
 	| n.TSArrayType
 	| n.TSAsExpression

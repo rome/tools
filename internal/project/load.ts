@@ -27,7 +27,7 @@ import {
 	mergeAbsoluteFilePathSets,
 	mergeArrays,
 } from "./utils";
-import {ConsumeJSONResult, consumeJSONExtra} from "@internal/codec-json";
+import {ConsumeConfigResult, consumeConfig} from "@internal/codec-config";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {exists, lstat, readDirectory, readFileText} from "@internal/fs";
 import crypto = require("crypto");
@@ -123,7 +123,7 @@ async function loadPartialProjectConfig(
 	configPath: AbsoluteFilePath,
 ): Promise<NormalizedPartial> {
 	const configFile = await readFileText(configPath);
-	const res = consumeJSONExtra({
+	const res = consumeConfig({
 		path: configPath,
 		input: configFile,
 	});
@@ -132,7 +132,7 @@ async function loadPartialProjectConfig(
 }
 
 export async function normalizeProjectConfig(
-	res: ConsumeJSONResult,
+	res: ConsumeConfigResult,
 	configPath: AbsoluteFilePath,
 	configFile: string,
 	projectDirectory: AbsoluteFilePath,

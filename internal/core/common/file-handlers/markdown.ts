@@ -1,8 +1,7 @@
-import {ExtensionHandler} from "./types";
+import {PartialExtensionHandler} from "./types";
 import {parseMarkdown} from "@internal/markdown-parser";
 
-export const markdownHandler: ExtensionHandler = {
-	ext: "md",
+export const markdownHandler: PartialExtensionHandler = {
 	language: "md",
 	hasTabs: true,
 	capabilities: {

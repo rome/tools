@@ -7,7 +7,7 @@
 
 import {Position} from "@internal/parser-core";
 import {Number0, Number1} from "@internal/ob1";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
 import {InterfaceToObject} from "@internal/typescript-helpers";

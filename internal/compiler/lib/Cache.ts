@@ -7,7 +7,7 @@
 
 import {TransformProjectDefinition, TransformRequest} from "../types";
 import {AnyRoot} from "@internal/ast";
-import {JSONObject} from "@internal/codec-json";
+import {JSONObject} from "@internal/codec-config";
 
 type CacheQuery = {
 	key: string;

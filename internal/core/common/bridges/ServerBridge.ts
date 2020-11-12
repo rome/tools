@@ -9,7 +9,7 @@ import {Profile} from "@internal/v8";
 import {Diagnostics} from "@internal/diagnostics";
 import {ClientFlags, ClientRequestFlags} from "../types/client";
 import {Bridge} from "@internal/events";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-config";
 import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";

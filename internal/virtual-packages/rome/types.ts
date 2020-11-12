@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// These are copied from internal/codec-json/types.ts
+// These are copied from internal/codec-config/types.ts
 export type JSONValue =
 	| null
 	| string

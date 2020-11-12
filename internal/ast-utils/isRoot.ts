@@ -6,7 +6,6 @@ export function isRoot(node: AnyNode): node is AnyRoot {
 		node.type === "CSSRoot" ||
 		node.type === "CommitRoot" ||
 		node.type === "MarkdownRoot" ||
-		node.type === "HTMLRoot" ||
-		node.type === "TomlRoot"
+		node.type === "HTMLRoot"
 	);
 }

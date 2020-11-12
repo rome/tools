@@ -1,0 +1,6 @@
+{
+	"name": "@internal/codec-config",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
+}

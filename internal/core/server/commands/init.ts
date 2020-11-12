@@ -11,11 +11,11 @@ import {
 	writeFile,
 } from "@internal/fs";
 import {
+	ConfigCommentMap,
 	JSONObject,
-	RJSONCommentMap,
-	consumeJSON,
-	stringifyRJSON,
-} from "@internal/codec-json";
+	json,
+	rjson,
+} from "@internal/codec-config";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
 import Linter from "../linter/Linter";
 import {PROJECT_CONFIG_DIRECTORY} from "@internal/project";
@@ -147,7 +147,7 @@ export default createServerCommand<Flags>({
 		};
 
 		// Comments to include in the created project config
-		const comments: RJSONCommentMap = new Map();
+		const comments: ConfigCommentMap = new Map();
 		comments.set(
 			"",
 			{
@@ -167,7 +167,7 @@ export default createServerCommand<Flags>({
 				...config,
 				...partial,
 			};
-			await writeFile(configPath, stringifyRJSON(config, comments) + "\n");
+			await writeFile(configPath, rjson.stringify(config, comments) + "\n");
 		}
 
 		// Create initial project config
@@ -183,7 +183,7 @@ export default createServerCommand<Flags>({
 		if (await exists(manifestPath)) {
 			manifest = await normalizeManifest(
 				manifestPath,
-				consumeJSON(await readFileTextMeta(manifestPath)),
+				json.consumeValue(await readFileTextMeta(manifestPath)),
 				projects,
 			);
 		}

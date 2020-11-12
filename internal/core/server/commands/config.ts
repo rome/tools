@@ -14,10 +14,11 @@ import {markup} from "@internal/markup";
 import {interceptDiagnostics} from "@internal/diagnostics";
 import {Consumer} from "@internal/consume";
 import {
-	ConsumeJSONResult,
-	consumeJSONExtra,
-	stringifyJSONExtra,
-} from "@internal/codec-json";
+	ConsumeConfigResult,
+	consumeConfig,
+	json,
+	stringifyConfig,
+} from "@internal/codec-config";
 import {readFileText, writeFile} from "@internal/fs";
 import {
 	loadUserConfig,
@@ -67,7 +68,7 @@ async function runCommand(
 	async function handleConfig(
 		configPath: AbsoluteFilePath,
 		subKey: string | undefined,
-		validate: (res: ConsumeJSONResult, stringified: string) => Promise<void>,
+		validate: (res: ConsumeConfigResult, stringified: string) => Promise<void>,
 	) {
 		if (action === "location") {
 			reporter.log(markup`${configPath.join()}`);
@@ -90,7 +91,7 @@ async function runCommand(
 
 		// Load the config file again
 		const configFile = await readFileText(configPath);
-		const res = consumeJSONExtra({
+		const res = consumeConfig({
 			path: configPath,
 			input: configFile,
 		});
@@ -103,13 +104,13 @@ async function runCommand(
 		}
 
 		// Stringify the config
-		const stringified = stringifyJSONExtra(res);
+		const stringified = stringifyConfig(res);
 
 		// Test if this project config doesn't result in errors
 		await interceptDiagnostics(
 			async () => {
 				// Reconsume with new stringified config
-				const res = consumeJSONExtra({
+				const res = json.consume({
 					path: configPath,
 					input: stringified,
 				});

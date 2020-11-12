@@ -3,24 +3,23 @@ import {
 	HOME_PATH,
 	createAbsoluteFilePath,
 } from "@internal/path";
+import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
 export const PROJECT_CONFIG_DIRECTORY = ".config";
-export const PROJECT_CONFIG_FILENAMES: Array<string> = [
-	"rome.json",
-	"rome.rjson",
-];
+export const PROJECT_CONFIG_FILENAMES: Array<string> = [];
 export const PROJECT_CONFIG_WARN_FILENAMES: Array<string> = [
+	".romeconfig",
 	"romeconfig",
 	"romerc",
-	"rome.son",
-	"rome.config.ts",
-	"rome.config.js",
-	"rome.config.json",
-	"rome.config.rjson",
-	"rome.config.son",
+	".romerc",
 ];
-
+for (const ext of CONFIG_EXTENSIONS) {
+	PROJECT_CONFIG_FILENAMES.push(`rome.${ext}`);
+	PROJECT_CONFIG_WARN_FILENAMES.push(`rome.config.${ext}`);
+	PROJECT_CONFIG_WARN_FILENAMES.push(`.romerc.${ext}`);
+	PROJECT_CONFIG_WARN_FILENAMES.push(`.romeconfig.${ext}`);
+}
 // Creating or loading projects from these folders is always a mistake
 // We also disallow any roots, check is in ProjectManager
 export const PROJECT_CONFIG_SENSITIVE_DIRECTORIES: AbsoluteFilePathSet = new AbsoluteFilePathSet([
