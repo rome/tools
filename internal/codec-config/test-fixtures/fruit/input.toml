@@ -1,0 +1,13 @@
+[[fruit.blah]]
+  name = "apple"
+
+  [fruit.blah.physical]
+    color = "red"
+    shape = "round"
+
+[[fruit.blah]]
+  name = "banana"
+
+  [fruit.blah.physical]
+    color = "yellow"
+    shape = "bent"

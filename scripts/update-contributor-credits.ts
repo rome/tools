@@ -1,6 +1,6 @@
 import {Consumer} from "@internal/consume";
 import https = require("https");
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {ROOT, modifyGeneratedFile} from "./_utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
@@ -55,7 +55,7 @@ function get(
 						try {
 							resolve({
 								nextURL,
-								data: consumeJSON({
+								data: json.consumeValue({
 									input: buff,
 								}),
 							});

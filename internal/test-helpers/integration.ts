@@ -17,8 +17,7 @@ import {
 	createRelativeFilePath,
 	createUnknownPath,
 } from "@internal/path";
-
-import {JSONObject, stringifyJSON} from "@internal/codec-json";
+import {JSONObject, json} from "@internal/codec-config";
 import {
 	createDirectory,
 	exists,
@@ -354,7 +353,7 @@ export function createIntegrationTest(
 				files[".config/rome.json"] === undefined &&
 				files[".config/rome.rjson"] === undefined
 			) {
-				files[".config/rome.json"] = stringifyJSON(projectConfig) + "\n";
+				files[".config/rome.json"] = json.stringify(projectConfig) + "\n";
 			}
 
 			// Materialize files

@@ -32,7 +32,7 @@ import {
 import {Dict} from "@internal/typescript-helpers";
 import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";
-import {stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {markup} from "@internal/markup";
 import {BundleCompileResolvedImports} from "@internal/compiler";
 import {serializeAssembled} from "./utils";
@@ -319,7 +319,7 @@ export default class Bundler {
 			"bundlebuddy.json",
 			{
 				kind: "stats",
-				content: () => stringifyJSON(bundleBuddyStats),
+				content: () => json.stringify(bundleBuddyStats),
 			},
 		);
 
@@ -353,7 +353,7 @@ export default class Bundler {
 				"package.json",
 				{
 					kind: "manifest",
-					content: () => stringifyJSON(newManifest),
+					content: () => json.stringify(newManifest),
 				},
 			);
 		}

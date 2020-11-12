@@ -2417,8 +2417,12 @@ export function parseTSTypeExpressionStatement(
 
 		case "type": {
 			expectTSEnabled(parser, "type alias", start);
-			// TODO perform some lookahead to make sure we want to do this
-			return parseTSTypeAlias(parser, start);
+
+			if (match(parser, tt.name)) {
+				return parseTSTypeAlias(parser, start);
+			} else {
+				break;
+			}
 		}
 
 		case "abstract":

@@ -23,7 +23,7 @@ import {
 	removeFile,
 	writeFile,
 } from "@internal/fs";
-import {stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {getEnvVar} from "@internal/cli-environment";
 import {AnyMarkups, markup} from "@internal/markup";
 
@@ -148,7 +148,7 @@ export default class Cache {
 		for (const [path, entry] of pendingWrites) {
 			filelinks.push(markup`${path}`);
 			await createDirectory(path.getParent());
-			await writeFile(path, stringifyJSON(entry));
+			await writeFile(path, json.stringify(entry));
 		}
 
 		// Log

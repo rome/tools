@@ -16,6 +16,7 @@ import {
 } from "./types";
 import {
 	Diagnostic,
+	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
 	DiagnosticLocation,
@@ -60,6 +61,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		impl: ParserCoreImplementation<Types>,
 		opts: Types["options"],
 		meta: Types["meta"],
+		diagnosticCategory?: DiagnosticCategory,
 	) {
 		const {
 			path,
@@ -81,6 +83,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.options = opts;
 		this.meta = meta;
 		this.impl = impl;
+		this.diagnosticCategory = diagnosticCategory ?? impl.diagnosticCategory;
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownPath(path);
@@ -143,6 +146,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	public mtime: undefined | number;
 	private sourceText: string;
 	public length: Number0;
+	private diagnosticCategory: DiagnosticCategory;
 	private currLine: Number1;
 	private currColumn: Number0;
 
@@ -431,7 +435,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const descriptionWithCategory: DiagnosticDescription = {
 			...description,
 			advice: description.advice ?? [],
-			category: description.category ?? this.impl.diagnosticCategory,
+			category: description.category ?? this.diagnosticCategory,
 		};
 
 		return {
@@ -779,7 +783,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		const collector = new DiagnosticsProcessor({
 			origins: [
 				{
-					category: this.impl.diagnosticCategory,
+					category: this.diagnosticCategory,
 				},
 			],
 			//unique: ['start.line'],

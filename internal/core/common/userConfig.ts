@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {
 	DEFAULT_CACHE_PATH,
 	DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY,
@@ -53,7 +53,7 @@ export async function normalizeUserConfig(
 		if (await exists(path)) {
 			const input = await readFileText(path);
 
-			userConfig.syntaxTheme = consumeJSON({
+			userConfig.syntaxTheme = json.consumeValue({
 				consumeDiagnosticCategory: "parse/vscodeTheme",
 				input,
 				path,
@@ -85,7 +85,7 @@ export async function getUserConfigFile(): Promise<
 		}
 
 		const configFile = await readFileText(configPath);
-		const consumer = consumeJSON({
+		const consumer = json.consumeValue({
 			path: configPath,
 			input: configFile,
 		});

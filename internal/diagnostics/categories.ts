@@ -36,6 +36,8 @@ export type DiagnosticCategory =
 	| "parse/css"
 	| "parse/js"
 	| "parse/json"
+	| "parse/toml"
+	| "parse/yaml"
 	| "parse/manifest"
 	| "parse/markdown"
 	| "parse/patchMatch"

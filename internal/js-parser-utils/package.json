@@ -1,6 +1,6 @@
 {
-  "name": "@internal/js-parser-utils",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
+	"name": "@internal/js-parser-utils",
+	"private": true,
+	"type": "module",
+	"main": "index.ts"
 }
