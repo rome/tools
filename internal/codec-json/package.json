@@ -1,6 +1,0 @@
-{
-  "name": "@internal/codec-json",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
-}

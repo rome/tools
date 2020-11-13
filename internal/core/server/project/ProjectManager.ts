@@ -52,7 +52,7 @@ import {
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
 import {createDirectory, readFileText} from "@internal/fs";
 import {Consumer} from "@internal/consume";
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
 import {FilePathLocker} from "@internal/async/lockers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
@@ -886,8 +886,8 @@ export default class ProjectManager {
 			const packagePath = dir.append("package.json");
 			if (await this.server.memoryFs.existsHard(packagePath)) {
 				const input = await readFileText(packagePath);
-				const json = await consumeJSON({input, path: packagePath});
-				if (json.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
+				const consumer = await json.consumeValue({input, path: packagePath});
+				if (consumer.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
 					if (this.isLoadingBannedProjectPath(dir, packagePath, processor)) {
 						// Would have emitted a diagnostic
 						return;

@@ -1,0 +1,105 @@
+import {
+	ExtensionHandlerMethodInfo,
+	ExtensionLintResult,
+	PartialExtensionHandler,
+} from "@internal/core/common/file-handlers/types";
+import {createAbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {consumeConfig, json, stringifyConfig} from "@internal/codec-config";
+import {parseJS} from "@internal/js-parser";
+
+export const configHandler: PartialExtensionHandler = {
+	language: "unknown",
+	hasTabs: true,
+
+	capabilities: {
+		lint: false,
+		format: true,
+	},
+
+	async customFormat(
+		info: ExtensionHandlerMethodInfo,
+	): Promise<ExtensionLintResult> {
+		const {file, mtime, worker} = info;
+		const {uid} = file;
+
+		const real = createAbsoluteFilePath(file.real);
+		const sourceText = await worker.readFile(real);
+		const path = createUnknownPath(uid);
+
+		let formatted: string = sourceText;
+
+		if (sourceText.length > 50_000) {
+			// Fast path for big files
+			consumeConfig({
+				path,
+				input: sourceText,
+				mtime,
+			});
+		} else {
+			formatted = stringifyConfig(
+				consumeConfig({
+					path,
+					input: sourceText,
+					mtime,
+				}),
+			);
+		}
+
+		return {
+			mtime,
+			sourceText,
+			diagnostics: [],
+			suppressions: [],
+			formatted,
+		};
+	},
+
+	async parse({mtime, path, file, worker}) {
+		const src = await worker.readFile(file.real);
+
+		// Parse the JSON to make sure it's valid
+		const obj = consumeConfig({
+			path: createUnknownPath(file.uid),
+			input: src,
+		}).consumer.asUnknown();
+
+		const serial = json.stringify(obj);
+		const sourceText = `export default ${serial};`;
+
+		// TODO we could produce an AST from the consumer and even retain source locations
+
+		return {
+			// Shouldn't error
+			ast: parseJS({input: sourceText, mtime, sourceType: "module", path}),
+			sourceText,
+			astModifiedFromSource: true,
+		};
+	},
+};
+
+export const ASSET_EXPORT_TEMPORARY_VALUE = "VALUE_INJECTED_BY_BUNDLER";
+
+export const assetHandler: PartialExtensionHandler = {
+	sourceTypeJS: "module",
+	language: "unknown",
+	hasTabs: false,
+	canHaveScale: true,
+	isAsset: true,
+	capabilities: {
+		lint: false,
+		format: false,
+	},
+
+	async parse({path}) {
+		// This exists just so analyzeDependencies has something to look at
+		// When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
+		const sourceText = `export default '${ASSET_EXPORT_TEMPORARY_VALUE}';`;
+
+		return {
+			// Shouldn't error
+			ast: parseJS({input: sourceText, sourceType: "module", path}),
+			astModifiedFromSource: true,
+			sourceText,
+		};
+	},
+};

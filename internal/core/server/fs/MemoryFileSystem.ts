@@ -23,7 +23,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
 import {
 	AbsoluteFilePath,
@@ -648,7 +648,7 @@ export default class MemoryFileSystem {
 		const manifestRaw = content ?? (await readFileText(path));
 		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
 
-		const consumer = consumeJSON({
+		const consumer = json.consumeValue({
 			path,
 			input: manifestRaw,
 			consumeDiagnosticCategory: "parse/manifest",

@@ -9,7 +9,7 @@ import {Position, SourceLocation} from "@internal/parser-core";
 import {Diffs} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
 import {Number0, Number1} from "@internal/ob1";
-import {JSONPropertyValue} from "@internal/codec-json";
+import {JSONPropertyValue} from "@internal/codec-config";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags} from "@internal/core";
@@ -57,6 +57,8 @@ export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
 export type DiagnosticLanguage =
 	| "json"
+	| "rjson"
+	| "json5"
 	| "js"
 	| "url"
 	| "commit"
@@ -65,6 +67,7 @@ export type DiagnosticLanguage =
 	| "html"
 	| "md"
 	| "text"
+	| "yaml"
 	| "toml"
 	| "unknown";
 

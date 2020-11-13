@@ -26,8 +26,8 @@ export const INCORRECT_SUPPRESSION_START = [
 	"@rome-disable",
 	"romefrontend-ignore",
 	"romefrontend-disable",
-	"@romefrontend-ignore",
-	"@romefrontend-disable",
+	"@rometools-ignore",
+	"@rometools-disable",
 ];
 
 type ExtractedSuppressions = {

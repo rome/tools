@@ -1,6 +1,6 @@
 import {Consumer} from "@internal/consume";
 import https = require("https");
-import {consumeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {ROOT, modifyGeneratedFile} from "./_utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
@@ -24,7 +24,7 @@ function get(
 			url,
 			{
 				headers: {
-					"User-Agent": "@romefrontend",
+					"User-Agent": "@rometools",
 					Authorization: `token ${token}`,
 				},
 			},
@@ -55,7 +55,7 @@ function get(
 						try {
 							resolve({
 								nextURL,
-								data: consumeJSON({
+								data: json.consumeValue({
 									input: buff,
 								}),
 							});
@@ -115,7 +115,7 @@ export async function main(args: Array<string>) {
 		},
 		async () => {
 			const contributors = await getContributors(
-				"https://api.github.com/repos/romefrontend/rome/contributors",
+				"https://api.github.com/repos/rome/tools/contributors",
 				token,
 			);
 			const lines: Array<string> = [];
@@ -124,7 +124,7 @@ export async function main(args: Array<string>) {
 
 			for (const {username, avatar} of contributors) {
 				lines.push(
-					`<li><a href="https://github.com/romefrontend/rome/commits?author=${encodeURIComponent(
+					`<li><a href="https://github.com/rome/tools/commits?author=${encodeURIComponent(
 						username,
 					)}">`,
 				);

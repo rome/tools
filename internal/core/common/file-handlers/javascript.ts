@@ -6,7 +6,7 @@
  */
 
 import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
-import {ExtensionHandler} from "./types";
+import {PartialExtensionHandler} from "./types";
 import {parseJS} from "@internal/js-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
@@ -24,11 +24,10 @@ function buildJSHandler(
 	ext: string,
 	syntax: Array<ConstJSProgramSyntax>,
 	sourceTypeJS?: ConstJSSourceType,
-): ExtensionHandler {
+): PartialExtensionHandler {
 	JS_EXTENSIONS.push(ext);
 
 	return {
-		ext,
 		sourceTypeJS,
 		language: "js",
 		hasTabs: true,

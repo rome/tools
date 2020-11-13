@@ -1,73 +1,73 @@
 {
-  "name": "vscode-rome",
-  "publisher": "rome",
-  "displayName": "Rome",
-  "description": "Rome LSP VSCode extension",
-  "version": "0.0.1",
-  "activationEvents": [
-    "*"
-  ],
-  "icon": "icon.png",
-  "_activationEvents": [
-    "onLanguage:html",
-    "onLanguage:css",
-    "onLanguage:javascript",
-    "onLanguage:javascriptreact",
-    "onLanguage:typescript",
-    "onLanguage:typescriptreact",
-    "onLanguage:json",
-    "onLanguage:rjson"
-  ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "rjson",
-        "aliases": [
-          "Rome JSON",
-          "RJSON"
-        ],
-        "extensions": [
-          ".rjson"
-        ],
-        "mimetypes": [
-          "application/rjson"
-        ],
-        "configuration": "./syntaxes/rjson-language-configuration.json"
-      }
-    ],
-    "grammars": [
-      {
-        "language": "rjson",
-        "scopeName": "source.json.rome",
-        "path": "./syntaxes/RJSON.tmLanguage.json"
-      }
-    ]
-  },
-  "files": [
-    "/icon.png",
-    "/README.md",
-    "/syntaxes"
-  ],
-  "main": "index.ts",
-  "engines": {
-    "vscode": "^1.33.0"
-  },
-  "dependencies": {
-    "vscode-languageclient": "^5.2.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/romefrontend/rome.git"
-  },
-  "bugs": {
-    "url": "https://github.com/romefrontend/rome/issues"
-  },
-  "rome": {
-    "extends": "../../package.json",
-    "bundler": {
-      "externals": [
-        "vscode"
-      ]
-    }
-  }
+	"name": "vscode-rome",
+	"publisher": "rome",
+	"displayName": "Rome",
+	"description": "Rome LSP VSCode extension",
+	"version": "0.0.1",
+	"activationEvents": [
+		"*"
+	],
+	"icon": "icon.png",
+	"_activationEvents": [
+		"onLanguage:html",
+		"onLanguage:css",
+		"onLanguage:javascript",
+		"onLanguage:javascriptreact",
+		"onLanguage:typescript",
+		"onLanguage:typescriptreact",
+		"onLanguage:json",
+		"onLanguage:rjson"
+	],
+	"contributes": {
+		"languages": [
+			{
+				"id": "rjson",
+				"aliases": [
+					"Rome JSON",
+					"RJSON"
+				],
+				"extensions": [
+					".rjson"
+				],
+				"mimetypes": [
+					"application/rjson"
+				],
+				"configuration": "./syntaxes/rjson-language-configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "rjson",
+				"scopeName": "source.json.rome",
+				"path": "./syntaxes/RJSON.tmLanguage.json"
+			}
+		]
+	},
+	"files": [
+		"/icon.png",
+		"/README.md",
+		"/syntaxes"
+	],
+	"main": "index.ts",
+	"engines": {
+		"vscode": "^1.33.0"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^5.2.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rome/tools.git"
+	},
+	"bugs": {
+		"url": "https://github.com/rome/tools/issues"
+	},
+	"rome": {
+		"extends": "../../package.json",
+		"bundler": {
+			"externals": [
+				"vscode"
+			]
+		}
+	}
 }

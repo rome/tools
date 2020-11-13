@@ -1,15 +1,19 @@
 import {reduceParserCore} from "./utils";
-import {tokenizeJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {AnsiHighlightOptions, HighlightCodeResult} from "./types";
+import {ConfigHandler} from "@internal/codec-config/types";
 
 export default function highlightJSON(
 	{input, path}: AnsiHighlightOptions,
+	handler: ConfigHandler,
 ): HighlightCodeResult {
-	const tokens = tokenizeJSON({
+	const tokens = json.tokenize({
 		input,
 		// Wont be used anywhere but activates JSON extensions if necessary
 		path,
 	});
+
+	handler;
 
 	return reduceParserCore(
 		input,

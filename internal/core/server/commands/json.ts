@@ -9,7 +9,7 @@ import {ServerRequest} from "@internal/core";
 import {createServerCommand} from "../commands";
 import {commandCategories} from "../../common/commands";
 import {readFileText} from "@internal/fs";
-import {parseJSON, stringifyJSON} from "@internal/codec-json";
+import {json} from "@internal/codec-config";
 import {markup} from "@internal/markup";
 
 export default createServerCommand({
@@ -25,13 +25,13 @@ export default createServerCommand({
 		const path = await req.resolveEntryAssertPathArg(0);
 
 		const file = await readFileText(path);
-		const value = parseJSON({
+		const value = json.parse({
 			path,
 			input: file,
 		});
 
-		const json = stringifyJSON(value);
-		reporter.write(json);
-		return json;
+		const serial = json.stringify(value);
+		reporter.write(serial);
+		return serial;
 	},
 });

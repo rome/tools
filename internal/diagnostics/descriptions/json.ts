@@ -1,7 +1,7 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
 
-// @internal/codec-json
+// @internal/codec-config
 export const json = createDiagnosticsCategory({
 	SINGLE_QUOTE_USAGE: {message: markup`You can only use double quoted strings`},
 	TRAILING_COMMA_VALUE: {

@@ -249,7 +249,7 @@ function parseVersionQualifierPart(parser: SemverParser): string | number {
 			parser.nextToken();
 			parts.push("-");
 		} else if (parser.options.loose && token.type === "Star") {
-			// https://github.com/romefrontend/rome/issues/295
+			// https://github.com/rome/tools/issues/295
 			parser.nextToken();
 			parts.push("*");
 		} else {

@@ -1,6 +1,6 @@
 # Contributing
 
-We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romefrontend/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
+We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/rome/tools/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
 
 Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
 
@@ -9,7 +9,7 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 Getting started with developing Rome takes only three commands. You will only need Node v12 or above.
 
 ```bash
-git clone https://github.com/romefrontend/rome
+git clone https://github.com/rome/tools
 cd rome
 ./rome --help
 ```
@@ -39,7 +39,7 @@ You can find more information on this process [here](https://help.github.com/en/
 
 ## Website
 
-The [Rome website](https://romefrontend.dev/) is built with [Eleventy](https://www.11ty.dev/). To start a development server you can run the following commands:
+The [Rome website](https://rome.tools/) is built with [Eleventy](https://www.11ty.dev/). To start a development server you can run the following commands:
 
 ```bash
 cd website
@@ -119,7 +119,7 @@ This is used to generate new lint rules and boilperlate.
 ./rome run scripts/lint-create-rule [category]/[ruleName]
 ```
 
-The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/romefrontend/rome/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
+The `category` is one of the lint category folders defined in [`internal/compiler/lint/rules`](https://github.com/rome/tools/tree/main/internal/compiler/lint/rules). Some of these represent specific languages, or general themes.
 
 For example, to create a rule in the `js` category called `useCamelCase` run:
 
@@ -137,7 +137,7 @@ This is used to generate new ast nodes and boilerplate.
 ./rome run scripts/ast-create-node [language]/[category]/[nodeType]
 ```
 
-The `language` is one of the language folders defined in [`https://github.com/romefrontend/rome/tree/main/internal/ast/`]
+The `language` is one of the language folders defined in [`https://github.com/rome/tools/tree/main/internal/ast/`]
 
 The `category` is one of the category folders inside the `language` folders.
 

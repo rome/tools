@@ -1,18 +1,17 @@
+---
+title: Lint Rule js/preferOptionalChaining
+layout: layouts/rule.liquid
+showHero: false
+description: MISSING DOCUMENTATION
+eleventyNavigation:
+   key: lint-rules/js/preferOptionalChaining
+   parent: lint-rules
+   title: js/preferOptionalChaining
+---
 
-			---
-			title: Lint Rule js/preferOptionalChaining
-			layout: layouts/rule.liquid
-			showHero: false
-			description: MISSING DOCUMENTATION
-			eleventyNavigation:
-				key: lint-rules/js/preferOptionalChaining
-				parent: lint-rules
-				title: js/preferOptionalChaining
-			---
+# js/preferOptionalChaining
 
-			# js/preferOptionalChaining
-
-			MISSING DOCUMENTATION
+MISSING DOCUMENTATION
 
 <!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 

@@ -1,7 +1,7 @@
 import {test} from "rome";
 import {createIntegrationTest} from "@internal/test-helpers";
 import LSPServer from "@internal/core/server/lsp/LSPServer";
-import {JSONObject} from "@internal/codec-json";
+import {JSONObject} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
 
 function makeRange(

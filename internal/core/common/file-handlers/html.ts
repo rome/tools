@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExtensionHandler} from "./types";
+import {PartialExtensionHandler} from "./types";
 import {parseHTML} from "@internal/html-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
@@ -16,8 +16,7 @@ import {parseHTML} from "@internal/html-parser";
 // import source with ".ts"
 export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 
-export const htmlHandler: ExtensionHandler = {
-	ext: "html",
+export const htmlHandler: PartialExtensionHandler = {
 	language: "html",
 	hasTabs: true,
 	capabilities: {
@@ -38,9 +37,4 @@ export const htmlHandler: ExtensionHandler = {
 			astModifiedFromSource: false,
 		};
 	},
-};
-
-export const htmHandler: ExtensionHandler = {
-	...htmlHandler,
-	ext: "htm",
 };

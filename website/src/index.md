@@ -2,7 +2,7 @@
 layout: layouts/homepage.liquid
 ---
 
-# The Rome Frontend Toolchain
+# The Rome Toolchain
 
 {% include docs/intro.md %}
 {% include docs/getting-started.md %}

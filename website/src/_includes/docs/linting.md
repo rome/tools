@@ -77,7 +77,7 @@ To use the Rome linter we require usage of the Rome formatter. We offer powerful
 
 Notable formatting choices include:
 
- - Indentation: Hard tabs. [Improved accessibility](https://github.com/romefrontend/rome/issues/425) over two-spaced tabs.
+ - Indentation: Hard tabs. [Improved accessibility](https://github.com/rome/tools/issues/425) over two-spaced tabs.
  - Double string quotes. Consistent quote style across all supported languages.
 
 ### Applying Fixes
@@ -189,4 +189,4 @@ Rome implements the [Language Server Protocol (LSP)](https://microsoft.github.io
 
 Once an editor extension has been installed, the version of Rome in your project will be automatically found and used. As we improve Rome and add new functionality any changes will automatically work with your editor!
 
-We welcome contributions adding official extensions for other mainstream editors. See [contributing](https://github.com/romefrontend/rome/blob/main/CONTRIBUTING.md) for more information. LSP communication is done by the [`rome lsp` command](#rome-lsp).
+We welcome contributions adding official extensions for other mainstream editors. See [contributing](https://github.com/rome/tools/blob/main/CONTRIBUTING.md) for more information. LSP communication is done by the [`rome lsp` command](#rome-lsp).

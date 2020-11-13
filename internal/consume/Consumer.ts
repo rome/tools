@@ -26,7 +26,7 @@ import {
 	JSONObject,
 	JSONPropertyValue,
 	JSONValue,
-} from "@internal/codec-json";
+} from "@internal/codec-config";
 import {
 	ConsumeContext,
 	ConsumeKey,
