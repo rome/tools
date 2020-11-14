@@ -195,7 +195,7 @@ export const toml: PartialConfigHandler = {
 		};
 	},
 
-	tokenize(opts: ConfigParserOptions): Array<TokenBase> {
+	tokenize(opts: ConfigParserOptions): TokenBase[] {
 		return createTomlParser(opts).tokenizeAll();
 	},
 

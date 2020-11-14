@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:2b48445b06cb7bb9472592a085bacc6f3ddcd3fc,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:ca37bee4b52ac1474012393d8813ac8958a5a428,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -352,7 +352,7 @@ it bans the use of `any`
 	<a href="/docs/lint/rules/ts/preferShorthandArrayType">preferShorthandArrayType</a>
 	<a class="header-anchor" href="#preferShorthandArrayType"></a>
 </h3>
-MISSING DOCUMENTATION
+promotes the use of `[]` over `Array&lt;&gt;`
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useInterfaces">

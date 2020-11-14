@@ -1,7 +1,7 @@
 ---
 title: Lint Rule ts/preferShorthandArrayType
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: promotes the use of `[]` over `Array<>`
 eleventyNavigation:
 	key: lint-rules/ts/preferShorthandArrayType
 	parent: lint-rules
@@ -10,9 +10,10 @@ eleventyNavigation:
 
 # ts/preferShorthandArrayType
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
-<!-- GENERATED:END(id:description) -->
+
+When expressing array types, this rule promotes the usage of `[]` shorthand instead
+of `Array<>`.
 
 <!-- GENERATED:START(hash:0a91ebccaec89220d637df970192d01977b1f5e4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
@@ -106,3 +107,7 @@ MISSING DOCUMENTATION
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">Foo</span> <span class="token operator">|</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">let</span> <span class="token variable">valid</span><span class="token punctuation">:</span> <span class="token variable">Array</span><span class="token operator">&lt;</span><span class="token variable">keyof</span> <span class="token variable">Bar</span><span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
+
+<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+
+<!-- GENERATED:END(id:description) -->

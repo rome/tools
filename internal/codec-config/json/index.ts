@@ -30,7 +30,7 @@ function createJSONParserMethods(
 			return parseJSONExtra(opts, type, parseCategory);
 		},
 
-		tokenize(opts: ConfigParserOptions): Array<TokenValues<Tokens>> {
+		tokenize(opts: ConfigParserOptions): TokenValues<Tokens>[] {
 			return createJSONParser(opts, {type}, parseCategory).tokenizeAll();
 		},
 	};

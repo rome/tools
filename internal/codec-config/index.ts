@@ -27,8 +27,8 @@ export {
 
 export {ConfigCommentMap, ConsumeConfigResult} from "./types";
 
-export const CONFIG_HANDLERS: Array<ConfigHandler> = [];
-export const CONFIG_EXTENSIONS: Array<string> = [];
+export const CONFIG_HANDLERS: ConfigHandler[] = [];
+export const CONFIG_EXTENSIONS: string[] = [];
 
 export const rjson = partialToFull(_rjson);
 export const json = partialToFull(_json);
