@@ -69,7 +69,7 @@ export default class Bundler {
 	private server: Server;
 	private request: ServerRequest;
 	private reporter: Reporter;
-	private entries: Array<AbsoluteFilePath>;
+	private entries: AbsoluteFilePath[];
 
 	public static createFromServerRequest(req: ServerRequest): Bundler {
 		return new Bundler(req, req.getBundlerConfigFromFlags());
@@ -215,7 +215,7 @@ export default class Bundler {
 
 	// This will take multiple entry points and do some magic to make them more efficient to build in parallel
 	public async bundleMultiple(
-		entries: Array<AbsoluteFilePath>,
+		entries: AbsoluteFilePath[],
 		options: BundleOptions = {},
 	): Promise<Map<AbsoluteFilePath, BundleResult>> {
 		// Clone so we can mess with it
@@ -296,7 +296,7 @@ export default class Bundler {
 	public async bundleManifest(
 		{resolvedEntry, manifestDef}: BundlerEntryResoluton,
 	) {
-		let bundles: Array<BundleResultBundle> = [];
+		let bundles: BundleResultBundle[] = [];
 		const files: BundlerFiles = new Map();
 
 		const createBundle = async (

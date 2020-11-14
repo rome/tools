@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSUnionTypeAnnotation extends NodeBaseWithComments {
 	readonly type: "TSUnionTypeAnnotation";
-	readonly types: Array<AnyTSPrimary>;
+	readonly types: AnyTSPrimary[];
 }
 
 export const tsUnionTypeAnnotation = createBuilder<TSUnionTypeAnnotation>(

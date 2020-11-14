@@ -16,7 +16,7 @@ export default function JSVariableDeclarationStatement(
 		return "";
 	}
 
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.declare) {
 		tokens.push("declare", space);

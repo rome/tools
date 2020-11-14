@@ -36,7 +36,7 @@ export type PathToken = {
 };
 
 export type PathOptions = {
-	ancestryPaths?: Array<Path>;
+	ancestryPaths?: Path[];
 	nodeKey?: string;
 	listKey?: number;
 	parentScope?: Scope;
@@ -134,7 +134,7 @@ export default class Path {
 	public node: AnyNode;
 	public parent: AnyNode;
 	public scope: Scope;
-	public ancestryPaths: Array<Path>;
+	public ancestryPaths: Path[];
 	public parentPath: Path;
 	public token: PathToken;
 	public opts: PathOptions;
@@ -172,7 +172,7 @@ export default class Path {
 		);
 	}
 
-	public getChildPaths(key: string): Array<Path> {
+	public getChildPaths(key: string): Path[] {
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const nodes = (this.node as any)[key];
 
@@ -202,7 +202,7 @@ export default class Path {
 		});
 	}
 
-	public getPathKeys(): Array<string> {
+	public getPathKeys(): string[] {
 		const parts = [];
 
 		let path: undefined | Path = this;
@@ -266,13 +266,13 @@ export default class Path {
 
 	public addFixableDiagnostic(
 		nodes: {
-			target?: AnyNode | Array<AnyNode>;
+			target?: AnyNode | (AnyNode[]);
 			fixed?: ExitSignal;
-			suggestions?: Array<{
+			suggestions?: {
 				description: StaticMarkup;
 				title: StaticMarkup;
 				fixed: ExitSignal;
-			}>;
+			}[];
 		},
 		description: DiagnosticDescription,
 		diag: ContextDiagnostic = {},

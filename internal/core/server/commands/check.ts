@@ -22,7 +22,7 @@ import {createUnknownPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 
 type Flags = {
-	decisions: Array<string>;
+	decisions: string[];
 	apply: boolean;
 	changed: undefined | string;
 	formatOnly: boolean;

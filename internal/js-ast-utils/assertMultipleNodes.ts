@@ -7,7 +7,7 @@
 
 import {AnyNode, AnyNodes} from "@internal/ast";
 
-export function assertMultipleNodes(result: AnyNodes): Array<AnyNode> {
+export function assertMultipleNodes(result: AnyNodes): AnyNode[] {
 	if (Array.isArray(result)) {
 		return result;
 	} else if (result === undefined) {

@@ -13,7 +13,7 @@ export default function TSConstructorType(
 	builder: Builder,
 	node: TSConstructorType,
 ): Token {
-	const tokens: Array<Token> = ["new", space, builder.tokenize(node.meta, node)];
+	const tokens: Token[] = ["new", space, builder.tokenize(node.meta, node)];
 
 	if (node.typeAnnotation) {
 		tokens.push(space, "=>", space, builder.tokenize(node.typeAnnotation, node));

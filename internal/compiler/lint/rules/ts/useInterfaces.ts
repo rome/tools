@@ -13,8 +13,8 @@ function extractObjects(
 ):
 	| undefined
 	| {
-			extends: Array<TSExpressionWithTypeArguments>;
-			members: Array<AnyTSTypeElement>;
+			extends: TSExpressionWithTypeArguments[];
+			members: AnyTSTypeElement[];
 		} {
 	const {right} = typeAlias;
 
@@ -27,8 +27,8 @@ function extractObjects(
 		return undefined;
 	}
 
-	const _extends: Array<TSExpressionWithTypeArguments> = [];
-	let members: Array<AnyTSTypeElement> = [];
+	const _extends: TSExpressionWithTypeArguments[] = [];
+	let members: AnyTSTypeElement[] = [];
 
 	for (const node of types) {
 		if (node.type === "TSObjectTypeAnnotation") {

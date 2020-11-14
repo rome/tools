@@ -17,10 +17,10 @@ type StatusResult = {
 		pid: number;
 		uptime: number;
 	};
-	workers: Array<StatusWorkerResult>;
-	projects: Array<{
+	workers: StatusWorkerResult[];
+	projects: {
 		id: number;
-	}>;
+	}[];
 };
 
 type StatusWorkerResult = {

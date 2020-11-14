@@ -18,7 +18,7 @@ export default function JSClassProperty(
 		return "";
 	}
 
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		builder.tokenize(node.meta, node),
 		builder.tokenize(node.key, node),
 	];

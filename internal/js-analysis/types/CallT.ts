@@ -19,7 +19,7 @@ export default class CallT extends T {
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		callee: T,
-		args: Array<T>,
+		args: T[],
 	) {
 		super(scope, originNode);
 		this.callee = callee;
@@ -29,7 +29,7 @@ export default class CallT extends T {
 	public static type = "CallT";
 
 	private callee: T;
-	public args: Array<T>;
+	public args: T[];
 
 	public reduce(): T {
 		let callee = this.utils.reduce(this.callee);

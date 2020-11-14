@@ -11,14 +11,14 @@ import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
 
 export default class BlockT extends T {
-	constructor(scope: Scope, originNode: undefined | AnyNode, body: Array<T>) {
+	constructor(scope: Scope, originNode: undefined | AnyNode, body: T[]) {
 		super(scope, originNode);
 		this.body = body;
 	}
 
 	public static type = "BlockT";
 
-	private body: Array<T>;
+	private body: T[];
 
 	public reduce(): T {
 		const body = [];

@@ -110,8 +110,8 @@ export default createVisitor({
 		// export {} from '';
 		if (node.type === "JSExportExternalDeclaration") {
 			const {source} = node;
-			const specifiersKinds: Array<ConstJSImportModuleKind> = [];
-			const exportedNames: Array<AnalyzeDependencyName> = [];
+			const specifiersKinds: ConstJSImportModuleKind[] = [];
+			const exportedNames: AnalyzeDependencyName[] = [];
 
 			const {namedSpecifiers, defaultSpecifier, namespaceSpecifier} = node;
 
@@ -232,8 +232,8 @@ export default createVisitor({
 		// import * as foo from '';
 		if (node.type === "JSImportDeclaration") {
 			let hasNamespaceSpecifier = false;
-			const specifierKinds: Array<ConstJSImportModuleKind> = [];
-			const names: Array<AnalyzeDependencyName> = [];
+			const specifierKinds: ConstJSImportModuleKind[] = [];
+			const names: AnalyzeDependencyName[] = [];
 
 			for (const specifier of getImportSpecifiers(node)) {
 				if (specifier.type === "JSImportNamespaceSpecifier") {

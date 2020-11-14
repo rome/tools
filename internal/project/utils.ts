@@ -29,7 +29,7 @@ export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 	};
 }
 
-export function arrayOfStrings(consumer: Consumer): Array<string> {
+export function arrayOfStrings(consumer: Consumer): string[] {
 	if (consumer.exists()) {
 		return consumer.asMappedArray((item) => item.asString());
 	} else {
@@ -49,9 +49,9 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
 }
 
 export function mergeArrays<T>(
-	a: undefined | Array<T>,
-	b: undefined | Array<T>,
-): undefined | Array<T> {
+	a: undefined | (T[]),
+	b: undefined | (T[]),
+): undefined | (T[]) {
 	if (a === undefined) {
 		return a;
 	}

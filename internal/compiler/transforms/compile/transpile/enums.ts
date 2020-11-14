@@ -31,13 +31,13 @@ function buildEnumWrapper(
 	path: Path,
 	node: TSEnumDeclaration,
 	id: JSBindingIdentifier,
-	assignments: Array<AnyJSExpression>,
+	assignments: AnyJSExpression[],
 ): JSVariableDeclaration {
 	const call = jsCallExpression.assert(
 		template.expression`(function () { const ${id} = {}; return ${id};})();`,
 	);
 
-	const statements: Array<JSExpressionStatement> = assignments.map((expression) => ({
+	const statements: JSExpressionStatement[] = assignments.map((expression) => ({
 		type: "JSExpressionStatement",
 		expression,
 	}));
@@ -120,7 +120,7 @@ function translateEnumValues(
 	node: TSEnumDeclaration,
 	scope: Scope,
 	context: CompilerContext,
-): Array<[string, AnyJSExpression]> {
+): [string, AnyJSExpression][] {
 	const seen: PreviousEnumMembers = new Map();
 	let prev: number | undefined = -1;
 

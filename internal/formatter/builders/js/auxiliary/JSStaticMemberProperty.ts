@@ -12,7 +12,7 @@ export default function JSStaticMemberProperty(
 	builder: Builder,
 	node: JSStaticMemberProperty,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.optional) {
 		tokens.push("?");

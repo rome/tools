@@ -21,7 +21,7 @@ export default function JSArrowFunctionExpression(
 	builder: Builder,
 	node: JSArrowFunctionExpression,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.head.async === true) {
 		tokens.push("async");

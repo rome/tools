@@ -212,7 +212,7 @@ export function parseExpression(
 	const startPos = parser.state.startPos;
 	const expr = parseMaybeAssign(parser, context, noIn, refShorthandDefaultPos);
 	if (match(parser, tt.comma)) {
-		let expressions: Array<AnyJSExpression> = [expr];
+		let expressions: AnyJSExpression[] = [expr];
 		while (eat(parser, tt.comma)) {
 			expressions.push(
 				parseMaybeAssign(parser, context, noIn, refShorthandDefaultPos),
@@ -1926,7 +1926,7 @@ export function parseParenAndDistinguishExpression(
 	parser.state.awaitPos = ob1Number0;
 
 	const innerStart = parser.getPosition();
-	const exprList: Array<ToReferencedItem> = [];
+	const exprList: ToReferencedItem[] = [];
 	const refShorthandDefaultPos: IndexTracker = createIndexTracker();
 	const refNeedsArrowPos: IndexTracker = createIndexTracker();
 	let first = true;
@@ -2531,7 +2531,7 @@ export function parseObjectPattern(
 	let first = true;
 
 	const start = parser.getPosition();
-	const properties: Array<JSBindingObjectPatternProperty> = [];
+	const properties: JSBindingObjectPatternProperty[] = [];
 	let rest: undefined | JSBindingIdentifier;
 
 	const openContext = expectOpening(
@@ -3117,7 +3117,7 @@ export function parseMethod(
 
 function createFunctionHead(
 	parser: JSParser,
-	params: Array<AnyJSBindingPattern>,
+	params: AnyJSBindingPattern[],
 	rest: undefined | AnyJSTargetBindingPattern,
 	opts: Partial<JSFunctionHead>,
 ): JSFunctionHead {
@@ -3150,7 +3150,7 @@ export function parseArrowExpression(
 	parser: JSParser,
 	start: Position,
 	opts: {
-		bindingList?: Array<AnyJSBindingPattern>;
+		bindingList?: AnyJSBindingPattern[];
 		assignmentList?: Array<JSArrayHole | ToReferencedItem>;
 		rest?: AnyJSTargetBindingPattern;
 	},
@@ -3180,7 +3180,7 @@ export function parseArrowExpression(
 
 	const headEnd = parser.getLastEndPosition();
 
-	let params: Array<AnyJSBindingPattern> = [];
+	let params: AnyJSBindingPattern[] = [];
 	let rest: undefined | AnyJSTargetBindingPattern = opts.rest;
 
 	if (opts.bindingList !== undefined) {
@@ -3418,7 +3418,7 @@ type CheckFunctionNameParamsOpts = {
 	isArrowFunction: boolean;
 	isMethod: boolean;
 	id: undefined | JSBindingIdentifier;
-	params: Array<AnyJSBindingPattern>;
+	params: AnyJSBindingPattern[];
 	rest: undefined | AnyJSTargetBindingPattern;
 	start: Position;
 };
@@ -3493,7 +3493,7 @@ export function checkFunctionNameAndParams(
 }
 
 function isSimpleParamList(
-	params: Array<AnyJSBindingPattern>,
+	params: AnyJSBindingPattern[],
 	rest: undefined | AnyJSTargetBindingPattern,
 ): boolean {
 	if (rest !== undefined) {
@@ -3515,7 +3515,7 @@ export function parseExpressionList(
 	openContext: OpeningContext,
 	allowEmpty?: boolean,
 	refShorthandDefaultPos?: IndexTracker,
-): Array<ReturnType<typeof parseCallArgument>> {
+): ReturnType<typeof parseCallArgument>[] {
 	const elts = [];
 	let first = true;
 
@@ -3549,7 +3549,7 @@ export function parseExpressionListNonEmpty(
 	context: ExpressionContext,
 	openContext: OpeningContext,
 	refShorthandDefaultPos?: IndexTracker,
-): Array<AnyJSExpression> {
+): AnyJSExpression[] {
 	const val = parseExpressionList(
 		parser,
 		context,

@@ -20,7 +20,7 @@ import {RSERObject} from "@internal/codec-binary-serial";
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
 	commandFlags: RSERObject;
-	args: Array<string>;
+	args: string[];
 	commandName: string;
 	silent: boolean;
 	noData: boolean;
@@ -38,7 +38,7 @@ export type PartialServerQueryRequest = Partial<Omit<
 };
 
 type ServerQueryResponseBase = {
-	markers: Array<ServerMarker>;
+	markers: ServerMarker[];
 };
 
 export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
@@ -142,7 +142,7 @@ export default class ServerBridge extends Bridge {
 		direction: "server<-client",
 	});
 
-	public profilingGetWorkers = this.createEvent<void, Array<number>>({
+	public profilingGetWorkers = this.createEvent<void, number[]>({
 		name: "profiling.getWorkers",
 		direction: "server<-client",
 	});

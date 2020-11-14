@@ -42,7 +42,7 @@ export default class MaybeT extends T {
 		return markup`?${builder.humanize(this.parent)}`;
 	}
 
-	public explodeUnion(): Array<T> {
+	public explodeUnion(): T[] {
 		return [
 			new VoidT(this.scope, this.originNode),
 			new NullT(this.scope, this.originNode),

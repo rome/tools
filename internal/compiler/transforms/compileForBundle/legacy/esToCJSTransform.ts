@@ -30,8 +30,8 @@ export default createVisitor({
 
 		const options = getOptions(path.context);
 
-		const topBody: Array<AnyJSStatement> = [];
-		const bottomBody: Array<AnyJSStatement> = [];
+		const topBody: AnyJSStatement[] = [];
+		const bottomBody: AnyJSStatement[] = [];
 
 		for (const bodyNode of node.body) {
 			if (bodyNode.type === "JSImportDeclaration") {

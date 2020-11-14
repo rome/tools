@@ -17,7 +17,7 @@ import {
 
 let inited: boolean = false;
 
-function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
+function prepareStackTrace(err: Error, frames: NodeJS.CallSite[]) {
 	try {
 		addErrorFrames(err, frames);
 		return buildStackString(err);
@@ -39,7 +39,7 @@ export function teardown() {
 
 function buildStackString(err: Error): string {
 	const {frames} = getErrorStructure(err);
-	const lines: Array<string> = [];
+	const lines: string[] = [];
 
 	lines.push(`${err.name}: ${err.message}`);
 
@@ -57,7 +57,7 @@ function buildStackString(err: Error): string {
 			lineNumber,
 			columnNumber,
 		} = frame;
-		const parts: Array<string> = [];
+		const parts: string[] = [];
 
 		if (isAsync) {
 			parts.push("await");
@@ -112,10 +112,7 @@ function noNull<T>(val: null | T): undefined | T {
 	}
 }
 
-function addErrorFrames(
-	err: ErrorWithFrames,
-	frames: Array<NodeJS.CallSite>,
-): void {
+function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 	if (err[ERROR_FRAMES_PROP]) {
 		return;
 	}

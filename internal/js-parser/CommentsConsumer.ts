@@ -8,7 +8,7 @@
 import {AnyComment, AnyCommentOptionalId} from "@internal/ast";
 
 export default class CommentsConsumer {
-	constructor(seedComments: Array<AnyComment> = []) {
+	constructor(seedComments: AnyComment[] = []) {
 		this.idToComment = new Map();
 		this.counter = seedComments.length;
 		this.setComments(seedComments);
@@ -17,7 +17,7 @@ export default class CommentsConsumer {
 	private idToComment: Map<string, AnyComment>;
 	private counter: number;
 
-	public setComments(comments: Array<AnyComment>) {
+	public setComments(comments: AnyComment[]) {
 		this.idToComment.clear();
 
 		for (const comment of comments) {
@@ -25,12 +25,12 @@ export default class CommentsConsumer {
 		}
 	}
 
-	public getCommentsFromIds(ids: undefined | Array<string>): Array<AnyComment> {
+	public getCommentsFromIds(ids: undefined | (string[])): AnyComment[] {
 		if (ids === undefined) {
 			return [];
 		}
 
-		const comments: Array<AnyComment> = [];
+		const comments: AnyComment[] = [];
 
 		for (const id of ids) {
 			const comment = this.getCommentFromId(id);

@@ -40,7 +40,7 @@ async function getOptions(dir: AbsoluteFilePath): Promise<Consumer> {
 }
 
 export type Fixture = {
-	name: Array<string>;
+	name: string[];
 	dir: AbsoluteFilePath;
 	options: Consumer;
 	files: ExtendedMap<string, FixtureFile>;
@@ -57,10 +57,10 @@ async function _getFixtures(
 		root: AbsoluteFilePath;
 		name: undefined | string;
 		dir: AbsoluteFilePath;
-		parts: Array<string>;
+		parts: string[];
 		options: Consumer;
 	},
-): Promise<Array<Fixture>> {
+): Promise<Fixture[]> {
 	const {name, dir, parts, options: inheritOptions} = opts;
 
 	// Check if directory even exists
@@ -110,7 +110,7 @@ async function _getFixtures(
 
 	// If there's any directories then get the fixtures from all of them
 	if (directories.size > 0) {
-		let fixtures: Array<Fixture> = [];
+		let fixtures: Fixture[] = [];
 
 		for (const path of directories) {
 			fixtures = fixtures.concat(
@@ -153,7 +153,7 @@ async function _getFixtures(
 	];
 }
 
-export async function getFixtures(dir: string): Promise<Array<Fixture>> {
+export async function getFixtures(dir: string): Promise<Fixture[]> {
 	const root = createAbsoluteFilePath(dir).append("test-fixtures");
 	return _getFixtures({
 		root,

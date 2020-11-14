@@ -69,7 +69,7 @@ export function maybeTypeBinding(
 
 export function getKindWithSpecifiers(
 	rawKind: undefined | ConstJSImportModuleKind,
-	specifierKinds: Array<ConstJSImportModuleKind>,
+	specifierKinds: ConstJSImportModuleKind[],
 ): ConstJSImportModuleKind {
 	const kind: ConstJSImportModuleKind = getImportKind(rawKind);
 	if (isTypeKind(kind) || specifierKinds.length === 0) {
@@ -143,8 +143,8 @@ export function getDeclarationLoc(
 }
 
 function arraySame<T>(
-	a: Array<T>,
-	b: Array<T>,
+	a: T[],
+	b: T[],
 	callback: (a: T, b: T) => boolean,
 ): boolean {
 	if (a.length !== b.length) {

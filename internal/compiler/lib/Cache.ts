@@ -29,7 +29,7 @@ export default class Cache<Result> {
 		additionalOptions?: JSONObject,
 	): CacheQuery {
 		const {ast, project, options} = req;
-		const keyParts: Array<string> = [];
+		const keyParts: string[] = [];
 
 		let projectId = projectToId.get(project);
 		if (projectId === undefined) {

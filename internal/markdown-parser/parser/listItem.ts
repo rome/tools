@@ -70,7 +70,7 @@ export function tokenizeListItem(
 export function parseListItem(parser: MarkdownParser): MarkdownListItem {
 	const token = parser.expectToken("ListItem");
 	const pos = parser.getPosition();
-	const children: Array<MarkdownListChildren> = [];
+	const children: MarkdownListChildren[] = [];
 
 	while (
 		!parser.matchToken("EOF") &&

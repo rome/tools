@@ -35,7 +35,7 @@ export default function TSTupleType(builder: Builder, node: TSTupleType): Token 
 		}
 	}
 
-	const parts: Array<Token> = [];
+	const parts: Token[] = [];
 
 	for (const elementType of node.elementTypes) {
 		parts.push(builder.tokenize(elementType, node));
@@ -45,7 +45,7 @@ export default function TSTupleType(builder: Builder, node: TSTupleType): Token 
 		parts.push(concat(["...", builder.tokenize(node.rest, node)]));
 	}
 
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		"[",
 		indent(concat([softline, join(concat([",", lineOrSpace]), parts)])),
 	];

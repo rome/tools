@@ -18,10 +18,10 @@ export default class FunctionT extends ObjT {
 		scope: Scope,
 		originNode: undefined | AnyNode,
 		opts: {
-			params: Array<T>;
+			params: T[];
 			rest: undefined | T;
 			returns: T;
-			props?: Array<T>;
+			props?: T[];
 			proto?: T;
 			body?: T;
 		},
@@ -43,7 +43,7 @@ export default class FunctionT extends ObjT {
 
 	public static type = "FunctionT";
 
-	private params: Array<T>;
+	private params: T[];
 	private rest: undefined | T;
 	public returns: T;
 	private body: undefined | T;

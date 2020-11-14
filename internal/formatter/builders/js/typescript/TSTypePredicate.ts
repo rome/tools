@@ -12,7 +12,7 @@ export default function TSTypePredicate(
 	builder: Builder,
 	node: TSTypePredicate,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.asserts) {
 		tokens.push("asserts", space);

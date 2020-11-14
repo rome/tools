@@ -15,12 +15,12 @@ type License = {
 	referenceNumber: string;
 	name: string;
 	licenseId: string;
-	seeAlso: Array<string>;
+	seeAlso: string[];
 	isOsiApproved: boolean;
 };
 
 const idToLicense: Map<string, License> = new Map();
-const licenseNames: Array<string> = [];
+const licenseNames: string[] = [];
 for (const license of data.licenses) {
 	licenseNames.push(license.licenseId);
 	idToLicense.set(license.licenseId.toLowerCase(), license);

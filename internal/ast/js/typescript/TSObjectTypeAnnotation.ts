@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface TSObjectTypeAnnotation extends NodeBaseWithComments {
 	readonly type: "TSObjectTypeAnnotation";
-	readonly members: Array<AnyTSTypeElement>;
+	readonly members: AnyTSTypeElement[];
 }
 
 export const tsObjectTypeAnnotation = createBuilder<TSObjectTypeAnnotation>(

@@ -137,11 +137,7 @@ type HostedGitPattern = IncompleteHostedGitPattern & {
 
 const GITHUB_SHORTHAND = /^[^:@%\/\s.\-][^:@%\/\s]*[\/][^:@\s\/%]+(?:#.*)?$/;
 
-const HOSTED_GIT_PREFIXES: Array<HostedGitHost> = [
-	"bitbucket",
-	"github",
-	"gitlab",
-];
+const HOSTED_GIT_PREFIXES: HostedGitHost[] = ["bitbucket", "github", "gitlab"];
 
 function parseHostedGit(
 	host: HostedGitHost,

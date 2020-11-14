@@ -41,8 +41,8 @@ function printBinaryExpression(
 	node: JSBinaryExpression | JSLogicalExpression,
 	parent: AnyNode,
 	shouldNotGroup: boolean,
-): Array<Token> {
-	const parts: Array<Token> = [];
+): Token[] {
+	const parts: Token[] = [];
 
 	if (
 		isBinary(node.left) &&

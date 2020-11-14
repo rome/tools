@@ -13,7 +13,7 @@ export default function JSRegExpCharSet(
 	builder: Builder,
 	node: JSRegExpCharSet,
 ): Token {
-	const tokens: Array<Token> = ["["];
+	const tokens: Token[] = ["["];
 
 	if (node.invert) {
 		tokens.push("^");

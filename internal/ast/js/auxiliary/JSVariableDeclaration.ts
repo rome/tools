@@ -13,7 +13,7 @@ export type JSVariableDeclarationKind = "var" | "let" | "const";
 export interface JSVariableDeclaration extends NodeBaseWithComments {
 	readonly type: "JSVariableDeclaration";
 	readonly kind: JSVariableDeclarationKind;
-	readonly declarations: Array<JSVariableDeclarator>;
+	readonly declarations: JSVariableDeclarator[];
 }
 
 export const jsVariableDeclaration = createBuilder<JSVariableDeclaration>(

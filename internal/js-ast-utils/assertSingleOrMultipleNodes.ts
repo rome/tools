@@ -9,7 +9,7 @@ import {AnyNode, AnyNodes} from "@internal/ast";
 
 export function assertSingleOrMultipleNodes(
 	result: AnyNodes,
-): AnyNode | Array<AnyNode> {
+): AnyNode | (AnyNode[]) {
 	if (result === undefined) {
 		throw new Error("Expected node or node list but got null");
 	} else if (typeof result === "symbol") {

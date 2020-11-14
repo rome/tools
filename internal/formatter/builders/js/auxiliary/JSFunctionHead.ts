@@ -13,7 +13,7 @@ export default function JSFunctionHead(
 	builder: Builder,
 	node: JSFunctionHead,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (builder.options.typeAnnotations && node.typeParameters) {
 		tokens.push(builder.tokenize(node.typeParameters, node));
@@ -29,7 +29,7 @@ export default function JSFunctionHead(
 	let printedReturnType: Token = "";
 	if (builder.options.typeAnnotations) {
 		if (node.returnType) {
-			const tokens: Array<Token> = [":"];
+			const tokens: Token[] = [":"];
 			tokens.push(space, builder.tokenize(node.returnType, node));
 			printedReturnType = concat(tokens);
 		}

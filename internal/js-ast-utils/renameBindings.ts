@@ -24,7 +24,7 @@ import {assertSingleOrMultipleNodes} from "./assertSingleOrMultipleNodes";
 export function renameBindings(
 	path: Path,
 	oldToNewMapping: Map<Binding | string, string>,
-): AnyNode | Array<AnyNode> {
+): AnyNode | (AnyNode[]) {
 	if (oldToNewMapping.size === 0) {
 		return path.node;
 	}

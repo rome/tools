@@ -123,14 +123,14 @@ tags.set(
 );
 
 // Tags that only support certain other tags as their children
-export const tagsToOnlyChildren: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
+export const tagsToOnlyChildren: Map<MarkupTagName, MarkupTagName[]> = new Map();
 tagsToOnlyChildren.set("table", ["tr"]);
 tagsToOnlyChildren.set("tr", ["td"]);
 tagsToOnlyChildren.set("ol", ["li"]);
 tagsToOnlyChildren.set("ul", ["li"]);
 
 // Tags that should only be children of other tags
-export const tagsToOnlyParent: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
+export const tagsToOnlyParent: Map<MarkupTagName, MarkupTagName[]> = new Map();
 tagsToOnlyParent.set("tr", ["table"]);
 tagsToOnlyParent.set("td", ["tr"]);
 tagsToOnlyParent.set("li", ["ol", "ul"]);

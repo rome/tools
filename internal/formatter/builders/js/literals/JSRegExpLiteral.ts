@@ -13,7 +13,7 @@ export default function JSRegExpLiteral(
 	builder: Builder,
 	node: JSRegExpLiteral,
 ): Token {
-	const flags: Array<string> = [];
+	const flags: string[] = [];
 
 	if (node.global === true) {
 		flags.push("g");

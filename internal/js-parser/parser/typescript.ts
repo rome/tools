@@ -198,7 +198,7 @@ function tsNextTokenCanFollowModifier(parser: JSParser) {
 /** Parses a modifier matching one the given modifier names.*/
 export function parseTSModifier<T extends ConstTSModifier>(
 	parser: JSParser,
-	allowedModifiers: Array<T>,
+	allowedModifiers: T[],
 ): undefined | T {
 	if (!match(parser, tt.name)) {
 		return undefined;
@@ -221,7 +221,7 @@ export function parseTSModifier<T extends ConstTSModifier>(
 
 export function hasTSModifier(
 	parser: JSParser,
-	allowedModifiers: Array<ConstTSModifier>,
+	allowedModifiers: ConstTSModifier[],
 ): boolean {
 	return parseTSModifier(parser, allowedModifiers) !== undefined;
 }
@@ -271,8 +271,8 @@ function parseTSList<T>(
 	parser: JSParser,
 	kind: ParsingContext,
 	parseElement: ParserCallback<T>,
-): Array<T> {
-	const result: Array<T> = [];
+): T[] {
+	const result: T[] = [];
 	while (!tsIsListTerminator(parser, kind)) {
 		// Skipping 'parseListElement' from the TS source since that's just for error handling.
 		result.push(parseElement(parser));
@@ -288,7 +288,7 @@ function parseTSDelimitedList<T>(
 	parser: JSParser,
 	kind: ParsingContext,
 	parseElement: ParserCallback<undefined | T>,
-): Array<T> {
+): T[] {
 	const result = [];
 
 	while (true) {
@@ -326,7 +326,7 @@ function parseTSBracketedList<T>(
 	parseElement: ParserCallback<undefined | T>,
 	bracket: boolean,
 	skipFirstToken: boolean,
-): Array<T> {
+): T[] {
 	if (!skipFirstToken) {
 		if (bracket) {
 			expect(parser, tt.bracketL);
@@ -668,7 +668,7 @@ function parseTSSignatureDeclarationMeta(
 function parseTSBindingListForSignature(
 	parser: JSParser,
 ): {
-	list: Array<AnyJSTargetBindingPattern>;
+	list: AnyJSTargetBindingPattern[];
 	rest: undefined | AnyJSTargetBindingPattern;
 } {
 	const openContext = expectOpening(
@@ -678,7 +678,7 @@ function parseTSBindingListForSignature(
 		"ts signature parameters",
 	);
 	const {list: patterns, rest} = parseBindingListNonEmpty(parser, openContext);
-	const validPatterns: Array<AnyJSTargetBindingPattern> = [];
+	const validPatterns: AnyJSTargetBindingPattern[] = [];
 
 	for (const pattern of patterns) {
 		if (
@@ -881,7 +881,7 @@ function parseTSObjectTypeAnnotation(parser: JSParser): TSObjectTypeAnnotation {
 	);
 }
 
-function parseTSObjectTypeMembers(parser: JSParser): Array<AnyTSTypeElement> {
+function parseTSObjectTypeMembers(parser: JSParser): AnyTSTypeElement[] {
 	const openContext = expectOpening(
 		parser,
 		tt.braceL,
@@ -1010,7 +1010,7 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 
 	//   If there's a rest element, it must be at the end of the tuple
 	let seenOptionalElement = false;
-	const elementTypes: Array<TSTupleElement> = [];
+	const elementTypes: TSTupleElement[] = [];
 	let rest: undefined | TSTupleElement;
 	for (const {type, isRest} of elementDefs) {
 		if (rest !== undefined) {
@@ -1542,7 +1542,7 @@ function parseTSInferType(parser: JSParser): TSInferType {
 	);
 }
 
-const TS_TYPE_OPERATORS: Array<TSTypeOperator["operator"]> = [
+const TS_TYPE_OPERATORS: TSTypeOperator["operator"][] = [
 	"keyof",
 	"unique",
 	"readonly",
@@ -1867,7 +1867,7 @@ export function parseTSTypeAssertion(parser: JSParser): TSTypeAssertion {
 export function parseTSHeritageClause(
 	parser: JSParser,
 	descriptor: string,
-): Array<TSExpressionWithTypeArguments> {
+): TSExpressionWithTypeArguments[] {
 	expectTSEnabled(parser, "heritage clause");
 
 	const originalStart = parser.state.startPos;

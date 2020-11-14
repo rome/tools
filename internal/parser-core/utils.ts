@@ -126,9 +126,9 @@ export function derivePositionKey(pos: Position): string {
 
 // Utility methods for dealing with nodes
 export function extractSourceLocationRangeFromNodes(
-	nodes: Array<{
+	nodes: {
 		loc?: SourceLocation;
-	}>,
+	}[],
 ): undefined | SourceLocation {
 	if (nodes.length === 0) {
 		return undefined;

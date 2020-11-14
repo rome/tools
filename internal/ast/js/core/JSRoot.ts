@@ -19,11 +19,11 @@ import {createBuilder} from "../../utils";
 export interface JSRoot extends NodeBaseWithComments,
 RootBase {
 	readonly type: "JSRoot";
-	readonly directives: Array<JSDirective>;
-	readonly body: Array<AnyJSStatement>;
+	readonly directives: JSDirective[];
+	readonly body: AnyJSStatement[];
 	readonly interpreter: undefined | JSInterpreterDirective;
 	readonly sourceType: ConstJSSourceType;
-	readonly syntax: Array<ConstJSProgramSyntax>;
+	readonly syntax: ConstJSProgramSyntax[];
 	readonly hasHoistedVars: boolean;
 }
 

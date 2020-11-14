@@ -22,8 +22,8 @@ function isSpaceChar(
 }
 
 function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
-	const newBody: Array<AnyJSRegExpBodyItem> = [];
-	const diagnosticTargets: Array<AnyJSRegExpBodyItem> = [];
+	const newBody: AnyJSRegExpBodyItem[] = [];
+	const diagnosticTargets: AnyJSRegExpBodyItem[] = [];
 
 	let index = 0;
 	while (index < node.body.length) {

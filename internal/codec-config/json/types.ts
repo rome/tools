@@ -32,4 +32,4 @@ export type JSONObject = {
 	[x: string]: JSONPropertyValue;
 };
 
-export type JSONArray = Array<JSONValue>;
+export type JSONArray = JSONValue[];

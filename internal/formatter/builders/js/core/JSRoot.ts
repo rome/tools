@@ -9,9 +9,7 @@ import {Builder, Token, concat, hardline} from "@internal/formatter";
 import {JSRoot} from "@internal/ast";
 
 export default function JSRoot(builder: Builder, node: JSRoot): Token {
-	const tokens: Array<Token> = [
-		builder.tokenizeStatementList(node.directives, node),
-	];
+	const tokens: Token[] = [builder.tokenizeStatementList(node.directives, node)];
 
 	if (node.directives?.length) {
 		tokens.push(hardline);

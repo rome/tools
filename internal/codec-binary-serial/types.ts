@@ -61,6 +61,6 @@ export type RSERSet = Set<RSERValue>;
 export type RSERObject = {
 	[x: string]: RSERValue;
 };
-export type RSERArray = Array<RSERValue>;
+export type RSERArray = RSERValue[];
 
 export type RSERValueObject = Extract<RSERValue, object>;

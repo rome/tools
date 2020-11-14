@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function sprintf(msg: string, ...args: Array<unknown>): string {
+function sprintf(msg: string, ...args: unknown[]): string {
 	return msg.replace(
 		/\$(\d+)/g,
 		(match, num) => {
@@ -18,7 +18,7 @@ type MessagesShape = {
 	[key: string]: string;
 };
 
-type Factory = (...args: Array<unknown>) => string;
+type Factory = (...args: unknown[]) => string;
 
 type FactoryObject<Messages extends MessagesShape> = {
 	[P in keyof Messages]: Factory
@@ -34,7 +34,7 @@ export function createMessageFactory<Messages extends MessagesShape>(
 	for (const key in messages) {
 		const msg = messages[key];
 
-		obj[key] = (...args: Array<unknown>) => {
+		obj[key] = (...args: unknown[]) => {
 			return sprintf(msg, ...args);
 		};
 	}

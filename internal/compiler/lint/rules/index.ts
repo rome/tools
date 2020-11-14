@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:e56437371df83618255c4186dd04ab56602325cd,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3a4f40cacd3ea5c2e64a99ffda6c92eb43abc3c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -25,7 +25,6 @@ import noNestedTernary from "./js/noNestedTernary";
 import noRestrictedGlobals from "./js/noRestrictedGlobals";
 import noSetterReturn from "./js/noSetterReturn";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
-import noShorthandArrayType from "./js/noShorthandArrayType";
 import noShoutyConstants from "./js/noShoutyConstants";
 import noSparseArray from "./js/noSparseArray";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
@@ -109,6 +108,7 @@ import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpace
 import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
 import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
 import noExplicitAny from "./ts/noExplicitAny";
+import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
 import {AnyVisitor} from "@internal/compiler";
 
@@ -139,7 +139,6 @@ lintTransforms.set("js/noNestedTernary", noNestedTernary);
 lintTransforms.set("js/noRestrictedGlobals", noRestrictedGlobals);
 lintTransforms.set("js/noSetterReturn", noSetterReturn);
 lintTransforms.set("js/noShadowRestrictedNames", noShadowRestrictedNames);
-lintTransforms.set("js/noShorthandArrayType", noShorthandArrayType);
 lintTransforms.set("js/noShoutyConstants", noShoutyConstants);
 lintTransforms.set("js/noSparseArray", noSparseArray);
 lintTransforms.set("js/noTemplateCurlyInString", noTemplateCurlyInString);
@@ -250,9 +249,10 @@ lintTransforms.set(
 	noReferenceToNonExistingGroup,
 );
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
+lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
 
-export const lintRuleNames: Array<LintRuleName> = [
+export const lintRuleNames: LintRuleName[] = [
 	"html/useClosingNonVoid",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
@@ -279,7 +279,6 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"js/noRestrictedGlobals",
 	"js/noSetterReturn",
 	"js/noShadowRestrictedNames",
-	"js/noShorthandArrayType",
 	"js/noShoutyConstants",
 	"js/noSparseArray",
 	"js/noTemplateCurlyInString",
@@ -363,6 +362,7 @@ export const lintRuleNames: Array<LintRuleName> = [
 	"regex/noPosixInRegularExpression",
 	"regex/noReferenceToNonExistingGroup",
 	"ts/noExplicitAny",
+	"ts/preferShorthandArrayType",
 	"ts/useInterfaces",
 ];
 
@@ -393,7 +393,6 @@ export type LintRuleName =
 	| "js/noRestrictedGlobals"
 	| "js/noSetterReturn"
 	| "js/noShadowRestrictedNames"
-	| "js/noShorthandArrayType"
 	| "js/noShoutyConstants"
 	| "js/noSparseArray"
 	| "js/noTemplateCurlyInString"
@@ -477,5 +476,6 @@ export type LintRuleName =
 	| "regex/noPosixInRegularExpression"
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
+	| "ts/preferShorthandArrayType"
 	| "ts/useInterfaces";
 /* GENERATED:END(id:main) */

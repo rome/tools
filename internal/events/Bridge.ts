@@ -89,13 +89,13 @@ export default class Bridge {
 	private heartbeatTimeout: undefined | NodeJS.Timeout;
 
 	private prioritizedResponses: Set<number>;
-	private deprioritizedResponseQueue: Array<BridgeResponseMessage>;
+	private deprioritizedResponseQueue: BridgeResponseMessage[];
 
-	private postHandshakeQueue: Array<BridgeMessage>;
+	private postHandshakeQueue: BridgeMessage[];
 	private handshakeEvent: Event<
 		{
 			first: boolean;
-			subscriptions: Array<string>;
+			subscriptions: string[];
 		},
 		void
 	>;
@@ -254,7 +254,7 @@ export default class Bridge {
 		this.postHandshakeQueue = [];
 	}
 
-	public getSubscriptions(): Array<string> {
+	public getSubscriptions(): string[] {
 		const names = [];
 		for (const event of this.events.values()) {
 			if (event.hasSubscriptions()) {
@@ -285,7 +285,7 @@ export default class Bridge {
 		});
 	}
 
-	private receivedSubscriptions(names: Array<string>): void {
+	private receivedSubscriptions(names: string[]): void {
 		this.listeners = new Set(names);
 		this.updatedListenersEvent.send(this.listeners);
 	}

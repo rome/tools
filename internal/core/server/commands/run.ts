@@ -17,7 +17,7 @@ import {markup} from "@internal/markup";
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {
 	type: "executeCode";
-	args: Array<string>;
+	args: string[];
 	filename: string;
 	code: string;
 	map: SourceMap;

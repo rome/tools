@@ -75,7 +75,7 @@ export default class WorkerManager {
 		return this.workers.assert(id);
 	}
 
-	public getWorkers(): Array<WorkerContainer> {
+	public getWorkers(): WorkerContainer[] {
 		return Array.from(this.workers.values());
 	}
 
@@ -91,7 +91,7 @@ export default class WorkerManager {
 	}
 
 	// Get all the workers that live in external processes
-	public getExternalWorkers(): Array<WorkerContainer> {
+	public getExternalWorkers(): WorkerContainer[] {
 		return this.getWorkers().filter((worker) => worker.thread !== undefined);
 	}
 

@@ -164,8 +164,8 @@ export const createSnapshotParser = createParser<SnapshotParserTypes>({
 	},
 });
 
-export function parseSnapshot(parser: SnapshotParser): Array<Node> {
-	const nodes: Array<Node> = [];
+export function parseSnapshot(parser: SnapshotParser): Node[] {
+	const nodes: Node[] = [];
 
 	while (!parser.matchToken("EOF")) {
 		const start = parser.getPosition();

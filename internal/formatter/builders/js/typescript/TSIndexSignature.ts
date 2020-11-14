@@ -12,7 +12,7 @@ export default function TSIndexSignature(
 	builder: Builder,
 	node: TSIndexSignature,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.readonly) {
 		tokens.push("readonly");

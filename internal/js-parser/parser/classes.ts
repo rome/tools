@@ -217,7 +217,7 @@ type ClassBodyState = {
 	hadConstructor: boolean;
 };
 
-function parseClassBody(parser: JSParser): Array<AnyJSClassMember> {
+function parseClassBody(parser: JSParser): AnyJSClassMember[] {
 	// class bodies are implicitly strict
 	pushScope(parser, "STRICT", true);
 	parser.state.classLevel = ob1Inc(parser.state.classLevel);
@@ -949,7 +949,7 @@ function parseClassSuper(
 		superTypeParameters = maybeParseTSTypeArguments(parser);
 	}
 
-	let implemented: undefined | Array<TSExpressionWithTypeArguments>;
+	let implemented: undefined | (TSExpressionWithTypeArguments[]);
 	if (isContextual(parser, "implements")) {
 		next(parser);
 		implemented = parseTSHeritageClause(parser, "implements");

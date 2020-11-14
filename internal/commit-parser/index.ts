@@ -170,6 +170,6 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 	);
 }
 
-export function tokenizeCommit(opts: ParserOptions): Array<TokenValues<Tokens>> {
+export function tokenizeCommit(opts: ParserOptions): TokenValues<Tokens>[] {
 	return createCommitParser(opts).tokenizeAll();
 }

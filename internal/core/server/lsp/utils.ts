@@ -45,12 +45,12 @@ export function convertDiagnosticLocationToLSPRange(
 export function convertDiagnosticsToLSP(
 	diagnostics: Diagnostics,
 	server: Server,
-): Array<LSPDiagnostic> {
-	const lspDiagnostics: Array<LSPDiagnostic> = [];
+): LSPDiagnostic[] {
+	const lspDiagnostics: LSPDiagnostic[] = [];
 
 	for (const {description, location} of diagnostics) {
 		// Infer relatedInformation from log messages followed by frames
-		let relatedInformation: Array<LSPDiagnosticRelatedInformation> = [];
+		let relatedInformation: LSPDiagnosticRelatedInformation[] = [];
 		const {advice} = description;
 		for (let i = 0; i < advice.length; i++) {
 			const item = advice[i];
@@ -92,11 +92,8 @@ export function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
 	return createAbsoluteFilePath(consumer.get("uri").asString());
 }
 
-export function diffTextEdits(
-	original: string,
-	desired: string,
-): Array<LSPTextEdit> {
-	const edits: Array<LSPTextEdit> = [];
+export function diffTextEdits(original: string, desired: string): LSPTextEdit[] {
+	const edits: LSPTextEdit[] = [];
 
 	const diffs: Diffs = stringDiff(original, desired);
 
@@ -177,7 +174,7 @@ export function getLSPRange(range: Consumer): LSPRange {
 
 export function getWorkerBufferPatches(
 	contentChanges: Consumer,
-): Array<WorkerBufferPatch> {
+): WorkerBufferPatch[] {
 	return contentChanges.asMappedArray((change) => {
 		const range = getLSPRange(change.get("range"));
 

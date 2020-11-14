@@ -25,7 +25,7 @@ import {diagnosticLocationToMarkupFilelink} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 
-function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
+function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
 		return val;
 	} else {
@@ -35,7 +35,7 @@ function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 
 export function mergeDiagnostics(
 	rootDiag: Diagnostic,
-	...diags: Array<Diagnostic>
+	...diags: Diagnostic[]
 ): Diagnostic {
 	let mergedAdvice: DiagnosticAdvice = [
 		...normalizeArray(rootDiag.description.advice),
@@ -250,7 +250,7 @@ export function deriveDiagnosticFromError(
 
 export type DeriveErrorStackAdviceOptions = {
 	title?: StaticMarkup;
-	importantFilenames?: Array<string>;
+	importantFilenames?: string[];
 };
 
 export function getErrorStackAdvice(
@@ -367,7 +367,7 @@ export function getErrorStackAdvice(
 }
 
 export function addOriginsToDiagnostics(
-	origins: Array<DiagnosticOrigin>,
+	origins: DiagnosticOrigin[],
 	diagnostics: Diagnostics,
 ): Diagnostics {
 	return diagnostics.map((diag) => {
@@ -376,7 +376,7 @@ export function addOriginsToDiagnostics(
 }
 
 export function addOriginsToDiagnostic(
-	origins: Array<DiagnosticOrigin>,
+	origins: DiagnosticOrigin[],
 	diag: Diagnostic,
 ): Diagnostic {
 	const newOrigins =

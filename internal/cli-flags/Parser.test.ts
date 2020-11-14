@@ -24,7 +24,7 @@ async function testParser<T>(
 		options: opts,
 	}: {
 		defineFlags: (consumer: Consumer) => T;
-		args: Array<string>;
+		args: string[];
 		preInit?: (parser: Parser<T>) => void;
 		postInit?: (parser: Parser<T>, flags: T) => void;
 		options?: Partial<ParserOptions<T>>;

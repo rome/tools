@@ -16,7 +16,7 @@ export interface TSEnumDeclaration extends NodeBaseWithComments {
 	readonly type: "TSEnumDeclaration";
 	readonly id: JSBindingIdentifier;
 	readonly const?: boolean;
-	readonly members: Array<TSEnumMember>;
+	readonly members: TSEnumMember[];
 	readonly declare?: boolean;
 }
 

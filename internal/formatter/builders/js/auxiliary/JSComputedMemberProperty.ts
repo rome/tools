@@ -13,7 +13,7 @@ export default function JSComputedMemberProperty(
 	builder: Builder,
 	node: JSComputedMemberProperty,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.optional) {
 		tokens.push("?.");

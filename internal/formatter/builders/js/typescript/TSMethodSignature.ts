@@ -12,7 +12,7 @@ export default function TSMethodSignature(
 	builder: Builder,
 	node: TSMethodSignature,
 ): Token {
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		builder.tokenize(node.key, node),
 		builder.tokenize(node.meta, node),
 	];

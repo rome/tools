@@ -12,7 +12,7 @@ import {
 } from "@internal/path";
 import {test} from "rome";
 
-const relativeTests: Array<[string, string, string]> = [
+const relativeTests: [string, string, string][] = [
 	// Windows paths
 	["c:/blah\\blah", "d:/games", "D:\\games"],
 	["c:/aaaa/bbbb", "c:/aaaa", ".."],
@@ -87,7 +87,7 @@ for (let i = 0; i < relativeTests.length; i++) {
 	);
 }
 
-const segmentTests: Array<[string, Array<string>]> = [
+const segmentTests: [string, string[]][] = [
 	["./../images/test.png", ["..", "images", "test.png"]],
 	["foo/", ["foo"]],
 ];

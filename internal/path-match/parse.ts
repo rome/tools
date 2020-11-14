@@ -290,9 +290,9 @@ export function parsePattern(opts: ParserOptions): PathPattern {
 	return pattern;
 }
 
-export function parsePatternsFile(opts: ParserOptions): Array<PathPattern> {
+export function parsePatternsFile(opts: ParserOptions): PathPattern[] {
 	const parser = createPathMatchParser(opts);
-	const patterns: Array<PathPattern> = [];
+	const patterns: PathPattern[] = [];
 
 	while (true) {
 		eatEOL(parser);

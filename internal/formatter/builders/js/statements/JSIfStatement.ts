@@ -23,7 +23,7 @@ export default function JSIfStatement(
 	builder: Builder,
 	node: JSIfStatement,
 ): Token {
-	const tokens: Array<Token> = [
+	const tokens: Token[] = [
 		group(
 			concat([
 				"if",

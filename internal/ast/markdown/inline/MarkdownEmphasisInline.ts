@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 // *emphasis*
 export interface MarkdownEmphasisInline extends NodeBaseWithComments {
 	type: "MarkdownEmphasisInline";
-	value: Array<AnyMarkdownInlineNode>;
+	value: AnyMarkdownInlineNode[];
 }
 
 export const markdownEmphasisInline = createBuilder<MarkdownEmphasisInline>(

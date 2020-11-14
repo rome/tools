@@ -54,7 +54,7 @@ export type IfBreakToken = {
 	flatContents: Token | undefined;
 };
 
-export type Tokens = Array<Token>;
+export type Tokens = Token[];
 
 export type Token =
 	| string

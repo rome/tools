@@ -58,17 +58,17 @@ export function deriveDecisionPositionKey(
 }
 
 export function parseDecisionStrings(
-	decisions: Array<string>,
+	decisions: string[],
 	cwd: AbsoluteFilePath,
 	unexpected: UnexpectedDecision,
 ): {
 	lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile;
-	globalDecisions: Array<LintCompilerOptionsDecision>;
+	globalDecisions: LintCompilerOptionsDecision[];
 } {
 	const lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile = {};
-	const globalDecisions: Array<LintCompilerOptionsDecision> = [];
+	const globalDecisions: LintCompilerOptionsDecision[] = [];
 
-	function parseGlobalDecision(parts: Array<string>, i: number) {
+	function parseGlobalDecision(parts: string[], i: number) {
 		if (parts.length !== 2) {
 			unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
 		}
@@ -84,7 +84,7 @@ export function parseDecisionStrings(
 		globalDecisions.push({category, action});
 	}
 
-	function parseLineDecision(parts: Array<string>, i: number) {
+	function parseLineDecision(parts: string[], i: number) {
 		if (parts.length < 4 || parts.length > 5) {
 			unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
 		}

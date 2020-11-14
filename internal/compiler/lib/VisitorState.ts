@@ -36,7 +36,7 @@ export default class VisitorState<State extends UnknownObject>
 		this.currentPathToken = undefined;
 	}
 
-	private stack: Array<StackItem<State>>;
+	private stack: StackItem<State>[];
 	private currentIndex: number;
 	private pushQueue: undefined | State;
 	private currentPathToken: undefined | PathToken;

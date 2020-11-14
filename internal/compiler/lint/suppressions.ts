@@ -43,7 +43,7 @@ export function addSuppressions(
 	function addComment(
 		path: Path,
 		node: AnyNode,
-		decisions: Array<LintCompilerOptionsDecision>,
+		decisions: LintCompilerOptionsDecision[],
 	): AnyNode {
 		// Find all suppression decisions
 		const suppressionCategories: Set<string> = new Set();

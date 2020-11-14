@@ -31,16 +31,16 @@ type UniquePart =
 	| "category"
 	| "label";
 
-type UniqueRule = Array<UniquePart>;
+type UniqueRule = UniquePart[];
 
-type UniqueRules = Array<UniqueRule>;
+type UniqueRules = UniqueRule[];
 
 export type DiagnosticsProcessorOptions = {
-	filters?: Array<DiagnosticFilterWithTest>;
+	filters?: DiagnosticFilterWithTest[];
 	unique?: UniqueRules;
 	max?: number;
 	onDiagnostics?: (diags: Diagnostics) => void;
-	origins?: Array<DiagnosticOrigin>;
+	origins?: DiagnosticOrigin[];
 	markupOptions?: MarkupFormatNormalizeOptions;
 	normalizeOptions?: DiagnosticsNormalizerOptions;
 	sourceMaps?: SourceMapConsumerCollection;
@@ -80,13 +80,13 @@ export default class DiagnosticsProcessor {
 	private unique: UniqueRules;
 	private includedKeys: Set<string>;
 	private diagnostics: Set<Diagnostic>;
-	private filters: Array<DiagnosticFilterWithTest>;
+	private filters: DiagnosticFilterWithTest[];
 	private allowedUnusedSuppressionPrefixes: Set<string>;
 	private usedSuppressions: Set<DiagnosticSuppression>;
 	private suppressions: Set<DiagnosticSuppression>;
 	private options: DiagnosticsProcessorOptions;
 	private throwAfter: undefined | number;
-	private origins: Array<DiagnosticOrigin>;
+	private origins: DiagnosticOrigin[];
 	private cachedDiagnostics: undefined | Diagnostics;
 
 	private assertEmpty() {
@@ -96,7 +96,7 @@ export default class DiagnosticsProcessor {
 	}
 
 	public static createImmediateThrower(
-		origins: Array<DiagnosticOrigin>,
+		origins: DiagnosticOrigin[],
 	): DiagnosticsProcessor {
 		const diagnostics = new DiagnosticsProcessor({
 			origins,
@@ -140,7 +140,7 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public addFilters(filters: Array<DiagnosticFilterWithTest>) {
+	public addFilters(filters: DiagnosticFilterWithTest[]) {
 		this.cachedDiagnostics = undefined;
 		this.filters = this.filters.concat(filters);
 	}
@@ -213,7 +213,7 @@ export default class DiagnosticsProcessor {
 		return false;
 	}
 
-	private buildDedupeKeys(diag: Diagnostic): Array<string> {
+	private buildDedupeKeys(diag: Diagnostic): string[] {
 		if (diag.tags?.unique) {
 			return [];
 		}
@@ -221,7 +221,7 @@ export default class DiagnosticsProcessor {
 		// We don't do anything with `end` in this method, it's fairly meaningless for deduping errors
 		let {start} = diag.location;
 
-		const keys: Array<string> = [];
+		const keys: string[] = [];
 
 		for (const rule of this.unique) {
 			const parts = [];
@@ -294,7 +294,7 @@ export default class DiagnosticsProcessor {
 		const added: Diagnostics = [];
 
 		// Add origins to diagnostics
-		const origins: Array<DiagnosticOrigin> = [...this.origins];
+		const origins: DiagnosticOrigin[] = [...this.origins];
 		if (origin !== undefined) {
 			origins.push(origin);
 		}

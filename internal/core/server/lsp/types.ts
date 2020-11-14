@@ -187,13 +187,13 @@ export type LSPDiagnostic = {
    *
    * @since 3.15.0
    */
-	tags?: Array<LSPDiagnosticTag[keyof LSPDiagnosticTag]>;
+	tags?: LSPDiagnosticTag[keyof LSPDiagnosticTag][];
 
 	/**
    * An array of related diagnostic information, e.g. when symbol-names within
    * a scope collide all definitions can be marked via this property.
    */
-	relatedInformation?: Array<LSPDiagnosticRelatedInformation>;
+	relatedInformation?: LSPDiagnosticRelatedInformation[];
 };
 
 export type LSPDiagnosticSeverity = {
@@ -280,7 +280,7 @@ export type LSPCommand = {
 	 * Arguments that the command handler should be
 	 * invoked with.
 	 */
-	arguments?: Array<string>;
+	arguments?: string[];
 };
 
 export type LSPCodeActionKind = string;
@@ -301,7 +301,7 @@ export type LSPCodeAction = {
 	/**
 	 * The diagnostics that this code action resolves.
 	 */
-	diagnostics?: Array<LSPDiagnostic>;
+	diagnostics?: LSPDiagnostic[];
 
 	/**
 	 * Marks this as a preferred action. Preferred actions are used by the `auto fix` command and can be targeted
@@ -332,7 +332,7 @@ export type LSPWorkspaceEdit = {
 	 * Holds changes to existing resources.
 	 */
 	changes?: {
-		[uri: string]: Array<LSPTextEdit>;
+		[uri: string]: LSPTextEdit[];
 	};
 
 	/**
@@ -347,7 +347,7 @@ export type LSPWorkspaceEdit = {
 	 * If a client neither supports `documentChanges` nor `workspace.workspaceEdit.resourceOperations` then
 	 * only plain `TextEdit`s using the `changes` property are supported.
 	 */
-	documentChanges?: Array<LSPTextDocumentEdit>;
+	documentChanges?: LSPTextDocumentEdit[];
 };
 
 export type LSPTextDocumentEdit = {
@@ -359,7 +359,7 @@ export type LSPTextDocumentEdit = {
 	/**
 	 * The edits to be applied.
 	 */
-	edits: Array<LSPTextEdit>;
+	edits: LSPTextEdit[];
 };
 
 export type LSPTextDocumentIdentifier = {

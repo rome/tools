@@ -12,7 +12,7 @@ export default function TSConstructSignatureDeclaration(
 	builder: Builder,
 	node: TSConstructSignatureDeclaration,
 ): Token {
-	const tokens: Array<Token> = ["new", space, builder.tokenize(node.meta, node)];
+	const tokens: Token[] = ["new", space, builder.tokenize(node.meta, node)];
 
 	if (node.typeAnnotation) {
 		tokens.push(":", space, builder.tokenize(node.typeAnnotation, node));
