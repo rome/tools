@@ -8,8 +8,8 @@
 import {isEscaped} from "./isEscaped";
 import {ob1Coerce0} from "@internal/ob1";
 
-export function escapeSplit(input: string, splitChar: string): Array<string> {
-	const parts: Array<string> = [];
+export function escapeSplit(input: string, splitChar: string): string[] {
+	const parts: string[] = [];
 	const unescapeRegex = new RegExp(`\\\\${splitChar}`, "g");
 
 	let buff = "";

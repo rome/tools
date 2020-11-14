@@ -13,7 +13,7 @@ import {markup} from "@internal/markup";
 import {createUnknownPath} from "@internal/path";
 import {main as generateAST} from "./generated-files/ast";
 
-export async function main([filename]: Array<string>): Promise<number> {
+export async function main([filename]: string[]): Promise<number> {
 	const whitelistedPrefix = ["TS"];
 
 	if (filename === undefined) {

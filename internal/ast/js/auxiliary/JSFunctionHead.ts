@@ -17,7 +17,7 @@ import {createQuickBuilder} from "../../utils";
 
 export interface JSFunctionHead extends NodeBaseWithComments {
 	readonly type: "JSFunctionHead";
-	readonly params: Array<AnyJSParamBindingPattern>;
+	readonly params: AnyJSParamBindingPattern[];
 	readonly rest?: AnyJSTargetBindingPattern;
 	readonly thisType?: JSBindingIdentifier;
 	readonly hasHoistedVars?: boolean;

@@ -12,7 +12,7 @@ export default function TSCallSignatureDeclaration(
 	builder: Builder,
 	node: TSCallSignatureDeclaration,
 ): Token {
-	const tokens: Array<Token> = [builder.tokenize(node.meta, node)];
+	const tokens: Token[] = [builder.tokenize(node.meta, node)];
 
 	if (node.typeAnnotation) {
 		tokens.push(":", space, builder.tokenize(node.typeAnnotation, node));

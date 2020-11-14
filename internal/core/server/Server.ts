@@ -345,7 +345,7 @@ export default class Server {
 	// We also create a progress bar for all connected LSP clients
 	// Refer to ServerReporter
 	public createConnectedProgress(opts?: ReporterProgressOptions) {
-		const progresses: Array<ReporterProgress> = [];
+		const progresses: ReporterProgress[] = [];
 
 		for (const client of this.connectedClients) {
 			progresses.push(client.reporter.progress(opts));
@@ -363,8 +363,8 @@ export default class Server {
 	}
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	public wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-		return (((...args: Array<any>): any => {
+	public wrapFatal<T extends (...args: any[]) => any>(callback: T): T {
+		return (((...args: any[]): any => {
 			try {
 				const res = callback(...args);
 				if (res instanceof Promise) {
@@ -429,7 +429,7 @@ export default class Server {
 	}
 
 	public createDisconnectedDiagnosticsProcessor(
-		origins: Array<DiagnosticOrigin>,
+		origins: DiagnosticOrigin[],
 	): DiagnosticsProcessor {
 		return this.createDiagnosticsProcessor({
 			onDiagnostics: (diagnostics: Diagnostics) => {
@@ -539,7 +539,7 @@ export default class Server {
 		});
 
 		bridge.profilingGetWorkers.subscribe(async () => {
-			const ids: Array<number> = [];
+			const ids: number[] = [];
 			for (const {id} of this.workerManager.getExternalWorkers()) {
 				ids.push(id);
 			}
@@ -844,7 +844,7 @@ export default class Server {
 	private async dispatchRequest(
 		req: ServerRequest,
 		bridgeEndPromise: Promise<void>,
-		origins: Array<string>,
+		origins: string[],
 	): Promise<ServerQueryResponse> {
 		const {query} = req;
 		const {requestFlags} = query;

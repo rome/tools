@@ -50,7 +50,7 @@ export default class SourceMapGenerator {
 	}
 
 	public file: string;
-	private materializeCallbacks: Array<MaterializeCallback>;
+	private materializeCallbacks: MaterializeCallback[];
 	private sourceRoot: undefined | string;
 	private sources: ArraySet;
 	private names: ArraySet;
@@ -212,9 +212,9 @@ export default class SourceMapGenerator {
 	}
 
 	private generateSourcesContent(
-		sources: Array<string>,
+		sources: string[],
 		sourceRoot: undefined | string,
-	): Array<string> {
+	): string[] {
 		return sources.map((source) => {
 			if (sourceRoot !== undefined) {
 				source = toRelativeUrl(sourceRoot, source);

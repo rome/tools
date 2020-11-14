@@ -353,7 +353,7 @@ function parseText(parser: HTMLParser): HTMLText {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Text");
 
-	const lines: Array<string> = [];
+	const lines: string[] = [];
 	let line = "";
 
 	function pushLine() {
@@ -435,7 +435,7 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
 	const parser = createHTMLParser(opts);
 	const start = parser.getPosition();
-	const body: Array<AnyHTMLChildNode> = [];
+	const body: AnyHTMLChildNode[] = [];
 
 	while (!parser.matchToken("EOF")) {
 		const child = parseChild(parser);

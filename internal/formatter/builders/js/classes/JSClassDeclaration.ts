@@ -21,7 +21,7 @@ export default function JSClassDeclaration(
 	builder: Builder,
 	node: JSClassDeclaration | JSClassExpression,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.type === "JSClassDeclaration" && builder.options.typeAnnotations) {
 		if (node.declare) {

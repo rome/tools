@@ -8,10 +8,10 @@
 import {AnyNode} from "@internal/ast";
 import {isIdentifierish} from "./isIdentifierish";
 
-type Parts = Array<{
+type Parts = {
 	value: string;
 	node: AnyNode;
-}>;
+}[];
 
 type Result = {
 	bailed: boolean;

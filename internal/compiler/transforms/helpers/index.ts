@@ -22,7 +22,7 @@ import {
 import {isRoot} from "@internal/ast-utils";
 
 type VariableInjectorState = {
-	bindings: Array<[string, undefined | AnyJSExpression]>;
+	bindings: [string, undefined | AnyJSExpression][];
 };
 
 export function injectBinding(
@@ -94,7 +94,7 @@ export const variableInjectorVisitor = createVisitor<VariableInjectorState>({
 });
 
 type CommentState = {
-	comments: Array<AnyComment>;
+	comments: AnyComment[];
 };
 
 export function injectComment(path: Path, comment: AnyCommentOptionalId): string {

@@ -398,7 +398,7 @@ const ISO = {
 };
 
 // We lazily build this suggestions list as it is massive
-let suggestions: undefined | Array<string>;
+let suggestions: undefined | (string[]);
 function getSuggestions() {
 	if (suggestions !== undefined) {
 		return suggestions;

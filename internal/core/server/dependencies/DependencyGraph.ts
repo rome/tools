@@ -78,7 +78,7 @@ const NODE_BUILTINS = [
 type SeedQueueItem = {
 	all: boolean;
 	async: boolean;
-	ancestry: Array<string>;
+	ancestry: string[];
 	type: AnalyzeModuleType;
 	loc: undefined | SourceLocation;
 };
@@ -112,7 +112,7 @@ export default class DependencyGraph {
 		);
 	}
 
-	public getBundleBuddyStats(entries: Array<AbsoluteFilePath>): BundleBuddyStats {
+	public getBundleBuddyStats(entries: AbsoluteFilePath[]): BundleBuddyStats {
 		const stats: BundleBuddyStats = [];
 
 		for (const node of this.nodes.values()) {
@@ -173,7 +173,7 @@ export default class DependencyGraph {
 			allowFileNotFound = false,
 			validate = false,
 		}: {
-			paths: Array<AbsoluteFilePath>;
+			paths: AbsoluteFilePath[];
 			diagnosticsProcessor: DiagnosticsProcessor;
 			analyzeProgress?: ReporterProgress;
 			allowFileNotFound?: boolean;
@@ -227,7 +227,7 @@ export default class DependencyGraph {
 				},
 			},
 		);
-		const roots: Array<MissingFileReturn<DependencyNode>> = [];
+		const roots: MissingFileReturn<DependencyNode>[] = [];
 
 		for (const path of paths) {
 			await FileNotFound.maybeAllowMissing(
@@ -289,7 +289,7 @@ export default class DependencyGraph {
 		opts: {
 			all: boolean;
 			async: boolean;
-			ancestry: Array<string>;
+			ancestry: string[];
 			workerQueue: DependencyGraphWorkerQueue;
 		},
 		diagnosticsProcessor: DiagnosticsProcessor,

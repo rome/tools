@@ -29,7 +29,7 @@ export type BundleRequestResult = {
 	assets: Map<string, Buffer>;
 };
 
-export type BundleBuddyStats = Array<BundleBuddyGraphNode>;
+export type BundleBuddyStats = BundleBuddyGraphNode[];
 
 export type BundleBuddyGraphNode = {
 	source: string;
@@ -59,6 +59,6 @@ export type BundleResultBundle = {
 export type BundleResult = {
 	bundler: Bundler;
 	files: BundlerFiles;
-	bundles: Array<BundleResultBundle>;
+	bundles: BundleResultBundle[];
 	entry: BundleResultBundle;
 };

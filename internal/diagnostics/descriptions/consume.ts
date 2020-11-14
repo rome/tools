@@ -35,7 +35,7 @@ export const consume = createDiagnosticsCategory({
 	EXPECTED_NUMBER_LOWER: (num: UnknownNumber) => ({
 		message: markup`Expected number lower than ${String(ob1Get(num))}`,
 	}),
-	INVALID_NUMBER_SET_VALUE: (value: number, validValues: Array<number>) => ({
+	INVALID_NUMBER_SET_VALUE: (value: number, validValues: number[]) => ({
 		message: markup`Invalid number <emphasis>${value}</emphasis>`,
 		advice: [
 			{
@@ -49,7 +49,7 @@ export const consume = createDiagnosticsCategory({
 			},
 		],
 	}),
-	INVALID_STRING_SET_VALUE: (value: string, validValues: Array<string>) => ({
+	INVALID_STRING_SET_VALUE: (value: string, validValues: string[]) => ({
 		message: markup`Invalid value <emphasis>${value}</emphasis>`,
 		advice: [
 			{
@@ -63,7 +63,7 @@ export const consume = createDiagnosticsCategory({
 			},
 		],
 	}),
-	UNUSED_PROPERTY: (key: string, type: string, knownProperties: Array<string>) => ({
+	UNUSED_PROPERTY: (key: string, type: string, knownProperties: string[]) => ({
 		message: markup`Unknown <emphasis>${key}</emphasis> ${type}`,
 		advice: buildSuggestionAdvice(
 			key,

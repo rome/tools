@@ -18,7 +18,7 @@ export type PrinterOptions = {
 
 export type PrinterOutput = {
 	code: string;
-	mappings: Array<Mapping>;
+	mappings: Mapping[];
 };
 
 type State = {
@@ -29,9 +29,9 @@ type State = {
 	generatedIndex: Box<Number0>;
 	generatedLine: Box<Number1>;
 	generatedColumn: Box<Number0>;
-	buffer: Array<string>;
-	mappings: Array<Mapping>;
-	lineSuffixes: Array<[Token, State]>;
+	buffer: string[];
+	mappings: Mapping[];
+	lineSuffixes: [Token, State][];
 	lineWidth: Box<number>;
 };
 
@@ -110,7 +110,7 @@ function write(str: string, state: State, options: PrinterOptions): void {
 }
 
 function print(token: Token, state: State, options: PrinterOptions): void {
-	const stack: Array<[Token, State]> = [[token, state]];
+	const stack: [Token, State][] = [[token, state]];
 
 	while (stack.length > 0) {
 		const [token, state] = stack.pop()!;

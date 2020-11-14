@@ -34,7 +34,7 @@ export {default as stringifySemver} from "./stringify";
 export function sortSemverVersions(
 	rawVersions: UserVersions,
 	opts?: SemverParserOptions,
-): Array<AbsoluteVersionNode> {
+): AbsoluteVersionNode[] {
 	const versions = rawVersions.map((ver) => normalizeUserVersion(ver, opts));
 	return versions.sort((a, b) => compareFromAst(a, b));
 }

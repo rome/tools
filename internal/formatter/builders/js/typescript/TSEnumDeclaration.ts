@@ -14,7 +14,7 @@ export default function TSEnumDeclaration(
 	builder: Builder,
 	node: TSEnumDeclaration,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.declare) {
 		tokens.push("declare", space);

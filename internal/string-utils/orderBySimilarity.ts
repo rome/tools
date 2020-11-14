@@ -93,7 +93,7 @@ export type Rating = {
 	rating: number;
 };
 
-export type Ratings = Array<Rating>;
+export type Ratings = Rating[];
 
 type OrderBySimilarityOptions = {
 	minRating?: number;
@@ -102,7 +102,7 @@ type OrderBySimilarityOptions = {
 
 export function orderBySimilarity(
 	compareStr: string,
-	targets: Array<string>,
+	targets: string[],
 	{minRating, ignoreCase = false}: OrderBySimilarityOptions = {},
 ): Ratings {
 	if (targets.length === 0) {

@@ -1081,12 +1081,12 @@ function parseExpression(
 	parser: RegExpParser,
 	whileCallback?: () => boolean,
 ): JSRegExpSubExpression | JSRegExpAlternation {
-	const alternations: Array<{
+	const alternations: {
 		start: Position;
 		end: Position;
-		body: Array<AnyJSRegExpBodyItem>;
-	}> = [];
-	let body: Array<AnyJSRegExpBodyItem> = [];
+		body: AnyJSRegExpBodyItem[];
+	}[] = [];
+	let body: AnyJSRegExpBodyItem[] = [];
 
 	const start = parser.getPosition();
 	let alternateStart = start;

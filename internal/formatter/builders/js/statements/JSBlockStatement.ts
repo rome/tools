@@ -38,7 +38,7 @@ export default function JSBlockStatement(
 		return "{}";
 	}
 
-	const tokens: Array<Token> = ["{"];
+	const tokens: Token[] = ["{"];
 
 	if (hasDirectives) {
 		for (const directive of node.directives!) {

@@ -46,7 +46,7 @@ export type WebServerRequest = WebServerTime & {
 	id: number;
 	client: number;
 	query: ServerQueryRequest;
-	markers: Array<ServerMarker>;
+	markers: ServerMarker[];
 	response: undefined | ServerQueryResponse;
 };
 

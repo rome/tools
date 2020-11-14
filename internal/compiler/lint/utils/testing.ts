@@ -14,8 +14,8 @@ type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
 	filename: string;
 	snapshotFilename?: string;
-	valid?: Array<string>;
-	invalid?: Array<string>;
+	valid?: string[];
+	invalid?: string[];
 };
 
 export async function testLint(t: TestHelper, opts: TestLintOptions) {

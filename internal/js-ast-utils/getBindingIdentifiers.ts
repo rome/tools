@@ -8,9 +8,9 @@
 import {AnyNode, JSBindingIdentifier, bindingKeys} from "@internal/ast";
 
 export function getBindingIdentifiers(
-	node: AnyNode | Array<AnyNode>,
-): Array<JSBindingIdentifier> {
-	const ids: Array<JSBindingIdentifier> = [];
+	node: AnyNode | (AnyNode[]),
+): JSBindingIdentifier[] {
+	const ids: JSBindingIdentifier[] = [];
 	let queue: Array<undefined | AnyNode> = Array.isArray(node)
 		? [...node]
 		: [node];
@@ -26,7 +26,7 @@ export function getBindingIdentifiers(
 			continue;
 		}
 
-		const keys: undefined | Array<string> = bindingKeys.get(node.type);
+		const keys: undefined | (string[]) = bindingKeys.get(node.type);
 		if (keys === undefined) {
 			continue;
 		}

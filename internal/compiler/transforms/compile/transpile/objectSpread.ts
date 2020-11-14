@@ -28,7 +28,7 @@ import {
 } from "@internal/ast";
 import {template} from "@internal/js-ast-utils";
 
-function hasSpreadProperty(props: Array<AnyNode>): boolean {
+function hasSpreadProperty(props: AnyNode[]): boolean {
 	for (const prop of props) {
 		if (prop.type === "JSSpreadProperty") {
 			return true;
@@ -77,7 +77,7 @@ function transformSpreadProperty(
 	path: Path,
 	node: JSObjectExpression,
 ): JSCallExpression {
-	let props: Array<AnyJSObjectMember> = [];
+	let props: AnyJSObjectMember[] = [];
 	const assignArgs = [];
 
 	function pushProps() {
@@ -110,8 +110,8 @@ function transformSpreadProperty(
 function transformRestProperty(
 	path: Path,
 	node: JSVariableDeclaration,
-): Array<AnyJSStatement> {
-	const nodes: Array<AnyJSStatement> = [];
+): AnyJSStatement[] {
+	const nodes: AnyJSStatement[] = [];
 
 	for (const declarator of node.declarations) {
 		const restElem = getRestProperty(declarator);

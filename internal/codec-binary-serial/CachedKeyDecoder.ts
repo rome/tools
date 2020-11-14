@@ -32,7 +32,7 @@ export class CachedKeyDecoder {
 		}
 	}
 
-	private caches: Array<Array<KeyCacheRecord>>;
+	private caches: (KeyCacheRecord[])[];
 
 	public canBeCached(byteLength: number): boolean {
 		return byteLength > 0 && byteLength <= MAX_KEY_LENGTH;

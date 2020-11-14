@@ -28,7 +28,7 @@ function assert(t: TestHelper, val: RSERValue) {
 test(
 	"value types",
 	(t) => {
-		const cases: Array<RSERValue> = [
+		const cases: RSERValue[] = [
 			"foobar",
 			[1, 2, 3, "a", "b", "c"],
 			new Set([1, 2, 3, "a", "b", "c"]),

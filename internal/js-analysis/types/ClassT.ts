@@ -21,10 +21,10 @@ export default class ClassT extends ObjT {
 		originNode: undefined | AnyNode,
 		opts: {
 			_constructor: undefined | T;
-			statics: Array<T>;
-			instances: Array<T>;
+			statics: T[];
+			instances: T[];
 			extends?: T;
-			calls?: Array<T>;
+			calls?: T[];
 		},
 	) {
 		// point `class.prototype.__proto__` to `superClass.prototype`
@@ -83,8 +83,8 @@ export default class ClassT extends ObjT {
 
 	public static type = "ClassT";
 
-	private _statics: Array<T>;
-	private _instances: Array<T>;
+	private _statics: T[];
+	private _instances: T[];
 	private _extends: undefined | T;
 	private _constructor: undefined | T;
 

@@ -23,7 +23,7 @@ export default class ArraySet {
 		this.set = new Map();
 	}
 
-	private array: Array<string>;
+	private array: string[];
 	private set: Map<string, number>;
 
 	/**
@@ -65,7 +65,7 @@ export default class ArraySet {
    * indicated by indexOf). Note that this is a copy of the internal array used
    * for storing the members so that no one can mess with internal state.
    */
-	public toArray(): Array<string> {
+	public toArray(): string[] {
 		return this.array.slice();
 	}
 }

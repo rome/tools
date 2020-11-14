@@ -13,7 +13,7 @@ export default function JSImportSpecifier(
 	builder: Builder,
 	node: JSImportSpecifier,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	tokens.push(builder.tokenize(node.imported, node));
 

@@ -16,7 +16,7 @@ import {StaticMarkup} from "@internal/markup";
 
 export type ConsumeKey = number | string;
 
-export type ConsumePath = Array<ConsumeKey>;
+export type ConsumePath = ConsumeKey[];
 
 export type ConsumeSourceLocationRequestTarget =
 	| "all"
@@ -56,12 +56,12 @@ export type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase &
 
 export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {
 	type: "string";
-	allowedValues?: Array<string>;
+	allowedValues?: string[];
 };
 
 export type ConsumePropertyNumberDefinition = ConsumePropertyDefinitionBase & {
 	type: "number";
-	allowedValues?: Array<number>;
+	allowedValues?: number[];
 	min?: number;
 	max?: number;
 };

@@ -9,7 +9,7 @@ export * from "./markdown/unions";
 export * from "./unions";
 
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
-export type AnyNodes = AnyNode | Array<AnyNode>;
+export type AnyNodes = AnyNode | (AnyNode[]);
 
 /* GENERATED:START(hash:52a01c652b90aff283bc92bbb3f34791b1668346,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";

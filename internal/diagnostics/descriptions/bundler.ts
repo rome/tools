@@ -6,7 +6,7 @@ export const bundler = createDiagnosticsCategory({
 		localName: string,
 		target: string,
 		culprit: string,
-		path: Array<string>,
+		path: string[],
 	) => {
 		function formatPart(part: string, index?: number): StaticMarkup {
 			const tagged = markup`<filelink target="${part}" />`;

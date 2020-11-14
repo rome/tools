@@ -73,9 +73,7 @@ export function addEmphasis(items: StaticMarkups): StaticMarkups {
 }
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-type InputMessagesFactory = (
-	...params: Array<any>
-) => Partial<DiagnosticDescription>;
+type InputMessagesFactory = (...params: any[]) => Partial<DiagnosticDescription>;
 
 export type InputMessagesCategory = {
 	[key: string]: Partial<DiagnosticDescription> | InputMessagesFactory;

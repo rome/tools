@@ -83,9 +83,9 @@ type DiagnosticTarget =
 	| {
 			loc?: SourceLocation;
 		}
-	| Array<{
+	| ({
 			loc?: SourceLocation;
-		}>;
+		}[]);
 
 export default class CompilerContext {
 	constructor(arg: ContextArg) {
@@ -146,7 +146,7 @@ export default class CompilerContext {
 
 	public comments: CommentsConsumer;
 	private cacheDependencies: Set<string>;
-	public records: Array<Record>;
+	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;
 	public suppressions: DiagnosticSuppressions;
@@ -219,7 +219,7 @@ export default class CompilerContext {
 		return false;
 	}
 
-	public getCacheDependencies(): Array<string> {
+	public getCacheDependencies(): string[] {
 		return Array.from(this.cacheDependencies);
 	}
 
@@ -277,7 +277,7 @@ export default class CompilerContext {
 
 	public getLintDecisions(
 		key: undefined | string,
-	): Array<LintCompilerOptionsDecision> {
+	): LintCompilerOptionsDecision[] {
 		const {lint} = this.options;
 		if (lint === undefined) {
 			return [];
@@ -302,7 +302,7 @@ export default class CompilerContext {
 		description: DiagnosticDescription,
 		contextDiag: ContextDiagnostic = {},
 	): AddDiagnosticResult {
-		let origins: Array<DiagnosticOrigin> = [];
+		let origins: DiagnosticOrigin[] = [];
 		if (this.origin !== undefined) {
 			origins.push(this.origin);
 		}

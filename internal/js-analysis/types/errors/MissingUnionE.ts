@@ -17,7 +17,7 @@ export default class MissingUnionE extends E {
 		originNode: undefined | AnyNode,
 		target: T,
 		union: T,
-		missing: Array<T>,
+		missing: T[],
 	) {
 		super(scope, originNode);
 		this.target = target;
@@ -28,7 +28,7 @@ export default class MissingUnionE extends E {
 	public static type = "MissingUnionE";
 	private target: T;
 	public union: T;
-	private missing: Array<T>;
+	private missing: T[];
 
 	public getError(): ErrorDefinition {
 		return {

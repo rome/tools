@@ -51,7 +51,7 @@ export default createVisitor({
 
 			// Defer fixing unless it's totally necessary since there's additional overhead
 			if (shouldFix) {
-				const newBody: Array<AnyJSStatement> = [];
+				const newBody: AnyJSStatement[] = [];
 
 				for (let i = 0; i < node.body.length; i++) {
 					const bodyNode = node.body[i];

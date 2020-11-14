@@ -118,7 +118,7 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeTemplatedObjectArray<Value extends RSERObject &
-		UnionToIntersection<Value>>(arr: Array<Value>) {
+		UnionToIntersection<Value>>(arr: Value[]) {
 		// More compact form
 		if (arr.length === 0) {
 			this.writeCode(VALUE_CODES.ARRAY);
@@ -130,7 +130,7 @@ export default class RSERBufferAssembler {
 		this.encodeInt(arr.length);
 
 		// Encode keys
-		const keys: Array<string> = Object.keys(arr[0]);
+		const keys: string[] = Object.keys(arr[0]);
 		this.encodeInt(keys.length);
 		for (const key of keys) {
 			this.encodeStringValue(key);

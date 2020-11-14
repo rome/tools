@@ -58,15 +58,13 @@ export type PartialConfigHandler = {
 	language: DiagnosticLanguage;
 	consumeCategory: DiagnosticCategory;
 	jsonSuperset: boolean;
-	extensions: Array<string>;
+	extensions: string[];
 	parseExtra: (opts: ParserOptions) => ConfigParserResult;
 	tokenize: (
 		opts: ConfigParserOptions,
-	) => Array<
-		TokenBase & {
-			value?: unknown;
-		}
-	>;
+	) => (TokenBase & {
+		value?: unknown;
+	})[];
 	stringifyFromConsumer: (opts: PartialConsumeConfigResult) => string;
 };
 

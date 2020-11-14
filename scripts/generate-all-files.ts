@@ -8,7 +8,7 @@ import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
 import child = require("child_process");
 import {markup} from "@internal/markup";
 
-export async function main(args: Array<string>) {
+export async function main(args: string[]) {
 	const flags = await parseCLIFlagsFromProcess({
 		reporter,
 		args,

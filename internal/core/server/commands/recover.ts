@@ -54,9 +54,7 @@ async function applyStore(req: ServerRequest, storeId: string) {
 	);
 }
 
-async function getAllStores(
-	req: ServerRequest,
-): Promise<Array<RecoveryDiskStore>> {
+async function getAllStores(req: ServerRequest): Promise<RecoveryDiskStore[]> {
 	const {server, reporter} = req;
 	const {stores, diagnostics} = await server.recoveryStore.getAllStores();
 

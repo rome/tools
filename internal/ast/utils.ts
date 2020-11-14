@@ -10,13 +10,13 @@ import {NodeBase} from "@internal/parser-core";
 import {AnyNode, AnyNodes} from "./index";
 import {NodeBaseWithComments} from "./base";
 
-export const bindingKeys: Map<string, Array<string>> = new Map();
-export const visitorKeys: Map<string, Array<string>> = new Map();
+export const bindingKeys: Map<string, string[]> = new Map();
+export const visitorKeys: Map<string, string[]> = new Map();
 export const nodeNames: Set<string> = new Set();
 
 type JustNodeKeysProp<K, V> = V extends
 	| NodeBase
-	| Array<NodeBase>
+	| (NodeBase[])
 	| Array<undefined | NodeBase>
 	? K
 	: never;

@@ -41,7 +41,7 @@ export const resolver = createDiagnosticsCategory({
 	UNKNOWN_EXPORT: (
 		name: string,
 		source: string,
-		exportedNames: Array<string>,
+		exportedNames: string[],
 		formatExportedName: (
 			name: string,
 		) => {

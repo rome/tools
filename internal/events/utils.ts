@@ -29,7 +29,7 @@ export interface SubscriptionWrapperHelpers extends EventSubscription {
 	add: (sub: EventSubscription) => void;
 }
 
-type SubscriptionWrapperCallback<Ret, Args extends Array<unknown>> = (
+type SubscriptionWrapperCallback<Ret, Args extends unknown[]> = (
 	helper: SubscriptionWrapperHelpers,
 	...args: Args
 ) => Promise<Ret>;
@@ -48,7 +48,7 @@ export function createSubscriptionHelper(): SubscriptionWrapperHelpers {
 }
 
 // A safe way to wrap subscriptions and ensure they're properly closed on errors
-export function wrapSubscriptionConsumer<Ret, Args extends Array<unknown>>(
+export function wrapSubscriptionConsumer<Ret, Args extends unknown[]>(
 	callback: SubscriptionWrapperCallback<Ret, Args>,
 ): (...args: Args) => Promise<Ret> {
 	return async function(...args: Args): Promise<Ret> {

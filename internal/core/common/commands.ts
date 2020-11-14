@@ -17,7 +17,7 @@ export interface SharedCommand<Req, Flags extends UnknownObject, Ret> {
 	usage: string;
 	examples: Examples;
 	hidden?: boolean;
-	ignoreFlags?: Array<string>;
+	ignoreFlags?: string[];
 	allowRequestFlags?: Array<"review" | "watch">;
 	callback: (req: Req, flags: Flags) => Ret;
 }

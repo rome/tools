@@ -109,7 +109,7 @@ export default class BundleRequest {
 		return graph.getNode(this.resolvedEntry).getDependencyOrder();
 	}
 
-	public async stepCompile(paths: Array<AbsoluteFilePath>) {
+	public async stepCompile(paths: AbsoluteFilePath[]) {
 		const {server} = this;
 		const {reporter} = this;
 		this.diagnostics.setThrowAfter(undefined);

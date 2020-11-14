@@ -55,12 +55,12 @@ type Cursor = {
 	column: Number1;
 };
 
-type Rows = Array<Array<MarkupParsedTag>>;
+type Rows = (MarkupParsedTag[])[];
 
-type Ancestry = Array<MarkupParsedTag>;
+type Ancestry = MarkupParsedTag[];
 
 type Column = string | symbol;
-type Columns = Array<Column>;
+type Columns = Column[];
 
 function createTag(
 	name: MarkupParsedTag["name"],
@@ -87,11 +87,11 @@ function extractViewTags(
 	tag: MarkupParsedTag,
 ): {
 	pointer: undefined | MarkupParsedTag;
-	linePrefixes: Array<MarkupParsedTag>;
+	linePrefixes: MarkupParsedTag[];
 	children: MarkupParsedChildren;
 } {
 	let pointer: undefined | MarkupParsedTag;
-	let linePrefixes: Array<MarkupParsedTag> = [];
+	let linePrefixes: MarkupParsedTag[] = [];
 	let children: MarkupParsedChildren = [];
 
 	for (const child of tag.children) {
@@ -112,11 +112,11 @@ function extractViewTags(
 }
 
 type GridLine = {
-	ranges: Array<{
+	ranges: {
 		start: Number1;
 		end: Number1;
 		ancestry: Ancestry;
-	}>;
+	}[];
 	columns: Columns;
 };
 
@@ -184,7 +184,7 @@ export default class Grid {
 	public features: TerminalFeatures;
 	private lineWrapMode: MarkupLineWrapMode;
 	public options: GridOptions;
-	private lines: Array<GridLine>;
+	private lines: GridLine[];
 	public cursor: Cursor;
 	private width: Number1;
 	public viewportWidth: undefined | Number1;
@@ -313,7 +313,7 @@ export default class Grid {
 		return {...this.cursor};
 	}
 
-	public getLines(format: GridOutputFormat): Array<string> {
+	public getLines(format: GridOutputFormat): string[] {
 		switch (format) {
 			case "ansi":
 				return this.getFormattedAnsiLines();
@@ -326,7 +326,7 @@ export default class Grid {
 		}
 	}
 
-	private getTrimmedLines(): Array<GridLine> {
+	private getTrimmedLines(): GridLine[] {
 		const lines = [...this.lines];
 
 		// Remove empty columns
@@ -338,7 +338,7 @@ export default class Grid {
 		return lines;
 	}
 
-	private getUnformattedLines(): Array<string> {
+	private getUnformattedLines(): string[] {
 		return this.lines.map(({columns}) => {
 			return joinColumns(columns).trimRight();
 		});
@@ -350,8 +350,8 @@ export default class Grid {
 			formatTag: (tag: MarkupParsedTag, inner: string) => string;
 			wrapRange: (text: string) => string;
 		},
-	): Array<string> {
-		const lines: Array<string> = [];
+	): string[] {
+		const lines: string[] = [];
 
 		for (const {ranges, columns} of this.getTrimmedLines()) {
 			// Sort ranges from last to first
@@ -394,7 +394,7 @@ export default class Grid {
 		return lines;
 	}
 
-	private getFormattedHtmlLines(): Array<string> {
+	private getFormattedHtmlLines(): string[] {
 		return this.getFormattedLines({
 			normalizeText: (text) => escapeXHTMLEntities(text),
 			formatTag: (tag, inner) => htmlFormatText(tag, inner),
@@ -402,7 +402,7 @@ export default class Grid {
 		});
 	}
 
-	private getFormattedAnsiLines(): Array<string> {
+	private getFormattedAnsiLines(): string[] {
 		return this.getFormattedLines({
 			normalizeText: (text) => text,
 			formatTag: (tag, inner) => {
@@ -730,7 +730,7 @@ export default class Grid {
 	}
 
 	private drawListTag(tag: MarkupParsedTag, ancestry: Ancestry) {
-		let items: Array<MarkupParsedTag> = [];
+		let items: MarkupParsedTag[] = [];
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "li") {
 				items.push(child);
@@ -857,7 +857,7 @@ export default class Grid {
 	}
 
 	private getViewLinePrefixes(
-		children: Array<MarkupParsedTag>,
+		children: MarkupParsedTag[],
 		ancestry: Ancestry,
 	): {
 		width: Number1;
@@ -866,7 +866,7 @@ export default class Grid {
 		middle: undefined | Grid;
 		last: undefined | Grid;
 	} {
-		const prefixes: Array<MarkupParsedTag> = [];
+		const prefixes: MarkupParsedTag[] = [];
 
 		let linePrefixFirst: undefined | MarkupParsedTag;
 		let linePrefixMiddle: undefined | MarkupParsedTag;
@@ -1087,7 +1087,7 @@ export default class Grid {
 
 		for (const child of tag.children) {
 			if (child.type === "Tag" && child.name === "tr") {
-				const row: Array<MarkupParsedTag> = [];
+				const row: MarkupParsedTag[] = [];
 
 				for (const field of child.children) {
 					if (field.type === "Tag" && field.name === "td") {
@@ -1107,7 +1107,7 @@ export default class Grid {
 		const columnCount = Math.max(...rows.map((columns) => columns.length));
 
 		// Get column widths
-		const columnWidths: Array<number> = [];
+		const columnWidths: number[] = [];
 		for (let i = 0; i < columnCount; i++) {
 			const widths = rows.map((row): number => {
 				const field = row[i];

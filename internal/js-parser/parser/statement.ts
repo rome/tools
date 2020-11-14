@@ -772,7 +772,7 @@ export function parseSwitchStatement(
 ): JSSwitchStatement {
 	expect(parser, tt._switch);
 	const discriminant = parseParenExpression(parser, "switch discriminant");
-	const cases: Array<JSSwitchCase> = [];
+	const cases: JSSwitchCase[] = [];
 	const hasBrace = match(parser, tt.braceL);
 	const openContext = expectOpening(parser, tt.braceL, tt.braceR, "switch body");
 	parser.state.labels.push(switchLabel);
@@ -786,7 +786,7 @@ export function parseSwitchStatement(
 			| {
 					start: Position;
 					test: undefined | AnyJSExpression;
-					consequent: Array<AnyJSStatement>;
+					consequent: AnyJSStatement[];
 				};
 
 		function pushCase() {
@@ -1191,8 +1191,8 @@ export function parseBlockBody(
 	topLevel: boolean,
 	openContext: OpeningContext,
 ): {
-	body: Array<AnyJSStatement>;
-	directives: Array<JSDirective>;
+	body: AnyJSStatement[];
+	directives: JSDirective[];
 } {
 	return parseBlockOrModuleBlockBody(
 		parser,
@@ -1208,11 +1208,11 @@ export function parseBlockOrModuleBlockBody(
 	topLevel: boolean,
 	openContext: OpeningContext,
 ): {
-	body: Array<AnyJSStatement>;
-	directives: Array<JSDirective>;
+	body: AnyJSStatement[];
+	directives: JSDirective[];
 } {
-	const body: Array<AnyJSStatement> = [];
-	const directives: Array<JSDirective> = [];
+	const body: AnyJSStatement[] = [];
+	const directives: JSDirective[] = [];
 
 	let parsedNonDirective = false;
 	let didSetStrict = undefined;
@@ -1379,8 +1379,8 @@ export function parseVar(
 	start: Position,
 	kind: string,
 	isFor: boolean,
-): Array<JSVariableDeclarator> {
-	const declarations: Array<JSVariableDeclarator> = [];
+): JSVariableDeclarator[] {
+	const declarations: JSVariableDeclarator[] = [];
 
 	while (true) {
 		const start = parser.getPosition();
@@ -1709,7 +1709,7 @@ export function parseFunctionParams(
 	allowTSModifiers?: boolean,
 ): {
 	typeParameters: undefined | TSTypeParameterDeclaration;
-	params: Array<AnyJSBindingPattern>;
+	params: AnyJSBindingPattern[];
 	rest: undefined | AnyJSTargetBindingPattern;
 } {
 	let typeParameters = undefined;

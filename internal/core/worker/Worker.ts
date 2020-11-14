@@ -267,7 +267,7 @@ export default class Worker {
 		);
 	}
 
-	private patchBuffer(ref: FileReference, patches: Array<WorkerBufferPatch>) {
+	private patchBuffer(ref: FileReference, patches: WorkerBufferPatch[]) {
 		this.logger.info(markup`Patched ${ref.real} buffer`);
 		let buffer: undefined | string = this.buffers.assert(ref.real);
 
@@ -290,7 +290,7 @@ export default class Worker {
 		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
-		const libs: Array<JSRoot> = [];
+		const libs: JSRoot[] = [];
 
 		// TODO Figure out how to get the uids for the libraries, probably adding some additional stuff to ProjectConfig?
 

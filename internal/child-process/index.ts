@@ -14,7 +14,7 @@ interface ChildProcessOptions extends Omit<childProcess.SpawnOptions, "cwd"> {
 }
 
 export class ChildProcess {
-	constructor(command: string, args: Array<string>, opts: ChildProcessOptions) {
+	constructor(command: string, args: string[], opts: ChildProcessOptions) {
 		this.process = childProcess.spawn(
 			command,
 			args,
@@ -52,8 +52,8 @@ export class ChildProcess {
 	public process: childProcess.ChildProcess;
 	private command: string;
 	private cwd: AbsoluteFilePath;
-	private args: Array<string>;
-	private output: Array<[0 | 1, string]>;
+	private args: string[];
+	private output: [0 | 1, string][];
 
 	public getDisplayCommand(): string {
 		return `${this.command} ${this.args.join(" ")}`;
@@ -137,7 +137,7 @@ export class ChildProcess {
 
 export function spawn(
 	command: string,
-	args: Array<string>,
+	args: string[],
 	opts: ChildProcessOptions,
 ): ChildProcess {
 	return new ChildProcess(command, args, opts);

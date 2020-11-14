@@ -7,14 +7,14 @@
 
 export function dedent(
 	literals: string | TemplateStringsArray,
-	...values: Array<string>
+	...values: string[]
 ): string {
 	let string: string = "";
 
 	if (typeof literals === "string") {
 		string = literals;
 	} else {
-		const parts: Array<string> = [];
+		const parts: string[] = [];
 
 		if (literals.raw) {
 			// Perform the interpolation

@@ -61,7 +61,7 @@ export default class GetPropT extends T {
 		property: T,
 		opts: {
 			topObject?: T;
-			protoKeys?: Array<string>;
+			protoKeys?: string[];
 		} = {},
 	): T {
 		object = this.utils.reduce(object);
@@ -82,7 +82,7 @@ export default class GetPropT extends T {
 		// look up on object
 		if (key !== undefined && object instanceof ObjT) {
 			//
-			const indexers: Array<ObjIndexPropT> = [];
+			const indexers: ObjIndexPropT[] = [];
 			for (const maybePropRaw of object.props) {
 				const maybeProp = this.utils.reduce(maybePropRaw);
 				if (maybeProp instanceof ObjPropT) {

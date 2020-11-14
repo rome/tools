@@ -32,17 +32,15 @@
 import {AnyParserCore} from "@internal/parser-core";
 import {AnyComment, AnyNode} from "@internal/ast";
 
-function last<T>(stack: Array<T>): T {
+function last<T>(stack: T[]): T {
 	return stack[stack.length - 1];
 }
 
-function getIds(comments: Array<AnyComment>): Array<string> {
+function getIds(comments: AnyComment[]): string[] {
 	return comments.map((comment) => comment.id);
 }
 
-function hasComments(
-	comments: undefined | Array<unknown>,
-): comments is Array<unknown> {
+function hasComments(comments: undefined | (unknown[])): comments is unknown[] {
 	return comments !== undefined && comments.length > 0;
 }
 
@@ -50,7 +48,7 @@ function setComments(
 	parser: AnyParserCore,
 	node: AnyNode,
 	key: "leadingComments" | "trailingComments",
-	comments: Array<AnyComment>,
+	comments: AnyComment[],
 ) {
 	let innerEndIndex = -1;
 
@@ -118,7 +116,7 @@ function adjustCommentsAfterTrailingComma(
 		}
 	}
 
-	const newTrailingComments: Array<AnyComment> = [];
+	const newTrailingComments: AnyComment[] = [];
 	for (let i = 0; i < state.leadingComments.length; i++) {
 		const leadingComment = state.leadingComments[i];
 		if (parser.getInputEndIndex(leadingComment) < parser.getInputEndIndex(node)) {
@@ -155,7 +153,7 @@ export function attachComments(parser: AnyParserCore, node: AnyNode) {
 	const {state} = parser;
 	const {commentStack, commentPreviousNode} = state;
 
-	let trailingComments: undefined | Array<AnyComment>;
+	let trailingComments: undefined | (AnyComment[]);
 
 	if (state.trailingComments.length > 0) {
 		// If the first comment in trailingComments comes after the

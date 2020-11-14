@@ -16,7 +16,7 @@ import {createBuilder} from "../../utils";
 export interface JSBindingObjectPattern extends NodeBaseWithComments {
 	readonly meta?: JSPatternMeta;
 	readonly type: "JSBindingObjectPattern";
-	readonly properties: Array<JSBindingObjectPatternProperty>;
+	readonly properties: JSBindingObjectPatternProperty[];
 	readonly rest: undefined | JSBindingIdentifier;
 }
 

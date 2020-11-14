@@ -310,7 +310,7 @@ function parseBreak(parser: MarkdownParser): MarkdownDividerBlock {
 
 function parseListBlock(parser: MarkdownParser): MarkdownListBlock {
 	const pos = parser.getPosition();
-	const children: Array<MarkdownListItem> = [];
+	const children: MarkdownListItem[] = [];
 	const currentToken = parser.getToken();
 	let ordered = false;
 	if (currentToken.type === "ListItem") {
@@ -360,7 +360,7 @@ function parseCode(parser: MarkdownParser): MarkdownCodeBlock {
 
 function parseBlock(
 	parser: MarkdownParser,
-): undefined | AnyMarkdownNode | Array<AnyMarkdownNode> {
+): undefined | AnyMarkdownNode | (AnyMarkdownNode[]) {
 	const token = parser.getToken();
 	switch (token.type) {
 		case "NewLine": {
@@ -394,7 +394,7 @@ function parseBlock(
 export function parseMarkdown(opts: ParserOptionsWithRequiredPath): MarkdownRoot {
 	const parser = createMarkdownParser(opts);
 	const start = parser.getPosition();
-	const body: Array<AnyMarkdownNode> = [];
+	const body: AnyMarkdownNode[] = [];
 
 	while (!parser.matchToken("EOF")) {
 		const child = parseBlock(parser);

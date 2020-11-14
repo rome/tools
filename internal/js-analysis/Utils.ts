@@ -140,7 +140,7 @@ export default class Utils {
 		}
 	}
 
-	public explodeUnion(type: T): Array<T> {
+	public explodeUnion(type: T): T[] {
 		return Array.from(new Set(this.reduce(type).explodeUnion()));
 	}
 

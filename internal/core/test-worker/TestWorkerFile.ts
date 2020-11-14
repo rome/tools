@@ -103,7 +103,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 
 export type TestWorkerFileResult = {
 	snapshots: AbsoluteFilePathMap<Snapshot>;
-	inlineSnapshotUpdates: Array<InlineSnapshotUpdate>;
+	inlineSnapshotUpdates: InlineSnapshotUpdate[];
 };
 
 type FoundTest = {
@@ -155,15 +155,15 @@ export default class TestWorkerFile {
 
 	private worker: TestWorker;
 	private foundTests: ExtendedMap<string, FoundTest>;
-	private focusedTests: Array<FocusedTest>;
+	private focusedTests: FocusedTest[];
 	private bridge: TestWorkerBridge;
 	private snapshotManager: SnapshotManager;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
-	private consoleAdvice: Array<() => DiagnosticAdvice>;
+	private consoleAdvice: (() => DiagnosticAdvice)[];
 
 	// Diagnostics that shouldn't result in console logs being output
-	private pendingDiagnostics: Array<Diagnostic>;
+	private pendingDiagnostics: Diagnostic[];
 
 	private createTestRef(test: FoundTest): TestRef {
 		return {
@@ -173,10 +173,7 @@ export default class TestWorkerFile {
 	}
 
 	private createConsole(): Partial<Console> {
-		const addDiagnostic = (
-			category: DiagnosticLogCategory,
-			args: Array<unknown>,
-		) => {
+		const addDiagnostic = (category: DiagnosticLogCategory, args: unknown[]) => {
 			const err = new Error();
 
 			// Remove the first two frames to get to the actual source
@@ -211,12 +208,12 @@ export default class TestWorkerFile {
 			});
 		};
 
-		function log(...args: Array<unknown>): void {
+		function log(...args: unknown[]): void {
 			addDiagnostic("none", args);
 		}
 
 		return {
-			assert(expression: unknown, ...args: Array<unknown>): void {
+			assert(expression: unknown, ...args: unknown[]): void {
 				if (!expression) {
 					args[0] = `Assertion failed${args.length === 0 ? "" : `: ${args[0]}`}`;
 					addDiagnostic("warn", args);
@@ -225,15 +222,15 @@ export default class TestWorkerFile {
 			dir(obj: unknown): void {
 				addDiagnostic("info", [obj]);
 			},
-			error: (...args: Array<unknown>): void => {
+			error: (...args: unknown[]): void => {
 				addDiagnostic("error", args);
 			},
-			warn: (...args: Array<unknown>): void => {
+			warn: (...args: unknown[]): void => {
 				addDiagnostic("warn", args);
 			},
 			dirxml: log,
 			debug: log,
-			info: (...args: Array<unknown>): void => {
+			info: (...args: unknown[]): void => {
 				addDiagnostic("info", args);
 			},
 			log,

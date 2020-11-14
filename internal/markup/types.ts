@@ -39,7 +39,7 @@ export type MarkupParsedTag = {
 
 export type MarkupParsedChild = MarkupParsedText | MarkupParsedTag;
 
-export type MarkupParsedChildren = Array<MarkupParsedChild>;
+export type MarkupParsedChildren = MarkupParsedChild[];
 
 export type MarkupLineWrapMode = "none" | "char-break" | "word-break";
 
@@ -105,7 +105,7 @@ export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 
 export type MarkupLinesAndWidth = {
 	width: number;
-	lines: Array<string>;
+	lines: string[];
 };
 
 export type MarkupRGB = [number, number, number];

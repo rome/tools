@@ -151,10 +151,10 @@ function getNodeName(node: AnyNode): string {
 
 // Solution comes from https://en.wikipedia.org/wiki/Longest_increasing_subsequence
 function findOutOfOrderNodes(
-	seq: Array<ClassNode>,
+	seq: ClassNode[],
 ): {
-	nodesToMove: Array<ClassNode>;
-	nodesInOrder: Array<ClassNode>;
+	nodesToMove: ClassNode[];
+	nodesInOrder: ClassNode[];
 } {
 	if (seq.length <= 1) {
 		return {nodesToMove: [], nodesInOrder: []};

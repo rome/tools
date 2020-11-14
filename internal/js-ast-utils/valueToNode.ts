@@ -29,7 +29,7 @@ import {UnknownObject} from "@internal/typescript-helpers";
 
 export function valueToNode(
 	value: unknown,
-	ancestry: Array<unknown> = [],
+	ancestry: unknown[] = [],
 ):
 	| JSStringLiteral
 	| JSBooleanLiteral
@@ -69,7 +69,7 @@ export function valueToNode(
 			}
 
 			const obj = (value as UnknownObject);
-			const props: Array<JSObjectProperty> = [];
+			const props: JSObjectProperty[] = [];
 
 			for (let key in obj) {
 				props.push(

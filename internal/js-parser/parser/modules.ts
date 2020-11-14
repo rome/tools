@@ -100,7 +100,7 @@ export function parseExport(
 
 	let exportKind: ConstJSExportModuleKind = "value";
 	let declaration: undefined | AnyJSStatement;
-	let localSpecifiers: undefined | Array<JSExportLocalSpecifier>;
+	let localSpecifiers: undefined | (JSExportLocalSpecifier[]);
 
 	// export * from '...'';
 	if (shouldParseExportStar(parser)) {
@@ -109,7 +109,7 @@ export function parseExport(
 		const defStart = parser.getPosition();
 		const defExported = parseIdentifier(parser, true);
 
-		let namedSpecifiers: Array<JSExportLocalSpecifier> = [];
+		let namedSpecifiers: JSExportLocalSpecifier[] = [];
 		let defaultSpecifier: JSExportDefaultSpecifier = parser.finishNode(
 			defStart,
 			{
@@ -272,7 +272,7 @@ function createExportExternalDeclaration(
 	start: Position,
 	defaultSpecifier: undefined | JSExportDefaultSpecifier,
 	namespaceSpecifier: undefined | JSExportNamespaceSpecifier,
-	namedSpecifiers: Array<JSExportLocalSpecifier>,
+	namedSpecifiers: JSExportLocalSpecifier[],
 	source: JSStringLiteral,
 	exportKind?: ConstJSExportModuleKind,
 ): JSExportExternalDeclaration {
@@ -309,8 +309,8 @@ function createExportExternalDeclaration(
 
 function convertLocalToExternalSpecifiers(
 	parser: JSParser,
-	specifiers: Array<JSExportLocalSpecifier> = [],
-): Array<JSExportExternalSpecifier> {
+	specifiers: JSExportLocalSpecifier[] = [],
+): JSExportExternalSpecifier[] {
 	return specifiers.map((specifier) => {
 		return {
 			...specifier,
@@ -371,7 +371,7 @@ function parseExportDeclaration(
 ): {
 	exportKind: ConstJSExportModuleKind;
 	declaration?: AnyJSStatement;
-	localSpecifiers?: Array<JSExportLocalSpecifier>;
+	localSpecifiers?: JSExportLocalSpecifier[];
 	source?: JSStringLiteral;
 } {
 	if (isContextual(parser, "type")) {
@@ -451,7 +451,7 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
 
 function parseExportLocalSpecifiersMaybe(
 	parser: JSParser,
-): Array<JSExportLocalSpecifier> {
+): JSExportLocalSpecifier[] {
 	if (eat(parser, tt.comma)) {
 		return parseExportSpecifiers(parser);
 	} else {
@@ -569,7 +569,7 @@ function parseExportNamespace(
 ): {
 	source: JSStringLiteral;
 	namespaceSpecifier: JSExportNamespaceSpecifier;
-	namedSpecifiers: Array<JSExportExternalSpecifier>;
+	namedSpecifiers: JSExportExternalSpecifier[];
 } {
 	if (exportKind === "type") {
 		unexpectedDiagnostic(
@@ -718,8 +718,8 @@ function checkDuplicateExports(
 }
 
 // Parses a comma-separated list of module exports.
-function parseExportSpecifiers(parser: JSParser): Array<JSExportLocalSpecifier> {
-	const specifiers: Array<JSExportLocalSpecifier> = [];
+function parseExportSpecifiers(parser: JSParser): JSExportLocalSpecifier[] {
+	const specifiers: JSExportLocalSpecifier[] = [];
 	let first = true;
 
 	// export { x, y as z } [from '...']';
@@ -776,7 +776,7 @@ export function parseImport(
 		return parseTSImportEqualsDeclaration(parser, start);
 	}
 
-	let namedSpecifiers: Array<JSImportSpecifier> = [];
+	let namedSpecifiers: JSImportSpecifier[] = [];
 	let namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
 	let defaultSpecifier: undefined | JSImportDefaultSpecifier;
 	let source: JSStringLiteral;
@@ -877,7 +877,7 @@ function parseImportSpecifiers(
 	parser: JSParser,
 	start: Position,
 ): {
-	namedSpecifiers: Array<JSImportSpecifier>;
+	namedSpecifiers: JSImportSpecifier[];
 	namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
 	defaultSpecifier: undefined | JSImportDefaultSpecifier;
 	importKind: undefined | ConstJSImportModuleKind;
@@ -909,7 +909,7 @@ function parseImportSpecifiers(
 		}
 	}
 
-	let namedSpecifiers: Array<JSImportSpecifier> = [];
+	let namedSpecifiers: JSImportSpecifier[] = [];
 	let namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
 	let defaultSpecifier: undefined | JSImportDefaultSpecifier;
 

@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 // **something**
 export interface MarkdownBoldInline extends NodeBaseWithComments {
 	type: "MarkdownBoldInline";
-	value: Array<AnyMarkdownInlineNode>;
+	value: AnyMarkdownInlineNode[];
 }
 
 export const markdownBoldInline = createBuilder<MarkdownBoldInline>(

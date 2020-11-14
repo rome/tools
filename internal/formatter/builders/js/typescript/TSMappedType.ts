@@ -20,7 +20,7 @@ export default function TSMappedType(
 	builder: Builder,
 	node: TSMappedType,
 ): Token {
-	const tokens: Array<Token> = [];
+	const tokens: Token[] = [];
 
 	if (node.readonly) {
 		tokens.push(tokenIfPlusMinus(builder, node.readonly), "readonly", space);

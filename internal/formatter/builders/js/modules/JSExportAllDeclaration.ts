@@ -12,7 +12,7 @@ export default function JSExportAllDeclaration(
 	builder: Builder,
 	node: JSExportAllDeclaration,
 ): Token {
-	const tokens: Array<Token> = ["export", space];
+	const tokens: Token[] = ["export", space];
 
 	if (node.exportKind === "type") {
 		if (!builder.options.typeAnnotations) {

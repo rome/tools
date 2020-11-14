@@ -46,13 +46,13 @@ import {removeCarriageReturn} from "@internal/string-utils";
 import {attachComments} from "./comments";
 
 export type ParserCoreState = {
-	comments: Array<AnyComment>;
-	trailingComments: Array<AnyComment>;
-	leadingComments: Array<AnyComment>;
-	commentStack: Array<AnyNode>;
+	comments: AnyComment[];
+	trailingComments: AnyComment[];
+	leadingComments: AnyComment[];
+	commentStack: AnyNode[];
 	commentPreviousNode: undefined | AnyNode;
 	diagnostics: Diagnostics;
-	diagnosticFilters: Array<DiagnosticFilter>;
+	diagnosticFilters: DiagnosticFilter[];
 	corrupt: boolean;
 };
 
@@ -182,8 +182,8 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	}
 
 	// Run the tokenizer over all tokens
-	public tokenizeAll(): Array<TokenValues<Types["tokens"]>> {
-		const tokens: Array<TokenValues<Types["tokens"]>> = [];
+	public tokenizeAll(): TokenValues<Types["tokens"]>[] {
+		const tokens: TokenValues<Types["tokens"]>[] = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
 			while (true) {
@@ -722,10 +722,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	}
 
 	// Sometimes we want to pretend we're in different locations to consume the comments of other nodes
-	public finishNodeWithStarts<T extends AnyNode>(
-		starts: Array<Position>,
-		node: T,
-	): T {
+	public finishNodeWithStarts<T extends AnyNode>(starts: Position[], node: T): T {
 		for (const start of starts) {
 			node = this.finishNode(start, node);
 		}

@@ -65,8 +65,8 @@ export default class Scope {
 		return this.bindings;
 	}
 
-	public getBindingNames(): Array<string> {
-		let bindingNames: Array<string> = [];
+	public getBindingNames(): string[] {
+		let bindingNames: string[] = [];
 
 		let scope: undefined | Scope = this;
 		while (scope !== undefined) {
@@ -77,7 +77,7 @@ export default class Scope {
 		return Array.from(new Set(bindingNames));
 	}
 
-	private getOwnBindingNames(): Array<string> {
+	private getOwnBindingNames(): string[] {
 		return Array.from(this.bindings.keys());
 	}
 
@@ -148,7 +148,7 @@ export default class Scope {
 		lines.push(`# Scope ${this.kind}`);
 
 		if (this.globals.size > 0) {
-			const filteredGlobals: Array<string> = [];
+			const filteredGlobals: string[] = [];
 			for (const name of this.globals) {
 				if (globalGlobals.includes(name)) {
 					continue;
@@ -276,8 +276,8 @@ export class RootScope extends Scope {
 	public context: CompilerContext;
 	private uids: Set<string>;
 
-	private parseGlobalComments(ast: AnyRoot): Array<string> {
-		const globals: Array<string> = [];
+	private parseGlobalComments(ast: AnyRoot): string[] {
+		const globals: string[] = [];
 
 		for (const {value} of ast.comments) {
 			// Check if comment starts with "global ", ignoring any leading whitespace

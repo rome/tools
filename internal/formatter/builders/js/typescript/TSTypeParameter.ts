@@ -12,7 +12,7 @@ export default function TSTypeParameter(
 	builder: Builder,
 	node: TSTypeParameter,
 ): Token {
-	const tokens: Array<Token> = [node.name];
+	const tokens: Token[] = [node.name];
 
 	if (node.constraint) {
 		tokens.push(

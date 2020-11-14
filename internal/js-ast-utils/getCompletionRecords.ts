@@ -50,7 +50,7 @@ function getIfCompletionRecords(
 }
 
 function getLastCompletionRecordFromNodes(
-	nodes: Array<AnyJSStatement>,
+	nodes: AnyJSStatement[],
 ): undefined | Records {
 	// Get the last node to produce records
 	for (let i = nodes.length - 1; i >= 0; i--) {

@@ -34,8 +34,8 @@ export default function JSObjectExpression(
 		);
 	}
 
-	const tokens: Array<Token> = [];
-	const props: Array<AnyNode> = node.properties;
+	const tokens: Token[] = [];
+	const props: AnyNode[] = node.properties;
 
 	tokens.push(
 		join(

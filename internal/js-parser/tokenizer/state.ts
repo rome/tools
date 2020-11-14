@@ -12,11 +12,11 @@ import {TokenTypes} from "./types";
 import {Token} from "..";
 import {Number0, Number1} from "@internal/ob1";
 
-type Scopes = {[K in ScopeType]?: Array<unknown>};
+type Scopes = {[K in ScopeType]?: unknown[]};
 
 export type State = {
 	isIterator: boolean;
-	tokens: Array<Token>;
+	tokens: Token[];
 	hasHoistedVars: boolean;
 	indentLevel: Number0;
 	lineStart: boolean;
@@ -28,7 +28,7 @@ export type State = {
 	// typed arrow function, but it isn't
 	// e.g. a ? (b) : c => d
 	//          ^
-	noArrowAt: Array<Number0>;
+	noArrowAt: Number0[];
 
 	// Used to signify the start of an expression whose params, if it looks like
 	// an arrow function, shouldn't be converted to assignable nodes.
@@ -36,7 +36,7 @@ export type State = {
 	// conditional expressions.
 	// e.g. a ? (b) : c => d
 	//          ^
-	noArrowParamsConversionAt: Array<Number0>;
+	noArrowParamsConversionAt: Number0[];
 
 	// Flags to track whether we are in a function, a generator.
 	maybeInArrowParameters: boolean;
@@ -55,7 +55,7 @@ export type State = {
 	classLevel: Number0;
 
 	// Labels in scope.
-	labels: Array<Label>;
+	labels: Label[];
 
 	// The first yield expression inside parenthesized expressions and arrow
 	// function parameters. It is used to disallow yield in arrow function
@@ -88,7 +88,7 @@ export type State = {
 	// The context stack is used to superficially track syntactic
 	// context to predict whether a regular expression is allowed in a
 	// given position.
-	context: Array<TokContext>;
+	context: TokContext[];
 	exprAllowed: boolean;
 
 	// Used to signal to callers of `readWord1` whether the word

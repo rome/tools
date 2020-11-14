@@ -10,7 +10,7 @@ import {createBuilder} from "../../utils";
 
 export interface JSRegExpSubExpression extends NodeBaseWithComments {
 	readonly type: "JSRegExpSubExpression";
-	readonly body: Array<AnyJSRegExpBodyItem>;
+	readonly body: AnyJSRegExpBodyItem[];
 }
 
 export const jsRegExpSubExpression = createBuilder<JSRegExpSubExpression>(

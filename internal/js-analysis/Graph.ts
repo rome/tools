@@ -7,7 +7,7 @@
 
 export type Node<Value> = {
 	value: Value;
-	lines: Array<Node<Value>>;
+	lines: Node<Value>[];
 };
 
 export default class Graph<Value> {
@@ -16,7 +16,7 @@ export default class Graph<Value> {
 		this.nodesByValue = new Map();
 	}
 
-	public nodes: Array<Node<Value>>;
+	public nodes: Node<Value>[];
 	public nodesByValue: Map<Value, Node<Value>>;
 
 	public addNode(value: Value): void {

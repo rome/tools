@@ -99,7 +99,7 @@ function getUserConfigDirectory(): AbsoluteFilePath {
 }
 
 export const USER_CONFIG_DIRECTORY = getUserConfigDirectory();
-export const USER_CONFIG_FILENAMES: Array<string> = [];
+export const USER_CONFIG_FILENAMES: string[] = [];
 for (const ext of CONFIG_EXTENSIONS) {
 	USER_CONFIG_FILENAMES.push(`config.${ext}`);
 }

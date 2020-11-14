@@ -21,7 +21,7 @@ function createEnv(processType: string): Dict<string> {
 export function forkProcess(
 	processType: string,
 	opts: child.ForkOptions = {},
-	args: Array<string> = [],
+	args: string[] = [],
 ): child.ChildProcess {
 	return child.fork(
 		getBinPath().join(),

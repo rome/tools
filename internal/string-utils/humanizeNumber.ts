@@ -20,8 +20,8 @@ export function humanizeNumber(num: bigint | number, sep: string = "_"): string 
 
 	const decimals = str.split(".");
 
-	let intChars: Array<string> = String(decimals.shift()).split("");
-	let intParts: Array<string> = [];
+	let intChars: string[] = String(decimals.shift()).split("");
+	let intParts: string[] = [];
 
 	while (intChars.length > 0) {
 		const part = intChars.slice(-3).join("");

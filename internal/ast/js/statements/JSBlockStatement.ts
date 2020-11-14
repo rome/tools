@@ -10,8 +10,8 @@ import {createQuickBuilder} from "../../utils";
 
 export interface JSBlockStatement extends NodeBaseWithComments {
 	readonly type: "JSBlockStatement";
-	readonly body: Array<AnyJSStatement>;
-	readonly directives?: Array<JSDirective>;
+	readonly body: AnyJSStatement[];
+	readonly directives?: JSDirective[];
 }
 
 export const jsBlockStatement = createQuickBuilder<JSBlockStatement, "body">(

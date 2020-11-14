@@ -52,7 +52,7 @@ export default class ProgressBase implements ReporterProgress {
 
 	protected text: undefined | AnyMarkup;
 	protected textIdCounter: number;
-	protected textIdStack: Array<string>;
+	protected textIdStack: string[];
 	protected textStack: AnyMarkups;
 	protected textIds: Set<string>;
 

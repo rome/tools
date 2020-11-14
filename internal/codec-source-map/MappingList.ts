@@ -50,7 +50,7 @@ export default class MappingList {
 		};
 	}
 
-	private array: Array<Mapping>;
+	private array: Mapping[];
 	private sorted: boolean;
 
 	// Serves as infimum
@@ -78,7 +78,7 @@ export default class MappingList {
    * an immutable borrow. If you want to take ownership, you must make your own
    * copy.
    */
-	public toArray(): Array<Mapping> {
+	public toArray(): Mapping[] {
 		if (!this.sorted) {
 			this.array.sort(compareByGeneratedPositionsInflated);
 			this.sorted = true;

@@ -18,10 +18,10 @@ import {createQuickBuilder} from "../../utils";
 export interface JSClassHead extends NodeBaseWithComments {
 	readonly type: "JSClassHead";
 	readonly superClass?: AnyJSExpression;
-	readonly body: Array<AnyJSClassMember>;
+	readonly body: AnyJSClassMember[];
 	readonly typeParameters?: TSTypeParameterDeclaration;
 	readonly superTypeParameters?: TSTypeParameterInstantiation;
-	readonly implements?: undefined | Array<TSExpressionWithTypeArguments>;
+	readonly implements?: undefined | (TSExpressionWithTypeArguments[]);
 }
 
 export const jsClassHead = createQuickBuilder<JSClassHead, "body">(

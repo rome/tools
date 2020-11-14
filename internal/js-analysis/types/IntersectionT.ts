@@ -13,13 +13,13 @@ import {HumanBuilder} from "../Utils";
 import {StaticMarkup, concatMarkup, markup} from "@internal/markup";
 
 export default class IntersectionT extends T {
-	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
+	constructor(scope: Scope, originNode: undefined | AnyNode, types: T[]) {
 		super(scope, originNode);
 		this.types = types;
 	}
 
 	public static type = "IntersectionT";
-	private types: Array<T>;
+	private types: T[];
 
 	public serialize(addType: SerialTypeFactory): HydrateData {
 		return {

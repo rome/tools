@@ -13,7 +13,7 @@ export default function JSRegExpQuantified(
 	builder: Builder,
 	node: JSRegExpQuantified,
 ): Token {
-	const tokens: Array<Token> = [builder.tokenize(node.target, node)];
+	const tokens: Token[] = [builder.tokenize(node.target, node)];
 
 	if (node.min === 0 && node.max === 1) {
 		tokens.push("?");

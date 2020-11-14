@@ -81,8 +81,8 @@ function isUnnecessaryStringConcatExpression(
 // expr + expr + expr + ...
 function collectBinaryAddExpressionExpressions(
 	node: JSBinaryExpression,
-): Array<AnyJSExpression> {
-	let expressions: Array<AnyJSExpression> = [];
+): AnyJSExpression[] {
+	let expressions: AnyJSExpression[] = [];
 
 	if (isBinaryAddExpression(node.left)) {
 		expressions = expressions.concat(
@@ -104,9 +104,7 @@ function collectBinaryAddExpressionExpressions(
 }
 
 // zips template.quasis and template.expressions into one array
-function zipTemplateLiteralParts(
-	template: JSTemplateLiteral,
-): Array<TemplatePart> {
+function zipTemplateLiteralParts(template: JSTemplateLiteral): TemplatePart[] {
 	let templateParts = [];
 
 	for (let i = 0; i < template.quasis.length; i++) {
@@ -122,10 +120,10 @@ function zipTemplateLiteralParts(
 
 // flattens an array of expressions into TemplateLiteral parts
 function flattenExpressionsToTemplateParts(
-	expressions: Array<AnyJSExpression>,
-): Array<TemplatePart> {
-	let parts: Array<TemplatePart> = [];
-	let queue: Array<TemplatePart> = [...expressions];
+	expressions: AnyJSExpression[],
+): TemplatePart[] {
+	let parts: TemplatePart[] = [];
+	let queue: TemplatePart[] = [...expressions];
 
 	while (true) {
 		let node = queue.shift();
@@ -144,8 +142,8 @@ function flattenExpressionsToTemplateParts(
 }
 
 // 'str' + 'str' + expr -> 'strstr' + expr
-function combineTemplateParts(expressions: Array<TemplatePart>) {
-	let reducedExpressions: Array<AnyJSExpression> = [];
+function combineTemplateParts(expressions: TemplatePart[]) {
+	let reducedExpressions: AnyJSExpression[] = [];
 	let index = 0;
 
 	while (index < expressions.length) {
@@ -155,7 +153,7 @@ function combineTemplateParts(expressions: Array<TemplatePart>) {
 			current.type === "JSStringLiteral" ||
 			current.type === "JSTemplateElement"
 		) {
-			let strings: Array<StaticString> = [current];
+			let strings: StaticString[] = [current];
 
 			while (index + 1 < expressions.length) {
 				let next = expressions[index + 1];
@@ -202,10 +200,10 @@ function createEmptyQuasis(isTail: boolean = false) {
 
 // 'str' + expr + 'str' -> `str${expr}str`
 function convertTemplatePartsToTemplateLiteral(
-	nodes: Array<TemplatePart>,
+	nodes: TemplatePart[],
 ): JSStringLiteral | JSTemplateLiteral {
-	let templateExpressions: Array<AnyJSExpression> = [];
-	let templateQuasis: Array<JSTemplateElement> = [];
+	let templateExpressions: AnyJSExpression[] = [];
+	let templateQuasis: JSTemplateElement[] = [];
 
 	for (let index = 0; index < nodes.length; index++) {
 		let node = nodes[index];
@@ -249,7 +247,7 @@ function convertTemplatePartsToTemplateLiteral(
 // Replace:
 // str + expr
 // str + expr + str
-function shouldReplace(expressions: Array<AnyJSExpression>): boolean {
+function shouldReplace(expressions: AnyJSExpression[]): boolean {
 	for (let expression of expressions) {
 		if (expression.type !== "JSStringLiteral") {
 			return true;
