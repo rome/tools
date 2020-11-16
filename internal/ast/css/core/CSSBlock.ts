@@ -10,9 +10,7 @@ import {AnyCSSValue} from "../../../css-parser/types";
 export interface CSSBlock extends NodeBaseWithComments {
 	readonly type: "CSSBlock";
 	readonly startingTokenValue?: string;
-	readonly value?: Array<
-		AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration | undefined
-	>;
+	readonly value?: Array<AnyCSSValue | CSSRule | CSSAtRule | CSSDeclaration>;
 }
 export const cssBlock = createBuilder<CSSBlock>(
 	"CSSBlock",
