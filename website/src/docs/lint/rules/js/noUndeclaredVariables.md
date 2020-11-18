@@ -2,6 +2,7 @@
 title: Lint Rule js/noUndeclaredVariables
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
+eslint-rule: https://eslint.org/docs/rules/no-undef
 eleventyNavigation:
 	key: lint-rules/js/noUndeclaredVariables
 	parent: lint-rules
@@ -27,8 +28,8 @@ MISSING DOCUMENTATION
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:main) -->
 
-<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-
+<!-- GENERATED:START(hash:5e2d6b27806b51889eb92a8c0ba2ee9db7b1623e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+**ESLint Equivalent:** [no-undef](https://eslint.org/docs/rules/no-undef)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:c0b09a509166e06f0bd34fb6288b0421b4fd3823,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

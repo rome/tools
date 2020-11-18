@@ -2,6 +2,7 @@
 title: Lint Rule js/noSingleVarDeclarator
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
+eslint-rule: https://eslint.org/docs/rules/one-var
 eleventyNavigation:
 	key: lint-rules/js/noSingleVarDeclarator
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/noSingleVarDeclarator
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:49a6abd5645f6016dfc0deaf228ff48edfaa8379,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+
+**ESLint Equivalent:** [one-var](https://eslint.org/docs/rules/one-var)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:5cd5ae341967f9c818500974f2557cc841b33c49,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

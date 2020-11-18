@@ -2,6 +2,7 @@
 title: Lint Rule js/noUnusedTemplateLiteral
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
+eslint-rule: https://eslint.org/docs/rules/quotes#allowtemplateliterals
 eleventyNavigation:
 	key: lint-rules/js/noUnusedTemplateLiteral
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/noUnusedTemplateLiteral
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5031917f7648d3f1d2259d4a9db8a830b8c0f9b5,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+
+**ESLint Equivalent:** [quotes#allowtemplateliterals](https://eslint.org/docs/rules/quotes#allowtemplateliterals)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:e63ba5033955de2cbef5264c72c519746febfaa9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
