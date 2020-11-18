@@ -1,7 +1,8 @@
 ---
 title: Lint Rule js/noArguments
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow the use of `arguments`
+eslint-rule: https://eslint.org/docs/rules/prefer-rest-params
 eleventyNavigation:
 	key: lint-rules/js/noArguments
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/noArguments
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:44c761235e8a5357412cfd6b76a049f77107ec6a,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow the use of `arguments`
+
+**ESLint Equivalent:** [prefer-rest-params](https://eslint.org/docs/rules/prefer-rest-params)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:4b08477456818e445044952fa637776ec69603ec,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

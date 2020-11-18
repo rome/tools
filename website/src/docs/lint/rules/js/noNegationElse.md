@@ -2,6 +2,7 @@
 title: Lint Rule js/noNegationElse
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
+eslint-rule: https://eslint.org/docs/rules/no-negated-condition
 eleventyNavigation:
 	key: lint-rules/js/noNegationElse
 	parent: lint-rules
@@ -10,8 +11,10 @@ eleventyNavigation:
 
 # js/noNegationElse
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:b0bbf8aa76294879c8b7e9aea8dce916bf76392e,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 MISSING DOCUMENTATION
+
+**ESLint Equivalent:** [no-negated-condition](https://eslint.org/docs/rules/no-negated-condition)
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:df4746ce0c84f344e5d0d3c9e382dbdd8eeeff7e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->

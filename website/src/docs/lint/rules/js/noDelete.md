@@ -1,7 +1,7 @@
 ---
 title: Lint Rule js/noDelete
 layout: layouts/rule.liquid
-description: MISSING DOCUMENTATION
+description: disallow the use of the `delete` operator
 eleventyNavigation:
 	key: lint-rules/js/noDelete
 	parent: lint-rules
@@ -10,8 +10,8 @@ eleventyNavigation:
 
 # js/noDelete
 
-<!-- GENERATED:START(hash:0c842939a2a049e8cdb4f0be47baab529ffcaf37,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-MISSING DOCUMENTATION
+<!-- GENERATED:START(hash:366d40aa16ed07a89a6b3771e32d8ac3259c527a,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow the use of the `delete` operator
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:b50a0fbed4a3ae4edcd32bbbe9545e72375ec8e2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
