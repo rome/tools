@@ -15,6 +15,10 @@ html.transition {
 	transition-property: background;
 }
 
+[hidden] {
+	display: none !important;
+}
+
 body {
 	font-size: 16px;
 	font-family: $body-font;
@@ -76,17 +80,19 @@ h5 {
 	font-weight: bold;
 }
 
-a {
+a, .link {
 	color: var(--logo-font-color);
-}
+	text-decoration: underline;
+	cursor: pointer;
 
-a:hover {
-	text-decoration: none;
-	color: var(--link-hover-color);
-}
-
-a:active {
-	color: var(--primary-color);
+	&:hover {
+		text-decoration: none;
+		color: var(--link-hover-color);
+	}
+	
+	&:active {
+		color: var(--primary-color);
+	}
 }
 
 .no-scroll {

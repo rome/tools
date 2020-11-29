@@ -169,6 +169,12 @@
 		border-radius: $unit-border-radius;
 	}
 
+	hr {
+		border: none;
+		border-bottom: 1px solid var(--hard-border-color);
+		margin: $unit 0;
+	}
+
 	h1, h2, h3 {
 		border-bottom: 1px solid var(--soft-border-color);
 		padding: $unit 0;

@@ -12,23 +12,27 @@
 	color: black;
 	text-align: center;
 
+	.text {
+		flex-shrink: 0;
+	}
+
 	h1 > div {
 		display: flex;
 		align-items: center;
 	}
 
-	.left, .right{
+	.left, .right {
 		border-bottom: 3px solid var(--sub-text-color);
 
 		width: 100%;
 		opacity: 0.5;
 	}
 
-	.left{
+	.left {
 		margin-right: 32px;
 	}
 
-	.right{
+	.right {
 		margin-left: 32px;
 	}
 
@@ -127,7 +131,7 @@ ul.home-actions {
 	}
 }
 
-html[data-theme='dark'] {
+@include dark-mode {
 	a.getting-started {
 		opacity: 0.9;
 	}

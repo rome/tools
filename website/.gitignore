@@ -1,5 +1,6 @@
 node_modules
 build
+.env
 
 # Auto generated
 src/_includes/styles
