@@ -1,0 +1,145 @@
+---
+simple-sidebar: true
+social-image: social-logo-heart.png
+layout: layouts/base.liquid
+---
+
+<div class="hero hero-funding">
+	<h1>
+		<div>
+			<div class="left"></div>
+			<span class="text long-text">The Road to Rome</span>
+			<span class="text short-text" aria-hidden="true">Road to Rome</span>
+			<div class="right"></div>
+		</div>
+	</h1>
+
+	<h2>Fundraising and Project Goals</h2>
+</div>
+
+<main id="main-content" class="content split funding">
+	{{ content | safe }}
+</main>
+
+<div class="modal-container funding-modal" hidden>
+	<div class="modal-inner">
+		<div class="modal content">
+			<div class="modal-close"></div>
+
+			<ul	class="form-steps">
+				<li class="complete">Select your tier</li>
+				<li class="details">Details</li>
+				<li class="review">Review</li>
+				<li>Checkout via Stripe</li>
+			</ul>
+
+			<form class="details">
+				<h2>Contact details</h2>
+
+				<p>Used to receive order updates and surveys. <a href="#what-is-my-email-used-for">What is my email used for?</a></p>
+
+				<div class="form-row">
+					<label for="email">Email (required)</label>
+					<div class="form-row-input">
+						<input name="email" type="email" placeholder="eg. sebastian@rome.tools" required>
+					</div>
+				</div>
+
+				<h2>Reward details</h2>
+
+				<p>Accounts for tier reward allocation. <a href="#why-do-you-need-my-usernames">Why do you need my usernames?</a></p>
+
+				<div class="form-row">
+					<label for="twitter">Twitter username</label>
+					<div class="form-row-input">
+						<input name="twitter" type="text" placeholder="eg. @rometools">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label for="github">GitHub username</label>
+					<div class="form-row-input">
+						<input name="github" type="text" placeholder="eg. @sebmck">
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label for="discord">Discord username</label>
+					<div class="form-row-input">
+						<input name="discord" type="text" placeholder="eg. sebmck#6578">
+					</div>
+				</div>
+
+				<h2>Contribution details</h2>
+
+				<div class="form-row">
+					<label for="public">Make public?</label>
+					<div class="form-row-input">
+						<div>
+							<input name="public" type="checkbox" checked>
+						</div>
+						<div class="hint">Would you like to include your contribution in "recent contributions"?</div>
+					</div>
+				</div>
+
+				<div class="form-row public-hide">
+					<label for="public-name">Display name (optional)</label>
+					<div class="form-row-input">
+						<input name="public-name" type="text" maxlength="100" placeholder="Display name to attribute your contribution to">
+					</div>
+				</div>
+
+				<div class="form-row public-hide">
+					<label for="public">Comment (optional)</label>
+					<div class="form-row-input">
+						<textarea name="public-comment" maxlength="500" placeholder="Add a comment that will appear alongside your contribution"></textarea>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="form-row">
+					<div class="form-row-input">
+						<input type="submit" value="Continue">
+					</div>
+				</div>
+			</form>
+
+			<form class="review">
+				<p>Prices are in USD and include sales tax and international shipping. <a href="#what-do-tier-prices-include">What do tier prices include?</a></p>
+
+				<h2>Selected tier</h2>
+
+				<h2 class="summary-heading">Summary</h2>
+
+				<div class="form-row">
+					<label for="public">Additional donation</label>
+					<div class="form-row-input">
+						<ul class="button-group add-donation-buttons"></ul>
+						<div class="currency-input add-donation-container" hidden>
+							<input name="add-donation" type="number" min="0" placeholder="0" step="any">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<label>Total</label>
+					<div class="form-row-input">
+						<span class="checkout-total"></span>
+					</div>
+				</div>
+
+				<hr>
+
+				<div class="form-row">
+					<div class="form-row-input">
+						<input class="stripe-checkout primary" type="submit" value="Checkout via Stripe">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% capture script %}{% include scripts/funding.js %}{% endcapture %}
+<script>{{ script | jsmin | safe }}</script>

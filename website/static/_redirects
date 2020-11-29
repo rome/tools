@@ -15,3 +15,4 @@ https://www.romefrontend.com/* https://rome.tools/:splat 301!
 https://www.romefrontend.io/* https://rome.tools/:splat 301!
 https://www.romefrontend.org/* https://rome.tools/:splat 301!
 https://preview.romejs.dev/* https://rome.tools/:splat 301!
+https://unreleased-preview-do-not-share.rome.tools/* https://rome.tools/:splat 301!

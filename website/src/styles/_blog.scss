@@ -4,16 +4,33 @@ section.blog {
 	h1 {
 		margin-bottom: $unit / 2;
 	}
+}
 
-	.info {
-		display: flex;
-		flex-direction: row;
-		color: var(--sub-text-color);
-		margin-bottom: 1.5em;
+.blog-info {
+	display: flex;
+	flex-direction: row;
+	color: var(--sub-text-color);
+	margin-bottom: 1.5em;
+	line-height: 36px;
 
-		time {
-			margin-left: auto;
+	img {
+		border-radius: 50%;
+		width: 36px;
+		height: 36px;
+		margin-right: 8px;
+		vertical-align: middle;
+	}
+
+	a {
+		text-decoration: none;
+
+		span {
+			text-decoration: underline;
 		}
+	}
+
+	time {
+		margin-left: auto;
 	}
 }
 

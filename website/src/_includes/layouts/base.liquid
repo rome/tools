@@ -13,8 +13,8 @@
 		<meta name="theme-color" content="#FFC905">
 		<meta property="og:title" content="{{ title | titlify }}">
 		<meta property="og:description" content="Unifying the frontend development toolchain">
-		<meta property="og:image" content="https://rome.tools/img/social-logo.png">
-		<meta property="twitter:image" content="https://rome.tools/img/social-logo.png">
+		<meta property="og:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
+		<meta property="twitter:image" content="{{ env.WEBSITE_URL }}/img/{{ social-image }}">
 		<meta property="twitter:site" content="@rometools">
 		<meta property="twitter:creator" content="@rometools">
 		<meta property="twitter:image:alt" content="Logo for the Rome Toolchain Project">
@@ -85,6 +85,11 @@
 						<div class="site-navigation-container">
 							<nav aria-labelledby="site-navigation" class="menu site-navigation">
 								<h2 id="site-navigation" class="sr-only">Site Navigation</h2>
+								{% if page.url != "/funding/" %}
+									<div class="content">
+										<a href="/funding/" class="primary button">Fundraising</a>
+									</div>
+								{% endif %}
 								<ul>
 									<li>
 										<a href="/blog">Blog</a>
@@ -98,23 +103,26 @@
 								</ul>
 							</nav>
 
-							<nav aria-labelledby="quick-links" class="menu site-navigation">
-								<h2 id="quick-links">Quick Links</h2>
-								<ul>
-									<li>
-										<a href="/#linting">Linting</a>
-									</li>
-									<li>
-										<a href="/docs/lint/rules">Lint Rules</a>
-									</li>
-									<li>
-										<a href="/#cli">CLI</a>
-									</li>
-									<li>
-										<a href="/#project-configuration">Project Configuration</a>
-									</li>
-								</ul>
-							</nav>
+							{% if simple-sidebar %}
+							{% else %}
+								<nav aria-labelledby="quick-links" class="menu site-navigation">
+									<h2 id="quick-links">Quick Links</h2>
+									<ul>
+										<li>
+											<a href="/#linting">Linting</a>
+										</li>
+										<li>
+											<a href="/docs/lint/rules">Lint Rules</a>
+										</li>
+										<li>
+											<a href="/#cli">CLI</a>
+										</li>
+										<li>
+											<a href="/#project-configuration">Project Configuration</a>
+										</li>
+									</ul>
+								</nav>
+							{% endif %}
 						</div>
 
 						<nav aria-labelledby="site-navigation-documentation" class="toc-menu menu">
@@ -191,6 +199,23 @@
 				</div>
 			</div>
 		</footer>
+
+		{% if env.production %}
+			<script
+				src="https://browser.sentry-cdn.com/5.28.0/bundle.tracing.min.js"
+				integrity="sha384-xrK0+JsTXPSVvgSH/ozYbzi5VZS/4OdtwYYbntpfcn0kd6lyh5TeeeFn6G67Uop3"
+				crossorigin="anonymous"
+			></script>
+
+			<script>
+				if (typeof Sentry !== "undefined") {
+					Sentry.init({
+						dsn: "https://d2e6dd662d05460db434756b97bf054e@o487646.ingest.sentry.io/5546624",
+						tracesSampleRate: 1.0,
+					});
+				}
+			</script>
+		{% endif %}
 
 		{% capture script %}{% include ../scripts/index.liquid %}{% endcapture %}
 		<script async defer>{{ script | jsmin | safe }}</script>

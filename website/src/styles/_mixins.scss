@@ -29,3 +29,15 @@
 	transition-property: box-shadow;
 	box-shadow: inset 0 5px var(--top-border-color);
 }
+
+@mixin dark-mode {
+	@at-root html[data-theme='dark'] #{if(&, "&", "")} {
+		@content;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		@at-root html[data-theme='auto'] #{if(&, "&", "")} {
+			@content;
+		}
+	}
+}

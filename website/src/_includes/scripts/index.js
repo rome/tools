@@ -217,11 +217,14 @@ class Manager {
 	toggleActiveHeading(i, activating) {
 		const {link, titles} = this.headingsCalculated[i];
 
-		if (activating) {
-			document.title = `${titles.join(": ")} — ${originalTitle}`;
-			history.replaceState({}, "", link.getAttribute("href"));
-		} else {
-			document.title = originalTitle;
+		// Only automatically rewrite the heading on the homepage
+		if (location.pathname === "/") {
+			if (activating) {
+				document.title = `${titles.join(": ")} — ${originalTitle}`;
+				history.replaceState({}, "", link.getAttribute("href"));
+			} else {
+				document.title = originalTitle;
+			}
 		}
 
 		/** @type {null | Element}*/
@@ -326,15 +329,20 @@ class Manager {
 
 	/**
 	 * @param {string} hash
+	 * @param {undefined | (() => void)} callback
 	 * @returns {boolean}
 	 */
-	scrollToHeading(hash) {
+	scrollToHeading(hash, callback) {
 		// Allow passing in raw link href
 		const id = hash.replace(/^(#)/, "");
 
 		const heading = document.getElementById(id);
 		if (!heading) {
 			return false;
+		}
+
+		if (callback !== undefined) {
+			callback();
 		}
 
 		heading.setAttribute("tabindex", "-1");
@@ -358,7 +366,9 @@ class Manager {
 		const hash = target.getAttribute("href");
 		window.location.hash = hash;
 		this.scrollToHeading(hash);
-		navigator.clipboard.writeText(window.location.href);
+		if (navigator.clipboard !== undefined) {
+			navigator.clipboard.writeText(window.location.href);
+		}
 
 		// Only another copied text can appear here so delete it if it exists
 		if (target.nextElementSibling != null) {
@@ -410,10 +420,13 @@ class Manager {
 			return;
 		}
 
-		if (this.scrollToHeading(href)) {
-			event.preventDefault();
-			location.hash = href;
-		}
+		this.scrollToHeading(
+			href,
+			function() {
+				event.preventDefault();
+				location.hash = href;
+			},
+		);
 	}
 
 	/**
@@ -433,7 +446,7 @@ class Manager {
 			this.handleHeadingAnchorClick(event, target);
 		}
 
-		if (target.matches(".toc")) {
+		if (target.closest(".toc") != null) {
 			this.handleTOCClick(event);
 		} else if (target.matches("a")) {
 			this.handleAnchorClick(event, target);

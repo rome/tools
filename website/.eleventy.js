@@ -14,6 +14,8 @@ const htmlmin = require("html-minifier");
 const {base64Encode} = require("./utils");
 const romePackage = require("../package.json");
 
+require("dotenv").config();
+
 /**
  * @type {any}
  */
@@ -60,7 +62,10 @@ module.exports = function(eleventyConfig) {
 			permalinkAttrs: (slug) => ({"aria-label": slug}),
 			slugify: (title) => {
 				return encodeURIComponent(
-					String(title).trim().toLowerCase().replace(/\s+/g, "-"),
+					String(title).trim().toLowerCase().replace(/[^a-zA-Z\s0-9]/g, "").replace(
+						/\s+/g,
+						"-",
+					),
 				);
 			},
 		},
