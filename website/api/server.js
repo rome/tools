@@ -326,7 +326,7 @@ function getAllContributions() {
 async function getFreshStats() {
 	const [{count, current, target}, recentContributions, tiers] = await Promise.all([
 		getProgressStats(),
-		getRecentContributions(3),
+		getContributions(3),
 		getTierStats(),
 	]);
 
