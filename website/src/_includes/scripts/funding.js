@@ -704,29 +704,38 @@ function processStats(res, interactive) {
 	donationCount.textContent = res.count.toLocaleString();
 
 	if (interactive) {
-		// Animate the progress fill only when it's visible to draw attention
-		let observer = new IntersectionObserver(
-			(changes) => {
-				for (const {isIntersecting} of changes) {
-					if (!isIntersecting) {
-						continue;
+		function show() {
+
+			const percent = Math.min(100, 100 / res.target * res.current);
+			progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
+			progressFillContainer.style.width = `0`;
+
+			requestAnimationFrame(() => {
+				progressFillContainer.style.width = `${percent}%`;
+			});
+		}
+
+		if (typeof IntersectionObserver === "undefined") {
+			show();
+		} else {
+			// Animate the progress fill only when it's visible to draw attention
+			let observer = new IntersectionObserver(
+				(changes) => {
+					for (const {isIntersecting} of changes) {
+						if (!isIntersecting) {
+							continue;
+						}
+
+						observer.unobserve(progressContainer);
+						show();
 					}
-
-					const percent = Math.min(100, 100 / res.target * res.current);
-					progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
-					progressFillContainer.style.width = `0`;
-					observer.unobserve(progressContainer);
-
-					requestAnimationFrame(() => {
-						progressFillContainer.style.width = `${percent}%`;
-					});
-				}
-			},
-			{
-				threshold: 1,
-			},
-		);
-		observer.observe(progressContainer);
+				},
+				{
+					threshold: 1,
+				},
+			);
+			observer.observe(progressContainer);
+		}
 	}
 
 	individualTiersContainer.textContent = "";
