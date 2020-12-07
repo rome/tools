@@ -250,7 +250,7 @@ async function getContributions(limit) {
 	return query.rows.map((row) => {
 		return {
 			name: row.publicName,
-			github: row.github === "" ? undefined : row.github,
+			github: row.github === "" || row.publicName === "" ? undefined : row.github,
 			comment: row.publicComment,
 			amount: Number(row.tierPrice) + Number(row.tip),
 			time: new Date(row.createdAt).valueOf(),
