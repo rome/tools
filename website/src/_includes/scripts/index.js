@@ -180,12 +180,14 @@ class Manager {
 		if (this.hasInitializedHeadings) {
 			const i = headingElements.length - 1;
 			const existing = this.headingsCalculated[i];
-			const recalculated = this.calculateHeading(i, []);
-			if (
-				recalculated.start === existing.start &&
-				recalculated.end === existing.end
-			) {
-				return;
+			if (existing !== undefined) {
+				const recalculated = this.calculateHeading(i, []);
+				if (
+					recalculated.start === existing.start &&
+					recalculated.end === existing.end
+				) {
+					return;
+				}
 			}
 		}
 
