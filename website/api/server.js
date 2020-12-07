@@ -346,7 +346,7 @@ app.get(
 	}),
 );
 
-app.get("/funding/all", wrapAsyncCallback(async () => {
+app.get("/funding/all", wrapAsyncCallback(async (req, res) => {
 	res.json(await getAllContributions());
 }));
 
