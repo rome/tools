@@ -1,4 +1,7 @@
+{% include scripts/funding-utils.js %}
+
 //# State
+
 let selectedTier = undefined;
 let existingToast = undefined;
 
@@ -18,7 +21,6 @@ const modalAnchors = document.querySelectorAll(`.modal a[href^="#"]`);
 const detailsStepIndicator = document.querySelector(".form-steps .details");
 const reviewStepIndicator = document.querySelector(".form-steps .review");
 
-const recentContributions = document.querySelector("ul.recent-contributions");
 const progressFillContainer = document.querySelector(".progress-fill");
 const progressContainer = document.querySelector(".progress");
 const progressLoading = document.querySelector(".progress-loading");
@@ -171,44 +173,6 @@ async function wrapFetch(opts, attempt = 0) {
 function changeInputValue(input, value) {
 	input.value = value;
 	input.dispatchEvent(new Event("input", {bubbles: true}));
-}
-
-function formatCurrency(num = 0) {
-	const text = num.toLocaleString("en-US");
-	if (Number.isInteger(num)) {
-		return `$${text}`;
-	} else {
-		// Format decimals with two digit precision
-		// This is mainly so people can donate $4.2 and have it display as $4.20 lol
-		const int = Math.floor(num);
-		const dec = num - int;
-		return `$${int.toLocaleString("en-US")}.${dec.toFixed(2).slice(2)}`;
-	}
-}
-
-const SECOND = 1_000;
-const MINUTE = 60 * SECOND;
-const HOUR = MINUTE * 60;
-const DAY = HOUR * 24;
-const MONTH = DAY * 30;
-const YEAR = DAY * 365;
-
-function humanizeRelativeTime(relative) {
-	const elapsed = Date.now() - relative;
-
-	if (elapsed < MINUTE) {
-		return `${Math.round(elapsed / 1_000)} seconds ago`;
-	} else if (elapsed < HOUR) {
-		return `${Math.round(elapsed / MINUTE)} minutes ago`;
-	} else if (elapsed < DAY) {
-		return `${Math.round(elapsed / HOUR)} hours ago`;
-	} else if (elapsed < MONTH) {
-		return `~${Math.round(elapsed / DAY)} days ago`;
-	} else if (elapsed < YEAR) {
-		return `~${Math.round(elapsed / MONTH)} months ago`;
-	} else {
-		return `~${Math.round(elapsed / YEAR)} years ago`;
-	}
 }
 
 function closeModal() {
@@ -725,6 +689,8 @@ function addTier(tier, interactive) {
 	}
 }
 
+{% include scripts/recent-contributions.js %}
+
 function processStats(res, interactive) {
 	// May have already been set
 	progressFillContainer.style.removeProperty("min-width");
@@ -757,7 +723,6 @@ function processStats(res, interactive) {
 		observer.observe(progressContainer);
 	}
 
-	recentContributions.textContent = "";
 	individualTiersContainer.textContent = "";
 	businessTiersContainer.textContent = "";
 
@@ -765,56 +730,12 @@ function processStats(res, interactive) {
 		addTier(tier, interactive);
 	}
 
-	if (res.recentContributions.length === 0) {
-		const item = document.createElement("li");
-		item.textContent = "No public contributions yet! Will you be the first?";
-		recentContributions.appendChild(item);
-	}
-
-	for (const obj of res.recentContributions) {
-		const item = document.createElement("li");
-		recentContributions.appendChild(item);
-
-		const details = document.createElement("div");
-		details.classList.add("details");
-		item.append(details);
-
-		if (obj.github !== undefined) {
-			const img = document.createElement("img");
-			img.src = `https://avatars.githubusercontent.com/${obj.github}`;
-			details.append(img);
-		}
-
-		const name = document.createElement("span");
-		name.classList.add("name");
-		name.textContent = obj.name === "" ? "Anonymous" : obj.name;
-		details.append(name);
-
-		if (obj.comment !== "") {
-			const comment = document.createElement("div");
-			comment.classList.add("quote");
-			comment.textContent = `“${obj.comment}”`;
-			item.append(comment);
-		}
-
-		const amount = document.createElement("div");
-		amount.classList.add("amount");
-		amount.textContent = formatCurrency(obj.amount);
-		item.append(amount);
-
-		const time = document.createElement("span");
-		time.classList.add("time");
-		time.textContent = humanizeRelativeTime(obj.time);
-		item.append(time);
-	}
+	setRecentContributions(res.recentContributions);
 }
 
 //# Init
 
 toggleCustomTierSelectButton();
-
-// Show toast on uncaught errors
-// TODO
 
 // Load cached stats (may need a breaker here if the data structure changes too much)
 const cachedStatus = localStorage.getItem("stats");
