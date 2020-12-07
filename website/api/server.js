@@ -242,9 +242,9 @@ app.use((req, res, next) => {
 	next();
 });
 
-async function getRecentContributions() {
+async function getContributions(limit) {
 	const query = await db.query(
-		`SELECT "publicName", "publicComment", "tierPrice", tip, github, "createdAt" FROM contributions WHERE paid = true AND public = true ORDER BY "createdAt" DESC LIMIT 3`,
+		`SELECT "publicName", "publicComment", "tierPrice", tip, github, "createdAt" FROM contributions WHERE paid = true AND public = true ORDER BY "createdAt" DESC LIMIT ${limit}`,
 	);
 
 	return query.rows.map((row) => {
@@ -314,10 +314,19 @@ function getStats() {
 	return cachedStats;
 }
 
+let cachedAllContributions;
+
+function getAllContributions() {
+	if (cachedStats === undefined) {
+		cachedAllContributions = getContributions("ALL");
+	}
+	return cachedAllContributions;
+}
+
 async function getFreshStats() {
 	const [{count, current, target}, recentContributions, tiers] = await Promise.all([
 		getProgressStats(),
-		getRecentContributions(),
+		getRecentContributions(3),
 		getTierStats(),
 	]);
 
@@ -336,6 +345,10 @@ app.get(
 		res.json(await getStats());
 	},
 );
+
+api.get("/funding/all", () => {
+	res.json(await getAllContributions());
+});
 
 function generateRewardsDescription(tier) {
 	const rewards = [...(tier.rewards || []), ...(tier.previousRewards || [])];
@@ -472,7 +485,10 @@ app.post(
 						"Authorization": `Bearer ${process.env.CF_SECRET}`,
 					},
 					body: JSON.stringify({
-						files: [`${process.env.API_URL}/status`],
+						files: [
+							`${process.env.API_URL}/funding/stats`,
+							`${process.env.API_URL}/funding/all`,
+						],
 					}),
 				},
 			);
