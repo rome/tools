@@ -712,8 +712,12 @@ function processStats(res, interactive) {
 
 					const percent = Math.min(100, 100 / res.target * res.current);
 					progressFillContainer.style.minWidth = `${progressFillContainer.clientWidth}px`;
-					progressFillContainer.style.width = `${percent}%`;
+					progressFillContainer.style.width = `0`;
 					observer.unobserve(progressContainer);
+
+					requestAnimationFrame(() => {
+						progressFillContainer.style.width = `${percent}%`;
+					});
 				}
 			},
 			{
