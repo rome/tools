@@ -317,7 +317,7 @@ function getStats() {
 let cachedAllContributions;
 
 function getAllContributions() {
-	if (cachedStats === undefined) {
+	if (cachedAllContributions === undefined) {
 		cachedAllContributions = getContributions("ALL");
 	}
 	return cachedAllContributions;
