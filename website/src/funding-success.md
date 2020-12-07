@@ -19,7 +19,7 @@ Interested in supporting us with a recurring donation? Subscribe on [OpenCollect
 <script>
   const tweetButton = document.querySelector("#tweet");
   const tier = localStorage.getItem("checkout-tier");
-  const leading = tier == null || tier === "Custom" ? "I just sponsored @rometools" : `I just sponsored @rometools as a ${tier}`;
+  const leading = tier == null || tier === "Custom" || tier.startsWith("Business") ? "I just sponsored @rometools" : `I just sponsored @rometools as a ${tier}`;
   const tweetTemplate = `${leading}! Rome is a new open source JavaScript and web toolchain. Find out more and contribute at https://rome.tools/funding/`;
   tweetButton.href = `https://twitter.com/intent/tweet?text=${encodeURI(tweetTemplate)}`;
 </script>
