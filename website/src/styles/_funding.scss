@@ -531,6 +531,16 @@ ul.recent-contributions {
 	margin: 0;
 	text-align: center;
 
+	&.rows {
+		flex-direction: column;
+
+		li {
+			padding: 20px;
+			border-right: none;
+			border-bottom: 1px solid var(--hard-border-color);
+		}
+	}
+
 	@include mobile-only {
 		flex-direction: column;
 
