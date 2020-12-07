@@ -6,6 +6,8 @@ layout: layouts/page.liquid
 
 # All Public Contributions
 
+Only contributions marked as public are displayed.
+
 <ul class="recent-contributions rows">
 	<li>Loading...</li>
 </ul>
