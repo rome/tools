@@ -50,7 +50,7 @@ If you're passionate about what we're building, or have otherwise benefited from
 <div class="donate-bar">
 	<div class="left">
 		<a class="button primary" href="#contribute">Contribute</a>
-		<p><strong><span class="donation-count">?</span> people</strong> have already contributed</p>
+		<p><a href="/funding/all-contributions"><strong><span class="donation-count">?</span> people</strong> have already contributed</a></p>
 	</div>
 	<div class="right">
 		<a class="button" href="#goals">Goals</a>
