@@ -341,14 +341,14 @@ async function getFreshStats() {
 
 app.get(
 	"/funding/stats",
-	async (req, res) => {
+	wrapAsyncCallback(async (req, res) => {
 		res.json(await getStats());
-	},
+	}),
 );
 
-api.get("/funding/all", () => {
+api.get("/funding/all", wrapAsyncCallback(async () => {
 	res.json(await getAllContributions());
-});
+}));
 
 function generateRewardsDescription(tier) {
 	const rewards = [...(tier.rewards || []), ...(tier.previousRewards || [])];
