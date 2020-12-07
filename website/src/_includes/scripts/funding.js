@@ -625,16 +625,10 @@ function buildTierButton(tier) {
 
 	const already = document.createElement("div");
 	already.classList.add("already");
-	if (tier.count > 0) {
-		if (tier.type === "business") {
-			already.textContent = `${tier.count.toLocaleString()} previuous ${tier.count === 1
-				? "purchase"
-				: "purchases"}`;
-		} else {
-			already.textContent = `${tier.count.toLocaleString()} ${tier.count === 1
-				? "person"
-				: "people"} selected this tier`;
-		}
+	if (tier.count > 0 && tier.type === "personal") {
+		already.textContent = `${tier.count.toLocaleString()} ${tier.count === 1
+			? "person"
+			: "people"} selected this tier`;
 	}
 	headerRight.appendChild(already);
 

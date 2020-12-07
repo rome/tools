@@ -261,6 +261,13 @@ async function getContributions(limit) {
 async function getTierStats() {
 	return Promise.all(
 		tiers.map(async (tier) => {
+			if (tier.type === "business") {
+				return {
+					...tier,
+					count: 0,
+				}
+			}
+			
 			const query = await db.query(
 				`SELECT COUNT(*) FROM contributions WHERE paid = true AND "tierPrice" = $1`,
 				[tier.price],
