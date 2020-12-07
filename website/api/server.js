@@ -474,6 +474,7 @@ app.post(
 
 			// Refresh stats
 			cachedStats = undefined;
+			cachedAllContributions = undefined;
 
 			// Purge cache from Cloudflare
 			await fetch(
