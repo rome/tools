@@ -10,7 +10,7 @@ Getting started with developing Rome takes only three commands. You will only ne
 
 ```bash
 git clone https://github.com/rome/tools
-cd rome
+cd tools
 ./rome --help
 ```
 
