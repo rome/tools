@@ -250,7 +250,9 @@ async function getContributions(limit) {
 	return query.rows.map((row) => {
 		return {
 			name: row.publicName,
-			github: row.github === "" || row.publicName === "" ? undefined : row.github,
+			github: row.github === "" || row.publicName === ""
+				? undefined
+				: row.github,
 			comment: row.publicComment,
 			amount: Number(row.tierPrice) + Number(row.tip),
 			time: new Date(row.createdAt).valueOf(),
@@ -265,9 +267,9 @@ async function getTierStats() {
 				return {
 					...tier,
 					count: 0,
-				}
+				};
 			}
-			
+
 			const query = await db.query(
 				`SELECT COUNT(*) FROM contributions WHERE paid = true AND "tierPrice" = $1`,
 				[tier.price],
@@ -353,9 +355,12 @@ app.get(
 	}),
 );
 
-app.get("/funding/all", wrapAsyncCallback(async (req, res) => {
-	res.json(await getAllContributions());
-}));
+app.get(
+	"/funding/all",
+	wrapAsyncCallback(async (req, res) => {
+		res.json(await getAllContributions());
+	}),
+);
 
 function generateRewardsDescription(tier) {
 	const rewards = [...(tier.rewards || []), ...(tier.previousRewards || [])];
