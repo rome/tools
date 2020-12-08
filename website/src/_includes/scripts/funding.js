@@ -692,7 +692,7 @@ function addTier(tier, interactive) {
 	}
 }
 
-{% include scripts/recent-contributions.js %}
+// {% include scripts/recent-contributions.js %}
 
 function processStats(res, interactive) {
 	// May have already been set
