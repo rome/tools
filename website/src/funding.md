@@ -68,6 +68,10 @@ If you're passionate about what we're building, or have otherwise benefited from
 
 Prices are in USD. Includes sales tax and international shipping. Refer to [Questions and Answers](#questions-and-answers) for more information.
 
+<div class="individual-tiers-container">
+	Loading...
+</div>
+
 <div class="tier">
 	<h4>Custom</h4>
 	<p>Want to donate under $10? Something else? Select your own amount!</p>
@@ -75,10 +79,6 @@ Prices are in USD. Includes sales tax and international shipping. Refer to [Ques
 		<div class="currency-input"><input type="number" step="any" placeholder="0" min="0"></div>
 		<button hidden class="primary">Select</button>
 	</form>
-</div>
-
-<div class="individual-tiers-container">
-	Loading...
 </div>
 
 #### Business
