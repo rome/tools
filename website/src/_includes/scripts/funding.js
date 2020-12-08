@@ -1,4 +1,5 @@
-{% include scripts/funding-utils.js %}
+// {% include scripts/funding-utils.js %}
+// global formatCurrency, setRecentContributions
 
 //# State
 

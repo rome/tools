@@ -1,3 +1,4 @@
+// Funding utils
 function formatCurrency(num = 0) {
 	const text = num.toLocaleString("en-US");
 	if (Number.isInteger(num)) {
@@ -35,3 +36,6 @@ function humanizeRelativeTime(relative) {
 		return `~${Math.round(elapsed / YEAR)} years ago`;
 	}
 }
+
+humanizeRelativeTime;
+formatCurrency;

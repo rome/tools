@@ -1,7 +1,8 @@
+// global formatCurrency, setRecentContributions, humanizeRelativeTime
 const recentContributions = document.querySelector("ul.recent-contributions");
 
 function setRecentContributions(data) {
-  recentContributions.textContent = "";
+	recentContributions.textContent = "";
 
 	if (data.length === 0) {
 		const item = document.createElement("li");
@@ -46,3 +47,5 @@ function setRecentContributions(data) {
 		item.append(time);
 	}
 }
+
+setRecentContributions;
