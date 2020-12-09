@@ -38,17 +38,17 @@ export async function main(args: string[]) {
 	reporter.hr();
 
 	// Check that `git status` is fine
-	const gitStatusChanges = child.spawnSync("git", ["ls-files", "-m"]).stdout.toString();
-	if (gitStatusChanges === "") {
+	const uncommittedFiles = child.spawnSync("git", ["ls-files", "-m"]).stdout.toString();
+	if (uncommittedFiles === "") {
 		reporter.success(markup`Generated files up-to-date`);
 		return 0;
 	}
 	reporter.info(markup`Modified uncommitted files:`);
 	reporter.list(
-		gitStatusChanges.trim().split("\n").map((filename) => markup`${filename}`),
+		uncommittedFiles.trim().split("\n").map((filename) => markup`${filename}`),
 	);
 	reporter.info(
-		markup`To fix this run <code>./rome run scripts/generate-all-files</code> and commit the results`,
+		markup`To fix this, run <code>./rome run scripts/generate-all-files</code> and commit the results`,
 	);
 	return 1;
 }
