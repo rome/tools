@@ -2,7 +2,7 @@
 
 Rome JSON (RJSON) is a superset of JSON. It does not add any new data types. It just makes some syntax optional for the sake of readability.
 
-We wanted to allow comments inside Rome configuration files. Existing JSON supersets either add new data types (effecting portability), introduce syntax variants, or offer no way to edit the JSON and retain the original comments. This necessitated the creation of our own JSON parser.
+We wanted to allow comments inside Rome configuration files. Existing JSON supersets either add new data types (affecting portability), introduce syntax variants, or offer no way to edit the JSON and retain the original comments. This necessitated the creation of our own JSON parser.
 
 RJSON is a superset, meaning that it is backwards compatible and accepts all existing JSON. All places where RJSON files are allowed, you can alternatively use a regular JSON file where these syntax extensions wont be allowed.
 
