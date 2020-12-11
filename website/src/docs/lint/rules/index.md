@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:d3597448a00dee2887171f21879f55fb33c9ed87,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:abd812718c29bb8224151e5dd4e43aa3f3b02e12,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -194,6 +194,13 @@ disallow identifiers from shadowing restricted names
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/docs/lint/rules/js/noShoutyConstants">noShoutyConstants</a>
 	<a class="header-anchor" href="#noShoutyConstants"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noSingleCharRegexAlternatives">
+	<a href="/docs/lint/rules/js/noSingleCharRegexAlternatives">noSingleCharRegexAlternatives</a>
+	<a class="header-anchor" href="#noSingleCharRegexAlternatives"></a>
 </h3>
 MISSING DOCUMENTATION
 </div>
