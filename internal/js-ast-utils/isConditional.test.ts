@@ -1,6 +1,12 @@
 import {test} from "rome";
 import {parseJS} from "@internal/js-parser";
-import {jsExpressionStatement, jsIfStatement} from "@internal/ast";
+import {
+	jsExpressionStatement,
+	jsFunctionDeclaration,
+	jsIfStatement,
+	jsReturnStatement,
+	jsVariableDeclarationStatement,
+} from "@internal/ast";
 import {isConditional} from "./isConditional";
 
 function createNode(input: string) {
@@ -31,12 +37,10 @@ test(
 test(
 	"returns true for conditional expressions",
 	(t) => {
-		function isConditionalHelper(input: string) {
-			const node = jsExpressionStatement.assert(createNode(input));
-			return isConditional(node.expression);
-		}
-
-		t.true(isConditionalHelper("foo ? foo.bar : undefined"));
+		const conditionalExpression = jsExpressionStatement.assert(
+			createNode("foo ? foo.bar : undefined"),
+		).expression;
+		t.true(isConditional(conditionalExpression));
 	},
 );
 
@@ -50,5 +54,24 @@ test(
 
 		t.true(isConditionalHelper("x && y"));
 		t.true(isConditionalHelper("x || y"));
+		t.true(isConditionalHelper("x || y && z"));
+	},
+);
+
+test(
+	"returns false for non-conditionals",
+	(t) => {
+		const functionDeclaration = jsFunctionDeclaration.assert(
+			createNode("function x() {}"),
+		);
+		t.false(isConditional(functionDeclaration));
+
+		const variableStatement = jsVariableDeclarationStatement.assert(
+			createNode("const y = 1;"),
+		);
+		t.false(isConditional(variableStatement));
+
+		const returnStatement = jsReturnStatement.assert(createNode("return z;"));
+		t.false(isConditional(returnStatement));
 	},
 );
