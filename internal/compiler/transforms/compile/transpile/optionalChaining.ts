@@ -16,6 +16,39 @@ import {
 	jsMemberExpression,
 } from "@internal/ast";
 
+function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
+	let root: null | AnyJSExpression = null;
+	const properties: (JSStaticMemberProperty | JSComputedMemberProperty)[]  = [];
+	let current: AnyJSExpression = node;
+
+	while (true) {
+		if (current.type === "JSMemberExpression") {
+			properties.unshift({
+				...current.property,
+				optional: false,
+			});
+			current = current.object;
+			continue;
+		} else {
+			root = current;
+			break;
+		}
+	}
+
+	if (root === null) {
+		throw new Error('optionalChaining transform: js member expression root cannot be null');
+	}
+
+	return properties.reduce(
+		(object, property) => jsMemberExpression.create({
+			object,
+			property,
+		}),
+		root as AnyJSExpression,
+	)
+
+}
+
 function findParts(
 	node: JSOptionalCallExpression,
 ): {
@@ -51,7 +84,7 @@ function findParts(
 				property,
 			});
 		},
-		needsChecking,
+		unoptionifyMemberExpression(needsChecking),
 	);
 
 	return {
@@ -83,7 +116,7 @@ export default createVisitor({
 			if (node.optional) {
 				return signals.replace(
 					template.expression`${node.callee} == null ? undefined : ${jsCallExpression.create({
-						callee: node.callee,
+						callee: unoptionifyMemberExpression(node.callee),
 						arguments: node.arguments,
 					})}`,
 				);
