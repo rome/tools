@@ -18,7 +18,7 @@ import {
 
 function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
 	let root: null | AnyJSExpression = null;
-	const properties: (JSStaticMemberProperty | JSComputedMemberProperty)[]  = [];
+	const properties: (JSStaticMemberProperty | JSComputedMemberProperty)[] = [];
 	let current: AnyJSExpression = node;
 
 	while (true) {
@@ -28,7 +28,6 @@ function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
 				optional: false,
 			});
 			current = current.object;
-			continue;
 		} else {
 			root = current;
 			break;
@@ -36,17 +35,20 @@ function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
 	}
 
 	if (root === null) {
-		throw new Error('optionalChaining transform: js member expression root cannot be null');
+		throw new Error(
+			"optionalChaining transform: js member expression root cannot be null",
+		);
 	}
 
 	return properties.reduce(
-		(object, property) => jsMemberExpression.create({
-			object,
-			property,
-		}),
-		root as AnyJSExpression,
-	)
-
+		(object, property) =>
+			jsMemberExpression.create({
+				object,
+				property,
+			})
+		,
+		(root as AnyJSExpression),
+	);
 }
 
 function findParts(
