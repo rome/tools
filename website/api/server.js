@@ -436,7 +436,7 @@ app.post(
 				: undefined,
 		});
 
-		const public = ensureBoolean(body.public);
+		const isPublic = ensureBoolean(body.public);
 		const publicName = ensureString(body.publicName, 100);
 		const publicComment = ensureString(body.publicComment, 500);
 		const twitter = normalizeUsername(body.twitter);
@@ -450,7 +450,7 @@ app.post(
 				email,
 				tier.id,
 				tierPrice,
-				public,
+				isPublic,
 				publicName,
 				publicComment,
 				tip,
