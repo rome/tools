@@ -2,6 +2,7 @@ import {test} from "rome";
 import {valueToNode} from "./valueToNode";
 import {
 	jsArrayExpression,
+	jsBigIntLiteral,
 	jsBooleanLiteral,
 	jsNullLiteral,
 	jsNumericLiteral,
@@ -19,6 +20,7 @@ test(
 		t.looksLike(valueToNode("string"), jsStringLiteral.quick("string"));
 		t.looksLike(valueToNode(true), jsBooleanLiteral.quick(true));
 		t.looksLike(valueToNode(123), jsNumericLiteral.quick(123));
+		t.looksLike(valueToNode(BigInt(10)), jsBigIntLiteral.create(jsStringLiteral.quick("10")));
 		t.looksLike(
 			valueToNode(undefined),
 			jsReferenceIdentifier.quick("undefined"),
@@ -59,12 +61,6 @@ test(
 		t.throws(
 			() => {
 				valueToNode(() => {});
-			},
-			"Do not know how to turn this value into a literal",
-		);
-		t.throws(
-			() => {
-				valueToNode(BigInt(10));
 			},
 			"Do not know how to turn this value into a literal",
 		);

@@ -7,6 +7,7 @@
 
 import {
 	JSArrayExpression,
+	JSBigIntLiteral,
 	JSBooleanLiteral,
 	JSNullLiteral,
 	JSNumericLiteral,
@@ -15,6 +16,7 @@ import {
 	JSReferenceIdentifier,
 	JSStringLiteral,
 	jsArrayExpression,
+	jsBigIntLiteral,
 	jsBooleanLiteral,
 	jsNullLiteral,
 	jsNumericLiteral,
@@ -32,6 +34,7 @@ export function valueToNode(
 	ancestry: unknown[] = [],
 ):
 	| JSStringLiteral
+	| JSBigIntLiteral
 	| JSBooleanLiteral
 	| JSNumericLiteral
 	| JSObjectExpression
@@ -51,6 +54,9 @@ export function valueToNode(
 
 		case "number":
 			return jsNumericLiteral.quick(value);
+
+		case "bigint":
+			return jsBigIntLiteral.create(jsStringLiteral.quick(String(value)));
 
 		case "undefined":
 			return jsReferenceIdentifier.quick("undefined");
