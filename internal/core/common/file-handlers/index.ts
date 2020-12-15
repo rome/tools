@@ -148,7 +148,7 @@ const DEFAULT_ASSET_EXTENSIONS = [
 	// CSS
 	"css",
 	// Extra css types to be ignored while we don't have a proper integration
-  "scss",
+	"scss",
 	"sass",
 	"less",
 	// Images
