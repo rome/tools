@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:abd812718c29bb8224151e5dd4e43aa3f3b02e12,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:6dddc6f2a96f7e35047dc98f9753b08695dbdc72,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -202,7 +202,7 @@ MISSING DOCUMENTATION
 	<a href="/docs/lint/rules/js/noSingleCharRegexAlternatives">noSingleCharRegexAlternatives</a>
 	<a class="header-anchor" href="#noSingleCharRegexAlternatives"></a>
 </h3>
-MISSING DOCUMENTATION
+disallow the use of single character alternations in regular expressions
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noSparseArray">
