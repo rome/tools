@@ -10,10 +10,8 @@ eleventyNavigation:
 
 # js/noSingleCharRegexAlternatives
 
-MISSING DOCUMENTATION
-
-<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
-
+<!-- GENERATED:START(hash:b1523944176bf0cc6a29b4983c98b0729d9742c4,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+disallow the use of single character alternations in regular expressions
 <!-- GENERATED:END(id:description) -->
 
 <!-- GENERATED:START(hash:d51f90fb727096a82c23efd04ae942dd506bc20b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
