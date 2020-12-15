@@ -22,26 +22,26 @@ type ConfusingLanguage = {
 
 export const confusingLanguage: ConfusingLanguage = [
 	{
-		"description": markup`The word <emphasis>whitelist</emphasis> can be considered racially charged language.`,
-		"word": "whitelist",
-		"suggestion": "allowlist",
-		"advice": [
+		description: markup`The word <emphasis>whitelist</emphasis> can be considered racially charged language.`,
+		word: "whitelist",
+		suggestion: "allowlist",
+		advice: [
 			{
-				"type": "log",
-				"category": "info",
-				"text": markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
+				type: "log",
+				category: "info",
+				text: markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
 			},
 		],
 	},
 	{
-		"description": markup`The word <emphasis>blacklist</emphasis> can be considered racially charged language.`,
-		"word": "blacklist",
-		"suggestion": "denylist",
-		"advice": [
+		description: markup`The word <emphasis>blacklist</emphasis> can be considered racially charged language.`,
+		word: "blacklist",
+		suggestion: "denylist",
+		advice: [
 			{
-				"type": "log",
-				"category": "info",
-				"text": markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
+				type: "log",
+				category: "info",
+				text: markup`See <hyperlink target=\"https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/\" /> for a more detailed explanation.`,
 			},
 		],
 	},

@@ -495,7 +495,7 @@ app.post(
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json",
-						"Authorization": `Bearer ${process.env.CF_SECRET}`,
+						Authorization: `Bearer ${process.env.CF_SECRET}`,
 					},
 					body: JSON.stringify({
 						files: [
