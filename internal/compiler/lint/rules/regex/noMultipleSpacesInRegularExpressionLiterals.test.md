@@ -198,7 +198,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `5: formatted`
 
 ```
-/foo [ba]r {2}b(a|z)/;
+/foo [ba]r {2}b([az])/;
 
 ```
 

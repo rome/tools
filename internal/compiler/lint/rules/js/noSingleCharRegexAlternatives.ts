@@ -1,35 +1,48 @@
-import {AnyNode} from "@internal/ast";
+import {
+	AnyNode,
+	JSRegExpCharacter,
+	jsRegExpCharSet,
+	jsRegExpCharacter,
+	jsRegExpSubExpression,
+} from "@internal/ast";
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
 /**
  * Recurses through `node` to check if it's a regex of only single characters and alternations e.g. a|b|c
  */
-function recurseCharAlternations(node: AnyNode): boolean {
+function recurseCharAlternations(
+	node: AnyNode,
+	chars: JSRegExpCharacter[],
+): boolean {
 	switch (node.type) {
 		case "JSRegExpAlternation":
 			return (
-				recurseCharAlternations(node.left) &&
-				recurseCharAlternations(node.right)
+				recurseCharAlternations(node.left, chars) &&
+				recurseCharAlternations(node.right, chars)
 			);
 
 		case "JSRegExpSubExpression":
-			return node.body.length === 1 && recurseCharAlternations(node.body[0]);
+			return (
+				node.body.length === 1 && recurseCharAlternations(node.body[0], chars)
+			);
 
-		case "JSRegExpCharacter":
+		case "JSRegExpCharacter": {
+			chars.push(jsRegExpCharacter.create({value: node.value}));
 			return true;
+		}
 
 		default:
 			return false;
 	}
 }
 
-function isCharAlternations(node: AnyNode): boolean {
+function getCharAlternations(node: AnyNode): (JSRegExpCharacter[]) | undefined {
 	if (node.type !== "JSRegExpAlternation") {
-		return false;
+		return;
 	}
-
-	return recurseCharAlternations(node);
+	const chars = Array<JSRegExpCharacter>();
+	return recurseCharAlternations(node, chars) ? chars : undefined;
 }
 
 export default createVisitor({
@@ -37,9 +50,20 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 
-		if (isCharAlternations(node)) {
-			path.context.addNodeDiagnostic(
-				node,
+		const chars = getCharAlternations(node);
+		if (chars) {
+			return path.addFixableDiagnostic(
+				{
+					fixed: signals.replace(
+						jsRegExpSubExpression.create({
+							body: [
+								jsRegExpCharSet.create({
+									body: chars,
+								}),
+							],
+						}),
+					),
+				},
 				descriptions.LINT.JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES,
 			);
 		}

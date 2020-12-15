@@ -9,12 +9,17 @@
 ```
 
  lint/js/noSingleCharRegexAlternatives/reject/1/filename.ts:1:1
-lint/js/noSingleCharRegexAlternatives ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No single character alternations in regular expressions. Use a character class instead.
 
     /a|b/
      ^^^
+
+  ℹ Safe fix
+
+  - a|b
+  + [ab]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -25,7 +30,7 @@ lint/js/noSingleCharRegexAlternatives ━━━━━━━━━━━━━━
 ### `0: formatted`
 
 ```
-/a|b/;
+/[ab]/;
 
 ```
 
@@ -34,12 +39,17 @@ lint/js/noSingleCharRegexAlternatives ━━━━━━━━━━━━━━
 ```
 
  lint/js/noSingleCharRegexAlternatives/reject/2/filename.ts:1:1
-lint/js/noSingleCharRegexAlternatives ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No single character alternations in regular expressions. Use a character class instead.
 
     /a|b|c/
      ^^^^^
+
+  ℹ Safe fix
+
+  - a|b|c
+  + [abc]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -50,7 +60,7 @@ lint/js/noSingleCharRegexAlternatives ━━━━━━━━━━━━━━
 ### `1: formatted`
 
 ```
-/a|b|c/;
+/[abc]/;
 
 ```
 
