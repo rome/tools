@@ -11,11 +11,12 @@ import {JSXFragment} from "@internal/ast";
 
 export default function JSXFragment(builder: Builder, node: JSXFragment): Token {
 	return concat([
-		"<>",
-		concat([
-			indent(builder.tokenizeStatementList(node.children, node), true),
-			hardline,
-		]),
-		"</>",
+		"(",
+		indent(
+			concat(["<>", builder.tokenizeStatementList(node.children, node), "</>"]),
+			true,
+		),
+		hardline,
+		")",
 	]);
 }
