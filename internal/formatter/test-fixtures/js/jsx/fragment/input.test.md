@@ -22,6 +22,12 @@ function Component1() {
 	return (<>Lorem ipsum</>);
 }
 
+function Component2() {
+	return <>
+		<Foo />
+		<Foo />
+	</>;
+}
 
 ```
 
@@ -30,13 +36,25 @@ function Component1() {
 ```js
 function Component() {
 	return (
-		<></>
+		<>
+		</>
 	);
 }
 
 function Component1() {
 	return (
-		<>Lorem ipsum</>
+		<>
+			Lorem ipsum
+		</>
+	);
+}
+
+function Component2() {
+	return (
+		<>
+			<Foo />
+			<Foo />
+		</>
 	);
 }
 

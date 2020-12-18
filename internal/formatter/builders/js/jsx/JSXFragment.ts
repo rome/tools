@@ -13,7 +13,12 @@ export default function JSXFragment(builder: Builder, node: JSXFragment): Token 
 	return concat([
 		"(",
 		indent(
-			concat(["<>", builder.tokenizeStatementList(node.children, node), "</>"]),
+			concat([
+				"<>",
+				indent(builder.tokenizeStatementList(node.children, node), true),
+				hardline,
+				"</>",
+			]),
 			true,
 		),
 		hardline,
