@@ -3,7 +3,7 @@ import {
 	ExtensionLintResult,
 	PartialExtensionHandler,
 } from "@internal/core/common/file-handlers/types";
-import {createAbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {consumeConfig, json, stringifyConfig} from "@internal/codec-config";
 import {parseJS} from "@internal/js-parser";
 
@@ -19,11 +19,10 @@ export const configHandler: PartialExtensionHandler = {
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,
 	): Promise<ExtensionLintResult> {
-		const {file, mtime, worker} = info;
+		const {file, integrity, mtimeNs, worker} = info;
 		const {uid} = file;
 
-		const real = createAbsoluteFilePath(file.real);
-		const sourceText = await worker.readFile(real);
+		const sourceText = await worker.readFile(file);
 		const path = createUnknownPath(uid);
 
 		let formatted: string = sourceText;
@@ -33,20 +32,20 @@ export const configHandler: PartialExtensionHandler = {
 			consumeConfig({
 				path,
 				input: sourceText,
-				mtime,
+				integrity,
 			});
 		} else {
 			formatted = stringifyConfig(
 				consumeConfig({
 					path,
 					input: sourceText,
-					mtime,
+					integrity,
 				}),
 			);
 		}
 
 		return {
-			mtime,
+			mtimeNs,
 			sourceText,
 			diagnostics: [],
 			suppressions: [],
@@ -54,8 +53,8 @@ export const configHandler: PartialExtensionHandler = {
 		};
 	},
 
-	async parse({mtime, path, file, worker}) {
-		const src = await worker.readFile(file.real);
+	async parse({integrity, path, file, worker}) {
+		const src = await worker.readFile(file);
 
 		// Parse the JSON to make sure it's valid
 		const obj = consumeConfig({
@@ -70,7 +69,7 @@ export const configHandler: PartialExtensionHandler = {
 
 		return {
 			// Shouldn't error
-			ast: parseJS({input: sourceText, mtime, sourceType: "module", path}),
+			ast: parseJS({input: sourceText, integrity, sourceType: "module", path}),
 			sourceText,
 			astModifiedFromSource: true,
 		};

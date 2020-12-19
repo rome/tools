@@ -9,6 +9,7 @@ import {FileReference} from "@internal/core";
 import {WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {
+	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticSuppressions,
 	Diagnostics,
@@ -18,7 +19,7 @@ import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {UnknownPath} from "@internal/path";
 
 export type ExtensionLintResult = {
-	mtime: undefined | number;
+	mtimeNs: bigint;
 	sourceText: string;
 	diagnostics: Diagnostics;
 	formatted: string;
@@ -27,7 +28,8 @@ export type ExtensionLintResult = {
 
 export type ExtensionHandlerMethodInfo = {
 	parseOptions: WorkerParseOptions;
-	mtime: undefined | number;
+	mtimeNs: bigint;
+	integrity: undefined | DiagnosticIntegrity;
 	file: FileReference;
 	project: compiler.TransformProjectDefinition;
 	worker: Worker;

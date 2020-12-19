@@ -9,11 +9,11 @@ export const markdownHandler: PartialExtensionHandler = {
 		format: false,
 	},
 
-	async parse({mtime, path, file, worker}) {
-		const sourceText = await worker.readFile(file.real);
+	async parse({integrity, path, file, worker}) {
+		const sourceText = await worker.readFile(file);
 		const ast = parseMarkdown({
 			input: sourceText,
-			mtime,
+			integrity,
 			path,
 		});
 		return {

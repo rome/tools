@@ -24,11 +24,11 @@ export const htmlHandler: PartialExtensionHandler = {
 		format: false,
 	},
 
-	async parse({mtime, path, file, worker}) {
-		const sourceText = await worker.readFile(file.real);
+	async parse({integrity, path, file, worker}) {
+		const sourceText = await worker.readFile(file);
 		const ast = parseHTML({
 			input: sourceText,
-			mtime,
+			integrity,
 			path,
 		});
 		return {
