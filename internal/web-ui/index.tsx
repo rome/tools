@@ -12,7 +12,7 @@ import Spinner from "./Spinner";
 import React = require("react");
 import ReactDOM = require("react-dom");
 import {WebServerClient, WebServerRequest} from "@internal/core";
-import {humanizeTime} from "@internal/string-utils";
+import {humanizeDuration} from "@internal/string-utils";
 import { VoidCallback } from "@internal/typescript-helpers";
 
 const {css, injectGlobal} = require("emotion");
@@ -288,7 +288,7 @@ function ClientItem(
           right: 15px;
           bottom: 15px;
         `}>
-			{humanizeTime(elapsed)}
+			{humanizeDuration(elapsed)}
 		</div>
 	</Button>;
 }
@@ -355,6 +355,7 @@ const bridge = createBridgeFromBrowserWebSocket(
 	Bridge,
 	socket,
 	{
+		debugName: "web",
 		type: "server",
 	},
 );
@@ -374,5 +375,5 @@ event.subscribe(
 );
 
 socket.onopen = () => {
-	bridge.handshake({second: true});
+	bridge.handshake();
 };
