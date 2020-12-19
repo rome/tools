@@ -23,7 +23,7 @@ export type DiagnosticsPrinterFlags = {
 
 export type DiagnosticsFileReaders = {
 	read: (path: AbsoluteFilePath) => Promise<undefined | string>;
-	getMtime: (path: AbsoluteFilePath) => Promise<undefined | number>;
+	exists: (path: AbsoluteFilePath) => Promise<undefined | boolean>;
 };
 
 export type DiagnosticsPrinterOptions = {

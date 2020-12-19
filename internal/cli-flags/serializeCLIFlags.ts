@@ -244,7 +244,7 @@ export function serializeCLIFlags(
 
 	return {
 		language: "shell",
-		mtime: undefined,
+		integrity: undefined,
 		sourceText: code.trimRight(),
 		filename: "argv",
 		start,

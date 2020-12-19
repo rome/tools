@@ -19,6 +19,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
+	DiagnosticIntegrity,
 	DiagnosticLocation,
 	Diagnostics,
 	DiagnosticsError,
@@ -65,7 +66,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	) {
 		const {
 			path,
-			mtime,
+			integrity,
 			offsetPosition,
 			sourceText,
 		} = opts;
@@ -88,7 +89,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownPath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
-		this.mtime = mtime;
+		this.integrity = integrity;
 		this.input = input;
 		this.sourceText = sourceText ?? this.input;
 		this.length = ob1Coerce0(this.input.length);
@@ -143,7 +144,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	public path: undefined | UnknownPath;
 	public filename: undefined | string;
 	public input: string;
-	public mtime: undefined | number;
+	public integrity: undefined | DiagnosticIntegrity;
 	private sourceText: string;
 	public length: Number0;
 	private diagnosticCategory: DiagnosticCategory;
@@ -511,7 +512,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		return {
 			sourceText,
-			mtime: this.mtime,
+			integrity: this.integrity,
 			start,
 			end,
 			filename: this.filename,
@@ -759,7 +760,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return {
 			...node,
 			corrupt: this.state.corrupt,
-			mtime: this.mtime,
+			integrity: this.integrity,
 			diagnostics: this.getDiagnostics(),
 			filename: this.getFilenameAssert(),
 			comments: this.state.comments,

@@ -39,7 +39,7 @@ export type DiagnosticFilterWithTest = DiagnosticFilter & {
 
 export type DiagnosticLocation = {
 	sourceText?: string;
-	mtime?: number;
+	integrity?: DiagnosticIntegrity;
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
@@ -88,13 +88,17 @@ export type Diagnostic = {
 	origins?: DiagnosticOrigin[];
 	dependencies?: {
 		filename: string;
-		mtime: number;
+		integrity: DiagnosticIntegrity;
 	}[];
 	meta?: DiagnosticsMeta;
 	tags?: DiagnosticTags;
 };
 
 export type Diagnostics = Diagnostic[];
+
+export type DiagnosticIntegrity = {
+	hash: string;
+};
 
 export type DiagnosticDescription = {
 	category: DiagnosticCategory;

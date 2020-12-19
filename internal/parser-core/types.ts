@@ -10,6 +10,7 @@ import {AnyFilePath} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
+	DiagnosticIntegrity,
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
@@ -137,7 +138,7 @@ export const UNKNOWN_POSITION: Position = {
 
 export type ParserOptions = {
 	path?: string | AnyFilePath;
-	mtime?: number;
+	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
