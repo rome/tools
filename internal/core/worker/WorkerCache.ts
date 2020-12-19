@@ -1,12 +1,6 @@
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {
-	Stats,
-	createFakeStats,
-	createReadStream,
-	exists,
-	lstat,
-} from "@internal/fs";
+import {Stats, createReadStream, exists, lstat} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
 import {
