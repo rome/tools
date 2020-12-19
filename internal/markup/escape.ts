@@ -82,7 +82,7 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue = undefined | number | AnyFilePath;
+type InterpolatedValue = undefined | number | bigint | AnyFilePath;
 
 const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
 
@@ -126,7 +126,7 @@ export function markup(
 		const value = values[i];
 		if (typeof value === "undefined") {
 			parts.push(toRawMarkup("<dim>undefined</dim>"));
-		} else if (typeof value === "number") {
+		} else if (typeof value === "number" || typeof value === "bigint") {
 			parts.push(toRawMarkup(`<number>${String(value)}</number>`));
 		} else if (
 			value instanceof RelativeFilePath ||
