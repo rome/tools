@@ -9,13 +9,12 @@ import {Profile} from "@internal/v8";
 import {Diagnostics} from "@internal/diagnostics";
 import {ClientFlags, ClientRequestFlags} from "../types/client";
 import {Bridge} from "@internal/events";
-import {JSONPropertyValue} from "@internal/codec-config";
 import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
-import {RSERObject} from "@internal/codec-binary-serial";
+import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -44,7 +43,7 @@ type ServerQueryResponseBase = {
 export type ServerQueryResponseSuccess = ServerQueryResponseBase & {
 	type: "SUCCESS";
 	hasData: boolean;
-	data: JSONPropertyValue;
+	data: RSERValue;
 	files: Dict<RecoverySaveFile>;
 };
 

@@ -22,7 +22,7 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			rser.send(data);
+			rser.sendValue(data);
 		},
 	});
 
@@ -44,16 +44,18 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
 	socket.on(
 		"error",
 		(err) => {
-			bridge.endWithError(err);
+			bridge.endWithError(err, false);
 		},
 	);
 
 	socket.on(
 		"end",
 		() => {
-			bridge.end("RPC WebSocket died");
+			bridge.end("RPC WebSocket died", false);
 		},
 	);
+
+	rser.init();
 
 	return bridge;
 }
@@ -66,7 +68,7 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			rser.send(data);
+			rser.sendValue(data);
 		},
 	});
 
@@ -91,8 +93,10 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 	};
 
 	socket.onclose = () => {
-		bridge.end("RPC WebSocket disconnected");
+		bridge.end("RPC WebSocket disconnected", false);
 	};
+
+	rser.init();
 
 	return bridge;
 }
@@ -105,7 +109,7 @@ export function createBridgeFromSocket<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			rser.send(data);
+			rser.sendValue(data);
 		},
 	});
 
@@ -129,16 +133,18 @@ export function createBridgeFromSocket<B extends Bridge>(
 	socket.on(
 		"error",
 		(err) => {
-			bridge.endWithError(err);
+			bridge.endWithError(err, false);
 		},
 	);
 
 	socket.on(
 		"end",
 		() => {
-			bridge.end("Socket disconnected");
+			bridge.end("Socket disconnected", false);
 		},
 	);
+
+	rser.init();
 
 	return bridge;
 }
@@ -146,16 +152,27 @@ export function createBridgeFromSocket<B extends Bridge>(
 export function createBridgeFromLocal<B extends Bridge>(
 	CustomBridge: BridgeClass<B>,
 	opts: Omit<BridgeCreatorOptions, "type">,
-): B {
-	const bridge = new CustomBridge({
+): {
+	server: B;
+	client: B;
+} {
+	const server = new CustomBridge({
 		...opts,
-		type: "server&client",
+		type: "server",
 		sendMessage: (msg: BridgeMessage) => {
-			bridge.handleMessage(msg);
+			client.handleMessage(msg);
 		},
 	});
 
-	return bridge;
+	const client = new CustomBridge({
+		...opts,
+		type: "client",
+		sendMessage: (msg: BridgeMessage) => {
+			server.handleMessage(msg);
+		},
+	});
+
+	return {server, client};
 }
 
 export function createBridgeFromWorkerThread<B extends Bridge>(
@@ -166,7 +183,7 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			rser.send(data);
+			rser.sendValue(data);
 		},
 	});
 
@@ -190,23 +207,25 @@ export function createBridgeFromWorkerThread<B extends Bridge>(
 	worker.on(
 		"messageerror",
 		(err) => {
-			bridge.endWithError(err);
+			bridge.endWithError(err, false);
 		},
 	);
 
 	worker.on(
 		"error",
 		(err) => {
-			bridge.endWithError(err);
+			bridge.endWithError(err, false);
 		},
 	);
 
 	worker.on(
 		"exit",
 		(code) => {
-			bridge.end(`Worker thread died with exit code ${code}`);
+			bridge.end(`Worker thread died with exit code ${code}`, false);
 		},
 	);
+
+	rser.init();
 
 	return bridge;
 }
@@ -223,7 +242,7 @@ export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			rser.send(data);
+			rser.sendValue(data);
 		},
 	});
 
@@ -248,9 +267,11 @@ export function createBridgeFromWorkerThreadParentPort<B extends Bridge>(
 	parentPort.on(
 		"close",
 		() => {
-			bridge.end("Worker thread parent port closed");
+			bridge.end("Worker thread parent port closed", false);
 		},
 	);
+
+	rser.init();
 
 	return bridge;
 }

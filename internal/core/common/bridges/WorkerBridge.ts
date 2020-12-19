@@ -17,6 +17,7 @@ import {
 import {Profile} from "@internal/v8";
 import {ProfilingStartData} from "./ServerBridge";
 import {
+	DiagnosticIntegrity,
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsError,
@@ -31,19 +32,18 @@ import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {ProjectConfig} from "@internal/project";
+import {WorkerBuffer} from "@internal/core/worker/Worker";
 
 export type WorkerProjects = {
 	id: number;
 	directory: AbsoluteFilePath;
+	configHashes: string[];
 	config: undefined | ProjectConfig;
 }[];
 
-export type WorkerCompileResult = CompileResult & {
-	cached: boolean;
-};
-
 export type WorkerPartialManifest = {
 	path: AbsoluteFilePath;
+	hash: string;
 	type: Manifest["type"];
 };
 
@@ -59,10 +59,15 @@ export type WorkerCompilerOptions = {
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, "analyze">;
 
-//
-export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
+export type CachedWrapper<T> = {
+	value: T;
+	integrity: undefined | DiagnosticIntegrity;
 	cached: boolean;
 };
+
+export type WorkerAnalyzeDependencyResult = CachedWrapper<AnalyzeDependencyResult>;
+
+export type WorkerCompileResult = CachedWrapper<CompileResult>;
 
 export type WorkerLintOptions = {
 	compilerOptions?: LintCompilerOptions;
@@ -192,7 +197,8 @@ export default class WorkerBridge extends Bridge {
 
 	public evict = this.createEvent<
 		{
-			filename: string;
+			real: AbsoluteFilePath;
+			uid: string;
 		},
 		void
 	>({
@@ -228,7 +234,7 @@ export default class WorkerBridge extends Bridge {
 			ref: FileReference;
 			parseOptions: WorkerParseOptions;
 		},
-		AnalyzeDependencyResult
+		WorkerAnalyzeDependencyResult
 	>({
 		name: "analyzeDependencies",
 		direction: "server->client",
@@ -259,7 +265,7 @@ export default class WorkerBridge extends Bridge {
 			options: WorkerCompilerOptions;
 			parseOptions: WorkerParseOptions;
 		},
-		CompileResult
+		WorkerCompileResult
 	>({name: "compile", direction: "server->client"});
 
 	public parse = this.createEvent<
@@ -273,10 +279,7 @@ export default class WorkerBridge extends Bridge {
 
 	public getFileBuffers = this.createEvent<
 		void,
-		{
-			filename: string;
-			content: string;
-		}[]
+		[AbsoluteFilePath, WorkerBuffer][]
 	>({
 		name: "getFileBuffers",
 		direction: "server->client",
@@ -295,7 +298,7 @@ export default class WorkerBridge extends Bridge {
 	public updateBuffer = this.createEvent<
 		{
 			ref: FileReference;
-			content: string;
+			buffer: WorkerBuffer;
 		},
 		void
 	>({

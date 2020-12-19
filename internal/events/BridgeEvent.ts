@@ -31,23 +31,6 @@ export type BridgeEventOptions = EventOptions & {
 	direction: BridgeEventDirection;
 };
 
-function validateDirection(
-	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	event: BridgeEvent<any, any>,
-	invalidDirections: [BridgeEventDirection, BridgeType][],
-	verb: string,
-) {
-	invalidDirections.push(["server<->client", "server&client"]);
-
-	for (const [eventDirection, bridgeType] of invalidDirections) {
-		if (event.direction === eventDirection && event.bridge.type === bridgeType) {
-			throw new Error(
-				`The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
-			);
-		}
-	}
-}
-
 export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 	extends Event<Param, Ret> {
 	constructor(opts: BridgeEventOptions, bridge: Bridge) {
@@ -70,6 +53,24 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		}
 	>;
 
+	private validateDirection(
+		invalidDirections: [BridgeEventDirection, BridgeType][],
+		verb: string,
+	) {
+		for (const [eventDirection, bridgeType] of invalidDirections) {
+			if (this.direction === eventDirection && this.bridge.type === bridgeType) {
+				throw new Error(
+					`The ${this.getDisplayName()} cannot be ${verb} by this sort of bridge`,
+				);
+			}
+		}
+	}
+
+	protected getDisplayName(): string {
+		const {bridge} = this;
+		return `${super.getDisplayName()}(${this.direction}) in ${bridge.getDisplayName()}`;
+	}
+
 	public clear() {
 		super.clear();
 		this.requestCallbacks.clear();
@@ -82,9 +83,8 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 	}
 
 	public onSubscriptionChange() {
-		validateDirection(
-			this,
-			[["server->client", "client"], ["server<-client", "server"]],
+		this.validateDirection(
+			[["server<-client", "client"], ["server->client", "server"]],
 			"subscribed",
 		);
 		this.bridge.sendSubscriptions();
@@ -129,9 +129,8 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 	}
 
 	private validateCanSend(): void {
-		validateDirection(
-			this,
-			[["server<-client", "client"], ["server->client", "server"]],
+		this.validateDirection(
+			[["server<-client", "server"], ["server->client", "client"]],
 			"called",
 		);
 	}
@@ -207,7 +206,11 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		});
 	}
 
-	public callOptional(): never {
-		throw new Error(`callOptional not allowed on BridgeEvent ${this.name}`);
+	public async callOptional(param: Param): Promise<undefined | Ret> {
+		if (this.hasSubscribers()) {
+			return this.call(param);
+		} else {
+			return undefined;
+		}
 	}
 }

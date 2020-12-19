@@ -5,6 +5,7 @@ test(
 	"Bridge#handshake",
 	async (t) => {
 		const fooBridge = new Bridge({
+			debugName: "foo",
 			type: "server",
 			sendMessage: (msg) => {
 				barBridge.handleMessage(msg);
@@ -12,6 +13,7 @@ test(
 		});
 
 		const barBridge = new Bridge({
+			debugName: "bar",
 			type: "client",
 			sendMessage: (msg) => {
 				fooBridge.handleMessage(msg);
@@ -43,6 +45,7 @@ test(
 	"BridgeEvent",
 	async (t) => {
 		const fooBridge = new Bridge({
+			debugName: "foo",
 			type: "server",
 			sendMessage: (msg) => {
 				barBridge.handleMessage(msg);
@@ -54,6 +57,7 @@ test(
 		});
 
 		const barBridge = new Bridge({
+			debugName: "bar",
 			type: "client",
 			sendMessage: (msg) => {
 				fooBridge.handleMessage(msg);
@@ -111,65 +115,6 @@ test(
 			// client bridges can't call server<-client events
 			await barGreet.call("bar");
 		});
-
-		t.throwsAsync(async () => {
-			// callOptional not allowed on BridgeEvents
-			fooGreet.callOptional();
-		});
-	},
-);
-
-test(
-	"Bridge server&client",
-	async (t) => {
-		const bridge = new Bridge({
-			type: "server&client",
-			sendMessage: (msg) => {
-				bridge.handleMessage(msg);
-			},
-		});
-		const fooGreet = bridge.createEvent<string, string>({
-			name: "fooGreet",
-			direction: "server<-client",
-		});
-
-		const barGreet = bridge.createEvent<string, string>({
-			name: "barGreet",
-			direction: "server->client",
-		});
-
-		const wrongGreet = bridge.createEvent<string, string>({
-			name: "wrongGreet",
-			direction: "server<->client",
-		});
-
-		t.throws(() => {
-			// can't subscribe to server<->client event on a server&client bridge
-			wrongGreet.subscribe((str) => str);
-		});
-		t.throwsAsync(async () => {
-			// can't call a server<->client event on a server&client bridge
-			await wrongGreet.call("wrong");
-		});
-
-		async function foo() {
-			fooGreet.subscribe((str) => `hey, ${str}`);
-			await bridge.handshake();
-
-			const res = await barGreet.call("foo");
-			t.is(res, "greetings, foo");
-		}
-
-		async function bar() {
-			barGreet.subscribe((str) => `greetings, ${str}`);
-			await bridge.handshake();
-
-			const res = await fooGreet.call("bar");
-			t.is(res, "hey, bar");
-		}
-
-		foo();
-		await bar();
 	},
 );
 
@@ -177,7 +122,8 @@ test(
 	"Bridge#end",
 	async (t) => {
 		const bridge = new Bridge({
-			type: "server&client",
+			debugName: "foo",
+			type: "server",
 			sendMessage: (msg) => {
 				bridge.handleMessage(msg);
 			},
@@ -199,7 +145,7 @@ test(
 		t.looksLike(bridge.getSubscriptions(), ["greet"]);
 		t.true(greet.hasSubscriptions());
 
-		bridge.end("Halt!");
+		await bridge.end("Halt!");
 
 		t.looksLike(bridge.getSubscriptions(), []);
 		t.false(greet.hasSubscriptions());
