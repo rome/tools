@@ -16,7 +16,8 @@ export default async function worker() {
 	const bridge = createBridgeFromWorkerThreadParentPort(
 		WorkerBridge,
 		{
-			type: "server",
+			type: "client",
+			debugName: "worker",
 		},
 	);
 

@@ -32,7 +32,7 @@ import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
-import Cache from "./Cache";
+import ServerCache from "./ServerCache";
 import {
 	Reporter,
 	ReporterProgress,
@@ -49,11 +49,8 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-
-import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
-
 import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
-import {Dict, ErrorCallback, mergeObjects} from "@internal/typescript-helpers";
+import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
@@ -61,10 +58,11 @@ import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProc
 import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../../async/lockers";
 import {getEnvVar} from "@internal/cli-environment";
-import {StaticMarkup, markup} from "@internal/markup";
+import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
-import handleFatalError from "../common/handleFatalError";
+import WorkerQueue, {WorkerQueueOptions} from "./WorkerQueue";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export type ServerClient = {
 	id: number;
@@ -166,12 +164,23 @@ function validateAllowedRequestFlag(
 
 export default class Server {
 	constructor(opts: ServerOptions) {
-		this.onFatalErrorBound = this.onFatalError.bind(this);
-
 		this.profiling = undefined;
 		this.options = opts;
 
 		this.userConfig = opts.userConfig;
+
+		this.fatalErrorHandler = new FatalErrorHandler({
+			getOptions: () => {
+				// Ensure workers are properly ended as they could be hanging
+				this.workerManager.end();
+
+				return {
+					source: markup`server`,
+					reporter: this.getImportantReporter(),
+					exit: this.options.dedicated,
+				};
+			},
+		});
 
 		this.requestFileLocker = new FilePathLocker();
 
@@ -250,7 +259,7 @@ export default class Server {
 		this.workerManager = new WorkerManager(this);
 		this.fileAllocator = new FileAllocator(this);
 		this.resolver = new Resolver(this);
-		this.cache = new Cache(this);
+		this.cache = new ServerCache(this);
 
 		this.logger.info(
 			markup`[Server] Created Server with options: ${prettyFormat(opts)}`,
@@ -258,7 +267,7 @@ export default class Server {
 	}
 
 	public userConfig: UserConfig;
-	public onFatalErrorBound: ErrorCallback;
+	public fatalErrorHandler: FatalErrorHandler;
 	public options: ServerOptions;
 
 	// Public events
@@ -281,7 +290,7 @@ export default class Server {
 	public projectManager: ProjectManager;
 	public workerManager: WorkerManager;
 	public fileAllocator: FileAllocator;
-	public cache: Cache;
+	public cache: ServerCache;
 	public connectedReporters: ServerReporter;
 	public logger: Logger;
 	public requestFileLocker: FilePathLocker;
@@ -312,6 +321,12 @@ export default class Server {
 		return Reporter.concat([this.logger, this.connectedReporters]);
 	}
 
+	public createWorkerQueue<M = void>(
+		opts: WorkerQueueOptions<M>,
+	): WorkerQueue<M> {
+		return new WorkerQueue<M>(this, opts);
+	}
+
 	private emitServerLog(chunk: string) {
 		if (this.clientIdCounter === 0) {
 			this.logInitBuffer += chunk;
@@ -323,20 +338,6 @@ export default class Server {
 				bridge.log.send({chunk, origin: "server"});
 			}
 		}
-	}
-
-	public onFatalError(error: Error, source: StaticMarkup = markup`server`) {
-		// Ensure workers are properly ended as they could be hanging
-		this.workerManager.end();
-
-		// NB: This will call process.exit. If we want to expose this for other use-cases then we will probably want to
-		// make this customizable
-		handleFatalError({
-			error,
-			source,
-			reporter: this.getImportantReporter(),
-			exit: this.options.dedicated,
-		});
 	}
 
 	// This is so all progress bars are renderer on each client. If we just use this.progressLocal then
@@ -356,25 +357,6 @@ export default class Server {
 		}
 
 		return mergeProgresses(progresses);
-	}
-
-	public wrapFatalPromise(promise: Promise<unknown>) {
-		promise.catch(this.onFatalErrorBound);
-	}
-
-	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	public wrapFatal<T extends (...args: any[]) => any>(callback: T): T {
-		return (((...args: any[]): any => {
-			try {
-				const res = callback(...args);
-				if (res instanceof Promise) {
-					res.catch(this.onFatalErrorBound);
-				}
-				return res;
-			} catch (err) {
-				throw this.onFatalError(err);
-			}
-		}) as T);
 	}
 
 	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
@@ -405,15 +387,11 @@ export default class Server {
 					return virtualContents;
 				}
 			},
-
-			getMtime: async (path) => {
-				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
-					path,
-				);
-				if (virtualContents === undefined) {
-					return undefined;
+			exists: async (path) => {
+				if (this.virtualModules.isVirtualPath(path)) {
+					return true;
 				} else {
-					return this.memoryFs.getMtime(path);
+					return undefined;
 				}
 			},
 		};
@@ -433,7 +411,9 @@ export default class Server {
 	): DiagnosticsProcessor {
 		return this.createDiagnosticsProcessor({
 			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.wrapFatalPromise(this.handleDisconnectedDiagnostics(diagnostics));
+				this.fatalErrorHandler.wrapPromise(
+					this.handleDisconnectedDiagnostics(diagnostics),
+				);
 			},
 			origins: [
 				...origins,
@@ -450,9 +430,7 @@ export default class Server {
 			return;
 		}
 
-		const teardown = setupGlobalErrorHandlers((err) => {
-			this.onFatalError(err);
-		});
+		const teardown = this.fatalErrorHandler.setupGlobalHandlers();
 
 		this.endEvent.subscribe(() => {
 			teardown();
@@ -485,7 +463,7 @@ export default class Server {
 			}
 
 			// Kill socket
-			client.bridge.end();
+			await client.bridge.end();
 		}
 
 		// We should remove everything that has an external dependency like a socket or process
@@ -511,8 +489,8 @@ export default class Server {
 		// If we aren't a dedicated process then we should only expect a single connection
 		// and when that ends. End the Server.
 		if (!this.options.dedicated) {
-			bridge.endEvent.subscribe(() => {
-				this.end();
+			bridge.endEvent.subscribe(async () => {
+				await this.end();
 			});
 		}
 
@@ -586,7 +564,7 @@ export default class Server {
 			client.reporter.error(
 				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
 			);
-			client.bridge.end();
+			await client.bridge.end();
 			return client;
 		}
 
@@ -602,7 +580,7 @@ export default class Server {
 			}
 		});
 
-		bridge.endServer.subscribe(async () => this.end());
+		bridge.endServer.subscribe(() => this.end());
 
 		await this.clientStartEvent.callOptional(client);
 		await bridge.serverReady.call();
@@ -621,7 +599,7 @@ export default class Server {
 
 		// Initialize the reporter
 		const reporter = new Reporter({
-			wrapperFactory: this.wrapFatal.bind(this),
+			wrapperFactory: this.fatalErrorHandler.wrapBound,
 			markupOptions: {
 				...this.logger.markupOptions,
 				cwd: flags.cwd,
@@ -782,7 +760,7 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			await this.onFatalErrorBound(err);
+			await this.fatalErrorHandler.handle(err);
 			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies

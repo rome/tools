@@ -14,8 +14,8 @@ import worker from "../worker";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
-import handleFatalError from "@internal/core/common/handleFatalError";
 import {readFileTextSync} from "@internal/fs";
+import FatalErrorHandler from "@internal/core/common/FatalErrorHandler";
 
 async function main(): Promise<void> {
 	switch (
@@ -55,13 +55,16 @@ export function executeCLIMain() {
 		1_000_000,
 	);
 
-	main().catch((error: Error) => {
-		handleFatalError({
-			error,
-			source: markup`cli`,
-			reporter: Reporter.fromProcess(),
-		});
+	const fatalErrorHandler = new FatalErrorHandler({
+		getOptions() {
+			return {
+				source: markup`cli`,
+				reporter: Reporter.fromProcess(),
+			};
+		},
 	});
+
+	fatalErrorHandler.wrapPromise(main());
 }
 
 executeCLIMain();
