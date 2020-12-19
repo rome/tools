@@ -156,7 +156,7 @@ export default async function select<Options extends SelectOptions>(
 
 	setRawMode(stdin, true);
 
-	await new Promise((resolve) => {
+	await new Promise<void>((resolve) => {
 		const keypress = onKeypress(
 			reporter,
 			(key) => {

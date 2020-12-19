@@ -511,7 +511,7 @@ export default class RecoveryStore {
 		};
 
 		// refreshFileEvent doesn't resolve
-		const waitRefresh = new Promise((resolve) => {
+		const waitRefresh: Promise<void> = new Promise((resolve) => {
 			registerFile = (refreshedPaths) => {
 				for (const path of refreshedPaths) {
 					if (!paths.has(path)) {

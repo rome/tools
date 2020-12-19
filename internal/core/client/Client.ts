@@ -686,7 +686,7 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon: undefined | ServerBridge = await new Promise((
+		const newDaemon: void | ServerBridge = await new Promise<void | ServerBridge>((
 			resolve,
 			reject,
 		) => {
@@ -767,7 +767,7 @@ export default class Client {
 			return this.bridgeStatus.bridge;
 		}
 
-		const promise: Promise<undefined | net.Socket> = new Promise((
+		const promise: Promise<void | net.Socket> = new Promise((
 			resolve,
 			reject,
 		) => {

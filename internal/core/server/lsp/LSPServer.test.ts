@@ -51,7 +51,7 @@ test(
 				callback: (c: Consumer, resolve: () => void) => void,
 			) {
 				const out = createMessage(msg);
-				const promise = new Promise((resolve) => {
+				const promise = new Promise<void>((resolve) => {
 					transport.writeEvent.subscribe((response) => {
 						const consumer = consumeMessage(response);
 						callback(consumer, resolve);
