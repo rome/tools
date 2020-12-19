@@ -7,6 +7,7 @@
 
 import {
 	JSArrayExpression,
+	JSBigIntLiteral,
 	JSBooleanLiteral,
 	JSNullLiteral,
 	JSNumericLiteral,
@@ -15,6 +16,7 @@ import {
 	JSReferenceIdentifier,
 	JSStringLiteral,
 	jsArrayExpression,
+	jsBigIntLiteral,
 	jsBooleanLiteral,
 	jsNullLiteral,
 	jsNumericLiteral,
@@ -37,7 +39,8 @@ export function valueToNode(
 	| JSObjectExpression
 	| JSNullLiteral
 	| JSReferenceIdentifier
-	| JSArrayExpression {
+	| JSArrayExpression
+	| JSBigIntLiteral {
 	if (ancestry.includes(value)) {
 		throw new Error("Recursion detected");
 	}
@@ -51,6 +54,9 @@ export function valueToNode(
 
 		case "number":
 			return jsNumericLiteral.quick(value);
+
+		case "bigint":
+			return jsBigIntLiteral.quick(String(value));
 
 		case "undefined":
 			return jsReferenceIdentifier.quick("undefined");

@@ -1,4 +1,4 @@
-import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
+import {INTERNAL, ROOT, modifyGeneratedFile, valueToCode} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 
 const virtualModules = ROOT.append("internal", "virtual-packages");
@@ -31,11 +31,7 @@ export async function main() {
 				}
 
 				lines.push(
-					`modules.set("${packageName}", new Map(${JSON.stringify(
-						files,
-						null,
-						"\t",
-					)}));`,
+					`modules.set("${packageName}", new Map(${valueToCode(files)}));`,
 				);
 			}
 
