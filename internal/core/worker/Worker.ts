@@ -17,9 +17,8 @@ import WorkerBridge, {
 import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
-import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig} from "@internal/core";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticIntegrity, DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -27,7 +26,7 @@ import {
 	createAbsoluteFilePath,
 	createUnknownPath,
 } from "@internal/path";
-import {lstat, readFileText} from "@internal/fs";
+import {Stats, createFakeStats, readFileText} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
@@ -37,15 +36,23 @@ import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
 import {BridgeError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
+import WorkerCache from "./WorkerCache";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export type ParseResult = {
 	ast: AnyRoot;
-	mtime: undefined | number;
+	integrity: undefined | DiagnosticIntegrity;
+	mtimeNs: bigint;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
 	sourceText: string;
 	astModifiedFromSource: boolean;
+};
+
+export type WorkerBuffer = {
+	content: string;
+	mtimeNs: bigint;
 };
 
 type WorkerOptions = {
@@ -81,13 +88,16 @@ export default class Worker {
 			this.logger.updateStream();
 		});
 
-		this.api = new WorkerAPI(this);
+		this.cache = new WorkerCache(this);
+		this.api = new WorkerAPI(this, this.logger, this.cache);
 
-		if (opts.dedicated) {
-			setupGlobalErrorHandlers((err) => {
+		this.fatalErrorHandler = new FatalErrorHandler({
+			getOptions: (err) => {
 				try {
+					const {bridge} = this;
+
 					// Dispatch error to the server and trigger a fatal
-					opts.bridge.fatalError.send(opts.bridge.serializeError(err));
+					bridge.fatalError.send(bridge.serializeError(err));
 				} catch (err) {
 					if (!(err instanceof BridgeError)) {
 						console.error(
@@ -97,7 +107,12 @@ export default class Worker {
 					}
 					process.exit(1);
 				}
-			});
+				return false;
+			},
+		});
+
+		if (opts.dedicated) {
+			this.fatalErrorHandler.setupGlobalHandlers();
 
 			// Pretty sure we'll hit another error condition before this but for completeness
 			/*opts.bridge.monitorHeartbeat(
@@ -115,25 +130,26 @@ export default class Worker {
 	public userConfig: UserConfig;
 	public api: WorkerAPI;
 	public logger: Logger;
+	public fatalErrorHandler: FatalErrorHandler;
+	public virtualModules: VirtualModules;
 
+	private cache: WorkerCache;
 	private bridge: WorkerBridge;
-	private virtualModules: VirtualModules;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: Map<number, TransformProjectDefinition>;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
 	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
-	private buffers: AbsoluteFilePathMap<string>;
+	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
-	private getPartialManifest(id: number): WorkerPartialManifest {
+	public getPartialManifest(id: number): WorkerPartialManifest {
 		return this.partialManifests.assert(id);
 	}
 
-	private end() {
-		// This will only actually be called when a Worker is created inside of the Server
-		// Clear internal maps for memory, in case the Worker instance sticks around
+	private async end() {
 		this.astCache.clear();
 		this.projects.clear();
 		this.moduleSignatureCache.clear();
+		await this.cache.teardown();
 	}
 
 	public async init() {
@@ -141,8 +157,8 @@ export default class Worker {
 
 		const bridge: WorkerBridge = this.bridge;
 
-		bridge.endEvent.subscribe(() => {
-			this.end();
+		bridge.endEvent.subscribe(async () => {
+			await this.end();
 		});
 
 		let profiler: undefined | Profiler;
@@ -196,8 +212,8 @@ export default class Worker {
 			return this.api.analyzeDependencies(payload.ref, payload.parseOptions);
 		});
 
-		bridge.evict.subscribe((payload) => {
-			this.evict(createAbsoluteFilePath(payload.filename));
+		bridge.evict.subscribe(async (payload) => {
+			await this.evict(payload);
 			return undefined;
 		});
 
@@ -226,15 +242,15 @@ export default class Worker {
 			return this.getBuffer(payload.ref);
 		});
 
-		bridge.updateBuffer.subscribe((payload) => {
-			return this.updateBuffer(payload.ref, payload.content);
+		bridge.updateBuffer.subscribe(async (payload) => {
+			return this.updateBuffer(payload.ref, payload.buffer);
 		});
 
-		bridge.patchBuffer.subscribe((payload) => {
+		bridge.patchBuffer.subscribe(async (payload) => {
 			return this.patchBuffer(payload.ref, payload.patches);
 		});
 
-		bridge.clearBuffer.subscribe((payload) => {
+		bridge.clearBuffer.subscribe(async (payload) => {
 			return this.clearBuffer(payload.ref);
 		});
 
@@ -243,33 +259,54 @@ export default class Worker {
 		});
 	}
 
-	public getBuffer(ref: FileReference) {
+	public isDiskSynced(path: AbsoluteFilePath): boolean {
+		return !this.buffers.has(path) && !this.virtualModules.isVirtualPath(path);
+	}
+
+	public hasBuffer(path: AbsoluteFilePath): boolean {
+		return this.buffers.has(path);
+	}
+
+	public getBufferFakeStats(path: AbsoluteFilePath): Stats {
+		const buffer = this.buffers.assert(path);
+		return createFakeStats({
+			type: "file",
+			size: BigInt(buffer.content.length),
+			date: new Date(Number(buffer.mtimeNs / 1000000n)),
+		});
+	}
+
+	public getBuffer(ref: FileReference): undefined | string {
 		this.logger.info(markup`Returned ${ref.real} buffer`);
-		return this.buffers.get(ref.real);
+		const buffer = this.buffers.get(ref.real);
+		if (buffer === undefined) {
+			return undefined;
+		} else {
+			return buffer.content;
+		}
 	}
 
-	public clearBuffer({real}: FileReference) {
-		this.logger.info(markup`Cleared ${real} buffer`);
-		this.buffers.delete(real);
-		this.evict(real);
+	public async clearBuffer(ref: FileReference) {
+		this.logger.info(markup`Cleared ${ref.real} buffer`);
+		this.buffers.delete(ref.real);
+		await this.evict(ref);
 	}
 
-	public updateBuffer(ref: FileReference, content: string) {
+	public async updateBuffer(ref: FileReference, buffer: WorkerBuffer) {
 		this.logger.info(markup`Updated ${ref.real} buffer`);
-		this.buffers.set(ref.real, content);
-		this.evict(ref.real);
+		this.buffers.set(ref.real, buffer);
+		await this.evict(ref);
 	}
 
-	private getFileBuffers() {
-		return Array.from(
-			this.buffers,
-			([path, content]) => ({filename: path.join(), content}),
-		);
+	private getFileBuffers(): [AbsoluteFilePath, WorkerBuffer][] {
+		return Array.from(this.buffers);
 	}
 
-	private patchBuffer(ref: FileReference, patches: WorkerBufferPatch[]) {
+	private async patchBuffer(ref: FileReference, patches: WorkerBufferPatch[]) {
 		this.logger.info(markup`Patched ${ref.real} buffer`);
-		let buffer: undefined | string = this.buffers.assert(ref.real);
+		const entry = this.buffers.assert(ref.real);
+		const {mtimeNs: mtime} = entry;
+		let buffer: undefined | string = entry.content;
 
 		// Patches must be applied sequentially
 		for (const patch of patches) {
@@ -280,8 +317,8 @@ export default class Worker {
 			}
 		}
 
-		this.buffers.set(ref.real, buffer);
-		this.evict(ref.real);
+		this.buffers.set(ref.real, {content: buffer, mtimeNs: mtime});
+		await this.evict(ref);
 		return buffer;
 	}
 
@@ -348,18 +385,25 @@ export default class Worker {
 		};
 	}
 
-	public async readFile(path: AbsoluteFilePath): Promise<string> {
-		const buffer = this.buffers.get(path);
+	public async readFile(ref: FileReference): Promise<string> {
+		const buffer = this.buffers.get(ref.real);
 		if (buffer !== undefined) {
-			return buffer;
+			return buffer.content;
 		}
 
-		const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
+		const virtual = this.virtualModules.getPossibleVirtualFileContents(ref.real);
 		if (virtual !== undefined) {
 			return virtual;
 		}
 
-		return await readFileText(path);
+		// We may have already read this file to hash it for the cache
+		const cache = await this.cache.getFile(ref);
+		const cached = cache.takePossibleReadFile();
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		return await readFileText(ref.real);
 	}
 
 	public async parse(
@@ -425,7 +469,9 @@ export default class Worker {
 
 		this.logger.info(markup`Parsing: ${path}`);
 
-		const mtime = await this.getMtime(path);
+		const cacheFile = await this.cache.getFile(ref);
+		const integrity = await this.cache.getIntegrity(ref);
+		const {mtimeNs} = await cacheFile.getStats();
 
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
@@ -436,7 +482,8 @@ export default class Worker {
 			sourceTypeJS,
 			path: createUnknownPath(uid),
 			manifestPath,
-			mtime,
+			integrity,
+			mtimeNs,
 			file: ref,
 			worker: this,
 			project,
@@ -467,7 +514,8 @@ export default class Worker {
 			project,
 			path,
 			astModifiedFromSource,
-			mtime,
+			integrity,
+			mtimeNs,
 		};
 
 		if (cacheEnabled) {
@@ -475,18 +523,6 @@ export default class Worker {
 		}
 
 		return res;
-	}
-
-	// Get the file mtime to warn about outdated diagnostics
-	// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
-	// explicitly do not match the file system
-	public async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
-		if (this.buffers.has(path) || this.virtualModules.isVirtualPath(path)) {
-			return undefined;
-		} else {
-			const stat = await lstat(path);
-			return stat.mtimeMs;
-		}
 	}
 
 	public getProject(id: number): TransformProjectDefinition {
@@ -499,10 +535,16 @@ export default class Worker {
 		return config;
 	}
 
-	private evict(path: AbsoluteFilePath) {
-		this.logger.info(markup`Evicted ${path}`);
-		this.astCache.delete(path);
-		this.moduleSignatureCache.delete(path);
+	private async evict(
+		{real, uid}: {
+			real: AbsoluteFilePath;
+			uid: string;
+		},
+	) {
+		this.logger.info(markup`Evicted ${real}`);
+		this.astCache.delete(real);
+		this.moduleSignatureCache.delete(real);
+		await this.cache.remove(uid, real);
 	}
 
 	private updateManifests(manifests: WorkerPartialManifests) {
@@ -516,7 +558,7 @@ export default class Worker {
 	}
 
 	public updateProjects(projects: WorkerProjects) {
-		for (const {config, directory, id} of projects) {
+		for (const {config, directory, configHashes, id} of projects) {
 			if (config === undefined) {
 				this.projects.delete(id);
 			} else {
@@ -524,6 +566,7 @@ export default class Worker {
 					id,
 					{
 						directory,
+						configHashes,
 						config,
 					},
 				);

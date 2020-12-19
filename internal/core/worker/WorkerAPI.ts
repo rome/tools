@@ -24,6 +24,8 @@ import {
 	signals,
 } from "@internal/compiler";
 import {
+	WorkerAnalyzeDependencyResult,
+	WorkerCompileResult,
 	WorkerCompilerOptions,
 	WorkerFormatOptions,
 	WorkerFormatResult,
@@ -34,6 +36,7 @@ import {
 } from "../common/bridges/WorkerBridge";
 import Logger from "../common/utils/Logger";
 import * as jsAnalysis from "@internal/js-analysis";
+import {ModuleSignature} from "@internal/js-analysis";
 import {ExtensionLintResult} from "../common/file-handlers/types";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {
@@ -48,6 +51,7 @@ import {formatAST} from "@internal/formatter";
 import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
+import WorkerCache, {createCacheEntryLoader} from "./WorkerCache";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
 // This retains the line endings for the formatted code if they were present in the source
@@ -62,14 +66,36 @@ function normalizeFormattedLineEndings(
 	}
 }
 
+const analyzeDependenciesCacheLoader = createCacheEntryLoader<AnalyzeDependencyResult>(
+	"analyzeDependencies",
+	(consumer) => consumer.asAny(),
+);
+
+const moduleSignatureCacheLoader = createCacheEntryLoader<ModuleSignature>(
+	"moduleSignature",
+	(consumer) => consumer.asAny(),
+);
+
+const compileCacheLoader = createCacheEntryLoader<CompileResult>(
+	"compile",
+	(consumer) => consumer.asAny(),
+);
+
+const lintCacheLoader = createCacheEntryLoader<WorkerLintResult>(
+	"lint",
+	(consumer) => consumer.asAny(),
+);
+
 export default class WorkerAPI {
-	constructor(worker: Worker) {
+	constructor(worker: Worker, logger: Logger, cache: WorkerCache) {
 		this.worker = worker;
-		this.logger = worker.logger;
+		this.logger = logger;
+		this.cache = cache;
 	}
 
 	private worker: Worker;
 	private logger: Logger;
+	private cache: WorkerCache;
 
 	private interceptDiagnostics<T extends {
 		diagnostics: Diagnostics;
@@ -106,7 +132,17 @@ export default class WorkerAPI {
 	public async moduleSignatureJS(
 		ref: FileReference,
 		parseOptions: WorkerParseOptions,
-	) {
+	): Promise<ModuleSignature> {
+		const cacheEntry = await this.cache.getEntry(
+			ref,
+			moduleSignatureCacheLoader,
+			[parseOptions],
+		);
+		const cached = await cacheEntry.load();
+		if (cached !== undefined) {
+			return cached;
+		}
+
 		const {ast, project} = await this.worker.parse(ref, parseOptions);
 
 		if (ast.type !== "JSRoot") {
@@ -117,7 +153,7 @@ export default class WorkerAPI {
 
 		this.logger.info(markup`Generating module signature: ${ref.real}`);
 
-		return await jsAnalysis.getModuleSignature({
+		const res = await jsAnalysis.getModuleSignature({
 			ast,
 			project,
 			provider: await this.worker.getTypeCheckProvider(
@@ -126,6 +162,10 @@ export default class WorkerAPI {
 				parseOptions,
 			),
 		});
+
+		cacheEntry.update(res);
+
+		return res;
 	}
 
 	public async updateInlineSnapshots(
@@ -133,7 +173,7 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerUpdateInlineSnapshotResult> {
-		let {ast, mtime, project} = await this.worker.parse(ref, parseOptions);
+		let {ast, mtimeNs, project} = await this.worker.parse(ref, parseOptions);
 
 		if (!project.config.format.enabled) {
 			return {
@@ -235,7 +275,7 @@ export default class WorkerAPI {
 			file = {
 				type: "WRITE",
 				content: formatted,
-				mtime,
+				mtimeNs,
 			};
 		}
 
@@ -243,6 +283,34 @@ export default class WorkerAPI {
 	}
 
 	public async analyzeDependencies(
+		ref: FileReference,
+		parseOptions: WorkerParseOptions,
+	): Promise<WorkerAnalyzeDependencyResult> {
+		const cacheEntry = await this.cache.getEntry(
+			ref,
+			analyzeDependenciesCacheLoader,
+		);
+		const cached = await cacheEntry.load();
+		if (cached !== undefined) {
+			return {
+				integrity: await this.cache.getIntegrity(ref),
+				value: cached,
+				cached: true,
+			};
+		}
+
+		const res = await this.uncachedAnalyzeDependencies(ref, parseOptions);
+
+		cacheEntry.update(res);
+
+		return {
+			integrity: await this.cache.getIntegrity(ref),
+			cached: false,
+			value: res,
+		};
+	}
+
+	private async uncachedAnalyzeDependencies(
 		ref: FileReference,
 		parseOptions: WorkerParseOptions,
 	): Promise<AnalyzeDependencyResult> {
@@ -280,9 +348,9 @@ export default class WorkerAPI {
 				...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 				diagnostics: analyzeResult.diagnostics,
 			};
+		} else {
+			return analyzeResult.value;
 		}
-
-		return analyzeResult.value;
 	}
 
 	private async workerCompilerOptionsToCompilerOptions(
@@ -299,7 +367,7 @@ export default class WorkerAPI {
 				...options,
 				bundle: {
 					...bundle,
-					analyze: await this.analyzeDependencies(ref, parseOptions),
+					analyze: (await this.analyzeDependencies(ref, parseOptions)).value,
 				},
 			};
 		}
@@ -310,8 +378,24 @@ export default class WorkerAPI {
 		stage: TransformStageName,
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
-	): Promise<CompileResult> {
-		const {ast, project, sourceText, astModifiedFromSource} = await this.worker.parse(
+	): Promise<WorkerCompileResult> {
+		// Check cache for this stage and options
+		const cacheEntry = await this.cache.getEntry(
+			ref,
+			compileCacheLoader,
+			[stage, options, parseOptions],
+		);
+		const cached = await cacheEntry.load();
+		if (cached !== undefined) {
+			// TODO check cacheDependencies
+			return {
+				integrity: await this.cache.getIntegrity(ref),
+				value: cached,
+				cached: true,
+			};
+		}
+
+		const {ast, integrity, project, sourceText, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -322,7 +406,7 @@ export default class WorkerAPI {
 			options,
 			parseOptions,
 		);
-		return this.interceptDiagnostics(
+		const res = await this.interceptDiagnostics(
 			await compile({
 				ref,
 				ast,
@@ -333,6 +417,15 @@ export default class WorkerAPI {
 			}),
 			{astModifiedFromSource},
 		);
+
+		// There's a race condition here between the file being opened and then rewritten
+		cacheEntry.update(res);
+
+		return {
+			integrity,
+			value: res,
+			cached: false,
+		};
 	}
 
 	public async parse(
@@ -385,8 +478,14 @@ export default class WorkerAPI {
 
 		const {customFormat} = handler;
 		if (customFormat !== undefined) {
+			const [integrity, stats] = await Promise.all([
+				this.cache.getIntegrity(ref),
+				this.cache.getFile(ref).then((file) => file.getStats()),
+			]);
+
 			return await customFormat({
-				mtime: await this.worker.getMtime(ref.real),
+				integrity,
+				mtimeNs: stats.mtimeNs,
 				file: ref,
 				project,
 				worker: this.worker,
@@ -394,7 +493,7 @@ export default class WorkerAPI {
 			});
 		}
 
-		const {ast, mtime, sourceText, astModifiedFromSource} = await this.worker.parse(
+		const {ast, mtimeNs, sourceText, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -409,7 +508,7 @@ export default class WorkerAPI {
 
 		return this.interceptDiagnostics(
 			{
-				mtime,
+				mtimeNs,
 				formatted: out.code,
 				sourceText,
 				suppressions: [],
@@ -420,6 +519,31 @@ export default class WorkerAPI {
 	}
 
 	public async lint(
+		ref: FileReference,
+		options: WorkerLintOptions,
+		parseOptions: WorkerParseOptions,
+	): Promise<WorkerLintResult> {
+		const optionsWithoutModuleSigs = {
+			...options,
+			// TODO return just mtimes or something
+			prefetchedModuleSignatures: undefined,
+		};
+		const cacheEntry = await this.cache.getEntry(
+			ref,
+			lintCacheLoader,
+			[optionsWithoutModuleSigs, parseOptions],
+		);
+		const cached = await cacheEntry.load();
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		const res = await this.uncachedLint(ref, options, parseOptions);
+		cacheEntry.update(res);
+		return res;
+	}
+
+	private async uncachedLint(
 		ref: FileReference,
 		options: WorkerLintOptions,
 		parseOptions: WorkerParseOptions,
@@ -476,7 +600,7 @@ export default class WorkerAPI {
 			sourceText,
 			diagnostics,
 			suppressions,
-			mtime,
+			mtimeNs,
 		}: ExtensionLintResult = res.value;
 
 		const formatted = normalizeFormattedLineEndings(
@@ -492,7 +616,7 @@ export default class WorkerAPI {
 			return {
 				save: {
 					type: "WRITE",
-					mtime,
+					mtimeNs,
 					content: formatted,
 				},
 				diagnostics,
@@ -536,7 +660,7 @@ export default class WorkerAPI {
 		options: WorkerLintOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<ExtensionLintResult> {
-		const {ast, mtime, sourceText, project, astModifiedFromSource} = await this.worker.parse(
+		const {ast, mtimeNs, sourceText, project, astModifiedFromSource} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -585,7 +709,7 @@ export default class WorkerAPI {
 				diagnostics,
 				sourceText,
 				formatted: res.src,
-				mtime,
+				mtimeNs,
 			},
 			{astModifiedFromSource},
 		);
