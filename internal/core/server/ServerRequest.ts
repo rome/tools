@@ -82,13 +82,10 @@ import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
-import {JSONObject} from "@internal/codec-config";
 import {VCSClient} from "@internal/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
-import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
-import crypto = require("crypto");
 import {GlobOptions, Globber} from "./fs/glob";
 
 type ServerRequestOptions = {
@@ -206,12 +203,6 @@ export class ServerRequestInvalid extends DiagnosticsError {
 	}
 
 	public showHelp: boolean;
-}
-
-function hash(val: JSONObject): string {
-	return val === undefined || Object.keys(val).length === 0
-		? "none"
-		: crypto.createHash("sha256").update(JSON.stringify(val)).digest("hex");
 }
 
 export class ServerRequestCancelled extends Error {
@@ -751,18 +742,6 @@ export default class ServerRequest {
 		};
 	}
 
-	private normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
-		const {projectManager} = this.server;
-
-		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
-		return {
-			...res,
-			cacheDependencies: res.cacheDependencies.map((filename) => {
-				return projectManager.getFileReference(createAbsoluteFilePath(filename)).uid;
-			}),
-		};
-	}
-
 	private startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
@@ -793,7 +772,7 @@ export default class ServerRequest {
 
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
-		const startMtime = server.memoryFs.maybeGetMtime(path);
+		const startMtime = server.memoryFs.maybeGetMtimeNs(path);
 		const start = Date.now();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getFileReference(path);
@@ -855,7 +834,7 @@ export default class ServerRequest {
 			lock.release();
 			clearInterval(interval);
 
-			const endMtime = this.server.memoryFs.maybeGetMtime(path);
+			const endMtime = this.server.memoryFs.maybeGetMtimeNs(path);
 			if (endMtime !== startMtime && !opts.noRetry) {
 				return this.wrapRequestDiagnostic(method, path, factory);
 			}
@@ -886,8 +865,14 @@ export default class ServerRequest {
 			"updateBuffer",
 			path,
 			async (bridge, ref) => {
-				await bridge.updateBuffer.call({ref, content});
-				this.server.memoryFs.addBuffer(path, content);
+				const mtimeNs = this.server.memoryFs.addBuffer(path, content);
+				await bridge.updateBuffer.call({
+					ref,
+					buffer: {
+						content,
+						mtimeNs,
+					},
+				});
 				await this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
@@ -963,15 +948,6 @@ export default class ServerRequest {
 	): Promise<WorkerLintResult> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-		const cacheEntry = await cache.get(path);
-
-		const cacheKey = hash(optionsWithoutModSigs);
-		const cached = cacheEntry.lint[cacheKey];
-		if (cached !== undefined) {
-			return cached;
-		}
-
 		const prefetchedModuleSignatures = await this.maybePrefetchModuleSignatures(
 			path,
 		);
@@ -981,25 +957,11 @@ export default class ServerRequest {
 			prefetchedModuleSignatures,
 		};
 
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"lint",
 			path,
 			(bridge, ref) => bridge.lint.call({ref, options, parseOptions: {}}),
 		);
-
-		await cache.update(
-			path,
-			(cacheEntry) =>
-				({
-					lint: {
-						...cacheEntry.lint,
-						[cacheKey]: res,
-					},
-				} as CacheEntry)
-			,
-		);
-
-		return res;
 	}
 
 	public async requestWorkerFormat(
@@ -1022,22 +984,10 @@ export default class ServerRequest {
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerCompileResult> {
+		const {projectManager} = this.server;
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		// Create a cache key comprised of the stage and hash of the options
-		const cacheKey = `${stage}:${hash(options)}`;
-
-		// Check cache for this stage and options
-		const cacheEntry = await cache.get(path);
-		const cached = cacheEntry.compile[cacheKey];
-		if (cached !== undefined) {
-			// TODO check cacheDependencies
-			return cached;
-		}
-
-		const compileRes = await this.wrapRequestDiagnostic(
+		const res = await this.wrapRequestDiagnostic(
 			"compile",
 			path,
 			(bridge, ref) => {
@@ -1050,28 +1000,18 @@ export default class ServerRequest {
 			},
 		);
 
-		const res = this.normalizeCompileResult({
-			...compileRes,
-			cached: false,
-		});
-
-		// There's a race condition here between the file being opened and then rewritten
-		await cache.update(
-			path,
-			(cacheEntry) =>
-				({
-					compile: {
-						...cacheEntry.compile,
-						[cacheKey]: {
-							...res,
-							cached: true,
-						},
-					},
-				} as CacheEntry)
-			,
-		);
-
-		return res;
+		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
+		return {
+			...res,
+			value: {
+				...res.value,
+				cacheDependencies: res.value.cacheDependencies.map((filename) => {
+					return projectManager.getFileReference(
+						createAbsoluteFilePath(filename),
+					).uid;
+				}),
+			},
+		};
 	}
 
 	public async requestWorkerAnalyzeDependencies(
@@ -1080,32 +1020,11 @@ export default class ServerRequest {
 	): Promise<WorkerAnalyzeDependencyResult> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		const cacheEntry = await cache.get(path);
-		if (cacheEntry.analyzeDependencies !== undefined) {
-			return cacheEntry.analyzeDependencies;
-		}
-
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"analyzeDependencies",
 			path,
 			(bridge, ref) => bridge.analyzeDependencies.call({ref, parseOptions}),
 		);
-		await cache.update(
-			path,
-			{
-				analyzeDependencies: {
-					...res,
-					cached: true,
-				},
-			},
-		);
-
-		return {
-			...res,
-			cached: false,
-		};
 	}
 
 	public async requestWorkerModuleSignature(
@@ -1114,25 +1033,11 @@ export default class ServerRequest {
 	): Promise<ModuleSignature> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		const cacheEntry = await cache.get(path);
-		if (cacheEntry.moduleSignature !== undefined) {
-			return cacheEntry.moduleSignature;
-		}
-
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"moduleSignature",
 			path,
 			(bridge, ref) => bridge.moduleSignatureJS.call({ref, parseOptions}),
 		);
-		await cache.update(
-			path,
-			{
-				moduleSignature: res,
-			},
-		);
-		return res;
 	}
 
 	private async maybePrefetchModuleSignatures(

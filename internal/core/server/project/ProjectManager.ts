@@ -345,6 +345,8 @@ export default class ProjectManager {
 		const project = this.assertProjectExisting(path);
 		const uid = this.getUid(path);
 		const pkg = this.server.memoryFs.getOwnedManifest(path);
+
+		// TODO should we cache this?
 		return {
 			uid,
 			project: project.id,
@@ -435,6 +437,7 @@ export default class ProjectManager {
 						{
 							id: evictProjectId,
 							directory: project.directory,
+							configHashes: [],
 							config: undefined,
 						},
 					],
@@ -708,6 +711,7 @@ export default class ProjectManager {
 		const projectsSerial: WorkerProjects = [];
 		for (const project of projects) {
 			projectsSerial.push({
+				configHashes: project.meta.configHashes,
 				config: project.config,
 				id: project.id,
 				directory: project.directory,

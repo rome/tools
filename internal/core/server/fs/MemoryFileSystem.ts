@@ -32,6 +32,7 @@ import {
 } from "@internal/path";
 import {
 	FSWatcher,
+	Stats,
 	exists,
 	lstat,
 	readDirectory,
@@ -115,9 +116,9 @@ type CrawlOptions = {
 
 export type StatsType = "unknown" | "directory" | "file";
 
-export type Stats = {
-	size: number;
-	mtime: number;
+export type SimpleStats = {
+	size: bigint;
+	mtimeNs: bigint;
 	type: StatsType;
 };
 
@@ -125,9 +126,24 @@ export type WatcherClose = VoidCallback;
 
 export type ChangedFileEventItem = {
 	path: AbsoluteFilePath;
-	oldStats: undefined | Stats;
-	newStats: Stats;
+	oldStats: undefined | SimpleStats;
+	newStats: SimpleStats;
 };
+
+function toSimpleStats(stats: Stats): SimpleStats {
+	let type: StatsType = "unknown";
+	if (stats.isDirectory()) {
+		type = "directory";
+	} else if (stats.isFile()) {
+		type = "file";
+	}
+
+	return {
+		type,
+		size: stats.size,
+		mtimeNs: stats.mtimeNs,
+	};
+}
 
 export default class MemoryFileSystem {
 	constructor(server: Server) {
@@ -166,8 +182,8 @@ export default class MemoryFileSystem {
 	private watcherCounter: number;
 	private server: Server;
 	private directoryListings: AbsoluteFilePathMap<AbsoluteFilePathMap<AbsoluteFilePath>>;
-	private directories: AbsoluteFilePathMap<Stats>;
-	private files: AbsoluteFilePathMap<Stats>;
+	private directories: AbsoluteFilePathMap<SimpleStats>;
+	private files: AbsoluteFilePathMap<SimpleStats>;
 	private manifests: AbsoluteFilePathMap<ManifestDefinition>;
 	private logger: ReporterNamespace;
 
@@ -179,7 +195,7 @@ export default class MemoryFileSystem {
 	private watchPromises: AbsoluteFilePathMap<Promise<WatcherClose>>;
 
 	// Used to maintain fake mtimes for file buffers
-	private buffers: AbsoluteFilePathMap<Stats>;
+	private buffers: AbsoluteFilePathMap<SimpleStats>;
 
 	isActiveWatcherId(id: undefined | number): boolean {
 		return id === undefined || this.activeWatcherIds.has(id);
@@ -194,10 +210,10 @@ export default class MemoryFileSystem {
 		const files = this.server.virtualModules.getStatMap();
 
 		for (const [path, {stats, content}] of files) {
-			if (stats.type === "directory") {
-				this.directories.set(path, stats);
+			if (stats.isDirectory()) {
+				this.directories.set(path, toSimpleStats(stats));
 			} else {
-				this.files.set(path, stats);
+				this.files.set(path, toSimpleStats(stats));
 				this.addFileToDirectoryListing(path);
 
 				if (isValidManifest(path)) {
@@ -216,15 +232,19 @@ export default class MemoryFileSystem {
 		return this.buffers.has(path);
 	}
 
-	public addBuffer(path: AbsoluteFilePath, content: string) {
+	public addBuffer(path: AbsoluteFilePath, content: string): bigint {
+		const mtime = BigInt(Date.now()) * 1000000n;
+
 		this.buffers.set(
 			path,
 			{
 				type: "file",
-				size: content.length,
-				mtime: Date.now(),
+				size: BigInt(content.length),
+				mtimeNs: mtime,
 			},
 		);
+
+		return mtime;
 	}
 
 	public clearBuffer(path: AbsoluteFilePath) {
@@ -399,6 +419,7 @@ export default class MemoryFileSystem {
 	public getPartialManifest(def: ManifestDefinition): WorkerPartialManifest {
 		return {
 			path: def.path,
+			hash: def.hash,
 			type: def.manifest.type,
 		};
 	}
@@ -552,46 +573,34 @@ export default class MemoryFileSystem {
 	}
 
 	// Query actual file system for stats
-	private async hardStat(path: AbsoluteFilePath): Promise<Stats> {
+	private async hardStat(path: AbsoluteFilePath): Promise<SimpleStats> {
 		const stats = await lstat(path);
-
-		let type: StatsType = "unknown";
-		if (stats.isDirectory()) {
-			type = "directory";
-		} else if (stats.isFile()) {
-			type = "file";
-		}
-
-		return {
-			type,
-			size: stats.size,
-			mtime: stats.mtimeMs,
-		};
+		return toSimpleStats(stats);
 	}
 
-	public maybeGetMtime(path: AbsoluteFilePath): undefined | number {
+	public maybeGetMtimeNs(path: AbsoluteFilePath): undefined | bigint {
 		const stats = this.buffers.get(path) || this.files.get(path);
 		if (stats === undefined) {
 			return undefined;
 		} else {
-			return stats.mtime;
+			return stats.mtimeNs;
 		}
 	}
 
-	public getMtime(path: AbsoluteFilePath): number {
-		const mtime = this.maybeGetMtime(path);
-		if (mtime === undefined) {
+	public getMtimeNs(path: AbsoluteFilePath): bigint {
+		const mtimeNs = this.maybeGetMtimeNs(path);
+		if (mtimeNs === undefined) {
 			throw new FileNotFound(path, "Not found in memory file system");
 		} else {
-			return mtime;
+			return mtimeNs;
 		}
 	}
 
-	public getFileStats(path: AbsoluteFilePath): undefined | Stats {
+	public getFileStats(path: AbsoluteFilePath): undefined | SimpleStats {
 		return this.files.get(path);
 	}
 
-	public getFileStatsAssert(path: AbsoluteFilePath): Stats {
+	public getFileStatsAssert(path: AbsoluteFilePath): SimpleStats {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
 			throw new FileNotFound(path, "Not found in memory file system");
@@ -736,14 +745,17 @@ export default class MemoryFileSystem {
 		return count;
 	}
 
-	private hasStatsChanged(path: AbsoluteFilePath, newStats: Stats): boolean {
+	private hasStatsChanged(
+		path: AbsoluteFilePath,
+		newStats: SimpleStats,
+	): boolean {
 		const oldStats = this.directories.get(path) || this.files.get(path);
-		return oldStats === undefined || newStats.mtime !== oldStats.mtime;
+		return oldStats === undefined || newStats.mtimeNs !== oldStats.mtimeNs;
 	}
 
 	private async addDirectory(
 		directoryPath: AbsoluteFilePath,
-		stats: Stats,
+		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
 		if (!this.hasStatsChanged(directoryPath, stats)) {
@@ -886,7 +898,7 @@ export default class MemoryFileSystem {
 
 	private async addFile(
 		path: AbsoluteFilePath,
-		stats: Stats,
+		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
 		if (!this.hasStatsChanged(path, stats)) {

@@ -326,7 +326,7 @@ export default class TestServer {
 			timeout = setTimeout(
 				() => {
 					// TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-					this.server.wrapFatalPromise(
+					this.server.fatalErrorHandler.wrapPromise(
 						worker.handleTimeout(`${String(timeoutMs)}ms`),
 					);
 				},

@@ -34,13 +34,13 @@ import _projectDump from "./commands/_projectDump";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {JSONPropertyValue} from "@internal/codec-config";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
+import {RSERValue} from "@internal/codec-binary-serial";
 
-export type ServerCommandReturn = undefined | Promise<JSONPropertyValue>;
+export type ServerCommandReturn = undefined | Promise<RSERValue>;
 
 export type ServerCommand<Flags extends UnknownObject> = SharedCommand<
 	ServerRequest,

@@ -298,6 +298,7 @@ export default class WebRequest {
 			WebBridge,
 			socket,
 			{
+				debugName: "web",
 				type: "client",
 			},
 		);

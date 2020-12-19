@@ -94,7 +94,7 @@ async function testLintExpect(
 
 	t.addToAdvice({
 		type: "inspect",
-		data: res,
+		data: (res as any),
 	});
 
 	const processor = new DiagnosticsProcessor();

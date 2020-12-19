@@ -24,6 +24,7 @@ test(
 		const res = await lint({
 			applySafeFixes: true,
 			project: {
+				configHashes: [],
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},

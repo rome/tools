@@ -28,7 +28,7 @@ type StatusWorkerResult = {
 	heapTotal: number;
 	pid: number;
 	uptime: number;
-	ownedBytes: number;
+	ownedBytes: bigint;
 	ownedFileCount: number;
 };
 

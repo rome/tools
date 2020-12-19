@@ -47,6 +47,7 @@ export default class TestServerWorker {
 			TestWorkerBridge,
 			this.thread,
 			{
+				debugName: "test worker",
 				type: "client",
 			},
 		);
@@ -102,7 +103,9 @@ export default class TestServerWorker {
 		bridge.monitorHeartbeat(
 			5_000,
 			async () => {
-				this.server.wrapFatalPromise(this.handleTimeout("10 seconds"));
+				this.server.fatalErrorHandler.wrapPromise(
+					this.handleTimeout("10 seconds"),
+				);
 			},
 		);
 
@@ -142,6 +145,7 @@ export default class TestServerWorker {
 					resolve(
 						this.bridge.end(
 							`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+							false,
 						),
 					);
 				},
@@ -154,8 +158,9 @@ export default class TestServerWorker {
 			}).catch((err) => {
 				clearTimeout(timeout);
 				if (err instanceof InspectorClientCloseError) {
-					return this.bridge.end(
+					this.bridge.end(
 						`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
+						false,
 					);
 				} else {
 					reject(err);
@@ -167,8 +172,9 @@ export default class TestServerWorker {
 	private async _handleTimeout(duration: string): Promise<void> {
 		const {inspector, bridge} = this;
 		if (inspector === undefined) {
-			bridge.end(
+			await bridge.end(
 				`Test worker was unresponsive for ${duration}. There was no inspector connected so we were unable to capture stack frames before it was terminated.`,
+				false,
 			);
 			return undefined;
 		}
@@ -212,7 +218,7 @@ export default class TestServerWorker {
 			});
 		}
 
-		bridge.endWithError(
+		await bridge.endWithError(
 			new BridgeDiagnosticsError(
 				deriveDiagnosticFromErrorStructure(
 					{
@@ -299,7 +305,7 @@ export default class TestServerWorker {
 						this.transferredCompiled.add(path);
 						const compiled = bundle.bundler.compiles.get(path);
 						if (compiled !== undefined) {
-							pending.set(path, compiled.compiledCode);
+							pending.set(path, compiled.value.compiledCode);
 						}
 					}
 				}

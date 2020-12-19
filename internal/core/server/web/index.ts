@@ -74,7 +74,7 @@ export class WebServer {
 				serverRequest: this.serverRequest,
 				webServer: this,
 			});
-			server.wrapFatalPromise(webRequest.dispatch());
+			server.fatalErrorHandler.wrapPromise(webRequest.dispatch());
 		});
 
 		server.clientStartEvent.subscribe((client) => {

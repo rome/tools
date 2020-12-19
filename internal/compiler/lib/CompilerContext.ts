@@ -20,6 +20,7 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
+	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticOrigin,
@@ -96,6 +97,7 @@ export default class CompilerContext {
 			frozen = false,
 			options = {},
 			project = {
+				configHashes: [],
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},
@@ -110,7 +112,7 @@ export default class CompilerContext {
 		this.displayFilename =
 			ref === undefined ? ast.filename : ref.relative.join();
 		this.frozen = frozen;
-		this.mtime = ast.mtime;
+		this.integrity = ast.integrity;
 		this.project = project;
 		this.options = options;
 		this.origin = origin;
@@ -135,7 +137,7 @@ export default class CompilerContext {
 	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
 	public displayFilename: string;
 	public filename: string;
-	private mtime: undefined | number;
+	private integrity: undefined | DiagnosticIntegrity;
 	public path: UnknownPath;
 	public project: TransformProjectDefinition;
 	public language: DiagnosticLanguage;
@@ -363,7 +365,7 @@ export default class CompilerContext {
 			},
 			location: {
 				marker,
-				mtime: this.mtime,
+				integrity: this.integrity,
 				filename: this.filename,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,

@@ -13,7 +13,6 @@ import {getPrefixedBundleNamespace} from "@internal/compiler";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
-import WorkerQueue from "../WorkerQueue";
 import {markup} from "@internal/markup";
 import DependencyGraph from "../dependencies/DependencyGraph";
 import {Server, ServerRequest} from "@internal/core";
@@ -120,30 +119,27 @@ export default class BundleRequest {
 		});
 		compilingSpinner.setTotal(paths.length);
 
-		const queue: WorkerQueue<void> = new WorkerQueue(
-			server,
-			{
-				callback: async ({path}) => {
-					const progressId = compilingSpinner.pushText(markup`${path}`);
+		const queue = server.createWorkerQueue({
+			callback: async ({path}) => {
+				const progressId = compilingSpinner.pushText(markup`${path}`);
 
-					const res = await this.bundler.compileJS(path);
+				const res = await this.bundler.compileJS(path);
 
-					if (res.asset !== undefined) {
-						this.assets.set(res.asset.path, res.asset.buffer);
-					}
+				if (res.asset !== undefined) {
+					this.assets.set(res.asset.path, res.asset.buffer);
+				}
 
-					if (!res.cached) {
-						this.cached = false;
-					}
+				if (!res.cached) {
+					this.cached = false;
+				}
 
-					this.diagnostics.addSuppressions(res.suppressions);
-					this.diagnostics.addDiagnostics(res.diagnostics);
+				this.diagnostics.addSuppressions(res.value.suppressions);
+				this.diagnostics.addDiagnostics(res.value.diagnostics);
 
-					compilingSpinner.popText(progressId);
-					compilingSpinner.tick();
-				},
+				compilingSpinner.popText(progressId);
+				compilingSpinner.tick();
 			},
-		);
+		});
 
 		for (const path of paths) {
 			await queue.pushPath(path);
@@ -271,7 +267,7 @@ export default class BundleRequest {
 				declareCJS(this.graph.getNode(path));
 			}
 
-			const compileResult = this.bundler.compiles.assert(path);
+			const compileResult = this.bundler.compiles.assert(path).value;
 
 			push(`  // ${uid}`);
 

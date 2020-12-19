@@ -11,6 +11,14 @@ import {AbsoluteFilePath} from "@internal/path";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {Queue, QueueOptions} from "@internal/async";
 
+export type WorkerQueueOptions<M> = QueueOptions<
+	{
+		path: AbsoluteFilePath;
+		item: M;
+	},
+	WorkerContainer
+>;
+
 export default class WorkerQueue<M>
 	extends Queue<
 		{
@@ -19,16 +27,7 @@ export default class WorkerQueue<M>
 		},
 		WorkerContainer
 	> {
-	constructor(
-		server: Server,
-		opts: QueueOptions<
-			{
-				path: AbsoluteFilePath;
-				item: M;
-			},
-			WorkerContainer
-		>,
-	) {
+	constructor(server: Server, opts: WorkerQueueOptions<M>) {
 		super(opts);
 		this.server = server;
 	}

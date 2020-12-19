@@ -11,10 +11,11 @@ import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;
+	debugName: string;
 	onSendMessage?: (msg: BridgeMessage) => void;
 };
 
-export type BridgeType = "server" | "client" | "server&client";
+export type BridgeType = "server" | "client";
 
 export type BridgeOptions = BridgeCreatorOptions & {
 	sendMessage: (msg: BridgeMessage) => void;
@@ -40,13 +41,12 @@ export type BridgeHeartbeatExceededOptions = {
 
 export type BridgeHandshakeMessage = {
 	type: "handshake";
-	first: boolean;
-	subscriptions: string[];
+	subscriptions: Set<string>;
 };
 
 export type BridgeSubscriptionsMessage = {
 	type: "subscriptions";
-	names: string[];
+	names: Set<string>;
 };
 
 export type BridgeRequestMessage = {

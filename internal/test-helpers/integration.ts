@@ -156,7 +156,12 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		userConfig: DEFAULT_USER_CONFIG,
 
 		// This wont actually be used, it's just for setting up subscriptions
-		bridge: createBridgeFromLocal(WorkerBridge, {}),
+		bridge: createBridgeFromLocal(
+			WorkerBridge,
+			{
+				debugName: "mock worker",
+			},
+		).client,
 	});
 
 	let projectIdCounter = 0;
@@ -192,7 +197,13 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		};
 
 		if (sourceText !== undefined) {
-			worker.updateBuffer(ref, sourceText);
+			worker.updateBuffer(
+				ref,
+				{
+					mtimeNs: BigInt(Date.now()) * 1000000n,
+					content: sourceText,
+				},
+			);
 		}
 
 		try {
@@ -217,6 +228,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 			{
 				config,
 				id,
+				configHashes: [],
 				directory: createAbsoluteFilePath(`/project-${id}`),
 			},
 		]);
@@ -462,7 +474,7 @@ export function createIntegrationTest(
 									{
 										type: "WRITE",
 										content,
-										mtime: server.memoryFs.maybeGetMtime(absolute),
+										mtimeNs: server.memoryFs.maybeGetMtimeNs(absolute),
 									},
 								],
 							]),

@@ -19,6 +19,7 @@ async function testAnalyzeDeps(input: string, sourceType: ConstJSSourceType) {
 		ast: parseJS({input, sourceType, path: createUnknownPath("unknown")}),
 		sourceText: input,
 		project: {
+			configHashes: [],
 			directory: undefined,
 			config: createDefaultProjectConfig(),
 		},

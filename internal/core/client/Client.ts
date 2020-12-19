@@ -539,7 +539,7 @@ export default class Client {
 		const status = this.bridgeStatus;
 		if (status?.bridge.alive) {
 			try {
-				await status.bridge.endServer.call();
+				await status.bridge.endServer.callOptional();
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
@@ -640,11 +640,20 @@ export default class Client {
 		});
 		await server.init();
 
-		const bridge = createBridgeFromLocal(ServerBridge, {});
-		const status: BridgeStatusLocal = {bridge, server, dedicated: false};
+		const bridges = createBridgeFromLocal(
+			ServerBridge,
+			{
+				debugName: "server",
+			},
+		);
+		const status: BridgeStatusLocal = {
+			bridge: bridges.client,
+			server,
+			dedicated: false,
+		};
 
 		const [serverClient] = await Promise.all([
-			server.attachToBridge(bridge),
+			server.attachToBridge(bridges.server),
 			this.attachBridge(status),
 		]);
 
@@ -652,7 +661,7 @@ export default class Client {
 			await server.end();
 		});
 
-		return {serverClient, bridge, server};
+		return {serverClient, bridge: bridges.client, server};
 	}
 
 	public async forceStartDaemon(): Promise<ServerBridge> {
@@ -797,6 +806,7 @@ export default class Client {
 			socket,
 			{
 				type: "server",
+				debugName: "server",
 			},
 		);
 		await this.attachBridge({socket, bridge, dedicated: true});

@@ -41,7 +41,7 @@ export default createServerCommand({
 			res = await req.requestWorkerCompile(resolved, "compile", {}, {});
 		}
 
-		const {compiledCode, diagnostics, suppressions}: WorkerCompileResult = res;
+		const {compiledCode, diagnostics, suppressions} = res.value;
 
 		if (diagnostics.length > 0) {
 			throw new DiagnosticsError(

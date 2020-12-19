@@ -965,7 +965,7 @@ function _parse(
 			return {
 				language: "json",
 				...loc,
-				mtime: parser.mtime,
+				integrity: parser.integrity,
 				sourceText: undefined,
 			};
 		},

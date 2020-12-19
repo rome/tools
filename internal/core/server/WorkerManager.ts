@@ -6,7 +6,7 @@
  */
 
 import {ProjectDefinition} from "@internal/project";
-import {Stats} from "./fs/MemoryFileSystem";
+import {SimpleStats} from "./fs/MemoryFileSystem";
 import {forkThread} from "../common/utils/fork";
 import {
 	LAG_INTERVAL,
@@ -20,7 +20,7 @@ import {
 	createBridgeFromLocal,
 	createBridgeFromWorkerThread,
 } from "@internal/events";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import {ReporterNamespace} from "@internal/cli-reporter";
@@ -30,7 +30,7 @@ import {ExtendedMap} from "@internal/collections";
 export type WorkerContainer = {
 	id: number;
 	fileCount: number;
-	byteCount: number;
+	byteCount: bigint;
 	bridge: WorkerBridge;
 	thread: undefined | workerThreads.Worker;
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
@@ -102,7 +102,7 @@ export default class WorkerManager {
 				this.workers.values(),
 				async ({thread, bridge}) => {
 					if (thread !== undefined) {
-						bridge.end();
+						await bridge.end();
 						await thread.terminate();
 					}
 				},
@@ -134,9 +134,10 @@ export default class WorkerManager {
 
 	public async init(): Promise<void> {
 		// Create the worker
-		const bridge = createBridgeFromLocal(
+		const bridges = createBridgeFromLocal(
 			WorkerBridge,
 			{
+				debugName: "worker inside server",
 				onSendMessage: (msg) => {
 					this.logger.info(
 						markup`Sending local worker request: ${prettyFormat(msg)}`,
@@ -147,7 +148,7 @@ export default class WorkerManager {
 		const worker = new Worker({
 			id: 0,
 			userConfig: this.server.userConfig,
-			bridge,
+			bridge: bridges.client,
 			dedicated: false,
 		});
 
@@ -161,18 +162,21 @@ export default class WorkerManager {
 		const container: WorkerContainer = {
 			id: 0,
 			fileCount: 0,
-			byteCount: 0,
+			byteCount: 0n,
 			thread: undefined,
-			bridge,
+			bridge: bridges.server,
 			ghost: false,
 			ready: false,
 		};
 		this.workers.set(0, container);
 		await worker.init();
 
-		await Promise.all([this.workerHandshake(container), bridge.handshake()]);
+		await Promise.all([
+			this.workerHandshake(container),
+			bridges.client.handshake(),
+		]);
 
-		this.workerStartEvent.send(bridge);
+		this.workerStartEvent.send(bridges.server);
 	}
 
 	private async replaceOwnWorker() {
@@ -193,20 +197,17 @@ export default class WorkerManager {
 			// Transfer buffers to the new worker
 			const buffers = await serverWorker.bridge.getFileBuffers.call();
 
-			for (const {filename, content} of buffers) {
+			for (const [path, buffer] of buffers) {
 				await newWorker.bridge.updateBuffer.call({
-					ref: this.server.projectManager.getFileReference(
-						createAbsoluteFilePath(filename),
-					),
-					content,
+					ref: this.server.projectManager.getFileReference(path),
+					buffer,
 				});
 			}
 
 			// End the old worker, will automatically cleanup
-			serverWorker.bridge.end();
+			await serverWorker.bridge.end();
 
 			// Swap the workers
-
 			// We perform this as a single atomic operation rather than doing it in spawnWorker so we have predictable worker retrieval
 			this.workers.set(
 				0,
@@ -272,7 +273,8 @@ export default class WorkerManager {
 			WorkerBridge,
 			thread,
 			{
-				type: "client",
+				debugName: "worker",
+				type: "server",
 				onSendMessage: (data) => {
 					this.logger.info(
 						markup`Sending dedicated worker request to ${String(workerId)}: ${prettyFormat(
@@ -284,7 +286,10 @@ export default class WorkerManager {
 		);
 
 		bridge.fatalError.subscribe((details) => {
-			this.server.onFatalError(bridge.hydrateError(details), fatalErrorSource);
+			this.server.fatalErrorHandler.handle(
+				bridge.hydrateError(details),
+				fatalErrorSource,
+			);
 		});
 
 		bridge.monitorHeartbeat(
@@ -302,7 +307,7 @@ export default class WorkerManager {
 				);
 
 				if (iterations > 5) {
-					this.server.onFatalError(
+					this.server.fatalErrorHandler.handle(
 						new Error(
 							`Did not respond for ${totalTime}ms and was checked ${iterations} times`,
 						),
@@ -315,7 +320,7 @@ export default class WorkerManager {
 		const worker: WorkerContainer = {
 			id: workerId,
 			fileCount: 0,
-			byteCount: 0,
+			byteCount: 0n,
 			thread,
 			bridge,
 			ghost: isGhost,
@@ -329,18 +334,8 @@ export default class WorkerManager {
 				// The process could not be spawned, or
 				// The process could not be killed, or
 				// Sending a message to the child process failed.
-				this.server.onFatalError(err, fatalErrorSource);
+				this.server.fatalErrorHandler.handle(err, fatalErrorSource);
 				thread.terminate();
-			},
-		);
-
-		process.once(
-			"exit",
-			() => {
-				this.server.onFatalError(
-					new Error("Process unexpectedly exit"),
-					fatalErrorSource,
-				);
 			},
 		);
 
@@ -363,13 +358,13 @@ export default class WorkerManager {
 		return worker;
 	}
 
-	public own(workerId: number, stats: Stats) {
+	public own(workerId: number, stats: SimpleStats) {
 		const worker = this.getWorkerAssert(workerId);
 		worker.byteCount += stats.size;
 		worker.fileCount++;
 	}
 
-	public disown(workerId: number, stats: Stats) {
+	public disown(workerId: number, stats: SimpleStats) {
 		const worker = this.getWorkerAssert(workerId);
 		worker.byteCount -= stats.size;
 		worker.fileCount--;

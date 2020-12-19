@@ -13,7 +13,7 @@ import inspector = require("inspector");
 import {AbsoluteFilePathMap} from "@internal/path";
 import {serializeAssembled} from "../server/bundler/utils";
 import {AssembledBundle} from "../common/types/bundler";
-import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export type TestWorkerFlags = {
 	inspectorPort: number;
@@ -49,24 +49,29 @@ export default class TestWorker {
 		const bridge = createBridgeFromWorkerThreadParentPort(
 			TestWorkerBridge,
 			{
+				debugName: "test worker",
 				type: "server",
 			},
 		);
 
-		setupGlobalErrorHandlers((err) => {
-			bridge.testDiagnostic.send({
-				testPath: undefined,
-				origin: undefined,
-				diagnostic: deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: "tests/unhandledRejection",
+		const errorHandler = new FatalErrorHandler({
+			getOptions: (err) => {
+				bridge.testDiagnostic.send({
+					testPath: undefined,
+					origin: undefined,
+					diagnostic: deriveDiagnosticFromError(
+						err,
+						{
+							description: {
+								category: "tests/unhandledRejection",
+							},
 						},
-					},
-				),
-			});
+					),
+				});
+				return false;
+			},
 		});
+		errorHandler.setupGlobalHandlers();
 
 		bridge.inspectorDetails.subscribe(() => {
 			return {

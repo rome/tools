@@ -136,7 +136,7 @@ export default class Bundler {
 				if (compiled === undefined) {
 					return undefined;
 				} else {
-					return compiled.compiledCode;
+					return compiled.value.compiledCode;
 				}
 			},
 		);
