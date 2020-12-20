@@ -44,6 +44,7 @@ JSRoot {
 			}
 			expression: JSOptionalCallExpression {
 				arguments: Array []
+				optional: true
 				loc: Object {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
@@ -85,6 +86,7 @@ JSRoot {
 				}
 			}
 			expression: JSOptionalCallExpression {
+				optional: true
 				loc: Object {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
@@ -159,6 +161,7 @@ JSRoot {
 			}
 			expression: JSOptionalCallExpression {
 				arguments: Array []
+				optional: true
 				loc: Object {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
@@ -243,6 +246,7 @@ JSRoot {
 				}
 			}
 			expression: JSOptionalCallExpression {
+				optional: true
 				loc: Object {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {
@@ -360,6 +364,7 @@ JSRoot {
 			}
 			expression: JSOptionalCallExpression {
 				arguments: Array []
+				optional: true
 				loc: Object {
 					filename: "es2020/optional-chaining/function-call/input.js"
 					end: Object {

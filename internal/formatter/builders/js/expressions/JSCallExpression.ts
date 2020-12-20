@@ -36,7 +36,7 @@ export default function JSCallExpression(
 ): Token {
 	const tokens: Token[] = [builder.tokenize(node.callee, node)];
 
-	if (node.type === "JSOptionalCallExpression") {
+	if (node.type === "JSOptionalCallExpression" && node.optional) {
 		tokens.push("?.");
 	}
 

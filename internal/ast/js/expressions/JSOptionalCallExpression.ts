@@ -17,6 +17,7 @@ import {createBuilder} from "../../utils";
 export interface JSOptionalCallExpression extends NodeBaseWithComments {
 	readonly type: "JSOptionalCallExpression";
 	readonly callee: AnyJSExpression | JSSuper;
+	readonly optional?: boolean;
 	readonly arguments: Array<AnyJSExpression | JSSpreadElement>;
 	readonly typeArguments?: TSTypeParameterInstantiation;
 }

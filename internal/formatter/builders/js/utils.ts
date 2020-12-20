@@ -215,6 +215,10 @@ export function printPatternMeta(
 			tokens.push("?");
 		}
 
+		if (meta.definite) {
+			tokens.push("!");
+		}
+
 		if (meta.typeAnnotation) {
 			tokens.push(":", space, builder.tokenize(meta.typeAnnotation, node));
 		}
