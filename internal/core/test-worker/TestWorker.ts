@@ -49,7 +49,6 @@ export default class TestWorker {
 		const bridge = createBridgeFromWorkerThreadParentPort(
 			TestWorkerBridge,
 			{
-				debugName: "test worker",
 				type: "client",
 			},
 		);

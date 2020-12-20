@@ -137,7 +137,6 @@ export default class WorkerManager {
 		const bridges = createBridgeFromLocal(
 			WorkerBridge,
 			{
-				debugName: "worker inside server",
 				onSendMessage: (msg) => {
 					this.logger.info(
 						markup`Sending local worker request: ${prettyFormat(msg)}`,
@@ -273,7 +272,6 @@ export default class WorkerManager {
 			WorkerBridge,
 			thread,
 			{
-				debugName: "worker",
 				type: "server",
 				onSendMessage: (data) => {
 					this.logger.info(

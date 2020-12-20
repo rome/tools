@@ -150,6 +150,8 @@ export type WorkerUpdateInlineSnapshotResult = {
 };
 
 export default class WorkerBridge extends Bridge {
+	protected debugName = "worker";
+
 	public log = this.createEvent<string, void>({
 		name: "log",
 		direction: "server<-client",

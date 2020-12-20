@@ -11,7 +11,6 @@ import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;
-	debugName: string;
 	onSendMessage?: (msg: BridgeMessage) => void;
 };
 

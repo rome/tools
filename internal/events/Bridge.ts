@@ -45,7 +45,7 @@ export default class Bridge {
 		this.alive = true;
 		this.hasHandshook = false;
 		this.endError = undefined;
-		this.debugName = opts.debugName;
+		this.debugName = "unknown";
 		this.type = opts.type;
 		this.opts = opts;
 
@@ -108,7 +108,7 @@ export default class Bridge {
 	public endEvent: Event<Error, void>;
 	public alive: boolean;
 	private endError: undefined | Error;
-	public debugName: string;
+	protected debugName: string;
 	public type: BridgeType;
 
 	private messageIdCounter: number;

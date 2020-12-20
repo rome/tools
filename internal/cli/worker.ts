@@ -17,7 +17,6 @@ export default async function worker() {
 		WorkerBridge,
 		{
 			type: "client",
-			debugName: "worker",
 		},
 	);
 

@@ -158,9 +158,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		// This wont actually be used, it's just for setting up subscriptions
 		bridge: createBridgeFromLocal(
 			WorkerBridge,
-			{
-				debugName: "mock worker",
-			},
+			{},
 		).client,
 	});
 

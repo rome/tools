@@ -39,7 +39,6 @@ export default class TestServerWorker {
 			TestWorkerBridge,
 			this.thread,
 			{
-				debugName: "test worker",
 				type: "server",
 			},
 		);

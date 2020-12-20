@@ -643,7 +643,6 @@ export default class Client {
 		const bridges = createBridgeFromLocal(
 			ServerBridge,
 			{
-				debugName: "server",
 			},
 		);
 		const status: BridgeStatusLocal = {
@@ -806,7 +805,6 @@ export default class Client {
 			socket,
 			{
 				type: "server",
-				debugName: "server",
 			},
 		);
 		await this.attachBridge({socket, bridge, dedicated: true});

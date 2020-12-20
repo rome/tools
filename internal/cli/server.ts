@@ -35,7 +35,6 @@ export default async function server() {
 			ServerBridge,
 			socket,
 			{
-				debugName: "server",
 				type: "client",
 			},
 		);

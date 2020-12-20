@@ -92,6 +92,8 @@ export type ServerBridgeInfo = {
 };
 
 export default class ServerBridge extends Bridge {
+	protected debugName = "server";
+	
 	public getClientInfo = this.createEvent<void, ServerBridgeInfo>({
 		name: "getClientInfo",
 		direction: "server->client",

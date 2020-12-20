@@ -41,6 +41,8 @@ export type TestWorkerRunTestOptions = {
 };
 
 export default class TestWorkerBridge extends Bridge {
+	public debugName = "test worker";
+
 	public inspectorDetails = this.createEvent<
 		void,
 		{
