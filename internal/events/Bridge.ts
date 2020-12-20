@@ -481,13 +481,13 @@ export default class Bridge {
 		}
 	}
 
-	public handleMessage(msg: BridgeMessage) {
+	public async handleMessage(msg: BridgeMessage) {
 		try {
 			this.assertAlive();
 
 			if (msg.type === "handshake") {
 				this.receivedSubscriptions(msg.subscriptions);
-				this.handshakeEvent.call();
+				await this.handshakeEvent.call();
 			}
 
 			if (msg.type === "subscriptions") {
@@ -495,7 +495,7 @@ export default class Bridge {
 			}
 
 			if (msg.type === "request") {
-				this.handleMessageRequest(msg);
+				await this.handleMessageRequest(msg);
 			}
 
 			if (msg.type === "response") {
@@ -521,7 +521,7 @@ export default class Bridge {
 		eventHandler.dispatchResponse(id, data);
 	}
 
-	private handleMessageRequest(data: BridgeRequestMessage) {
+	private async handleMessageRequest(data: BridgeRequestMessage) {
 		const {id, event, param, priority} = data;
 		if (event === undefined) {
 			throw new Error("Expected event in message request but received none");
@@ -530,7 +530,7 @@ export default class Bridge {
 		const eventHandler = this.events.assert(event);
 
 		if (id === undefined) {
-			eventHandler.dispatchRequest(param).catch((err) => {
+			await eventHandler.dispatchRequest(param).catch((err) => {
 				this.endWithError(err);
 			});
 		} else {
@@ -538,7 +538,7 @@ export default class Bridge {
 				this.prioritizedResponses.add(id);
 			}
 
-			eventHandler.dispatchRequest(param).then(
+			await eventHandler.dispatchRequest(param).then(
 				(value) => {
 					this.sendMessage({
 						event,
@@ -551,7 +551,7 @@ export default class Bridge {
 				(err) => {
 					this.sendMessage(this.buildErrorResponse(id, event, err));
 				},
-			).catch((err) => this.endWithError(err));
+			);
 		}
 	}
 }

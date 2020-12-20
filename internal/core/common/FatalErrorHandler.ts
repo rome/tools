@@ -6,6 +6,7 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
+import workerThreads = require("worker_threads");
 
 type FatalErrorHandlerOptions = {
 	getOptions: (
@@ -31,6 +32,8 @@ export default class FatalErrorHandler {
 	public wrapBound: WrapperFactory;
 
 	public handle(err: Error, overrideSource?: StaticMarkup) {
+		console.trace("async handle", err);
+
 		// Swallow promise. Should never throw an error.
 		this.handleAsync(err, overrideSource).then();
 	}
@@ -124,7 +127,15 @@ export default class FatalErrorHandler {
 			console.error(logErr.stack);
 		} finally {
 			if (exit) {
-				process.exit(1);
+				if (workerThreads.isMainThread) {
+					process.exit(1);
+				} else {
+					// Get around an annoying bug(?) in worker_threads where the output streams wont be flushed if
+					// we immediately exit
+					setTimeout(() => {
+						process.exit(1);
+					}, 0);
+				}
 			}
 		}
 	}

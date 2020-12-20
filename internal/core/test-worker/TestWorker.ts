@@ -50,7 +50,7 @@ export default class TestWorker {
 			TestWorkerBridge,
 			{
 				debugName: "test worker",
-				type: "server",
+				type: "client",
 			},
 		);
 

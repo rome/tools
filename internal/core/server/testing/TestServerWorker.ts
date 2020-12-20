@@ -33,22 +33,14 @@ export default class TestServerWorker {
 		this.runner = runner;
 		this.request = request;
 
-		this.thread = forkThread(
-			"test-worker",
-			{
-				workerData: flags,
-				stdin: true,
-				stdout: true,
-				stderr: true,
-			},
-		);
+		this.thread = this.createThread(flags);
 
 		this.bridge = createBridgeFromWorkerThread(
 			TestWorkerBridge,
 			this.thread,
 			{
 				debugName: "test worker",
-				type: "client",
+				type: "server",
 			},
 		);
 
@@ -70,8 +62,17 @@ export default class TestServerWorker {
 	public thread: workerThreads.Worker;
 	public inspector: undefined | InspectorClient;
 
-	public async init() {
-		const {thread, bridge, runner} = this;
+	private createThread(flags: TestWorkerFlags): workerThreads.Worker {
+		const thread = forkThread(
+			"test-worker",
+			{
+				workerData: flags,
+				stdin: true,
+				stdout: true,
+				stderr: true,
+			},
+		);
+
 		const {stdout, stderr} = thread;
 
 		stdout.on(
@@ -97,6 +98,12 @@ export default class TestServerWorker {
 				process.stderr.write(chunk);
 			},
 		);
+
+		return thread;
+	}
+
+	public async init() {
+		const {bridge, runner} = this;
 
 		await bridge.handshake();
 

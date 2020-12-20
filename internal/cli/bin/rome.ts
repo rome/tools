@@ -16,6 +16,7 @@ import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import {readFileTextSync} from "@internal/fs";
 import FatalErrorHandler from "@internal/core/common/FatalErrorHandler";
+import workerThreads = require("worker_threads");
 
 async function main(): Promise<void> {
 	switch (

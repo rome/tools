@@ -199,8 +199,8 @@ export async function createFixtureTests(
 					type: "list",
 					list: Array.from(
 						fixture.files,
-						([basename, info]) =>
-							`<filelink target="${info.absolute}">${basename}</filelink>`
+						([basename]) =>
+							`${basename}`
 						,
 					),
 				});
