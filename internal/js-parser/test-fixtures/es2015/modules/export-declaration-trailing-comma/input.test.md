@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/modules/export-declaration-trailing-comma/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

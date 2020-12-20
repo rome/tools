@@ -13,7 +13,7 @@ CommitRoot {
 	custom: true
 	diagnostics: Array []
 	filename: "breaking/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with a breaking change indicator"
 	scope: ""
 	loc: Object {

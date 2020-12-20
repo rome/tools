@@ -35,9 +35,9 @@ Object {
 			origins: Array [Object {category: "analyzeDependencies"}]
 			location: Object {
 				filename: "unknown"
+				integrity: undefined
 				language: "js"
 				marker: undefined
-				mtime: undefined
 				sourceTypeJS: "module"
 				end: Object {
 					column: 19
@@ -273,7 +273,7 @@ Object {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "unknown"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 25

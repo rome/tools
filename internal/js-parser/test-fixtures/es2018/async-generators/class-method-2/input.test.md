@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2018/async-generators/class-method-2/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

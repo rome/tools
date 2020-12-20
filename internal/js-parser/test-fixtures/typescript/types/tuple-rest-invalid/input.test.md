@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/types/tuple-rest-invalid/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "typescript/types/tuple-rest-invalid/input.ts"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 19

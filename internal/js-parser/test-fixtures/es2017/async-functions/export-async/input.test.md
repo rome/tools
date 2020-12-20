@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2017/async-functions/export-async/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "es2017/async-functions/export-async/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 13

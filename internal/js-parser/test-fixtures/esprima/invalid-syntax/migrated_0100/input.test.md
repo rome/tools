@@ -12,8 +12,8 @@ JSRoot {
 	corrupt: false
 	filename: "esprima/invalid-syntax/migrated_0100/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -58,7 +58,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0100/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 19

@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -41,7 +41,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 18

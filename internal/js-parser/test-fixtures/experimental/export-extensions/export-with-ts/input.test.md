@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/export-extensions/export-with-ts/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 15

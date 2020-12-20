@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -43,7 +43,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "es2015/modules/import-invalid-keyword-typeof/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 15

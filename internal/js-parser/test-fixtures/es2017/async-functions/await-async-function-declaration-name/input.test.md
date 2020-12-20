@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/regression/issue-11387/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
@@ -43,7 +43,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "jsx/regression/issue-11387/input.jsx"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 63

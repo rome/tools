@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/invalid-syntax/migrated_0069/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -50,7 +50,7 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0069/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 0

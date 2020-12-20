@@ -13,7 +13,7 @@ CommitRoot {
 	custom: true
 	diagnostics: Array []
 	filename: "custom/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with a custom commit type"
 	scope: ""
 	loc: Object {

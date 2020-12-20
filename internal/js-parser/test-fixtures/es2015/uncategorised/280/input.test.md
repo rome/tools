@@ -12,8 +12,8 @@ JSRoot {
 	corrupt: false
 	filename: "es2015/uncategorised/280/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -48,7 +48,7 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "es2015/uncategorised/280/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 31

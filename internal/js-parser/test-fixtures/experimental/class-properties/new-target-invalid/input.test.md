@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-properties/new-target-invalid/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "experimental/class-properties/new-target-invalid/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 18

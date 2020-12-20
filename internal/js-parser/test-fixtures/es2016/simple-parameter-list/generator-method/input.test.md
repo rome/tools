@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2016/simple-parameter-list/generator-method/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "es2016/simple-parameter-list/generator-method/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 17

@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "comments/basic/object-property-trailing-comma/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

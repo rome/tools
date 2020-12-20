@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/declaration-function/migrated_0010/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

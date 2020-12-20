@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/top-level-await/for-await-script/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -43,7 +43,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "experimental/top-level-await/for-await-script/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 9

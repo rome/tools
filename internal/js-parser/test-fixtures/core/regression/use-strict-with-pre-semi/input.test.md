@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/regression/use-strict-with-pre-semi/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

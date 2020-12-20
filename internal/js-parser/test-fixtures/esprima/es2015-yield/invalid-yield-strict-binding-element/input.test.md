@@ -12,8 +12,8 @@ JSRoot {
 	corrupt: false
 	filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -58,7 +58,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "esprima/es2015-yield/invalid-yield-strict-binding-element/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 28

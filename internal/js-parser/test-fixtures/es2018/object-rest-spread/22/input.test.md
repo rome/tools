@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2018/object-rest-spread/22/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -43,7 +43,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "es2018/object-rest-spread/22/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 11

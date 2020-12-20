@@ -13,7 +13,7 @@ CommitRoot {
 	custom: false
 	diagnostics: Array []
 	filename: "footer/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with a breaking change footer\n\nMore description\n\nBREAKING CHANGE: breaking change footer"
 	scope: ""
 	loc: Object {

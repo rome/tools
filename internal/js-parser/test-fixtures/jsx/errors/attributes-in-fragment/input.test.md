@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/errors/attributes-in-fragment/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "jsx/errors/attributes-in-fragment/input.jsx"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 5

@@ -14,8 +14,8 @@ JSRoot {
 	diagnostics: Array []
 	filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0002/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

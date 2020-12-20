@@ -9,8 +9,8 @@ CSSRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "smoke/input.css"
+	integrity: undefined
 	leadingComments: Array []
-	mtime: undefined
 	innerComments: Array ["0"]
 	loc: Object {
 		filename: "smoke/input.css"

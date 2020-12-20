@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/class/optional-async-error/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -44,7 +44,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "typescript/class/optional-async-error/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 9

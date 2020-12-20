@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/tsx/anonymous-function-generator/input.tsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array [
 		"ts"
@@ -46,7 +46,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "typescript/tsx/anonymous-function-generator/input.tsx"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 22

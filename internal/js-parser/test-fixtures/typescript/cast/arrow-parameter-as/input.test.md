@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/cast/arrow-parameter-as/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "typescript/cast/arrow-parameter-as/input.ts"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 7

@@ -5,7 +5,6 @@ test(
 	"Bridge#handshake",
 	async (t) => {
 		const fooBridge = new Bridge({
-			debugName: "foo",
 			type: "server",
 			sendMessage: (msg) => {
 				barBridge.handleMessage(msg);
@@ -13,7 +12,6 @@ test(
 		});
 
 		const barBridge = new Bridge({
-			debugName: "bar",
 			type: "client",
 			sendMessage: (msg) => {
 				fooBridge.handleMessage(msg);
@@ -45,7 +43,6 @@ test(
 	"BridgeEvent",
 	async (t) => {
 		const fooBridge = new Bridge({
-			debugName: "foo",
 			type: "server",
 			sendMessage: (msg) => {
 				barBridge.handleMessage(msg);
@@ -57,7 +54,6 @@ test(
 		});
 
 		const barBridge = new Bridge({
-			debugName: "bar",
 			type: "client",
 			sendMessage: (msg) => {
 				fooBridge.handleMessage(msg);
@@ -122,7 +118,6 @@ test(
 	"Bridge#end",
 	async (t) => {
 		const bridge = new Bridge({
-			debugName: "foo",
 			type: "server",
 			sendMessage: (msg) => {
 				bridge.handleMessage(msg);

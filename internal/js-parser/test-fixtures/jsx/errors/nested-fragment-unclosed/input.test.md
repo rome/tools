@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
@@ -33,7 +33,7 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 7

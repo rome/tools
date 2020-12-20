@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

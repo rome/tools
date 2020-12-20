@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/categorized/invalid-assignment-pattern-3/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -38,7 +38,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "core/categorized/invalid-assignment-pattern-3/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 15

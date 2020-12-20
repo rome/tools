@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -33,7 +33,7 @@ JSRoot {
 			origins: Array [Object {category: "parse/js"}]
 			location: Object {
 				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 23

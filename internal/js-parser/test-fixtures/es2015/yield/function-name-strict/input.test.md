@@ -12,8 +12,8 @@ JSRoot {
 	corrupt: false
 	filename: "es2015/yield/function-name-strict/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -58,7 +58,7 @@ JSRoot {
 			}
 			location: Object {
 				filename: "es2015/yield/function-name-strict/input.js"
-				mtime: undefined
+				integrity: undefined
 				sourceText: undefined
 				end: Object {
 					column: 14

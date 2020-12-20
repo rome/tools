@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/let/let-at-binding-list-fail-1/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

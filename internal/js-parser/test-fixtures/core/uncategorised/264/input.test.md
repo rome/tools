@@ -13,8 +13,8 @@ JSRoot {
 	diagnostics: Array []
 	filename: "core/uncategorised/264/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
