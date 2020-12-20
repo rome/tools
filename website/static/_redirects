@@ -1,3 +1,4 @@
+http://rome.tools/* https://rome.tools/:splat 301!
 https://romejs.com/* https://rome.tools/:splat 301!
 https://romejs.io/* https://rome.tools/:splat 301!
 https://romejs.org/* https://rome.tools/:splat 301!

@@ -1052,6 +1052,7 @@ export function parseExpressionSubscript(
 				{
 					type: "JSOptionalCallExpression",
 					arguments: args,
+					optional: true,
 					callee,
 					typeArguments,
 				},
@@ -1103,6 +1104,7 @@ export function parseExpressionSubscript(
 				startPos,
 				{
 					type: "JSOptionalCallExpression",
+					optional: true,
 					callee,
 					arguments: args,
 				},
