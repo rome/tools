@@ -17,7 +17,7 @@ import {
 } from "@internal/ast";
 
 function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
-	let root: null | AnyJSExpression = null;
+	let root!: AnyJSExpression;
 	const properties: (JSStaticMemberProperty | JSComputedMemberProperty)[] = [];
 	let current: AnyJSExpression = node;
 
@@ -32,12 +32,6 @@ function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
 			root = current;
 			break;
 		}
-	}
-
-	if (root === null) {
-		throw new Error(
-			"optionalChaining transform: js member expression root cannot be null",
-		);
 	}
 
 	return properties.reduce(
