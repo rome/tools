@@ -1,31 +1,24 @@
-import Bridge from "./Bridge";
 import {test} from "rome";
+import createBridge, {createBridgeEventDeclaration} from "./createBridge";
 
 test(
 	"Bridge#handshake",
 	async (t) => {
-		const fooBridge = new Bridge({
-			type: "server",
-			sendMessage: (msg) => {
-				barBridge.handleMessage(msg);
-			},
-		});
-
-		const barBridge = new Bridge({
-			type: "client",
-			sendMessage: (msg) => {
-				fooBridge.handleMessage(msg);
-			},
-		});
+		const {server, client} = createBridge({
+			debugName: "Test",
+			server: {},
+			client: {},
+			shared: {},
+		}).createFromLocal();
 
 		async function foo() {
 			test = "two";
-			await fooBridge.handshake();
+			await server.handshake();
 			test = "three";
 		}
 		async function bar() {
 			t.is(test, "two");
-			await barBridge.handshake();
+			await client.handshake();
 			t.is(test, "three");
 		}
 
@@ -42,41 +35,31 @@ test(
 test(
 	"BridgeEvent",
 	async (t) => {
-		const fooBridge = new Bridge({
-			type: "server",
-			sendMessage: (msg) => {
-				barBridge.handleMessage(msg);
+		const {
+			server,
+			client,
+		} = createBridge({
+			debugName: "Test",
+			server: {},
+			client: {},
+			shared: {
+				greet: createBridgeEventDeclaration<string, string>(),
 			},
-		});
-		const fooGreet = fooBridge.createEvent<string, string>({
-			name: "greet",
-			direction: "server<-client",
-		});
-
-		const barBridge = new Bridge({
-			type: "client",
-			sendMessage: (msg) => {
-				fooBridge.handleMessage(msg);
-			},
-		});
-		const barGreet = barBridge.createEvent<string, string>({
-			name: "greet",
-			direction: "server<-client",
-		});
+		}).createFromLocal();
 
 		async function foo() {
-			await fooBridge.handshake();
+			await server.handshake();
 
-			const res = await fooGreet.call("foo");
+			const res = await server.events.greet.call("foo");
 			t.is(res, "Hello, foo");
 		}
 
 		async function bar() {
-			barGreet.subscribe((name) => {
+			client.events.greet.subscribe((name) => {
 				fooMessages.push(name);
 				return `Hello, ${name}`;
 			});
-			await barBridge.handshake();
+			await client.handshake();
 		}
 
 		let fooMessages: string[] = [];
@@ -84,74 +67,57 @@ test(
 		foo();
 		await bar();
 
-		t.looksLike(fooBridge.getSubscriptions(), ["Bridge.heartbeat"]);
-		t.looksLike(barBridge.getSubscriptions(), ["Bridge.heartbeat", "greet"]);
+		t.looksLike(server.getSubscriptions(), ["Bridge.heartbeat"]);
+		t.looksLike(client.getSubscriptions(), ["Bridge.heartbeat", "greet"]);
 
 		t.looksLike(fooMessages, ["foo"]);
 
-		fooGreet.send("cat");
-		await fooGreet.call("dog");
+		server.events.greet.send("cat");
+		await server.events.greet.call("dog");
 
 		t.looksLike(fooMessages, ["foo", "cat", "dog"]);
-
-		t.throws(() => {
-			// can't create duplicate event on a bridge
-			fooBridge.createEvent<string, string>({
-				name: "greet",
-				direction: "server<-client",
-			});
-		});
-
-		t.throws(() => {
-			// server bridges can't subscribe to server<-client events
-			fooGreet.subscribe((str) => str);
-		});
-
-		t.throwsAsync(async () => {
-			// client bridges can't call server<-client events
-			await barGreet.call("bar");
-		});
 	},
 );
 
 test(
 	"Bridge#end",
 	async (t) => {
-		const bridge = new Bridge({
-			type: "server",
-			sendMessage: (msg) => {
-				bridge.handleMessage(msg);
+		const {
+			server,
+			client,
+		} = createBridge({
+			debugName: "Test",
+			server: {},
+			client: {},
+			shared: {
+				greet: createBridgeEventDeclaration<string, string>(),
 			},
-		});
-		const greet = bridge.createEvent<string, string>({
-			name: "greet",
-			direction: "server<-client",
-		});
+		}).createFromLocal();
 
-		bridge.handshake();
-		await bridge.handshake();
+		server.handshake();
+		await client.handshake();
 
-		const greetSub = greet.subscribe((str) => `hello ${str}`);
-		const res = await greet.call("rome");
+		const greetSub = server.events.greet.subscribe((str) => `hello ${str}`);
+		const res = await client.events.greet.call("rome");
 		t.is(res, "hello rome");
 
-		bridge.attachEndSubscriptionRemoval(greetSub);
+		client.attachEndSubscriptionRemoval(greetSub);
 
-		t.looksLike(bridge.getSubscriptions(), ["greet"]);
-		t.true(greet.hasSubscriptions());
+		t.looksLike(client.getSubscriptions(), ["greet"]);
+		t.true(client.events.greet.hasSubscriptions());
 
-		await bridge.end("Halt!");
+		await client.end("Halt!");
 
-		t.looksLike(bridge.getSubscriptions(), []);
-		t.false(greet.hasSubscriptions());
+		t.looksLike(client.getSubscriptions(), []);
+		t.false(client.events.greet.hasSubscriptions());
 
 		t.throwsAsync(async () => {
 			// Bridge is dead
-			await greet.call("test");
+			await client.events.greet.call("test");
 		});
 
 		t.throws(() => {
-			bridge.assertAlive();
+			client.assertAlive();
 		});
 	},
 );

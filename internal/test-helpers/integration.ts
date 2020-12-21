@@ -34,8 +34,6 @@ import ServerRequest from "../core/server/ServerRequest";
 import {partialServerQueryRequestToFull} from "../core/server/Server";
 import {PartialServerQueryRequest} from "../core/common/bridges/ServerBridge";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
-import {createBridgeFromLocal} from "@internal/events";
-
 import {Fixture, FixtureFile, createFixtureTests} from "@internal/test-helpers";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {
@@ -59,12 +57,13 @@ import {markupToPlainText} from "@internal/cli-layout";
 import child = require("child_process");
 import util = require("util");
 import {Reporter} from "@internal/cli-reporter";
+import {BridgeClient} from "@internal/events";
 
 const exec = util.promisify(child.exec);
 
 type IntegrationTestHelper = {
 	cwd: AbsoluteFilePath;
-	bridge: ServerBridge;
+	bridge: BridgeClient<typeof ServerBridge>;
 	client: Client;
 	server: Server;
 	readFile: (relative: RelativeFilePath | string) => Promise<string>;
@@ -156,10 +155,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		userConfig: DEFAULT_USER_CONFIG,
 
 		// This wont actually be used, it's just for setting up subscriptions
-		bridge: createBridgeFromLocal(
-			WorkerBridge,
-			{},
-		).client,
+		bridge: WorkerBridge.createFromLocal().client,
 	});
 
 	let projectIdCounter = 0;

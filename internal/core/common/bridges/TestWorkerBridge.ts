@@ -7,13 +7,14 @@
 
 import {Diagnostic, DiagnosticOrigin} from "@internal/diagnostics";
 import {TestServerRunnerOptions} from "../../server/testing/types";
-import {Bridge} from "@internal/events";
+import {createBridge} from "@internal/events";
 import {
 	FocusedTest,
 	TestWorkerFileResult,
 } from "@internal/core/test-worker/TestWorkerFile";
 import {AssembledBundle} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 
 export type TestRef = {
 	path: AbsoluteFilePath;
@@ -40,73 +41,55 @@ export type TestWorkerRunTestOptions = {
 	testNames: string[];
 };
 
-export default class TestWorkerBridge extends Bridge {
-	public debugName = "test worker";
+export default createBridge({
+	debugName: "test worker",
 
-	public inspectorDetails = this.createEvent<
-		void,
-		{
-			inspectorUrl: undefined | string;
-		}
-	>({
-		name: "inspectorDetails",
-		direction: "server->client",
-	});
+	shared: {},
 
-	public receiveCompiled = this.createEvent<AbsoluteFilePathMap<string>, void>({
-		name: "receiveCompiled",
-		direction: "server->client",
-	});
+	client: {
+		inspectorDetails: createBridgeEventDeclaration<
+			void,
+			{
+				inspectorUrl: undefined | string;
+			}
+		>(),
+		receiveCompiled: createBridgeEventDeclaration<
+			AbsoluteFilePathMap<string>,
+			void
+		>(),
+		prepareTest: createBridgeEventDeclaration<
+			TestWorkerPrepareTestOptions,
+			TestWorkerPrepareTestResult
+		>(),
+		runTest: createBridgeEventDeclaration<TestWorkerRunTestOptions, void>(),
+		teardownTest: createBridgeEventDeclaration<
+			AbsoluteFilePath,
+			TestWorkerFileResult
+		>(),
+	},
 
-	public prepareTest = this.createEvent<
-		TestWorkerPrepareTestOptions,
-		TestWorkerPrepareTestResult
-	>({
-		name: "prepareTest",
-		direction: "server->client",
-	});
-
-	public runTest = this.createEvent<TestWorkerRunTestOptions, void>({
-		name: "runTest",
-		direction: "server->client",
-	});
-
-	public teardownTest = this.createEvent<AbsoluteFilePath, TestWorkerFileResult>({
-		name: "teardownTest",
-		direction: "server->client",
-	});
-
-	public testStart = this.createEvent<
-		{
-			ref: TestRef;
-			timeout: undefined | number;
-		},
-		void
-	>({
-		name: "onTestStart",
-		direction: "server<-client",
-	});
-
-	public testDiagnostic = this.createEvent<
-		{
-			testPath: undefined | AbsoluteFilePath;
-			diagnostic: Diagnostic;
-			origin: undefined | DiagnosticOrigin;
-		},
-		void
-	>({
-		name: "testDiagnostic",
-		direction: "server<-client",
-	});
-
-	public testFinish = this.createEvent<
-		{
-			success: boolean;
-			ref: TestRef;
-		},
-		void
-	>({
-		name: "onTestSuccess",
-		direction: "server<-client",
-	});
-}
+	server: {
+		testStart: createBridgeEventDeclaration<
+			{
+				ref: TestRef;
+				timeout: undefined | number;
+			},
+			void
+		>(),
+		testDiagnostic: createBridgeEventDeclaration<
+			{
+				testPath: undefined | AbsoluteFilePath;
+				diagnostic: Diagnostic;
+				origin: undefined | DiagnosticOrigin;
+			},
+			void
+		>(),
+		testFinish: createBridgeEventDeclaration<
+			{
+				success: boolean;
+				ref: TestRef;
+			},
+			void
+		>(),
+	},
+});

@@ -34,10 +34,11 @@ import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeError} from "@internal/events";
+import {BridgeClient, BridgeError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
+import {RSERObject} from "@internal/codec-binary-serial";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -58,7 +59,7 @@ export type WorkerBuffer = {
 type WorkerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
-	bridge: WorkerBridge;
+	bridge: BridgeClient<typeof WorkerBridge>;
 	id: number;
 };
 
@@ -78,9 +79,9 @@ export default class Worker {
 			{},
 			{
 				loggerType: "worker",
-				check: () => opts.bridge.log.hasSubscribers(),
+				check: () => opts.bridge.events.log.hasSubscribers(),
 				write(chunk) {
-					opts.bridge.log.send(chunk.toString());
+					opts.bridge.events.log.send(chunk.toString());
 				},
 			},
 		);
@@ -97,7 +98,7 @@ export default class Worker {
 					const {bridge} = this;
 
 					// Dispatch error to the server and trigger a fatal
-					bridge.fatalError.send(bridge.serializeError(err));
+					bridge.events.fatalError.send(bridge.serializeError(err));
 				} catch (err) {
 					if (!(err instanceof BridgeError)) {
 						console.error(
@@ -134,7 +135,7 @@ export default class Worker {
 	public virtualModules: VirtualModules;
 
 	private cache: WorkerCache;
-	private bridge: WorkerBridge;
+	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: Map<number, TransformProjectDefinition>;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
@@ -155,14 +156,14 @@ export default class Worker {
 	public async init() {
 		this.virtualModules.init();
 
-		const bridge: WorkerBridge = this.bridge;
+		const bridge: BridgeClient<typeof WorkerBridge> = this.bridge;
 
 		bridge.endEvent.subscribe(async () => {
 			await this.end();
 		});
 
 		let profiler: undefined | Profiler;
-		bridge.profilingStart.subscribe(async (data) => {
+		bridge.events.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
 				throw new Error("Expected no profiler to be running");
 			}
@@ -170,7 +171,7 @@ export default class Worker {
 			await profiler.startProfiling(data.samplingInterval);
 		});
 
-		bridge.profilingStop.subscribe(async () => {
+		bridge.events.profilingStop.subscribe(async () => {
 			if (profiler === undefined) {
 				throw new Error("Expected a profiler to be running");
 			}
@@ -179,7 +180,7 @@ export default class Worker {
 			return workerProfile;
 		});
 
-		bridge.compile.subscribe((payload) => {
+		bridge.events.compile.subscribe((payload) => {
 			return this.api.compile(
 				payload.ref,
 				payload.stage,
@@ -188,19 +189,20 @@ export default class Worker {
 			);
 		});
 
-		bridge.parse.subscribe((payload) => {
-			return this.api.parse(payload.ref, payload.options);
+		bridge.events.parse.subscribe((payload) => {
+			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			return (this.api.parse(payload.ref, payload.options) as RSERObject);
 		});
 
-		bridge.lint.subscribe((payload) => {
+		bridge.events.lint.subscribe((payload) => {
 			return this.api.lint(payload.ref, payload.options, payload.parseOptions);
 		});
 
-		bridge.format.subscribe((payload) => {
+		bridge.events.format.subscribe((payload) => {
 			return this.api.format(payload.ref, payload.options, payload.parseOptions);
 		});
 
-		bridge.updateInlineSnapshots.subscribe((payload) => {
+		bridge.events.updateInlineSnapshots.subscribe((payload) => {
 			return this.api.updateInlineSnapshots(
 				payload.ref,
 				payload.updates,
@@ -208,28 +210,28 @@ export default class Worker {
 			);
 		});
 
-		bridge.analyzeDependencies.subscribe((payload) => {
+		bridge.events.analyzeDependencies.subscribe((payload) => {
 			return this.api.analyzeDependencies(payload.ref, payload.parseOptions);
 		});
 
-		bridge.evict.subscribe(async (payload) => {
+		bridge.events.evict.subscribe(async (payload) => {
 			await this.evict(payload);
 			return undefined;
 		});
 
-		bridge.moduleSignatureJS.subscribe((payload) => {
+		bridge.events.moduleSignatureJS.subscribe((payload) => {
 			return this.api.moduleSignatureJS(payload.ref, payload.parseOptions);
 		});
 
-		bridge.updateProjects.subscribe((payload) => {
+		bridge.events.updateProjects.subscribe((payload) => {
 			return this.updateProjects(payload.projects);
 		});
 
-		bridge.updateManifests.subscribe((payload) => {
+		bridge.events.updateManifests.subscribe((payload) => {
 			return this.updateManifests(payload.manifests);
 		});
 
-		bridge.status.subscribe(() => {
+		bridge.events.status.subscribe(() => {
 			return {
 				astCacheSize: this.astCache.size,
 				pid: process.pid,
@@ -238,23 +240,23 @@ export default class Worker {
 			};
 		});
 
-		bridge.getBuffer.subscribe((payload) => {
+		bridge.events.getBuffer.subscribe((payload) => {
 			return this.getBuffer(payload.ref);
 		});
 
-		bridge.updateBuffer.subscribe(async (payload) => {
+		bridge.events.updateBuffer.subscribe(async (payload) => {
 			return this.updateBuffer(payload.ref, payload.buffer);
 		});
 
-		bridge.patchBuffer.subscribe(async (payload) => {
+		bridge.events.patchBuffer.subscribe(async (payload) => {
 			return this.patchBuffer(payload.ref, payload.patches);
 		});
 
-		bridge.clearBuffer.subscribe(async (payload) => {
+		bridge.events.clearBuffer.subscribe(async (payload) => {
 			return this.clearBuffer(payload.ref);
 		});
 
-		bridge.getFileBuffers.subscribe(() => {
+		bridge.events.getFileBuffers.subscribe(() => {
 			return this.getFileBuffers();
 		});
 	}

@@ -8,6 +8,8 @@
 import {
 	BridgeErrorResponseDetails,
 	BridgeErrorResponseMessage,
+	BridgeEventsDeclaration,
+	BridgeEventsDeclarationToInstances,
 	BridgeHeartbeatExceededOptions,
 	BridgeMessage,
 	BridgeOptions,
@@ -18,7 +20,12 @@ import {
 	EventSubscription,
 } from "./types";
 import BridgeError from "./BridgeError";
-import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
+import {
+	BridgeEvent,
+	BridgeEventBidirectional,
+	BridgeEventCallOnly,
+	BridgeEventListenOnly,
+} from "./BridgeEvent";
 import Event from "./Event";
 import {
 	ErrorWithFrames,
@@ -38,20 +45,31 @@ type ErrorSerial<Data extends RSERValue> = {
 	hydrate: (err: StructuredError, obj: Data) => NodeSystemError;
 };
 
-export default class Bridge {
-	constructor(opts: BridgeOptions) {
+export default class Bridge<
+	ListenEvents extends BridgeEventsDeclaration,
+	CallEvents extends BridgeEventsDeclaration,
+	SharedEvents extends BridgeEventsDeclaration
+> {
+	constructor(
+		opts: BridgeOptions,
+		listenEvents: ListenEvents,
+		callEvents: CallEvents,
+		SharedEvents: SharedEvents,
+	) {
 		this.errorTransports = new Map();
 
 		this.alive = true;
 		this.hasHandshook = false;
 		this.endError = undefined;
-		this.debugName = "unknown";
+		this.debugName = opts.debugName;
 		this.type = opts.type;
-		this.opts = opts;
 
 		this.messageIdCounter = 0;
-		this.events = new ExtendedMap("events");
+		this.eventsMap = new ExtendedMap("events");
 
+		this.sendMessageEvent = new Event({
+			name: "Bridge.sendMessageEvent",
+		});
 		this.handshakeEvent = new Event({
 			name: "Bridge.handshake",
 		});
@@ -72,30 +90,48 @@ export default class Bridge {
 
 		this.postHandshakeQueue = [];
 
-		this.heartbeatEvent = this.createEvent({
-			name: "Bridge.heartbeat",
-			direction: "server<->client",
-		});
-
+		this.heartbeatEvent = new BridgeEventBidirectional("Bridge.heartbeat", this);
+		this.registerEvent(this.heartbeatEvent);
 		this.heartbeatEvent.subscribe(() => {
 			return undefined;
 		});
 
-		this.teardownEvent = this.createEvent({
-			name: "Bridge.teardown",
-			direction: "server<->client",
-		});
-
+		this.teardownEvent = new BridgeEventBidirectional("Bridge.teardown", this);
+		this.registerEvent(this.teardownEvent);
 		this.teardownEvent.subscribe(async () => {
 			await this.end("Graceful teardown requested", false);
 		});
 
+		// @ts-ignore: Cannot safely type this but the code to build it is fine
+		this.events = {};
+
+		for (const name in callEvents) {
+			const event = new BridgeEventCallOnly(name, this);
+			// @ts-ignore
+			this.events[name] = event;
+			this.registerEvent(event);
+		}
+
+		for (const name in listenEvents) {
+			const event = new BridgeEventListenOnly(name, this);
+			// @ts-ignore
+			this.events[name] = event;
+			this.registerEvent(event);
+		}
+
+		for (const name in SharedEvents) {
+			const event = new BridgeEventBidirectional(name, this);
+			// @ts-ignore
+			this.events[name] = event;
+			this.registerEvent(event);
+		}
+
 		this.init();
 	}
 
-	private teardownEvent: BridgeEvent<void, void>;
+	private teardownEvent: BridgeEventBidirectional<void, void>;
 
-	private heartbeatEvent: BridgeEvent<void, void>;
+	private heartbeatEvent: BridgeEventBidirectional<void, void>;
 	private heartbeatTimeout: undefined | NodeJS.Timeout;
 
 	private prioritizedResponses: Set<number>;
@@ -105,6 +141,13 @@ export default class Bridge {
 	private handshakeEvent: Event<void, void>;
 	private hasHandshook: boolean;
 
+	public events: BridgeEventsDeclarationToInstances<
+		ListenEvents,
+		CallEvents,
+		SharedEvents
+	>;
+
+	public sendMessageEvent: Event<BridgeMessage, void>;
 	public endEvent: Event<Error, void>;
 	public alive: boolean;
 	private endError: undefined | Error;
@@ -114,12 +157,10 @@ export default class Bridge {
 	private messageIdCounter: number;
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	private events: ExtendedMap<string, BridgeEvent<any, any>>;
+	private eventsMap: ExtendedMap<string, BridgeEvent<any, any>>;
 
 	public listeners: Set<string>;
 	public updatedListenersEvent: Event<Set<string>, void>;
-
-	private opts: BridgeOptions;
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	private errorTransports: Map<string, ErrorSerial<any>>;
@@ -137,7 +178,7 @@ export default class Bridge {
 	private getPendingRequestsSummary(): AnyMarkups {
 		const summaries: AnyMarkups = [];
 
-		for (const event of this.events.values()) {
+		for (const event of this.eventsMap.values()) {
 			const requestCount = event.requestCallbacks.size;
 			if (requestCount > 0) {
 				let list = Array.from(
@@ -273,7 +314,7 @@ export default class Bridge {
 
 	public getSubscriptions(): Set<string> {
 		const names: Set<string> = new Set();
-		for (const event of this.events.values()) {
+		for (const event of this.eventsMap.values()) {
 			if (event.hasSubscriptions()) {
 				names.add(event.name);
 			}
@@ -320,6 +361,10 @@ export default class Bridge {
 			});
 		});
 
+		this.sendMessageEvent.subscribe((data) => {
+			buf.sendValue(data);
+		});
+
 		return buf;
 	}
 
@@ -328,7 +373,7 @@ export default class Bridge {
 	}
 
 	private clear(): void {
-		for (const [, event] of this.events) {
+		for (const [, event] of this.eventsMap) {
 			event.clear();
 		}
 	}
@@ -337,15 +382,14 @@ export default class Bridge {
 		return ++this.messageIdCounter;
 	}
 
-	public createEvent<Param extends RSERValue, Ret extends RSERValue>(
-		opts: BridgeEventOptions,
+	public registerEvent<Param extends RSERValue, Ret extends RSERValue>(
+		event: BridgeEvent<Param, Ret>,
 	): BridgeEvent<Param, Ret> {
-		if (this.events.has(opts.name)) {
+		if (this.eventsMap.has(event.name)) {
 			throw new Error("Duplicate event");
 		}
 
-		const event = new BridgeEvent<Param, Ret>(opts, this);
-		this.events.set(opts.name, event);
+		this.eventsMap.set(event.name, event);
 		return event;
 	}
 
@@ -362,7 +406,7 @@ export default class Bridge {
 		}
 
 		// Reject any pending requests
-		for (const [, event] of this.events) {
+		for (const [, event] of this.eventsMap) {
 			event.end(err);
 		}
 		this.clear();
@@ -474,11 +518,7 @@ export default class Bridge {
 			}
 		}
 
-		const {opts} = this;
-		opts.sendMessage(msg);
-		if (opts.onSendMessage !== undefined) {
-			opts.onSendMessage(msg);
-		}
+		this.sendMessageEvent.call(msg);
 	}
 
 	public async handleMessage(msg: BridgeMessage) {
@@ -517,7 +557,7 @@ export default class Bridge {
 			throw new Error("Expected event");
 		}
 
-		const eventHandler = this.events.assert(event);
+		const eventHandler = this.eventsMap.assert(event);
 		eventHandler.dispatchResponse(id, data);
 	}
 
@@ -527,7 +567,7 @@ export default class Bridge {
 			throw new Error("Expected event in message request but received none");
 		}
 
-		const eventHandler = this.events.assert(event);
+		const eventHandler = this.eventsMap.assert(event);
 
 		if (id === undefined) {
 			await eventHandler.dispatchRequest(param).catch((err) => {

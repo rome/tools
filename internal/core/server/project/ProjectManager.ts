@@ -432,7 +432,7 @@ export default class ProjectManager {
 			// Notify all workers that it should delete the project
 			for (const {bridge} of this.server.workerManager.getWorkers()) {
 				// Evict project
-				bridge.updateProjects.send({
+				bridge.events.updateProjects.send({
 					projects: [
 						{
 							id: evictProjectId,
@@ -444,7 +444,7 @@ export default class ProjectManager {
 				});
 
 				// Evict packages
-				bridge.updateManifests.send({
+				bridge.events.updateManifests.send({
 					manifests: Array.from(
 						project.manifests.values(),
 						(def) => ({
@@ -729,10 +729,10 @@ export default class ProjectManager {
 
 		for (const worker of workers) {
 			promises.push(
-				worker.bridge.updateProjects.call({projects: projectsSerial}),
+				worker.bridge.events.updateProjects.call({projects: projectsSerial}),
 			);
 			promises.push(
-				worker.bridge.updateManifests.call({
+				worker.bridge.events.updateManifests.call({
 					manifests: manifestsSerial,
 				}),
 			);

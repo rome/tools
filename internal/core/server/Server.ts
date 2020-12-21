@@ -24,7 +24,12 @@ import {
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
-import {Event, EventQueue, EventSubscription} from "@internal/events";
+import {
+	BridgeServer,
+	Event,
+	EventQueue,
+	EventSubscription,
+} from "@internal/events";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
@@ -67,7 +72,7 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 export type ServerClient = {
 	id: number;
 	reporter: Reporter;
-	bridge: ServerBridge;
+	bridge: BridgeServer<typeof ServerBridge>;
 	flags: ClientFlags;
 	version: string;
 	requestsInFlight: Set<ServerRequest>;
@@ -335,7 +340,7 @@ export default class Server {
 		for (const {bridge} of this.connectedClientsListeningForLogs) {
 			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
 			if (bridge.alive) {
-				bridge.log.send({chunk, origin: "server"});
+				bridge.events.log.send({chunk, origin: "server"});
 			}
 		}
 	}
@@ -483,7 +488,9 @@ export default class Server {
 		});
 	}
 
-	public async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {
+	public async attachToBridge(
+		bridge: BridgeServer<typeof ServerBridge>,
+	): Promise<ServerClient> {
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
@@ -494,7 +501,7 @@ export default class Server {
 			});
 		}
 
-		bridge.profilingStart.subscribe(async (data) => {
+		bridge.events.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
 				throw new Error("Expected no profiler to be running");
 			}
@@ -502,11 +509,11 @@ export default class Server {
 			await profiler.startProfiling(data.samplingInterval);
 			this.profiling = data;
 			for (const {bridge} of this.workerManager.getExternalWorkers()) {
-				await bridge.profilingStart.call(data);
+				await bridge.events.profilingStart.call(data);
 			}
 		});
 
-		bridge.profilingStop.subscribe(async () => {
+		bridge.events.profilingStop.subscribe(async () => {
 			if (profiler === undefined) {
 				throw new Error("Expected profiler to be running");
 			}
@@ -516,7 +523,7 @@ export default class Server {
 			return serverProfile;
 		});
 
-		bridge.profilingGetWorkers.subscribe(async () => {
+		bridge.events.profilingGetWorkers.subscribe(async () => {
 			const ids: number[] = [];
 			for (const {id} of this.workerManager.getExternalWorkers()) {
 				ids.push(id);
@@ -524,15 +531,15 @@ export default class Server {
 			return ids;
 		});
 
-		bridge.profilingStopWorker.subscribe(async (id) => {
+		bridge.events.profilingStopWorker.subscribe(async (id) => {
 			const worker = this.workerManager.getWorkerAssert(id);
-			return await worker.bridge.profilingStop.call();
+			return await worker.bridge.events.profilingStop.call();
 		});
 
 		// When enableWorkerLogs is called we setup subscriptions to the worker logs
 		// Logs are never transported from workers to the server unless there is a subscription
 		let subscribedWorkers = false;
-		bridge.enableWorkerLogs.subscribe(() => {
+		bridge.events.enableWorkerLogs.subscribe(() => {
 			// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
 			if (subscribedWorkers) {
 				return;
@@ -541,17 +548,19 @@ export default class Server {
 			}
 
 			function onLog(chunk: string) {
-				bridge.log.call({origin: "worker", chunk});
+				bridge.events.log.call({origin: "worker", chunk});
 			}
 
 			// Add on existing workers if there are any
 			for (const worker of this.workerManager.getWorkers()) {
-				bridge.attachEndSubscriptionRemoval(worker.bridge.log.subscribe(onLog));
+				bridge.attachEndSubscriptionRemoval(
+					worker.bridge.events.log.subscribe(onLog),
+				);
 			}
 
 			// Listen for logs for any workers that start later
 			this.workerManager.workerStartEvent.subscribe((worker) => {
-				bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
+				bridge.attachEndSubscriptionRemoval(worker.events.log.subscribe(onLog));
 			});
 		});
 
@@ -568,11 +577,11 @@ export default class Server {
 			return client;
 		}
 
-		bridge.query.subscribe(async (request) => {
+		bridge.events.query.subscribe(async (request) => {
 			return await this.handleRequest(client, request);
 		});
 
-		bridge.cancelQuery.subscribe(async (token) => {
+		bridge.events.cancelQuery.subscribe(async (token) => {
 			for (const req of client.requestsInFlight) {
 				if (req.query.cancelToken === token) {
 					await req.cancel("user requested");
@@ -580,22 +589,24 @@ export default class Server {
 			}
 		});
 
-		bridge.endServer.subscribe(() => this.end());
+		bridge.events.endServer.subscribe(() => this.end());
 
 		await this.clientStartEvent.callOptional(client);
-		await bridge.serverReady.call();
+		await bridge.events.serverReady.call();
 
 		return client;
 	}
 
-	private async createClient(bridge: ServerBridge): Promise<ServerClient> {
+	private async createClient(
+		bridge: BridgeServer<typeof ServerBridge>,
+	): Promise<ServerClient> {
 		const {
 			flags,
 			streamState,
 			outputFormat,
 			outputSupport,
 			version,
-		} = await bridge.getClientInfo.call();
+		} = await bridge.events.getClientInfo.call();
 
 		// Initialize the reporter
 		const reporter = new Reporter({
@@ -615,13 +626,13 @@ export default class Server {
 						return;
 					}
 
-					bridge.write.send([chunk, error]);
+					bridge.events.write.send([chunk, error]);
 				},
 			},
 			streamState,
 		);
 
-		bridge.updateFeatures.subscribe((features) => {
+		bridge.events.updateFeatures.subscribe((features) => {
 			streamHandle.stream.updateFeatures(features);
 		});
 
@@ -658,7 +669,7 @@ export default class Server {
 					let buffer = this.logInitBuffer;
 					buffer += ".".repeat(20);
 					buffer += "\n";
-					bridge.log.send({
+					bridge.events.log.send({
 						chunk: buffer,
 						origin: "server",
 					});

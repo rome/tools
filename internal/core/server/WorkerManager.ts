@@ -15,11 +15,7 @@ import {
 } from "../common/constants";
 import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
 import {Locker} from "../../async/lockers";
-import {
-	Event,
-	createBridgeFromLocal,
-	createBridgeFromWorkerThread,
-} from "@internal/events";
+import {BridgeServer, Event} from "@internal/events";
 import {AbsoluteFilePath} from "@internal/path";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
@@ -31,7 +27,7 @@ export type WorkerContainer = {
 	id: number;
 	fileCount: number;
 	byteCount: bigint;
-	bridge: WorkerBridge;
+	bridge: BridgeServer<typeof WorkerBridge>;
 	thread: undefined | workerThreads.Worker;
 	// Whether we've completed a handshake with the worker and it's ready to receive requests
 	ready: boolean;
@@ -54,7 +50,7 @@ export default class WorkerManager {
 		this.logger = server.logger.namespace(markup`[WorkerManager]`);
 	}
 
-	public workerStartEvent: Event<WorkerBridge, void>;
+	public workerStartEvent: Event<BridgeServer<typeof WorkerBridge>, void>;
 	public locker: Locker<number>;
 
 	private server: Server;
@@ -134,16 +130,14 @@ export default class WorkerManager {
 
 	public async init(): Promise<void> {
 		// Create the worker
-		const bridges = createBridgeFromLocal(
-			WorkerBridge,
-			{
-				onSendMessage: (msg) => {
-					this.logger.info(
-						markup`Sending local worker request: ${prettyFormat(msg)}`,
-					);
-				},
-			},
-		);
+		const bridges = WorkerBridge.createFromLocal();
+
+		bridges.server.sendMessageEvent.subscribe((data) => {
+			this.logger.info(
+				markup`Sending local worker request: ${prettyFormat(data)}`,
+			);
+		});
+
 		const worker = new Worker({
 			id: 0,
 			userConfig: this.server.userConfig,
@@ -194,10 +188,10 @@ export default class WorkerManager {
 			const newWorker = await this.spawnWorker(this.getNextWorkerId(), true);
 
 			// Transfer buffers to the new worker
-			const buffers = await serverWorker.bridge.getFileBuffers.call();
+			const buffers = await serverWorker.bridge.events.getFileBuffers.call();
 
 			for (const [path, buffer] of buffers) {
-				await newWorker.bridge.updateBuffer.call({
+				await newWorker.bridge.events.updateBuffer.call({
 					ref: this.server.projectManager.getFileReference(path),
 					buffer,
 				});
@@ -268,22 +262,17 @@ export default class WorkerManager {
 			},
 		);
 
-		const bridge = createBridgeFromWorkerThread(
-			WorkerBridge,
-			thread,
-			{
-				type: "server",
-				onSendMessage: (data) => {
-					this.logger.info(
-						markup`Sending dedicated worker request to ${String(workerId)}: ${prettyFormat(
-							data,
-						)}`,
-					);
-				},
-			},
-		);
+		const bridge = WorkerBridge.Server.createFromWorkerThread(thread);
 
-		bridge.fatalError.subscribe((details) => {
+		bridge.sendMessageEvent.subscribe((data) => {
+			this.logger.info(
+				markup`Sending dedicated worker request to ${String(workerId)}: ${prettyFormat(
+					data,
+				)}`,
+			);
+		});
+
+		bridge.events.fatalError.subscribe((details) => {
 			this.server.fatalErrorHandler.handle(
 				bridge.hydrateError(details),
 				fatalErrorSource,
@@ -342,7 +331,7 @@ export default class WorkerManager {
 		// If a worker is spawned while we're profiling then make sure it's profiling too
 		const profileData = this.server.getRunningProfilingData();
 		if (profileData !== undefined) {
-			await bridge.profilingStart.call(profileData);
+			await bridge.events.profilingStart.call(profileData);
 		}
 
 		this.workerStartEvent.send(bridge);

@@ -8,13 +8,13 @@
 import {Profile} from "@internal/v8";
 import {Diagnostics} from "@internal/diagnostics";
 import {ClientFlags, ClientRequestFlags} from "../types/client";
-import {Bridge} from "@internal/events";
 import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
+import createBridge, {createBridgeEventDeclaration} from "@internal/events/createBridge";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -91,90 +91,38 @@ export type ServerBridgeInfo = {
 	flags: ClientFlags;
 };
 
-export default class ServerBridge extends Bridge {
-	protected debugName = "server";
-	
-	public getClientInfo = this.createEvent<void, ServerBridgeInfo>({
-		name: "getClientInfo",
-		direction: "server->client",
-	});
+export default createBridge({
+	debugName: "server",
 
-	public serverReady = this.createEvent<void, void>({
-		name: "serverReady",
-		direction: "server->client",
-	});
+	shared: {},
 
-	public write = this.createEvent<[string, boolean], void>({
-		name: "write",
-		direction: "server->client",
-	});
+	client: {
+		getClientInfo: createBridgeEventDeclaration<void, ServerBridgeInfo>(),
+		serverReady: createBridgeEventDeclaration<void, void>(),
+		write: createBridgeEventDeclaration<[string, boolean], void>(),
+		log: createBridgeEventDeclaration<
+			{
+				origin: "server" | "worker";
+				chunk: string;
+			},
+			void
+		>(),
+		lspFromServerBuffer: createBridgeEventDeclaration<string, void>(),
+	},
 
-	public enableWorkerLogs = this.createEvent<void, void>({
-		name: "enableWorkerLogs",
-		direction: "server<-client",
-	});
-
-	public log = this.createEvent<
-		{
-			origin: "server" | "worker";
-			chunk: string;
-		},
-		void
-	>({
-		name: "log",
-		direction: "server->client",
-	});
-
-	public updateFeatures = this.createEvent<TerminalFeatures, void>({
-		name: "updateFeatures",
-		direction: "server<-client",
-	});
-
-	public query = this.createEvent<
-		PartialServerQueryRequest,
-		ServerQueryResponse
-	>({
-		name: "query",
-		direction: "server<-client",
-	});
-
-	public cancelQuery = this.createEvent<string, void>({
-		name: "cancel",
-		direction: "server<-client",
-	});
-
-	public profilingGetWorkers = this.createEvent<void, number[]>({
-		name: "profiling.getWorkers",
-		direction: "server<-client",
-	});
-
-	public profilingStart = this.createEvent<ProfilingStartData, void>({
-		name: "profiling.start",
-		direction: "server<-client",
-	});
-
-	public profilingStop = this.createEvent<void, Profile>({
-		name: "profiling.stop",
-		direction: "server<-client",
-	});
-
-	public profilingStopWorker = this.createEvent<number, Profile>({
-		name: "profile.stopWorker",
-		direction: "server<-client",
-	});
-
-	public lspFromClientBuffer = this.createEvent<string, void>({
-		name: "lspFromClientBuffer",
-		direction: "server<-client",
-	});
-
-	public lspFromServerBuffer = this.createEvent<string, void>({
-		name: "lspFromServerBuffer",
-		direction: "server->client",
-	});
-
-	public endServer = this.createEvent<void, void>({
-		name: "endServer",
-		direction: "server<-client",
-	});
-}
+	server: {
+		enableWorkerLogs: createBridgeEventDeclaration<void, void>(),
+		endServer: createBridgeEventDeclaration<void, void>(),
+		updateFeatures: createBridgeEventDeclaration<TerminalFeatures, void>(),
+		query: createBridgeEventDeclaration<
+			PartialServerQueryRequest,
+			ServerQueryResponse
+		>(),
+		cancelQuery: createBridgeEventDeclaration<string, void>(),
+		profilingGetWorkers: createBridgeEventDeclaration<void, number[]>(),
+		profilingStart: createBridgeEventDeclaration<ProfilingStartData, void>(),
+		profilingStop: createBridgeEventDeclaration<void, Profile>(),
+		profilingStopWorker: createBridgeEventDeclaration<number, Profile>(),
+		lspFromClientBuffer: createBridgeEventDeclaration<string, void>(),
+	},
+});

@@ -112,7 +112,7 @@ export default class FileAllocator {
 		// We do not use a FileReference here as the file might not exist
 		const uid = this.server.projectManager.getUid(path, true);
 		const worker = this.server.workerManager.getWorkerAssert(workerId);
-		await worker.bridge.evict.call({
+		await worker.bridge.events.evict.call({
 			real: path,
 			uid,
 		});

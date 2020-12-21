@@ -32,8 +32,6 @@ export default class FatalErrorHandler {
 	public wrapBound: WrapperFactory;
 
 	public handle(err: Error, overrideSource?: StaticMarkup) {
-		console.trace("async handle", err);
-
 		// Swallow promise. Should never throw an error.
 		this.handleAsync(err, overrideSource).then();
 	}
@@ -132,9 +130,12 @@ export default class FatalErrorHandler {
 				} else {
 					// Get around an annoying bug(?) in worker_threads where the output streams wont be flushed if
 					// we immediately exit
-					setTimeout(() => {
-						process.exit(1);
-					}, 0);
+					setTimeout(
+						() => {
+							process.exit(1);
+						},
+						0,
+					);
 				}
 			}
 		}

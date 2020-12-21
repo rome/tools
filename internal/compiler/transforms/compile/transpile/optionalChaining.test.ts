@@ -15,6 +15,7 @@ async function transformCode(sourceText: string): Promise<string> {
 
 	const project: TransformProjectDefinition = {
 		config: createDefaultProjectConfig(),
+		configHashes: [],
 		directory: undefined,
 	};
 

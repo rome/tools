@@ -6,19 +6,13 @@
  */
 
 import setProcessTitle from "./utils/setProcessTitle";
-import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
 import {Worker, WorkerBridge} from "@internal/core";
 import {loadUserConfig} from "@internal/core/common/userConfig";
 import workerThreads = require("worker_threads");
 
 export default async function worker() {
 	setProcessTitle("worker");
-	const bridge = createBridgeFromWorkerThreadParentPort(
-		WorkerBridge,
-		{
-			type: "client",
-		},
-	);
+	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
 
 	const {id} = workerThreads.workerData;
 	if (typeof id !== "number") {

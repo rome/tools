@@ -7,12 +7,7 @@
 
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
-import {EventOptions, EventSubscription} from "./types";
-
-type Callback<Param, Ret> = (
-	param: Param,
-	subscription: EventSubscription,
-) => Ret | Promise<Ret>;
+import {EventCallback, EventOptions, EventSubscription} from "./types";
 
 export default class Event<Param, Ret = void> {
 	constructor(opts: EventOptions) {
@@ -20,38 +15,38 @@ export default class Event<Param, Ret = void> {
 		this.callbacks = new Set();
 		this.rootCallback = undefined;
 		this.name = opts.name;
+		this.displayName = opts.displayName ?? `event ${this.name}`;
 		this.options = opts;
 	}
 
 	public name: string;
+	private displayName: string;
 	private options: EventOptions;
 
-	private rootCallback: undefined | Callback<Param, Ret>;
-	private callbacks: Set<Callback<Param, Ret>>;
-	private subscriptions: ExtendedMap<Callback<Param, Ret>, EventSubscription>;
+	private rootCallback: undefined | EventCallback<Param, Ret>;
+	private callbacks: Set<EventCallback<Param, Ret>>;
+	private subscriptions: ExtendedMap<
+		EventCallback<Param, Ret>,
+		EventSubscription
+	>;
 
 	private async callCallback(
-		callback: Callback<Param, Ret>,
+		callback: EventCallback<Param, Ret>,
 		param: Param,
 	): Promise<Ret> {
 		return callback(param, this.subscriptions.assert(callback));
 	}
 
-	protected getDisplayName(): string {
-		return `event ${this.name}`;
-	}
-
-	public onSubscriptionChange() {
-		// Hook for BridgeEvent
+	private onSubscriptionChange() {
+		const {onSubscriptionChange} = this.options;
+		if (onSubscriptionChange !== undefined) {
+			onSubscriptionChange();
+		}
 	}
 
 	public clear() {
 		this.callbacks.clear();
 		this.rootCallback = undefined;
-	}
-
-	public hasSubscribers(): boolean {
-		return this.hasSubscriptions();
 	}
 
 	public hasSubscriptions(): boolean {
@@ -63,7 +58,7 @@ export default class Event<Param, Ret = void> {
 		const {rootCallback: rootSubscription} = this;
 		if (rootSubscription === undefined) {
 			if (required) {
-				throw new Error(`No subscription for ${this.getDisplayName()}`);
+				throw new Error(`No subscription for ${this.displayName}`);
 			}
 			return;
 		}
@@ -78,7 +73,7 @@ export default class Event<Param, Ret = void> {
 	public async call(param: Param): Promise<Ret> {
 		const {rootCallback, callbacks: subscriptions} = this;
 		if (rootCallback === undefined) {
-			throw new Error(`No subscription for ${this.getDisplayName()}`);
+			throw new Error(`No subscription for ${this.displayName}`);
 		}
 
 		if (this.options.serial === true) {
@@ -113,7 +108,7 @@ export default class Event<Param, Ret = void> {
 						listener.unsubscribe().then(() => {
 							reject(
 								new Error(
-									`Timed out after waiting ${humanizeDuration(timeout)} for ${this.getDisplayName()}`,
+									`Timed out after waiting ${humanizeDuration(timeout)} for ${this.displayName}`,
 								),
 							);
 						}).catch((err) => {
@@ -149,12 +144,12 @@ export default class Event<Param, Ret = void> {
 	}
 
 	public subscribe(
-		callback: Callback<Param, Ret>,
+		callback: EventCallback<Param, Ret>,
 		makeRoot?: boolean,
 	): EventSubscription {
 		if (this.options.unique === true && this.callbacks.size !== 0) {
 			throw new Error(
-				`Only allowed a single subscription for ${this.getDisplayName()}`,
+				`Only allowed a single subscription for ${this.displayName}`,
 			);
 		}
 
@@ -167,7 +162,7 @@ export default class Event<Param, Ret = void> {
 
 		if (this.rootCallback === callback || this.callbacks.has(callback)) {
 			throw new Error(
-				`Cannot double subscribe a callback for ${this.getDisplayName()}`,
+				`Cannot double subscribe a callback for ${this.displayName}`,
 			);
 		}
 
@@ -185,7 +180,7 @@ export default class Event<Param, Ret = void> {
 		return subscription;
 	}
 
-	private unsubscribe(callback: Callback<Param, Ret>) {
+	private unsubscribe(callback: EventCallback<Param, Ret>) {
 		this.subscriptions.delete(callback);
 
 		if (this.callbacks.has(callback)) {

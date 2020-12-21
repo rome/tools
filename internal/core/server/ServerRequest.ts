@@ -48,7 +48,7 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {Event} from "@internal/events";
+import {BridgeServer, Event} from "@internal/events";
 import {
 	FlagValue,
 	SerializeCLITarget,
@@ -256,7 +256,7 @@ export default class ServerRequest {
 
 	public id: number;
 	public query: ServerQueryRequest;
-	public bridge: ServerBridge;
+	public bridge: BridgeServer<typeof ServerBridge>;
 	public client: ServerClient;
 	public logger: ReporterNamespace;
 	public server: Server;
@@ -765,7 +765,10 @@ export default class ServerRequest {
 	private async wrapRequestDiagnostic<T>(
 		method: string,
 		path: AbsoluteFilePath,
-		factory: (bridge: WorkerBridge, ref: FileReference) => Promise<T>,
+		factory: (
+			bridge: BridgeServer<typeof WorkerBridge>,
+			ref: FileReference,
+		) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
 		await this.server.memoryFs.processingLock.wait();
@@ -850,7 +853,7 @@ export default class ServerRequest {
 			"getBuffer",
 			path,
 			async (bridge, ref) => {
-				return bridge.getBuffer.call({ref});
+				return bridge.events.getBuffer.call({ref});
 			},
 		);
 	}
@@ -866,7 +869,7 @@ export default class ServerRequest {
 			path,
 			async (bridge, ref) => {
 				const mtimeNs = this.server.memoryFs.addBuffer(path, content);
-				await bridge.updateBuffer.call({
+				await bridge.events.updateBuffer.call({
 					ref,
 					buffer: {
 						content,
@@ -889,7 +892,7 @@ export default class ServerRequest {
 			"patchBuffer",
 			path,
 			async (bridge, ref) => {
-				const buffer = await bridge.patchBuffer.call({ref, patches});
+				const buffer = await bridge.events.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
 				this.server.refreshFileEvent.push(path);
 				return buffer;
@@ -905,7 +908,7 @@ export default class ServerRequest {
 			"clearBuffer",
 			path,
 			async (bridge, ref) => {
-				await bridge.clearBuffer.call({ref});
+				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.push(path);
 			},
@@ -919,10 +922,11 @@ export default class ServerRequest {
 	): Promise<AnyRoot> {
 		this.checkCancelled();
 
+		// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,
-			(bridge, ref) => bridge.parse.call({ref, options: opts}),
+			(bridge, ref) => bridge.events.parse.call({ref, options: opts}),
 		);
 	}
 
@@ -937,7 +941,7 @@ export default class ServerRequest {
 			"updateInlineSnapshots",
 			path,
 			(bridge, ref) =>
-				bridge.updateInlineSnapshots.call({ref, updates, parseOptions})
+				bridge.events.updateInlineSnapshots.call({ref, updates, parseOptions})
 			,
 		);
 	}
@@ -960,7 +964,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"lint",
 			path,
-			(bridge, ref) => bridge.lint.call({ref, options, parseOptions: {}}),
+			(bridge, ref) => bridge.events.lint.call({ref, options, parseOptions: {}}),
 		);
 	}
 
@@ -974,7 +978,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"format",
 			path,
-			(bridge, ref) => bridge.format.call({ref, options, parseOptions}),
+			(bridge, ref) => bridge.events.format.call({ref, options, parseOptions}),
 		);
 	}
 
@@ -996,7 +1000,7 @@ export default class ServerRequest {
 					options = {};
 				}
 
-				return bridge.compile.call({ref, stage, options, parseOptions});
+				return bridge.events.compile.call({ref, stage, options, parseOptions});
 			},
 		);
 
@@ -1023,7 +1027,9 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"analyzeDependencies",
 			path,
-			(bridge, ref) => bridge.analyzeDependencies.call({ref, parseOptions}),
+			(bridge, ref) =>
+				bridge.events.analyzeDependencies.call({ref, parseOptions})
+			,
 		);
 	}
 
@@ -1036,7 +1042,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"moduleSignature",
 			path,
-			(bridge, ref) => bridge.moduleSignatureJS.call({ref, parseOptions}),
+			(bridge, ref) => bridge.events.moduleSignatureJS.call({ref, parseOptions}),
 		);
 	}
 

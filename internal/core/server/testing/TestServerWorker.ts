@@ -7,7 +7,6 @@ import {
 } from "@internal/v8";
 import workerThreads = require("worker_threads");
 import {forkThread} from "@internal/core/common/utils/fork";
-import {createBridgeFromWorkerThread} from "@internal/events";
 import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
@@ -19,6 +18,7 @@ import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
+import {BridgeServer} from "@internal/events";
 
 export default class TestServerWorker {
 	constructor(
@@ -35,13 +35,7 @@ export default class TestServerWorker {
 
 		this.thread = this.createThread(flags);
 
-		this.bridge = createBridgeFromWorkerThread(
-			TestWorkerBridge,
-			this.thread,
-			{
-				type: "server",
-			},
-		);
+		this.bridge = TestWorkerBridge.Server.createFromWorkerThread(this.thread);
 
 		this.inspector = undefined;
 
@@ -57,7 +51,7 @@ export default class TestServerWorker {
 	private preparedPaths: AbsoluteFilePathSet;
 	private prepareLock: FilePathLocker;
 
-	public bridge: TestWorkerBridge;
+	public bridge: BridgeServer<typeof TestWorkerBridge>;
 	public thread: workerThreads.Worker;
 	public inspector: undefined | InspectorClient;
 
@@ -116,7 +110,7 @@ export default class TestServerWorker {
 		);
 
 		// Start debugger
-		const {inspectorUrl} = await bridge.inspectorDetails.call();
+		const {inspectorUrl} = await bridge.events.inspectorDetails.call();
 		if (inspectorUrl !== undefined) {
 			const client = new InspectorClient(await createClient(inspectorUrl));
 			this.inspector = client;
@@ -135,7 +129,7 @@ export default class TestServerWorker {
 			});
 		}
 
-		bridge.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
+		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
 			if (testPath !== undefined) {
 				this.runner.files.assert(testPath).onDiagnostics();
 			}
@@ -317,10 +311,10 @@ export default class TestServerWorker {
 				}
 			}
 			if (pending.size > 0) {
-				await bridge.receiveCompiled.call(pending);
+				await bridge.events.receiveCompiled.call(pending);
 			}
 
-			const {focusedTests, foundTests} = await bridge.prepareTest.call({
+			const {focusedTests, foundTests} = await bridge.events.prepareTest.call({
 				globalOptions,
 				partial,
 				projectDirectory: req.server.projectManager.assertProjectExisting(
@@ -363,7 +357,7 @@ export default class TestServerWorker {
 			for (const testName of file.getPendingTests()) {
 				file.removePendingTest(testName);
 				await this.prepareLock.waitLock(path);
-				await bridge.runTest.call({
+				await bridge.events.runTest.call({
 					path,
 					testNames: [testName],
 				});
@@ -400,7 +394,7 @@ export default class TestServerWorker {
 			await Promise.all(promises);
 
 			for (const path of this.preparedPaths) {
-				const result = await bridge.teardownTest.call(path);
+				const result = await bridge.events.teardownTest.call(path);
 				await this.runner.files.assert(path).addResult(result);
 			}
 		} catch (err) {

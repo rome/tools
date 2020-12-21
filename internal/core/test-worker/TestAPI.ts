@@ -116,7 +116,7 @@ function normalizeUserAdviceItem(
 				type: "inspect",
 				// rome-ignore lint/ts/noExplicitAny: can remove this when we add back diagnostics structure validation
 				data: (item.data as any),
-			}
+			};
 
 		default:
 			return item;

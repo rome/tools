@@ -725,7 +725,7 @@ export default class MemoryFileSystem {
 
 		// Tell all workers of our discovery
 		for (const worker of this.server.workerManager.getWorkers()) {
-			worker.bridge.updateManifests.send({
+			worker.bridge.events.updateManifests.send({
 				manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
 			});
 		}
