@@ -29,33 +29,42 @@ function Component2() {
 	</>;
 }
 
+function Component2() {
+	return <>
+		<>
+			<></>
+		</>
+	</>;
+}
+
 ```
 
 ### `Output`
 
 ```js
 function Component() {
-	return (
-		<>
-		</>
-	);
+	return <></>;
 }
 
 function Component1() {
-	return (
-		<>
-			Lorem ipsum
-		</>
-	);
+	return <>
+		Lorem ipsum
+	</>;
 }
 
 function Component2() {
-	return (
+	return <>
+		<Foo />
+		<Foo />
+	</>;
+}
+
+function Component2() {
+	return <>
 		<>
-			<Foo />
-			<Foo />
+			<></>
 		</>
-	);
+	</>;
 }
 
 ```

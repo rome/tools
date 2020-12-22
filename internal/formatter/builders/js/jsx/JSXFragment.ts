@@ -5,23 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat, hardline, indent} from "@internal/formatter";
+import {
+	Builder,
+	Token,
+	concat,
+	group,
+	indent,
+	softline,
+} from "@internal/formatter";
 
 import {JSXFragment} from "@internal/ast";
 
 export default function JSXFragment(builder: Builder, node: JSXFragment): Token {
-	return concat([
-		"(",
-		indent(
-			concat([
-				"<>",
-				indent(builder.tokenizeStatementList(node.children, node), true),
-				hardline,
-				"</>",
-			]),
-			true,
-		),
-		hardline,
-		")",
-	]);
+	return group(
+		concat([
+			"<>",
+			indent(builder.tokenizeStatementList(node.children, node), true),
+			softline,
+			"</>",
+		]),
+	);
 }

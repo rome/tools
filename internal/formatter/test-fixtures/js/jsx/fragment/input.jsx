@@ -12,3 +12,11 @@ function Component2() {
 		<Foo />
 	</>;
 }
+
+function Component2() {
+	return <>
+		<>
+			<></>
+		</>
+	</>;
+}
