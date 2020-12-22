@@ -43,7 +43,26 @@ test(
 
 			a5.b?.<T>();
 
-			(a6 ? b6 : c6)?.zoo();`,
+			(a6 ? b6 : c6)?.zoo();
+
+			a7?.b.c();
+
+			a8?.b.c;
+      
+			a9.b?.c.d();
+
+			a10.b?.c.d;
+
+			a10.b?.c?.d;
+
+			a11.b?.c.d?.e();
+
+			a12.b?.c.d?.e;
+
+			a13.b.c.d.e?.();
+
+			a14?.['b'].c?.['d'];
+			`,
 		);
 
 		t.snapshot(response);

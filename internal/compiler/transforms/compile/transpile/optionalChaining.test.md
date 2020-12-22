@@ -5,16 +5,34 @@
 ## `optional chaining gets compiled correct`
 
 ```
-a1 == null ? undefined : a1.b();
+a1 == void 0 ? void 0 : a1.b();
 
-(a2 == null ? undefined : a2.b) == null ? undefined : a2.b.c();
+(a2 == void 0 ? void 0 : a2.b) == void 0 ? void 0 : a2.b.c();
 
-a3.b == null ? undefined : a3.b();
+a3.b == void 0 ? void 0 : a3.b();
 
-(a4 == null ? undefined : a4.b) == null ? undefined : a4.b();
+(a4 == void 0 ? void 0 : a4.b) == void 0 ? void 0 : a4.b();
 
-a5.b == null ? undefined : a5.b();
+a5.b == void 0 ? void 0 : a5.b();
 
-(a6 ? b6 : c6) == null ? undefined : (a6 ? b6 : c6).zoo();
+(a6 ? b6 : c6) == void 0 ? void 0 : (a6 ? b6 : c6).zoo();
+
+a7 == void 0 ? void 0 : a7.b.c();
+
+a8 == void 0 ? void 0 : a8.b.c;
+
+a9.b == void 0 ? void 0 : a9.b.c.d();
+
+a10.b == void 0 ? void 0 : a10.b.c.d;
+
+(a10.b == void 0 ? void 0 : a10.b.c) == void 0 ? void 0 : a10.b.c.d;
+
+(a11.b == void 0 ? void 0 : a11.b.c.d) == void 0 ? void 0 : a11.b.c.d.e();
+
+(a12.b == void 0 ? void 0 : a12.b.c.d) == void 0 ? void 0 : a12.b.c.d.e;
+
+a13.b.c.d.e == void 0 ? void 0 : a13.b.c.d.e();
+
+(a14 == void 0 ? void 0 : a14["b"].c) == void 0 ? void 0 : a14["b"].c["d"];
 
 ```
