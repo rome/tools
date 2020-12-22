@@ -56,6 +56,7 @@ export default createVisitor({
 		if (
 			path.parent.type !== "JSReturnStatement" &&
 			path.parent.type !== "JSVariableDeclarator" &&
+			path.parent.type !== "JSConditionalExpression" &&
 			!isFunctionNode(path.parent) &&
 			isFragment(node, scope) &&
 			!(node.type === "JSXElement" && hasJSXAttribute(node, "key")) &&
