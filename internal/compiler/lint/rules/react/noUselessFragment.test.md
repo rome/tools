@@ -375,3 +375,20 @@ function cat() {
 </Fragment>;
 
 ```
+
+### `15`
+
+```
+✔ No known problems!
+
+```
+
+### `15: formatted`
+
+```
+true
+	? <div />
+	: <>
+		</>;
+
+```
