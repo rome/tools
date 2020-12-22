@@ -17,7 +17,7 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b78f7544b7a4c84ffe8121a11ada07184774b09a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3506b3adc8e1997be7bb4c29c0872893faacb0d7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -193,4 +193,5 @@ disallow unnecessary fragments
 	&lt;<span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">SomeComponent</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">Fragment</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">id</span><span class="token punctuation">}</span>&gt;<span class="token punctuation">{</span><span class="token variable">item</span><span class="token punctuation">.</span><span class="token variable">value</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;</code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token boolean">true</span> <span class="token punctuation">?</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt; <span class="token punctuation">:</span> &lt;&gt;&lt;<span class="token operator">/</span>&gt;<span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
