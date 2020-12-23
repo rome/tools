@@ -11,7 +11,9 @@ test(
 		});
 
 		t.not(node.loc, undefined);
+		t.not(node.body[0].loc, undefined);
 
 		t.is(removeShallowLoc(node).loc, undefined);
+		t.not(removeShallowLoc(node).body[0].loc, undefined);
 	},
 );
