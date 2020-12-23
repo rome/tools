@@ -1,10 +1,7 @@
 import {
-	BaseTokens,
 	ParserCore,
 	ParserOptions,
 	ParserOptionsWithRequiredPath,
-	SimpleToken,
-	ValueToken,
 	createParser,
 	isAlpha,
 	isDigit,
@@ -12,6 +9,7 @@ import {
 import {
 	AnyHTMLChildNode,
 	HTMLAttribute,
+	HTMLDoctypeTag,
 	HTMLElement,
 	HTMLIdentifier,
 	HTMLRoot,
@@ -22,26 +20,7 @@ import {Number0, ob1Add, ob1Get0, ob1Inc} from "@internal/ob1";
 import {isEscaped} from "@internal/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@internal/diagnostics";
-
-type Tokens = BaseTokens & {
-	Text: ValueToken<"Text", string>;
-	// <
-	TagStartOpen: SimpleToken<"TagStartOpen">;
-	// />
-	TagSelfClosing: SimpleToken<"TagSelfClosing">;
-	// >
-	TagEnd: SimpleToken<"TagEnd">;
-	// </
-	TagEndOpen: SimpleToken<"TagEndOpen">;
-	Equals: SimpleToken<"Equals">;
-	Identifier: ValueToken<"Identifier", string>;
-	String: ValueToken<"String", string>;
-	Comment: ValueToken<"Comment", string>;
-};
-
-type State = {
-	inTagHead: boolean;
-};
+import {State, Tokens} from "@internal/html-parser/types";
 
 function isTagStartChar(index: Number0, input: string): boolean {
 	const i = ob1Get0(index);
@@ -85,7 +64,7 @@ type HTMLParser = ParserCore<HTMLParserTypes>;
 const createHTMLParser = createParser<HTMLParserTypes>({
 	ignoreWhitespaceTokens: true,
 	diagnosticCategory: "parse/html",
-	getInitialState: () => ({inTagHead: false}),
+	getInitialState: () => ({inTagHead: false, insertionMode: "Initial"}),
 
 	tokenizeWithState(parser, index, state) {
 		const escaped = isEscaped(index, parser.input);
@@ -138,6 +117,16 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 						inTagHead: false,
 					},
 					token: parser.finishToken("TagEnd"),
+				};
+			}
+		}
+
+		if (parser.getInputCharOnly(index) === "!") {
+			const [isCDATA, value, endIndex] = consumeDOCTYPE(parser, index);
+			if (isCDATA && value && endIndex) {
+				return {
+					state,
+					token: parser.finishValueToken("Doctype", value, endIndex),
 				};
 			}
 		}
@@ -243,9 +232,12 @@ function parseAttribute(parser: HTMLParser): HTMLAttribute {
 	);
 }
 
-function parseTag(parser: HTMLParser): HTMLElement {
+function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined {
 	const headStart = parser.getPosition();
 	parser.expectToken("TagStartOpen");
+	if (parser.getToken().type === "Doctype") {
+		return parserDoctype(parser);
+	}
 
 	const attributes: HTMLElement["attributes"] = [];
 	const children: HTMLElement["children"] = [];
@@ -336,6 +328,29 @@ function parseTag(parser: HTMLParser): HTMLElement {
 	);
 }
 
+function parserDoctype(parser: HTMLParser): HTMLDoctypeTag | undefined {
+	const token = parser.getToken();
+	const start = parser.getPosition();
+	if (token.type === "Doctype") {
+		if (token.value !== "html") {
+			parser.unexpectedDiagnostic({
+				description: descriptions.HTML_PARSER.UNSUPPORTED_DOCTYPE(token.value),
+			});
+		} else {
+			parser.nextToken();
+			return parser.finishNode(
+				start,
+				{
+					type: "HTMLDoctypeTag",
+					value: token.value,
+				},
+			);
+		}
+	}
+	parser.nextToken();
+	return undefined;
+}
+
 function parseComment(parser: HTMLParser): undefined {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Comment");
@@ -408,6 +423,9 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 	const token = parser.getToken();
 
 	switch (token.type) {
+		case "Doctype":
+			return parserDoctype(parser);
+
 		case "TagStartOpen":
 			return parseTag(parser);
 
@@ -431,6 +449,34 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 			return undefined;
 		}
 	}
+}
+
+function consumeDOCTYPE(
+	parser: HTMLParser,
+	index: Number0,
+): [boolean, string | undefined, Number0 | undefined] {
+	// doc requires a token like this
+	if (
+		parser.getInputCharOnly(index, 1) === "D" &&
+		parser.getInputCharOnly(index, 2) === "O" &&
+		parser.getInputCharOnly(index, 3) === "C" &&
+		parser.getInputCharOnly(index, 4) === "T" &&
+		parser.getInputCharOnly(index, 5) === "Y" &&
+		parser.getInputCharOnly(index, 6) === "P" &&
+		parser.getInputCharOnly(index, 7) === "E" &&
+		parser.getInputCharOnly(index, 8) === " "
+	) {
+		const [value, endIndex] = parser.readInputFrom(
+			ob1Add(index, 9),
+			(char) => {
+				return char !== ">";
+			},
+		);
+		// we skip the greater sign
+		return [true, value, ob1Add(endIndex, 1)];
+	}
+
+	return [false, undefined, undefined];
 }
 
 export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {

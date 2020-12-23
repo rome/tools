@@ -12,6 +12,21 @@ export const htmlParser = createDiagnosticsCategory({
 		message: markup`Expected to close ${expected} but found ${got}`,
 	}),
 	UNOPENED_TAG: {message: markup`Ending tag with no opening tag`},
+	UNSUPPORTED_DOCTYPE: (value: string) => ({
+		message: markup`The !DOCTYPE value <emphasis>${value}</emphasis> is not supported.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The supported value should be <emphasis>html</emphasis>`,
+			},
+			{
+				type: "log",
+				category: "warn",
+				text: markup`Other DOCTYPEs are deprecated and not supported by Rome as they activate the old "quirk-mode", which is an old standard.`,
+			},
+		],
+	}),
 	UNCLOSED_TAG: (tagName: string, openLocation: DiagnosticLocation) => ({
 		message: markup`Unclosed ${tagName} tag`,
 		advice: [
