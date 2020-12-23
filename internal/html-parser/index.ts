@@ -205,37 +205,58 @@ function parseIdentifier(parser: HTMLParser): HTMLIdentifier {
 	);
 }
 
-function parseString(parser: HTMLParser): HTMLString {
+function parseString(parser: HTMLParser): HTMLString | undefined {
 	const start = parser.getPosition();
-	const value = parser.expectToken("String").value;
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLString",
-			value,
-		},
-	);
+	const token = parser.getToken();
+	if (token.type === "String") {
+		const value = parser.expectToken("String").value;
+		return parser.finishNode(
+			start,
+			{
+				type: "HTMLString",
+				value,
+			},
+		);
+	}
+	parser.unexpectedDiagnostic({
+		description: descriptions.HTML_PARSER.INVALID_ATTRIBUTE_NAME,
+		token,
+	});
+	return undefined;
 }
 
-function parseAttribute(parser: HTMLParser): HTMLAttribute {
+function parseAttribute(parser: HTMLParser): HTMLAttribute | undefined {
 	const start = parser.getPosition();
-	const name = parseIdentifier(parser);
-	parser.expectToken("Equals");
-	const value = parseString(parser);
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLAttribute",
-			name,
-			value,
-		},
-	);
+	const token = parser.getToken();
+	if (token.type === "Identifier") {
+		const name = parseIdentifier(parser);
+		const valueToken = parser.getToken();
+		if (valueToken.type === "Equals") {
+			parser.nextToken();
+			const value = parseString(parser);
+			if (value) {
+				return parser.finishNode(
+					start,
+					{
+						type: "HTMLAttribute",
+						name,
+						value,
+					},
+				);
+			}
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,
+			token,
+		});
+	}
+	return undefined;
 }
 
 function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined {
 	const headStart = parser.getPosition();
 	parser.expectToken("TagStartOpen");
-	if (parser.getToken().type === "Doctype") {
+	if (parser.matchToken("Doctype")) {
 		return parserDoctype(parser);
 	}
 
@@ -255,18 +276,27 @@ function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined 
 		const keyToken = parser.getToken();
 
 		if (keyToken.type === "Identifier") {
-			attributes.push(parseAttribute(parser));
+			const attribute = parseAttribute(parser);
+			if (attribute) {
+				attributes.push(attribute);
+			}
 		} else {
-			throw parser.unexpected({
+			parser.unexpectedDiagnostic({
 				description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,
 			});
+			parser.nextToken();
 		}
 	}
 
 	if (parser.eatToken("TagSelfClosing")) {
 		selfClosing = true;
 	} else {
-		parser.expectToken("TagEnd");
+		if (parser.getToken().type !== "TagEnd") {
+			parser.unexpectedDiagnostic({
+				description: descriptions.HTML_PARSER.TAGEND_NOT_FOUND(tagName),
+			});
+		}
+		parser.nextToken();
 	}
 
 	const headEnd = parser.getPosition();
@@ -285,34 +315,47 @@ function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined 
 		}
 
 		if (parser.matchToken("EOF")) {
-			throw parser.unexpected({
+			parser.unexpectedDiagnostic({
 				description: descriptions.HTML_PARSER.UNCLOSED_TAG(
 					tagName,
 					parser.finishLocAt(headStart, headEnd),
 				),
 			});
+			parser.nextToken();
+			return undefined;
 		} else {
 			parser.expectToken("TagEndOpen");
 
 			const name = parser.getToken();
 			if (name.type === "Identifier") {
 				if (name.value !== tagName) {
-					throw parser.unexpected({
+					parser.unexpectedDiagnostic({
 						description: descriptions.HTML_PARSER.INCORRECT_CLOSING_TAG_NAME(
 							tagName,
 							name.value,
 						),
 					});
+					parser.nextToken();
+					return undefined;
 				}
 
 				parser.nextToken();
 			} else {
-				throw parser.unexpected({
-					description: descriptions.HTML_PARSER.EXPECTED_CLOSING_TAG_NAME,
+				parser.unexpectedDiagnostic({
+					description: descriptions.HTML_PARSER.EXPECTED_CLOSING_TAG_NAME(
+						tagName,
+					),
 				});
+				parser.nextToken();
 			}
 
-			parser.expectToken("TagEnd");
+			if (!parser.matchToken("TagEnd")) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.HTML_PARSER.TAGEND_NOT_FOUND(tagName),
+					token: name,
+				});
+			}
+			parser.nextToken();
 		}
 	}
 
