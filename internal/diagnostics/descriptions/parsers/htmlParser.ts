@@ -16,7 +16,9 @@ export const htmlParser = createDiagnosticsCategory({
 	TAGEND_NOT_FOUND: (tagName: string) => ({
 		message: markup`The tag <emphasis>${tagName}</emphasis> doesn't have an end.`,
 	}),
-	TAGNAME_NOT_FOUND: () => ({}),
+	TAGNAME_NOT_FOUND: {
+		message: markup`The tag doesn't have any name.`,
+	},
 	INVALID_ATTRIBUTE_NAME: {
 		message: markup`The name of the attribute is not valid and should be wrapped in double quotes.`,
 	},
