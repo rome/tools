@@ -84,6 +84,7 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSMappedType {
+									nameType: undefined
 									optional: undefined
 									readonly: undefined
 									loc: Object {
@@ -210,6 +211,7 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSMappedType {
+									nameType: undefined
 									optional: true
 									readonly: true
 									loc: Object {
@@ -336,6 +338,7 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSMappedType {
+									nameType: undefined
 									optional: "+"
 									readonly: "+"
 									loc: Object {
@@ -462,6 +465,7 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSMappedType {
+									nameType: undefined
 									optional: "-"
 									readonly: "-"
 									loc: Object {
