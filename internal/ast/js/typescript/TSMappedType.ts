@@ -20,6 +20,7 @@ export interface TSMappedType extends NodeBaseWithComments {
 	readonly typeAnnotation?: AnyTSPrimary;
 	readonly optional?: TSMappedTypeBoolean;
 	readonly readonly?: TSMappedTypeBoolean;
+	readonly nameType?: AnyTSPrimary;
 }
 
 export const tsMappedType = createBuilder<TSMappedType>(
@@ -29,6 +30,7 @@ export const tsMappedType = createBuilder<TSMappedType>(
 		visitorKeys: {
 			typeParameter: true,
 			typeAnnotation: true,
+			nameType: true,
 		},
 	},
 );

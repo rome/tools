@@ -968,6 +968,12 @@ function parseTSMappedType(parser: JSParser): TSMappedType {
 		"ts mapped type parameter",
 	);
 	const typeParameter = parseTSMappedTypeParameter(parser);
+
+	let nameType: AnyTSPrimary | undefined;
+	if (isContextual(parser, "as")) {
+		nameType = tsNextThenParseType(parser);
+	}
+
 	expectClosing(parser, paramOpenContext);
 
 	let optional: TSMappedTypeBoolean;
@@ -991,6 +997,7 @@ function parseTSMappedType(parser: JSParser): TSMappedType {
 			typeAnnotation,
 			optional,
 			readonly,
+			nameType,
 		},
 	);
 }
