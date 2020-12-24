@@ -1,0 +1,1 @@
+type StrStrNumNumBool = [boolean, ...Strings];

@@ -106,7 +106,6 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSTupleType {
-									elementTypes: Array []
 									loc: Object {
 										filename: "typescript/types/tuple-rest-invalid/input.ts"
 										end: Object {
@@ -118,21 +117,10 @@ JSRoot {
 											line: 1
 										}
 									}
-									rest: TSTupleElement {
-										name: undefined
-										optional: false
-										loc: Object {
-											filename: "typescript/types/tuple-rest-invalid/input.ts"
-											end: Object {
-												column: 19
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
-										typeAnnotation: TSArrayType {
+									elementTypes: Array [
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "typescript/types/tuple-rest-invalid/input.ts"
 												end: Object {
@@ -140,25 +128,79 @@ JSRoot {
 													line: 1
 												}
 												start: Object {
-													column: 11
+													column: 8
 													line: 1
 												}
 											}
-											elementType: TSNumberKeywordTypeAnnotation {
+											typeAnnotation: TSRestType {
 												loc: Object {
 													filename: "typescript/types/tuple-rest-invalid/input.ts"
 													end: Object {
-														column: 17
+														column: 19
 														line: 1
 													}
 													start: Object {
-														column: 11
+														column: 8
+														line: 1
+													}
+												}
+												argument: TSArrayType {
+													loc: Object {
+														filename: "typescript/types/tuple-rest-invalid/input.ts"
+														end: Object {
+															column: 19
+															line: 1
+														}
+														start: Object {
+															column: 11
+															line: 1
+														}
+													}
+													elementType: TSNumberKeywordTypeAnnotation {
+														loc: Object {
+															filename: "typescript/types/tuple-rest-invalid/input.ts"
+															end: Object {
+																column: 17
+																line: 1
+															}
+															start: Object {
+																column: 11
+																line: 1
+															}
+														}
+													}
+												}
+											}
+										}
+										TSTupleElement {
+											name: undefined
+											optional: false
+											loc: Object {
+												filename: "typescript/types/tuple-rest-invalid/input.ts"
+												end: Object {
+													column: 27
+													line: 1
+												}
+												start: Object {
+													column: 21
+													line: 1
+												}
+											}
+											typeAnnotation: TSStringKeywordTypeAnnotation {
+												loc: Object {
+													filename: "typescript/types/tuple-rest-invalid/input.ts"
+													end: Object {
+														column: 27
+														line: 1
+													}
+													start: Object {
+														column: 21
 														line: 1
 													}
 												}
 											}
 										}
-									}
+									]
 								}
 							}
 						}
