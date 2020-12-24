@@ -16,6 +16,7 @@
 ```js
 const foo = {
   "bar": true,
+  "foo-bar": true,
 };
 
 ```
@@ -25,6 +26,7 @@ const foo = {
 ```js
 const foo = {
 	bar: true,
+	"foo-bar": true,
 };
 
 ```
