@@ -34,8 +34,13 @@ export default function TSMappedType(
 		"in",
 		space,
 		builder.tokenize(typeParameter.constraint, typeParameter),
-		"]",
 	);
+
+	if (node.nameType) {
+		tokens.push(space, "as", space, builder.tokenize(node.nameType, node));
+	}
+
+	tokens.push("]");
 
 	if (node.optional) {
 		tokens.push(tokenIfPlusMinus(builder, node.optional), "?");

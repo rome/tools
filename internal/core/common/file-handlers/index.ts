@@ -122,7 +122,12 @@ function setHandler(ext: string, handler: PartialExtensionHandler) {
 const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
+	// CSS
 	"css",
+	// Extra css types to be ignored while we don't have a proper integration
+	"scss",
+	"sass",
+	"less",
 	// Images
 	"png",
 	"jpg",
