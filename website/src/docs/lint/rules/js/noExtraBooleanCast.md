@@ -17,14 +17,14 @@ disallow unnecessary boolean casts
 **ESLint Equivalent:** [no-extra-boolean-cast](https://eslint.org/docs/rules/no-extra-boolean-cast)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:cbe830d8d5d7e7baa2b44233f603416dd3f5b284,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:20313da064b1e52d7f4692c2383b533ef1558090,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noExtraBooleanCast</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
 
@@ -34,13 +34,72 @@ disallow unnecessary boolean casts
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
     <span style="color: DodgerBlue;">be coerced to a boolean.</span>
 
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:4</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">Boolean(foo)</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">Boolean(foo)</span>
+
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:6</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:5</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
 </code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:7</span> <strong>lint/js/noExtraBooleanCast</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:7</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
 
@@ -49,6 +108,11 @@ disallow unnecessary boolean casts
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
     <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">foo</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
 
 </code></pre>{% endraw %}
 
@@ -59,7 +123,7 @@ disallow unnecessary boolean casts
 	<span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:4:9</span> <strong>lint/js/noExtraBooleanCast</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:4:9</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
 
@@ -71,13 +135,18 @@ disallow unnecessary boolean casts
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
     <span style="color: DodgerBlue;">be coerced to a boolean.</span>
 
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">x</span><span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">x</span>
+
 </code></pre>{% endraw %}
 
 ---
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> <span class="token operator">!</span><span class="token operator">!</span><span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:7</span> <strong>lint/js/noExtraBooleanCast</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:7</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
 
@@ -87,5 +156,79 @@ disallow unnecessary boolean casts
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
     <span style="color: DodgerBlue;">be coerced to a boolean.</span>
 
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">foo</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
 </code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">new</span> <span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">new</span> <span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">x</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">x</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">;</span>
+     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">x</span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">x</span>
+
+</code></pre>{% endraw %}
+
+---
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text">
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:1</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token operator">!</span><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is not necessary to use double-negation when a value will already</span>
+    <span style="color: DodgerBlue;">be coerced to a boolean.</span>
+
+  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">x</span><span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">x</span>
+
+</code></pre>{% endraw %}
+
+### Valid
+
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token function">Boolean</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
+{% raw %}<pre class="language-text"><code class="language-text"><span class="token operator">!</span><span class="token operator">!</span><span class="token variable">x</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->
