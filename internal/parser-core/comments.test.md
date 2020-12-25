@@ -965,15 +965,15 @@ JSRoot {
 	comments: Array [
 		CommentBlock {
 			id: "0"
-			value: "*\n   * comments in empty block\n   "
+			value: "*\n\t * comments in empty block\n\t "
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 5
+					column: 4
 					line: 4
 				}
 				start: Object {
-					column: 2
+					column: 1
 					line: 2
 				}
 			}
