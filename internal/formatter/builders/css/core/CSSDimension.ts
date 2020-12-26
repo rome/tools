@@ -1,9 +1,14 @@
 import {CSSDimension} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function CSSDimension(
 	builder: Builder,
 	node: CSSDimension,
 ): Token {
-	throw new Error("unimplemented");
+	const tokens: Token[] = [];
+	tokens.push(node.value.toString());
+	if (node.unit) {
+		tokens.push(node.unit);
+	}
+	return concat(tokens);
 }

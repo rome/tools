@@ -1,0 +1,11 @@
+.a {
+	text-decoration: none;
+}
+
+span.something {
+	margin-bottom: 2px;
+}
+
+#id .class:hover {
+	background-color: red;
+}
