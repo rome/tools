@@ -17,6 +17,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
+		category: "lint/js/noSingleCharRegexAlternatives",
+		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
+	},
 	JS_NO_UNNECESSARY_CONTINUE: {
 		category: "lint/js/noUnnecessaryContinue",
 		message: markup`Unnecessary <emphasis>continue</emphasis> statement`,

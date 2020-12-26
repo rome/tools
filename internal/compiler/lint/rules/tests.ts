@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[])>;
 
-/* GENERATED:START(hash:80a5154fc8cfb423e0040786f53f490830fc49ca,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:23edab674452547d174142970ac832e2b85697af,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
@@ -63,6 +63,8 @@ import noSetterReturn from "./js/noSetterReturn.test.rjson";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames.test.rjson";
 // @ts-ignore
 import noShoutyConstants from "./js/noShoutyConstants.test.rjson";
+// @ts-ignore
+import noSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives.test.rjson";
 // @ts-ignore
 import noSparseArray from "./js/noSparseArray.test.rjson";
 // @ts-ignore
@@ -254,6 +256,7 @@ export const tests: Tests = {
 	"js/noSetterReturn": noSetterReturn,
 	"js/noShadowRestrictedNames": noShadowRestrictedNames,
 	"js/noShoutyConstants": noShoutyConstants,
+	"js/noSingleCharRegexAlternatives": noSingleCharRegexAlternatives,
 	"js/noSparseArray": noSparseArray,
 	"js/noTemplateCurlyInString": noTemplateCurlyInString,
 	"js/noUndeclaredVariables": noUndeclaredVariables,
