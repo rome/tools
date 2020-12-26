@@ -106,7 +106,6 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSTupleType {
-									rest: undefined
 									loc: Object {
 										filename: "typescript/types/tuple-optional-invalid/input.ts"
 										end: Object {

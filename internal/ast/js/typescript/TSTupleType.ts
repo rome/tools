@@ -11,7 +11,6 @@ import {createBuilder} from "../../utils";
 export interface TSTupleType extends NodeBaseWithComments {
 	readonly type: "TSTupleType";
 	readonly elementTypes: TSTupleElement[];
-	readonly rest?: TSTupleElement;
 }
 
 export const tsTupleType = createBuilder<TSTupleType>(
@@ -20,7 +19,6 @@ export const tsTupleType = createBuilder<TSTupleType>(
 		bindingKeys: {},
 		visitorKeys: {
 			elementTypes: true,
-			rest: true,
 		},
 	},
 );

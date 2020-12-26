@@ -17,7 +17,7 @@ const evaluators: ExtendedMap<
 > = new ExtendedMap("evaluators");
 export default evaluators;
 
-/* GENERATED:START(hash:d0a409df473136fa1f0904bc4401b258c7f9020c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:c8adb04a2d8c146d42a73f879bf03bb2676103b3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import JSAmbiguousFlowTypeCastExpression from "./temp/JSAmbiguousFlowTypeCastExpression";
 evaluators.set(
 	"JSAmbiguousFlowTypeCastExpression",
@@ -402,6 +402,8 @@ import TSPropertySignature from "./typescript/TSPropertySignature";
 evaluators.set("TSPropertySignature", TSPropertySignature);
 import TSQualifiedName from "./typescript/TSQualifiedName";
 evaluators.set("TSQualifiedName", TSQualifiedName);
+import TSRestType from "./typescript/TSRestType";
+evaluators.set("TSRestType", TSRestType);
 import TSSignatureDeclarationMeta from "./typescript/TSSignatureDeclarationMeta";
 evaluators.set("TSSignatureDeclarationMeta", TSSignatureDeclarationMeta);
 import TSStringKeywordTypeAnnotation from "./typescript/TSStringKeywordTypeAnnotation";

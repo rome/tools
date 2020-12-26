@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:2ce4371c64ca62a914417a3f76581b33bfab1b1a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:b2f07115746d8d145029df40a1e3d7c93111829a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -238,6 +238,7 @@ export * from "./js/typescript/TSObjectTypeAnnotation";
 export * from "./js/typescript/TSParenthesizedType";
 export * from "./js/typescript/TSPropertySignature";
 export * from "./js/typescript/TSQualifiedName";
+export * from "./js/typescript/TSRestType";
 export * from "./js/typescript/TSSignatureDeclarationMeta";
 export * from "./js/typescript/TSStringKeywordTypeAnnotation";
 export * from "./js/typescript/TSStringLiteralTypeAnnotation";
@@ -487,6 +488,7 @@ export type AnyNode =
 	| n.TSParenthesizedType
 	| n.TSPropertySignature
 	| n.TSQualifiedName
+	| n.TSRestType
 	| n.TSSignatureDeclarationMeta
 	| n.TSStringKeywordTypeAnnotation
 	| n.TSStringLiteralTypeAnnotation
