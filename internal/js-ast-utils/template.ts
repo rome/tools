@@ -108,7 +108,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	return {ast, placeholderPaths};
 }
 
-type TemplateSubstitions = Array<AnyNode | string>;
+type TemplateSubstitutions = Array<AnyNode | string>;
 
 function createIdentifier(
 	substitute: AnyNode | string,
@@ -127,7 +127,7 @@ function createIdentifier(
 
 export function template(
 	strs: TemplateStringsArray,
-	...substitutions: TemplateSubstitions
+	...substitutions: TemplateSubstitutions
 ): AnyNode {
 	const {ast, placeholderPaths} = getTemplate(strs);
 
@@ -138,7 +138,7 @@ export function template(
 
 	// this case should never be hit
 	if (placeholderPaths.length !== substitutions.length) {
-		throw new Error("Expected subtituions to be the same length as paths");
+		throw new Error("Expected substitutions to be the same length as paths");
 	}
 
 	const newAst = {...ast};
@@ -174,7 +174,7 @@ export function template(
 
 template.expression = (
 	strs: TemplateStringsArray,
-	...substitutions: TemplateSubstitions
+	...substitutions: TemplateSubstitutions
 ): AnyJSExpression => {
 	const first = template.statement(strs, ...substitutions);
 
@@ -188,7 +188,7 @@ template.expression = (
 
 template.statement = (
 	strs: TemplateStringsArray,
-	...substitutions: TemplateSubstitions
+	...substitutions: TemplateSubstitutions
 ): AnyJSStatement => {
 	// Parse the template, with caching
 	const ast = jsRoot.assert(template(strs, ...substitutions));
@@ -203,7 +203,7 @@ template.statement = (
 
 template.root = (
 	strs: TemplateStringsArray,
-	...substitutions: TemplateSubstitions
+	...substitutions: TemplateSubstitutions
 ): JSRoot => {
 	return jsRoot.assert(template(strs, ...substitutions));
 };
