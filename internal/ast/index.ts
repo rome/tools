@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:44103853f3982b75c4b9e16c71019c383fe6525e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:b2f07115746d8d145029df40a1e3d7c93111829a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -20,12 +20,14 @@ export * from "./css/core/CSSBlock";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
+export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
+export * from "./css/core/CSSWhitespace";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLDoctypeTag";
 export * from "./html/tags/HTMLElement";
@@ -268,12 +270,14 @@ export type AnyNode =
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
+	| n.CSSHash
 	| n.CSSIdentifier
 	| n.CSSNumber
 	| n.CSSPercentage
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
+	| n.CSSWhitespace
 	| n.HTMLAttribute
 	| n.HTMLDoctypeTag
 	| n.HTMLElement

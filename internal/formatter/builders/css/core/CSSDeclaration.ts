@@ -1,9 +1,21 @@
 import {CSSDeclaration} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat, space} from "@internal/formatter";
 
 export default function CSSDeclaration(
 	builder: Builder,
 	node: CSSDeclaration,
 ): Token {
-	throw new Error("unimplemented");
+	const tokens: Token[] = [];
+
+	tokens.push(node.name);
+	tokens.push(":");
+	tokens.push(space);
+	tokens.push(...node.value.map((value) => builder.tokenize(value, node)));
+	if (node.important) {
+		tokens.push(space);
+		tokens.push("!important");
+	}
+	tokens.push(";");
+
+	return concat(tokens);
 }

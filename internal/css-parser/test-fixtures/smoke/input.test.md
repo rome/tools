@@ -70,6 +70,19 @@ CSSRoot {
 						}
 					}
 				}
+				CSSWhitespace {
+					loc: Object {
+						filename: "smoke/input.css"
+						end: Object {
+							column: 5
+							line: 2
+						}
+						start: Object {
+							column: 4
+							line: 2
+						}
+					}
+				}
 			]
 			block: CSSBlock {
 				value: Array [
@@ -322,6 +335,19 @@ CSSRoot {
 									}
 									start: Object {
 										column: 4
+										line: 8
+									}
+								}
+							}
+							CSSWhitespace {
+								loc: Object {
+									filename: "smoke/input.css"
+									end: Object {
+										column: 9
+										line: 8
+									}
+									start: Object {
+										column: 8
 										line: 8
 									}
 								}

@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:3a4f40cacd3ea5c2e64a99ffda6c92eb43abc3c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:91326f452f3b82dd5191bc08ac06e8366f1e13d4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
 import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
@@ -26,6 +26,7 @@ import noRestrictedGlobals from "./js/noRestrictedGlobals";
 import noSetterReturn from "./js/noSetterReturn";
 import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
 import noShoutyConstants from "./js/noShoutyConstants";
+import noSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives";
 import noSparseArray from "./js/noSparseArray";
 import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
 import noUndeclaredVariables from "./js/noUndeclaredVariables";
@@ -140,6 +141,10 @@ lintTransforms.set("js/noRestrictedGlobals", noRestrictedGlobals);
 lintTransforms.set("js/noSetterReturn", noSetterReturn);
 lintTransforms.set("js/noShadowRestrictedNames", noShadowRestrictedNames);
 lintTransforms.set("js/noShoutyConstants", noShoutyConstants);
+lintTransforms.set(
+	"js/noSingleCharRegexAlternatives",
+	noSingleCharRegexAlternatives,
+);
 lintTransforms.set("js/noSparseArray", noSparseArray);
 lintTransforms.set("js/noTemplateCurlyInString", noTemplateCurlyInString);
 lintTransforms.set("js/noUndeclaredVariables", noUndeclaredVariables);
@@ -280,6 +285,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/noSetterReturn",
 	"js/noShadowRestrictedNames",
 	"js/noShoutyConstants",
+	"js/noSingleCharRegexAlternatives",
 	"js/noSparseArray",
 	"js/noTemplateCurlyInString",
 	"js/noUndeclaredVariables",
@@ -394,6 +400,7 @@ export type LintRuleName =
 	| "js/noSetterReturn"
 	| "js/noShadowRestrictedNames"
 	| "js/noShoutyConstants"
+	| "js/noSingleCharRegexAlternatives"
 	| "js/noSparseArray"
 	| "js/noTemplateCurlyInString"
 	| "js/noUndeclaredVariables"

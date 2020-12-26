@@ -89,7 +89,7 @@ Since this command can be destructive and may have unintended consequences, we c
 
 #### `rome logs`
 
-Alias for `rome noop --logs --hang`. See [`--logs` documentation](#--logs) for more info.
+Alias for `rome noop --logs --hang`. See [`--logs` documentation](#logs) for more info.
 
 This command will never complete.
 
@@ -99,7 +99,7 @@ Running this command will start a long-running server and communicate via the [L
 
 #### `rome noop`
 
-This command does nothing. Used in conjunction with other global flags such as [`--logs`](#--logs) and [`--rage`](#--rage).
+This command does nothing. Used in conjunction with other global flags such as [`--logs`](#logs) and [`--rage`](#rage).
 
 **Flags**
 
@@ -107,7 +107,7 @@ This command does nothing. Used in conjunction with other global flags such as [
 
 #### `rome rage`
 
-Alias for `rome noop --rage`. See [`--rage` documentation](#--rage) for more info.
+Alias for `rome noop --rage`. See [`--rage` documentation](#rage) for more info.
 
 #### `rome recover`
 

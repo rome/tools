@@ -40,7 +40,7 @@ type CSSParser = ParserCore<CSSParserTypes>;
 
 export const createCSSParser = createParser<CSSParserTypes>({
 	diagnosticCategory: "parse/css",
-	ignoreWhitespaceTokens: true,
+	ignoreWhitespaceTokens: false,
 	tokenize(parser: CSSParser, index: Number0): AnyCSSToken {
 		const char = parser.getInputCharOnly(index);
 
@@ -697,11 +697,11 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 					// TODO: Parse prelude according to selector grammar
 					// https://www.w3.org/TR/css-syntax-3/#style-rules
 					prelude,
-					block: parseDeclartionBlock(parser),
+					block: parseDeclarationBlock(parser),
 				},
 			);
 		}
-		const parsedValue = parseComponentValue(parser);
+		const parsedValue = parseComponentValue(parser, true);
 		parsedValue && prelude.push(parsedValue);
 	}
 	parser.unexpectedDiagnostic({
@@ -749,7 +749,7 @@ function parseSimpleBlock(parser: CSSParser): CSSBlock | undefined {
 	const startingToken = parser.getToken();
 	const startingTokenValue = getBlockStartTokenValue(parser, startingToken);
 	const endingTokenType = getBlockEndTokenType(parser, startingToken);
-	let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration | undefined> = [];
+	let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration> = [];
 
 	if (!endingTokenType) {
 		return undefined;
@@ -782,12 +782,12 @@ function parseSimpleBlock(parser: CSSParser): CSSBlock | undefined {
 	);
 }
 
-function parseDeclartionBlock(parser: CSSParser): CSSBlock | undefined {
+function parseDeclarationBlock(parser: CSSParser): CSSBlock | undefined {
 	const start = parser.getPosition();
 	const startingToken = parser.getToken();
 	const startingTokenValue = getBlockStartTokenValue(parser, startingToken);
 	const endingTokenType = getBlockEndTokenType(parser, startingToken);
-	let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration | undefined> = [];
+	let value: Array<AnyCSSValue | CSSAtRule | CSSDeclaration> = [];
 
 	if (!endingTokenType) {
 		return undefined;
@@ -832,12 +832,10 @@ function parseComplexBlock(parser: CSSParser): CSSBlock | undefined {
 	);
 }
 
-function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
-	if (parser.matchToken("Whitespace")) {
-		parser.nextToken();
-		return undefined;
-	}
-
+function parseComponentValue(
+	parser: CSSParser,
+	isPrelude: boolean = false,
+): AnyCSSValue | undefined {
 	if (
 		parser.matchToken("LeftCurlyBracket") ||
 		parser.matchToken("LeftParen") ||
@@ -851,6 +849,22 @@ function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	}
 
 	const start = parser.getPosition();
+
+	// NOTE: even though the spec says to ignore whitespaces
+	// Inside the prelude, it has a meaning so we need to have a token
+	if (parser.matchToken("Whitespace")) {
+		parser.nextToken();
+
+		if (isPrelude) {
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSWhitespace",
+				},
+			);
+		}
+		return undefined;
+	}
 
 	if (parser.matchToken("Dimension")) {
 		const unit = (parser.getToken() as Tokens["Dimension"]).unit;
@@ -911,6 +925,20 @@ function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 				value: ":",
 			},
 		);
+	}
+
+	if (parser.matchToken("Hash")) {
+		const hashToken = (parser.getToken() as Tokens["Hash"]);
+		if (hashToken.hashType === "id") {
+			parser.nextToken();
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSHash",
+					value: `${hashToken.value}`,
+				},
+			);
+		}
 	}
 
 	const value = (parser.getToken() as ValueToken<string, string>).value;
