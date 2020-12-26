@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:dd9807e2d59163449a5b105de9f20bf55345169d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:5ea6c8a2d1239e85eec333e09beec221ebccedff,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -31,6 +31,8 @@ import CSSDimension from "./css/core/CSSDimension";
 builders.set("CSSDimension", CSSDimension);
 import CSSFunction from "./css/core/CSSFunction";
 builders.set("CSSFunction", CSSFunction);
+import CSSHash from "./css/core/CSSHash";
+builders.set("CSSHash", CSSHash);
 import CSSIdentifier from "./css/core/CSSIdentifier";
 builders.set("CSSIdentifier", CSSIdentifier);
 import CSSNumber from "./css/core/CSSNumber";
@@ -43,6 +45,8 @@ import CSSRoot from "./css/core/CSSRoot";
 builders.set("CSSRoot", CSSRoot);
 import CSSRule from "./css/core/CSSRule";
 builders.set("CSSRule", CSSRule);
+import CSSWhitespace from "./css/core/CSSWhitespace";
+builders.set("CSSWhitespace", CSSWhitespace);
 import HTMLAttribute from "./html/attributes/HTMLAttribute";
 builders.set("HTMLAttribute", HTMLAttribute);
 import HTMLDoctypeTag from "./html/tags/HTMLDoctypeTag";

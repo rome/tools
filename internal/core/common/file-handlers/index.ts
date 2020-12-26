@@ -24,6 +24,7 @@ import {
 	configHandler,
 } from "@internal/core/common/file-handlers/base";
 import {CONFIG_HANDLERS} from "@internal/codec-config";
+import {cssHandler} from "@internal/core/common/file-handlers/css";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -122,8 +123,6 @@ function setHandler(ext: string, handler: PartialExtensionHandler) {
 const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
-	// CSS
-	"css",
 	// Extra css types to be ignored while we don't have a proper integration
 	"scss",
 	"sass",
@@ -163,7 +162,7 @@ setHandler("tsx", tsxHandler);
 setHandler("html", htmlHandler);
 setHandler("htm", htmlHandler);
 setHandler("md", markdownHandler);
-
+setHandler("css", cssHandler);
 // Config
 
 for (const handler of CONFIG_HANDLERS) {
