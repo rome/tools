@@ -269,7 +269,7 @@ function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined 
 		return undefined;
 	}
 	if (parser.matchToken("Doctype")) {
-		return parserDoctype(parser);
+		return parseDoctype(parser);
 	}
 
 	const attributes: HTMLElement["attributes"] = [];
@@ -395,7 +395,7 @@ function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined 
 	);
 }
 
-function parserDoctype(parser: HTMLParser): HTMLDoctypeTag | undefined {
+function parseDoctype(parser: HTMLParser): HTMLDoctypeTag | undefined {
 	const token = parser.getToken();
 	const start = parser.getPosition();
 	if (token.type === "Doctype") {
@@ -502,7 +502,7 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 
 	switch (token.type) {
 		case "Doctype":
-			return parserDoctype(parser);
+			return parseDoctype(parser);
 
 		case "TagStartOpen":
 			return parseTag(parser);
