@@ -1,10 +1,7 @@
 import {
-	BaseTokens,
 	ParserCore,
 	ParserOptions,
 	ParserOptionsWithRequiredPath,
-	SimpleToken,
-	ValueToken,
 	createParser,
 	isAlpha,
 	isDigit,
@@ -12,6 +9,7 @@ import {
 import {
 	AnyHTMLChildNode,
 	HTMLAttribute,
+	HTMLDoctypeTag,
 	HTMLElement,
 	HTMLIdentifier,
 	HTMLRoot,
@@ -22,26 +20,7 @@ import {Number0, ob1Add, ob1Get0, ob1Inc} from "@internal/ob1";
 import {isEscaped} from "@internal/string-utils";
 import {isSelfClosingTagName} from "./tags";
 import {descriptions} from "@internal/diagnostics";
-
-type Tokens = BaseTokens & {
-	Text: ValueToken<"Text", string>;
-	// <
-	TagStartOpen: SimpleToken<"TagStartOpen">;
-	// />
-	TagSelfClosing: SimpleToken<"TagSelfClosing">;
-	// >
-	TagEnd: SimpleToken<"TagEnd">;
-	// </
-	TagEndOpen: SimpleToken<"TagEndOpen">;
-	Equals: SimpleToken<"Equals">;
-	Identifier: ValueToken<"Identifier", string>;
-	String: ValueToken<"String", string>;
-	Comment: ValueToken<"Comment", string>;
-};
-
-type State = {
-	inTagHead: boolean;
-};
+import {State, Tokens} from "@internal/html-parser/types";
 
 function isTagStartChar(index: Number0, input: string): boolean {
 	const i = ob1Get0(index);
@@ -85,7 +64,7 @@ type HTMLParser = ParserCore<HTMLParserTypes>;
 const createHTMLParser = createParser<HTMLParserTypes>({
 	ignoreWhitespaceTokens: true,
 	diagnosticCategory: "parse/html",
-	getInitialState: () => ({inTagHead: false}),
+	getInitialState: () => ({inTagHead: false, insertionMode: "Initial"}),
 
 	tokenizeWithState(parser, index, state) {
 		const escaped = isEscaped(index, parser.input);
@@ -138,6 +117,16 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 						inTagHead: false,
 					},
 					token: parser.finishToken("TagEnd"),
+				};
+			}
+		}
+
+		if (parser.getInputCharOnly(index) === "!") {
+			const [isCDATA, value, endIndex] = consumeDOCTYPE(parser, index);
+			if (isCDATA && value && endIndex) {
+				return {
+					state,
+					token: parser.finishValueToken("Doctype", value, endIndex),
 				};
 			}
 		}
@@ -204,53 +193,96 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 	},
 });
 
-function parseIdentifier(parser: HTMLParser): HTMLIdentifier {
+function parseIdentifier(parser: HTMLParser): HTMLIdentifier | undefined {
 	const start = parser.getPosition();
-	const token = parser.expectToken("Identifier");
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLIdentifier",
-			name: token.value,
-		},
-	);
+	const token = parser.getToken();
+	if (token.type === "Identifier") {
+		parser.nextToken();
+		return parser.finishNode(
+			start,
+			{
+				type: "HTMLIdentifier",
+				name: token.value,
+			},
+		);
+	}
+
+	parser.nextToken();
+	return undefined;
 }
 
-function parseString(parser: HTMLParser): HTMLString {
+function parseString(parser: HTMLParser): HTMLString | undefined {
 	const start = parser.getPosition();
-	const value = parser.expectToken("String").value;
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLString",
-			value,
-		},
-	);
+	const token = parser.getToken();
+	if (token.type === "String") {
+		parser.nextToken();
+		return parser.finishNode(
+			start,
+			{
+				type: "HTMLString",
+				value: token.value,
+			},
+		);
+	}
+	parser.unexpectedDiagnostic({
+		description: descriptions.HTML_PARSER.INVALID_ATTRIBUTE_NAME,
+		token,
+	});
+	parser.nextToken();
+	return undefined;
 }
 
-function parseAttribute(parser: HTMLParser): HTMLAttribute {
+function parseAttribute(parser: HTMLParser): HTMLAttribute | undefined {
 	const start = parser.getPosition();
-	const name = parseIdentifier(parser);
-	parser.expectToken("Equals");
-	const value = parseString(parser);
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLAttribute",
-			name,
-			value,
-		},
-	);
+	const token = parser.getToken();
+	if (token.type === "Identifier") {
+		const name = parseIdentifier(parser);
+		const valueToken = parser.getToken();
+		if (valueToken.type === "Equals") {
+			parser.nextToken();
+			const value = parseString(parser);
+			if (value && name) {
+				return parser.finishNode(
+					start,
+					{
+						type: "HTMLAttribute",
+						name,
+						value,
+					},
+				);
+			}
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,
+			token,
+		});
+	}
+	return undefined;
 }
 
-function parseTag(parser: HTMLParser): HTMLElement {
+function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined {
 	const headStart = parser.getPosition();
-	parser.expectToken("TagStartOpen");
+	if (!parser.eatToken("TagStartOpen")) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.HTML_PARSER.UNKNOWN_START,
+		});
+		return undefined;
+	}
+	if (parser.matchToken("Doctype")) {
+		return parseDoctype(parser);
+	}
 
 	const attributes: HTMLElement["attributes"] = [];
 	const children: HTMLElement["children"] = [];
 
 	const name = parseIdentifier(parser);
+	if (!name) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.HTML_PARSER.TAGNAME_NOT_FOUND,
+		});
+		parser.nextToken();
+		return undefined;
+	}
 	const tagName = name.name;
 	let selfClosing = isSelfClosingTagName(tagName);
 
@@ -263,18 +295,27 @@ function parseTag(parser: HTMLParser): HTMLElement {
 		const keyToken = parser.getToken();
 
 		if (keyToken.type === "Identifier") {
-			attributes.push(parseAttribute(parser));
+			const attribute = parseAttribute(parser);
+			if (attribute) {
+				attributes.push(attribute);
+			}
 		} else {
-			throw parser.unexpected({
+			parser.unexpectedDiagnostic({
 				description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,
 			});
+			parser.nextToken();
 		}
 	}
 
 	if (parser.eatToken("TagSelfClosing")) {
 		selfClosing = true;
 	} else {
-		parser.expectToken("TagEnd");
+		if (parser.getToken().type !== "TagEnd") {
+			parser.unexpectedDiagnostic({
+				description: descriptions.HTML_PARSER.TAGEND_NOT_FOUND(tagName),
+			});
+		}
+		parser.nextToken();
 	}
 
 	const headEnd = parser.getPosition();
@@ -292,34 +333,52 @@ function parseTag(parser: HTMLParser): HTMLElement {
 		}
 
 		if (parser.matchToken("EOF")) {
-			throw parser.unexpected({
+			parser.unexpectedDiagnostic({
 				description: descriptions.HTML_PARSER.UNCLOSED_TAG(
 					tagName,
 					parser.finishLocAt(headStart, headEnd),
 				),
 			});
+			parser.nextToken();
+			return undefined;
 		} else {
-			parser.expectToken("TagEndOpen");
+			if (!parser.matchToken("TagEndOpen")) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.HTML_PARSER.TAGEND_NOT_FOUND(tagName),
+				});
+			}
+			parser.nextToken();
 
 			const name = parser.getToken();
 			if (name.type === "Identifier") {
 				if (name.value !== tagName) {
-					throw parser.unexpected({
+					parser.unexpectedDiagnostic({
 						description: descriptions.HTML_PARSER.INCORRECT_CLOSING_TAG_NAME(
 							tagName,
 							name.value,
 						),
 					});
+					parser.nextToken();
+					return undefined;
 				}
 
 				parser.nextToken();
 			} else {
-				throw parser.unexpected({
-					description: descriptions.HTML_PARSER.EXPECTED_CLOSING_TAG_NAME,
+				parser.unexpectedDiagnostic({
+					description: descriptions.HTML_PARSER.EXPECTED_CLOSING_TAG_NAME(
+						tagName,
+					),
 				});
+				parser.nextToken();
 			}
 
-			parser.expectToken("TagEnd");
+			if (!parser.matchToken("TagEnd")) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.HTML_PARSER.TAGEND_NOT_FOUND(tagName),
+					token: name,
+				});
+			}
+			parser.nextToken();
 		}
 	}
 
@@ -335,78 +394,115 @@ function parseTag(parser: HTMLParser): HTMLElement {
 	);
 }
 
-function parseComment(parser: HTMLParser): undefined {
+function parseDoctype(parser: HTMLParser): HTMLDoctypeTag | undefined {
+	const token = parser.getToken();
 	const start = parser.getPosition();
-	const token = parser.expectToken("Comment");
-
-	parser.registerComment(
-		parser.comments.createComment({
-			value: token.value,
-			type: "CommentBlock",
-			loc: parser.finishLoc(start),
-		}),
-	);
+	if (token.type === "Doctype") {
+		if (token.value !== "html") {
+			parser.unexpectedDiagnostic({
+				description: descriptions.HTML_PARSER.UNSUPPORTED_DOCTYPE(token.value),
+			});
+		} else {
+			parser.nextToken();
+			return parser.finishNode(
+				start,
+				{
+					type: "HTMLDoctypeTag",
+					value: token.value,
+				},
+			);
+		}
+	}
+	parser.nextToken();
 	return undefined;
 }
 
-function parseText(parser: HTMLParser): HTMLText {
+function parseComment(parser: HTMLParser): undefined {
 	const start = parser.getPosition();
-	const token = parser.expectToken("Text");
 
-	const lines: string[] = [];
-	let line = "";
+	const token = parser.getToken();
 
-	function pushLine() {
-		line = line.trim();
-
-		if (line !== "") {
-			lines.push(line);
-			line = "";
-		}
+	if (token.type === "Comment") {
+		parser.nextToken();
+		parser.registerComment(
+			parser.comments.createComment({
+				value: token.value,
+				type: "CommentBlock",
+				loc: parser.finishLoc(start),
+			}),
+		);
 	}
 
-	let lineStart = true;
+	return undefined;
+}
 
-	for (const char of token.value) {
-		switch (char) {
-			case "\n": {
-				lineStart = true;
-				break;
+function parseText(parser: HTMLParser): HTMLText | undefined {
+	const start = parser.getPosition();
+	const token = parser.getToken();
+
+	if (token.type === "Text") {
+		const lines: string[] = [];
+		let line = "";
+
+		function pushLine() {
+			line = line.trim();
+
+			if (line !== "") {
+				lines.push(line);
+				line = "";
 			}
+		}
 
-			case "\t":
-			case " ": {
-				if (!lineStart) {
-					line += " ";
+		let lineStart = true;
+
+		for (const char of token.value) {
+			switch (char) {
+				case "\n": {
+					lineStart = true;
+					break;
 				}
-				break;
-			}
 
-			default: {
-				lineStart = false;
-				line += char;
-				break;
+				case "\t":
+				case " ": {
+					if (!lineStart) {
+						line += " ";
+					}
+					break;
+				}
+
+				default: {
+					lineStart = false;
+					line += char;
+					break;
+				}
 			}
 		}
+
+		pushLine();
+
+		const value = lines.join(" ").replace(/\s+/g, " ");
+
+		parser.nextToken();
+		return parser.finishNode(
+			start,
+			{
+				type: "HTMLText",
+				value,
+			},
+		);
 	}
 
-	pushLine();
-
-	const value = lines.join(" ").replace(/\s+/g, " ");
-
-	return parser.finishNode(
-		start,
-		{
-			type: "HTMLText",
-			value,
-		},
-	);
+	parser.nextToken();
+	return undefined;
 }
 
 function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 	const token = parser.getToken();
 
 	switch (token.type) {
+		case "Doctype":
+			return parseDoctype(parser);
+
 		case "TagStartOpen":
 			return parseTag(parser);
 
@@ -430,6 +526,34 @@ function parseChild(parser: HTMLParser): undefined | AnyHTMLChildNode {
 			return undefined;
 		}
 	}
+}
+
+function consumeDOCTYPE(
+	parser: HTMLParser,
+	index: Number0,
+): [boolean, string | undefined, Number0 | undefined] {
+	// doc requires a token like this
+	if (
+		parser.getInputCharOnly(index, 1) === "D" &&
+		parser.getInputCharOnly(index, 2) === "O" &&
+		parser.getInputCharOnly(index, 3) === "C" &&
+		parser.getInputCharOnly(index, 4) === "T" &&
+		parser.getInputCharOnly(index, 5) === "Y" &&
+		parser.getInputCharOnly(index, 6) === "P" &&
+		parser.getInputCharOnly(index, 7) === "E" &&
+		parser.getInputCharOnly(index, 8) === " "
+	) {
+		const [value, endIndex] = parser.readInputFrom(
+			ob1Add(index, 9),
+			(char) => {
+				return char !== ">";
+			},
+		);
+		// we skip the greater sign
+		return [true, value, ob1Add(endIndex, 1)];
+	}
+
+	return [false, undefined, undefined];
 }
 
 export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
