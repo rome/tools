@@ -8,7 +8,7 @@
 
 ```
 
- lint/js/noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -16,6 +16,11 @@
         ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - Boolean(foo)
+  + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -26,7 +31,7 @@
 ### `0: formatted`
 
 ```
-if (Boolean(foo)) {
+if (foo) {
 }
 
 ```
@@ -35,25 +40,42 @@ if (Boolean(foo)) {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/2/file.ts:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/2/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-    while (!!foo) {}
-           ^^^^^
+    if (!!Boolean(foo)) {}
+        ^^^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
+  ℹ Safe fix
+
+  - !!Boolean(foo)
+  + Boolean(foo)
+
+ lint/js/noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - Boolean(foo)
+  + foo
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 1 problem
+✖ Found 2 problems
 
 ```
 
 ### `1: formatted`
 
 ```
-while (!!foo) {}
+if (foo) {
+}
 
 ```
 
@@ -61,16 +83,19 @@ while (!!foo) {}
 
 ```
 
- lint/js/noExtraBooleanCast/reject/3/file.ts:4:9 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-    2 │ do {
-    3 │   1 + 1;
-  > 4 │ } while (Boolean(x));
-      │          ^^^^^^^^^^
+    if (!Boolean(foo)) {}
+         ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - Boolean(foo)
+  + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -81,10 +106,8 @@ while (!!foo) {}
 ### `2: formatted`
 
 ```
-let x = 1;
-do {
-	1 + 1;
-} while (Boolean(x));
+if (!foo) {
+}
 
 ```
 
@@ -92,14 +115,19 @@ do {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
-    for (; !!foo; ) {}
+    while (!!foo) {}
            ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - !!foo
+  + foo
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,6 +138,208 @@ do {
 ### `3: formatted`
 
 ```
-while (!!foo) {}
+while (foo) {}
+
+```
+
+### `4`
+
+```
+
+ lint/js/noExtraBooleanCast/reject/5/file.ts:4:9 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+    2 │ do {
+    3 │   1 + 1;
+  > 4 │ } while (Boolean(x));
+      │          ^^^^^^^^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - Boolean(x)
+  + x
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+let x = 1;
+do {
+	1 + 1;
+} while (x);
+
+```
+
+### `5`
+
+```
+
+ lint/js/noExtraBooleanCast/reject/6/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+    for (; !!foo; ) {}
+           ^^^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - !!foo
+  + foo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+while (foo) {}
+
+```
+
+### `6`
+
+```
+
+ lint/js/noExtraBooleanCast/reject/7/file.ts:1:12 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+    new Boolean(!!x);
+                ^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - !!x
+  + x
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+new Boolean(x);
+
+```
+
+### `7`
+
+```
+
+ lint/js/noExtraBooleanCast/reject/8/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+    !!!x;
+     ^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - !!x
+  + x
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+!x;
+
+```
+
+### `8`
+
+```
+
+ lint/js/noExtraBooleanCast/reject/9/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+
+  ✖ Avoid redundant double-negation.
+
+    !Boolean(x);
+     ^^^^^^^^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
+
+  ℹ Safe fix
+
+  - Boolean(x)
+  + x
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+!x;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+Boolean(!x);
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+!x;
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+!!x;
 
 ```

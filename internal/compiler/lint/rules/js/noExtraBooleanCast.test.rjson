@@ -4,6 +4,12 @@ invalid: [
 		if (Boolean(foo)) {}
 	"
 	"
+		if (!!Boolean(foo)) {}
+	"
+	"
+		if (!Boolean(foo)) {}
+	"
+	"
 		while (!!foo) {}
 	"
 	"
@@ -14,5 +20,25 @@ invalid: [
 	"
 	"
 		for (; !!foo; ) {}
+	"
+	"
+		new Boolean(!!x);
+	"
+	"
+		!!!x;
+	"
+	"
+		!Boolean(x);
+	"
+]
+valid: [
+	"
+		Boolean(!x);
+	"
+	"
+		!x;
+	"
+	"
+		!!x;
 	"
 ]
