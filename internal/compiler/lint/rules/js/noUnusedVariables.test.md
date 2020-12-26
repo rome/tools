@@ -162,33 +162,195 @@ function foo(b) {
 ### `5`
 
 ```
-✔ No known problems!
+
+ lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function variable foo is unused.
+
+  > 1 │ function foo() {
+      │          ^^^
+    2 │   foo();
+    3 │ }
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-function foo(_, b) {
-	console.log(b);
+function foo() {
+	foo();
 }
-foo();
 
 ```
 
 ### `6`
 
 ```
-✔ No known problems!
+
+ lint/js/noUnusedVariables/reject/7/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The const variable foo is unused.
+
+  > 1 │ const foo = () => {
+      │       ^^^
+    2 │   foo();
+    3 │   console.log(this);
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `6: formatted`
 
 ```
+const foo = () => {
+	foo();
+	console.log(this);
+};
+
+```
+
+### `7`
+
+```
+
+ lint/js/noUnusedVariables/reject/8/file.ts:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The function variable foo is unused.
+
+  > 1 │ function foo(): typeof foo {
+      │          ^^^
+    2 │     return function () {
+    3 │         return foo;
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+function foo(): typeof foo {
+	return function() {
+		return foo;
+	};
+}
+
+```
+
+### `8`
+
+```
+
+ lint/js/noUnusedVariables/reject/9/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The class variable Foo is unused.
+
+  > 1 │ class Foo {
+      │       ^^^
+    2 │     init() {
+    3 │       this._foo = new Foo();
+
+  ℹ Unused variables are dead code and usually the result of incomplete refactoring.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+class Foo {
+	init() {
+		this._foo = new Foo();
+	}
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
 function foo(_, b) {
 	console.log(b);
 }
 foo();
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```
+function foo(_, b) {
+	console.log(b);
+}
+foo();
+
+```
+
+### `11`
+
+```
+✔ No known problems!
+
+```
+
+### `11: formatted`
+
+```
+foo();
+function foo() {
+	foo();
+}
+
+```
+
+### `12`
+
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+class Foo {
+	init() {
+		this._foo = new Foo();
+	}
+}
+const foo = new Foo();
+foo.init();
 
 ```

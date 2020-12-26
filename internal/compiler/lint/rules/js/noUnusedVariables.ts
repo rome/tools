@@ -1,7 +1,11 @@
-import {Scope, createVisitor, signals} from "@internal/compiler";
+import {Path, Scope, createVisitor, signals} from "@internal/compiler";
 import {getBindingIdentifiers} from "@internal/js-ast-utils";
 import {Dict} from "@internal/typescript-helpers";
-import {ArgumentsBinding, TypeBinding} from "@internal/compiler/scope/bindings";
+import {
+	ArgumentsBinding,
+	Binding,
+	TypeBinding,
+} from "@internal/compiler/scope/bindings";
 import {descriptions} from "@internal/diagnostics";
 
 type State = {
@@ -11,6 +15,50 @@ type State = {
 
 // Common variables that are sometimes impossible to avoid
 const ignoreVariables = ["React"];
+
+function getEnclosingFunctionBodyScope(
+	refPath: Path,
+	binding: Binding,
+): Scope | undefined {
+	const block = refPath.findAncestry((path) => {
+		const node = path.node;
+		return (
+			((node.type === "JSVariableDeclarator" &&
+			(node.init?.type === "JSFunctionExpression" ||
+			node.init?.type === "JSArrowFunctionExpression")) ||
+			node.type === "JSFunctionDeclaration" ||
+			node.type === "JSClassDeclaration") &&
+			node.id === binding.node
+		);
+	});
+
+	return block?.scope;
+}
+
+function isSelfReference(refPath: Path, binding: Binding) {
+	let scope: Scope | undefined = refPath.scope;
+	const blockScope = getEnclosingFunctionBodyScope(refPath, binding);
+	if (blockScope) {
+		while (scope) {
+			if (scope === blockScope) {
+				return true;
+			}
+			scope = scope.parentScope;
+		}
+	}
+	return false;
+}
+
+function maybeFunctionNameBinding(binding: Binding) {
+	const kind = binding.kind;
+	return (
+		kind === "let" ||
+		kind === "const" ||
+		kind === "var" ||
+		kind === "function" ||
+		kind === "class"
+	);
+}
 
 export default createVisitor<State>({
 	name: "js/unusedVariables",
@@ -119,8 +167,16 @@ export default createVisitor<State>({
 			node.type === "JSReferenceIdentifier"
 		) {
 			const binding = path.scope.getBindingFromPath(path);
-
 			if (binding !== undefined) {
+				let used = true;
+
+				if (
+					node.type === "JSReferenceIdentifier" &&
+					maybeFunctionNameBinding(binding)
+				) {
+					used = !isSelfReference(path, binding);
+				}
+
 				state.set(
 					(state): State => {
 						return {
@@ -128,7 +184,9 @@ export default createVisitor<State>({
 							// @ts-ignore
 							usedBindings: {
 								...state.usedBindings,
-								[node.name]: true,
+								[node.name]: state.usedBindings[node.name] === false
+									? used
+									: state.usedBindings[node.name],
 							},
 						};
 					},
