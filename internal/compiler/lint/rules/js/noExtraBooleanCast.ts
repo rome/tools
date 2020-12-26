@@ -5,18 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createVisitor, signals} from "@internal/compiler";
+import {createVisitor, signals} from "@internal/compiler";
 import {
 	AnyNode,
-	JSConditionalExpression,
-	JSDoWhileStatement,
-	JSForStatement,
-	JSIfStatement,
-	JSWhileStatement,
+	JSCallExpression,
+	JSNewExpression,
+	JSUnaryExpression,
 } from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 
-function isBooleanConstructorCall(node: AnyNode) {
+function isBooleanConstructorCall(node: AnyNode): node is JSNewExpression {
 	return (
 		node.type === "JSNewExpression" &&
 		node.callee.type === "JSReferenceIdentifier" &&
@@ -24,60 +22,54 @@ function isBooleanConstructorCall(node: AnyNode) {
 	);
 }
 
-function isConditionalStatement(node: AnyNode): node is JSConditionalExpression {
-	return node.type === "JSConditionalExpression";
-}
-
-function isInBooleanContext(
-	node: AnyNode,
-): node is
-	| JSIfStatement
-	| JSDoWhileStatement
-	| JSWhileStatement
-	| JSForStatement {
+function isBooleanCall(node: AnyNode): node is JSCallExpression {
 	return (
-		node.type === "JSIfStatement" ||
-		node.type === "JSDoWhileStatement" ||
-		node.type === "JSWhileStatement" ||
-		node.type === "JSForStatement"
+		node.type === "JSCallExpression" &&
+		node.callee.type === "JSReferenceIdentifier" &&
+		node.callee.name === "Boolean"
 	);
 }
 
-function getNode(path: Path): undefined | AnyNode {
-	let {node} = path;
+function isInBooleanContext(node: AnyNode, parent: AnyNode): boolean {
+	return (
+		(parent.type === "JSIfStatement" ||
+		parent.type === "JSDoWhileStatement" ||
+		parent.type === "JSWhileStatement" ||
+		parent.type === "JSForStatement" ||
+		parent.type === "JSConditionalExpression") &&
+		parent.test === node
+	);
+}
 
-	if (isBooleanConstructorCall(node)) {
-		if (node.type === "JSNewExpression" && node.arguments.length > 0) {
-			return node.arguments[0];
-		}
-	}
-
-	if (isInBooleanContext(node) || isConditionalStatement(node)) {
-		return node.test;
-	}
-
-	return undefined;
+function isNegation(node: AnyNode): node is JSUnaryExpression {
+	return node.type === "JSUnaryExpression" && node.operator === "!";
 }
 
 export default createVisitor({
 	name: "js/noExtraBooleanCast",
 	enter(path) {
-		const {context} = path;
+		const {node, parent} = path;
 
-		let node = getNode(path);
+		if (
+			isInBooleanContext(node, parent) ||
+			isBooleanConstructorCall(parent) ||
+			isNegation(parent) ||
+			isBooleanCall(parent)
+		) {
+			if (isNegation(node) && isNegation(node.argument)) {
+				return path.addFixableDiagnostic(
+					{
+						fixed: signals.replace(node.argument.argument),
+					},
+					descriptions.LINT.JS_NO_EXTRA_BOOLEAN_CAST,
+				);
+			}
 
-		if (node !== undefined) {
-			if (
-				(node.type === "JSUnaryExpression" &&
-				node.operator === "!" &&
-				node.argument.type === "JSUnaryExpression" &&
-				node.argument.operator === "!") ||
-				(node.type === "JSCallExpression" &&
-				node.callee.type === "JSReferenceIdentifier" &&
-				node.callee.name === "Boolean")
-			) {
-				context.addNodeDiagnostic(
-					node,
+			if (isBooleanCall(node) && node.arguments[0]) {
+				return path.addFixableDiagnostic(
+					{
+						fixed: signals.replace(node.arguments[0]),
+					},
 					descriptions.LINT.JS_NO_EXTRA_BOOLEAN_CAST,
 				);
 			}
