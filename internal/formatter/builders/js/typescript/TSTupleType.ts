@@ -22,7 +22,7 @@ import {
 import {hasInnerComments} from "../../comments";
 
 export default function TSTupleType(builder: Builder, node: TSTupleType): Token {
-	if (node.elementTypes.length === 0 && node.rest === undefined) {
+	if (node.elementTypes.length === 0) {
 		if (hasInnerComments(node)) {
 			return concat([
 				"[",
@@ -41,16 +41,15 @@ export default function TSTupleType(builder: Builder, node: TSTupleType): Token 
 		parts.push(builder.tokenize(elementType, node));
 	}
 
-	if (node.rest !== undefined) {
-		parts.push(concat(["...", builder.tokenize(node.rest, node)]));
-	}
-
 	const tokens: Token[] = [
 		"[",
 		indent(concat([softline, join(concat([",", lineOrSpace]), parts)])),
 	];
 
-	if (node.rest === undefined) {
+	if (
+		node.elementTypes[node.elementTypes.length - 1].typeAnnotation.type ===
+		"TSRestType"
+	) {
 		tokens.push(ifBreak(","));
 	}
 

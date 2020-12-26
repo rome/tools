@@ -85,7 +85,6 @@ JSRoot {
 								}
 								typeAnnotation: TSTupleType {
 									elementTypes: Array []
-									rest: undefined
 									loc: Object {
 										filename: "typescript/types/tuple-empty/input.ts"
 										end: Object {
