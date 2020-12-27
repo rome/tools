@@ -13,8 +13,10 @@
 
 ### `0: formatted`
 
-```javascript
-undefined
+```
+<div>
+</div>
+
 ```
 
 ### `1`
@@ -26,8 +28,11 @@ undefined
 
 ### `1: formatted`
 
-```javascript
-undefined
+```
+<div>
+	child
+</div>
+
 ```
 
 ### `2`
@@ -39,8 +44,9 @@ undefined
 
 ### `2: formatted`
 
-```javascript
-undefined
+```
+<input />
+
 ```
 
 ### `3`
@@ -52,6 +58,7 @@ undefined
 
 ### `3: formatted`
 
-```javascript
-undefined
+```
+<input />
+
 ```

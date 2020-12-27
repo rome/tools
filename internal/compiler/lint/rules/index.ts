@@ -1,264 +1,282 @@
-/* GENERATED:START(hash:91326f452f3b82dd5191bc08ac06e8366f1e13d4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
-import useClosingNonVoid from "./html/useClosingNonVoid";
-import noArguments from "./js/noArguments";
-import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
-import noCatchAssign from "./js/noCatchAssign";
-import noCommaOperator from "./js/noCommaOperator";
-import noCompareNegZero from "./js/noCompareNegZero";
-import noCondAssign from "./js/noCondAssign";
-import noDebugger from "./js/noDebugger";
-import noDelete from "./js/noDelete";
-import noDeleteVars from "./js/noDeleteVars";
-import noDoubleEquals from "./js/noDoubleEquals";
-import noDupeArgs from "./js/noDupeArgs";
-import noDuplicateCase from "./js/noDuplicateCase";
-import noDuplicateImportSource from "./js/noDuplicateImportSource";
-import noDuplicateKeys from "./js/noDuplicateKeys";
-import noEmptyBlocks from "./js/noEmptyBlocks";
-import noExtraBooleanCast from "./js/noExtraBooleanCast";
-import noFunctionAssign from "./js/noFunctionAssign";
-import noGetterReturn from "./js/noGetterReturn";
-import noImportAssign from "./js/noImportAssign";
-import noLabelVar from "./js/noLabelVar";
-import noNegationElse from "./js/noNegationElse";
-import noNestedTernary from "./js/noNestedTernary";
-import noRestrictedGlobals from "./js/noRestrictedGlobals";
-import noSetterReturn from "./js/noSetterReturn";
-import noShadowRestrictedNames from "./js/noShadowRestrictedNames";
-import noShoutyConstants from "./js/noShoutyConstants";
-import noSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives";
-import noSparseArray from "./js/noSparseArray";
-import noTemplateCurlyInString from "./js/noTemplateCurlyInString";
-import noUndeclaredVariables from "./js/noUndeclaredVariables";
-import noUnnecessaryContinue from "./js/noUnnecessaryContinue";
-import noUnsafeFinally from "./js/noUnsafeFinally";
-import noUnsafeNegation from "./js/noUnsafeNegation";
-import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
-import noUnusedVariables from "./js/noUnusedVariables";
-import noVar from "./js/noVar";
-import preferOptionalChaining from "./js/preferOptionalChaining";
-import useBlockStatements from "./js/useBlockStatements";
-import useCamelCase from "./js/useCamelCase";
-import useDefaultExportBasename from "./js/useDefaultExportBasename";
-import useDefaultImportBasename from "./js/useDefaultImportBasename";
-import useFunctionDeclarations from "./js/useFunctionDeclarations";
-import useSingleCaseStatement from "./js/useSingleCaseStatement";
-import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
-import useSortedSpecifiers from "./js/useSortedSpecifiers";
-import useTemplate from "./js/useTemplate";
-import useWhile from "./js/useWhile";
-import noAccessKey from "./jsx-a11y/noAccessKey";
-import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements";
-import noAutofocus from "./jsx-a11y/noAutofocus";
-import noDistractingElements from "./jsx-a11y/noDistractingElements";
-import noHeaderScope from "./jsx-a11y/noHeaderScope";
-import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
-import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
-import noOnChange from "./jsx-a11y/noOnChange";
-import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
-import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
-import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
-import noTargetBlank from "./jsx-a11y/noTargetBlank";
-import useAltText from "./jsx-a11y/useAltText";
-import useAnchorContent from "./jsx-a11y/useAnchorContent";
-import useAriaProps from "./jsx-a11y/useAriaProps";
-import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
-import useAriaProptypes from "./jsx-a11y/useAriaProptypes";
-import useHeadingContent from "./jsx-a11y/useHeadingContent";
-import useHtmlLang from "./jsx-a11y/useHtmlLang";
-import useIframeTitle from "./jsx-a11y/useIframeTitle";
-import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
-import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
-import useMediaCaption from "./jsx-a11y/useMediaCaption";
-import useValidAnchor from "./jsx-a11y/useValidAnchor";
-import useValidLang from "./jsx-a11y/useValidLang";
-import noCommentText from "./jsx/noCommentText";
-import noDuplicateProps from "./jsx/noDuplicateProps";
-import noImplicitBoolean from "./jsx/noImplicitBoolean";
-import noPropSpreading from "./jsx/noPropSpreading";
-import useJSXFileExtension from "./jsx/useJSXFileExtension";
-import usePascalCase from "./jsx/usePascalCase";
-import useSelfClosingElements from "./jsx/useSelfClosingElements";
-import noAccessStateInSetState from "./react/noAccessStateInSetState";
-import noArrayIndexKey from "./react/noArrayIndexKey";
-import noChildrenProp from "./react/noChildrenProp";
-import noDanger from "./react/noDanger";
-import noDangerWithChildren from "./react/noDangerWithChildren";
-import noDidMountSetState from "./react/noDidMountSetState";
-import noDidUpdateSetState from "./react/noDidUpdateSetState";
-import noDirectMutationState from "./react/noDirectMutationState";
-import noFindDOMNode from "./react/noFindDOMNode";
-import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
-import noRenderReturnValue from "./react/noRenderReturnValue";
-import noStringRefs from "./react/noStringRefs";
-import noThisInSFC from "./react/noThisInSFC";
-import noUnsafe from "./react/noUnsafe";
-import noUselessFragment from "./react/noUselessFragment";
-import noVoidElementsWithChildren from "./react/noVoidElementsWithChildren";
-import noWillUpdateSetState from "./react/noWillUpdateSetState";
-import useButtonType from "./react/useButtonType";
-import useFragmentSyntax from "./react/useFragmentSyntax";
-import useKey from "./react/useKey";
-import useRenderReturn from "./react/useRenderReturn";
-import useSortComp from "./react/useSortComp";
-import useStylePropObject from "./react/useStylePropObject";
-import noDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions";
-import noEmptyCharacterClass from "./regex/noEmptyCharacterClass";
-import noEmptyMatches from "./regex/noEmptyMatches";
-import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals";
-import noPosixInRegularExpression from "./regex/noPosixInRegularExpression";
-import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
-import noExplicitAny from "./ts/noExplicitAny";
-import preferShorthandArrayType from "./ts/preferShorthandArrayType";
-import useInterfaces from "./ts/useInterfaces";
+/* GENERATED:START(hash:b9db23cd4fee5e93d89f3bd6ba591d08326ae1aa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+import htmlUseClosingNonVoid from "./html/useClosingNonVoid";
+import htmlUseHtmlLang from "./html/useHtmlLang";
+import htmlUseValidLang from "./html/useValidLang";
+import jsNoArguments from "./js/noArguments";
+import jsNoAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
+import jsNoCatchAssign from "./js/noCatchAssign";
+import jsNoCommaOperator from "./js/noCommaOperator";
+import jsNoCompareNegZero from "./js/noCompareNegZero";
+import jsNoCondAssign from "./js/noCondAssign";
+import jsNoDebugger from "./js/noDebugger";
+import jsNoDelete from "./js/noDelete";
+import jsNoDeleteVars from "./js/noDeleteVars";
+import jsNoDoubleEquals from "./js/noDoubleEquals";
+import jsNoDupeArgs from "./js/noDupeArgs";
+import jsNoDuplicateCase from "./js/noDuplicateCase";
+import jsNoDuplicateImportSource from "./js/noDuplicateImportSource";
+import jsNoDuplicateKeys from "./js/noDuplicateKeys";
+import jsNoEmptyBlocks from "./js/noEmptyBlocks";
+import jsNoExtraBooleanCast from "./js/noExtraBooleanCast";
+import jsNoFunctionAssign from "./js/noFunctionAssign";
+import jsNoGetterReturn from "./js/noGetterReturn";
+import jsNoImportAssign from "./js/noImportAssign";
+import jsNoLabelVar from "./js/noLabelVar";
+import jsNoNegationElse from "./js/noNegationElse";
+import jsNoNestedTernary from "./js/noNestedTernary";
+import jsNoRestrictedGlobals from "./js/noRestrictedGlobals";
+import jsNoSetterReturn from "./js/noSetterReturn";
+import jsNoShadowRestrictedNames from "./js/noShadowRestrictedNames";
+import jsNoShoutyConstants from "./js/noShoutyConstants";
+import jsNoSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives";
+import jsNoSparseArray from "./js/noSparseArray";
+import jsNoTemplateCurlyInString from "./js/noTemplateCurlyInString";
+import jsNoUndeclaredVariables from "./js/noUndeclaredVariables";
+import jsNoUnnecessaryContinue from "./js/noUnnecessaryContinue";
+import jsNoUnsafeFinally from "./js/noUnsafeFinally";
+import jsNoUnsafeNegation from "./js/noUnsafeNegation";
+import jsNoUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
+import jsNoUnusedVariables from "./js/noUnusedVariables";
+import jsNoVar from "./js/noVar";
+import jsPreferOptionalChaining from "./js/preferOptionalChaining";
+import jsUseBlockStatements from "./js/useBlockStatements";
+import jsUseCamelCase from "./js/useCamelCase";
+import jsUseDefaultExportBasename from "./js/useDefaultExportBasename";
+import jsUseDefaultImportBasename from "./js/useDefaultImportBasename";
+import jsUseFunctionDeclarations from "./js/useFunctionDeclarations";
+import jsUseSingleCaseStatement from "./js/useSingleCaseStatement";
+import jsUseSingleVarDeclarator from "./js/useSingleVarDeclarator";
+import jsUseSortedSpecifiers from "./js/useSortedSpecifiers";
+import jsUseTemplate from "./js/useTemplate";
+import jsUseWhile from "./js/useWhile";
+import jsxA11YNoAccessKey from "./jsx-a11y/noAccessKey";
+import jsxA11YNoAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements";
+import jsxA11YNoAutofocus from "./jsx-a11y/noAutofocus";
+import jsxA11YNoDistractingElements from "./jsx-a11y/noDistractingElements";
+import jsxA11YNoHeaderScope from "./jsx-a11y/noHeaderScope";
+import jsxA11YNoNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
+import jsxA11YNoNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
+import jsxA11YNoOnChange from "./jsx-a11y/noOnChange";
+import jsxA11YNoPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
+import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt";
+import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles";
+import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank";
+import jsxA11YUseAltText from "./jsx-a11y/useAltText";
+import jsxA11YUseAnchorContent from "./jsx-a11y/useAnchorContent";
+import jsxA11YUseAriaProps from "./jsx-a11y/useAriaProps";
+import jsxA11YUseAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
+import jsxA11YUseAriaProptypes from "./jsx-a11y/useAriaProptypes";
+import jsxA11YUseHeadingContent from "./jsx-a11y/useHeadingContent";
+import jsxA11YUseHtmlLang from "./jsx-a11y/useHtmlLang";
+import jsxA11YUseIframeTitle from "./jsx-a11y/useIframeTitle";
+import jsxA11YUseKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
+import jsxA11YUseKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
+import jsxA11YUseMediaCaption from "./jsx-a11y/useMediaCaption";
+import jsxA11YUseValidAnchor from "./jsx-a11y/useValidAnchor";
+import jsxA11YUseValidLang from "./jsx-a11y/useValidLang";
+import jsxNoCommentText from "./jsx/noCommentText";
+import jsxNoDuplicateProps from "./jsx/noDuplicateProps";
+import jsxNoImplicitBoolean from "./jsx/noImplicitBoolean";
+import jsxNoPropSpreading from "./jsx/noPropSpreading";
+import jsxUseJSXFileExtension from "./jsx/useJSXFileExtension";
+import jsxUsePascalCase from "./jsx/usePascalCase";
+import jsxUseSelfClosingElements from "./jsx/useSelfClosingElements";
+import reactNoAccessStateInSetState from "./react/noAccessStateInSetState";
+import reactNoArrayIndexKey from "./react/noArrayIndexKey";
+import reactNoChildrenProp from "./react/noChildrenProp";
+import reactNoDanger from "./react/noDanger";
+import reactNoDangerWithChildren from "./react/noDangerWithChildren";
+import reactNoDidMountSetState from "./react/noDidMountSetState";
+import reactNoDidUpdateSetState from "./react/noDidUpdateSetState";
+import reactNoDirectMutationState from "./react/noDirectMutationState";
+import reactNoFindDOMNode from "./react/noFindDOMNode";
+import reactNoRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+import reactNoRenderReturnValue from "./react/noRenderReturnValue";
+import reactNoStringRefs from "./react/noStringRefs";
+import reactNoThisInSFC from "./react/noThisInSFC";
+import reactNoUnsafe from "./react/noUnsafe";
+import reactNoUselessFragment from "./react/noUselessFragment";
+import reactNoVoidElementsWithChildren from "./react/noVoidElementsWithChildren";
+import reactNoWillUpdateSetState from "./react/noWillUpdateSetState";
+import reactUseButtonType from "./react/useButtonType";
+import reactUseFragmentSyntax from "./react/useFragmentSyntax";
+import reactUseKey from "./react/useKey";
+import reactUseRenderReturn from "./react/useRenderReturn";
+import reactUseSortComp from "./react/useSortComp";
+import reactUseStylePropObject from "./react/useStylePropObject";
+import regexNoDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions";
+import regexNoEmptyCharacterClass from "./regex/noEmptyCharacterClass";
+import regexNoEmptyMatches from "./regex/noEmptyMatches";
+import regexNoMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals";
+import regexNoPosixInRegularExpression from "./regex/noPosixInRegularExpression";
+import regexNoReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
+import tsNoExplicitAny from "./ts/noExplicitAny";
+import tsPreferShorthandArrayType from "./ts/preferShorthandArrayType";
+import tsUseInterfaces from "./ts/useInterfaces";
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
-lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
-lintTransforms.set("js/noArguments", noArguments);
-lintTransforms.set("js/noAsyncPromiseExecutor", noAsyncPromiseExecutor);
-lintTransforms.set("js/noCatchAssign", noCatchAssign);
-lintTransforms.set("js/noCommaOperator", noCommaOperator);
-lintTransforms.set("js/noCompareNegZero", noCompareNegZero);
-lintTransforms.set("js/noCondAssign", noCondAssign);
-lintTransforms.set("js/noDebugger", noDebugger);
-lintTransforms.set("js/noDelete", noDelete);
-lintTransforms.set("js/noDeleteVars", noDeleteVars);
-lintTransforms.set("js/noDoubleEquals", noDoubleEquals);
-lintTransforms.set("js/noDupeArgs", noDupeArgs);
-lintTransforms.set("js/noDuplicateCase", noDuplicateCase);
-lintTransforms.set("js/noDuplicateImportSource", noDuplicateImportSource);
-lintTransforms.set("js/noDuplicateKeys", noDuplicateKeys);
-lintTransforms.set("js/noEmptyBlocks", noEmptyBlocks);
-lintTransforms.set("js/noExtraBooleanCast", noExtraBooleanCast);
-lintTransforms.set("js/noFunctionAssign", noFunctionAssign);
-lintTransforms.set("js/noGetterReturn", noGetterReturn);
-lintTransforms.set("js/noImportAssign", noImportAssign);
-lintTransforms.set("js/noLabelVar", noLabelVar);
-lintTransforms.set("js/noNegationElse", noNegationElse);
-lintTransforms.set("js/noNestedTernary", noNestedTernary);
-lintTransforms.set("js/noRestrictedGlobals", noRestrictedGlobals);
-lintTransforms.set("js/noSetterReturn", noSetterReturn);
-lintTransforms.set("js/noShadowRestrictedNames", noShadowRestrictedNames);
-lintTransforms.set("js/noShoutyConstants", noShoutyConstants);
+lintTransforms.set("html/useClosingNonVoid", htmlUseClosingNonVoid);
+lintTransforms.set("html/useHtmlLang", htmlUseHtmlLang);
+lintTransforms.set("html/useValidLang", htmlUseValidLang);
+lintTransforms.set("js/noArguments", jsNoArguments);
+lintTransforms.set("js/noAsyncPromiseExecutor", jsNoAsyncPromiseExecutor);
+lintTransforms.set("js/noCatchAssign", jsNoCatchAssign);
+lintTransforms.set("js/noCommaOperator", jsNoCommaOperator);
+lintTransforms.set("js/noCompareNegZero", jsNoCompareNegZero);
+lintTransforms.set("js/noCondAssign", jsNoCondAssign);
+lintTransforms.set("js/noDebugger", jsNoDebugger);
+lintTransforms.set("js/noDelete", jsNoDelete);
+lintTransforms.set("js/noDeleteVars", jsNoDeleteVars);
+lintTransforms.set("js/noDoubleEquals", jsNoDoubleEquals);
+lintTransforms.set("js/noDupeArgs", jsNoDupeArgs);
+lintTransforms.set("js/noDuplicateCase", jsNoDuplicateCase);
+lintTransforms.set("js/noDuplicateImportSource", jsNoDuplicateImportSource);
+lintTransforms.set("js/noDuplicateKeys", jsNoDuplicateKeys);
+lintTransforms.set("js/noEmptyBlocks", jsNoEmptyBlocks);
+lintTransforms.set("js/noExtraBooleanCast", jsNoExtraBooleanCast);
+lintTransforms.set("js/noFunctionAssign", jsNoFunctionAssign);
+lintTransforms.set("js/noGetterReturn", jsNoGetterReturn);
+lintTransforms.set("js/noImportAssign", jsNoImportAssign);
+lintTransforms.set("js/noLabelVar", jsNoLabelVar);
+lintTransforms.set("js/noNegationElse", jsNoNegationElse);
+lintTransforms.set("js/noNestedTernary", jsNoNestedTernary);
+lintTransforms.set("js/noRestrictedGlobals", jsNoRestrictedGlobals);
+lintTransforms.set("js/noSetterReturn", jsNoSetterReturn);
+lintTransforms.set("js/noShadowRestrictedNames", jsNoShadowRestrictedNames);
+lintTransforms.set("js/noShoutyConstants", jsNoShoutyConstants);
 lintTransforms.set(
 	"js/noSingleCharRegexAlternatives",
-	noSingleCharRegexAlternatives,
+	jsNoSingleCharRegexAlternatives,
 );
-lintTransforms.set("js/noSparseArray", noSparseArray);
-lintTransforms.set("js/noTemplateCurlyInString", noTemplateCurlyInString);
-lintTransforms.set("js/noUndeclaredVariables", noUndeclaredVariables);
-lintTransforms.set("js/noUnnecessaryContinue", noUnnecessaryContinue);
-lintTransforms.set("js/noUnsafeFinally", noUnsafeFinally);
-lintTransforms.set("js/noUnsafeNegation", noUnsafeNegation);
-lintTransforms.set("js/noUnusedTemplateLiteral", noUnusedTemplateLiteral);
-lintTransforms.set("js/noUnusedVariables", noUnusedVariables);
-lintTransforms.set("js/noVar", noVar);
-lintTransforms.set("js/preferOptionalChaining", preferOptionalChaining);
-lintTransforms.set("js/useBlockStatements", useBlockStatements);
-lintTransforms.set("js/useCamelCase", useCamelCase);
-lintTransforms.set("js/useDefaultExportBasename", useDefaultExportBasename);
-lintTransforms.set("js/useDefaultImportBasename", useDefaultImportBasename);
-lintTransforms.set("js/useFunctionDeclarations", useFunctionDeclarations);
-lintTransforms.set("js/useSingleCaseStatement", useSingleCaseStatement);
-lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
-lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
-lintTransforms.set("js/useTemplate", useTemplate);
-lintTransforms.set("js/useWhile", useWhile);
-lintTransforms.set("jsx-a11y/noAccessKey", noAccessKey);
+lintTransforms.set("js/noSparseArray", jsNoSparseArray);
+lintTransforms.set("js/noTemplateCurlyInString", jsNoTemplateCurlyInString);
+lintTransforms.set("js/noUndeclaredVariables", jsNoUndeclaredVariables);
+lintTransforms.set("js/noUnnecessaryContinue", jsNoUnnecessaryContinue);
+lintTransforms.set("js/noUnsafeFinally", jsNoUnsafeFinally);
+lintTransforms.set("js/noUnsafeNegation", jsNoUnsafeNegation);
+lintTransforms.set("js/noUnusedTemplateLiteral", jsNoUnusedTemplateLiteral);
+lintTransforms.set("js/noUnusedVariables", jsNoUnusedVariables);
+lintTransforms.set("js/noVar", jsNoVar);
+lintTransforms.set("js/preferOptionalChaining", jsPreferOptionalChaining);
+lintTransforms.set("js/useBlockStatements", jsUseBlockStatements);
+lintTransforms.set("js/useCamelCase", jsUseCamelCase);
+lintTransforms.set("js/useDefaultExportBasename", jsUseDefaultExportBasename);
+lintTransforms.set("js/useDefaultImportBasename", jsUseDefaultImportBasename);
+lintTransforms.set("js/useFunctionDeclarations", jsUseFunctionDeclarations);
+lintTransforms.set("js/useSingleCaseStatement", jsUseSingleCaseStatement);
+lintTransforms.set("js/useSingleVarDeclarator", jsUseSingleVarDeclarator);
+lintTransforms.set("js/useSortedSpecifiers", jsUseSortedSpecifiers);
+lintTransforms.set("js/useTemplate", jsUseTemplate);
+lintTransforms.set("js/useWhile", jsUseWhile);
+lintTransforms.set("jsx-a11y/noAccessKey", jsxA11YNoAccessKey);
 lintTransforms.set(
 	"jsx-a11y/noAriaUnsupportedElements",
-	noAriaUnsupportedElements,
+	jsxA11YNoAriaUnsupportedElements,
 );
-lintTransforms.set("jsx-a11y/noAutofocus", noAutofocus);
-lintTransforms.set("jsx-a11y/noDistractingElements", noDistractingElements);
-lintTransforms.set("jsx-a11y/noHeaderScope", noHeaderScope);
+lintTransforms.set("jsx-a11y/noAutofocus", jsxA11YNoAutofocus);
+lintTransforms.set(
+	"jsx-a11y/noDistractingElements",
+	jsxA11YNoDistractingElements,
+);
+lintTransforms.set("jsx-a11y/noHeaderScope", jsxA11YNoHeaderScope);
 lintTransforms.set(
 	"jsx-a11y/noNoninteractiveElementToInteractiveRole",
-	noNoninteractiveElementToInteractiveRole,
+	jsxA11YNoNoninteractiveElementToInteractiveRole,
 );
 lintTransforms.set(
 	"jsx-a11y/noNoninteractiveTabindex",
-	noNoninteractiveTabindex,
+	jsxA11YNoNoninteractiveTabindex,
 );
-lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
-lintTransforms.set("jsx-a11y/noPositiveTabindex", noPositiveTabindex);
-lintTransforms.set("jsx-a11y/noRedundantAlt", noRedundantAlt);
-lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
-lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
-lintTransforms.set("jsx-a11y/useAltText", useAltText);
-lintTransforms.set("jsx-a11y/useAnchorContent", useAnchorContent);
-lintTransforms.set("jsx-a11y/useAriaProps", useAriaProps);
-lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
-lintTransforms.set("jsx-a11y/useAriaProptypes", useAriaProptypes);
-lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
-lintTransforms.set("jsx-a11y/useHtmlLang", useHtmlLang);
-lintTransforms.set("jsx-a11y/useIframeTitle", useIframeTitle);
-lintTransforms.set("jsx-a11y/useKeyWithClickEvents", useKeyWithClickEvents);
-lintTransforms.set("jsx-a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
-lintTransforms.set("jsx-a11y/useMediaCaption", useMediaCaption);
-lintTransforms.set("jsx-a11y/useValidAnchor", useValidAnchor);
-lintTransforms.set("jsx-a11y/useValidLang", useValidLang);
-lintTransforms.set("jsx/noCommentText", noCommentText);
-lintTransforms.set("jsx/noDuplicateProps", noDuplicateProps);
-lintTransforms.set("jsx/noImplicitBoolean", noImplicitBoolean);
-lintTransforms.set("jsx/noPropSpreading", noPropSpreading);
-lintTransforms.set("jsx/useJSXFileExtension", useJSXFileExtension);
-lintTransforms.set("jsx/usePascalCase", usePascalCase);
-lintTransforms.set("jsx/useSelfClosingElements", useSelfClosingElements);
-lintTransforms.set("react/noAccessStateInSetState", noAccessStateInSetState);
-lintTransforms.set("react/noArrayIndexKey", noArrayIndexKey);
-lintTransforms.set("react/noChildrenProp", noChildrenProp);
-lintTransforms.set("react/noDanger", noDanger);
-lintTransforms.set("react/noDangerWithChildren", noDangerWithChildren);
-lintTransforms.set("react/noDidMountSetState", noDidMountSetState);
-lintTransforms.set("react/noDidUpdateSetState", noDidUpdateSetState);
-lintTransforms.set("react/noDirectMutationState", noDirectMutationState);
-lintTransforms.set("react/noFindDOMNode", noFindDOMNode);
+lintTransforms.set("jsx-a11y/noOnChange", jsxA11YNoOnChange);
+lintTransforms.set("jsx-a11y/noPositiveTabindex", jsxA11YNoPositiveTabindex);
+lintTransforms.set("jsx-a11y/noRedundantAlt", jsxA11YNoRedundantAlt);
+lintTransforms.set("jsx-a11y/noRedundantRoles", jsxA11YNoRedundantRoles);
+lintTransforms.set("jsx-a11y/noTargetBlank", jsxA11YNoTargetBlank);
+lintTransforms.set("jsx-a11y/useAltText", jsxA11YUseAltText);
+lintTransforms.set("jsx-a11y/useAnchorContent", jsxA11YUseAnchorContent);
+lintTransforms.set("jsx-a11y/useAriaProps", jsxA11YUseAriaProps);
+lintTransforms.set("jsx-a11y/useAriaPropsForRole", jsxA11YUseAriaPropsForRole);
+lintTransforms.set("jsx-a11y/useAriaProptypes", jsxA11YUseAriaProptypes);
+lintTransforms.set("jsx-a11y/useHeadingContent", jsxA11YUseHeadingContent);
+lintTransforms.set("jsx-a11y/useHtmlLang", jsxA11YUseHtmlLang);
+lintTransforms.set("jsx-a11y/useIframeTitle", jsxA11YUseIframeTitle);
+lintTransforms.set(
+	"jsx-a11y/useKeyWithClickEvents",
+	jsxA11YUseKeyWithClickEvents,
+);
+lintTransforms.set(
+	"jsx-a11y/useKeyWithMouseEvents",
+	jsxA11YUseKeyWithMouseEvents,
+);
+lintTransforms.set("jsx-a11y/useMediaCaption", jsxA11YUseMediaCaption);
+lintTransforms.set("jsx-a11y/useValidAnchor", jsxA11YUseValidAnchor);
+lintTransforms.set("jsx-a11y/useValidLang", jsxA11YUseValidLang);
+lintTransforms.set("jsx/noCommentText", jsxNoCommentText);
+lintTransforms.set("jsx/noDuplicateProps", jsxNoDuplicateProps);
+lintTransforms.set("jsx/noImplicitBoolean", jsxNoImplicitBoolean);
+lintTransforms.set("jsx/noPropSpreading", jsxNoPropSpreading);
+lintTransforms.set("jsx/useJSXFileExtension", jsxUseJSXFileExtension);
+lintTransforms.set("jsx/usePascalCase", jsxUsePascalCase);
+lintTransforms.set("jsx/useSelfClosingElements", jsxUseSelfClosingElements);
+lintTransforms.set(
+	"react/noAccessStateInSetState",
+	reactNoAccessStateInSetState,
+);
+lintTransforms.set("react/noArrayIndexKey", reactNoArrayIndexKey);
+lintTransforms.set("react/noChildrenProp", reactNoChildrenProp);
+lintTransforms.set("react/noDanger", reactNoDanger);
+lintTransforms.set("react/noDangerWithChildren", reactNoDangerWithChildren);
+lintTransforms.set("react/noDidMountSetState", reactNoDidMountSetState);
+lintTransforms.set("react/noDidUpdateSetState", reactNoDidUpdateSetState);
+lintTransforms.set("react/noDirectMutationState", reactNoDirectMutationState);
+lintTransforms.set("react/noFindDOMNode", reactNoFindDOMNode);
 lintTransforms.set(
 	"react/noRedundantShouldComponentUpdate",
-	noRedundantShouldComponentUpdate,
+	reactNoRedundantShouldComponentUpdate,
 );
-lintTransforms.set("react/noRenderReturnValue", noRenderReturnValue);
-lintTransforms.set("react/noStringRefs", noStringRefs);
-lintTransforms.set("react/noThisInSFC", noThisInSFC);
-lintTransforms.set("react/noUnsafe", noUnsafe);
-lintTransforms.set("react/noUselessFragment", noUselessFragment);
+lintTransforms.set("react/noRenderReturnValue", reactNoRenderReturnValue);
+lintTransforms.set("react/noStringRefs", reactNoStringRefs);
+lintTransforms.set("react/noThisInSFC", reactNoThisInSFC);
+lintTransforms.set("react/noUnsafe", reactNoUnsafe);
+lintTransforms.set("react/noUselessFragment", reactNoUselessFragment);
 lintTransforms.set(
 	"react/noVoidElementsWithChildren",
-	noVoidElementsWithChildren,
+	reactNoVoidElementsWithChildren,
 );
-lintTransforms.set("react/noWillUpdateSetState", noWillUpdateSetState);
-lintTransforms.set("react/useButtonType", useButtonType);
-lintTransforms.set("react/useFragmentSyntax", useFragmentSyntax);
-lintTransforms.set("react/useKey", useKey);
-lintTransforms.set("react/useRenderReturn", useRenderReturn);
-lintTransforms.set("react/useSortComp", useSortComp);
-lintTransforms.set("react/useStylePropObject", useStylePropObject);
+lintTransforms.set("react/noWillUpdateSetState", reactNoWillUpdateSetState);
+lintTransforms.set("react/useButtonType", reactUseButtonType);
+lintTransforms.set("react/useFragmentSyntax", reactUseFragmentSyntax);
+lintTransforms.set("react/useKey", reactUseKey);
+lintTransforms.set("react/useRenderReturn", reactUseRenderReturn);
+lintTransforms.set("react/useSortComp", reactUseSortComp);
+lintTransforms.set("react/useStylePropObject", reactUseStylePropObject);
 lintTransforms.set(
 	"regex/noDuplicateGroupNamesInRegularExpressions",
-	noDuplicateGroupNamesInRegularExpressions,
+	regexNoDuplicateGroupNamesInRegularExpressions,
 );
-lintTransforms.set("regex/noEmptyCharacterClass", noEmptyCharacterClass);
-lintTransforms.set("regex/noEmptyMatches", noEmptyMatches);
+lintTransforms.set("regex/noEmptyCharacterClass", regexNoEmptyCharacterClass);
+lintTransforms.set("regex/noEmptyMatches", regexNoEmptyMatches);
 lintTransforms.set(
 	"regex/noMultipleSpacesInRegularExpressionLiterals",
-	noMultipleSpacesInRegularExpressionLiterals,
+	regexNoMultipleSpacesInRegularExpressionLiterals,
 );
 lintTransforms.set(
 	"regex/noPosixInRegularExpression",
-	noPosixInRegularExpression,
+	regexNoPosixInRegularExpression,
 );
 lintTransforms.set(
 	"regex/noReferenceToNonExistingGroup",
-	noReferenceToNonExistingGroup,
+	regexNoReferenceToNonExistingGroup,
 );
-lintTransforms.set("ts/noExplicitAny", noExplicitAny);
-lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
-lintTransforms.set("ts/useInterfaces", useInterfaces);
+lintTransforms.set("ts/noExplicitAny", tsNoExplicitAny);
+lintTransforms.set("ts/preferShorthandArrayType", tsPreferShorthandArrayType);
+lintTransforms.set("ts/useInterfaces", tsUseInterfaces);
 
 export const lintRuleNames: LintRuleName[] = [
 	"html/useClosingNonVoid",
+	"html/useHtmlLang",
+	"html/useValidLang",
 	"js/noArguments",
 	"js/noAsyncPromiseExecutor",
 	"js/noCatchAssign",
@@ -374,6 +392,8 @@ export const lintRuleNames: LintRuleName[] = [
 
 export type LintRuleName =
 	| "html/useClosingNonVoid"
+	| "html/useHtmlLang"
+	| "html/useValidLang"
 	| "js/noArguments"
 	| "js/noAsyncPromiseExecutor"
 	| "js/noCatchAssign"

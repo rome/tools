@@ -20,7 +20,7 @@ export const htmlHandler: PartialExtensionHandler = {
 	language: "html",
 	hasTabs: true,
 	capabilities: {
-		lint: false,
+		lint: true,
 		format: true,
 	},
 

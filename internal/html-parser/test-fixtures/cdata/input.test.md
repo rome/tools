@@ -17,7 +17,7 @@ HTMLRoot {
 		filename: "cdata/input.html"
 		end: Object {
 			column: 7
-			line: 3
+			line: 6
 		}
 		start: Object {
 			column: 0
@@ -46,7 +46,7 @@ HTMLRoot {
 				filename: "cdata/input.html"
 				end: Object {
 					column: 7
-					line: 3
+					line: 6
 				}
 				start: Object {
 					column: 0
@@ -54,50 +54,19 @@ HTMLRoot {
 				}
 			}
 			children: Array [
-				HTMLElement {
-					name: HTMLIdentifier {
-						name: "ms"
-						loc: Object {
-							filename: "cdata/input.html"
-							end: Object {
-								column: 4
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-					}
-					attributes: Array []
-					selfClosing: false
+				HTMLCdataTag {
+					value: "x>y"
 					loc: Object {
 						filename: "cdata/input.html"
 						end: Object {
-							column: 25
-							line: 2
+							column: 4
+							line: 5
 						}
 						start: Object {
 							column: 1
-							line: 2
+							line: 3
 						}
 					}
-					children: Array [
-						HTMLCdataTag {
-							value: "x<y"
-							loc: Object {
-								filename: "cdata/input.html"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-						}
-					]
 				}
 			]
 		}
