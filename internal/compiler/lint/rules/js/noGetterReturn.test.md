@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 class p {
 	get name() {
 		console.log("hello");
@@ -65,7 +65,7 @@ class p {
 
 ### `1: formatted`
 
-```
+```ts
 let p = {
 	get name() {
 		console.log("hello");
@@ -83,7 +83,7 @@ let p = {
 
 ### `2: formatted`
 
-```
+```ts
 let p = {};
 Object.defineProperty(
 	p,

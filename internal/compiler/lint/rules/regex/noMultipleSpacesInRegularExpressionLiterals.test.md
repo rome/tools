@@ -32,7 +32,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `0: formatted`
 
-```
+```ts
 / {3}/;
 
 ```
@@ -65,7 +65,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `1: formatted`
 
-```
+```ts
 / {2}foo/;
 
 ```
@@ -98,7 +98,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `2: formatted`
 
-```
+```ts
 /foo {3}/;
 
 ```
@@ -131,7 +131,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `3: formatted`
 
-```
+```ts
 /foo {2}bar/;
 
 ```
@@ -164,7 +164,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `4: formatted`
 
-```
+```ts
 /foo {3}bar {4}baz/;
 
 ```
@@ -197,7 +197,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `5: formatted`
 
-```
+```ts
 /foo [ba]r {2}b([az])/;
 
 ```
@@ -211,7 +211,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `6: formatted`
 
-```
+```ts
 /foo {2}bar/;
 
 ```
@@ -225,7 +225,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `7: formatted`
 
-```
+```ts
 /foo bar baz/;
 
 ```
@@ -239,7 +239,7 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ### `8: formatted`
 
-```
+```ts
 /foo /;
 
 ```

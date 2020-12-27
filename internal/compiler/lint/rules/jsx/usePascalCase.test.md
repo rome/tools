@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <Foo_component />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <FOO_COMPONENT />;
 
 ```
@@ -65,7 +65,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <Foo />;
 
 ```
@@ -79,7 +79,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <foo_bar />;
 
 ```
@@ -93,7 +93,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <fooBar />;
 
 ```
@@ -107,7 +107,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <foo_COMPONENT />;
 
 ```
@@ -121,7 +121,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <foo />;
 
 ```
@@ -135,7 +135,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -149,7 +149,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <FooComponent />;
 
 ```

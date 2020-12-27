@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```jsx
 <img src="foo" />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```jsx
 <img {...props} />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```jsx
 <img {...props} alt={undefined} />;
 
 ```
@@ -107,7 +107,7 @@
 
 ### `3: formatted`
 
-```
+```jsx
 <img src="foo" role="presentation" />;
 
 ```
@@ -134,7 +134,7 @@
 
 ### `4: formatted`
 
-```
+```jsx
 <img src="foo" role="none" />;
 
 ```
@@ -161,7 +161,7 @@
 
 ### `5: formatted`
 
-```
+```jsx
 <object {...props} />;
 
 ```
@@ -188,7 +188,7 @@
 
 ### `6: formatted`
 
-```
+```jsx
 <object aria-label={undefined} />;
 
 ```
@@ -215,7 +215,7 @@
 
 ### `7: formatted`
 
-```
+```jsx
 <area {...props} />;
 
 ```
@@ -242,7 +242,7 @@
 
 ### `8: formatted`
 
-```
+```jsx
 <area alt={undefined} />;
 
 ```
@@ -269,7 +269,7 @@
 
 ### `9: formatted`
 
-```
+```jsx
 <input type="image" {...props} />;
 
 ```
@@ -296,7 +296,7 @@
 
 ### `10: formatted`
 
-```
+```jsx
 <input type="image" {...props} alt={undefined} />;
 
 ```
@@ -310,7 +310,7 @@
 
 ### `11: formatted`
 
-```
+```jsx
 <img {...props} alt={true} />;
 
 ```
@@ -324,7 +324,7 @@
 
 ### `12: formatted`
 
-```
+```jsx
 <img src="foo" alt="Foo eating a sandwich." />;
 
 ```
@@ -338,7 +338,7 @@
 
 ### `13: formatted`
 
-```
+```jsx
 <img src="foo" alt={"Foo eating a sandwich."} />;
 
 ```
@@ -352,7 +352,7 @@
 
 ### `14: formatted`
 
-```
+```jsx
 <img src="foo" alt={altText} />;
 
 ```
@@ -366,7 +366,7 @@
 
 ### `15: formatted`
 
-```
+```jsx
 <img src="foo" alt={`${person} smiling`} />;
 
 ```
@@ -380,7 +380,7 @@
 
 ### `16: formatted`
 
-```
+```jsx
 <img src="foo" alt="" />;
 
 ```
@@ -394,7 +394,7 @@
 
 ### `17: formatted`
 
-```
+```jsx
 <object aria-label={true} />;
 
 ```
@@ -408,7 +408,7 @@
 
 ### `18: formatted`
 
-```
+```jsx
 <object aria-label="foo" />;
 
 ```
@@ -422,7 +422,7 @@
 
 ### `19: formatted`
 
-```
+```jsx
 <object aria-labelledby="id1" />;
 
 ```
@@ -436,7 +436,7 @@
 
 ### `20: formatted`
 
-```
+```jsx
 <object>
 	Meaningful description
 </object>;
@@ -452,7 +452,7 @@
 
 ### `21: formatted`
 
-```
+```jsx
 <object>
 	{hello}
 </object>;
@@ -468,7 +468,7 @@
 
 ### `22: formatted`
 
-```
+```jsx
 <object title="An object" />;
 
 ```
@@ -482,7 +482,7 @@
 
 ### `23: formatted`
 
-```
+```jsx
 <area {...props} alt={true} />;
 
 ```
@@ -496,7 +496,7 @@
 
 ### `24: formatted`
 
-```
+```jsx
 <area aria-label="foo" />;
 
 ```
@@ -510,7 +510,7 @@
 
 ### `25: formatted`
 
-```
+```jsx
 <area aria-labelledby="id1" />;
 
 ```
@@ -524,7 +524,7 @@
 
 ### `26: formatted`
 
-```
+```jsx
 <area alt="This is descriptive!" />;
 
 ```
@@ -538,7 +538,7 @@
 
 ### `27: formatted`
 
-```
+```jsx
 <input type="image" {...props} alt={true} />;
 
 ```
@@ -552,7 +552,7 @@
 
 ### `28: formatted`
 
-```
+```jsx
 <input type="image" alt="This is descriptive!" />;
 
 ```
@@ -566,7 +566,7 @@
 
 ### `29: formatted`
 
-```
+```jsx
 <input type="image" aria-label="foo" />;
 
 ```
@@ -580,7 +580,7 @@
 
 ### `30: formatted`
 
-```
+```jsx
 <input type="image" aria-labelledby="id1" />;
 
 ```

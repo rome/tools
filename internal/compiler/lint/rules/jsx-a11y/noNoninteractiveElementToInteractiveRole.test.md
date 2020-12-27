@@ -26,7 +26,7 @@ lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━�
 
 ### `0: formatted`
 
-```
+```tsx
 <h1 role="checkbox" />;
 
 ```
@@ -40,7 +40,7 @@ lint/jsx-a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━�
 
 ### `1: formatted`
 
-```
+```tsx
 <h1 role="article" />;
 
 ```

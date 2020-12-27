@@ -137,7 +137,7 @@ undefined
 
 ### `4: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	update() {
 		this.setState({
@@ -178,7 +178,7 @@ class MyComponent extends Component {
 
 ### `5: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	update() {
 		this.setState({
@@ -218,7 +218,7 @@ class MyComponent extends Component {
 
 ### `6: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	update() {
 		this.setState({
@@ -258,7 +258,7 @@ class MyComponent extends Component {
 
 ### `7: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	update() {
 		this.setState({
@@ -279,7 +279,7 @@ class MyComponent extends Component {
 
 ### `8: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	update() {
 		this.setState({
@@ -299,7 +299,7 @@ class MyComponent extends Component {
 
 ### `9: formatted`
 
-```
+```tsx
 class MyComponent extends Component {
 	increment() {
 		this.setState((prevState) => ({value: prevState.value + 1}));

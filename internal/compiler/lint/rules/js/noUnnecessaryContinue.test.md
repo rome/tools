@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 loop: for (let i = 0; i < 5; i++) {}
 
 ```
@@ -58,7 +58,7 @@ loop: for (let i = 0; i < 5; i++) {}
 
 ### `1: formatted`
 
-```
+```ts
 while (i--) {}
 
 ```
@@ -88,7 +88,7 @@ while (i--) {}
 
 ### `2: formatted`
 
-```
+```ts
 while (1) {}
 
 ```
@@ -120,7 +120,7 @@ while (1) {}
 
 ### `3: formatted`
 
-```
+```ts
 for (let i = 0; i < 10; i++) {
 	if (i > 5) {
 		console.log("foo");
@@ -158,7 +158,7 @@ for (let i = 0; i < 10; i++) {
 
 ### `4: formatted`
 
-```
+```ts
 for (let i = 0; i < 9; i++) {}
 
 ```
@@ -172,7 +172,7 @@ for (let i = 0; i < 9; i++) {}
 
 ### `5: formatted`
 
-```
+```ts
 while (i) {
 	if (i > 5) {
 		continue;
@@ -192,7 +192,7 @@ while (i) {
 
 ### `6: formatted`
 
-```
+```ts
 while (i) {
 	continue;
 	console.log(i);
@@ -209,7 +209,7 @@ while (i) {
 
 ### `7: formatted`
 
-```
+```ts
 while (condition) {
 	if (conditionZ) {
 		if (conditionX) {
@@ -234,7 +234,7 @@ while (condition) {
 
 ### `8: formatted`
 
-```
+```ts
 loop: while (1) {
 	forLoop: for (let i = 0; i < 5; i++) {
 		if (someCondition) {
@@ -254,7 +254,7 @@ loop: while (1) {
 
 ### `9: formatted`
 
-```
+```ts
 loop: for (let i = 0; i < 10; i++) {
 	for (let j = 0; j < byteLength; j++) {
 		if (condition) {

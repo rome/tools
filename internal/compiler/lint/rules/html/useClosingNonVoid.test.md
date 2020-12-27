@@ -13,7 +13,7 @@
 
 ### `0: formatted`
 
-```
+```html
 <div>
 </div>
 
@@ -28,7 +28,7 @@
 
 ### `1: formatted`
 
-```
+```html
 <div>
 	child
 </div>
@@ -44,7 +44,7 @@
 
 ### `2: formatted`
 
-```
+```html
 <input />
 
 ```
@@ -58,7 +58,7 @@
 
 ### `3: formatted`
 
-```
+```html
 <input />
 
 ```

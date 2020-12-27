@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let valid: foo[];
 let invalid: bar[];
 
@@ -68,7 +68,7 @@ let invalid: bar[];
 
 ### `1: formatted`
 
-```
+```ts
 let invalid: foo[] | (string[])[];
 
 ```
@@ -97,7 +97,7 @@ let invalid: foo[] | (string[])[];
 
 ### `2: formatted`
 
-```
+```ts
 let invalid: Promise<string[]>;
 
 ```
@@ -126,7 +126,7 @@ let invalid: Promise<string[]>;
 
 ### `3: formatted`
 
-```
+```ts
 let invalid: Foo<Bar>[];
 
 ```
@@ -140,7 +140,7 @@ let invalid: Foo<Bar>[];
 
 ### `4: formatted`
 
-```
+```ts
 let valid: Array<foo | bar>;
 
 ```
@@ -154,7 +154,7 @@ let valid: Array<foo | bar>;
 
 ### `5: formatted`
 
-```
+```ts
 let valid: Array<Foo | Bar>;
 
 ```
@@ -168,7 +168,7 @@ let valid: Array<Foo | Bar>;
 
 ### `6: formatted`
 
-```
+```ts
 let valid: Array<keyof Bar>;
 
 ```

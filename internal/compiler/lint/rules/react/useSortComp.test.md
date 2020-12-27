@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 // Must force a lifecycle method to be placed before render
 class Hello extends React.Component {
 	render() {
@@ -69,7 +69,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 // Must force a custom method to be placed before render
 class Hello extends React.Component {
 	render() {
@@ -108,7 +108,7 @@ class Hello extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 // Must force a custom method to be placed before render, even in function
 var Hello = () => {
 	return class Test extends React.Component {
@@ -149,7 +149,7 @@ var Hello = () => {
 
 ### `3: formatted`
 
-```
+```tsx
 // Type Annotations should not be at the top by default
 class Hello extends React.Component {
 	props: {
@@ -175,7 +175,7 @@ class Hello extends React.Component {
 
 ### `4: formatted`
 
-```
+```tsx
 // Must validate a full class
 class Hello extends React.Component {
 	displayName = "";
@@ -212,7 +212,7 @@ class Hello extends React.Component {
 
 ### `5: formatted`
 
-```
+```tsx
 // Must validate a class with missing groups
 class Hello extends React.Component {
 	render() {
@@ -233,7 +233,7 @@ class Hello extends React.Component {
 
 ### `6: formatted`
 
-```
+```tsx
 // Must put a custom method in 'everything-else'
 class Hello extends React.Component {
 	onClick() {}
@@ -255,7 +255,7 @@ class Hello extends React.Component {
 
 ### `7: formatted`
 
-```
+```tsx
 // Must validate a full React class
 class Hello extends React.Component {
 	displayName = "";
@@ -294,7 +294,7 @@ class Hello extends React.Component {
 
 ### `8: formatted`
 
-```
+```tsx
 // Must validate React 16.3 lifecycle methods with the default parser
 class Hello extends React.Component {
 	constructor() {}
@@ -327,7 +327,7 @@ class Hello extends React.Component {
 
 ### `9: formatted`
 
-```
+```tsx
 // Must validate a full React 16.3 ES6 class
 class Hello extends React.Component {
 	static displayName = "";
@@ -365,7 +365,7 @@ class Hello extends React.Component {
 
 ### `10: formatted`
 
-```
+```tsx
 // Must allow us to use 'constructor' as a method name
 class Hello extends React.Component {
 	constructor() {}
@@ -388,7 +388,7 @@ class Hello extends React.Component {
 
 ### `11: formatted`
 
-```
+```tsx
 // Must ignore stateless components
 function Hello(props) {
 	return <div>
@@ -408,7 +408,7 @@ function Hello(props) {
 
 ### `12: formatted`
 
-```
+```tsx
 // Must ignore stateless components (arrow function with explicit return)
 var Hello = (props) =>
 	<div>
@@ -428,7 +428,7 @@ var Hello = (props) =>
 
 ### `13: formatted`
 
-```
+```tsx
 // Non-react classes should be ignored, even in expressions
 class Hello {
 	render() {
@@ -454,7 +454,7 @@ class Hello {
 
 ### `14: formatted`
 
-```
+```tsx
 // Non-react classes should be ignored, even in expressions
 const foo = class {
 	render() {
@@ -480,7 +480,7 @@ const foo = class {
 
 ### `15: formatted`
 
-```
+```tsx
 // static lifecycle methods can be grouped (with lifecycle)
 class Hello extends React.Component {
 	constructor() {}
@@ -498,7 +498,7 @@ class Hello extends React.Component {
 
 ### `16: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	static propTypes;
 	state = {};
@@ -519,7 +519,7 @@ class MyComponent extends React.Component {
 
 ### `17: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	static getDerivedStateFromProps() {}
 	static foo;
@@ -539,7 +539,7 @@ class MyComponent extends React.Component {
 
 ### `18: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	static getDerivedStateFromProps() {}
 	static foo = "some-str";
@@ -559,7 +559,7 @@ class MyComponent extends React.Component {
 
 ### `19: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	static getDerivedStateFromProps() {}
 	foo = {};
@@ -580,7 +580,7 @@ class MyComponent extends React.Component {
 
 ### `20: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	static getDerivedStateFromProps() {}
 	static bar = 1;
@@ -601,7 +601,7 @@ class MyComponent extends React.Component {
 
 ### `21: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	constructor() {
 		super(props);

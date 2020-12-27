@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```html
 <html>
 </html>
 
@@ -56,7 +56,7 @@
 
 ### `1: formatted`
 
-```
+```html
 <html lang="">
 </html>
 
@@ -71,7 +71,7 @@
 
 ### `2: formatted`
 
-```
+```html
 <html lang="42">
 </html>
 
@@ -86,7 +86,7 @@
 
 ### `3: formatted`
 
-```
+```html
 <html lang="en">
 </html>
 

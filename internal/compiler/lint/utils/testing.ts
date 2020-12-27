@@ -9,6 +9,7 @@ import {TestHelper} from "rome";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
+import {createRelativeFilePath} from '@internal/path'
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
@@ -114,6 +115,7 @@ async function testLintExpect(
 	} else {
 		t.true(diagnostics.length > 0, "Expected test to have diagnostics.");
 	}
+	const path = createRelativeFilePath(filename);
 
 	const snapshotName = t.snapshot(
 		await printDiagnosticsToString({
@@ -128,7 +130,7 @@ async function testLintExpect(
 		`${snapshotName}: formatted`,
 		res.save?.content,
 		undefined,
-		{filename: snapshotFilename},
+		{filename: snapshotFilename, language: path.getExtensions().slice(1)},
 	);
 
 	t.clearAdvice();

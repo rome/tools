@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 0, 1, 2;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```ts
 test(), rome();
 
 ```
@@ -65,7 +65,7 @@ test(), rome();
 
 ### `2: formatted`
 
-```
+```ts
 foo(0, 1, 2);
 
 ```
@@ -79,7 +79,7 @@ foo(0, 1, 2);
 
 ### `3: formatted`
 
-```
+```ts
 [1, 2];
 
 ```
@@ -93,7 +93,7 @@ foo(0, 1, 2);
 
 ### `4: formatted`
 
-```
+```ts
 [1, undefined, undefined, 3];
 
 ```
@@ -107,7 +107,7 @@ foo(0, 1, 2);
 
 ### `5: formatted`
 
-```
+```ts
 let a;
 let b;
 let c;

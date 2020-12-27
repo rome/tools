@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```js
 function hello(a, a) {
 	//
 }
@@ -80,7 +80,7 @@ undefined
 
 ### `2: formatted`
 
-```
+```js
 function hello(a, a) {
 	//
 }
@@ -96,7 +96,7 @@ function hello(a, a) {
 
 ### `3: formatted`
 
-```
+```js
 function foo(foo) {
 	console.log(foo);
 }
@@ -112,7 +112,7 @@ function foo(foo) {
 
 ### `4: formatted`
 
-```
+```js
 const foo = "test";
 function bar(foo) {
 	console.log(foo);

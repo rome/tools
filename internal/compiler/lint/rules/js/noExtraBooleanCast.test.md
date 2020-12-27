@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 if (foo) {
 }
 
@@ -73,7 +73,7 @@ if (foo) {
 
 ### `1: formatted`
 
-```
+```ts
 if (foo) {
 }
 
@@ -105,7 +105,7 @@ if (foo) {
 
 ### `2: formatted`
 
-```
+```ts
 if (!foo) {
 }
 
@@ -137,7 +137,7 @@ if (!foo) {
 
 ### `3: formatted`
 
-```
+```ts
 while (foo) {}
 
 ```
@@ -170,7 +170,7 @@ while (foo) {}
 
 ### `4: formatted`
 
-```
+```ts
 let x = 1;
 do {
 	1 + 1;
@@ -204,7 +204,7 @@ do {
 
 ### `5: formatted`
 
-```
+```ts
 while (foo) {}
 
 ```
@@ -235,7 +235,7 @@ while (foo) {}
 
 ### `6: formatted`
 
-```
+```ts
 new Boolean(x);
 
 ```
@@ -266,7 +266,7 @@ new Boolean(x);
 
 ### `7: formatted`
 
-```
+```ts
 !x;
 
 ```
@@ -297,7 +297,7 @@ new Boolean(x);
 
 ### `8: formatted`
 
-```
+```ts
 !x;
 
 ```
@@ -311,7 +311,7 @@ new Boolean(x);
 
 ### `9: formatted`
 
-```
+```ts
 Boolean(!x);
 
 ```
@@ -325,7 +325,7 @@ Boolean(!x);
 
 ### `10: formatted`
 
-```
+```ts
 !x;
 
 ```
@@ -339,7 +339,7 @@ Boolean(!x);
 
 ### `11: formatted`
 
-```
+```ts
 !!x;
 
 ```

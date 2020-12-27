@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		this.setState({
@@ -65,7 +65,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		foo();
@@ -102,7 +102,7 @@ class Hello extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	componentDidMount() {
 		this.setState({
@@ -138,7 +138,7 @@ class Hello extends Component {
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	componentDidMount() {
 		foo();
@@ -159,7 +159,7 @@ class Hello extends Component {
 
 ### `4: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		if (condition) {
@@ -181,7 +181,7 @@ class Hello extends React.Component {
 
 ### `5: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		condition &&
@@ -202,7 +202,7 @@ class Hello extends React.Component {
 
 ### `6: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		condition
