@@ -2,6 +2,6 @@ filename: "file.ts"
 invalid: [
 	"
 					const user = 'Faustina';
-                    const helloUser = 'Hello, ${user};
+                    const helloUser = 'Hello, ${user}';
 				"
 ]
