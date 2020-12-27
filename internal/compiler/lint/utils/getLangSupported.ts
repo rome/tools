@@ -1,8 +1,7 @@
 import {ISO} from "@internal/compiler/lint/utils/constants";
 
-const countries = ISO.get("countries")
-const languages = ISO.get("languages")
-
+const countries = ISO.get("countries");
+const languages = ISO.get("languages");
 
 export function langSupported(lang: string): boolean {
 	const [language, country] = lang.split("-");

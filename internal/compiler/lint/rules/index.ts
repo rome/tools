@@ -1,117 +1,231 @@
-/* GENERATED:START(hash:b9db23cd4fee5e93d89f3bd6ba591d08326ae1aa,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:697b54d3ce71731f6c9b5a7927aa606961ab6b2b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseClosingNonVoid from "./html/useClosingNonVoid";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseHtmlLang from "./html/useHtmlLang";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseValidLang from "./html/useValidLang";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoArguments from "./js/noArguments";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoCatchAssign from "./js/noCatchAssign";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoCommaOperator from "./js/noCommaOperator";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoCompareNegZero from "./js/noCompareNegZero";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoCondAssign from "./js/noCondAssign";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDebugger from "./js/noDebugger";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDelete from "./js/noDelete";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDeleteVars from "./js/noDeleteVars";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDoubleEquals from "./js/noDoubleEquals";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDupeArgs from "./js/noDupeArgs";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDuplicateCase from "./js/noDuplicateCase";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDuplicateImportSource from "./js/noDuplicateImportSource";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoDuplicateKeys from "./js/noDuplicateKeys";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoEmptyBlocks from "./js/noEmptyBlocks";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoExtraBooleanCast from "./js/noExtraBooleanCast";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoFunctionAssign from "./js/noFunctionAssign";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoGetterReturn from "./js/noGetterReturn";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoImportAssign from "./js/noImportAssign";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoLabelVar from "./js/noLabelVar";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoNegationElse from "./js/noNegationElse";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoNestedTernary from "./js/noNestedTernary";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoRestrictedGlobals from "./js/noRestrictedGlobals";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoSetterReturn from "./js/noSetterReturn";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoShadowRestrictedNames from "./js/noShadowRestrictedNames";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoShoutyConstants from "./js/noShoutyConstants";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoSparseArray from "./js/noSparseArray";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoTemplateCurlyInString from "./js/noTemplateCurlyInString";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUndeclaredVariables from "./js/noUndeclaredVariables";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUnnecessaryContinue from "./js/noUnnecessaryContinue";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUnsafeFinally from "./js/noUnsafeFinally";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUnsafeNegation from "./js/noUnsafeNegation";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoUnusedVariables from "./js/noUnusedVariables";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsNoVar from "./js/noVar";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsPreferOptionalChaining from "./js/preferOptionalChaining";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseBlockStatements from "./js/useBlockStatements";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseCamelCase from "./js/useCamelCase";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseDefaultExportBasename from "./js/useDefaultExportBasename";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseDefaultImportBasename from "./js/useDefaultImportBasename";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseFunctionDeclarations from "./js/useFunctionDeclarations";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseSingleCaseStatement from "./js/useSingleCaseStatement";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseSingleVarDeclarator from "./js/useSingleVarDeclarator";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseSortedSpecifiers from "./js/useSortedSpecifiers";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseTemplate from "./js/useTemplate";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsUseWhile from "./js/useWhile";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoAccessKey from "./jsx-a11y/noAccessKey";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoAutofocus from "./jsx-a11y/noAutofocus";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoDistractingElements from "./jsx-a11y/noDistractingElements";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoHeaderScope from "./jsx-a11y/noHeaderScope";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoOnChange from "./jsx-a11y/noOnChange";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAltText from "./jsx-a11y/useAltText";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAnchorContent from "./jsx-a11y/useAnchorContent";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAriaProps from "./jsx-a11y/useAriaProps";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAriaProptypes from "./jsx-a11y/useAriaProptypes";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseHeadingContent from "./jsx-a11y/useHeadingContent";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseHtmlLang from "./jsx-a11y/useHtmlLang";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseIframeTitle from "./jsx-a11y/useIframeTitle";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseMediaCaption from "./jsx-a11y/useMediaCaption";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseValidAnchor from "./jsx-a11y/useValidAnchor";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseValidLang from "./jsx-a11y/useValidLang";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxNoCommentText from "./jsx/noCommentText";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxNoDuplicateProps from "./jsx/noDuplicateProps";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxNoImplicitBoolean from "./jsx/noImplicitBoolean";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxNoPropSpreading from "./jsx/noPropSpreading";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxUseJSXFileExtension from "./jsx/useJSXFileExtension";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxUsePascalCase from "./jsx/usePascalCase";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxUseSelfClosingElements from "./jsx/useSelfClosingElements";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoAccessStateInSetState from "./react/noAccessStateInSetState";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoArrayIndexKey from "./react/noArrayIndexKey";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoChildrenProp from "./react/noChildrenProp";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoDanger from "./react/noDanger";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoDangerWithChildren from "./react/noDangerWithChildren";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoDidMountSetState from "./react/noDidMountSetState";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoDidUpdateSetState from "./react/noDidUpdateSetState";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoDirectMutationState from "./react/noDirectMutationState";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoFindDOMNode from "./react/noFindDOMNode";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoRenderReturnValue from "./react/noRenderReturnValue";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoStringRefs from "./react/noStringRefs";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoThisInSFC from "./react/noThisInSFC";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoUnsafe from "./react/noUnsafe";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoUselessFragment from "./react/noUselessFragment";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoVoidElementsWithChildren from "./react/noVoidElementsWithChildren";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactNoWillUpdateSetState from "./react/noWillUpdateSetState";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseButtonType from "./react/useButtonType";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseFragmentSyntax from "./react/useFragmentSyntax";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseKey from "./react/useKey";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseRenderReturn from "./react/useRenderReturn";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseSortComp from "./react/useSortComp";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import reactUseStylePropObject from "./react/useStylePropObject";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoEmptyCharacterClass from "./regex/noEmptyCharacterClass";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoEmptyMatches from "./regex/noEmptyMatches";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoPosixInRegularExpression from "./regex/noPosixInRegularExpression";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import regexNoReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import tsNoExplicitAny from "./ts/noExplicitAny";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import tsPreferShorthandArrayType from "./ts/preferShorthandArrayType";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import tsUseInterfaces from "./ts/useInterfaces";
 import {AnyVisitor} from "@internal/compiler";
 

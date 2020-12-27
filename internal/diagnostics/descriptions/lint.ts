@@ -17,7 +17,7 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
-	HTML_USE_VALID_LANG: (value: string, suggestions: string[]) =>  ({
+	HTML_USE_VALID_LANG: (value: string, suggestions: string[]) => ({
 		category: "lint/html/useValidLang",
 		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
 		advice: buildSuggestionAdvice(value, suggestions),

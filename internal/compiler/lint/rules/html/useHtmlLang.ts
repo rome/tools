@@ -7,9 +7,12 @@ export default createVisitor({
 		const {node} = path;
 
 		if (node.type === "HTMLElement" && node.name.name === "html") {
-			const langAttr = node.attributes.find(a => a.name.name === "lang")
-			if (!langAttr || (langAttr && (langAttr.value.value === ""  ))) {
-				path.context.addNodeDiagnostic(node, descriptions.LINT.HTML_USE_HTML_LANG);
+			const langAttr = node.attributes.find((a) => a.name.name === "lang");
+			if (!langAttr || langAttr?.value.value === "") {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.HTML_USE_HTML_LANG,
+				);
 			}
 		}
 

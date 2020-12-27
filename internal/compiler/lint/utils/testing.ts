@@ -9,7 +9,7 @@ import {TestHelper} from "rome";
 import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {IntegrationWorker, createMockWorker} from "@internal/test-helpers";
-import {createRelativeFilePath} from '@internal/path'
+import {createRelativeFilePath} from "@internal/path";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;

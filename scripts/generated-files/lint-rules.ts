@@ -89,7 +89,13 @@ export async function main() {
 		async () => {
 			let lines = [];
 			for (const {basename, ruleName, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(basename, { forcePascal: true})}`;
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
+				lines.push(
+					"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
+				);
 				lines.push(`import ${varName} from "./${ruleName}";`);
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
@@ -98,7 +104,10 @@ export async function main() {
 				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
 			);
 			for (const {basename, ruleName, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(basename, { forcePascal: true})}`;
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
 				lines.push(`lintTransforms.set("${ruleName}", ${varName});`);
 			}
 			lines.push("");
@@ -145,16 +154,25 @@ export async function main() {
 		async () => {
 			const lines = [];
 			for (const {basename, ruleName, hasRJSON, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(basename, { forcePascal: true})}`;
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
 				if (hasRJSON) {
 					lines.push("// @ts-ignore");
+					lines.push(
+						"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
+					);
 					lines.push(`import ${varName} from "./${ruleName}.test.rjson";`);
 				}
 			}
 			lines.push("");
 			lines.push("export const tests: Tests = {");
 			for (const {basename, ruleName, hasRJSON, category} of defs) {
-				const varName = `${toCamelCase(category)}${toCamelCase(basename, { forcePascal: true})}`;
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
 				if (hasRJSON) {
 					lines.push(`	"${ruleName}": ${varName},`);
 				}
