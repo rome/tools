@@ -24,7 +24,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `0: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\18/;
 foo;
 
@@ -50,7 +50,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `1: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\49/;
 foo;
 
@@ -76,7 +76,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `2: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\78/;
 foo;
 
@@ -102,7 +102,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `3: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\99/;
 foo;
 
@@ -133,7 +133,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `4: formatted`
 
-```
+```ts
 let foo = /(([abc])\19)+=\28/;
 foo;
 
@@ -159,7 +159,7 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
 ### `5: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\199/;
 foo;
 
@@ -174,7 +174,7 @@ foo;
 
 ### `6: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\u0001/;
 foo;
 
@@ -189,7 +189,7 @@ foo;
 
 ### `7: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\u0002/;
 foo;
 
@@ -204,7 +204,7 @@ foo;
 
 ### `8: formatted`
 
-```
+```ts
 let foo = /([abc]+)=8/;
 foo;
 
@@ -219,7 +219,7 @@ foo;
 
 ### `9: formatted`
 
-```
+```ts
 let foo = /([abc]+)=9/;
 foo;
 
@@ -234,7 +234,7 @@ foo;
 
 ### `10: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\t9/;
 foo;
 
@@ -249,7 +249,7 @@ foo;
 
 ### `11: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\u001b8/;
 foo;
 
@@ -264,7 +264,7 @@ foo;
 
 ### `12: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\u00ff/;
 foo;
 
@@ -279,7 +279,7 @@ foo;
 
 ### `13: formatted`
 
-```
+```ts
 let foo = /([abc]+)=\?7/;
 foo;
 
