@@ -33,6 +33,6 @@ a10.b == void 0 ? void 0 : a10.b.c.d;
 
 a13.b.c.d.e == void 0 ? void 0 : a13.b.c.d.e();
 
-(a14 == void 0 ? void 0 : a14["b"].c) == void 0 ? void 0 : a14["b"].c["d"];
+(a14 == void 0 ? void 0 : a14.b.c) == void 0 ? void 0 : a14.b.c.d;
 
 ```

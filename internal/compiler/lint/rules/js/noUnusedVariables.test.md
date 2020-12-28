@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const a = 4;
 
 ```
@@ -51,7 +51,7 @@ const a = 4;
 
 ### `1: formatted`
 
-```
+```ts
 let a = 4;
 
 ```
@@ -85,7 +85,7 @@ let a = 4;
 
 ### `2: formatted`
 
-```
+```ts
 function foo(myVar) {
 	console.log("foo");
 }
@@ -115,7 +115,7 @@ function foo(myVar) {
 
 ### `3: formatted`
 
-```
+```ts
 function foo(myVar) {
 	console.log("foo");
 }
@@ -152,7 +152,7 @@ foo();
 
 ### `4: formatted`
 
-```
+```ts
 function foo(b) {
 	console.log("foo");
 }
@@ -182,7 +182,7 @@ function foo(b) {
 
 ### `5: formatted`
 
-```
+```ts
 function foo() {
 	foo();
 }
@@ -212,7 +212,7 @@ function foo() {
 
 ### `6: formatted`
 
-```
+```ts
 const foo = () => {
 	foo();
 	console.log(this);
@@ -243,7 +243,7 @@ const foo = () => {
 
 ### `7: formatted`
 
-```
+```ts
 function foo(): typeof foo {
 	return function() {
 		return foo;
@@ -275,7 +275,7 @@ function foo(): typeof foo {
 
 ### `8: formatted`
 
-```
+```ts
 class Foo {
 	init() {
 		this._foo = new Foo();
@@ -293,7 +293,7 @@ class Foo {
 
 ### `9: formatted`
 
-```
+```ts
 function foo(_, b) {
 	console.log(b);
 }
@@ -310,7 +310,7 @@ foo();
 
 ### `10: formatted`
 
-```
+```ts
 function foo(_, b) {
 	console.log(b);
 }
@@ -327,7 +327,7 @@ foo();
 
 ### `11: formatted`
 
-```
+```ts
 foo();
 function foo() {
 	foo();
@@ -344,7 +344,7 @@ function foo() {
 
 ### `12: formatted`
 
-```
+```ts
 class Foo {
 	init() {
 		this._foo = new Foo();

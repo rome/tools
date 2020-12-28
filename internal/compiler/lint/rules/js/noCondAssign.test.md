@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 for (let i = 1; i = 10; i++) {
 	console.log("foo");
 }
@@ -57,7 +57,7 @@ for (let i = 1; i = 10; i++) {
 
 ### `1: formatted`
 
-```
+```ts
 if (foo = "bar") {
 	console.log("foo");
 }
@@ -87,7 +87,7 @@ if (foo = "bar") {
 
 ### `2: formatted`
 
-```
+```ts
 while (foo = "bar") {
 	console.log("foo");
 }
@@ -117,7 +117,7 @@ while (foo = "bar") {
 
 ### `3: formatted`
 
-```
+```ts
 do {
 	console.log("foo");
 } while (foo = "bar");
@@ -145,7 +145,7 @@ do {
 
 ### `4: formatted`
 
-```
+```ts
 (foo = bar) ? foo() : bar();
 
 ```
@@ -159,7 +159,7 @@ do {
 
 ### `5: formatted`
 
-```
+```ts
 while ((foo = foo.bar) !== undefined) {
 	console.log(foo);
 }
@@ -175,7 +175,7 @@ while ((foo = foo.bar) !== undefined) {
 
 ### `6: formatted`
 
-```
+```ts
 if (foo++ === 3) {
 	console.log(foo);
 }
@@ -191,7 +191,7 @@ if (foo++ === 3) {
 
 ### `7: formatted`
 
-```
+```ts
 foo = bar ? foo() : bar();
 
 ```

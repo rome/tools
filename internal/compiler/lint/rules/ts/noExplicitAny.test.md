@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const age: any = "seventeen";
 age;
 
@@ -52,7 +52,7 @@ age;
 
 ### `1: formatted`
 
-```
+```ts
 const ages: any[] = ["seventeen"];
 ages;
 
@@ -79,7 +79,7 @@ ages;
 
 ### `2: formatted`
 
-```
+```ts
 const ages: any[] = ["seventeen"];
 ages;
 
@@ -106,7 +106,7 @@ ages;
 
 ### `3: formatted`
 
-```
+```ts
 function greet(): any {}
 greet();
 
@@ -133,7 +133,7 @@ greet();
 
 ### `4: formatted`
 
-```
+```ts
 function greet(): any[] {}
 greet();
 
@@ -160,7 +160,7 @@ greet();
 
 ### `5: formatted`
 
-```
+```ts
 function greet(): any[] {}
 greet();
 
@@ -187,7 +187,7 @@ greet();
 
 ### `6: formatted`
 
-```
+```ts
 function greet(): (any[])[] {}
 greet();
 
@@ -214,7 +214,7 @@ greet();
 
 ### `7: formatted`
 
-```
+```ts
 function greet(param: any[]): string {
 	return param;
 }
@@ -249,7 +249,7 @@ greet();
 
 ### `8: formatted`
 
-```
+```ts
 function greet(param: any[]): any[] {
 	return param;
 }
@@ -266,7 +266,7 @@ greet();
 
 ### `9: formatted`
 
-```
+```ts
 const age: number = 17;
 age;
 
@@ -281,7 +281,7 @@ age;
 
 ### `10: formatted`
 
-```
+```ts
 const ages: number[] = [17];
 ages;
 
@@ -296,7 +296,7 @@ ages;
 
 ### `11: formatted`
 
-```
+```ts
 function greet(): string {}
 greet();
 
@@ -311,7 +311,7 @@ greet();
 
 ### `12: formatted`
 
-```
+```ts
 function greet(): string[] {}
 greet();
 
@@ -326,7 +326,7 @@ greet();
 
 ### `13: formatted`
 
-```
+```ts
 function greet(): (string[])[] {}
 greet();
 
@@ -341,7 +341,7 @@ greet();
 
 ### `14: formatted`
 
-```
+```ts
 function greet(param: string[]): string {
 	return param;
 }
@@ -358,7 +358,7 @@ greet();
 
 ### `15: formatted`
 
-```
+```ts
 function greet(param: string[]): string[] {
 	return param;
 }

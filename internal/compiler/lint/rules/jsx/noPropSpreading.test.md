@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <App {...props} />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <MyCustomComponent {...props} some_other_prop={some_other_prop} />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <MyCustomComponent some_other_prop={some_other_prop} {...props} />;
 
 ```
@@ -107,7 +107,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <img {...props} />;
 
 ```
@@ -121,7 +121,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <MyCustomComponent one_prop={one_prop} two_prop={two_prop} />;
 
 ```
@@ -135,7 +135,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <img src={src} alt={alt} />;
 
 ```

@@ -32,7 +32,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <a href="http://external.link">
 	child
 </a>;
@@ -67,7 +67,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <a href={dynamicLink}>
 	child
 </a>;
@@ -83,7 +83,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <p href="http://external.link" target="_blank">
 	child
 </p>;
@@ -99,7 +99,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <a href="http://external.link" rel="noreferrer" target="_blank">
 	child
 </a>;
@@ -115,7 +115,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <a href="http://external.link" rel="noopener noreferrer" target="_blank">
 	child
 </a>;
@@ -131,7 +131,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <a href="relative/link" rel="noreferrer" target="_blank">
 	child
 </a>;
@@ -147,7 +147,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <a href="/absolute/link" rel="noreferrer" target="_blank">
 	child
 </a>;
@@ -163,7 +163,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <a href={dynamicLink} rel="noreferrer" target="_blank">
 	child
 </a>;

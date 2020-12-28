@@ -2,7 +2,7 @@ import {INTERNAL, ROOT, modifyGeneratedFile} from "../_utils";
 import {lstat, readDirectory, readFileText} from "@internal/fs";
 import {AbsoluteFilePath} from "@internal/path";
 import {pretty} from "@internal/pretty-format";
-import {dedent} from "@internal/string-utils";
+import {dedent, toCamelCase} from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
 
 const lintRulesFolder = INTERNAL.append("compiler", "lint", "rules");
@@ -88,16 +88,27 @@ export async function main() {
 		},
 		async () => {
 			let lines = [];
-			for (const {basename, ruleName} of defs) {
-				lines.push(`import ${basename} from "./${ruleName}";`);
+			for (const {basename, ruleName, category} of defs) {
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
+				lines.push(
+					"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
+				);
+				lines.push(`import ${varName} from "./${ruleName}";`);
 			}
 			lines.push(`import {AnyVisitor} from "@internal/compiler";`);
 			lines.push("");
 			lines.push(
 				"export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();",
 			);
-			for (const {basename, ruleName} of defs) {
-				lines.push(`lintTransforms.set("${ruleName}", ${basename});`);
+			for (const {basename, ruleName, category} of defs) {
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
+				lines.push(`lintTransforms.set("${ruleName}", ${varName});`);
 			}
 			lines.push("");
 
@@ -142,17 +153,28 @@ export async function main() {
 		},
 		async () => {
 			const lines = [];
-			for (const {basename, ruleName, hasRJSON} of defs) {
+			for (const {basename, ruleName, hasRJSON, category} of defs) {
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
 				if (hasRJSON) {
 					lines.push("// @ts-ignore");
-					lines.push(`import ${basename} from "./${ruleName}.test.rjson";`);
+					lines.push(
+						"// rome-ignore lint/js/useDefaultImportBasename: avoid clashing",
+					);
+					lines.push(`import ${varName} from "./${ruleName}.test.rjson";`);
 				}
 			}
 			lines.push("");
 			lines.push("export const tests: Tests = {");
-			for (const {basename, ruleName, hasRJSON} of defs) {
+			for (const {basename, ruleName, hasRJSON, category} of defs) {
+				const varName = `${toCamelCase(category)}${toCamelCase(
+					basename,
+					{forcePascal: true},
+				)}`;
 				if (hasRJSON) {
-					lines.push(`	"${ruleName}": ${basename},`);
+					lines.push(`	"${ruleName}": ${varName},`);
 				}
 			}
 			lines.push("};");

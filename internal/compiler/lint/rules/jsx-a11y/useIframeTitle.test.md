@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <iframe />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <iframe {...props} />;
 
 ```
@@ -77,7 +77,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <iframe title="" />;
 
 ```
@@ -103,7 +103,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <iframe title={""} />;
 
 ```
@@ -129,7 +129,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <iframe title={""} />;
 
 ```
@@ -155,7 +155,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <iframe title={undefined} />;
 
 ```
@@ -181,7 +181,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <iframe title={false} />;
 
 ```
@@ -207,7 +207,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <iframe title={true} />;
 
 ```
@@ -233,7 +233,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <iframe title={42} />;
 
 ```
@@ -247,7 +247,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <iframe title="title" />;
 
 ```
@@ -261,7 +261,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <Iframe title="title" />;
 
 ```

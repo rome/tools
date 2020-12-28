@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div onClick={() => {}} />;
 
 ```
@@ -41,7 +41,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div onClick={() => {}} onKeyDown={this.handleKeyDown} />;
 
 ```
@@ -55,7 +55,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <div onClick={() => {}} onKeyUp={this.handleKeyUp} />;
 
 ```
@@ -69,7 +69,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <div onClick={() => {}} onKeyPress={this.handleKeyPress} />;
 
 ```
@@ -83,7 +83,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <Button onClick={() => {}} />;
 
 ```

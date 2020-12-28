@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function greet1() {
 	try {
 		throw new Error("Try");
@@ -121,7 +121,7 @@ undefined
 
 ### `3: formatted`
 
-```
+```ts
 function greet4() {
 	try {
 		throw new Error("Try");

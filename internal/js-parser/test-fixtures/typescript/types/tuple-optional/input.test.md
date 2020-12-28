@@ -84,7 +84,6 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSTupleType {
-									rest: undefined
 									loc: Object {
 										filename: "typescript/types/tuple-optional/input.ts"
 										end: Object {

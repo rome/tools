@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function foo() {}
 
 ```
@@ -47,7 +47,7 @@ function foo() {}
 
 ### `1: formatted`
 
-```
+```ts
 function foo() {}
 
 ```
@@ -71,7 +71,7 @@ function foo() {}
 
 ### `2: formatted`
 
-```
+```ts
 function foo() {
 	function bar() {
 		this;
@@ -89,7 +89,7 @@ function foo() {
 
 ### `3: formatted`
 
-```
+```ts
 const foo = () => {
 	this;
 };
@@ -105,7 +105,7 @@ const foo = () => {
 
 ### `4: formatted`
 
-```
+```ts
 const foo: string = function() {};
 
 ```

@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```jsx
 <input className="" aria-labell="" />;
 
 ```
@@ -54,7 +54,7 @@
 
 ### `1: formatted`
 
-```
+```jsx
 <div aria-="foobar" />;
 
 ```
@@ -85,7 +85,7 @@
 
 ### `2: formatted`
 
-```
+```jsx
 <div aria-labeledby="foobar" />;
 
 ```
@@ -109,7 +109,7 @@
 
 ### `3: formatted`
 
-```
+```jsx
 <div aria-skldjfaria-klajsd="foobar" />;
 
 ```
@@ -123,7 +123,7 @@
 
 ### `4: formatted`
 
-```
+```jsx
 <div />;
 
 ```
@@ -137,7 +137,7 @@
 
 ### `5: formatted`
 
-```
+```jsx
 <div />;
 
 ```
@@ -151,7 +151,7 @@
 
 ### `6: formatted`
 
-```
+```jsx
 <div aria="wee" />;
 
 ```
@@ -165,7 +165,7 @@
 
 ### `7: formatted`
 
-```
+```jsx
 <div abcARIAdef="true" />;
 
 ```
@@ -179,7 +179,7 @@
 
 ### `8: formatted`
 
-```
+```jsx
 <div fooaria-foobar="true" />;
 
 ```
@@ -193,7 +193,7 @@
 
 ### `9: formatted`
 
-```
+```jsx
 <div fooaria-hidden="true" />;
 
 ```
@@ -207,7 +207,7 @@
 
 ### `10: formatted`
 
-```
+```jsx
 <input type="text" aria-errormessage="foobar" />;
 
 ```

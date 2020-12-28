@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 const a = [<div />, <div />];
 
 ```
@@ -57,7 +57,7 @@ const a = [<div />, <div />];
 
 ### `1: formatted`
 
-```
+```tsx
 const a = [1, 2].map((x) =>
 	<div>
 		{x}
@@ -87,7 +87,7 @@ const a = [1, 2].map((x) =>
 
 ### `2: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	(x) =>
@@ -120,7 +120,7 @@ React.Children.map(
 
 ### `3: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	(x) =>
@@ -155,7 +155,7 @@ Children.map(
 
 ### `4: formatted`
 
-```
+```tsx
 const a = [1, 2].map((x) => {
 	return <div>
 		{x}
@@ -187,7 +187,7 @@ const a = [1, 2].map((x) => {
 
 ### `5: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	(x) => {
@@ -222,7 +222,7 @@ React.Children.map(
 
 ### `6: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	(x) => {
@@ -257,7 +257,7 @@ Children.map(
 
 ### `7: formatted`
 
-```
+```tsx
 const a = [1, 2].map(function(x) {
 	return <div>
 		{x}
@@ -289,7 +289,7 @@ const a = [1, 2].map(function(x) {
 
 ### `8: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	function(x) {
@@ -324,7 +324,7 @@ React.Children.map(
 
 ### `9: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	function(x) {
@@ -345,7 +345,7 @@ Children.map(
 
 ### `10: formatted`
 
-```
+```tsx
 const a = [<div key="a" />, <div key={"b"} />];
 
 ```
@@ -359,7 +359,7 @@ const a = [<div key="a" />, <div key={"b"} />];
 
 ### `11: formatted`
 
-```
+```tsx
 const a = [1, 2].map((x) =>
 	<div key={x}>
 		{x}
@@ -377,7 +377,7 @@ const a = [1, 2].map((x) =>
 
 ### `12: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	(x) =>
@@ -398,7 +398,7 @@ React.Children.map(
 
 ### `13: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	(x) =>
@@ -419,7 +419,7 @@ Children.map(
 
 ### `14: formatted`
 
-```
+```tsx
 const a = [1, 2].map((x) => {
 	return <div key={x}>
 		{x}
@@ -437,7 +437,7 @@ const a = [1, 2].map((x) => {
 
 ### `15: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	(x) => {
@@ -458,7 +458,7 @@ React.Children.map(
 
 ### `16: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	(x) => {
@@ -479,7 +479,7 @@ Children.map(
 
 ### `17: formatted`
 
-```
+```tsx
 const a = [1, 2].map(function(x) {
 	return <div key={x}>
 		{x}
@@ -497,7 +497,7 @@ const a = [1, 2].map(function(x) {
 
 ### `18: formatted`
 
-```
+```tsx
 React.Children.map(
 	children,
 	function(x) {
@@ -518,7 +518,7 @@ React.Children.map(
 
 ### `19: formatted`
 
-```
+```tsx
 Children.map(
 	children,
 	function(x) {

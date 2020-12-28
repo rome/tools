@@ -31,7 +31,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `0: formatted`
 
-```
+```tsx
 <br className={"dont-remove-class"} />;
 
 ```
@@ -63,7 +63,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `1: formatted`
 
-```
+```tsx
 <img />;
 
 ```
@@ -93,7 +93,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `2: formatted`
 
-```
+```tsx
 <hr />;
 
 ```
@@ -124,7 +124,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `3: formatted`
 
-```
+```tsx
 <area />;
 
 ```
@@ -157,7 +157,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `4: formatted`
 
-```
+```tsx
 <img />;
 
 ```
@@ -186,7 +186,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `5: formatted`
 
-```
+```tsx
 
 
 ```
@@ -215,7 +215,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `6: formatted`
 
-```
+```tsx
 
 
 ```
@@ -245,7 +245,7 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ### `7: formatted`
 
-```
+```tsx
 React.createElement("img", {});
 
 ```
@@ -274,7 +274,7 @@ React.createElement("img", {});
 
 ### `8: formatted`
 
-```
+```tsx
 
 
 ```
@@ -303,7 +303,7 @@ React.createElement("img", {});
 
 ### `9: formatted`
 
-```
+```tsx
 
 
 ```
@@ -333,7 +333,7 @@ React.createElement("img", {});
 
 ### `10: formatted`
 
-```
+```tsx
 createElement("img", {});
 
 ```
@@ -347,7 +347,7 @@ createElement("img", {});
 
 ### `11: formatted`
 
-```
+```tsx
 <div>
 	Children
 </div>;
@@ -363,7 +363,7 @@ createElement("img", {});
 
 ### `12: formatted`
 
-```
+```tsx
 <div children="Children" />;
 
 ```
@@ -377,7 +377,7 @@ createElement("img", {});
 
 ### `13: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: ""}} />;
 
 ```
@@ -391,7 +391,7 @@ createElement("img", {});
 
 ### `14: formatted`
 
-```
+```tsx
 <br className="valid" />;
 
 ```
@@ -405,7 +405,7 @@ createElement("img", {});
 
 ### `15: formatted`
 
-```
+```tsx
 React.createElement("img", {});
 
 ```
@@ -419,7 +419,7 @@ React.createElement("img", {});
 
 ### `16: formatted`
 
-```
+```tsx
 React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
@@ -433,7 +433,7 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ### `17: formatted`
 
-```
+```tsx
 React.createElement("div", {}, "child");
 
 ```
@@ -447,7 +447,7 @@ React.createElement("div", {}, "child");
 
 ### `18: formatted`
 
-```
+```tsx
 createElement("img", {});
 
 ```
@@ -461,7 +461,7 @@ createElement("img", {});
 
 ### `19: formatted`
 
-```
+```tsx
 createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
@@ -475,7 +475,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ### `20: formatted`
 
-```
+```tsx
 createElement("div", {}, "child");
 
 ```

@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function f() {
 	console.log(arguments);
 }
@@ -57,7 +57,7 @@ function f() {
 
 ### `1: formatted`
 
-```
+```ts
 (function() {
 	console.log(arguments);
 })();
@@ -89,7 +89,7 @@ function f() {
 
 ### `2: formatted`
 
-```
+```ts
 class C {
 	fn() {
 		console.log(arguments);
@@ -123,7 +123,7 @@ class C {
 
 ### `3: formatted`
 
-```
+```ts
 const o = {
 	fn() {
 		console.log(arguments);

@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 new Promise(async function foo() {});
 
 ```
@@ -51,7 +51,7 @@ new Promise(async function foo() {});
 
 ### `1: formatted`
 
-```
+```ts
 new Promise(async () => {});
 
 ```
@@ -77,7 +77,7 @@ new Promise(async () => {});
 
 ### `2: formatted`
 
-```
+```ts
 new Promise(async () => {});
 
 ```
@@ -91,7 +91,7 @@ new Promise(async () => {});
 
 ### `3: formatted`
 
-```
+```ts
 new Promise(() => {});
 
 ```
@@ -105,7 +105,7 @@ new Promise(() => {});
 
 ### `4: formatted`
 
-```
+```ts
 new Promise(() => {}, async function unrelated() {});
 
 ```
@@ -119,7 +119,7 @@ new Promise(() => {}, async function unrelated() {});
 
 ### `5: formatted`
 
-```
+```ts
 class Foo {}
 new Foo(async () => {});
 

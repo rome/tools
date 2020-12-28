@@ -12,5 +12,9 @@ export default function TSParenthesizedType(
 	builder: Builder,
 	node: TSParenthesizedType,
 ): Token {
-	return concat(["(", builder.tokenize(node.typeAnnotation, node), ")"]);
+	const tokens = builder.tokenize(node.typeAnnotation, node);
+	if (node.typeAnnotation.type === "TSParenthesizedType") {
+		return tokens;
+	}
+	return concat(["(", tokens, ")"]);
 }

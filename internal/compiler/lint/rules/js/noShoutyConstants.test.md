@@ -35,7 +35,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const FOO = "FOO";
 console.log("FOO");
 
@@ -73,7 +73,7 @@ console.log("FOO");
 
 ### `1: formatted`
 
-```
+```ts
 const FOO = "FOO";
 function f() {
 	return "FOO";
@@ -112,7 +112,7 @@ function f() {
 
 ### `2: formatted`
 
-```
+```ts
 const FOO = "FOO";
 const BAR = "bar";
 console.log("FOO");
@@ -128,7 +128,7 @@ console.log("FOO");
 
 ### `3: formatted`
 
-```
+```ts
 let FOO = "FOO";
 console.log(FOO);
 
@@ -143,7 +143,7 @@ console.log(FOO);
 
 ### `4: formatted`
 
-```
+```ts
 export const FOO = "FOO";
 console.log(FOO);
 
@@ -158,7 +158,7 @@ console.log(FOO);
 
 ### `5: formatted`
 
-```
+```ts
 function f(FOO = "FOO") {
 	return FOO;
 }

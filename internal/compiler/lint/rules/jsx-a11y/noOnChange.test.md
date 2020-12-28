@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <select onChange={() => {}} />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <select onChange={handleOnChange} />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <option onChange={() => {}} />;
 
 ```
@@ -107,7 +107,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <option onChange={() => {}} {...props} />;
 
 ```
@@ -121,7 +121,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <select onBlur={() => {}} />;
 
 ```
@@ -135,7 +135,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <select onBlur={handleOnBlur} />;
 
 ```
@@ -149,7 +149,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <option />;
 
 ```
@@ -163,7 +163,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <option onBlur={() => {}} onChange={() => {}} />;
 
 ```
@@ -177,7 +177,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <option {...props} />;
 
 ```
@@ -191,7 +191,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <input onChange={() => {}} />;
 
 ```
@@ -205,7 +205,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <input onChange={handleOnChange} />;
 
 ```
@@ -219,7 +219,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -233,7 +233,7 @@
 
 ### `12: formatted`
 
-```
+```tsx
 <input onChange={() => {}} onChange={() => {}} />;
 
 ```
@@ -247,7 +247,7 @@
 
 ### `13: formatted`
 
-```
+```tsx
 <input {...props} />;
 
 ```

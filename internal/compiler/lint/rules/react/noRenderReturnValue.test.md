@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 const foo = ReactDOM.render(<div />, document.body);
 
 ```
@@ -47,7 +47,7 @@ const foo = ReactDOM.render(<div />, document.body);
 
 ### `1: formatted`
 
-```
+```tsx
 const foo = bar && ReactDOM.render(<div />, document.body);
 
 ```
@@ -71,7 +71,7 @@ const foo = bar && ReactDOM.render(<div />, document.body);
 
 ### `2: formatted`
 
-```
+```tsx
 const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 
 ```
@@ -95,7 +95,7 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 
 ### `3: formatted`
 
-```
+```tsx
 function foo() {
 	return ReactDOM.render(<div />, document.body);
 }
@@ -123,7 +123,7 @@ function foo() {
 
 ### `4: formatted`
 
-```
+```tsx
 const foo = {
 	react: ReactDOM.render(<div />, document.body),
 };
@@ -150,7 +150,7 @@ const foo = {
 
 ### `5: formatted`
 
-```
+```tsx
 let foo;
 foo = ReactDOM.render(<div />, document.body);
 
@@ -177,7 +177,7 @@ foo = ReactDOM.render(<div />, document.body);
 
 ### `6: formatted`
 
-```
+```tsx
 function render() {
 	return ReactDOM.render(<div />, document.body);
 }
@@ -193,7 +193,7 @@ function render() {
 
 ### `7: formatted`
 
-```
+```tsx
 ReactDOM.render(<div />, document.body);
 
 ```
@@ -207,7 +207,7 @@ ReactDOM.render(<div />, document.body);
 
 ### `8: formatted`
 
-```
+```tsx
 function render() {
 	ReactDOM.render(<div />, document.body);
 }
@@ -223,7 +223,7 @@ function render() {
 
 ### `9: formatted`
 
-```
+```tsx
 function render() {
 	ReactDOM.render(<div />, document.body);
 }

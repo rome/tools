@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```jsx
 <a href="#" onClick={foo} />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```jsx
 <a href={"#"} onClick={foo} />;
 
 ```
@@ -77,7 +77,7 @@
 
 ### `2: formatted`
 
-```
+```jsx
 <a href={"#"} onClick={foo} />;
 
 ```
@@ -103,7 +103,7 @@
 
 ### `3: formatted`
 
-```
+```jsx
 <a onClick={foo} />;
 
 ```
@@ -129,7 +129,7 @@
 
 ### `4: formatted`
 
-```
+```jsx
 <a href="javascript:void(0)" onClick={foo} />;
 
 ```
@@ -155,7 +155,7 @@
 
 ### `5: formatted`
 
-```
+```jsx
 <a href={"javascript:void(0)"} onClick={foo} />;
 
 ```
@@ -181,7 +181,7 @@
 
 ### `6: formatted`
 
-```
+```jsx
 <a href={"javascript:void(0)"} onClick={foo} />;
 
 ```
@@ -207,7 +207,7 @@
 
 ### `7: formatted`
 
-```
+```jsx
 <a />;
 
 ```
@@ -233,7 +233,7 @@
 
 ### `8: formatted`
 
-```
+```jsx
 <a href={undefined} />;
 
 ```
@@ -259,7 +259,7 @@
 
 ### `9: formatted`
 
-```
+```jsx
 <a href={null} />;
 
 ```
@@ -291,7 +291,7 @@
 
 ### `10: formatted`
 
-```
+```jsx
 <a href="#" />;
 
 ```
@@ -323,7 +323,7 @@
 
 ### `11: formatted`
 
-```
+```jsx
 <a href={"#"} />;
 
 ```
@@ -355,7 +355,7 @@
 
 ### `12: formatted`
 
-```
+```jsx
 <a href={"#"} />;
 
 ```
@@ -387,7 +387,7 @@
 
 ### `13: formatted`
 
-```
+```jsx
 <a href="javascript:void(0)" />;
 
 ```
@@ -419,7 +419,7 @@
 
 ### `14: formatted`
 
-```
+```jsx
 <a href={"javascript:void(0)"} />;
 
 ```
@@ -451,7 +451,7 @@
 
 ### `15: formatted`
 
-```
+```jsx
 <a href={"javascript:void(0)"} />;
 
 ```
@@ -465,7 +465,7 @@
 
 ### `16: formatted`
 
-```
+```jsx
 <a href="https://github.com" />;
 
 ```
@@ -479,7 +479,7 @@
 
 ### `17: formatted`
 
-```
+```jsx
 <a href="#section" />;
 
 ```
@@ -493,7 +493,7 @@
 
 ### `18: formatted`
 
-```
+```jsx
 <a href="foo" />;
 
 ```
@@ -507,7 +507,7 @@
 
 ### `19: formatted`
 
-```
+```jsx
 <a href="/foo/bar" />;
 
 ```
@@ -521,7 +521,7 @@
 
 ### `20: formatted`
 
-```
+```jsx
 <a href={someValidPath} />;
 
 ```
@@ -535,7 +535,7 @@
 
 ### `21: formatted`
 
-```
+```jsx
 <a href="https://github.com" onClick={foo} />;
 
 ```
@@ -549,7 +549,7 @@
 
 ### `22: formatted`
 
-```
+```jsx
 <a href="#section" onClick={foo} />;
 
 ```
@@ -563,7 +563,7 @@
 
 ### `23: formatted`
 
-```
+```jsx
 <a href="foo" onClick={foo} />;
 
 ```
@@ -577,7 +577,7 @@
 
 ### `24: formatted`
 
-```
+```jsx
 <a href="/foo/bar" onClick={foo} />;
 
 ```
@@ -591,7 +591,7 @@
 
 ### `25: formatted`
 
-```
+```jsx
 <a href={someValidPath} onClick={foo} />;
 
 ```

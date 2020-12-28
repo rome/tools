@@ -34,7 +34,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <>
 	<Foo />
 	<Foo />
@@ -72,7 +72,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <>
 	<Foo />
 	<Foo />
@@ -110,7 +110,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 const Hello = <div>
 	<Foo />
 	<Foo />
@@ -148,7 +148,7 @@ const Hello = <div>
 
 ### `3: formatted`
 
-```
+```tsx
 const Hello = <div>
 	<Foo />
 	<Foo />
@@ -186,7 +186,7 @@ const Hello = <div>
 
 ### `4: formatted`
 
-```
+```tsx
 const Hello = <>
 	<Foo />
 	<Foo />
@@ -224,7 +224,7 @@ const Hello = <>
 
 ### `5: formatted`
 
-```
+```tsx
 const Hello = <>
 	<Foo />
 	<Foo />
@@ -265,7 +265,7 @@ const Hello = <>
 
 ### `6: formatted`
 
-```
+```tsx
 function Foo() {
 	let bar = <>
 		<Foo />
@@ -309,7 +309,7 @@ function Foo() {
 
 ### `7: formatted`
 
-```
+```tsx
 function Foo() {
 	let bar = <>
 		<Foo />
@@ -352,7 +352,7 @@ function Foo() {
 
 ### `8: formatted`
 
-```
+```tsx
 function Hello() {
 	return <>
 		<Foo />
@@ -394,7 +394,7 @@ function Hello() {
 
 ### `9: formatted`
 
-```
+```tsx
 function Hello() {
 	return <>
 		<Foo />
@@ -434,7 +434,7 @@ function Hello() {
 
 ### `10: formatted`
 
-```
+```tsx
 function Hello() {
 	return <>
 		<Foo />
@@ -474,7 +474,7 @@ function Hello() {
 
 ### `11: formatted`
 
-```
+```tsx
 function Hello() {
 	return <>
 		<Foo />
@@ -493,7 +493,7 @@ function Hello() {
 
 ### `12: formatted`
 
-```
+```tsx
 <>
 	<Foo />
 	<Foo />
@@ -510,7 +510,7 @@ function Hello() {
 
 ### `13: formatted`
 
-```
+```tsx
 <Fragment key="id" />;
 
 ```
@@ -524,7 +524,7 @@ function Hello() {
 
 ### `14: formatted`
 
-```
+```tsx
 <React.Fragment key="id">
 	<Foo />
 </React.Fragment>;
@@ -540,7 +540,7 @@ function Hello() {
 
 ### `15: formatted`
 
-```
+```tsx
 const Hello = <div>
 	<Fragment key="word">
 		<Foo />
@@ -558,7 +558,7 @@ const Hello = <div>
 
 ### `16: formatted`
 
-```
+```tsx
 const Hello = <>
 	hello
 </>;
@@ -574,7 +574,7 @@ const Hello = <>
 
 ### `17: formatted`
 
-```
+```tsx
 const Hello = <Fragment key="id">
 	<Foo />
 </Fragment>;
@@ -590,7 +590,7 @@ const Hello = <Fragment key="id">
 
 ### `18: formatted`
 
-```
+```tsx
 const Hello = <React.Fragment key="id">
 	<Foo />
 </React.Fragment>;
@@ -606,7 +606,7 @@ const Hello = <React.Fragment key="id">
 
 ### `19: formatted`
 
-```
+```tsx
 function Foo() {
 	let bar = <React.Fragment key="word" />;
 	return bar;
@@ -623,7 +623,7 @@ function Foo() {
 
 ### `20: formatted`
 
-```
+```tsx
 function Hello() {
 	return <React.Fragment key="id">
 		<Foo />
@@ -641,7 +641,7 @@ function Hello() {
 
 ### `21: formatted`
 
-```
+```tsx
 function Hello() {
 	return <Fragment key="id">
 		<Foo />
@@ -659,7 +659,7 @@ function Hello() {
 
 ### `22: formatted`
 
-```
+```tsx
 function Hello() {
 	return <>
 	</>;
@@ -676,7 +676,7 @@ function Hello() {
 
 ### `23: formatted`
 
-```
+```tsx
 function Hello() {
 	return <React.Fragment key="id" />;
 }
@@ -692,7 +692,7 @@ function Hello() {
 
 ### `24: formatted`
 
-```
+```tsx
 function Hello() {
 	return <Fragment key="id" />;
 }

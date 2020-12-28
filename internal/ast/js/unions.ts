@@ -278,6 +278,7 @@ export type AnyTSPrimary =
 	| n.TSIntersectionTypeAnnotation
 	| n.TSTemplateLiteralTypeAnnotation
 	| n.TSConstKeyword
+	| n.TSRestType
 	| AnyTSLiteralTypeAnnotation
 	| AnyTSKeywordTypeAnnotation;
 

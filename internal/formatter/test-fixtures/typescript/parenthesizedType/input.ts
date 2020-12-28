@@ -1,0 +1,9 @@
+type A = keyof (T | U);
+type B = keyof (X & Y);
+type C = (keyof T)[];
+type D = ((keyof T))[];
+type E = (keyof T1)["foo"];
+type F = ((keyof T1))["foo"];
+type G = (((keyof T1)))["foo"];
+type H = ((((keyof T1))))["foo"];
+type I = keyof ((number[] | string[]));

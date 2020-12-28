@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 export default function foo() {}
 
 ```
@@ -55,7 +55,7 @@ export default function foo() {}
 
 ### `1: formatted`
 
-```
+```ts
 export default class Foo {}
 
 ```
@@ -69,7 +69,7 @@ export default class Foo {}
 
 ### `2: formatted`
 
-```
+```ts
 export default function foo() {}
 
 ```
@@ -83,7 +83,7 @@ export default function foo() {}
 
 ### `3: formatted`
 
-```
+```ts
 export default class Foo {}
 
 ```
@@ -97,7 +97,7 @@ export default class Foo {}
 
 ### `4: formatted`
 
-```
+```ts
 export default "rome";
 
 ```

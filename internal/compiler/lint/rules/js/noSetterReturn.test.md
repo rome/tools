@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 class p {
 	set name(value) {
 		if (!value) {
@@ -65,7 +65,7 @@ class p {
 
 ### `1: formatted`
 
-```
+```ts
 class p {
 	static set name(value) {
 		if (!value) {
@@ -101,7 +101,7 @@ class p {
 
 ### `2: formatted`
 
-```
+```ts
 let p = {
 	set name(value) {
 		if (!value) {
@@ -121,7 +121,7 @@ let p = {
 
 ### `3: formatted`
 
-```
+```ts
 class p {
 	set name(value) {
 		if (!value) {

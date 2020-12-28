@@ -119,20 +119,20 @@ type Theme = {
 };
 
 const scopeToTokenTypes: Dict<MarkupTokenType[]> = {
-	"constant": ["number", "boolean"],
+	constant: ["number", "boolean"],
 	"constant.numeric": ["number"],
 	"constant.language.boolean": ["boolean"],
 	"variable.other.constant": ["boolean"],
 
-	"string": ["string"],
+	string: ["string"],
 	"string.regexp": ["regex"],
 
-	"comment": ["comment"],
+	comment: ["comment"],
 	"entity.name.function": ["function"],
 	//"": "operator"],
-	"punctuation": ["punctuation"],
+	punctuation: ["punctuation"],
 	//"variable": ["variable"],
-	"keyword": ["keyword"],
+	keyword: ["keyword"],
 
 	"entity.name.tag.html": ["tag"],
 	"punctuation.separator.key-value.html": ["attr-equals"],
