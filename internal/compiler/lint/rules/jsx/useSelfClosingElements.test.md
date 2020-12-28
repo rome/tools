@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -61,7 +61,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <Component />;
 
 ```
@@ -92,7 +92,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <Foo.bar />;
 
 ```
@@ -106,7 +106,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -120,7 +120,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <div>
 	child
 </div>;
@@ -136,7 +136,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <Component />;
 
 ```
@@ -150,7 +150,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <Component>
 	child
 </Component>;
@@ -166,7 +166,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <Foo.bar />;
 
 ```
@@ -180,7 +180,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <Foo.bar>
 	child
 </Foo.bar>;

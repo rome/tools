@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div tabIndex="0" />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div role="article" tabIndex="0" />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <article tabIndex={0} />;
 
 ```
@@ -94,7 +94,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <button tabIndex="0" />;
 
 ```
@@ -108,7 +108,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <span role="button" tabIndex="0" />;
 
 ```
@@ -122,7 +122,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <span role="article" tabIndex="-1" />;
 
 ```
@@ -136,7 +136,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <MyButton tabIndex={0} />;
 
 ```
@@ -150,7 +150,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <article tabIndex="-1" />;
 
 ```
@@ -164,7 +164,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <div tabIndex="-1" />;
 
 ```
@@ -178,7 +178,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <article tabIndex={-1} />;
 
 ```
@@ -192,7 +192,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <div tabIndex={-1} />;
 
 ```
@@ -206,7 +206,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -220,7 +220,7 @@
 
 ### `12: formatted`
 
-```
+```tsx
 <button tabindex="-1" />;
 
 ```

@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 import React from "react";
 class Foo extends React.Component {
 	render() {}
@@ -61,7 +61,7 @@ class Foo extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 import React from "react";
 class Foo extends React.Component {
 	render() {
@@ -97,7 +97,7 @@ class Foo extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 import React from "react";
 class Foo extends React.Component {
 	render = () => {};
@@ -127,7 +127,7 @@ class Foo extends React.Component {
 
 ### `3: formatted`
 
-```
+```tsx
 import React, {Component} from "react";
 class Foo extends Component {
 	render = () => {};
@@ -157,7 +157,7 @@ class Foo extends Component {
 
 ### `4: formatted`
 
-```
+```tsx
 import React from "react";
 const Foo = class extends React.Component {
 	render = () => {};
@@ -187,7 +187,7 @@ const Foo = class extends React.Component {
 
 ### `5: formatted`
 
-```
+```tsx
 import React, {Component} from "react";
 const Foo = class extends Component {
 	render = () => {};
@@ -217,7 +217,7 @@ const Foo = class extends Component {
 
 ### `6: formatted`
 
-```
+```tsx
 import React from "react";
 const Foo = class extends React.PureComponent {
 	render = () => {};
@@ -247,7 +247,7 @@ const Foo = class extends React.PureComponent {
 
 ### `7: formatted`
 
-```
+```tsx
 import React, {PureComponent} from "react";
 const Foo = class extends PureComponent {
 	render = () => {};
@@ -264,7 +264,7 @@ const Foo = class extends PureComponent {
 
 ### `8: formatted`
 
-```
+```tsx
 import React from "react";
 class Foo extends React.Component {
 	render() {
@@ -285,7 +285,7 @@ class Foo extends React.Component {
 
 ### `9: formatted`
 
-```
+```tsx
 import React from "react";
 class Foo extends React.Component {
 	render() {
@@ -310,7 +310,7 @@ class Foo extends React.Component {
 
 ### `10: formatted`
 
-```
+```tsx
 class Foo {
 	render = () => {
 		return <>
@@ -329,7 +329,7 @@ class Foo {
 
 ### `11: formatted`
 
-```
+```tsx
 class Foo {
 	render = () =>
 		<>
@@ -348,7 +348,7 @@ class Foo {
 
 ### `12: formatted`
 
-```
+```tsx
 class Foo extends Bar {
 	render() {}
 }

@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		this.setState({
@@ -67,7 +67,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		foo();
@@ -105,7 +105,7 @@ class Hello extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	componentDidUpdate() {
 		this.setState({
@@ -142,7 +142,7 @@ class Hello extends Component {
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	componentDidUpdate() {
 		foo();
@@ -163,7 +163,7 @@ class Hello extends Component {
 
 ### `4: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		if (condition) {
@@ -185,7 +185,7 @@ class Hello extends React.Component {
 
 ### `5: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		condition &&
@@ -206,7 +206,7 @@ class Hello extends React.Component {
 
 ### `6: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		condition

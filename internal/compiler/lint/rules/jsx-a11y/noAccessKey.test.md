@@ -55,7 +55,7 @@ undefined
 
 ### `1: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -69,7 +69,7 @@ undefined
 
 ### `2: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -83,7 +83,7 @@ undefined
 
 ### `3: formatted`
 
-```
+```tsx
 <input accessKey={undefined} />;
 
 ```
@@ -97,7 +97,7 @@ undefined
 
 ### `4: formatted`
 
-```
+```tsx
 <Input accessKey={key} />;
 
 ```

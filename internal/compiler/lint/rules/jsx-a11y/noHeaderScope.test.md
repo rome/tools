@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -63,7 +63,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -77,7 +77,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <th scope={scope} />;
 
 ```
@@ -91,7 +91,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <th scope="col" />;
 
 ```

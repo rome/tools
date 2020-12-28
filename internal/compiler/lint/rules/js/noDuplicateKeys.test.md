@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const foo = {
 	test: true,
 	test2: true,

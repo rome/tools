@@ -33,7 +33,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 React.Children.map(
 	this.props.children,
 	(child, index) => React.cloneElement(child, {key: index}),
@@ -70,7 +70,7 @@ React.Children.map(
 
 ### `1: formatted`
 
-```
+```tsx
 React.Children.map(
 	this.props.children,
 	function(child, index) {
@@ -110,7 +110,7 @@ React.Children.map(
 
 ### `2: formatted`
 
-```
+```tsx
 React.Children.map(
 	this.props.children,
 	function(child, index) {
@@ -144,7 +144,7 @@ React.Children.map(
 
 ### `3: formatted`
 
-```
+```tsx
 Children.map(
 	this.props.children,
 	(child, index) => cloneElement(child, {key: index}),
@@ -175,7 +175,7 @@ Children.map(
 
 ### `4: formatted`
 
-```
+```tsx
 Children.map(
 	this.props.children,
 	function(child, index) {
@@ -209,7 +209,7 @@ Children.map(
 
 ### `5: formatted`
 
-```
+```tsx
 Children.map(
 	this.props.children,
 	function(child, index) {
@@ -249,7 +249,7 @@ Children.map(
 
 ### `6: formatted`
 
-```
+```tsx
 Children.map(
 	this.props.children,
 	(child, index) => React.cloneElement(child, {key: index}),
@@ -280,7 +280,7 @@ Children.map(
 
 ### `7: formatted`
 
-```
+```tsx
 React.Children.map(
 	this.props.children,
 	(child, index) => cloneElement(child, {key: index}),
@@ -317,7 +317,7 @@ React.Children.map(
 
 ### `8: formatted`
 
-```
+```tsx
 React.Children.forEach(
 	this.props.children,
 	(child, index) => React.cloneElement(child, {key: index}),
@@ -354,7 +354,7 @@ React.Children.forEach(
 
 ### `9: formatted`
 
-```
+```tsx
 React.Children.forEach(
 	this.props.children,
 	function(child, index) {
@@ -394,7 +394,7 @@ React.Children.forEach(
 
 ### `10: formatted`
 
-```
+```tsx
 React.Children.forEach(
 	this.props.children,
 	function(child, index) {
@@ -428,7 +428,7 @@ React.Children.forEach(
 
 ### `11: formatted`
 
-```
+```tsx
 Children.forEach(
 	this.props.children,
 	(child, index) => cloneElement(child, {key: index}),
@@ -459,7 +459,7 @@ Children.forEach(
 
 ### `12: formatted`
 
-```
+```tsx
 Children.forEach(
 	this.props.children,
 	function(child, index) {
@@ -493,7 +493,7 @@ Children.forEach(
 
 ### `13: formatted`
 
-```
+```tsx
 Children.forEach(
 	this.props.children,
 	function(child, index) {
@@ -533,7 +533,7 @@ Children.forEach(
 
 ### `14: formatted`
 
-```
+```tsx
 Children.forEach(
 	this.props.children,
 	(child, index) => React.cloneElement(child, {key: index}),
@@ -564,7 +564,7 @@ Children.forEach(
 
 ### `15: formatted`
 
-```
+```tsx
 React.Children.forEach(
 	this.props.children,
 	(child, index) => cloneElement(child, {key: index}),
@@ -595,7 +595,7 @@ React.Children.forEach(
 
 ### `16: formatted`
 
-```
+```tsx
 things.map((thing, index) => <Hello key={index} />);
 
 ```
@@ -623,7 +623,7 @@ things.map((thing, index) => <Hello key={index} />);
 
 ### `17: formatted`
 
-```
+```tsx
 things.map(function(thing, index) {
 	return <Hello key={index} />;
 });
@@ -659,7 +659,7 @@ things.map(function(thing, index) {
 
 ### `18: formatted`
 
-```
+```tsx
 things.map((thing, index) => React.cloneElement(thing, {key: index}));
 
 ```
@@ -687,7 +687,7 @@ things.map((thing, index) => React.cloneElement(thing, {key: index}));
 
 ### `19: formatted`
 
-```
+```tsx
 things.map((thing, index) => cloneElement(thing, {key: index}));
 
 ```
@@ -715,7 +715,7 @@ things.map((thing, index) => cloneElement(thing, {key: index}));
 
 ### `20: formatted`
 
-```
+```tsx
 things.map(function(thing, index) {
 	return cloneElement(thing, {key: index});
 });
@@ -745,7 +745,7 @@ things.map(function(thing, index) {
 
 ### `21: formatted`
 
-```
+```tsx
 things.forEach((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -775,7 +775,7 @@ things.forEach((thing, index) => {
 
 ### `22: formatted`
 
-```
+```tsx
 things.forEach(function(thing, index) {
 	otherThings.push(<Hello key={index} />);
 });
@@ -805,7 +805,7 @@ things.forEach(function(thing, index) {
 
 ### `23: formatted`
 
-```
+```tsx
 things.filter((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -835,7 +835,7 @@ things.filter((thing, index) => {
 
 ### `24: formatted`
 
-```
+```tsx
 things.some((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -865,7 +865,7 @@ things.some((thing, index) => {
 
 ### `25: formatted`
 
-```
+```tsx
 things.every((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -895,7 +895,7 @@ things.every((thing, index) => {
 
 ### `26: formatted`
 
-```
+```tsx
 things.find((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -925,7 +925,7 @@ things.find((thing, index) => {
 
 ### `27: formatted`
 
-```
+```tsx
 things.findIndex((thing, index) => {
 	otherThings.push(<Hello key={index} />);
 });
@@ -955,7 +955,7 @@ things.findIndex((thing, index) => {
 
 ### `28: formatted`
 
-```
+```tsx
 things.reduce(
 	(collection, thing, index) => collection.concat(<Hello key={index} />),
 	[],
@@ -986,7 +986,7 @@ things.reduce(
 
 ### `29: formatted`
 
-```
+```tsx
 things.reduce(
 	function(collection, thing, index) {
 		return collection.concat(<Hello key={index} />);
@@ -1019,7 +1019,7 @@ things.reduce(
 
 ### `30: formatted`
 
-```
+```tsx
 things.reduceRight(
 	(collection, thing, index) => collection.concat(<Hello key={index} />),
 	[],
@@ -1050,7 +1050,7 @@ things.reduceRight(
 
 ### `31: formatted`
 
-```
+```tsx
 things.reduceRight(
 	function(collection, thing, index) {
 		return collection.concat(<Hello key={index} />);
@@ -1069,7 +1069,7 @@ things.reduceRight(
 
 ### `32: formatted`
 
-```
+```tsx
 things.map((thing) => <Hello key={thing.id} />);
 
 ```
@@ -1083,7 +1083,7 @@ things.map((thing) => <Hello key={thing.id} />);
 
 ### `33: formatted`
 
-```
+```tsx
 things.map(function(thing) {
 	return <Hello key={thing.id} />;
 });
@@ -1099,7 +1099,7 @@ things.map(function(thing) {
 
 ### `34: formatted`
 
-```
+```tsx
 things.map((thing) => React.cloneElement(thing, {key: thing.id}));
 
 ```
@@ -1113,7 +1113,7 @@ things.map((thing) => React.cloneElement(thing, {key: thing.id}));
 
 ### `35: formatted`
 
-```
+```tsx
 things.map(function(thing) {
 	return React.cloneElement(thing, {key: thing.id});
 });
@@ -1129,7 +1129,7 @@ things.map(function(thing) {
 
 ### `36: formatted`
 
-```
+```tsx
 things.forEach((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1145,7 +1145,7 @@ things.forEach((thing) => {
 
 ### `37: formatted`
 
-```
+```tsx
 things.forEach(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1161,7 +1161,7 @@ things.forEach(function(thing) {
 
 ### `38: formatted`
 
-```
+```tsx
 things.filter((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1177,7 +1177,7 @@ things.filter((thing) => {
 
 ### `39: formatted`
 
-```
+```tsx
 things.filter(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1193,7 +1193,7 @@ things.filter(function(thing) {
 
 ### `40: formatted`
 
-```
+```tsx
 things.some((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1209,7 +1209,7 @@ things.some((thing) => {
 
 ### `41: formatted`
 
-```
+```tsx
 things.some(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1225,7 +1225,7 @@ things.some(function(thing) {
 
 ### `42: formatted`
 
-```
+```tsx
 things.every((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1241,7 +1241,7 @@ things.every((thing) => {
 
 ### `43: formatted`
 
-```
+```tsx
 things.every(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1257,7 +1257,7 @@ things.every(function(thing) {
 
 ### `44: formatted`
 
-```
+```tsx
 things.find((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1273,7 +1273,7 @@ things.find((thing) => {
 
 ### `45: formatted`
 
-```
+```tsx
 things.find(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1289,7 +1289,7 @@ things.find(function(thing) {
 
 ### `46: formatted`
 
-```
+```tsx
 things.findIndex((thing) => {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1305,7 +1305,7 @@ things.findIndex((thing) => {
 
 ### `47: formatted`
 
-```
+```tsx
 things.findIndex(function(thing) {
 	otherThings.push(<Hello key={thing.id} />);
 });
@@ -1321,7 +1321,7 @@ things.findIndex(function(thing) {
 
 ### `48: formatted`
 
-```
+```tsx
 things.reduce(
 	(collection, thing) => collection.concat(<Hello key={thing.id} />),
 	[],
@@ -1338,7 +1338,7 @@ things.reduce(
 
 ### `49: formatted`
 
-```
+```tsx
 things.reduce(
 	function(collection, thing) {
 		return collection.concat(<Hello key={thing.id} />);
@@ -1357,7 +1357,7 @@ things.reduce(
 
 ### `50: formatted`
 
-```
+```tsx
 things.reduceRight(
 	(collection, thing) => collection.concat(<Hello key={thing.id} />),
 	[],
@@ -1374,7 +1374,7 @@ things.reduceRight(
 
 ### `51: formatted`
 
-```
+```tsx
 things.reduceRight(
 	function(collection, thing) {
 		return collection.concat(<Hello key={thing.id} />);

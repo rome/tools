@@ -29,7 +29,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `0: formatted`
 
-```
+```ts
 /[ab]/;
 
 ```
@@ -59,7 +59,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `1: formatted`
 
-```
+```ts
 /[abc]/;
 
 ```
@@ -73,7 +73,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `2: formatted`
 
-```
+```ts
 /[ab]/;
 
 ```
@@ -87,7 +87,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `3: formatted`
 
-```
+```ts
 /ab|ba/;
 
 ```
@@ -101,7 +101,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `4: formatted`
 
-```
+```ts
 /a/;
 
 ```
@@ -115,7 +115,7 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ### `5: formatted`
 
-```
+```ts
 /ab|ba|a/;
 
 ```

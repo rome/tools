@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: "HTML"}}>
 	children
 </div>;
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: "HTML"}} children={"children"} />;
 
 ```
@@ -79,7 +79,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: "HTML"}} children={["children"]} />;
 
 ```
@@ -105,7 +105,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <Invalid dangerouslySetInnerHTML={{__html: "HTML"}}>
 	children
 </Invalid>;
@@ -133,7 +133,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <Invalid dangerouslySetInnerHTML={{__html: "HTML"}} children={"children"} />;
 
 ```
@@ -159,7 +159,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 React.createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -189,7 +189,7 @@ React.createElement(
 
 ### `6: formatted`
 
-```
+```tsx
 React.createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -220,7 +220,7 @@ React.createElement(
 
 ### `7: formatted`
 
-```
+```tsx
 React.createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
@@ -250,7 +250,7 @@ React.createElement(
 
 ### `8: formatted`
 
-```
+```tsx
 React.createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
@@ -280,7 +280,7 @@ React.createElement(
 
 ### `9: formatted`
 
-```
+```tsx
 React.createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
@@ -310,7 +310,7 @@ React.createElement(
 
 ### `10: formatted`
 
-```
+```tsx
 React.createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
@@ -339,7 +339,7 @@ React.createElement(
 
 ### `11: formatted`
 
-```
+```tsx
 React.createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -369,7 +369,7 @@ React.createElement(
 
 ### `12: formatted`
 
-```
+```tsx
 React.createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -399,7 +399,7 @@ React.createElement(
 
 ### `13: formatted`
 
-```
+```tsx
 createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, "children");
 
 ```
@@ -425,7 +425,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, "children");
 
 ### `14: formatted`
 
-```
+```tsx
 createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, ["children"]);
 
 ```
@@ -451,7 +451,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, ["children"]);
 
 ### `15: formatted`
 
-```
+```tsx
 createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
@@ -480,7 +480,7 @@ createElement(
 
 ### `16: formatted`
 
-```
+```tsx
 createElement(
 	"div",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
@@ -510,7 +510,7 @@ createElement(
 
 ### `17: formatted`
 
-```
+```tsx
 createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
@@ -540,7 +540,7 @@ createElement(
 
 ### `18: formatted`
 
-```
+```tsx
 createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
@@ -569,7 +569,7 @@ createElement(
 
 ### `19: formatted`
 
-```
+```tsx
 createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -599,7 +599,7 @@ createElement(
 
 ### `20: formatted`
 
-```
+```tsx
 createElement(
 	"Invalid",
 	{dangerouslySetInnerHTML: {__html: "HTML"}},
@@ -617,7 +617,7 @@ createElement(
 
 ### `21: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: "HTML"}} />;
 
 ```
@@ -631,7 +631,7 @@ createElement(
 
 ### `22: formatted`
 
-```
+```tsx
 <div>
 	children
 </div>;
@@ -647,7 +647,7 @@ createElement(
 
 ### `23: formatted`
 
-```
+```tsx
 <div children={"children"} />;
 
 ```
@@ -661,7 +661,7 @@ createElement(
 
 ### `24: formatted`
 
-```
+```tsx
 <div children={["children"]} />;
 
 ```
@@ -675,7 +675,7 @@ createElement(
 
 ### `25: formatted`
 
-```
+```tsx
 <Valid dangerouslySetInnerHTML={{__html: "HTML"}} />;
 
 ```
@@ -689,7 +689,7 @@ createElement(
 
 ### `26: formatted`
 
-```
+```tsx
 <Valid>
 	children
 </Valid>;
@@ -705,7 +705,7 @@ createElement(
 
 ### `27: formatted`
 
-```
+```tsx
 <Valid children={"children"} />;
 
 ```
@@ -719,7 +719,7 @@ createElement(
 
 ### `28: formatted`
 
-```
+```tsx
 <Valid children={["children"]} />;
 
 ```
@@ -733,7 +733,7 @@ createElement(
 
 ### `29: formatted`
 
-```
+```tsx
 React.createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
@@ -747,7 +747,7 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ### `30: formatted`
 
-```
+```tsx
 React.createElement("div", {}, "children");
 
 ```
@@ -761,7 +761,7 @@ React.createElement("div", {}, "children");
 
 ### `31: formatted`
 
-```
+```tsx
 React.createElement("div", {}, ["children"]);
 
 ```
@@ -775,7 +775,7 @@ React.createElement("div", {}, ["children"]);
 
 ### `32: formatted`
 
-```
+```tsx
 React.createElement("div", {children: "children"});
 
 ```
@@ -789,7 +789,7 @@ React.createElement("div", {children: "children"});
 
 ### `33: formatted`
 
-```
+```tsx
 React.createElement("div", {children: ["children"]});
 
 ```
@@ -803,7 +803,7 @@ React.createElement("div", {children: ["children"]});
 
 ### `34: formatted`
 
-```
+```tsx
 React.createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
@@ -817,7 +817,7 @@ React.createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ### `35: formatted`
 
-```
+```tsx
 React.createElement("valid", {}, "children");
 
 ```
@@ -831,7 +831,7 @@ React.createElement("valid", {}, "children");
 
 ### `36: formatted`
 
-```
+```tsx
 React.createElement("valid", {}, ["children"]);
 
 ```
@@ -845,7 +845,7 @@ React.createElement("valid", {}, ["children"]);
 
 ### `37: formatted`
 
-```
+```tsx
 React.createElement("valid", {children: "children"});
 
 ```
@@ -859,7 +859,7 @@ React.createElement("valid", {children: "children"});
 
 ### `38: formatted`
 
-```
+```tsx
 React.createElement("valid", {children: ["children"]});
 
 ```
@@ -873,7 +873,7 @@ React.createElement("valid", {children: ["children"]});
 
 ### `39: formatted`
 
-```
+```tsx
 createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
@@ -887,7 +887,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ### `40: formatted`
 
-```
+```tsx
 createElement("div", {}, "children");
 
 ```
@@ -901,7 +901,7 @@ createElement("div", {}, "children");
 
 ### `41: formatted`
 
-```
+```tsx
 createElement("div", {}, ["children"]);
 
 ```
@@ -915,7 +915,7 @@ createElement("div", {}, ["children"]);
 
 ### `42: formatted`
 
-```
+```tsx
 createElement("div", {children: "children"});
 
 ```
@@ -929,7 +929,7 @@ createElement("div", {children: "children"});
 
 ### `43: formatted`
 
-```
+```tsx
 createElement("div", {children: ["children"]});
 
 ```
@@ -943,7 +943,7 @@ createElement("div", {children: ["children"]});
 
 ### `44: formatted`
 
-```
+```tsx
 createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
@@ -957,7 +957,7 @@ createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ### `45: formatted`
 
-```
+```tsx
 createElement("valid", {}, "children");
 
 ```
@@ -971,7 +971,7 @@ createElement("valid", {}, "children");
 
 ### `46: formatted`
 
-```
+```tsx
 createElement("valid", {}, ["children"]);
 
 ```
@@ -985,7 +985,7 @@ createElement("valid", {}, ["children"]);
 
 ### `47: formatted`
 
-```
+```tsx
 createElement("valid", {children: "children"});
 
 ```
@@ -999,7 +999,7 @@ createElement("valid", {children: "children"});
 
 ### `48: formatted`
 
-```
+```tsx
 createElement("valid", {children: ["children"]});
 
 ```

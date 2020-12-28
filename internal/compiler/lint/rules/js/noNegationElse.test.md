@@ -34,7 +34,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 if (true) {
 	alternate;
 } else {
@@ -67,7 +67,7 @@ if (true) {
 
 ### `1: formatted`
 
-```
+```ts
 true ? alternate : consequent;
 
 ```
@@ -81,7 +81,7 @@ true ? alternate : consequent;
 
 ### `2: formatted`
 
-```
+```ts
 if (!true) {
 	consequent;
 }
@@ -97,7 +97,7 @@ if (!true) {
 
 ### `3: formatted`
 
-```
+```ts
 true ? consequent : alternate;
 
 ```

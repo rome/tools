@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 console.log(event);
 
 ```
@@ -51,7 +51,7 @@ console.log(event);
 
 ### `1: formatted`
 
-```
+```ts
 foo(event);
 
 ```
@@ -65,7 +65,7 @@ foo(event);
 
 ### `2: formatted`
 
-```
+```ts
 function foo(event) {
 	console.info(event);
 }

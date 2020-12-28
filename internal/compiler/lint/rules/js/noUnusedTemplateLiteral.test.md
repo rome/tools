@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const foo = "bar";
 
 ```
@@ -57,7 +57,7 @@ const foo = "bar";
 
 ### `1: formatted`
 
-```
+```ts
 const foo = "bar ";
 
 ```
@@ -71,7 +71,7 @@ const foo = "bar ";
 
 ### `2: formatted`
 
-```
+```ts
 const foo = `bar
 `;
 
@@ -86,7 +86,7 @@ const foo = `bar
 
 ### `3: formatted`
 
-```
+```ts
 const foo = `"bar"`;
 
 ```
@@ -100,7 +100,7 @@ const foo = `"bar"`;
 
 ### `4: formatted`
 
-```
+```ts
 const foo = `'bar'`;
 
 ```

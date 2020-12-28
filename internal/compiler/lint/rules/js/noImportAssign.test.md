@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 import x from "y";
 x = 1;
 
@@ -54,7 +54,7 @@ x = 1;
 
 ### `1: formatted`
 
-```
+```ts
 import x from "y";
 [x] = 1;
 
@@ -82,7 +82,7 @@ import x from "y";
 
 ### `2: formatted`
 
-```
+```ts
 import x from "y";
 ({x} = 1);
 
@@ -110,7 +110,7 @@ import x from "y";
 
 ### `3: formatted`
 
-```
+```ts
 import x from "y";
 x++;
 
@@ -138,7 +138,7 @@ x++;
 
 ### `4: formatted`
 
-```
+```ts
 import x from "y";
 [...x] = 1;
 
@@ -166,7 +166,7 @@ import x from "y";
 
 ### `5: formatted`
 
-```
+```ts
 import x from "y";
 ({...x} = 1);
 
@@ -194,7 +194,7 @@ import x from "y";
 
 ### `6: formatted`
 
-```
+```ts
 import x from "y";
 for (x in y) {
 	// empty
@@ -224,7 +224,7 @@ for (x in y) {
 
 ### `7: formatted`
 
-```
+```ts
 import x from "y";
 x += 1;
 
@@ -252,7 +252,7 @@ x += 1;
 
 ### `8: formatted`
 
-```
+```ts
 import * as x from "y";
 x = 1;
 
@@ -280,7 +280,7 @@ x = 1;
 
 ### `9: formatted`
 
-```
+```ts
 import {x} from "y";
 x = 1;
 

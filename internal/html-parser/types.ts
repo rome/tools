@@ -2,6 +2,7 @@ import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
 
 export type Tokens = BaseTokens & {
 	Doctype: ValueToken<"Doctype", string>;
+	Cdata: ValueToken<"Cdata", string>;
 	Text: ValueToken<"Text", string>;
 	// <
 	TagStartOpen: SimpleToken<"TagStartOpen">;

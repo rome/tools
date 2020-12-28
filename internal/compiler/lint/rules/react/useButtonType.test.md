@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <button>
 	child
 </button>;
@@ -55,7 +55,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <button type="foo">
 	child
 </button>;
@@ -84,7 +84,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 React.createElement("button", {type: "foo"}, ["child"]);
 
 ```
@@ -111,7 +111,7 @@ React.createElement("button", {type: "foo"}, ["child"]);
 
 ### `3: formatted`
 
-```
+```tsx
 createElement("button", {type: "foo"}, ["child"]);
 
 ```
@@ -125,7 +125,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `4: formatted`
 
-```
+```tsx
 <div>
 	child
 </div>;
@@ -141,7 +141,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `5: formatted`
 
-```
+```tsx
 <div type="type">
 	child
 </div>;
@@ -157,7 +157,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `6: formatted`
 
-```
+```tsx
 <button type="button">
 	child
 </button>;
@@ -173,7 +173,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `7: formatted`
 
-```
+```tsx
 <button type="submit">
 	child
 </button>;
@@ -189,7 +189,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `8: formatted`
 
-```
+```tsx
 <button type="reset">
 	child
 </button>;
@@ -205,7 +205,7 @@ createElement("button", {type: "foo"}, ["child"]);
 
 ### `9: formatted`
 
-```
+```tsx
 React.createElement("div", ["child"]);
 
 ```
@@ -219,7 +219,7 @@ React.createElement("div", ["child"]);
 
 ### `10: formatted`
 
-```
+```tsx
 React.createElement("div", {type: "type"}, ["child"]);
 
 ```
@@ -233,7 +233,7 @@ React.createElement("div", {type: "type"}, ["child"]);
 
 ### `11: formatted`
 
-```
+```tsx
 React.createElement("button", {type: "button"}, ["child"]);
 
 ```
@@ -247,7 +247,7 @@ React.createElement("button", {type: "button"}, ["child"]);
 
 ### `12: formatted`
 
-```
+```tsx
 React.createElement("button", {type: "submit"}, ["child"]);
 
 ```
@@ -261,7 +261,7 @@ React.createElement("button", {type: "submit"}, ["child"]);
 
 ### `13: formatted`
 
-```
+```tsx
 React.createElement("button", {type: "reset"}, ["child"]);
 
 ```
@@ -275,7 +275,7 @@ React.createElement("button", {type: "reset"}, ["child"]);
 
 ### `14: formatted`
 
-```
+```tsx
 createElement("div", ["child"]);
 
 ```
@@ -289,7 +289,7 @@ createElement("div", ["child"]);
 
 ### `15: formatted`
 
-```
+```tsx
 createElement("div", {type: "type"}, ["child"]);
 
 ```
@@ -303,7 +303,7 @@ createElement("div", {type: "type"}, ["child"]);
 
 ### `16: formatted`
 
-```
+```tsx
 createElement("button", {type: "button"}, ["child"]);
 
 ```
@@ -317,7 +317,7 @@ createElement("button", {type: "button"}, ["child"]);
 
 ### `17: formatted`
 
-```
+```tsx
 createElement("button", {type: "submit"}, ["child"]);
 
 ```
@@ -331,7 +331,7 @@ createElement("button", {type: "submit"}, ["child"]);
 
 ### `18: formatted`
 
-```
+```tsx
 createElement("button", {type: "reset"}, ["child"]);
 
 ```

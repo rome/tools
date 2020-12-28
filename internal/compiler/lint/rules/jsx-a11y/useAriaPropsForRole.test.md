@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <span role="checkbox" />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <span role="switch" />;
 
 ```
@@ -81,7 +81,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <span role="spinbutton" />;
 
 ```
@@ -109,7 +109,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <span role="spinbutton" aria-valuemax="100" />;
 
 ```
@@ -137,7 +137,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <span role="spinbutton" aria-valuemin="0" />;
 
 ```
@@ -163,7 +163,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <span role="spinbutton" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
@@ -191,7 +191,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <span role="slider" aria-valuemin="0" />;
 
 ```
@@ -219,7 +219,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <span role="slider" aria-valuemax="100" />;
 
 ```
@@ -245,7 +245,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <span role="slider" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
@@ -273,7 +273,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <span role="separator" aria-valuemin="0" />;
 
 ```
@@ -301,7 +301,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <span role="separator" aria-valuemax="100" />;
 
 ```
@@ -327,7 +327,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <span role="separator" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
@@ -359,7 +359,7 @@
 
 ### `12: formatted`
 
-```
+```tsx
 <span role="scrollbar" aria-valuemin="0" />;
 
 ```
@@ -391,7 +391,7 @@
 
 ### `13: formatted`
 
-```
+```tsx
 <span role="scrollbar" aria-valuemax="100" />;
 
 ```
@@ -421,7 +421,7 @@
 
 ### `14: formatted`
 
-```
+```tsx
 <span role="scrollbar" aria-valuemin="0" aria-valuemax="100" />;
 
 ```
@@ -450,7 +450,7 @@
 
 ### `15: formatted`
 
-```
+```tsx
 <span role="scrollbar"
 aria-valuemin="0"
 aria-valuemax="100"
@@ -479,7 +479,7 @@ aria-orientation="horizontal" />;
 
 ### `16: formatted`
 
-```
+```tsx
 <span role="radio" />;
 
 ```
@@ -505,7 +505,7 @@ aria-orientation="horizontal" />;
 
 ### `17: formatted`
 
-```
+```tsx
 <span role="option" />;
 
 ```
@@ -531,7 +531,7 @@ aria-orientation="horizontal" />;
 
 ### `18: formatted`
 
-```
+```tsx
 <span role="heading" />;
 
 ```
@@ -559,7 +559,7 @@ aria-orientation="horizontal" />;
 
 ### `19: formatted`
 
-```
+```tsx
 <span role="combobox" />;
 
 ```
@@ -585,7 +585,7 @@ aria-orientation="horizontal" />;
 
 ### `20: formatted`
 
-```
+```tsx
 <span role="combobox" aria-expanded="true" />;
 
 ```
@@ -611,7 +611,7 @@ aria-orientation="horizontal" />;
 
 ### `21: formatted`
 
-```
+```tsx
 <span role="combobox" aria-controls="true" />;
 
 ```
@@ -637,7 +637,7 @@ aria-orientation="horizontal" />;
 
 ### `22: formatted`
 
-```
+```tsx
 <span role="menuitemcheckbox" />;
 
 ```
@@ -663,7 +663,7 @@ aria-orientation="horizontal" />;
 
 ### `23: formatted`
 
-```
+```tsx
 <span role="menuitemradio" />;
 
 ```
@@ -677,7 +677,7 @@ aria-orientation="horizontal" />;
 
 ### `24: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked="true" />;
 
 ```
@@ -691,7 +691,7 @@ aria-orientation="horizontal" />;
 
 ### `25: formatted`
 
-```
+```tsx
 <span role="switch" aria-checked="true" />;
 
 ```
@@ -705,7 +705,7 @@ aria-orientation="horizontal" />;
 
 ### `26: formatted`
 
-```
+```tsx
 <span role="spinbutton"
 aria-valuemax="100"
 aria-valuemin="0"
@@ -722,7 +722,7 @@ aria-valuenow="50" />;
 
 ### `27: formatted`
 
-```
+```tsx
 <span role="slider" aria-valuemax="100" aria-valuemin="0" aria-valuenow="50" />;
 
 ```
@@ -736,7 +736,7 @@ aria-valuenow="50" />;
 
 ### `28: formatted`
 
-```
+```tsx
 <span role="separator"
 aria-valuemax="100"
 aria-valuemin="0"
@@ -753,7 +753,7 @@ aria-valuenow="50" />;
 
 ### `29: formatted`
 
-```
+```tsx
 <span role="scrollbar"
 aria-valuemax="100"
 aria-valuemin="0"
@@ -772,7 +772,7 @@ aria-controls="123" />;
 
 ### `30: formatted`
 
-```
+```tsx
 <span role="radio" aria-checked="true" />;
 
 ```
@@ -786,7 +786,7 @@ aria-controls="123" />;
 
 ### `31: formatted`
 
-```
+```tsx
 <span role="option" aria-selected="true" />;
 
 ```
@@ -800,7 +800,7 @@ aria-controls="123" />;
 
 ### `32: formatted`
 
-```
+```tsx
 <span role="heading" aria-level="1" />;
 
 ```
@@ -814,7 +814,7 @@ aria-controls="123" />;
 
 ### `33: formatted`
 
-```
+```tsx
 <span role="combobox" aria-controls="true" aria-expanded="true" />;
 
 ```
@@ -828,7 +828,7 @@ aria-controls="123" />;
 
 ### `34: formatted`
 
-```
+```tsx
 <span role="menuitemcheckbox" aria-checked="true" />;
 
 ```
@@ -842,7 +842,7 @@ aria-controls="123" />;
 
 ### `35: formatted`
 
-```
+```tsx
 <span role="menuitemradio" aria-checked="true" />;
 
 ```
@@ -856,7 +856,7 @@ aria-controls="123" />;
 
 ### `36: formatted`
 
-```
+```tsx
 <Span role="menuitemradio" />;
 
 ```

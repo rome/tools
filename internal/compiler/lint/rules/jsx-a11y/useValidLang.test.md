@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <html lang="foo" />;
 
 ```
@@ -47,7 +47,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <html lang="ex" />;
 
 ```
@@ -71,7 +71,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <html lang="foo-bar" />;
 
 ```
@@ -116,7 +116,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <html lang="aa-zz" />;
 
 ```
@@ -161,7 +161,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <html lang="zz-AA" />;
 
 ```
@@ -198,7 +198,7 @@ undefined
 
 ### `6: formatted`
 
-```
+```tsx
 <html lang="en-US" />;
 
 ```
@@ -212,7 +212,7 @@ undefined
 
 ### `7: formatted`
 
-```
+```tsx
 <html lang="en" />;
 
 ```
@@ -226,7 +226,7 @@ undefined
 
 ### `8: formatted`
 
-```
+```tsx
 <html lang={lang} />;
 
 ```

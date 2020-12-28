@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function NaN() {}
 
 ```
@@ -53,7 +53,7 @@ function NaN() {}
 
 ### `1: formatted`
 
-```
+```ts
 let Set;
 
 ```
@@ -80,7 +80,7 @@ let Set;
 
 ### `2: formatted`
 
-```
+```ts
 try {
 } catch (Object) {
 }
@@ -109,7 +109,7 @@ try {
 
 ### `3: formatted`
 
-```
+```ts
 !function Array() {};
 
 ```
@@ -136,7 +136,7 @@ try {
 
 ### `4: formatted`
 
-```
+```ts
 function test(JSON) {
 	console.log(JSON);
 }

@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:d038d0ff320eb07937afdbadd917feca493baa4c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:0c4c9a924c7fdee8f4210a9810329cc3f5fcdb65,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -49,6 +49,8 @@ import CSSWhitespace from "./css/core/CSSWhitespace";
 builders.set("CSSWhitespace", CSSWhitespace);
 import HTMLAttribute from "./html/attributes/HTMLAttribute";
 builders.set("HTMLAttribute", HTMLAttribute);
+import HTMLCdataTag from "./html/tags/HTMLCdataTag";
+builders.set("HTMLCdataTag", HTMLCdataTag);
 import HTMLDoctypeTag from "./html/tags/HTMLDoctypeTag";
 builders.set("HTMLDoctypeTag", HTMLDoctypeTag);
 import HTMLElement from "./html/tags/HTMLElement";

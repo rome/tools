@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked="test" />;
 
 ```
@@ -49,7 +49,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <span aria-autocomplete="test" />;
 
 ```
@@ -75,7 +75,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <span aria-invalid="foo" />;
 
 ```
@@ -99,7 +99,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <span aria-errormessage="" />;
 
 ```
@@ -126,7 +126,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <span aria-relevant="fancy" />;
 
 ```
@@ -150,7 +150,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <span aria-labelledby="" />;
 
 ```
@@ -174,7 +174,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <span aria-labelledby={""} />;
 
 ```
@@ -198,7 +198,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <span aria-details="" />;
 
 ```
@@ -212,7 +212,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked={checked} />;
 
 ```
@@ -226,7 +226,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked="true" />;
 
 ```
@@ -240,7 +240,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked={true} />;
 
 ```
@@ -254,7 +254,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked="false" />;
 
 ```
@@ -268,7 +268,7 @@
 
 ### `12: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-checked="mixed" />;
 
 ```
@@ -282,7 +282,7 @@
 
 ### `13: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-autocomplete="both" />;
 
 ```
@@ -296,7 +296,7 @@
 
 ### `14: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-autocomplete="inline" />;
 
 ```
@@ -310,7 +310,7 @@
 
 ### `15: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-autocomplete="list" />;
 
 ```
@@ -324,7 +324,7 @@
 
 ### `16: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-autocomplete="none" />;
 
 ```
@@ -338,7 +338,7 @@
 
 ### `17: formatted`
 
-```
+```tsx
 <span aria-invalid="true" />;
 
 ```
@@ -352,7 +352,7 @@
 
 ### `18: formatted`
 
-```
+```tsx
 <span aria-invalid="grammar" />;
 
 ```
@@ -366,7 +366,7 @@
 
 ### `19: formatted`
 
-```
+```tsx
 <span aria-invalid="false" />;
 
 ```
@@ -380,7 +380,7 @@
 
 ### `20: formatted`
 
-```
+```tsx
 <span aria-invalid={false} />;
 
 ```
@@ -394,7 +394,7 @@
 
 ### `21: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-errormessage="someid" />;
 
 ```
@@ -408,7 +408,7 @@
 
 ### `22: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-relevant="additions" />;
 
 ```
@@ -422,7 +422,7 @@
 
 ### `23: formatted`
 
-```
+```tsx
 <span role="checkbox" aria-relevant="additions all" />;
 
 ```
@@ -436,7 +436,7 @@
 
 ### `24: formatted`
 
-```
+```tsx
 <span aria-labelledby="id" />;
 
 ```
@@ -450,7 +450,7 @@
 
 ### `25: formatted`
 
-```
+```tsx
 <span aria-labelledby="fooId barId" />;
 
 ```
@@ -464,7 +464,7 @@
 
 ### `26: formatted`
 
-```
+```tsx
 <span aria-details="someid" />;
 
 ```

@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <audio {...props} />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <video {...props} />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <audio>
 	child
 </audio>;
@@ -109,7 +109,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <video>
 	child
 </video>;
@@ -125,7 +125,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <audio>
 	<track kind="captions" {...props} />
 </audio>;
@@ -141,7 +141,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <video>
 	<track kind="captions" {...props} />
 </video>;
@@ -157,7 +157,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <video muted={true} {...props} />;
 
 ```
@@ -171,7 +171,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <Audio>
 	child
 </Audio>;
@@ -187,7 +187,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <Video>
 	child
 </Video>;

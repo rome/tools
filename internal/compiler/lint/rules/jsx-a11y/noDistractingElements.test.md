@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <blink />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <marquee />;
 
 ```
@@ -67,7 +67,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <div />;
 
 ```
@@ -81,7 +81,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <Marquee />;
 
 ```

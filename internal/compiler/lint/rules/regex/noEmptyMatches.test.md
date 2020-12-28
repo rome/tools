@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let a = /a*/;
 
 ```
@@ -51,7 +51,7 @@ let a = /a*/;
 
 ### `1: formatted`
 
-```
+```ts
 let b = /a*(abc)?[1,2,3]*/;
 
 ```
@@ -65,7 +65,7 @@ let b = /a*(abc)?[1,2,3]*/;
 
 ### `2: formatted`
 
-```
+```ts
 let a = /a*(abc)+[1,2,3]?/;
 
 ```
@@ -79,7 +79,7 @@ let a = /a*(abc)+[1,2,3]?/;
 
 ### `3: formatted`
 
-```
+```ts
 let b = /a+(abc)*/;
 
 ```

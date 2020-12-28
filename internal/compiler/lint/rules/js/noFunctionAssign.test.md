@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function foo() {}
 foo = bar;
 
@@ -52,7 +52,7 @@ foo = bar;
 
 ### `1: formatted`
 
-```
+```ts
 function foo() {
 	foo = bar;
 }
@@ -80,7 +80,7 @@ function foo() {
 
 ### `2: formatted`
 
-```
+```ts
 foo = bar;
 function foo() {}
 
@@ -107,7 +107,7 @@ function foo() {}
 
 ### `3: formatted`
 
-```
+```ts
 [foo] = bar;
 function foo() {}
 
@@ -134,7 +134,7 @@ function foo() {}
 
 ### `4: formatted`
 
-```
+```ts
 ({x: foo = 0} = bar);
 function foo() {}
 
@@ -161,7 +161,7 @@ function foo() {}
 
 ### `5: formatted`
 
-```
+```ts
 function foo() {
 	[foo] = bar;
 }
@@ -189,7 +189,7 @@ function foo() {
 
 ### `6: formatted`
 
-```
+```ts
 (function() {
 	({x: foo = 0} = bar);
 	function foo() {}
@@ -206,7 +206,7 @@ function foo() {
 
 ### `7: formatted`
 
-```
+```ts
 function foo() {
 	var foo = bar;
 }
@@ -222,7 +222,7 @@ function foo() {
 
 ### `8: formatted`
 
-```
+```ts
 function foo(foo) {
 	foo = bar;
 }
@@ -238,7 +238,7 @@ function foo(foo) {
 
 ### `9: formatted`
 
-```
+```ts
 function foo() {
 	var foo;
 	foo = bar;
@@ -255,7 +255,7 @@ function foo() {
 
 ### `10: formatted`
 
-```
+```ts
 var foo = () => {};
 foo = bar;
 
@@ -270,7 +270,7 @@ foo = bar;
 
 ### `11: formatted`
 
-```
+```ts
 var foo = function() {};
 foo = bar;
 
@@ -285,7 +285,7 @@ foo = bar;
 
 ### `12: formatted`
 
-```
+```ts
 var foo = function() {
 	foo = bar;
 };
@@ -301,7 +301,7 @@ var foo = function() {
 
 ### `13: formatted`
 
-```
+```ts
 import bar from "bar";
 function foo() {
 	var foo = bar;

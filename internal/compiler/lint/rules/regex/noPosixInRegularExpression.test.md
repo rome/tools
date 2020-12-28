@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const pattern = /[[:alpha:]\]/;
 
 ```
@@ -51,7 +51,7 @@ const pattern = /[[:alpha:]\]/;
 
 ### `1: formatted`
 
-```
+```ts
 const pattern = /[[.ch.]\]/;
 
 ```
