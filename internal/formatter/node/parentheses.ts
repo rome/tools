@@ -41,6 +41,15 @@ function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
 	);
 }
 
+function isCalleeOfParent(node: AnyNode, parent: AnyNode): boolean {
+	return (
+		(parent.type === "JSCallExpression" ||
+		parent.type === "JSOptionalCallExpression" ||
+		parent.type === "JSNewExpression") &&
+		parent.callee === node
+	);
+}
+
 const parens: Map<
 	AnyNode["type"],
 	(
@@ -102,9 +111,8 @@ parens.set(
 			// (foo++).test(), (foo++)[0]
 			(parent.type === "JSMemberExpression" && parent.object === node) ||
 			// (foo++)()
-			(parent.type === "JSCallExpression" && parent.callee === node) ||
 			// new (foo++)()
-			(parent.type === "JSNewExpression" && parent.callee === node) ||
+			isCalleeOfParent(node, parent) ||
 			isClassExtendsClause(node, parent)
 		);
 	},
@@ -144,12 +152,8 @@ function needsParenLogicalExpression(
 	// (f ?? g)()
 	// (f ?? g)?.()
 	// new (A ?? B)()
-	if (
-		parent.type === "JSCallExpression" ||
-		parent.type === "JSOptionalCallExpression" ||
-		parent.type === "JSNewExpression"
-	) {
-		return parent.callee === node;
+	if (isCalleeOfParent(node, parent)) {
+		return true;
 	}
 
 	// ...(a ?? b)
@@ -250,8 +254,7 @@ function needsParenYieldExpression(
 		isBinary(parent) ||
 		isUnaryLike(parent) ||
 		parent.type === "JSMemberExpression" ||
-		(parent.type === "JSCallExpression" && parent.callee === node) ||
-		(parent.type === "JSNewExpression" && parent.callee === node) ||
+		isCalleeOfParent(node, parent) ||
 		(parent.type === "JSAwaitExpression" && node.type === "JSYieldExpression") ||
 		(parent.type === "JSConditionalExpression" && node === parent.test) ||
 		isClassExtendsClause(node, parent)
@@ -290,8 +293,7 @@ function needsParenUnaryExpression(
 ): boolean {
 	return (
 		(parent.type === "JSMemberExpression" && parent.object === node) ||
-		(parent.type === "JSCallExpression" && parent.callee === node) ||
-		(parent.type === "JSNewExpression" && parent.callee === node) ||
+		isCalleeOfParent(node, parent) ||
 		(parent.type === "JSBinaryExpression" &&
 		parent.operator === "**" &&
 		parent.left === node) ||
