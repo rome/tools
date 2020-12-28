@@ -248,6 +248,8 @@ const globalGlobals = [
 	...GLOBALS.es5,
 	...GLOBALS.es2015,
 	...GLOBALS.es2017,
+	...GLOBALS.es2020,
+	...GLOBALS.es2021,
 	...GLOBALS.browser,
 	...GLOBALS.worker,
 	...GLOBALS.node,
