@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const arr = [["a", "b", "c"], [1, 2, 3]];
 arr[0][2] = undefined;
 
@@ -60,7 +60,7 @@ arr[0][2] = undefined;
 
 ### `1: formatted`
 
-```
+```ts
 const obj = {a: {b: {c: 123}}};
 obj.a.b.c = undefined;
 
@@ -75,7 +75,7 @@ obj.a.b.c = undefined;
 
 ### `2: formatted`
 
-```
+```ts
 const foo = new Set([1, 2, 3]);
 foo.delete(1);
 

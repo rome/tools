@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	UNSAFE_componentWillMount() {}
 }
@@ -59,7 +59,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	UNSAFE_componentWillReceiveProps() {}
 }
@@ -90,7 +90,7 @@ class Hello extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	UNSAFE_componentWillUpdate() {}
 }
@@ -106,7 +106,7 @@ class Hello extends React.Component {
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {}
 }

@@ -40,7 +40,7 @@ export default createVisitor({
 			if (!hasJSXAttribute(node, "title") || !validTitle(node)) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_IFRAME_HAS_TITLE,
+					descriptions.LINT.JSX_A11Y_IFRAME_USE_TITLE,
 				);
 			}
 		}

@@ -9,6 +9,7 @@ import {
 import {
 	AnyHTMLChildNode,
 	HTMLAttribute,
+	HTMLCdataTag,
 	HTMLDoctypeTag,
 	HTMLElement,
 	HTMLIdentifier,
@@ -122,12 +123,20 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 		}
 
 		if (parser.getInputCharOnly(index) === "!") {
-			const [isCDATA, value, endIndex] = consumeDOCTYPE(parser, index);
-			if (isCDATA && value && endIndex) {
+			const [isDoctype, value, endIndex] = consumeDOCTYPE(parser, index);
+			if (isDoctype && value && endIndex) {
 				return {
 					state,
 					token: parser.finishValueToken("Doctype", value, endIndex),
 				};
+			} else {
+				const [isCdata, value, endIndex] = consumeCDATA(parser, index);
+				if (isCdata && value && endIndex) {
+					return {
+						state,
+						token: parser.finishValueToken("Cdata", value, endIndex),
+					};
+				}
 			}
 		}
 
@@ -220,7 +229,7 @@ function parseString(parser: HTMLParser): HTMLString | undefined {
 			start,
 			{
 				type: "HTMLString",
-				value: token.value,
+				value: token.value.trim(),
 			},
 		);
 	}
@@ -260,7 +269,9 @@ function parseAttribute(parser: HTMLParser): HTMLAttribute | undefined {
 	return undefined;
 }
 
-function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined {
+function parseTag(
+	parser: HTMLParser,
+): HTMLElement | HTMLDoctypeTag | HTMLCdataTag | undefined {
 	const headStart = parser.getPosition();
 	if (!parser.eatToken("TagStartOpen")) {
 		parser.unexpectedDiagnostic({
@@ -270,6 +281,9 @@ function parseTag(parser: HTMLParser): HTMLElement | HTMLDoctypeTag | undefined 
 	}
 	if (parser.matchToken("Doctype")) {
 		return parseDoctype(parser);
+	}
+	if (parser.matchToken("Cdata")) {
+		return parseCdata(parser);
 	}
 
 	const attributes: HTMLElement["attributes"] = [];
@@ -418,6 +432,23 @@ function parseDoctype(parser: HTMLParser): HTMLDoctypeTag | undefined {
 	return undefined;
 }
 
+function parseCdata(parser: HTMLParser): HTMLCdataTag | undefined {
+	const token = parser.getToken();
+	const start = parser.getPosition();
+	if (token.type === "Cdata") {
+		parser.nextToken();
+		return parser.finishNode(
+			start,
+			{
+				type: "HTMLCdataTag",
+				value: token.value,
+			},
+		);
+	}
+	parser.nextToken();
+	return undefined;
+}
+
 function parseComment(parser: HTMLParser): undefined {
 	const start = parser.getPosition();
 
@@ -542,7 +573,8 @@ function consumeDOCTYPE(
 		parser.getInputCharOnly(index, 5) === "Y" &&
 		parser.getInputCharOnly(index, 6) === "P" &&
 		parser.getInputCharOnly(index, 7) === "E" &&
-		parser.getInputCharOnly(index, 8) === " "
+		!isDigit(parser.getInputCharOnly(index, 8)) &&
+		!isAlpha(parser.getInputCharOnly(index, 8))
 	) {
 		const [value, endIndex] = parser.readInputFrom(
 			ob1Add(index, 9),
@@ -551,7 +583,36 @@ function consumeDOCTYPE(
 			},
 		);
 		// we skip the greater sign
-		return [true, value, ob1Add(endIndex, 1)];
+		return [true, value.trim(), ob1Add(endIndex, 1)];
+	}
+
+	return [false, undefined, undefined];
+}
+
+function consumeCDATA(
+	parser: HTMLParser,
+	index: Number0,
+): [boolean, string | undefined, Number0 | undefined] {
+	// doc requires a token like this
+	if (
+		parser.getInputCharOnly(index, 1) === "[" &&
+		parser.getInputCharOnly(index, 2) === "C" &&
+		parser.getInputCharOnly(index, 3) === "D" &&
+		parser.getInputCharOnly(index, 4) === "A" &&
+		parser.getInputCharOnly(index, 5) === "T" &&
+		parser.getInputCharOnly(index, 6) === "A" &&
+		parser.getInputCharOnly(index, 7) === "["
+	) {
+		const [value, endIndex] = parser.readInputFrom(
+			ob1Add(index, 8),
+			(char, index, input) => {
+				return !(char === "]" &&
+				input[ob1Get0(index) + 1] === "]" &&
+				input[ob1Get0(index) + 2] === ">");
+			},
+		);
+		// we skip the greater sign
+		return [true, value.trim(), ob1Add(endIndex, 3)];
 	}
 
 	return [false, undefined, undefined];

@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const user = "Faustina";
 const helloUser = "Hello, ${user}";
 

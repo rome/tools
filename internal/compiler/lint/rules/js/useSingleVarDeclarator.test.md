@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let foo;
 let bar;
 
@@ -44,7 +44,7 @@ let bar;
 
 ### `1: formatted`
 
-```
+```ts
 for (let i = 0, x = 1; i < arr.length; i++) {}
 
 ```

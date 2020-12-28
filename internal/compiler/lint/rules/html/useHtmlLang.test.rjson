@@ -1,0 +1,10 @@
+filename: "file.html"
+invalid: [
+	"<html></html>"
+	"<html lang=\"
+\"></html>"
+]
+valid: [
+	"<html lang=\"42\"></html>"
+	"<html lang=\"en\"></html>"
+]

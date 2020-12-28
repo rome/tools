@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <meta charset="UTF-8" aria-hidden="false" />;
 
 ```
@@ -55,7 +55,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <meta charset="UTF-8" role="meta" />;
 
 ```
@@ -83,7 +83,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <html aria-required="true" />;
 
 ```
@@ -111,7 +111,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <html role="html" />;
 
 ```
@@ -139,7 +139,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <script aria-label="script" />;
 
 ```
@@ -167,7 +167,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <script role="script" />;
 
 ```
@@ -195,7 +195,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <style aria-labelledby={true} />;
 
 ```
@@ -223,7 +223,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <style role="style" />;
 
 ```
@@ -237,7 +237,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <meta charset="UTF-8" />;
 
 ```
@@ -251,7 +251,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <html maria="text" />;
 
 ```
@@ -265,7 +265,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <script />;
 
 ```
@@ -279,7 +279,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <style parole={true} />;
 
 ```

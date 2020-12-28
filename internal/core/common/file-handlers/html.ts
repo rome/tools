@@ -20,8 +20,8 @@ export const htmlHandler: PartialExtensionHandler = {
 	language: "html",
 	hasTabs: true,
 	capabilities: {
-		lint: false,
-		format: false,
+		lint: true,
+		format: true,
 	},
 
 	async parse({mtime, path, file, worker}) {

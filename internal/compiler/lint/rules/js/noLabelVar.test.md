@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const x = "test";
 x: expr;
 
@@ -41,7 +41,7 @@ x: expr;
 
 ### `1: formatted`
 
-```
+```ts
 const x = "test";
 z: expr;
 

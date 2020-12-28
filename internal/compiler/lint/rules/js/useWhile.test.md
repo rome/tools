@@ -32,7 +32,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 while (x.running) {
 	x.step();
 }
@@ -67,7 +67,7 @@ while (x.running) {
 
 ### `1: formatted`
 
-```
+```ts
 while (true) {
 	doSomething();
 }

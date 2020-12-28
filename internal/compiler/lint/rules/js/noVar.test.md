@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 var foobar;
 foobar;
 

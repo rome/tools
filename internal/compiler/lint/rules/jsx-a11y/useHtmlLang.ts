@@ -40,7 +40,7 @@ export default createVisitor({
 			if (!hasJSXAttribute(node, "lang") || !validLang(node)) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_HTML_HAS_LANG,
+					descriptions.LINT.JSX_A11Y_HTML_USE_LANG,
 				);
 			}
 		}

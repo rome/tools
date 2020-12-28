@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 findDOMNode(this).scrollIntoView();
 
 ```
@@ -53,7 +53,7 @@ findDOMNode(this).scrollIntoView();
 
 ### `1: formatted`
 
-```
+```tsx
 ReactDOM.findDOMNode(this).scrollIntoView();
 
 ```
@@ -67,7 +67,7 @@ ReactDOM.findDOMNode(this).scrollIntoView();
 
 ### `2: formatted`
 
-```
+```tsx
 this.node.scrollIntoView();
 
 ```

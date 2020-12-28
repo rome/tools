@@ -16,8 +16,8 @@ HTMLRoot {
 	loc: Object {
 		filename: "doctype/input.html"
 		end: Object {
-			column: 7
-			line: 4
+			column: 2
+			line: 5
 		}
 		start: Object {
 			column: 0
@@ -30,42 +30,12 @@ HTMLRoot {
 			loc: Object {
 				filename: "doctype/input.html"
 				end: Object {
-					column: 15
-					line: 1
+					column: 2
+					line: 5
 				}
 				start: Object {
 					column: 1
 					line: 1
-				}
-			}
-		}
-		HTMLElement {
-			name: HTMLIdentifier {
-				name: "html"
-				loc: Object {
-					filename: "doctype/input.html"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
-			}
-			attributes: Array []
-			children: Array []
-			selfClosing: false
-			loc: Object {
-				filename: "doctype/input.html"
-				end: Object {
-					column: 7
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 2
 				}
 			}
 		}

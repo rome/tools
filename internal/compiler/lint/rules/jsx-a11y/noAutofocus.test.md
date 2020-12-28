@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -63,7 +63,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -95,7 +95,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -109,7 +109,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <input />;
 
 ```
@@ -123,7 +123,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <input autoFocus={undefined} />;
 
 ```
@@ -137,7 +137,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <Input autoFocus={"false"} />;
 
 ```

@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div style={true} />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div style={1} />;
 
 ```
@@ -77,7 +77,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <div style={undefined} />;
 
 ```
@@ -103,7 +103,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <div style="color: &apos;red&apos;" />;
 
 ```
@@ -129,7 +129,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <div style={"color: 'red'"} />;
 
 ```
@@ -143,7 +143,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <div style={{color: "red"}} />;
 
 ```

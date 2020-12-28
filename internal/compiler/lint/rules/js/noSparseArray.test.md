@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 [1, undefined, 2];
 
 ```

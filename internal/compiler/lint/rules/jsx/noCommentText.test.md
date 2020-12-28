@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 const a = <div>
 	// comment
 </div>;
@@ -65,7 +65,7 @@ const a = <div>
 
 ### `1: formatted`
 
-```
+```tsx
 const a = <div>
 	/* comment */
 </div>;
@@ -99,7 +99,7 @@ const a = <div>
 
 ### `2: formatted`
 
-```
+```tsx
 const a = <div>
 	/** comment */
 </div>;
@@ -115,7 +115,7 @@ const a = <div>
 
 ### `3: formatted`
 
-```
+```tsx
 const a = <div>
 	{} /* comment */
 </div>;
@@ -131,7 +131,7 @@ const a = <div>
 
 ### `4: formatted`
 
-```
+```tsx
 const a = <div>
 	{} /** comment*/
 </div>;
@@ -147,7 +147,7 @@ const a = <div>
 
 ### `5: formatted`
 
-```
+```tsx
 const a = <div className={"cls" /* comment */} />;
 
 ```

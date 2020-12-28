@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 if (foo) {
 }
 
@@ -54,7 +54,7 @@ if (foo) {
 
 ### `1: formatted`
 
-```
+```ts
 if (foo) {
 	// foo;
 } else {
@@ -71,7 +71,7 @@ if (foo) {
 
 ### `2: formatted`
 
-```
+```ts
 if (foo) {
 	foo;
 }
@@ -87,7 +87,7 @@ if (foo) {
 
 ### `3: formatted`
 
-```
+```ts
 if (foo) {
 	foo;
 }
@@ -103,7 +103,7 @@ if (foo) {
 
 ### `4: formatted`
 
-```
+```ts
 if (foo) {
 	// empty
 }

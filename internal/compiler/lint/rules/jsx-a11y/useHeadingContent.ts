@@ -29,7 +29,7 @@ export default createVisitor({
 		) {
 			path.context.addNodeDiagnostic(
 				node,
-				descriptions.LINT.JSX_A11Y_HEADING_HAS_CONTENT,
+				descriptions.LINT.JSX_A11Y_HEADING_USE_CONTENT,
 			);
 		}
 

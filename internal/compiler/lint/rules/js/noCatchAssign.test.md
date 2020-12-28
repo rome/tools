@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 try {
 } catch (e) {
 	e;
@@ -55,7 +55,7 @@ try {
 
 ### `1: formatted`
 
-```
+```ts
 try {
 } catch (ex) {
 	console.log("test");
@@ -85,7 +85,7 @@ try {
 
 ### `2: formatted`
 
-```
+```ts
 try {
 } catch (ex) {
 	[ex, test] = [];
@@ -120,7 +120,7 @@ try {
 
 ### `3: formatted`
 
-```
+```ts
 try {
 } catch ({message, name}) {
 	message = "test";
@@ -150,7 +150,7 @@ try {
 
 ### `4: formatted`
 
-```
+```ts
 try {
 } catch (ex) {
 	({x: ex = 0} = {});
@@ -179,7 +179,7 @@ try {
 
 ### `5: formatted`
 
-```
+```ts
 try {
 } catch (ex) {
 	let a;
@@ -197,7 +197,7 @@ try {
 
 ### `6: formatted`
 
-```
+```ts
 try {
 } catch (e) {
 	three = 2 + 1;
@@ -214,7 +214,7 @@ try {
 
 ### `7: formatted`
 
-```
+```ts
 try {
 } catch ({e}) {
 	this.something = 2;
@@ -231,7 +231,7 @@ try {
 
 ### `8: formatted`
 
-```
+```ts
 function foo() {
 	try {
 	} catch (e) {

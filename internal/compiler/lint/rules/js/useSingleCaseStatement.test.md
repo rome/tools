@@ -38,7 +38,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 switch (foo) {
 	case true:
 	case false: {
@@ -58,7 +58,7 @@ switch (foo) {
 
 ### `1: formatted`
 
-```
+```ts
 switch (foo) {
 	case true:
 	case false:
@@ -76,7 +76,7 @@ switch (foo) {
 
 ### `2: formatted`
 
-```
+```ts
 switch (foo) {
 	case true: {
 		// empty
@@ -94,7 +94,7 @@ switch (foo) {
 
 ### `3: formatted`
 
-```
+```ts
 switch (foo) {
 	case true:
 }
