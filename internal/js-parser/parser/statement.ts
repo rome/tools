@@ -933,6 +933,22 @@ export function parseTryStatement(
 			param = parseTargetBindingPattern(parser);
 			const clashes: Map<string, AnyNode> = new Map();
 			checkLVal(parser, param, true, clashes, "catch clause");
+			if (match(parser, tt.colon)) {
+				const typeAnnotation = parseTSTypeAnnotation(parser, true);
+				param = parser.finishNode(
+					start,
+					{
+						...param,
+						meta: parser.finishNode(
+							start,
+							{
+								type: "JSPatternMeta",
+								typeAnnotation,
+							},
+						),
+					},
+				);
+			}
 			expectClosing(parser, openContext);
 		}
 
