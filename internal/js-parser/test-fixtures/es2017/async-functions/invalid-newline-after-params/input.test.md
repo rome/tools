@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"statement expression"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"statement expression"
+				]
 			}
 			location: Object {
 				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -165,7 +165,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/invalid-newline-after-params/input.js:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-newline-after-params/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

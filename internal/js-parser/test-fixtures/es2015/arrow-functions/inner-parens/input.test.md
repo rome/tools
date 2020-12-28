@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Function parameters can't be parenthesized"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
 			}
 			location: Object {
 				filename: "es2015/arrow-functions/inner-parens/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -180,7 +182,7 @@ JSRoot {
 
 ```
 
- es2015/arrow-functions/inner-parens/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/arrow-functions/inner-parens/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
 

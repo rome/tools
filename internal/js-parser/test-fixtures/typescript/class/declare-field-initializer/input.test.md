@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown class property start"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
 				filename: "typescript/class/declare-field-initializer/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -199,7 +201,7 @@ JSRoot {
 
 ```
 
- typescript/class/declare-field-initializer/input.ts:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/declare-field-initializer/input.ts:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

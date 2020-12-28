@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Binding member expression"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Binding member expression"}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-member-expr/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 8
@@ -192,7 +194,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-arrow-function/object-binding-pattern-invalid-member-expr/input.js:1:4 parse/js ━━━━
+ esprima/es2015-arrow-function/object-binding-pattern-invalid-member-expr/input.js:1:4 parse(js) ━━━
 
   ✖ Binding member expression
 

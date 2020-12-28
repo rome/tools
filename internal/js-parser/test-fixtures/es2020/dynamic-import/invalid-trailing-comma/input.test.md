@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
 				filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 13
@@ -100,7 +102,7 @@ JSRoot {
 
 ```
 
- es2020/dynamic-import/invalid-trailing-comma/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/invalid-trailing-comma/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
 

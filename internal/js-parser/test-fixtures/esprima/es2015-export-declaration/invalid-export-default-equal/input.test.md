@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"export default declaration"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"export default declaration"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -120,7 +120,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-export-declaration/invalid-export-default-equal/input.js:1:15 parse/js ━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-default-equal/input.js:1:15 parse(js) ━━━━━━━━━━━━
 
   ✖ Unknown start to an export default declaration
 

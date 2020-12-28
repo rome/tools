@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/109/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -206,7 +208,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/109/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/109/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

@@ -1,11 +1,16 @@
-import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
+import {
+	BaseTokens,
+	NumberToken,
+	SimpleToken,
+	StringToken,
+} from "@internal/parser-core";
 
 export type Tokens = BaseTokens & {
-	BlockComment: ValueToken<"BlockComment", string>;
-	LineComment: ValueToken<"LineComment", string>;
-	String: ValueToken<"String", string>;
-	Number: ValueToken<"Number", number>;
-	Word: ValueToken<"Word", string>;
+	BlockComment: StringToken<"BlockComment">;
+	LineComment: StringToken<"LineComment">;
+	String: StringToken<"String">;
+	Number: NumberToken<"Number">;
+	Word: StringToken<"Word">;
 	BracketOpen: SimpleToken<"BracketOpen">;
 	BracketClose: SimpleToken<"BracketClose">;
 	BraceOpen: SimpleToken<"BraceOpen">;

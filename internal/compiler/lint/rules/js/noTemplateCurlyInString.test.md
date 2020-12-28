@@ -8,7 +8,7 @@
 
 ```
 
- lint/js/noTemplateCurlyInString/reject/1/file.ts:2:49 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noTemplateCurlyInString/reject/1/file.ts:2:49 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

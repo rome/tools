@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0032/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 2
@@ -88,7 +90,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0032/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0032/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expecting Unicode escape sequence \uXXXX
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
 			}
 			location: Object {
 				filename: "typescript/function/pattern-parameters/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 13
@@ -185,7 +187,7 @@ JSRoot {
 
 ```
 
- typescript/function/pattern-parameters/input.ts:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/function/pattern-parameters/input.ts:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Redefinition of __proto__ property"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
 				filename: "es2015/duplicate-proto/in-new-expression/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 33
@@ -258,7 +260,7 @@ JSRoot {
 
 ```
 
- es2015/duplicate-proto/in-new-expression/input.js:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/duplicate-proto/in-new-expression/input.js:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Invalid left-hand side in "}
-						"for-of statement"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Invalid left-hand side in "}
+					"for-of statement"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -121,7 +121,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-for-of/invalid-lhs-init/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-for-of/invalid-lhs-init/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-of statement
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected a semicolon or a line terminator"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				filename: "es2017/async-functions/invalid-escape-export-dflt-async-function/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 25
@@ -209,7 +211,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/invalid-escape-export-dflt-async-function/input.js:1:26 parse/js ━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-export-dflt-async-function/input.js:1:26 parse(js) ━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

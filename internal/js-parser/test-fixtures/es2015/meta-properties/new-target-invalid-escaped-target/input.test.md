@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"target"
-						RAW_MARKUP {value: " can't contain a unicode escape"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"target"
+					RAW_MARKUP {value: " can't contain a unicode escape"}
+				]
 			}
 			location: Object {
 				filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -186,7 +186,7 @@ JSRoot {
 
 ```
 
- es2015/meta-properties/new-target-invalid-escaped-target/input.js:1:21 parse/js ━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/new-target-invalid-escaped-target/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━
 
   ✖ target can't contain a unicode escape
 

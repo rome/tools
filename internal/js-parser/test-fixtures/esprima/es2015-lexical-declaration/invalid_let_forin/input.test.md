@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
 				filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -162,7 +164,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-lexical-declaration/invalid_let_forin/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-lexical-declaration/invalid_let_forin/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

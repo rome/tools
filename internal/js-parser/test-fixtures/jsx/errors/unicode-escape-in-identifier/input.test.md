@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown JSX identifier token"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
 				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 1
@@ -104,7 +106,7 @@ JSRoot {
 
 ```
 
- jsx/errors/unicode-escape-in-identifier/input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/unicode-escape-in-identifier/input.jsx:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
 

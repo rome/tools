@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 24
@@ -45,18 +46,17 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "`"}
-						"foo"
-						RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "`"}
+					"foo"
+					RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
+						text: RAW_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {
@@ -236,7 +236,7 @@ JSRoot {
 
 ```
 
- es2015/modules/duplicate-named-export-function-declaration/input.js:2:7 parse/js ━━━━━━━━━━━━━━━━━━
+ es2015/modules/duplicate-named-export-function-declaration/input.js:2:7 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ `foo` has already been exported. Exported identifiers must be unique.
 

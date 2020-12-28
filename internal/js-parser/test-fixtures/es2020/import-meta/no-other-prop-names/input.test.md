@@ -30,10 +30,24 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "The only valid meta property for "}
+					"import"
+					RAW_MARKUP {value: " is "}
+					"import"
+					RAW_MARKUP {value: "."}
+					"meta"
+				]
+			}
 			location: Object {
 				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -42,20 +56,6 @@ JSRoot {
 				start: Object {
 					column: 7
 					line: 1
-				}
-			}
-			description: Object {
-				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "The only valid meta property for "}
-						"import"
-						RAW_MARKUP {value: " is "}
-						"import"
-						RAW_MARKUP {value: "."}
-						"meta"
-					]
 				}
 			}
 		}
@@ -125,7 +125,7 @@ JSRoot {
 
 ```
 
- es2020/import-meta/no-other-prop-names/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/import-meta/no-other-prop-names/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for import is import.meta
 

@@ -45,20 +45,22 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}]}
+						text: RAW_MARKUP {value: "Maybe a typo in the method name ('constructor') or not extending another class?"}
 					}
 				]
 			}
 			location: Object {
 				filename: "es2015/uncategorised/123/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 45
@@ -282,7 +284,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/123/input.js:1:40 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/123/input.js:1:40 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super() is only valid inside a class constructor of a subclass
 

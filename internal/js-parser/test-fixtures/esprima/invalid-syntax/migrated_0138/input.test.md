@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A constant must have an initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A constant must have an initializer"}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0138/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -161,7 +163,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0138/input.js:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0138/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A constant must have an initializer
 

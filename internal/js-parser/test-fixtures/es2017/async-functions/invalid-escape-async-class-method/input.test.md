@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"async"
-						RAW_MARKUP {value: " can't contain a unicode escape"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"async"
+					RAW_MARKUP {value: " can't contain a unicode escape"}
+				]
 			}
 			location: Object {
 				filename: "es2017/async-functions/invalid-escape-async-class-method/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 10
@@ -255,7 +255,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/invalid-escape-async-class-method/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/invalid-escape-async-class-method/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━
 
   ✖ async can't contain a unicode escape
 

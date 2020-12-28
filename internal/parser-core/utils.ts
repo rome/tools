@@ -1,12 +1,14 @@
 import {default as ParserCore} from "./ParserCore";
 import {
 	ParserCoreImplementation,
+	ParserCoreOverrides,
 	ParserCoreTypes,
 	ParserOptions,
 	Position,
 	SourceLocation,
 } from "./types";
-import {DiagnosticCategory, catchDiagnosticsSync} from "@internal/diagnostics";
+import {catchDiagnosticsSync} from "@internal/diagnostics";
+import {ob1Add, ob1Dec} from "@internal/ob1";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -28,8 +30,12 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 	return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
-export function readUntilLineBreak(char: string): boolean {
+export function isntLineBreak(char: string): boolean {
 	return char !== "\n";
+}
+
+export function isntWhitespace(char: string): boolean {
+	return char !== "\n" && char !== " " && char !== "\t";
 }
 
 export function createParser<Types extends ParserCoreTypes>(
@@ -37,14 +43,14 @@ export function createParser<Types extends ParserCoreTypes>(
 ): (
 	opts: Types["options"],
 	meta: Types["meta"],
-	diagnosticCategory?: DiagnosticCategory,
+	overrides?: ParserCoreOverrides,
 ) => ParserCore<Types> {
 	return (
 		opts: Types["options"],
 		meta: Types["meta"],
-		diagnosticCategory?: DiagnosticCategory,
+		overrides?: ParserCoreOverrides,
 	) => {
-		return new ParserCore(impl, opts, meta, diagnosticCategory);
+		return new ParserCore(impl, opts, meta, overrides);
 	};
 }
 
@@ -122,6 +128,13 @@ export function comparePositions(
 
 export function derivePositionKey(pos: Position): string {
 	return `${String(pos.line)}:${String(pos.column)}`;
+}
+
+export function addPositions(a: Position, b: Position): Position {
+	return {
+		line: ob1Dec(ob1Add(a.line, b.line)),
+		column: ob1Add(a.column, b.column),
+	};
 }
 
 // Utility methods for dealing with nodes

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Object pattern cannot contains methods"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 7
@@ -192,7 +194,7 @@ JSRoot {
 ```
 
  esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js:1:6
-parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
 

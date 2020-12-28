@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Template literal types cannot have any substitution"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Template literal types cannot have any substitution"}
 			}
 			location: Object {
 				filename: "typescript/types/literal-string-2/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 17
@@ -145,7 +147,7 @@ JSRoot {
 
 ```
 
- typescript/types/literal-string-2/input.ts:1:14 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/literal-string-2/input.ts:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literal types cannot have any substitution
 

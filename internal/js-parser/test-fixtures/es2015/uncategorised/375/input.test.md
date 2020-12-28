@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"enum"
-						RAW_MARKUP {value: " is a reserved word"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"enum"
+					RAW_MARKUP {value: " is a reserved word"}
+				]
 			}
 			location: Object {
 				filename: "es2015/uncategorised/375/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 19
@@ -217,7 +217,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/375/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/375/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ enum is a reserved word
 

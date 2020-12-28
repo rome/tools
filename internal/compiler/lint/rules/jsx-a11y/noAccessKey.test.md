@@ -8,7 +8,7 @@
 
 ```
 
- lint/jsx-a11y/noAccessKey/reject/1/file.tsx:1:24 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noAccessKey/reject/1/file.tsx:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

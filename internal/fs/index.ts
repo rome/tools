@@ -57,11 +57,11 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 export {FileNotFound} from "./FileNotFound";
 
 // Reexported types: Only file that ever imports the fs module is this one
-export type FileHandle = fs.promises.FileHandle;
-export type WriteStream = fs.WriteStream;
-export type ReadStream = fs.ReadStream;
+export type FSHandle = fs.promises.FileHandle;
+export type FSWriteStream = fs.WriteStream;
+export type FSReadStream = fs.ReadStream;
 export type FSWatcher = fs.FSWatcher;
-export type Stats = fs.BigIntStats;
+export type FSStats = fs.BigIntStats;
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
@@ -340,7 +340,7 @@ export function createFakeStats(
 		size: bigint;
 		date: Date;
 	},
-): Stats {
+): FSStats {
 	const ms = BigInt(Math.floor(date.valueOf()));
 	const ns = BigInt(date.valueOf()) * 1000000n;
 

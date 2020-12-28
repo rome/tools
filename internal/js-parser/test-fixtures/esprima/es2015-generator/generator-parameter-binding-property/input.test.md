@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected an identifier"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
 				filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -304,7 +306,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-generator/generator-parameter-binding-property/input.js:2:12 parse/js ━━━━━━━━━━━━━━
+ esprima/es2015-generator/generator-parameter-binding-property/input.js:2:12 parse(js) ━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

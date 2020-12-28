@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Escape sequence in keyword "}
-						"import"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Escape sequence in keyword "}
+					"import"
+				]
 			}
 			location: Object {
 				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 34
@@ -168,7 +168,7 @@ JSRoot {
 
 ```
 
- es2015/identifiers/invalid-escape-seq-import/input.js:1:34 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-import/input.js:1:34 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword import
 

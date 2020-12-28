@@ -45,10 +45,11 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0249/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 45
@@ -60,18 +61,17 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Argument <emphasis>"}
-						"__proto__"
-						RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Argument <emphasis>"}
+					"__proto__"
+					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
+						text: RAW_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {
@@ -225,7 +225,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0249/input.js:1:36 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0249/input.js:1:36 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument __proto__ name clash in strict mode
 

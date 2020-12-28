@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Missing catch or finally clause"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Missing catch or finally clause"}
 			}
 			location: Object {
 				filename: "core/uncategorised/425/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 0
@@ -90,7 +92,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/425/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/425/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing catch or finally clause
 

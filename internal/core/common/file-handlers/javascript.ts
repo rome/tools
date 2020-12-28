@@ -37,7 +37,7 @@ function buildJSHandler(
 		},
 
 		async parse({integrity, sourceTypeJS, manifestPath, path, file, worker}) {
-			const sourceText = await worker.readFile(file);
+			const sourceText = await worker.readFileText(file);
 			const ast = parseJS({
 				input: sourceText,
 				integrity,

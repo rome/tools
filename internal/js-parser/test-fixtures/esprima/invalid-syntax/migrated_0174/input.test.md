@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "No loop label found"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0174/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 22
@@ -120,7 +122,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0174/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0174/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 

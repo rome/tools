@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}
 			}
 			location: Object {
 				filename: "experimental/class-properties/no-ctor/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 13
@@ -174,7 +176,7 @@ JSRoot {
 
 ```
 
- experimental/class-properties/no-ctor/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/no-ctor/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have a non-static field named 'constructor'
 

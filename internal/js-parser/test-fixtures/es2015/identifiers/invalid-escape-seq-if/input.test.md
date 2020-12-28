@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Escape sequence in keyword "}
-						"if"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Escape sequence in keyword "}
+					"if"
+				]
 			}
 			location: Object {
 				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 6
@@ -108,7 +108,7 @@ JSRoot {
 
 ```
 
- es2015/identifiers/invalid-escape-seq-if/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/identifiers/invalid-escape-seq-if/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword if
 

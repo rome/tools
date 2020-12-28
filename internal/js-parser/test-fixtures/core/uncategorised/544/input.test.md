@@ -45,20 +45,20 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"public"
-						RAW_MARKUP {value: " is a reserved word"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"public"
+					RAW_MARKUP {value: " is a reserved word"}
+				]
 			}
 			location: Object {
 				filename: "core/uncategorised/544/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -223,7 +223,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/544/input.js:2:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/544/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ public is a reserved word
 

@@ -25,3 +25,4 @@ export {sliceEscaped} from "./sliceEscaped";
 export {splitLines} from "./splitLines";
 export {splitChars} from "./splitChars";
 export {sha256} from "./sha256";
+export {getIndentRegex} from "./getIndentRegex";

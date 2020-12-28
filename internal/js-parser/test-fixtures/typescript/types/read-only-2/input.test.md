@@ -46,15 +46,17 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
 				filename: "typescript/types/read-only-2/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -149,7 +151,7 @@ JSRoot {
 
 ```
 
- typescript/types/read-only-2/input.ts:1:20 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/read-only-2/input.ts:1:20 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
 

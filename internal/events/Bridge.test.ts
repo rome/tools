@@ -67,8 +67,14 @@ test(
 		foo();
 		await bar();
 
-		t.looksLike(server.getSubscriptions(), ["Bridge.heartbeat"]);
-		t.looksLike(client.getSubscriptions(), ["Bridge.heartbeat", "greet"]);
+		t.looksLike(
+			client.getSubscriptions(),
+			new Set(["Bridge.heartbeat", "Bridge.teardown", "greet"]),
+		);
+		t.looksLike(
+			server.getSubscriptions(),
+			new Set(["Bridge.heartbeat", "Bridge.teardown"]),
+		);
 
 		t.looksLike(fooMessages, ["foo"]);
 
@@ -76,48 +82,5 @@ test(
 		await server.events.greet.call("dog");
 
 		t.looksLike(fooMessages, ["foo", "cat", "dog"]);
-	},
-);
-
-test(
-	"Bridge#end",
-	async (t) => {
-		const {
-			server,
-			client,
-		} = createBridge({
-			debugName: "Test",
-			server: {},
-			client: {},
-			shared: {
-				greet: createBridgeEventDeclaration<string, string>(),
-			},
-		}).createFromLocal();
-
-		server.handshake();
-		await client.handshake();
-
-		const greetSub = server.events.greet.subscribe((str) => `hello ${str}`);
-		const res = await client.events.greet.call("rome");
-		t.is(res, "hello rome");
-
-		client.attachEndSubscriptionRemoval(greetSub);
-
-		t.looksLike(client.getSubscriptions(), ["greet"]);
-		t.true(client.events.greet.hasSubscriptions());
-
-		await client.end("Halt!");
-
-		t.looksLike(client.getSubscriptions(), []);
-		t.false(client.events.greet.hasSubscriptions());
-
-		t.throwsAsync(async () => {
-			// Bridge is dead
-			await client.events.greet.call("test");
-		});
-
-		t.throws(() => {
-			client.assertAlive();
-		});
 	},
 );

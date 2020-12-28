@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid escape sequence in template"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
 				filename: "esprima/es2015-template-literals/invalid-escape/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 2
@@ -105,7 +107,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-template-literals/invalid-escape/input.js:1:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-template-literals/invalid-escape/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
 

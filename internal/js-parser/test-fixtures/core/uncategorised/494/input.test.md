@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"eval"
-						RAW_MARKUP {value: " is a reserved word"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"eval"
+					RAW_MARKUP {value: " is a reserved word"}
+				]
 			}
 			location: Object {
 				filename: "core/uncategorised/494/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 53
@@ -309,7 +309,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/494/input.js:1:49 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/494/input.js:1:49 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
 

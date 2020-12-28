@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"implements"
-						RAW_MARKUP {value: " is a reserved word"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"implements"
+					RAW_MARKUP {value: " is a reserved word"}
+				]
 			}
 			location: Object {
 				filename: "core/uncategorised/504/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 47
@@ -203,7 +203,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/504/input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/504/input.js:1:37 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ implements is a reserved word
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can't have an await on a regular for loop"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
 			}
 			location: Object {
 				filename: "es2018/async-generators/for-await-no-semi-3/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 11
@@ -210,7 +212,7 @@ JSRoot {
 
 ```
 
- es2018/async-generators/for-await-no-semi-3/input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/async-generators/for-await-no-semi-3/input.js:2:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't have an await on a regular for loop
 

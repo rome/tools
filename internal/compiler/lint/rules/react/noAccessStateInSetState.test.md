@@ -8,7 +8,7 @@
 
 ```
 
- lint/react/noAccessStateInSetState/reject/1/file.tsx:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/1/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 
@@ -34,7 +34,7 @@ undefined
 
 ```
 
- lint/react/noAccessStateInSetState/reject/2/file.tsx:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/2/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 
@@ -60,7 +60,7 @@ undefined
 
 ```
 
- lint/react/noAccessStateInSetState/reject/3/file.tsx:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/3/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 
@@ -86,7 +86,7 @@ undefined
 
 ```
 
- lint/react/noAccessStateInSetState/reject/4/file.tsx:2:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/4/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

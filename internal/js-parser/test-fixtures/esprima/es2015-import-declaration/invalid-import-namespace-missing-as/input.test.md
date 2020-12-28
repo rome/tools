@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Expected keyword "}
-						"as"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Expected keyword "}
+					"as"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 8
@@ -164,7 +164,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js:1:9 parse/js ━━━━━━━
+ esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js:1:9 parse(js) ━━━━━━
 
   ✖ Expected keyword as
 

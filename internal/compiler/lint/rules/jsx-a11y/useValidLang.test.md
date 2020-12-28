@@ -170,7 +170,7 @@
 
 ```
 
- lint/jsx-a11y/useValidLang/reject/6/file.tsx:1:23 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidLang/reject/6/file.tsx:1:23 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 

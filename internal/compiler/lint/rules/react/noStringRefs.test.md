@@ -87,7 +87,7 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noStringRefs/reject/3/file.tsx:3:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noStringRefs/reject/3/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed jsx expression container
 
@@ -154,7 +154,7 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noStringRefs/reject/5/file.tsx:3:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noStringRefs/reject/5/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed jsx expression container
 

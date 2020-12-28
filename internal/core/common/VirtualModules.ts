@@ -11,7 +11,7 @@ import {
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {Stats, createFakeStats} from "@internal/fs";
+import {FSStats, createFakeStats} from "@internal/fs";
 
 export type VirtualModulesMap = Map<
 	string,
@@ -25,7 +25,7 @@ export type VirtualModulesMap = Map<
 >;
 
 export type VirtualModuleStatMap = AbsoluteFilePathMap<{
-	stats: Stats;
+	stats: FSStats;
 	content: undefined | string;
 }>;
 
@@ -45,7 +45,7 @@ export default class VirtualModules {
 		return this.nullAbsolute;
 	}
 
-	public getFakeStats(path: AbsoluteFilePath): Stats {
+	public getFakeStats(path: AbsoluteFilePath): FSStats {
 		return this.statMap.assert(path).stats;
 	}
 

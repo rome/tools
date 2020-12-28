@@ -31,17 +31,19 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [
-				Object {category: "parse/js"}
-				Object {category: "parse/regex"}
+				Object {category: "parse"}
+				Object {category: "parse"}
 			]
 			description: Object {
 				advice: Array []
-				category: "parse/regex"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}]}
+				category: "parse"
+				categoryValue: "regex"
+				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/196/input.js"
 				integrity: undefined
+				language: "regex"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -236,7 +238,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/196/input.js:1:8 parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/196/input.js:1:8 parse(regex) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 

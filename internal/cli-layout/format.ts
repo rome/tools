@@ -27,7 +27,7 @@ export function renderGrid(
 
 	// Optimization for rendering a single escaped string with no columns
 	if (opts.columns === undefined && isSingleEscaped(safe)) {
-		let line = safe.parts[0];
+		let line = safe[0];
 
 		if (opts.convertTabs) {
 			// TODO make the tab width customizable in userConfig

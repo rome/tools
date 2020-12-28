@@ -100,6 +100,7 @@ export type LintCompilerOptionsDecisionAction = "suppress" | "fix" | "ignore";
 export type LintCompilerOptionsDecision = {
 	action: LintCompilerOptionsDecisionAction;
 	category: DiagnosticCategory;
+	categoryValue: undefined | string;
 	id?: number;
 };
 

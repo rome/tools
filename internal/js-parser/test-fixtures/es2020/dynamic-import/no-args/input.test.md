@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "import() requires exactly one argument"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
 				filename: "es2020/dynamic-import/no-args/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 7
@@ -100,7 +102,7 @@ JSRoot {
 
 ```
 
- es2020/dynamic-import/no-args/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/no-args/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import() requires exactly one argument
 

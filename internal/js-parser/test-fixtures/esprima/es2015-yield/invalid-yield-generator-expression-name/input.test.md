@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
 				filename: "esprima/es2015-yield/invalid-yield-generator-expression-name/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -137,7 +139,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-yield/invalid-yield-generator-expression-name/input.js:1:10 parse/js ━━━━━━━━━━━━━━━
+ esprima/es2015-yield/invalid-yield-generator-expression-name/input.js:1:10 parse(js) ━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
 

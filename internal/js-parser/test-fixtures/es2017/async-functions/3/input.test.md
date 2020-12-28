@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Function parameters can't be parenthesized"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameters can't be parenthesized"}
 			}
 			location: Object {
 				filename: "es2017/async-functions/3/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 17
@@ -180,7 +182,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/3/input.js:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2017/async-functions/3/input.js:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
 

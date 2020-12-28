@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "experimental/class-private-properties/invalid-ts-type-literal/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 0
@@ -45,20 +46,19 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "A "}
+					"interface declaration"
+					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}]}
+						text: RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
 					}
 				]
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "A "}
-						"interface declaration"
-						RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-					]
-				}
 			}
 		}
 	]
@@ -172,7 +172,7 @@ JSRoot {
 
 ```
 
- experimental/class-private-properties/invalid-ts-type-literal/input.js:1 parse/js ━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/invalid-ts-type-literal/input.js:1 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 

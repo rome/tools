@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected character #"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected character #"}
 			}
 			location: Object {
 				filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -174,7 +176,7 @@ JSRoot {
 
 ```
 
- experimental/class-private-properties/undeclared-top-level/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/undeclared-top-level/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character #
 

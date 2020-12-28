@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A constant must have an initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A constant must have an initializer"}
 			}
 			location: Object {
 				filename: "esprima/es2015-for-of/unexpected-number/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 13
@@ -147,7 +149,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-for-of/unexpected-number/input.js:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-for-of/unexpected-number/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A constant must have an initializer
 

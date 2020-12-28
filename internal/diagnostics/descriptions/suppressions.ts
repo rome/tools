@@ -1,24 +1,25 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticSuppression} from "../types";
 import {markup} from "@internal/markup";
+import {joinCategoryName} from "../helpers";
 
 export const suppressions = createDiagnosticsCategory({
 	UNUSED: (suppression: DiagnosticSuppression) => {
-		let description = "";
+		let description = markup``;
 		if (suppression.startLine === suppression.endLine) {
-			description = `line ${suppression.startLine}`;
+			description = markup`on <emphasis>line ${suppression.startLine}</emphasis>`;
 		} else {
-			description += `lines ${suppression.startLine} to ${suppression.endLine}`;
+			description = markup`between <emphasis>lines ${suppression.startLine} and ${suppression.endLine}</emphasis>`;
 		}
 
 		return {
-			message: markup`Unused suppression. Did not hide any errors.`,
+			message: markup`Unused <emphasis>${joinCategoryName(suppression)}</emphasis> suppression`,
 			category: "suppressions/unused",
 			advice: [
 				{
 					type: "log",
 					category: "info",
-					text: markup`This suppression should hide <emphasis>${description}</emphasis>`,
+					text: markup`This suppression should have hidden a diagnostic ${description}`,
 				},
 			],
 		};
@@ -26,6 +27,10 @@ export const suppressions = createDiagnosticsCategory({
 	MISSING_SPACE: {
 		category: "suppressions/missingSpace",
 		message: markup`Missing space between prefix and suppression categories`,
+	},
+	EMPTY: {
+		category: "suppressions/empty",
+		message: markup`This suppression comment doesn't include any categories to suppress!`,
 	},
 	MISSING_TARGET: {
 		category: "suppressions/missingTarget",

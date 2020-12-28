@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-async-function-expression-name/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -137,7 +139,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/await-async-function-expression-name/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━
+ es2017/async-functions/await-async-function-expression-name/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
 

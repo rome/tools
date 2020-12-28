@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "es2015/uncategorised/255/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 7
@@ -45,23 +46,20 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unclosed "}
-						"property name"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unclosed "}
+					"property name"
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {
-							parts: Array [
-								RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-								"]"
-								RAW_MARKUP {value: "</emphasis> here"}
-							]
-						}
+						text: Array [
+							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
+							"]"
+							RAW_MARKUP {value: "</emphasis> here"}
+						]
 					}
 					frame {
 						location: Object {
@@ -240,7 +238,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/255/input.js:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/255/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed property name
 

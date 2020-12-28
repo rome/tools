@@ -25,10 +25,11 @@ export type DiagnosticFilter = {
 
 export type DiagnosticSuppression = {
 	filename: string;
-	category: string;
+	category: DiagnosticCategory;
+	categoryValue: undefined | string;
 	startLine: Number1;
 	endLine: Number1;
-	commentLocation: SourceLocation;
+	loc: SourceLocation;
 };
 
 export type DiagnosticSuppressions = DiagnosticSuppression[];
@@ -56,26 +57,30 @@ export type DiagnosticOrigin = {
 export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
 export type DiagnosticLanguage =
+	| "spdxlicense"
+	| "romemarkup"
+	| "semver"
+	| "regex"
+	| "path"
+	| "binary"
+	| "rser"
 	| "json"
 	| "rjson"
 	| "json5"
 	| "js"
 	| "url"
+	| "urlquery"
 	| "commit"
 	| "shell"
 	| "css"
 	| "html"
-	| "md"
+	| "markdown"
 	| "text"
 	| "yaml"
 	| "toml"
 	| "unknown";
 
 export type DiagnosticSourceType = "unknown" | ConstJSSourceType;
-
-export type DiagnosticsMeta = {
-	identifierName?: string;
-};
 
 export type DiagnosticTag = "fixable" | "internal" | "unique" | "fatal";
 
@@ -90,7 +95,6 @@ export type Diagnostic = {
 		filename: string;
 		integrity: DiagnosticIntegrity;
 	}[];
-	meta?: DiagnosticsMeta;
 	tags?: DiagnosticTags;
 };
 
@@ -102,12 +106,14 @@ export type DiagnosticIntegrity = {
 
 export type DiagnosticDescription = {
 	category: DiagnosticCategory;
+	categoryValue?: string;
 	message: StaticMarkup;
 	advice: DiagnosticAdvice;
 };
 
 export type DiagnosticDescriptionOptional = {
 	category?: DiagnosticCategory;
+	categoryValue?: string;
 	message: StaticMarkup;
 	advice?: DiagnosticAdvice;
 };

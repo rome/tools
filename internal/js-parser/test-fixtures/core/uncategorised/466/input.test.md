@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Deleting local variable in strict mode"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Deleting local variable in strict mode"}
 			}
 			location: Object {
 				filename: "core/uncategorised/466/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 37
@@ -196,7 +198,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/466/input.js:1:36 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/466/input.js:1:36 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Deleting local variable in strict mode
 

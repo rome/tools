@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Expected keyword "}
-						"from"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Expected keyword "}
+					"from"
+				]
 			}
 			location: Object {
 				filename: "typescript/types/import-type-escaped-error/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 16
@@ -220,7 +220,7 @@ JSRoot {
 
 ```
 
- typescript/types/import-type-escaped-error/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/import-type-escaped-error/input.ts:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected keyword from
 

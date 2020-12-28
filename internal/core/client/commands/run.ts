@@ -50,7 +50,7 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const data = consumeUnknown(res.data, "parse/json");
+		const data = consumeUnknown(res.data, "parse", "json");
 
 		if (data.exists()) {
 			const type = data.get("type").asString();

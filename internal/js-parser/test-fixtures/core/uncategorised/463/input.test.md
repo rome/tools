@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "No loop label found"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
 				filename: "core/uncategorised/463/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 33
@@ -209,7 +211,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/463/input.js:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/463/input.js:1:33 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 

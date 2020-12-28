@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "esprima/es2015-identifier/invalid_var_await/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 17
@@ -45,22 +46,17 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}]}
+						text: RAW_MARKUP {value: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"}
 					}
 					log {
 						category: "info"
-						text: MARKUP {
-							parts: Array [
-								RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\""}
-								RAW_MARKUP {value: "<dim>undefined</dim>"}
-								RAW_MARKUP {value: "\" />"}
-							]
-						}
+						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
 					}
 				]
 			}
@@ -148,7 +144,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-identifier/invalid_var_await/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-identifier/invalid_var_await/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import and export can only appear in a module
 

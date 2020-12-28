@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
 			}
 			location: Object {
 				filename: "jsx/errors/adjacent-tags/input.jsx"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 22
@@ -339,7 +341,7 @@ JSRoot {
 
 ```
 
- jsx/errors/adjacent-tags/input.jsx:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/adjacent-tags/input.jsx:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment
     <>...</>?

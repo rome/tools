@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "setter function argument must not be a rest parameter"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "setter function argument must not be a rest parameter"}
 			}
 			location: Object {
 				filename: "esprima/rest-parameter/invalid-setter-rest/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 16
@@ -224,7 +226,7 @@ JSRoot {
 
 ```
 
- esprima/rest-parameter/invalid-setter-rest/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/rest-parameter/invalid-setter-rest/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter function argument must not be a rest parameter
 

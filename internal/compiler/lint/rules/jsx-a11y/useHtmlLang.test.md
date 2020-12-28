@@ -62,7 +62,7 @@
 
 ```
 
- lint/jsx-a11y/useHtmlLang/reject/3/file.tsx:1:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useHtmlLang/reject/3/file.tsx:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
 
@@ -85,7 +85,7 @@ undefined
 
 ```
 
- lint/jsx-a11y/useHtmlLang/reject/4/file.tsx:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useHtmlLang/reject/4/file.tsx:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

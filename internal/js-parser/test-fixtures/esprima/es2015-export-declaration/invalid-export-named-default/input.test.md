@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unexpected keyword "}
-						"default"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unexpected keyword "}
+					"default"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -125,7 +125,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-export-declaration/invalid-export-named-default/input.js:1:8 parse/js ━━━━━━━━━━━━━━
+ esprima/es2015-export-declaration/invalid-export-named-default/input.js:1:8 parse(js) ━━━━━━━━━━━━━
 
   ✖ Unexpected keyword default
 

@@ -5,8 +5,8 @@ import {
 	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
-	FileHandle,
-	Stats,
+	FSHandle,
+	FSStats,
 	createDirectory,
 	exists,
 	lstat,
@@ -68,7 +68,7 @@ type WriteFilesEvents = {
 	onFileDone: (path: AbsoluteFilePath) => void;
 	beforeFileWrite: (
 		path: AbsoluteFilePath,
-		fh: FileHandle,
+		fh: FSHandle,
 	) => void | Promise<void>;
 	expectedExists: (path: AbsoluteFilePath) => void;
 	unexpectedExists: (path: AbsoluteFilePath) => void;
@@ -403,7 +403,7 @@ export default class RecoveryStore {
 		registerFile: (paths: AbsoluteFilePath[]) => void,
 	): Promise<boolean> {
 		const {server} = this;
-		let fd: undefined | FileHandle;
+		let fd: undefined | FSHandle;
 		let success = false;
 
 		try {
@@ -436,7 +436,7 @@ export default class RecoveryStore {
 
 						// First verify the mtime
 						// @ts-ignore: This is accurate
-						const stats: Stats = await fd.stat({bigint: true});
+						const stats: FSStats = await fd.stat({bigint: true});
 						if (stats.mtimeNs === mtimeNs) {
 							await events.beforeFileWrite(path, fd);
 							await fd.truncate(0);

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}
 			}
 			location: Object {
 				filename: "experimental/class-private-properties/failure-name-constructor/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -173,7 +175,7 @@ JSRoot {
 
 ```
 
- experimental/class-private-properties/failure-name-constructor/input.js:2:2 parse/js ━━━━━━━━━━━━━━
+ experimental/class-private-properties/failure-name-constructor/input.js:2:2 parse(js) ━━━━━━━━━━━━━
 
   ✖ Classes may not have a private field named '#constructor'
 

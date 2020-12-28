@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Duplicate constructor in the same class"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
 			}
 			location: Object {
 				filename: "esprima/es2015-class/migrated_0019/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 42
@@ -307,7 +309,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-class/migrated_0019/input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-class/migrated_0019/input.js:1:27 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate constructor in the same class
 

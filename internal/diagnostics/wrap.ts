@@ -44,7 +44,9 @@ export async function catchDiagnostics<T>(
 	}
 }
 
-export async function interceptDiagnostics<T>(
+export async function interceptDiagnostics<T extends {
+	diagnostics?: Diagnostics;
+}>(
 	promise: () => Promise<T>,
 	process: (processor: DiagnosticsProcessor) => void,
 	origin?: DiagnosticOrigin,
@@ -61,7 +63,19 @@ export async function interceptDiagnostics<T>(
 		);
 	}
 
-	return res.value;
+	const {value} = res;
+
+	if (value === undefined || value.diagnostics === undefined) {
+		return value;
+	} else {
+		const processor = new DiagnosticsProcessor();
+		process(processor);
+		processor.addDiagnostics(value.diagnostics);
+		return {
+			...value,
+			diagnostics: processor.getDiagnostics(),
+		};
+	}
 }
 
 export function catchDiagnosticsSync<T>(

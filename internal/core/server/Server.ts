@@ -20,7 +20,7 @@ import {
 } from "@internal/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
-	DiagnosticsFileReaders,
+	DiagnosticsFileHandler,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
@@ -375,14 +375,14 @@ export default class Server {
 			printerOptions: {
 				processor: this.createDiagnosticsProcessor(),
 				reporter: this.connectedReporters,
-				fileReaders: this.createDiagnosticsPrinterFileReaders(),
+				fileHandlers: [this.createDiagnosticsPrinterFileHandler()],
 			},
 		});
 	}
 
-	public createDiagnosticsPrinterFileReaders(): DiagnosticsFileReaders {
+	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
 		return {
-			read: async (path) => {
+			readAbsolute: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
 					path,
 				);

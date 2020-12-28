@@ -54700,16 +54700,11 @@ const ___R$project$rome$$internal$compiler$transforms$compile$transpile$template
 					);
 				}
 
-				if (nodes.length === 1) {
-					return ___R$project$rome$$internal$compiler$index_ts$signals.replace(
-						nodes[0],
-					);
-				}
-
 				// Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
 				if (
+					nodes.length === 1 || (
 					nodes[0].type !== "JSStringLiteral" &&
-					nodes[1].type !== "JSStringLiteral"
+					nodes[1].type !== "JSStringLiteral")
 				) {
 					nodes.unshift(
 						___R$project$rome$$internal$ast$js$literals$JSStringLiteral_ts$jsStringLiteral.quick(

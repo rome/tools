@@ -22,7 +22,7 @@ export const configHandler: PartialExtensionHandler = {
 		const {file, integrity, mtimeNs, worker} = info;
 		const {uid} = file;
 
-		const sourceText = await worker.readFile(file);
+		const sourceText = await worker.readFileText(file);
 		const path = createUnknownPath(uid);
 
 		let formatted: string = sourceText;
@@ -54,7 +54,7 @@ export const configHandler: PartialExtensionHandler = {
 	},
 
 	async parse({integrity, path, file, worker}) {
-		const src = await worker.readFile(file);
+		const src = await worker.readFileText(file);
 
 		// Parse the JSON to make sure it's valid
 		const obj = consumeConfig({

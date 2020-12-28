@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"get"
-						RAW_MARKUP {value: " can't contain a unicode escape"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"get"
+					RAW_MARKUP {value: " can't contain a unicode escape"}
+				]
 			}
 			location: Object {
 				filename: "es2015/class/invalid-escape-get/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -213,7 +213,7 @@ JSRoot {
 
 ```
 
- es2015/class/invalid-escape-get/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/invalid-escape-get/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ get can't contain a unicode escape
 

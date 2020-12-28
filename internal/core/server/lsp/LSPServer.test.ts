@@ -30,7 +30,7 @@ function createMessage(res: JSONObject) {
 function consumeMessage(msg: string): Consumer {
 	const content = msg.split("\r\n\r\n", 2)[1];
 	const data = JSON.parse(content);
-	return consumeUnknown(data, "lsp/parse");
+	return consumeUnknown(data, "parse", "json");
 }
 
 test(

@@ -1,6 +1,6 @@
 import {VERSION} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
-import {Stats, createReadStream, exists, lstat} from "@internal/fs";
+import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
 import {
@@ -81,7 +81,7 @@ function serializeCacheKey(rawParts: CacheKeyParts): string {
 		if (typeof part === "string") {
 			parts.push(part);
 		} else if (Object.keys(part).length > 0) {
-			parts.push(sha256(JSON.stringify(part)));
+			parts.push(sha256.sync(JSON.stringify(part)));
 		}
 	}
 	return parts.join("-");
@@ -123,7 +123,7 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 
 		const stream = createReadStream(path);
 		const data = await decodeSingleMessageRSERStream(stream);
-		const consumer = consumeUnknown(data, "parse/rser");
+		const consumer = consumeUnknown(data, "parse", "rser");
 
 		const value = this.loader.validate(consumer);
 		this.value = value;
@@ -157,12 +157,12 @@ class CacheFile {
 	public shouldWrite: boolean;
 
 	private readFile: undefined | string;
-	private stats: undefined | Stats;
+	private stats: undefined | FSStats;
 	private worker: Worker;
 	private cache: WorkerCache;
 	private entries: Map<string, CacheEntry<RSERValue>>;
 
-	public async getStats(): Promise<Stats> {
+	public async getStats(): Promise<FSStats> {
 		if (this.stats !== undefined) {
 			return this.stats;
 		}
@@ -170,7 +170,7 @@ class CacheFile {
 		const {worker} = this;
 		const path = this.ref.real;
 
-		let stats: Stats;
+		let stats: FSStats;
 		if (worker.hasBuffer(path)) {
 			stats = worker.getBufferFakeStats(path);
 		} else if (worker.virtualModules.isVirtualPath(path)) {
@@ -194,8 +194,23 @@ class CacheFile {
 
 	private async getHash(): Promise<string> {
 		const content = await this.worker.readFile(this.ref);
-		this.readFile = content;
-		return sha256(content);
+
+		if (typeof content === "string") {
+			this.readFile = content;
+			return sha256.sync(content);
+		} else {
+			let buff = "";
+			content.on(
+				"data",
+				(chunk) => {
+					buff += chunk.toString();
+				},
+			);
+
+			const hash = await sha256.async(content);
+			this.readFile = buff;
+			return hash;
+		}
 	}
 
 	public async isOutdated(

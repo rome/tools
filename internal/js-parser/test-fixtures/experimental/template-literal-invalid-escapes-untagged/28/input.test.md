@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid escape sequence in template"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
 				filename: "experimental/template-literal-invalid-escapes-untagged/28/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -168,7 +170,7 @@ JSRoot {
 
 ```
 
- experimental/template-literal-invalid-escapes-untagged/28/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━
+ experimental/template-literal-invalid-escapes-untagged/28/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
 

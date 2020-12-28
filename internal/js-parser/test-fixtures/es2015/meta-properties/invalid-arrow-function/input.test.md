@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "new.target can only be used in functions or class properties"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
 				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -221,7 +223,7 @@ JSRoot {
 
 ```
 
- es2015/meta-properties/invalid-arrow-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/invalid-arrow-function/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
 

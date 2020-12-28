@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected type cast in parameter position"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
 				filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -135,7 +137,7 @@ JSRoot {
 
 ```
 
- typescript/cast/arrow-async-parameter-assertion/input.ts:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/cast/arrow-async-parameter-assertion/input.ts:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected type cast in parameter position
 

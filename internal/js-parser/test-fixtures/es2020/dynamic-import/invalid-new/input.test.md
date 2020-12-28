@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "super is only allowed in object methods and classes"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
 				filename: "es2020/dynamic-import/invalid-new/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 17
@@ -116,7 +118,7 @@ JSRoot {
 
 ```
 
- es2020/dynamic-import/invalid-new/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/dynamic-import/invalid-new/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
 

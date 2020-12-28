@@ -32,12 +32,12 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import * as foo from 'foo';
+					import * as foo from 'foo';
 
-          function yeah() {
-            require('bar');
-          }
-        `,
+					function yeah() {
+					  require('bar');
+					}
+				`,
 				"module",
 			),
 		);
@@ -50,8 +50,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          require(dynamic);
-        `,
+					require(dynamic);
+				`,
 				"module",
 			),
 		);
@@ -64,16 +64,16 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          {
-            function require() {}
-            require('yes');
-          }
+					{
+					  function require() {}
+					  require('yes');
+					}
 
-          function yes() {
-            function require() {}
-            require('yes');
-          }
-        `,
+					function yes() {
+					  function require() {}
+					  require('yes');
+					}
+				`,
 				"script",
 			),
 		);
@@ -86,12 +86,12 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import('./foo');
+					import('./foo');
 
-          function yes() {
-            import('./bar');
-          }
-        `,
+					function yes() {
+					  import('./bar');
+					}
+				`,
 				"module",
 			),
 		);
@@ -104,8 +104,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export {foo, bar, yes as no};
-        `,
+					export {foo, bar, yes as no};
+				`,
 				"module",
 			),
 		);
@@ -118,10 +118,10 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export const yes = '';
-          export function foo() {}
-          export class Bar {}
-        `,
+					export const yes = '';
+					export function foo() {}
+					export class Bar {}
+				`,
 				"module",
 			),
 		);
@@ -134,8 +134,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export default 'yes';
-        `,
+					export default 'yes';
+				`,
 				"module",
 			),
 		);
@@ -148,8 +148,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export {foo, bar, default as no, boo as noo} from 'foobar';
-        `,
+					export {foo, bar, default as no, boo as noo} from 'foobar';
+				`,
 				"module",
 			),
 		);
@@ -162,8 +162,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export * from 'foobar';
-        `,
+					export * from 'foobar';
+				`,
 				"module",
 			),
 		);
@@ -176,8 +176,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import * as bar from 'foobar';
-        `,
+					import * as bar from 'foobar';
+				`,
 				"module",
 			),
 		);
@@ -190,8 +190,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import {bar, foo, default as lol, ya as to} from 'foobar';
-        `,
+					import {bar, foo, default as lol, ya as to} from 'foobar';
+				`,
 				"module",
 			),
 		);
@@ -204,8 +204,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import bar from 'foobar';
-        `,
+					import bar from 'foobar';
+				`,
 				"module",
 			),
 		);
@@ -218,8 +218,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          exports.yes = function() {};
-        `,
+					exports.yes = function() {};
+				`,
 				"script",
 			),
 		);
@@ -232,8 +232,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          module.exports = function() {};
-        `,
+					module.exports = function() {};
+				`,
 				"script",
 			),
 		);
@@ -246,8 +246,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          await foobar();
-        `,
+					await foobar();
+				`,
 				"module",
 			),
 		);
@@ -260,8 +260,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import 'bar';
-        `,
+					import 'bar';
+				`,
 				"module",
 			),
 		);
@@ -274,8 +274,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export const foo = 'bar';
-        `,
+					export const foo = 'bar';
+				`,
 				"module",
 			),
 		);
@@ -288,8 +288,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          exports.foo = 'bar';
-        `,
+					exports.foo = 'bar';
+				`,
 				"module",
 			),
 		);
@@ -302,8 +302,8 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          foo();
-        `,
+					foo();
+				`,
 				"module",
 			),
 		);
@@ -316,9 +316,9 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          export const foo = 'bar';
-          exports.bar = 'foo';
-        `,
+					export const foo = 'bar';
+					exports.bar = 'foo';
+				`,
 				"script",
 			),
 		);
@@ -331,9 +331,9 @@ test(
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
-          import {bar} from 'foo';
-          const foo = 'bar';
-        `,
+					import {bar} from 'foo';
+					const foo = 'bar';
+				`,
 				"module",
 			),
 		);

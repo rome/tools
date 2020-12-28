@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unexpected token, expected "}
-						"("
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unexpected token, expected "}
+					"("
+				]
 			}
 			location: Object {
 				filename: "experimental/function-sent/disabled-inside-function/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 18
@@ -253,7 +253,7 @@ JSRoot {
 
 ```
 
- experimental/function-sent/disabled-inside-function/input.js:2:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/disabled-inside-function/input.js:2:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected (
 

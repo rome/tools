@@ -50,14 +50,11 @@ export default createVisitor({
 				return signals.replace(jsStringLiteral.quick(""));
 			}
 
-			if (nodes.length === 1) {
-				return signals.replace(nodes[0]);
-			}
-
 			// Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
 			if (
-				nodes[0].type !== "JSStringLiteral" &&
-				nodes[1].type !== "JSStringLiteral"
+				nodes.length === 1 ||
+				(nodes[0].type !== "JSStringLiteral" &&
+				nodes[1].type !== "JSStringLiteral")
 			) {
 				nodes.unshift(jsStringLiteral.quick(""));
 			}

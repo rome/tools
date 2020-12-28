@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
 				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 25
@@ -285,7 +287,7 @@ JSRoot {
 
 ```
 
- experimental/class-properties/arguments-in-arrow-function/input.js:3:16 parse/js ━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/arguments-in-arrow-function/input.js:3:16 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
 

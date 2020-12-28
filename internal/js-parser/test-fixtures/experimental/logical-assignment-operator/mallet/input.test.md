@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"statement expression"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"statement expression"
+				]
 			}
 			location: Object {
 				filename: "experimental/logical-assignment-operator/mallet/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -275,7 +275,7 @@ JSRoot {
 
 ```
 
- experimental/logical-assignment-operator/mallet/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/logical-assignment-operator/mallet/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

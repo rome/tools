@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"spread argument"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"spread argument"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-spread-element/invalid-new-spreads/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -152,7 +152,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-spread-element/invalid-new-spreads/input.js:1:10 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-spread-element/invalid-new-spreads/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an spread argument
 

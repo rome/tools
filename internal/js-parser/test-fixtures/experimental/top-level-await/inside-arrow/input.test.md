@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can't use await outside of an async function"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
 				filename: "experimental/top-level-await/inside-arrow/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 11
@@ -148,7 +150,7 @@ JSRoot {
 
 ```
 
- experimental/top-level-await/inside-arrow/input.js:1:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/top-level-await/inside-arrow/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
 

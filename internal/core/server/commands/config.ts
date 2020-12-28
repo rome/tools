@@ -116,6 +116,8 @@ async function runCommand(
 				});
 
 				await validate(res, stringified);
+
+				return {};
 			},
 			(processor) => {
 				processor.normalizer.setInlineSourceText(configPath.join(), stringified);

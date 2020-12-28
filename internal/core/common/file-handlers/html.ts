@@ -25,7 +25,7 @@ export const htmlHandler: PartialExtensionHandler = {
 	},
 
 	async parse({integrity, path, file, worker}) {
-		const sourceText = await worker.readFile(file);
+		const sourceText = await worker.readFileText(file);
 		const ast = parseHTML({
 			input: sourceText,
 			integrity,

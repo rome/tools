@@ -31,8 +31,8 @@ import {
 	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
+	FSStats,
 	FSWatcher,
-	Stats,
 	exists,
 	lstat,
 	readDirectory,
@@ -130,7 +130,7 @@ export type ChangedFileEventItem = {
 	newStats: SimpleStats;
 };
 
-function toSimpleStats(stats: Stats): SimpleStats {
+function toSimpleStats(stats: FSStats): SimpleStats {
 	let type: StatsType = "unknown";
 	if (stats.isDirectory()) {
 		type = "directory";
@@ -660,7 +660,7 @@ export default class MemoryFileSystem {
 		const consumer = json.consumeValue({
 			path,
 			input: manifestRaw,
-			consumeDiagnosticCategory: "parse/manifest",
+			consumeDiagnosticCategoryValue: "manifest",
 		});
 
 		const projects = await this.server.projectManager.getProjectHierarchyFromPath(

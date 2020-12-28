@@ -212,12 +212,13 @@ export default class BundleRequest {
 
 		push(
 			dedent`
-		(function(res) {
-			if (typeof module !== "undefined") {
-				module.exports = res;
-			}
-			return res;
-		})(`,
+				(function(res) {
+					if (typeof module !== "undefined") {
+						module.exports = res;
+					}
+					return res;
+				})(
+			`,
 		);
 
 		// add on bootstrap

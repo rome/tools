@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unknown class property start"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
 				filename: "experimental/class-private-properties/asi-failure-inline/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -173,7 +175,7 @@ JSRoot {
 
 ```
 
- experimental/class-private-properties/asi-failure-inline/input.js:2:5 parse/js ━━━━━━━━━━━━━━━━━━━━
+ experimental/class-private-properties/asi-failure-inline/input.js:2:5 parse(js) ━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
 

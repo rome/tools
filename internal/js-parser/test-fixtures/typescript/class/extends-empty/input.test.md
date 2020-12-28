@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"extends"
-						RAW_MARKUP {value: " list cannot be empty"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"extends"
+					RAW_MARKUP {value: " list cannot be empty"}
+				]
 			}
 			location: Object {
 				filename: "typescript/class/extends-empty/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 22
@@ -109,7 +109,7 @@ JSRoot {
 
 ```
 
- typescript/class/extends-empty/input.ts:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/extends-empty/input.ts:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ extends list cannot be empty
 

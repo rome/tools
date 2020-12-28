@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "jsx/errors/nested-fragment-unclosed/input.jsx"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 7
@@ -45,12 +46,13 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unclosed JSX element"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Originated from this opening tag"}]}
+						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
 					frame {
 						location: Object {
@@ -120,7 +122,7 @@ JSRoot {
 
 ```
 
- jsx/errors/nested-fragment-unclosed/input.jsx:1:7 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/nested-fragment-unclosed/input.jsx:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
 			location: Object {
 				filename: "typescript/cast/parameter-typecast/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -102,7 +104,7 @@ JSRoot {
 
 ```
 
- typescript/cast/parameter-typecast/input.ts:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/cast/parameter-typecast/input.ts:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot
     async keyword.

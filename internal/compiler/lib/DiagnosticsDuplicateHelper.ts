@@ -35,7 +35,11 @@ export class DiagnosticsDuplicateHelper {
 	): {
 		duplicate: boolean;
 	} {
-		const isSuppressed = this.context.hasLocSuppression(location, this.category);
+		const isSuppressed = this.context.hasLocSuppression(
+			location,
+			this.category,
+			undefined,
+		);
 		if (isSuppressed) {
 			// If this location has had it's diagnostic suppressed then we don't want to return
 			// that it was a duplicate even if there's multiple occurences

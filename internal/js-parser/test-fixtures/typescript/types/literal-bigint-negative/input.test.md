@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token, expected \"number\""}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected token, expected \"number\""}
 			}
 			location: Object {
 				filename: "typescript/types/literal-bigint-negative/input.ts"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 8
@@ -145,7 +147,7 @@ JSRoot {
 
 ```
 
- typescript/types/literal-bigint-negative/input.ts:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/literal-bigint-negative/input.ts:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected "number"
 

@@ -2,7 +2,7 @@ import {PartialExtensionHandler} from "./types";
 import {parseMarkdown} from "@internal/markdown-parser";
 
 export const markdownHandler: PartialExtensionHandler = {
-	language: "md",
+	language: "markdown",
 	hasTabs: true,
 	capabilities: {
 		lint: false,
@@ -10,7 +10,7 @@ export const markdownHandler: PartialExtensionHandler = {
 	},
 
 	async parse({integrity, path, file, worker}) {
-		const sourceText = await worker.readFile(file);
+		const sourceText = await worker.readFileText(file);
 		const ast = parseMarkdown({
 			input: sourceText,
 			integrity,

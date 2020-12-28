@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Redefinition of __proto__ property"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
 				filename: "esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 48
@@ -273,7 +275,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js:1:39 parse/js ━━
+ esprima/es2015-object-initialiser/invalid-proto-getter-literal-identifier/input.js:1:39 parse(js) ━
 
   ✖ Redefinition of __proto__ property
 

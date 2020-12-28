@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"yield argument"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"yield argument"
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -197,7 +197,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-generator/incomplete-yield-delegate/input.js:1:22 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-generator/incomplete-yield-delegate/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an yield argument
 

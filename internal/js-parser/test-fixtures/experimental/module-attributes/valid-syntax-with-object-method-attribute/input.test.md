@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected a semicolon or a line terminator"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				filename: "experimental/module-attributes/valid-syntax-with-object-method-attribute/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 26
@@ -298,7 +300,7 @@ JSRoot {
 
 ```
 
- experimental/module-attributes/valid-syntax-with-object-method-attribute/input.js:1:27 parse/js ━━━
+ experimental/module-attributes/valid-syntax-with-object-method-attribute/input.js:1:27 parse(js) ━━
 
   ✖ Expected a semicolon or a line terminator
 

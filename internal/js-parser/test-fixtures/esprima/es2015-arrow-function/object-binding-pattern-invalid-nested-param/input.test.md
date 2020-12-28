@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Binding member expression"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Binding member expression"}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 28
@@ -512,7 +514,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js:1:24 parse/js ━━
+ esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js:1:24 parse(js) ━
 
   ✖ Binding member expression
 

@@ -26,7 +26,12 @@ import {
 	createAbsoluteFilePath,
 	createUnknownPath,
 } from "@internal/path";
-import {Stats, createFakeStats, readFileText} from "@internal/fs";
+import {
+	FSReadStream,
+	FSStats,
+	createFakeStats,
+	createReadStream,
+} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
@@ -269,7 +274,7 @@ export default class Worker {
 		return this.buffers.has(path);
 	}
 
-	public getBufferFakeStats(path: AbsoluteFilePath): Stats {
+	public getBufferFakeStats(path: AbsoluteFilePath): FSStats {
 		const buffer = this.buffers.assert(path);
 		return createFakeStats({
 			type: "file",
@@ -387,7 +392,40 @@ export default class Worker {
 		};
 	}
 
-	public async readFile(ref: FileReference): Promise<string> {
+	public async readFileText(ref: FileReference): Promise<string> {
+		const content = await this.readFile(ref);
+
+		if (typeof content === "string") {
+			return content;
+		} else {
+			return new Promise((resolve, reject) => {
+				let buff = "";
+
+				content.on(
+					"error",
+					(err) => {
+						reject(err);
+					},
+				);
+
+				content.on(
+					"data",
+					(chunk) => {
+						buff += chunk;
+					},
+				);
+
+				content.on(
+					"end",
+					() => {
+						resolve(buff);
+					},
+				);
+			});
+		}
+	}
+
+	public async readFile(ref: FileReference): Promise<string | FSReadStream> {
 		const buffer = this.buffers.get(ref.real);
 		if (buffer !== undefined) {
 			return buffer.content;
@@ -405,7 +443,7 @@ export default class Worker {
 			return cached;
 		}
 
-		return await readFileText(ref.real);
+		return createReadStream(ref.real);
 	}
 
 	public async parse(

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
 			}
 			location: Object {
 				filename: "es2015/statements/label-invalid-func-strict/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 34
@@ -232,7 +234,7 @@ JSRoot {
 
 ```
 
- es2015/statements/label-invalid-func-strict/input.js:1:35 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/statements/label-invalid-func-strict/input.js:1:35 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In strict mode code, functions can only be declared at top level or inside a block
 

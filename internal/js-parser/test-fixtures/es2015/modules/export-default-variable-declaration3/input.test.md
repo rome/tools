@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
 				filename: "es2015/modules/export-default-variable-declaration3/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -222,7 +224,7 @@ JSRoot {
 
 ```
 
- es2015/modules/export-default-variable-declaration3/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/modules/export-default-variable-declaration3/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only expressions, functions or classes are allowed as the `default` export.
 

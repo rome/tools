@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -146,7 +148,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

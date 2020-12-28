@@ -13,7 +13,7 @@ export function createBridgeEventDeclaration<
 	Param extends RSERValue,
 	Ret extends RSERValue
 >(): BridgeEventDeclaration<Param, Ret> {
-	return (undefined as any);
+	return {};
 }
 
 export class BridgeFactory<

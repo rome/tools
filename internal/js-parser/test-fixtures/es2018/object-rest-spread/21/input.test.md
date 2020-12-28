@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Not a valid assignment target"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Not a valid assignment target"}
 			}
 			location: Object {
 				filename: "es2018/object-rest-spread/21/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 10
@@ -129,7 +131,7 @@ JSRoot {
 
 ```
 
- es2018/object-rest-spread/21/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2018/object-rest-spread/21/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Not a valid assignment target
 

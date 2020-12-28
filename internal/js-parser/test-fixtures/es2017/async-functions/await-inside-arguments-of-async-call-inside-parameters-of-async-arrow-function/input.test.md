@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "await is not allowed in async function parameters"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 28
@@ -303,7 +305,7 @@ JSRoot {
 ```
 
  es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-functi
- on/input.js:2:28 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ on/input.js:2:28 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
 

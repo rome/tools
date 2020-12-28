@@ -31,17 +31,19 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [
-				Object {category: "parse/js"}
-				Object {category: "parse/regex"}
+				Object {category: "parse"}
+				Object {category: "parse"}
 			]
 			description: Object {
 				advice: Array []
-				category: "parse/regex"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}]}
+				category: "parse"
+				categoryValue: "regex"
+				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
 				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 				integrity: undefined
+				language: "regex"
 				sourceText: undefined
 				end: Object {
 					column: 29
@@ -281,7 +283,7 @@ JSRoot {
 ```
 
  esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js:1:16
-parse/regex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parse(regex) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
 

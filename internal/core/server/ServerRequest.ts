@@ -29,6 +29,7 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {
+	DiagnosticsFileHandler,
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
@@ -51,6 +52,7 @@ import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
 import {BridgeServer, Event} from "@internal/events";
 import {
 	FlagValue,
+	SerializeCLILocation,
 	SerializeCLITarget,
 	serializeCLIFlags,
 } from "@internal/cli-flags";
@@ -74,6 +76,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyFilePath,
+	RelativeFilePath,
 	UnknownPath,
 	createAbsoluteFilePath,
 	createUnknownPath,
@@ -550,6 +553,28 @@ export default class ServerRequest {
 		});
 	}
 
+	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
+		switch (path.join()) {
+			case "argv":
+				return this.getDiagnosticLocationFromFlags("none").sourceText;
+
+			case "cwd":
+				return this.client.flags.cwd.join();
+		}
+		return undefined;
+	}
+
+	private createDiagnosticsPrinterFileHandlers(): DiagnosticsFileHandler[] {
+		return [
+			this.server.createDiagnosticsPrinterFileHandler(),
+			{
+				readRelative: async (path) => {
+					return this.maybeReadMemoryFile(path);
+				},
+			},
+		];
+	}
+
 	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
 	): DiagnosticsPrinter {
@@ -564,7 +589,7 @@ export default class ServerRequest {
 			cwd: this.client.flags.cwd,
 			wrapErrors: true,
 			flags: this.getDiagnosticsPrinterFlags(),
-			fileReaders: this.server.createDiagnosticsPrinterFileReaders(),
+			fileHandlers: this.createDiagnosticsPrinterFileHandlers(),
 		});
 	}
 
@@ -684,8 +709,17 @@ export default class ServerRequest {
 	}
 
 	public getDiagnosticLocationFromFlags(
+		target: "none",
+	): RequiredProps<DiagnosticLocation, "sourceText">
+	public getDiagnosticLocationFromFlags(
+		target: Exclude<SerializeCLITarget, "none">,
+	): SerializeCLILocation
+	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
-	): RequiredProps<DiagnosticLocation, "sourceText"> {
+	): DiagnosticLocation
+	public getDiagnosticLocationFromFlags(
+		target: SerializeCLITarget,
+	): DiagnosticLocation {
 		const {query} = this;
 		const clientFlags = this.client.flags;
 

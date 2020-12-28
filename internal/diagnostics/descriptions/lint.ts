@@ -696,6 +696,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JS_NO_UNUSED_VARIABLES: (kind: string, name: string) => ({
 		category: "lint/js/noUnusedVariables",
+		categoryValue: name,
 		message: markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 		advice: [
 			{
@@ -707,6 +708,7 @@ export const lint = createDiagnosticsCategory({
 	}),
 	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: string[]) => ({
 		category: "lint/js/noUndeclaredVariables",
+		categoryValue: name,
 		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 		advice: buildSuggestionAdvice(name, bindingsInScope),
 	}),

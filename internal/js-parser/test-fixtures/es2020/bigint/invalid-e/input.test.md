@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A bigint can't have a decimal"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A bigint can't have a decimal"}
 			}
 			location: Object {
 				filename: "es2020/bigint/invalid-e/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 3
@@ -87,7 +89,7 @@ JSRoot {
 
 ```
 
- es2020/bigint/invalid-e/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2020/bigint/invalid-e/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A bigint can't have a decimal
 

@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unexpected token, expected "}
-						","
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unexpected token, expected "}
+					","
+				]
 			}
 			location: Object {
 				filename: "core/object/member-expression-after-property-initializer-2/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 5
@@ -333,7 +333,7 @@ JSRoot {
 
 ```
 
- core/object/member-expression-after-property-initializer-2/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━
+ core/object/member-expression-after-property-initializer-2/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid parenthesized binding"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
 				filename: "core/categorized/valid-assignment-pattern-3/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 5
@@ -133,7 +135,7 @@ JSRoot {
 
 ```
 
- core/categorized/valid-assignment-pattern-3/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/categorized/valid-assignment-pattern-3/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
 

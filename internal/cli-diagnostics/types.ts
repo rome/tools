@@ -6,8 +6,9 @@
  */
 
 import {Reporter} from "@internal/cli-reporter";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, RelativeFilePath} from "@internal/path";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
+import {FSReadStream} from "@internal/fs";
 
 export type DiagnosticPrinterAuxiliaryFormat = undefined | "github-actions";
 
@@ -21,9 +22,12 @@ export type DiagnosticsPrinterFlags = {
 	showAllDiagnostics: boolean;
 };
 
-export type DiagnosticsFileReaders = {
-	read: (path: AbsoluteFilePath) => Promise<undefined | string>;
-	exists: (path: AbsoluteFilePath) => Promise<undefined | boolean>;
+export type DiagnosticsFileHandler = {
+	readRelative?: (path: RelativeFilePath) => Promise<undefined | string>;
+	readAbsolute?: (
+		path: AbsoluteFilePath,
+	) => Promise<undefined | string | FSReadStream>;
+	exists?: (path: AbsoluteFilePath) => Promise<undefined | boolean>;
 };
 
 export type DiagnosticsPrinterOptions = {
@@ -32,5 +36,5 @@ export type DiagnosticsPrinterOptions = {
 	wrapErrors?: boolean;
 	cwd?: AbsoluteFilePath;
 	flags?: DiagnosticsPrinterFlags;
-	fileReaders?: DiagnosticsFileReaders;
+	fileHandlers?: DiagnosticsFileHandler[];
 };

@@ -8,7 +8,7 @@
 
 ```
 
- lint/react/noThisInSFC/reject/1/file.tsx:1:44 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noThisInSFC/reject/1/file.tsx:1:44 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated regular expression
 

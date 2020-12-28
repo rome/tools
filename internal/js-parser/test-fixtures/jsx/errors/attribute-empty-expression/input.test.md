@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "JSX attribute cannot be an empty expression"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "JSX attribute cannot be an empty expression"}
 			}
 			location: Object {
 				filename: "jsx/errors/attribute-empty-expression/input.jsx"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 11
@@ -158,7 +160,7 @@ JSRoot {
 
 ```
 
- jsx/errors/attribute-empty-expression/input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/attribute-empty-expression/input.jsx:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute cannot be an empty expression
 

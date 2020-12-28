@@ -24,7 +24,7 @@ export async function main() {
 					files.push([
 						path.getBasename(),
 						{
-							mtime: (await lstat(path)).mtimeMs,
+							mtime: Number((await lstat(path)).mtimeMs),
 							content,
 						},
 					]);

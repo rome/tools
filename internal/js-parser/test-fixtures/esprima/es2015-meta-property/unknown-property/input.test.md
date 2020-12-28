@@ -30,10 +30,24 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "The only valid meta property for "}
+					"new"
+					RAW_MARKUP {value: " is "}
+					"new"
+					RAW_MARKUP {value: "."}
+					"target"
+				]
+			}
 			location: Object {
 				filename: "esprima/es2015-meta-property/unknown-property/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 41
@@ -42,20 +56,6 @@ JSRoot {
 				start: Object {
 					column: 25
 					line: 1
-				}
-			}
-			description: Object {
-				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "The only valid meta property for "}
-						"new"
-						RAW_MARKUP {value: " is "}
-						"new"
-						RAW_MARKUP {value: "."}
-						"target"
-					]
 				}
 			}
 		}
@@ -233,7 +233,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-meta-property/unknown-property/input.js:1:25 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-meta-property/unknown-property/input.js:1:25 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
 

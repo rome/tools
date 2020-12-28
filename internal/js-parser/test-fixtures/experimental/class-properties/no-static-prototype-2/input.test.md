@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Classes may not have static property named prototype"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
 			}
 			location: Object {
 				filename: "experimental/class-properties/no-static-prototype-2/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 18
@@ -275,7 +277,7 @@ JSRoot {
 
 ```
 
- experimental/class-properties/no-static-prototype-2/input.js:2:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/no-static-prototype-2/input.js:2:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have static property named prototype
 

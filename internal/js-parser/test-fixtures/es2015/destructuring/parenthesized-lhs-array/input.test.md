@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid parenthesized binding"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
 				filename: "es2015/destructuring/parenthesized-lhs-array/input.js"
 				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -133,7 +135,7 @@ JSRoot {
 
 ```
 
- es2015/destructuring/parenthesized-lhs-array/input.js:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/destructuring/parenthesized-lhs-array/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
 

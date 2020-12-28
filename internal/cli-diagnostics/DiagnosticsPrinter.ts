@@ -24,12 +24,12 @@ import {
 } from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
 import {
-	DiagnosticsFileReaders,
+	DiagnosticsFileHandler,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
 import {formatAnsiRGB, markupToPlainText} from "@internal/cli-layout";
-import {ToLines, toLines} from "./utils";
+import {ToLines, concatFileHandlers, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
@@ -42,7 +42,7 @@ import {
 	createUnknownPath,
 } from "@internal/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
-import {exists, lstat, readFileText} from "@internal/fs";
+import {createReadStream, exists, lstat} from "@internal/fs";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
@@ -57,13 +57,16 @@ type PositionLike = {
 	column?: undefined | Number0;
 };
 
-const DEFAULT_FILE_READERS: DiagnosticsFileReaders = {
-	async read(path) {
+const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
+	async readAbsolute(path) {
 		if ((await exists(path)) && (await lstat(path)).isFile()) {
-			return await readFileText(path);
+			return createReadStream(path);
 		} else {
 			return undefined;
 		}
+	},
+	async readRelative() {
+		return undefined;
 	},
 	async exists(path) {
 		return await exists(path);
@@ -138,10 +141,10 @@ export default class DiagnosticsPrinter extends Error {
 
 		this.reporter = reporter;
 		this.flags = flags;
-		this.fileReaders =
-			opts.fileReaders === undefined
-				? [DEFAULT_FILE_READERS]
-				: [opts.fileReaders, DEFAULT_FILE_READERS];
+		this.fileHandler =
+			opts.fileHandlers === undefined
+				? DEFAULT_FILE_HANDLER
+				: concatFileHandlers([...opts.fileHandlers, DEFAULT_FILE_HANDLER]);
 		this.cwd = cwd ?? CWD_PATH;
 		this.processor = opts.processor;
 
@@ -169,7 +172,7 @@ export default class DiagnosticsPrinter extends Error {
 		after: boolean;
 	}[];
 	private cwd: AbsoluteFilePath;
-	private fileReaders: DiagnosticsFileReaders[];
+	private fileHandler: Required<DiagnosticsFileHandler>;
 	private hasTruncatedDiagnostics: boolean;
 	private missingFileSources: UnknownPathSet;
 	private fileSources: DiagnosticsPrinterFileSources;
@@ -238,16 +241,17 @@ export default class DiagnosticsPrinter extends Error {
 		const path = dep.path.assertAbsolute();
 
 		let needsHash = dep.integrity !== undefined;
-		let needsSource = dep.type === "reference" || needsHash;
+		let needsSource = dep.type === "reference";
 
 		// If we don't need the source then just do an existence check
-		if (!needsSource) {
+		if (!needsSource && !needsHash) {
 			let exists: undefined | boolean;
-			for (const reader of this.fileReaders) {
-				if (exists !== undefined) {
-					break;
-				}
-				exists = await reader.exists(path);
+			if (path.isRelative()) {
+				// Always assume relative paths exist
+				exists = true;
+			}
+			if (exists === undefined) {
+				exists = await this.fileHandler.exists(path);
 			}
 			if (exists === undefined) {
 				this.missingFileSources.add(path);
@@ -260,20 +264,61 @@ export default class DiagnosticsPrinter extends Error {
 		if (dep.type === "reference") {
 			sourceText = dep.sourceText;
 		}
-		if (needsSource) {
-			for (const reader of this.fileReaders) {
-				if (sourceText !== undefined) {
-					break;
+		if (needsSource || needsHash) {
+			if (path.isAbsolute()) {
+				const stream = await this.fileHandler.readAbsolute(path);
+
+				if (stream !== undefined) {
+					if (typeof stream === "string") {
+						sourceText = stream;
+						if (needsHash) {
+							this.fileHashes.set(path, sha256.sync(stream));
+						}
+					} else {
+						let buff = "";
+
+						stream.on(
+							"data",
+							(chunk) => {
+								buff += chunk.toString();
+							},
+						);
+
+						if (needsHash) {
+							// Stream a hash. This will finish when the stream has ended so we don't need to manually attach events
+							const hash = await sha256.async(stream);
+							this.fileHashes.set(path, hash);
+						} else {
+							await new Promise<void>((resolve, reject) => {
+								stream.on(
+									"error",
+									(err) => {
+										reject(err);
+									},
+								);
+
+								stream.on(
+									"end",
+									() => {
+										resolve();
+									},
+								);
+							});
+						}
+
+						sourceText = buff;
+					}
 				}
-				sourceText = await reader.read(path);
+			} else {
+				sourceText = await this.fileHandler.readRelative(path.assertRelative());
+
+				if (sourceText !== undefined && needsHash) {
+					this.fileHashes.set(path, sha256.sync(sourceText));
+				}
 			}
 			if (sourceText === undefined) {
 				this.missingFileSources.add(path);
 				return;
-			}
-
-			if (needsHash) {
-				this.fileHashes.set(path, sha256(sourceText));
 			}
 
 			if (dep.type === "reference") {
@@ -394,10 +439,6 @@ export default class DiagnosticsPrinter extends Error {
 		// Remove non-absolute filenames and normalize sourceType and language for conflicts
 		for (const dep of deps) {
 			const path = dep.path;
-			if (!path.isAbsolute()) {
-				continue;
-			}
-
 			const existing = depsMap.get(path);
 
 			// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
@@ -503,13 +544,14 @@ export default class DiagnosticsPrinter extends Error {
 			path,
 			integrity: expectedIntegrity,
 		} of this.getDependenciesFromDiagnostics([diag])) {
+			if (expectedIntegrity === undefined) {
+				continue;
+			}
+
 			const actualHash = this.fileHashes.get(path);
 
 			// Consider us outdated if the other file is newer than what we want or doesn't have an mtime
-			const isOutdated =
-				actualHash === undefined ||
-				(expectedIntegrity !== undefined &&
-				actualHash !== expectedIntegrity.hash);
+			const isOutdated = actualHash !== expectedIntegrity.hash;
 			if (isOutdated) {
 				outdatedFiles.add(path);
 			}

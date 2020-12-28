@@ -361,8 +361,8 @@ export default class DependencyGraph {
 								? undefined
 								: {
 										location: {
-											sourceText: undefined,
 											...dep.loc,
+											sourceText: undefined,
 											integrity: undefined,
 										},
 									},
