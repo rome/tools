@@ -31,13 +31,13 @@ test(
 		 */
 
 		const jsonSourceMap1 = {
-			"version": 3,
-			"sources": ["js/test1.js"],
-			"names": ["world", "foo", "hello"],
-			"mappings": ";AAAA,IAAMA,EAAQ,QAEd,SAASC,IACA,MAAA,MAGT,SAASC,IACAF,OAAAA",
-			"file": "test.js",
-			"sourceRoot": "..",
-			"sourcesContent": [
+			version: 3,
+			sources: ["js/test1.js"],
+			names: ["world", "foo", "hello"],
+			mappings: ";AAAA,IAAMA,EAAQ,QAEd,SAASC,IACA,MAAA,MAGT,SAASC,IACAF,OAAAA",
+			file: "test.js",
+			sourceRoot: "..",
+			sourcesContent: [
 				'const world = "world";\r\n\r\nfunction foo() {\r\n  return "bar";\r\n}\r\n\r\nfunction hello() {\r\n  return world;\r\n}\r\n',
 			],
 		};
@@ -63,13 +63,13 @@ test(
 		 */
 
 		const jsonSourceMap2 = {
-			"version": 3,
-			"sources": ["js/test2.js"],
-			"names": ["firstName", "lastname", "changeName", "fullName"],
-			"mappings": ";AAAA,IAAIA,EAAY,OACVC,EAAW,MAEjB,SAASC,IACPF,EAAY,OAGd,SAASG,IACGH,MAAAA,GAAAA,OAAAA,EAAaC,KAAAA,OAAAA",
-			"file": "test2.js",
-			"sourceRoot": "..",
-			"sourcesContent": [
+			version: 3,
+			sources: ["js/test2.js"],
+			names: ["firstName", "lastname", "changeName", "fullName"],
+			mappings: ";AAAA,IAAIA,EAAY,OACVC,EAAW,MAEjB,SAASC,IACPF,EAAY,OAGd,SAASG,IACGH,MAAAA,GAAAA,OAAAA,EAAaC,KAAAA,OAAAA",
+			file: "test2.js",
+			sourceRoot: "..",
+			sourcesContent: [
 				// rome-ignore lint/js/noTemplateCurlyInString: intentional string templates
 				'let firstName = "John";\r\nconst lastname = "Doe";\r\n\r\nfunction changeName() {\r\n  firstName = "Jane";\r\n}\r\n\r\nfunction fullName() {\r\n  return `${firstName} ${lastname}`;\r\n}\r\n',
 			],
