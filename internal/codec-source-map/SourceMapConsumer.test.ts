@@ -35,13 +35,13 @@ test(
 		 */
 
 		const jsonSourceMap = {
-			"version": 3,
-			"sources": ["js/test.js"],
-			"names": ["world", "foo", "hello"],
-			"mappings": ";AAAA,IAAMA,EAAQ,QAEd,SAASC,IACA,MAAA,MAGT,SAASC,IACAF,OAAAA",
-			"file": "test.js",
-			"sourceRoot": "..",
-			"sourcesContent": [
+			version: 3,
+			sources: ["js/test.js"],
+			names: ["world", "foo", "hello"],
+			mappings: ";AAAA,IAAMA,EAAQ,QAEd,SAASC,IACA,MAAA,MAGT,SAASC,IACAF,OAAAA",
+			file: "test.js",
+			sourceRoot: "..",
+			sourcesContent: [
 				'const world = "world";\r\n\r\nfunction foo() {\r\n  return "bar";\r\n}\r\n\r\nfunction hello() {\r\n  return world;\r\n}\r\n',
 			],
 		};
