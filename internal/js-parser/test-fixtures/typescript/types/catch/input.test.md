@@ -94,8 +94,8 @@ JSRoot {
 							line: 2
 						}
 						start: Object {
-							column: 0
-							line: 1
+							column: 7
+							line: 2
 						}
 					}
 					meta: JSPatternMeta {
@@ -106,8 +106,8 @@ JSRoot {
 								line: 2
 							}
 							start: Object {
-								column: 0
-								line: 1
+								column: 7
+								line: 2
 							}
 						}
 						typeAnnotation: TSUnknownKeywordTypeAnnotation {
