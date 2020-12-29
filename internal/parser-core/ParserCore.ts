@@ -561,10 +561,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		} else {
 			throw this.unexpected({
 				description: _metadata === undefined
-					? descriptions.PARSER_CORE.EXPECTED_TOKEN(
-							token.type,
-							(type as string),
-						)
+					? descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, type as string)
 					: _metadata,
 			});
 		}

@@ -12,7 +12,7 @@ function hasAriaAttributes(node: JSXElement): boolean {
 		node.attributes.some((attr) =>
 			attr.type === "JSXAttribute" &&
 			attr.name.type === "JSXIdentifier" &&
-			ariaPropsMap.has((attr.name.name as ARIAProperty))
+			ariaPropsMap.has(attr.name.name as ARIAProperty)
 		)
 	);
 }

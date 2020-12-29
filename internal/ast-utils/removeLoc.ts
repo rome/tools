@@ -44,7 +44,7 @@ const removeLocTransform: AnyVisitors = [
 					}
 				}
 
-				return signals.replace((newNode as AnyNode));
+				return signals.replace(newNode as AnyNode);
 			}
 		},
 	},

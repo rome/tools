@@ -173,7 +173,7 @@ function parseTag(
 	parentTagName: undefined | MarkupTagName,
 ): MarkupParsedTag {
 	const nameToken = parser.expectToken("Word");
-	const tagName = (nameToken.value as MarkupTagName);
+	const tagName = nameToken.value as MarkupTagName;
 
 	const allowedAttributes = tags.get(tagName);
 	if (allowedAttributes === undefined) {

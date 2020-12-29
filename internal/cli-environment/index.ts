@@ -86,7 +86,7 @@ export function inferTerminalFeatures(
 	if (stdout instanceof tty.WriteStream) {
 		isTTY = true;
 		unicode = process.platform !== "win32";
-		colorDepth = (stdout.getColorDepth() as TerminalFeatures["colorDepth"]);
+		colorDepth = stdout.getColorDepth() as TerminalFeatures["colorDepth"];
 		columns = ob1Coerce1(stdout.columns);
 
 		// Sniff for the background

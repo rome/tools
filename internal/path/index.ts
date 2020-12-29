@@ -731,7 +731,7 @@ function parsePathSegments(
 ): ParsedPath {
 	let absoluteType: ParsedPathAbsoluteType = "posix";
 	let absoluteTarget: undefined | string;
-	let firstSeg = (segments[0] as undefined | string);
+	let firstSeg = segments[0] as undefined | string;
 
 	// Detect URL
 	if (

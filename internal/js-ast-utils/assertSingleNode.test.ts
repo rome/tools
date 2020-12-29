@@ -25,7 +25,7 @@ test(
 		);
 		t.throws(
 			() => {
-				assertSingleNode(((undefined as unknown) as AnyNode));
+				assertSingleNode((undefined as unknown) as AnyNode);
 			},
 			"Expected node or node list but got undefined",
 		);

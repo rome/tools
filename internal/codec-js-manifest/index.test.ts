@@ -3,7 +3,7 @@ import {normalizeManifest} from ".";
 import {consumeUnknown} from "@internal/consume";
 import {AbsoluteFilePath} from "@internal/path";
 
-const PATH = ({} as AbsoluteFilePath);
+const PATH = {} as AbsoluteFilePath;
 
 function getManifest() {
 	return {
