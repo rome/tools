@@ -928,7 +928,7 @@ function parseComponentValue(
 	}
 
 	if (parser.matchToken("Hash")) {
-		const hashToken = (parser.getToken() as Tokens["Hash"]);
+		const hashToken = parser.getToken() as Tokens["Hash"];
 		if (hashToken.hashType === "id") {
 			parser.nextToken();
 			return parser.finishNode(

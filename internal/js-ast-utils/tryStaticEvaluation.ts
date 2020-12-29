@@ -38,7 +38,7 @@ function evalUnaryExpression(
 	if (!res.bailed) {
 		// We do not care about TS protections
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
-		const value = (res.value as any);
+		const value = res.value as any;
 
 		switch (expr.operator) {
 			case "+":
@@ -75,9 +75,9 @@ function evalBinaryExpression(
 
 	// We do not care about TS protections
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	const l = (left.value as any);
+	const l = left.value as any;
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	const r = (right.value as any);
+	const r = right.value as any;
 
 	switch (expr.operator) {
 		case "|":

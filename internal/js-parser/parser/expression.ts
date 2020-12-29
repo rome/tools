@@ -294,7 +294,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyJSExpression>(
 
 			if (possibleArrow.type === "JSArrowFunctionExpression") {
 				// `as` cast for reasons... `possibleArrow` is `T | JSArrowFunctionExpression`
-				const arrow = (possibleArrow as JSArrowFunctionExpression);
+				const arrow = possibleArrow as JSArrowFunctionExpression;
 				return {
 					...arrow,
 					head: {
@@ -389,7 +389,7 @@ function _parseMaybeAssign<T extends AnyNode>(
 	}
 
 	if (parser.state.tokenType.isAssign) {
-		const operator = (String(parser.state.tokenValue) as AssignmentOperator);
+		const operator = String(parser.state.tokenValue) as AssignmentOperator;
 		const leftPatt = toAssignmentPattern(parser, left, "assignment expression");
 
 		// reset because shorthand default was used correctly
@@ -654,9 +654,9 @@ export function parseExpressionOp(
 	const prec = parser.state.tokenType.binop;
 	if (prec !== undefined && !(noIn && match(parser, tt._in))) {
 		if (prec > minPrec) {
-			const operator = (String(parser.state.tokenValue) as
+			const operator = String(parser.state.tokenValue) as
 				| BinaryOperator
-				| LogicalOperator);
+				| LogicalOperator;
 
 			if (
 				operator === "**" &&
@@ -744,9 +744,9 @@ export function parseMaybeUnary(
 	if (parser.state.tokenType.prefix) {
 		const start = parser.getPosition();
 		const update = match(parser, tt.incDec);
-		const operator = (String(parser.state.tokenValue) as
+		const operator = String(parser.state.tokenValue) as
 			| UnaryOperator
-			| UpdateOperator);
+			| UpdateOperator;
 		const prefix = true;
 
 		next(parser);
@@ -831,7 +831,7 @@ export function parseMaybeUnary(
 	}
 
 	while (parser.state.tokenType.postfix && !canInsertSemicolon(parser)) {
-		const operator = (String(parser.state.tokenValue) as UpdateOperator);
+		const operator = String(parser.state.tokenValue) as UpdateOperator;
 		checkLVal(parser, expr, undefined, undefined, "postfix operation");
 		next(parser);
 

@@ -199,7 +199,7 @@ export async function main() {
 								}
 								lines.push(
 									await run(
-										(`lint/${ruleName}` as DiagnosticCategory),
+										`lint/${ruleName}` as DiagnosticCategory,
 										i,
 										filename,
 										dedent(invalid[i]),

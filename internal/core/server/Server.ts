@@ -364,7 +364,7 @@ export default class Server {
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	public wrapFatal<T extends (...args: any[]) => any>(callback: T): T {
-		return (((...args: any[]): any => {
+		return ((...args: any[]): any => {
 			try {
 				const res = callback(...args);
 				if (res instanceof Promise) {
@@ -374,7 +374,7 @@ export default class Server {
 			} catch (err) {
 				throw this.onFatalError(err);
 			}
-		}) as T);
+		}) as T;
 	}
 
 	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {

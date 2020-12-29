@@ -80,7 +80,7 @@ export function parseDecisionStrings(
 			return;
 		}
 
-		const category = (rawCategory as DiagnosticCategory);
+		const category = rawCategory as DiagnosticCategory;
 		globalDecisions.push({category, action});
 	}
 
@@ -96,7 +96,7 @@ export function parseDecisionStrings(
 			return;
 		}
 
-		const category = (rawCategory as DiagnosticCategory);
+		const category = rawCategory as DiagnosticCategory;
 		const resolvedFilename = cwd.resolve(rawFilename).join();
 
 		let compilerOptions = lintCompilerOptionsPerFile[resolvedFilename];

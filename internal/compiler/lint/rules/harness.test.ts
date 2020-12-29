@@ -20,7 +20,7 @@ for (const name in tests) {
 					{
 						invalid: invalid ? invalid.map((str) => dedent(str)) : [],
 						valid: valid ? valid.map((str) => dedent(str)) : [],
-						category: (`lint/${name}` as DiagnosticCategory),
+						category: `lint/${name}` as DiagnosticCategory,
 						snapshotFilename: `${name}.test.md`,
 						filename,
 					},

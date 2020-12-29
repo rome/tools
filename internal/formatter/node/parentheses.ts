@@ -23,6 +23,7 @@ import {
 	JSUnaryExpression,
 	JSUpdateExpression,
 	JSYieldExpression,
+	TSAsExpression,
 	TSInferType,
 	TSUnionTypeAnnotation,
 } from "@internal/ast";
@@ -47,6 +48,10 @@ function isCalleeOfParent(node: AnyNode, parent: AnyNode): boolean {
 	);
 }
 
+function isMemberObjectOfParent(node: AnyNode, parent: AnyNode): boolean {
+	return parent.type === "JSMemberExpression" && parent.object === node;
+}
+
 const parens: Map<
 	AnyNode["type"],
 	(
@@ -58,7 +63,21 @@ const parens: Map<
 > = new Map();
 export default parens;
 
-parens.set("TSAsExpression", () => true);
+parens.set(
+	"TSAsExpression",
+	(node: TSAsExpression, parent: AnyNode, printStack: AnyNode[]): boolean => {
+		return (
+			isCalleeOfParent(node, parent) ||
+			isMemberObjectOfParent(node, parent) ||
+			isClassExtendsClause(node, parent) ||
+			isBinary(parent) ||
+			isUnaryLike(parent) ||
+			isFirstInStatement(printStack, {considerArrow: true}) ||
+			parent.type === "TSAsExpression" ||
+			parent.type === "JSAwaitExpression"
+		);
+	},
+);
 
 parens.set("TSAssignmentAsExpression", () => true);
 

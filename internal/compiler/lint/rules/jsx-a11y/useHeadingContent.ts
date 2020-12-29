@@ -25,7 +25,7 @@ export default createVisitor({
 
 		if (
 			HEADINGS.some((heading) => isJSXElement(node, heading)) &&
-			!hasHeadingContent((node as JSXElement))
+			!hasHeadingContent(node as JSXElement)
 		) {
 			path.context.addNodeDiagnostic(
 				node,

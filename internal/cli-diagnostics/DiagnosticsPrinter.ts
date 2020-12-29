@@ -815,11 +815,11 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (isError) {
 					if (this.flags.fieri) {
-						this.showBanner((errorBanner as RawBanner));
+						this.showBanner(errorBanner as RawBanner);
 					}
 				} else {
 					if (this.flags.fieri) {
-						this.showBanner((successBanner as RawBanner));
+						this.showBanner(successBanner as RawBanner);
 					}
 				}
 

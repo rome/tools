@@ -102,7 +102,7 @@ abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 	}
 
 	public set(path: FilePath, value: Value): this {
-		const uniq = (path.getUnique() as FilePath);
+		const uniq = path.getUnique() as FilePath;
 		const joined = uniq.join();
 		this.joinedToValue.set(joined, value);
 		this.joinedToPath.set(joined, uniq);

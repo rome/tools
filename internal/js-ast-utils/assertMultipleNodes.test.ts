@@ -18,7 +18,7 @@ test(
 test(
 	"returns an empty list if asserted with undefined",
 	(t) => {
-		t.looksLike(assertMultipleNodes(((undefined as unknown) as AnyNode)), []);
+		t.looksLike(assertMultipleNodes((undefined as unknown) as AnyNode), []);
 	},
 );
 

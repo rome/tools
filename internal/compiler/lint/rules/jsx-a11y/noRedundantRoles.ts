@@ -32,13 +32,13 @@ function createFixableDiagnostic(
 		// e.g. role="heading" aria-level="1"
 		ariaAttributesToRemove = mappedRole.requiredProps.reduce(
 			(nodes, prop) => {
-				const attr = getJSXAttribute(node, (prop as string));
+				const attr = getJSXAttribute(node, prop as string);
 				if (attr) {
 					nodes.push(attr);
 				}
 				return nodes;
 			},
-			([] as AnyNode[]),
+			[] as AnyNode[],
 		);
 	}
 	const titleSuggestion =
@@ -55,7 +55,7 @@ function createFixableDiagnostic(
 				if (mappedRole) {
 					return (
 						attr.type === "JSXAttribute" &&
-						!mappedRole.requiredProps.includes((attr.name.name as ARIAProperty))
+						!mappedRole.requiredProps.includes(attr.name.name as ARIAProperty)
 					);
 				}
 				return attr.name.name !== "role";

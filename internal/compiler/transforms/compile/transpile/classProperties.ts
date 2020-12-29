@@ -163,7 +163,7 @@ function transformClass(
 									visited.add(node);
 
 									return signals.replace(
-										([node, ...toExpressionStatements(constructorAssignments)] as AnyNode[]),
+										[node, ...toExpressionStatements(constructorAssignments)] as AnyNode[],
 									);
 								}
 

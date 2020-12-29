@@ -18,13 +18,13 @@ test(
 	(t) => {
 		t.throws(
 			() => {
-				assertSingleOrMultipleNodes(((Symbol("symbol") as unknown) as AnyNode));
+				assertSingleOrMultipleNodes((Symbol("symbol") as unknown) as AnyNode);
 			},
 			"No symbols expected here",
 		);
 		t.throws(
 			() => {
-				assertSingleOrMultipleNodes(((undefined as unknown) as AnyNode));
+				assertSingleOrMultipleNodes((undefined as unknown) as AnyNode);
 			},
 			"Expected node or node list but got null",
 		);

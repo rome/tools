@@ -80,7 +80,7 @@ export function ob1Coerce0(x: undefined | number): Number0 | undefined;
 export function ob1Coerce0(
 	x: undefined | number | AnyNumber,
 ): Number0 | undefined {
-	return (x as Number0);
+	return x as Number0;
 }
 
 export const ob1Number0 = ob1Coerce0(0);
@@ -93,7 +93,7 @@ export function ob1Coerce1(x: undefined | number): Number1 | undefined;
 export function ob1Coerce1(
 	x: undefined | number | AnyNumber,
 ): Number1 | undefined {
-	return (x as Number1);
+	return x as Number1;
 }
 
 export const ob1Number1 = ob1Coerce1(1);
@@ -102,12 +102,12 @@ export const ob1Number1Neg1 = ob1Coerce1(-1);
 // Add 1 to a 0-based offset, thus converting it to 1-based.
 export function ob1Coerce0To1(x: Number0): Number1 {
 	// @ts-ignore
-	return (x + 1 as Number1);
+	return x + 1 as Number1;
 }
 
 export function ob1Coerce1To0(x: Number1 | number): Number0 {
 	// @ts-ignore
-	return (x - 1 as Number0);
+	return x - 1 as Number0;
 }
 
 // Increment

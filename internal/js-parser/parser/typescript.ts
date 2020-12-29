@@ -1250,9 +1250,9 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 				next(parser);
 				return parser.finishNode(
 					start,
-					({
+					{
 						type,
-					} as AnyTSPrimary),
+					} as AnyTSPrimary,
 				);
 			}
 			return parseTSTypeReference(parser);

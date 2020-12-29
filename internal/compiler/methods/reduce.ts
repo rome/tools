@@ -329,7 +329,7 @@ function _reduceSignal(
 								}
 
 								// Mutate the original node - funky typing since Flow doesn't understand the mutation
-								node = ({...node, [key]: children} as AnyNode);
+								node = {...node, [key]: children} as AnyNode;
 
 								// Create a new node path
 								path = path.fork(node);
@@ -376,7 +376,7 @@ function _reduceSignal(
 						}
 
 						// Mutate the original object - funky typing since Flow doesn't understand the mutation
-						node = ({...node, [key]: newValue} as AnyNode);
+						node = {...node, [key]: newValue} as AnyNode;
 
 						// Create a new node path for it
 						path = path.fork(node);
