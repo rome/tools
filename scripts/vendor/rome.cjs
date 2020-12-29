@@ -14520,6 +14520,7 @@ function ___R$project$rome$$internal$js$ast$utils$isFunctionNode_ts$isFunctionNo
   // project-rome/@internal/js-ast-utils/isTypeNode.ts
 function ___R$project$rome$$internal$js$ast$utils$isTypeNode_ts$isTypeNode(node) {
 		if (
+			node.type.startsWith("Flow") ||
 			node.type.startsWith("TS") ||
 			node.type.endsWith("TypeAnnotation")
 		) {

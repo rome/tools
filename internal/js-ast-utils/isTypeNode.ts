@@ -8,10 +8,7 @@
 import {AnyNode} from "@internal/ast";
 
 export function isTypeNode(node: AnyNode): boolean {
-	if (
-		node.type.startsWith("TS") ||
-		node.type.endsWith("TypeAnnotation")
-	) {
+	if (node.type.startsWith("TS") || node.type.endsWith("TypeAnnotation")) {
 		return true;
 	} else if (node.type === "JSImportDeclaration") {
 		return node.importKind === "type" || node.importKind === "typeof";
