@@ -9,7 +9,6 @@ import {AnyNode} from "@internal/ast";
 
 export function isTypeNode(node: AnyNode): boolean {
 	if (
-		node.type.startsWith("Flow") ||
 		node.type.startsWith("TS") ||
 		node.type.endsWith("TypeAnnotation")
 	) {
