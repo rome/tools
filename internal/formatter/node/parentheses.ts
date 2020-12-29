@@ -35,10 +35,7 @@ import {
 } from "@internal/js-ast-utils";
 
 function isClassExtendsClause(node: AnyNode, parent: AnyNode): boolean {
-	return (
-		(parent.type === "JSClassDeclaration" || parent.type === "JSClassExpression") &&
-		parent.meta.superClass === node
-	);
+	return parent.type === "JSClassHead" && parent.superClass === node;
 }
 
 function isCalleeOfParent(node: AnyNode, parent: AnyNode): boolean {
