@@ -2,6 +2,7 @@ filename: "file.tsx"
 invalid: [
 	"const a = [<div />, <div />]"
 	"const a = [1, 2].map(x => <div>{x}</div>);"
+	"const a = foo?.map(x => <div>{x}</div>);"
 	"React.Children.map(children, x => <div>{x}</div>);"
 	"Children.map(children, x => <div>{x}</div>);"
 	"
