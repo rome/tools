@@ -5,7 +5,7 @@ import {createBuilder} from "../../utils";
 export interface HTMLAttribute extends NodeBaseWithComments {
 	readonly type: "HTMLAttribute";
 	readonly name: HTMLIdentifier;
-	readonly value: HTMLString;
+	readonly value?: HTMLString;
 }
 
 export const htmlAttribute = createBuilder<HTMLAttribute>(

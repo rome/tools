@@ -5,9 +5,12 @@ export default function HTMLAttribute(
 	builder: Builder,
 	node: HTMLAttribute,
 ): Token {
-	return concat([
-		builder.tokenize(node.name, node),
-		"=",
-		builder.tokenize(node.value, node),
-	]);
+	const tokens: Token[] = [builder.tokenize(node.name, node)];
+
+	if (node.value) {
+		tokens.push("=");
+		tokens.push(builder.tokenize(node.value, node));
+	}
+
+	return concat(tokens);
 }

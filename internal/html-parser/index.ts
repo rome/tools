@@ -247,19 +247,20 @@ function parseAttribute(parser: HTMLParser): HTMLAttribute | undefined {
 	if (token.type === "Identifier") {
 		const name = parseIdentifier(parser);
 		const valueToken = parser.getToken();
+		let value: HTMLString | undefined;
 		if (valueToken.type === "Equals") {
 			parser.nextToken();
-			const value = parseString(parser);
-			if (value && name) {
-				return parser.finishNode(
-					start,
-					{
-						type: "HTMLAttribute",
-						name,
-						value,
-					},
-				);
-			}
+			value = parseString(parser);
+		}
+		if (name) {
+			return parser.finishNode(
+				start,
+				{
+					type: "HTMLAttribute",
+					name,
+					value,
+				},
+			);
 		}
 		parser.unexpectedDiagnostic({
 			description: descriptions.HTML_PARSER.EXPECTED_ATTRIBUTE_NAME,

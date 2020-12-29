@@ -17,9 +17,7 @@ export default function HTMLElement(builder: Builder, node: HTMLElement): Token 
 
 	for (const attr of node.attributes) {
 		tokens.push(space);
-		tokens.push(builder.tokenize(attr.name, attr));
-		tokens.push("=");
-		tokens.push(builder.tokenize(attr.value, attr));
+		tokens.push(builder.tokenize(attr, node));
 	}
 
 	if (

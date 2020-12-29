@@ -24,6 +24,8 @@ title
 aria-atomic="true"
 ></a>
 
+<input checked>
+
 ```
 
 ### `Output`
@@ -31,5 +33,7 @@ aria-atomic="true"
 ```html
 <a href="input.html" title="title" aria-atomic="true">
 </a>
+
+<input checked />
 
 ```
