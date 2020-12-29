@@ -17,7 +17,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 **ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:9dc71c7d92b56ccb6ac521f1c5970d912c6358ca,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a3be390845e473d3c97448d7a52cba95688a83f8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid

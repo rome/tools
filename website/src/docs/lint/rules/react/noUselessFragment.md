@@ -17,7 +17,7 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b7b4661b877f7ff84db836d5a8d9cbe19dfa2182,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:fcd810a2609603a0cf8251c84b86feab4c527dfb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -36,11 +36,9 @@ disallow unnecessary fragments
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
-  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>(</strong></span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
-  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">{foo}</span>
-  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
-  <strong>  </strong><strong>5</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>)</strong></span>
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">{foo}</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">{foo}</span>
 
 </code></pre>{% endraw %}
@@ -61,11 +59,9 @@ disallow unnecessary fragments
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
-  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>(</strong></span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
-  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
-  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
-  <strong>  </strong><strong>5</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>)</strong></span>
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">foo</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
 
 </code></pre>{% endraw %}
@@ -86,10 +82,7 @@ disallow unnecessary fragments
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
-  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>(</strong></span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
-  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
-  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>)</strong></span>
+  <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;&lt;/&gt;</strong></span>
 
 </code></pre>{% endraw %}
 
@@ -166,12 +159,10 @@ disallow unnecessary fragments
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
 
-  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>(</strong></span>
-  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
-  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>
-  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>
-  <strong>  </strong><strong>5</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
-  <strong>  </strong><strong>6</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>)</strong></span>
+  <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;&gt;</strong></span>
+  <strong>  </strong><strong>2</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>
+  <strong>  </strong><strong>3</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong><span style="opacity: 0.8;">&rarr; </span></strong></span><span style="color: Tomato;">&lt;div</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">/&gt;</span>
+  <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;/&gt;</strong></span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;div</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>2</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;div</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
