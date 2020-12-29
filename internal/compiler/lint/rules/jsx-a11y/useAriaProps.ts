@@ -37,7 +37,7 @@ export default createVisitor({
 			}
 
 			const isInvalidAriaProperty = !ariaPropsArray.includes(
-				(node.name.name as ARIAProperty),
+				node.name.name as ARIAProperty,
 			);
 			if (fixed !== undefined && isInvalidAriaProperty) {
 				return path.addFixableDiagnostic(

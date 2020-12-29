@@ -147,7 +147,7 @@ export const lint = createDiagnosticsCategory({
 						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
 						return str;
 					},
-					([] as string[]),
+					[] as string[],
 				).join(", ")}`,
 			});
 		}
@@ -1129,7 +1129,7 @@ export const lint = createDiagnosticsCategory({
 				language,
 				diff: stringDiff(original, formatted),
 			},
-			({
+			{
 				type: "action",
 				command: "check",
 				shortcut: "f",
@@ -1139,8 +1139,8 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			} as DiagnosticAdviceAction),
-			({
+			} as DiagnosticAdviceAction,
+			{
 				type: "action",
 				hidden: true,
 				command: "check",
@@ -1151,7 +1151,7 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					format: true,
 				},
-			} as DiagnosticAdviceAction),
+			} as DiagnosticAdviceAction,
 		],
 	}),
 	TS_NO_EXPLICIT_ANY: {

@@ -28,7 +28,7 @@ export function parseReference(
 				{
 					type: "MarkdownReferenceInline",
 					value: "",
-					reference: (reference as MarkdownReference),
+					reference: reference as MarkdownReference,
 				},
 			);
 		}

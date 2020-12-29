@@ -264,7 +264,7 @@ export default class Parser<T> {
 					command: this.currentCommand,
 					definition: def,
 				});
-				defaultFlags[key] = (def.default as FlagValue);
+				defaultFlags[key] = def.default as FlagValue;
 
 				// Automatically convert number strings
 				if (def.type === "number" && typeof value !== "number") {
