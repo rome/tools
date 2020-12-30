@@ -6,8 +6,8 @@ import {langSupported} from "@internal/compiler/lint/utils/getLangSupported";
 
 // Will return the attribute value if invalid
 function isSupportedLang(attribute: HTMLAttribute): undefined | string {
-	if (!langSupported(attribute.value.value)) {
-		return attribute.value.value;
+	if (!langSupported(attribute.value?.value ?? "")) {
+		return attribute.value?.value;
 	}
 
 	return undefined;

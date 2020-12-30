@@ -16,8 +16,8 @@ HTMLRoot {
 	loc: Object {
 		filename: "attributes/input.html"
 		end: Object {
-			column: 6
-			line: 2
+			column: 15
+			line: 4
 		}
 		start: Object {
 			column: 0
@@ -92,6 +92,65 @@ HTMLRoot {
 						start: Object {
 							column: 3
 							line: 1
+						}
+					}
+				}
+			]
+		}
+		HTMLElement {
+			name: HTMLIdentifier {
+				name: "input"
+				loc: Object {
+					filename: "attributes/input.html"
+					end: Object {
+						column: 6
+						line: 4
+					}
+					start: Object {
+						column: 1
+						line: 4
+					}
+				}
+			}
+			children: Array []
+			selfClosing: true
+			loc: Object {
+				filename: "attributes/input.html"
+				end: Object {
+					column: 15
+					line: 4
+				}
+				start: Object {
+					column: 0
+					line: 4
+				}
+			}
+			attributes: Array [
+				HTMLAttribute {
+					name: HTMLIdentifier {
+						name: "checked"
+						loc: Object {
+							filename: "attributes/input.html"
+							end: Object {
+								column: 14
+								line: 4
+							}
+							start: Object {
+								column: 7
+								line: 4
+							}
+						}
+					}
+					value: undefined
+					loc: Object {
+						filename: "attributes/input.html"
+						end: Object {
+							column: 14
+							line: 4
+						}
+						start: Object {
+							column: 7
+							line: 4
 						}
 					}
 				}
