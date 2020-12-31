@@ -27,9 +27,9 @@ import {
 	AnyMarkups,
 	StaticMarkup,
 	concatMarkup,
+	joinMarkupLines,
 	markup,
 	readMarkup,
-	joinMarkupLines,
 } from "@internal/markup";
 import {
 	Diagnostic,
