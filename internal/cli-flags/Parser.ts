@@ -29,6 +29,7 @@ import {
 	concatMarkup,
 	markup,
 	readMarkup,
+	joinMarkupLines,
 } from "@internal/markup";
 import {
 	Diagnostic,
@@ -40,6 +41,7 @@ import {prettyFormatEager} from "@internal/pretty-format";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ExtendedMap} from "@internal/collections";
+import {markupToPlainText} from "@internal/cli-layout";
 
 export type Examples = {
 	description: StaticMarkup;
@@ -805,7 +807,7 @@ export default class Parser<T> {
 			// add command description if exists
 			let description = "";
 			if (meta.description) {
-				description += ` -d '${readMarkup(meta.description)}'`;
+				description += ` -d '${joinMarkupLines(markupToPlainText(meta.description))}'`;
 			}
 
 			script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}'${description}\n`;
