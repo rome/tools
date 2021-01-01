@@ -17,6 +17,7 @@ function createLintTransformOptions(
 		}),
 		options: {},
 		project: {
+			configHashes: [],
 			config: mutateConfig(createDefaultProjectConfig()),
 			directory: undefined,
 		},

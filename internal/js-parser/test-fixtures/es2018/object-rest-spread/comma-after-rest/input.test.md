@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2018/object-rest-spread/comma-after-rest/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

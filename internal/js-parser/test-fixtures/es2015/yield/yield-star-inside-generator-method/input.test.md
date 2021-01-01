@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/yield/yield-star-inside-generator-method/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

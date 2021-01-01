@@ -12,6 +12,7 @@ import {
 import {
 	FILE_CODES,
 	VALUE_CODES,
+	VERSION,
 	arrayBufferViewCodeToInstance,
 	errorCodeToInstance,
 	filePathFromCode,
@@ -22,7 +23,7 @@ import {
 	validateErrorCode,
 	validateFileCode,
 	validateValueCode,
-} from "./codes";
+} from "./constants";
 import {AnyFilePath, AnyFilePathSet} from "@internal/path";
 import {
 	ErrorFrames,
@@ -134,18 +135,56 @@ export default class RSERBufferParser {
 		}
 	}
 
-	public decodeHeader(): false | number {
-		this.expectCode(0);
-		this.expectCode(1);
+	public getUnreadBuffer(): Uint8Array {
+		return this.bytes.slice(this.readOffset);
+	}
 
+	public maybeDecodeStreamHeader(): boolean {
+		const prevReadOffset = this.readOffset;
+
+		if (this.canRead(1)) {
+			this.expectCode(VALUE_CODES.STREAM_HEADER);
+		} else {
+			this.readOffset = prevReadOffset;
+			return false;
+		}
+
+		const version = this.maybeDecodeNumber();
+		if (version === undefined) {
+			this.readOffset = prevReadOffset;
+			return false;
+		}
+
+		if (version !== VERSION) {
+			throw new Error("Version mismatch");
+		}
+
+		return true;
+	}
+
+	public maybeDecodeMessageHeader(): false | number {
+		if (this.canRead(1)) {
+			this.expectCode(VALUE_CODES.MESSAGE_HEADER);
+		} else {
+			return false;
+		}
+
+		const num = this.maybeDecodeNumber();
+		if (num !== undefined) {
+			return num;
+		}
+
+		return false;
+	}
+
+	private maybeDecodeNumber(): undefined | number {
 		if (this.canRead(1)) {
 			const size = this.getDecodeIntSize();
 			if (this.canRead(1 + size)) {
 				return this.decodeNumber();
 			}
 		}
-
-		return false;
+		return undefined;
 	}
 
 	public decodeDeclareReference(): RSERValueObject {

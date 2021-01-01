@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

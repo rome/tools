@@ -35,14 +35,14 @@ export default createLocalCommand({
 
 		const {stream} = req.client.derivedReporterStreams.handle;
 
-		bridge.lspFromServerBuffer.subscribe((chunk) => {
+		bridge.events.lspFromServerBuffer.subscribe((chunk) => {
 			stream.write(chunk, false);
 		});
 
 		stdin.on(
 			"data",
 			(chunk) => {
-				bridge.lspFromClientBuffer.call(chunk.toString());
+				bridge.events.lspFromClientBuffer.call(chunk.toString());
 			},
 		);
 

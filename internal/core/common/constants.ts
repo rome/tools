@@ -17,7 +17,7 @@ import os = require("os");
 import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 
 // Node flags to pass to all forked processes
-export const CHILD_ARGS = ["--max-old-space-size=8192", "--trace-warnings"];
+export const CHILD_ARGS = ["--trace-warnings", "--inspect-publish-uid=http"];
 
 export function getBinPath(): AbsoluteFilePath {
 	return createAbsoluteFilePath(__filename);

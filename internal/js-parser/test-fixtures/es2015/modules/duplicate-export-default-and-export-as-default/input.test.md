@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 23
@@ -45,12 +46,13 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Only one default export allowed per module."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Only one default export allowed per module."}
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
+						text: RAW_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {
@@ -227,7 +229,7 @@ JSRoot {
 
 ```
 
- es2015/modules/duplicate-export-default-and-export-as-default/input.js:2:9 parse/js ━━━━━━━━━━━━━━━
+ es2015/modules/duplicate-export-default-and-export-as-default/input.js:2:9 parse(js) ━━━━━━━━━━━━━━
 
   ✖ Only one default export allowed per module.
 

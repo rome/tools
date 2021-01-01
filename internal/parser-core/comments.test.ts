@@ -32,7 +32,8 @@ test(
 					// Hello, world!
 
 					//   Another hello
-					42`,
+					42
+				`,
 			),
 		);
 
@@ -43,7 +44,8 @@ test(
 						/**
 						 * comments in empty block
 						 */
-					}`,
+					}
+				`,
 			),
 		);
 	},

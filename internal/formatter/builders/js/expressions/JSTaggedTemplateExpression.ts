@@ -6,7 +6,6 @@
  */
 
 import {Builder, Token, concat} from "@internal/formatter";
-
 import {JSTaggedTemplateExpression} from "@internal/ast";
 
 export default function JSTaggedTemplateExpression(

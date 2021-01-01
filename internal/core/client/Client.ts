@@ -21,11 +21,10 @@ import {
 } from "@internal/core";
 import {forkProcess} from "../common/utils/fork";
 import {
+	BridgeClient,
 	BridgeError,
 	Event,
 	EventSubscription,
-	createBridgeFromLocal,
-	createBridgeFromSocket,
 	createEmptySubscription,
 	createSubscriptionHelper,
 } from "@internal/events";
@@ -86,13 +85,13 @@ type ProfileCallback = (profile: TraceEvent[]) => Promise<void>;
 type BridgeStatus = BridgeStatusDedicated | BridgeStatusLocal;
 
 type BridgeStatusDedicated = {
-	bridge: ServerBridge;
+	bridge: BridgeClient<typeof ServerBridge>;
 	dedicated: true;
 	socket: net.Socket;
 };
 
 type BridgeStatusLocal = {
-	bridge: ServerBridge;
+	bridge: BridgeClient<typeof ServerBridge>;
 	server: Server;
 	dedicated: false;
 };
@@ -208,7 +207,7 @@ export default class Client {
 
 		// Start server and start profiling
 		const bridge = await this.findOrStartServer();
-		await bridge.profilingStart.call({
+		await bridge.events.profilingStart.call({
 			samplingInterval,
 		});
 
@@ -263,7 +262,7 @@ export default class Client {
 			fetchers.push([
 				cliProfiler === undefined ? "Server/CLI" : "Server",
 				async () => {
-					return await bridge.profilingStop.call(
+					return await bridge.events.profilingStop.call(
 						undefined,
 						{
 							priority: true,
@@ -274,12 +273,12 @@ export default class Client {
 
 			// Workers
 			if (includeWorkers) {
-				const workerIds = await bridge.profilingGetWorkers.call();
+				const workerIds = await bridge.events.profilingGetWorkers.call();
 				for (const id of workerIds) {
 					fetchers.push([
 						`Worker ${id}`,
 						async () => {
-							return await bridge.profilingStopWorker.call(
+							return await bridge.events.profilingStopWorker.call(
 								id,
 								{
 									priority: true,
@@ -321,10 +320,10 @@ export default class Client {
 	): Promise<EventSubscription> {
 		return this.onBridge(async ({bridge}) => {
 			if (includeWorkerLogs) {
-				await bridge.enableWorkerLogs.call();
+				await bridge.events.enableWorkerLogs.call();
 			}
 
-			return bridge.log.subscribe(({origin, chunk}) => {
+			return bridge.events.log.subscribe(({origin, chunk}) => {
 				if (origin === "worker" && !includeWorkerLogs) {
 					// We allow multiple calls to bridge.enableWorkerLogs
 					// Filter the event if necessary if it wasn't requested by this log subscription
@@ -452,7 +451,7 @@ export default class Client {
 
 		// Capture terminal output
 		let output = "";
-		const writeEvent = bridge.write.subscribe(([chunk]) => {
+		const writeEvent = bridge.events.write.subscribe(([chunk]) => {
 			output += chunk;
 		});
 
@@ -524,7 +523,7 @@ export default class Client {
 			cancel: async () => {
 				const status = this.getBridgeStatus();
 				if (status !== undefined) {
-					await status.bridge.cancelQuery.call(cancelToken);
+					await status.bridge.events.cancelQuery.call(cancelToken);
 				}
 			},
 		};
@@ -539,7 +538,7 @@ export default class Client {
 		const status = this.bridgeStatus;
 		if (status?.bridge.alive) {
 			try {
-				await status.bridge.endServer.call();
+				await status.bridge.events.endServer.callOptional();
 			} catch (err) {
 				// Swallow BridgeErrors since we expect one to be emitted as the endServer call will be an unanswered request
 				// when the server ends all client sockets
@@ -579,18 +578,18 @@ export default class Client {
 
 		const {bridge} = status;
 
-		bridge.write.subscribe(([chunk, error]) => {
+		bridge.events.write.subscribe(([chunk, error]) => {
 			const isError = error && !terminalFeatures.redirectError;
 			handle.stream.write(chunk, isError);
 		});
 
 		// Listen for resize column events if stdout is a TTY
 		featuresUpdated.subscribe((features) => {
-			bridge.updateFeatures.call(features);
+			bridge.events.updateFeatures.call(features);
 		});
 
 		await Promise.all([
-			bridge.getClientInfo.wait({
+			bridge.events.getClientInfo.wait({
 				version: VERSION,
 				outputFormat: format,
 				outputSupport: features,
@@ -601,13 +600,13 @@ export default class Client {
 				flags: this.flags,
 			}),
 			bridge.handshake(),
-			bridge.serverReady.wait(),
+			bridge.events.serverReady.wait(),
 		]);
 
 		await this.bridgeAttachedEvent.callOptional(status);
 	}
 
-	public async findOrStartServer(): Promise<ServerBridge> {
+	public async findOrStartServer(): Promise<BridgeClient<typeof ServerBridge>> {
 		// First check if we already have a bridge connection
 		const connected = this.getBridgeStatus();
 		if (connected !== undefined) {
@@ -627,7 +626,7 @@ export default class Client {
 	public async startInternalServer(
 		opts?: Partial<ServerOptions>,
 	): Promise<{
-		bridge: ServerBridge;
+		bridge: BridgeClient<typeof ServerBridge>;
 		server: Server;
 		serverClient: ServerClient;
 	}> {
@@ -640,11 +639,15 @@ export default class Client {
 		});
 		await server.init();
 
-		const bridge = createBridgeFromLocal(ServerBridge, {});
-		const status: BridgeStatusLocal = {bridge, server, dedicated: false};
+		const bridges = ServerBridge.createFromLocal();
+		const status: BridgeStatusLocal = {
+			bridge: bridges.client,
+			server,
+			dedicated: false,
+		};
 
 		const [serverClient] = await Promise.all([
-			server.attachToBridge(bridge),
+			server.attachToBridge(bridges.server),
 			this.attachBridge(status),
 		]);
 
@@ -652,10 +655,10 @@ export default class Client {
 			await server.end();
 		});
 
-		return {serverClient, bridge, server};
+		return {serverClient, bridge: bridges.client, server};
 	}
 
-	public async forceStartDaemon(): Promise<ServerBridge> {
+	public async forceStartDaemon(): Promise<BridgeClient<typeof ServerBridge>> {
 		const daemon = await this.startDaemon();
 		if (daemon === undefined) {
 			this.reporter.error(markup`Failed to start daemon`);
@@ -665,7 +668,9 @@ export default class Client {
 		}
 	}
 
-	public async startDaemon(): Promise<undefined | ServerBridge> {
+	public async startDaemon(): Promise<
+		undefined | BridgeClient<typeof ServerBridge>
+	> {
 		const {reporter} = this;
 
 		if (this.bridgeStatus !== undefined) {
@@ -677,10 +682,9 @@ export default class Client {
 		let exited = false;
 		let proc: undefined | child.ChildProcess;
 
-		const newDaemon: undefined | ServerBridge = await new Promise((
-			resolve,
-			reject,
-		) => {
+		const newDaemon = await new Promise<
+			void | BridgeClient<typeof ServerBridge>
+		>((resolve, reject) => {
 			const timeout = setTimeout(
 				() => {
 					reporter.error(markup`Daemon connection timed out`);
@@ -753,15 +757,14 @@ export default class Client {
 		return undefined;
 	}
 
-	public async tryConnectToExistingDaemon(): Promise<undefined | ServerBridge> {
+	public async tryConnectToExistingDaemon(): Promise<
+		undefined | BridgeClient<typeof ServerBridge>
+	> {
 		if (this.bridgeStatus !== undefined) {
 			return this.bridgeStatus.bridge;
 		}
 
-		const promise: Promise<undefined | net.Socket> = new Promise((
-			resolve,
-			reject,
-		) => {
+		const promise: Promise<void | net.Socket> = new Promise((resolve, reject) => {
 			const socket = net.createConnection(
 				{
 					path: SERVER_SOCKET_PATH.join(),
@@ -792,13 +795,7 @@ export default class Client {
 			return undefined;
 		}
 
-		const bridge = createBridgeFromSocket(
-			ServerBridge,
-			socket,
-			{
-				type: "server",
-			},
-		);
+		const bridge = ServerBridge.Client.createFromSocket(socket);
 		await this.attachBridge({socket, bridge, dedicated: true});
 		this.reporter.success(markup`Connected to daemon`);
 		return bridge;

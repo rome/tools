@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/invalid-syntax/migrated_0255/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -74,10 +74,11 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0255/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 0
@@ -89,23 +90,20 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unclosed "}
-						"block"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unclosed "}
+					"block"
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {
-							parts: Array [
-								RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-								"}"
-								RAW_MARKUP {value: "</emphasis> here"}
-							]
-						}
+						text: Array [
+							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
+							"}"
+							RAW_MARKUP {value: "</emphasis> here"}
+						]
 					}
 					frame {
 						location: Object {
@@ -131,7 +129,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0255/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0255/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed block
 

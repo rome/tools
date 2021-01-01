@@ -72,7 +72,7 @@ export default class LSPServer {
 		});
 
 		transport.errorEvent.subscribe((err) => {
-			request.server.onFatalError(err);
+			request.server.fatalErrorHandler.handle(err);
 		});
 	}
 
@@ -142,7 +142,9 @@ export default class LSPServer {
 		// TODO maybe unset all buffers?
 		const req = this.lintSessions.get(path);
 		if (req !== undefined) {
-			this.server.wrapFatalPromise(req.teardown(EMPTY_SUCCESS_RESPONSE));
+			this.server.fatalErrorHandler.wrapPromise(
+				req.teardown(EMPTY_SUCCESS_RESPONSE),
+			);
 			this.lintSessions.delete(path);
 		}
 	}
@@ -170,7 +172,7 @@ export default class LSPServer {
 		await req.init();
 
 		// This is not awaited so it doesn't delay the initialize response
-		this.server.wrapFatalPromise(this.watchProject(path, req));
+		this.server.fatalErrorHandler.wrapPromise(this.watchProject(path, req));
 	}
 
 	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {

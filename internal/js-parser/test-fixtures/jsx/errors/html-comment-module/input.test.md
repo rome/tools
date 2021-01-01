@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/errors/html-comment-module/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	trailingComments: Array []
 	innerComments: Array ["0"]

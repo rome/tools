@@ -115,7 +115,7 @@ const EMPTY_POS: Position = {
 };
 
 export const createJSParser = createParser<JSParserTypes>({
-	diagnosticCategory: "parse/js",
+	diagnosticLanguage: "js",
 	getInitialState(): State {
 		return {
 			scopes: {},

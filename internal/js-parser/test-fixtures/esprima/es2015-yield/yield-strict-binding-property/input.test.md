@@ -13,8 +13,8 @@ JSRoot {
 	diagnostics: Array []
 	filename: "esprima/es2015-yield/yield-strict-binding-property/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

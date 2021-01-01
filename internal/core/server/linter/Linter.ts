@@ -31,7 +31,6 @@ import {
 	areAnalyzeDependencyResultsEqual,
 } from "@internal/compiler";
 import {markup} from "@internal/markup";
-import WorkerQueue from "../WorkerQueue";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {WatchFilesEvent} from "../fs/glob";
@@ -181,73 +180,70 @@ class LintRunner {
 		const shouldSave = this.linter.shouldSave();
 		const applySafeFixes = !this.linter.shouldOnlyFormat();
 
-		const queue: WorkerQueue<void> = new WorkerQueue(
-			server,
-			{
-				callback: async ({path}) => {
-					const filename = path.join();
-					const progressId = progress.pushText(
-						markup`<filelink target="${filename}" />`,
-					);
+		const queue = server.createWorkerQueue({
+			callback: async ({path}) => {
+				const filename = path.join();
+				const progressId = progress.pushText(
+					markup`<filelink target="${filename}" />`,
+				);
 
-					let compilerOptions = lintCompilerOptionsPerFile[filename];
+				let compilerOptions = lintCompilerOptionsPerFile[filename];
 
-					// If we have decisions then make sure it's declared on all files
-					if (hasDecisions) {
-						if (compilerOptions === undefined) {
-							compilerOptions = {
-								hasDecisions: true,
-								globalDecisions,
-								decisionsByPosition: {},
-							};
-						} else {
-							compilerOptions = {
-								...compilerOptions,
-								hasDecisions: true,
-								globalDecisions: [
-									...(compilerOptions.globalDecisions || []),
-									...globalDecisions,
-								],
-							};
-						}
+				// If we have decisions then make sure it's declared on all files
+				if (hasDecisions) {
+					if (compilerOptions === undefined) {
+						compilerOptions = {
+							hasDecisions: true,
+							globalDecisions,
+							decisionsByPosition: {},
+						};
+					} else {
+						compilerOptions = {
+							...compilerOptions,
+							hasDecisions: true,
+							globalDecisions: [
+								...(compilerOptions.globalDecisions || []),
+								...globalDecisions,
+							],
+						};
 					}
+				}
 
-					const res = await FileNotFound.allowMissing(
-						path,
-						() =>
-							this.request.requestWorkerLint(
-								path,
-								{
-									save: shouldSave,
-									applySafeFixes,
-									compilerOptions,
-									suppressionExplanation: this.options.suppressionExplanation,
-								},
-							)
-						,
-					);
+				const res = await FileNotFound.allowMissing(
+					path,
+					() =>
+						this.request.requestWorkerLint(
+							path,
+							{
+								save: shouldSave,
+								applySafeFixes,
+								compilerOptions,
+								suppressionExplanation: this.options.suppressionExplanation,
+							},
+						)
+					,
+				);
 
-					if (res.missing) {
-						return;
-					}
+				if (res.missing) {
+					return;
+				}
 
-					const {
-						diagnostics,
-						suppressions,
-						save,
-					} = res.value;
-					processor.addSuppressions(suppressions);
-					processor.addDiagnostics(diagnostics);
-					this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
-					if (save !== undefined) {
-						this.request.queueSaveFile(path, save);
-					}
+				const {
+					diagnostics,
+					suppressions,
+					save,
+				} = res.value;
+				processor.addSuppressions(suppressions);
+				processor.addDiagnostics(diagnostics);
+				this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
+				if (save !== undefined) {
+					this.request.queueSaveFile(path, save);
+				}
 
-					progress.popText(progressId);
-					progress.tick();
-				},
+				progress.popText(progressId);
+				progress.tick();
 			},
-		);
+		});
 
 		const progress = this.events.createProgress({title: markup`Linting`});
 		progress.setTotal(paths.size);
@@ -313,7 +309,10 @@ class LintRunner {
 			const oldNode = oldEvictedNodes.get(path);
 			const sameShape =
 				oldNode !== undefined &&
-				areAnalyzeDependencyResultsEqual(oldNode.analyze, newNode.analyze);
+				areAnalyzeDependencyResultsEqual(
+					oldNode.analyze.value,
+					newNode.analyze.value,
+				);
 
 			for (const depNode of newNode.getDependents()) {
 				// If the old node has the same shape as the new one, only revalidate the dependent if it had dependency errors

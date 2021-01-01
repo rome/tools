@@ -58,6 +58,7 @@ import {
 import prettyFormat from "@internal/pretty-format";
 import {TestWorker} from "@internal/core";
 import {ExtendedMap} from "@internal/collections";
+import {BridgeClient} from "@internal/events";
 
 export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// TODO we should actually get the frames before module init and do it that way
@@ -121,7 +122,7 @@ export type FocusedTest = {
 export default class TestWorkerFile {
 	constructor(
 		worker: TestWorker,
-		bridge: TestWorkerBridge,
+		bridge: BridgeClient<typeof TestWorkerBridge>,
 		opts: TestWorkerPrepareTestOptions,
 	) {
 		this.opts = opts;
@@ -156,7 +157,7 @@ export default class TestWorkerFile {
 	private worker: TestWorker;
 	private foundTests: ExtendedMap<string, FoundTest>;
 	private focusedTests: FocusedTest[];
-	private bridge: TestWorkerBridge;
+	private bridge: BridgeClient<typeof TestWorkerBridge>;
 	private snapshotManager: SnapshotManager;
 	private opts: TestWorkerPrepareTestOptions;
 	private locked: boolean;
@@ -404,7 +405,7 @@ export default class TestWorkerFile {
 		};
 
 		this.hasDiagnostics = true;
-		await this.bridge.testDiagnostic.call({
+		await this.bridge.events.testDiagnostic.call({
 			diagnostic: diag,
 			origin: undefined,
 			testPath: this.path,
@@ -608,7 +609,7 @@ export default class TestWorkerFile {
 			});
 		} finally {
 			const teardownSuccess = await this.teardownTest(test, api);
-			await this.bridge.testFinish.call({
+			await this.bridge.events.testFinish.call({
 				success: testSuccess && teardownSuccess,
 				ref: this.createTestRef(test),
 			});
@@ -620,7 +621,7 @@ export default class TestWorkerFile {
 			const test = this.foundTests.assert(testName);
 			const {options} = test;
 
-			this.bridge.testStart.send({
+			this.bridge.events.testStart.send({
 				ref: this.createTestRef(test),
 				timeout: options.timeout,
 			});

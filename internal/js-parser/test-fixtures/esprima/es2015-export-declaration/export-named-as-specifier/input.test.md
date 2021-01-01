@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

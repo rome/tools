@@ -5,7 +5,8 @@ import {
 	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
-	FileHandle,
+	FSHandle,
+	FSStats,
 	createDirectory,
 	exists,
 	lstat,
@@ -35,7 +36,7 @@ export type RecoverySaveFile =
 		}
 	| {
 			type: "WRITE";
-			mtime: undefined | number;
+			mtimeNs: undefined | bigint;
 			content: string;
 		};
 
@@ -67,14 +68,14 @@ type WriteFilesEvents = {
 	onFileDone: (path: AbsoluteFilePath) => void;
 	beforeFileWrite: (
 		path: AbsoluteFilePath,
-		fh: FileHandle,
+		fh: FSHandle,
 	) => void | Promise<void>;
 	expectedExists: (path: AbsoluteFilePath) => void;
 	unexpectedExists: (path: AbsoluteFilePath) => void;
 	unexpectedModified: (
 		path: AbsoluteFilePath,
-		expectedMtime: number,
-		actualMtime: number,
+		expectedMtime: bigint,
+		actualMtime: bigint,
 	) => void;
 };
 
@@ -353,9 +354,9 @@ export default class RecoveryStore {
 			}
 
 			// Calculate mtime we expect
-			let mtime: undefined | number;
+			let mtimeNs: undefined | bigint;
 			if (await exists(originalPath)) {
-				mtime = (await lstat(originalPath)).mtimeMs;
+				mtimeNs = (await lstat(originalPath)).mtimeNs;
 			}
 
 			const content = await readFileText(artifactPath);
@@ -364,7 +365,7 @@ export default class RecoveryStore {
 				originalPath,
 				{
 					type: "WRITE",
-					mtime,
+					mtimeNs,
 					content,
 				},
 			);
@@ -402,7 +403,7 @@ export default class RecoveryStore {
 		registerFile: (paths: AbsoluteFilePath[]) => void,
 	): Promise<boolean> {
 		const {server} = this;
-		let fd: undefined | FileHandle;
+		let fd: undefined | FSHandle;
 		let success = false;
 
 		try {
@@ -410,9 +411,9 @@ export default class RecoveryStore {
 				await writeFile(path, op.content);
 				success = true;
 			} else if (op.type === "WRITE") {
-				const {mtime, content} = op;
+				const {mtimeNs, content} = op;
 
-				if (mtime === undefined) {
+				if (mtimeNs === undefined) {
 					const {content} = op;
 					try {
 						// `mtime === undefined` means we expect the file to not exist
@@ -434,15 +435,16 @@ export default class RecoveryStore {
 						fd = await openFile(path, "r+");
 
 						// First verify the mtime
-						const stats = await fd.stat();
-						if (stats.mtimeMs === mtime) {
+						// @ts-ignore: This is accurate
+						const stats: FSStats = await fd.stat({bigint: true});
+						if (stats.mtimeNs === mtimeNs) {
 							await events.beforeFileWrite(path, fd);
 							await fd.truncate(0);
 							await fd.write(content, 0);
 							success = true;
 						} else {
 							registerFile([path]);
-							events.unexpectedModified(path, mtime, stats.mtimeMs);
+							events.unexpectedModified(path, mtimeNs, stats.mtimeNs);
 						}
 					} catch (err) {
 						if (err.code === "ENOENT") {
@@ -464,7 +466,7 @@ export default class RecoveryStore {
 			// We want writeFiles to only return once all the refreshFileEvent handlers have ran
 			// We call maybeRefreshPath to do a hard check on the filesystem and update our in memory fs
 			// This mitigates slow watch events
-			server.wrapFatalPromise(
+			server.fatalErrorHandler.wrapPromise(
 				server.memoryFs.refreshPath(path, {}, "Server.writeFiles"),
 			);
 		}
@@ -509,7 +511,7 @@ export default class RecoveryStore {
 		};
 
 		// refreshFileEvent doesn't resolve
-		const waitRefresh = new Promise((resolve) => {
+		const waitRefresh: Promise<void> = new Promise((resolve) => {
 			registerFile = (refreshedPaths) => {
 				for (const path of refreshedPaths) {
 					if (!paths.has(path)) {

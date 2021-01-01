@@ -11,15 +11,12 @@ import {
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
-import {DiagnosticCategory} from "@internal/diagnostics";
 
 function createJSONParserMethods(
 	type: JSONConfigType,
-	parseCategory: DiagnosticCategory,
 ): Omit<PartialConfigHandler, "extensions" | "language"> {
 	return {
 		type,
-		consumeCategory: parseCategory,
 		jsonSuperset: true,
 
 		stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
@@ -27,11 +24,11 @@ function createJSONParserMethods(
 		},
 
 		parseExtra(opts) {
-			return parseJSONExtra(opts, type, parseCategory);
+			return parseJSONExtra(opts, type);
 		},
 
 		tokenize(opts: ConfigParserOptions): TokenValues<Tokens>[] {
-			return createJSONParser(opts, {type}, parseCategory).tokenizeAll();
+			return createJSONParser(opts, {type}, {diagnosticLanguage: type}).getAllTokens();
 		},
 	};
 }
@@ -39,7 +36,7 @@ function createJSONParserMethods(
 export const json: PartialConfigHandler = {
 	extensions: ["json"],
 	language: "json",
-	...createJSONParserMethods("json", "parse/json"),
+	...createJSONParserMethods("json"),
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
 		const val = opts.consumer.asUnknown();
@@ -55,17 +52,17 @@ export const json: PartialConfigHandler = {
 export const json5: PartialConfigHandler = {
 	extensions: ["json5"],
 	language: "json5",
-	...createJSONParserMethods("json", "parse/json"),
+	...createJSONParserMethods("json"),
 };
 
 export const rjson: PartialConfigHandler = {
-	...createJSONParserMethods("rjson", "parse/json"),
+	...createJSONParserMethods("rjson"),
 	extensions: ["rjson"],
 	language: "rjson",
 };
 
 export const yaml: PartialConfigHandler = {
-	...createJSONParserMethods("yaml", "parse/yaml"),
+	...createJSONParserMethods("yaml"),
 	extensions: ["yaml", "yml"],
 	language: "yaml",
 

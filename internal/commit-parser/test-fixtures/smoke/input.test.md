@@ -13,7 +13,7 @@ CommitRoot {
 	custom: true
 	diagnostics: Array []
 	filename: "smoke/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "everything included!"
 	scope: "some scope"
 	loc: Object {

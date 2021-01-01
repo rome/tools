@@ -8,6 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdviceItem,
+	DiagnosticIntegrity,
 	DiagnosticLocation,
 	DiagnosticTags,
 } from "./types";
@@ -27,6 +28,7 @@ type NormalizeOptionsRequiredPosition = RequiredProps<
 >;
 
 export type DiagnosticsNormalizerOptions = {
+	getIntegrity?: (filename: string) => undefined | DiagnosticIntegrity;
 	tags?: DiagnosticTags;
 	label?: StaticMarkup;
 };
@@ -128,14 +130,19 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		if (sourceMaps === undefined) {
+		const {getIntegrity} = this.options;
+		if (sourceMaps === undefined && getIntegrity === undefined) {
 			return location;
 		}
 
-		let {marker, filename, start, end} = location;
+		let {marker, filename, start, end, integrity} = location;
 		let origFilename = filename;
 
-		if (filename !== undefined && origFilename !== undefined) {
+		if (
+			filename !== undefined &&
+			origFilename !== undefined &&
+			sourceMaps !== undefined
+		) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
 					origFilename,
@@ -198,8 +205,17 @@ export default class DiagnosticsNormalizer {
 			}
 		}
 
+		if (
+			integrity === undefined &&
+			getIntegrity !== undefined &&
+			normalizedFilename !== undefined
+		) {
+			integrity = getIntegrity(normalizedFilename);
+		}
+
 		return {
 			...location,
+			integrity,
 			sourceText,
 			filename: normalizedFilename,
 			marker: this.maybeNormalizeMarkup(marker),

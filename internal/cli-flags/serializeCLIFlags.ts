@@ -13,6 +13,11 @@ import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {FlagValue} from "./Parser";
 import {AbsoluteFilePath} from "@internal/path";
 
+export type SerializeCLILocation = RequiredProps<
+	DiagnosticLocation,
+	"start" | "end" | "sourceText"
+>;
+
 export type SerializeCLIOptions = {
 	programName: string;
 	args: string[];
@@ -31,6 +36,7 @@ type SerializeCLITargetObjects =
 			type: "flag";
 			key: string;
 			target?: ConsumeSourceLocationRequestTarget;
+			index?: number;
 		}
 	| {
 			type: "arg";
@@ -44,10 +50,10 @@ type SerializeCLITargetObjects =
 
 export type SerializeCLITarget =
 	| SerializeCLITargetObjects
-	| "none"
 	| "command"
 	| "program"
-	| "cwd";
+	| "cwd"
+	| "none";
 
 function isObjectTarget(
 	target: SerializeCLITarget,
@@ -67,6 +73,18 @@ function hasConfusingArgs(args: string[]): boolean {
 }
 
 export function serializeCLIFlags(
+	opts: SerializeCLIOptions,
+	target: "none",
+): RequiredProps<DiagnosticLocation, "sourceText">;
+export function serializeCLIFlags(
+	opts: SerializeCLIOptions,
+	target: Exclude<SerializeCLITarget, "none">,
+): SerializeCLILocation;
+export function serializeCLIFlags(
+	opts: SerializeCLIOptions,
+	target: SerializeCLITarget,
+): DiagnosticLocation;
+export function serializeCLIFlags(
 	{
 		args,
 		flags,
@@ -79,7 +97,7 @@ export function serializeCLIFlags(
 		incorrectCaseFlags = new Set(),
 	}: SerializeCLIOptions,
 	target: SerializeCLITarget,
-): RequiredProps<DiagnosticLocation, "sourceText"> {
+): DiagnosticLocation {
 	let startColumn: Number0 = ob1Number0Neg1;
 	let endColumn: Number0 = ob1Number0Neg1;
 	let code = "";
@@ -178,14 +196,29 @@ export function serializeCLIFlags(
 
 		const values = Array.isArray(val) ? val : [val];
 
-		const isTarget =
-			isObjectTarget(target) && target.type === "flag" && key === target.key;
+		let isTarget = false;
+		let isEntireTarget = false;
+		let targetIndex;
+		if (isObjectTarget(target) && target.type === "flag") {
+			isTarget = key === target.key;
+			if (isTarget) {
+				isEntireTarget = target.index === undefined;
+				targetIndex = target.index;
+			}
+		}
 
-		if (isTarget) {
+		if (isEntireTarget) {
 			setStartColumn();
 		}
 
-		for (const val of values) {
+		for (let i = 0; i < values.length; i++) {
+			const val = values[i];
+
+			let isIndexTarget = targetIndex === i;
+			if (isIndexTarget) {
+				setStartColumn();
+			}
+
 			const flagPrefix = shorthandFlags.has(key) ? "-" : "--";
 			const kebabKey = incorrectCaseFlags.has(key) ? key : toKebabCase(key);
 			if (val === false) {
@@ -209,9 +242,13 @@ export function serializeCLIFlags(
 				// Number or string
 				code += `${String(val)} `;
 			}
+
+			if (isIndexTarget) {
+				setEndColumn();
+			}
 		}
 
-		if (isTarget) {
+		if (isEntireTarget) {
 			setEndColumn();
 		}
 	}
@@ -244,7 +281,7 @@ export function serializeCLIFlags(
 
 	return {
 		language: "shell",
-		mtime: undefined,
+		integrity: undefined,
 		sourceText: code.trimRight(),
 		filename: "argv",
 		start,

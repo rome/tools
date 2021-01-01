@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

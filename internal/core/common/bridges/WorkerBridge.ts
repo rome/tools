@@ -17,33 +17,32 @@ import {
 import {Profile} from "@internal/v8";
 import {ProfilingStartData} from "./ServerBridge";
 import {
+	DiagnosticIntegrity,
 	DiagnosticSuppressions,
 	Diagnostics,
-	DiagnosticsError,
 } from "@internal/diagnostics";
-import {Bridge, BridgeErrorResponseDetails} from "@internal/events";
+import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
-import {FileNotFound} from "@internal/fs/FileNotFound";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {ProjectConfig} from "@internal/project";
+import {WorkerBuffer} from "@internal/core/worker/Worker";
+import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 
 export type WorkerProjects = {
 	id: number;
 	directory: AbsoluteFilePath;
+	configHashes: string[];
 	config: undefined | ProjectConfig;
 }[];
 
-export type WorkerCompileResult = CompileResult & {
-	cached: boolean;
-};
-
 export type WorkerPartialManifest = {
 	path: AbsoluteFilePath;
+	hash: string;
 	type: Manifest["type"];
 };
 
@@ -59,10 +58,15 @@ export type WorkerCompilerOptions = {
 
 export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, "analyze">;
 
-//
-export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
+export type CachedWrapper<T> = {
+	value: T;
+	integrity: undefined | DiagnosticIntegrity;
 	cached: boolean;
 };
+
+export type WorkerAnalyzeDependencyResult = CachedWrapper<AnalyzeDependencyResult>;
+
+export type WorkerCompileResult = CachedWrapper<CompileResult>;
 
 export type WorkerLintOptions = {
 	compilerOptions?: LintCompilerOptions;
@@ -144,188 +148,145 @@ export type WorkerUpdateInlineSnapshotResult = {
 	file: undefined | RecoverySaveFile;
 };
 
-export default class WorkerBridge extends Bridge {
-	public log = this.createEvent<string, void>({
-		name: "log",
-		direction: "server<-client",
-	});
+export default createBridge({
+	debugName: "worker",
 
-	public fatalError = this.createEvent<BridgeErrorResponseDetails, void>({
-		name: "fatalError",
-		direction: "server<-client",
-	});
+	shared: {},
 
-	public updateProjects = this.createEvent<
-		{
-			projects: WorkerProjects;
-		},
-		void
-	>({
-		name: "updateProjects",
-		direction: "server->client",
-	});
+	server: {
+		log: createBridgeEventDeclaration<string, void>(),
+		fatalError: createBridgeEventDeclaration<BridgeErrorResponseDetails, void>(),
+	},
 
-	public updateManifests = this.createEvent<
-		{
-			manifests: WorkerPartialManifests;
-		},
-		void
-	>({
-		name: "updateManifests",
-		direction: "server->client",
-	});
+	client: {
+		updateProjects: createBridgeEventDeclaration<
+			{
+				projects: WorkerProjects;
+			},
+			void
+		>(),
 
-	public profilingStart = this.createEvent<ProfilingStartData, void>({
-		name: "profiling.start",
-		direction: "server->client",
-	});
+		updateManifests: createBridgeEventDeclaration<
+			{
+				manifests: WorkerPartialManifests;
+			},
+			void
+		>(),
 
-	public profilingStop = this.createEvent<void, Profile>({
-		name: "profiling.stop",
-		direction: "server->client",
-	});
+		profilingStart: createBridgeEventDeclaration<ProfilingStartData, void>(),
 
-	public status = this.createEvent<void, WorkerStatus>({
-		name: "status",
-		direction: "server->client",
-	});
+		profilingStop: createBridgeEventDeclaration<void, Profile>(),
 
-	public evict = this.createEvent<
-		{
-			filename: string;
-		},
-		void
-	>({
-		name: "evict",
-		direction: "server->client",
-	});
+		status: createBridgeEventDeclaration<void, WorkerStatus>(),
 
-	public format = this.createEvent<
-		{
-			ref: FileReference;
-			options: WorkerFormatOptions;
-			parseOptions: WorkerParseOptions;
-		},
-		undefined | WorkerFormatResult
-	>({
-		name: "format",
-		direction: "server->client",
-	});
+		evict: createBridgeEventDeclaration<
+			{
+				real: AbsoluteFilePath;
+				uid: string;
+			},
+			void
+		>(),
 
-	public moduleSignatureJS = this.createEvent<
-		{
-			ref: FileReference;
-			parseOptions: WorkerParseOptions;
-		},
-		ModuleSignature
-	>({
-		name: "moduleSignatureJS",
-		direction: "server->client",
-	});
+		format: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				options: WorkerFormatOptions;
+				parseOptions: WorkerParseOptions;
+			},
+			undefined | WorkerFormatResult
+		>(),
 
-	public analyzeDependencies = this.createEvent<
-		{
-			ref: FileReference;
-			parseOptions: WorkerParseOptions;
-		},
-		AnalyzeDependencyResult
-	>({
-		name: "analyzeDependencies",
-		direction: "server->client",
-	});
+		moduleSignatureJS: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				parseOptions: WorkerParseOptions;
+			},
+			ModuleSignature
+		>(),
 
-	public lint = this.createEvent<
-		{
-			ref: FileReference;
-			options: WorkerLintOptions;
-			parseOptions: WorkerParseOptions;
-		},
-		WorkerLintResult
-	>({name: "lint", direction: "server->client"});
+		analyzeDependencies: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				parseOptions: WorkerParseOptions;
+			},
+			WorkerAnalyzeDependencyResult
+		>(),
 
-	public updateInlineSnapshots = this.createEvent<
-		{
-			ref: FileReference;
-			updates: InlineSnapshotUpdates;
-			parseOptions: WorkerParseOptions;
-		},
-		WorkerUpdateInlineSnapshotResult
-	>({name: "updateInlineSnapshots", direction: "server->client"});
+		lint: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				options: WorkerLintOptions;
+				parseOptions: WorkerParseOptions;
+			},
+			WorkerLintResult
+		>(),
 
-	public compile = this.createEvent<
-		{
-			ref: FileReference;
-			stage: TransformStageName;
-			options: WorkerCompilerOptions;
-			parseOptions: WorkerParseOptions;
-		},
-		CompileResult
-	>({name: "compile", direction: "server->client"});
+		updateInlineSnapshots: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				updates: InlineSnapshotUpdates;
+				parseOptions: WorkerParseOptions;
+			},
+			WorkerUpdateInlineSnapshotResult
+		>(),
 
-	public parse = this.createEvent<
-		{
-			ref: FileReference;
-			options: WorkerParseOptions;
-		},
-		// @ts-ignore
-		AnyRoot
-	>({name: "parse", direction: "server->client"});
+		compile: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				stage: TransformStageName;
+				options: WorkerCompilerOptions;
+				parseOptions: WorkerParseOptions;
+			},
+			WorkerCompileResult
+		>(),
 
-	public getFileBuffers = this.createEvent<
-		void,
-		{
-			filename: string;
-			content: string;
-		}[]
-	>({
-		name: "getFileBuffers",
-		direction: "server->client",
-	});
+		parse: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				options: WorkerParseOptions;
+			},
+			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			AnyRoot
+		>(),
 
-	public getBuffer = this.createEvent<
-		{
-			ref: FileReference;
-		},
-		string | undefined
-	>({
-		name: "getBuffer",
-		direction: "server->client",
-	});
+		getFileBuffers: createBridgeEventDeclaration<
+			void,
+			[AbsoluteFilePath, WorkerBuffer][]
+		>(),
 
-	public updateBuffer = this.createEvent<
-		{
-			ref: FileReference;
-			content: string;
-		},
-		void
-	>({
-		name: "updateBuffer",
-		direction: "server->client",
-	});
+		getBuffer: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+			},
+			string | undefined
+		>(),
 
-	public patchBuffer = this.createEvent<
-		{
-			ref: FileReference;
-			patches: WorkerBufferPatch[];
-		},
-		string
-	>({
-		name: "patchBuffer",
-		direction: "server->client",
-	});
+		updateBuffer: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				buffer: WorkerBuffer;
+			},
+			void
+		>(),
 
-	public clearBuffer = this.createEvent<
-		{
-			ref: FileReference;
-		},
-		void
-	>({
-		name: "clearBuffer",
-		direction: "server->client",
-	});
+		patchBuffer: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+				patches: WorkerBufferPatch[];
+			},
+			string
+		>(),
 
-	public init() {
-		this.addErrorTransport(
+		clearBuffer: createBridgeEventDeclaration<
+			{
+				ref: FileReference;
+			},
+			void
+		>(),
+	},
+
+	/*init(bridge) {
+		bridge.addErrorTransport(
 			"FileNotFound",
 			{
 				serialize(err: Error) {
@@ -347,7 +308,7 @@ export default class WorkerBridge extends Bridge {
 			},
 		);
 
-		this.addErrorTransport(
+		bridge.addErrorTransport(
 			"DiagnosticsError",
 			{
 				serialize(err: Error) {
@@ -364,5 +325,5 @@ export default class WorkerBridge extends Bridge {
 				},
 			},
 		);
-	}
-}
+	}*/
+});

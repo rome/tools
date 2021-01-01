@@ -70,8 +70,8 @@ test(
 		t.snapshot(
 			dumpScopeTree(
 				dedent`
-		var foo;
-	`,
+					var foo;
+				`,
 			),
 		);
 
@@ -79,14 +79,14 @@ test(
 		t.snapshot(
 			dumpScopeTree(
 				dedent`
-		function foo() {
-			var bar;
+					function foo() {
+						var bar;
 
-			{
-				var car;
-			}
-		}
-	`,
+						{
+							var car;
+						}
+					}
+				`,
 			),
 		);
 	},

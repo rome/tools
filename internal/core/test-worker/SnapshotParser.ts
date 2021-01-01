@@ -8,8 +8,10 @@
 import {
 	BaseTokens,
 	NodeBase,
+	NumberToken,
 	ParserCore,
 	ParserOptions,
+	StringToken,
 	ValueToken,
 	createParser,
 } from "@internal/parser-core";
@@ -18,7 +20,7 @@ import {Number0, ob1Add, ob1Get0} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 
 type Tokens = BaseTokens & {
-	Hashes: ValueToken<"Hashes", number>;
+	Hashes: NumberToken<"Hashes">;
 	CodeBlock: ValueToken<
 		"CodeBlock",
 		{
@@ -26,7 +28,7 @@ type Tokens = BaseTokens & {
 			language: undefined | string;
 		}
 	>;
-	TextLine: ValueToken<"TextLine", string>;
+	TextLine: StringToken<"TextLine">;
 };
 
 type HeadingNode = NodeBase & {
@@ -83,7 +85,7 @@ type SnapshotParserTypes = {
 type SnapshotParser = ParserCore<SnapshotParserTypes>;
 
 export const createSnapshotParser = createParser<SnapshotParserTypes>({
-	diagnosticCategory: "parse/snapshots",
+	diagnosticLanguage: "markdown",
 	ignoreWhitespaceTokens: true,
 
 	tokenize(parser, index) {

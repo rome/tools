@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/class/extends-implements-empty/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"implements"
-						RAW_MARKUP {value: " list cannot be empty"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"implements"
+					RAW_MARKUP {value: " list cannot be empty"}
+				]
 			}
 			location: Object {
 				filename: "typescript/class/extends-implements-empty/input.ts"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 33
@@ -125,7 +125,7 @@ JSRoot {
 
 ```
 
- typescript/class/extends-implements-empty/input.ts:1:33 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/class/extends-implements-empty/input.ts:1:33 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ implements list cannot be empty
 

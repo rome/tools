@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/expression-left-hand-side/migrated_0011/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

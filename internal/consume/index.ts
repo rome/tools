@@ -37,11 +37,13 @@ export function consume(
 export function consumeUnknown(
 	value: unknown,
 	category: DiagnosticCategory,
+	categoryValue?: string,
 ): Consumer {
 	return new Consumer({
 		...EMPTY_CONSUME_OPTIONS,
 		context: {
 			category,
+			categoryValue,
 		},
 		value,
 	});

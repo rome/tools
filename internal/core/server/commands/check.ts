@@ -79,16 +79,26 @@ export default createServerCommand<Flags>({
 		let globalDecisions: LintCompilerOptionsDecisions = [];
 		const {decisions} = flags;
 		if (decisions !== undefined) {
-			({lintCompilerOptionsPerFile, globalDecisions} = parseDecisionStrings(
-				decisions,
-				req.client.flags.cwd,
-				(description) => {
+			({lintCompilerOptionsPerFile, globalDecisions} = parseDecisionStrings({
+				filename: "argv",
+				decisions: decisions.map((value, i) => {
+					return {
+						value,
+						start: req.getDiagnosticLocationFromFlags({
+							type: "flag",
+							key: "decisions",
+							index: i,
+						}).start,
+					};
+				}),
+				cwd: req.client.flags.cwd,
+				unexpected: (description) => {
 					throw req.throwDiagnosticFlagError({
 						description,
 						target: {type: "flag", key: "decisions"},
 					});
 				},
-			));
+			}));
 		}
 
 		// Look up arguments manually in vsc if we were passed a changes branch

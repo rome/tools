@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export function humanizeTime(
+export function humanizeDuration(
 	ms: number,
 	allowMilliseconds: boolean = false,
 ): string {

@@ -6,22 +6,6 @@
  */
 
 // These are copied from internal/codec-config/types.ts
-export type JSONValue =
-	| null
-	| string
-	| number
-	| boolean
-	| JSONObject
-	| JSONArray;
-
-export type JSONPropertyValue = undefined | void | JSONValue;
-
-export type JSONObject = {
-	[x: string]: JSONPropertyValue;
-};
-
-export type JSONArray = JSONValue[];
-
 export type VoidCallback = () => void | undefined;
 
 export type AsyncVoidCallback = () =>

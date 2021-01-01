@@ -35,249 +35,250 @@ function extractSuppressionsFromSource(
 test(
 	"single category",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore foo: explanation
-    foo();
+				// rome-ignore foo: explanation
+				foo();
 
-    /** rome-ignore bar: explanation */
-    bar();
+				/** rome-ignore bar: explanation */
+				bar();
 
-    /**
-     * rome-ignore yes: explanation
-     */
-    yes();
+				/**
+				 * rome-ignore yes: explanation
+				 */
+				yes();
 
-    /**
-     * hello
-     * rome-ignore wow: explanation
-     */
-    wow();
-  `,
+				/**
+				 * hello
+				 * rome-ignore wow: explanation
+				 */
+				wow();
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 4);
-		t.is(suppressions.diagnostics.length, 0);
+		t.is(result.suppressions.length, 4);
+		t.is(result.diagnostics.length, 0);
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"multiple categories",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore foo dog: explanation
-    foo();
+				// rome-ignore foo dog: explanation
+				foo();
 
-    /** rome-ignore bar cat: explanation */
-    bar();
+				/** rome-ignore bar cat: explanation */
+				bar();
 
-    /**
-     * rome-ignore yes frog: explanation
-     */
-    yes();
+				/**
+				 * rome-ignore yes frog: explanation
+				 */
+				yes();
 
-    /**
-     * hello
-     * rome-ignore wow fish: explanation
-     */
-    wow();
-  `,
+				/**
+				 * hello
+				 * rome-ignore wow fish: explanation
+				 */
+				wow();
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 8);
-		t.is(suppressions.diagnostics.length, 0);
+		t.is(result.suppressions.length, 8);
+		t.is(result.diagnostics.length, 0);
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"duplicates",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-    // rome-ignore dog dog: explanation
-    foo();
+				// rome-ignore dog dog: explanation
+				foo();
 
-    // rome-ignore dog cat dog: explanation
-    bar();
-  `,
+				// rome-ignore dog cat dog: explanation
+				bar();
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 3);
-		t.is(suppressions.diagnostics.length, 2);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 3);
+		t.is(result.diagnostics.length, 2);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/duplicate");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"overlap suppressions",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo: explanation
-      function foo_bar() {
-        // rome-ignore foo: explanation
-        bar_foo;
-      }
-  `,
+				// rome-ignore foo: explanation
+				function foo_bar() {
+				  // rome-ignore foo: explanation
+				  bar_foo;
+				}
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 2);
-		t.is(suppressions.diagnostics.length, 1);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 2);
+		t.is(result.diagnostics.length, 1);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/overlap");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"overlap suppressions with suppressions in between overlaps",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo: explanation
-      function foo_bar() {
-        // rome-ignore bar: explanation
-        // rome-ignore baz: explanation
-        // rome-ignore foo: explanation
-        bar_foo;
-      }
-  `,
+				// rome-ignore foo: explanation
+				function foo_bar() {
+				  // rome-ignore bar: explanation
+				  // rome-ignore baz: explanation
+				  // rome-ignore foo: explanation
+				  bar_foo;
+				}
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 4);
-		t.is(suppressions.diagnostics.length, 1);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 4);
+		t.is(result.diagnostics.length, 1);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/overlap");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"overlap suppression with a non-overlap suppression",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo: explanation
-      function foo_bar() {
-        // rome-ignore foo: explanation
-        bar_foo;
-      }
+				// rome-ignore foo: explanation
+				function foo_bar() {
+				  // rome-ignore foo: explanation
+				  bar_foo;
+				}
 
-      // rome-ignore foo: explanation
-      baz()
-  `,
+				// rome-ignore foo: explanation
+				baz()
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 3);
-		t.is(suppressions.diagnostics.length, 1);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 3);
+		t.is(result.diagnostics.length, 1);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/overlap");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"multiple overlap suppressions",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-      // rome-ignore foo: explanation
-      function foo_bar() {
-        // rome-ignore foo: explanation
-        // rome-ignore foo: explanation
-        bar_foo;
-      }
+				// rome-ignore foo: explanation
+				function foo_bar() {
+				  // rome-ignore foo: explanation
+				  // rome-ignore foo: explanation
+				  bar_foo;
+				}
 
-      // rome-ignore foo: explanation
-      baz()
-  `,
+				// rome-ignore foo: explanation
+				baz()
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 4);
-		t.is(suppressions.diagnostics.length, 2);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 4);
+		t.is(result.diagnostics.length, 2);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/overlap");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"incorrect suppression comment",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-			// @rome-ignore foo
-			boo()
+				// @rome-ignore foo1
+				boo()
 
-			// rome-disable foo
-			boo()
+				// rome-disable foo2
+				boo()
 
-			// @rome-disable foo
-			boo()
+				// @rome-disable foo3
+				boo()
 
-			// @rometools-ignore foo
-			boo()
+				// @rometools-ignore foo4
+				boo()
 
-			// romefrontend-ignore foo
-			boo()
+				// romefrontend-ignore foo5
+				boo()
 
-			// @rometools-disable foo
-			boo()
+				// @rometools-disable foo6
+				boo()
 
-			// romefrontend-disable foo
-			boo()
-  `,
+				// romefrontend-disable foo7
+				boo()
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 0);
-		t.is(suppressions.diagnostics.length, 7);
-		for (const diagnostic of suppressions.diagnostics) {
+		console.log(result);
+		t.is(result.suppressions.length, 0);
+		t.is(result.diagnostics.length, 7);
+		for (const diagnostic of result.diagnostics) {
 			t.is(
 				diagnostic.description.category,
 				"suppressions/incorrectSuppressionStart",
 			);
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );
 
 test(
 	"missing explanation",
 	async (t) => {
-		const suppressions = extractSuppressionsFromSource(
+		const result = extractSuppressionsFromSource(
 			dedent`
-			// rome-ignore foo
-			boo()
+				// rome-ignore foo
+				boo()
 
-			// rome-ignore foo:
-			boo()
-  		`,
+				// rome-ignore foo:
+				boo()
+			`,
 		);
 
-		t.is(suppressions.suppressions.length, 2);
-		t.is(suppressions.diagnostics.length, 2);
-		for (const diagnostic of suppressions.diagnostics) {
+		t.is(result.suppressions.length, 2);
+		t.is(result.diagnostics.length, 2);
+		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/missingExplanation");
 		}
 
-		t.snapshot(suppressions);
+		t.snapshot(result);
 	},
 );

@@ -96,7 +96,7 @@ async function run(
 				test(diag) {
 					return (
 						diag.description.category === category ||
-						diag.description.category === "parse/js"
+						diag.description.category === "parse"
 					);
 				},
 			});

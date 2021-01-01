@@ -11,6 +11,7 @@ import {ConstJSImportModuleKind} from "@internal/ast";
 import {SourceLocation} from "@internal/parser-core";
 import {
 	Diagnostic,
+	DiagnosticIntegrity,
 	DiagnosticLocation,
 	Diagnostics,
 	descriptions,
@@ -90,14 +91,13 @@ export default class DependencyNode {
 		ref: FileReference,
 		res: WorkerAnalyzeDependencyResult,
 	) {
-		this.server = server;
 		this.graph = graph;
 
 		this.project = server.projectManager.assertProjectExisting(ref.real);
 		this.uid = ref.uid;
 		this.path = ref.real;
 		this.ref = ref;
-		this.type = res.moduleType;
+		this.type = res.value.moduleType;
 
 		this.usedAsync = false;
 		this.all = false;
@@ -120,14 +120,13 @@ export default class DependencyNode {
 	public usedAsync: boolean;
 	public relativeToAbsolutePath: ExtendedMap<string, AbsoluteFilePath>;
 
-	private server: Server;
 	private graph: DependencyGraph;
 	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<DependencyNodeDependency>;
 	private project: ProjectDefinition;
 	private resolveImportsCache: undefined | ResolveImportsResult;
 
-	public getMtime(): number {
-		return this.server.memoryFs.getMtime(this.path);
+	public getIntegrity(): undefined | DiagnosticIntegrity {
+		return this.analyze.integrity;
 	}
 
 	public setUsedAsync(usedAsync: boolean) {
@@ -193,7 +192,7 @@ export default class DependencyNode {
 			chain.add(this);
 		}
 
-		for (const exp of this.analyze.exports) {
+		for (const exp of this.analyze.value.exports) {
 			if (
 				exp.type === "externalAll" &&
 				this.relativeToAbsolutePath.has(exp.source)
@@ -217,7 +216,7 @@ export default class DependencyNode {
 
 		let names: Set<string> = new Set();
 
-		for (const exp of this.analyze.exports) {
+		for (const exp of this.analyze.value.exports) {
 			if (!equalKind(exp, kind)) {
 				continue;
 			}
@@ -266,7 +265,7 @@ export default class DependencyNode {
 	): Diagnostic {
 		const location: DiagnosticLocation = {
 			...resolved.loc,
-			mtime: this.getMtime(),
+			integrity: this.getIntegrity(),
 		};
 
 		const expectedName = resolved.name;
@@ -277,11 +276,11 @@ export default class DependencyNode {
 			// We use an object as a hash map so need to check for pollution
 			if (
 				Object.prototype.hasOwnProperty.call(
-					mod.analyze.topLevelLocalBindings,
+					mod.analyze.value.topLevelLocalBindings,
 					expectedName,
 				)
 			) {
-				const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
+				const localLoc = mod.analyze.value.topLevelLocalBindings[expectedName];
 				if (localLoc !== undefined) {
 					return {
 						description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
@@ -398,7 +397,7 @@ export default class DependencyNode {
 		const subAncestry: DependencyNode[] = [...ancestry, this];
 
 		// We always want to resolve exports from the bottom up
-		const exports = this.analyze.exports.reverse();
+		const exports = this.analyze.value.exports.reverse();
 
 		for (const record of exports) {
 			// When resolving exportAll we never want to include the default export of those modules

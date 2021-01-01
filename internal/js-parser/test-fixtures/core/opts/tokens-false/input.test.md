@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/opts/tokens-false/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

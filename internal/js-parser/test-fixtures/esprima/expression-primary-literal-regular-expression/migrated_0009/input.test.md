@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/expression-primary-literal-regular-expression/migrated_0009/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

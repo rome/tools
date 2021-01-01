@@ -72,7 +72,7 @@ export default class InspectorClient {
 
 		socket.completeFrameEvent.subscribe((frame) => {
 			const json = frame.payload.toString();
-			const data = consumeUnknown(JSON.parse(json), "parse/json");
+			const data = consumeUnknown(JSON.parse(json), "parse", "json");
 
 			// Message reply
 			const id = data.get("id").asNumberOrVoid();

@@ -30,7 +30,7 @@ function createMessage(res: JSONObject) {
 function consumeMessage(msg: string): Consumer {
 	const content = msg.split("\r\n\r\n", 2)[1];
 	const data = JSON.parse(content);
-	return consumeUnknown(data, "lsp/parse");
+	return consumeUnknown(data, "parse", "json");
 }
 
 test(
@@ -51,7 +51,7 @@ test(
 				callback: (c: Consumer, resolve: () => void) => void,
 			) {
 				const out = createMessage(msg);
-				const promise = new Promise((resolve) => {
+				const promise = new Promise<void>((resolve) => {
 					transport.writeEvent.subscribe((response) => {
 						const consumer = consumeMessage(response);
 						callback(consumer, resolve);

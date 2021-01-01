@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "comments/basic/switch-fallthrough-comment/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

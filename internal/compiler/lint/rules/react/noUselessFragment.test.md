@@ -178,18 +178,18 @@ foo;
 
 ```
 
- lint/react/noUselessFragment/reject/6/file.tsx:2:5 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
+ lint/react/noUselessFragment/reject/6/file.tsx:2:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
 
     1 │ <section>
-  > 2 │           <>
-      │           ^^
-  > 3 │             <div />
-  > 4 │             <div />
-  > 5 │           </>
-      │ ^^^^^^^^^^^^^
-    6 │         </section>
+  > 2 │   <>
+      │   ^^
+  > 3 │     <div />
+  > 4 │     <div />
+  > 5 │   </>
+      │ ^^^^^
+    6 │ </section>
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.

@@ -9,9 +9,10 @@ import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
 import {Number1, ob1Get1} from "@internal/ob1";
 import Path from "../lib/Path";
-import {SUPPRESSION_START} from "../suppressions";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
+import {SUPPRESSION_START} from "../suppressionsParser";
+import {joinCategoryName} from "@internal/diagnostics";
 
 function getStartLine(node: AnyNode): undefined | Number1 {
 	const {loc} = node;
@@ -47,9 +48,9 @@ export function addSuppressions(
 	): AnyNode {
 		// Find all suppression decisions
 		const suppressionCategories: Set<string> = new Set();
-		for (const {category, action} of decisions) {
-			if (action === "suppress") {
-				suppressionCategories.add(category);
+		for (const decision of decisions) {
+			if (decision.action === "suppress") {
+				suppressionCategories.add(joinCategoryName(decision));
 			}
 		}
 		if (suppressionCategories.size === 0) {

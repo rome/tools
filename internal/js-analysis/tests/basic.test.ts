@@ -22,6 +22,7 @@ async function testCheck(code: string): Promise<Diagnostics> {
 	return check({
 		ast,
 		project: {
+			configHashes: [],
 			directory: undefined,
 			config: createDefaultProjectConfig(),
 		},

@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/arrow-function/async-generic-false-positive/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

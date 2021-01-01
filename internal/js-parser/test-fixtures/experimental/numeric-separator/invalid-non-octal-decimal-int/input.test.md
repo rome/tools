@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

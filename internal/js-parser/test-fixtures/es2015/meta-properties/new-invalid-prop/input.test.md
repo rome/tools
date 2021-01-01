@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/meta-properties/new-invalid-prop/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,10 +30,24 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "The only valid meta property for "}
+					"new"
+					RAW_MARKUP {value: " is "}
+					"new"
+					RAW_MARKUP {value: "."}
+					"target"
+				]
+			}
 			location: Object {
 				filename: "es2015/meta-properties/new-invalid-prop/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 10
@@ -42,20 +56,6 @@ JSRoot {
 				start: Object {
 					column: 6
 					line: 2
-				}
-			}
-			description: Object {
-				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "The only valid meta property for "}
-						"new"
-						RAW_MARKUP {value: " is "}
-						"new"
-						RAW_MARKUP {value: "."}
-						"target"
-					]
 				}
 			}
 		}
@@ -190,7 +190,7 @@ JSRoot {
 
 ```
 
- es2015/meta-properties/new-invalid-prop/input.js:2:6 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/meta-properties/new-invalid-prop/input.js:2:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
 

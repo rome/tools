@@ -2,18 +2,44 @@ import RSERBufferWriter from "./RSERBufferWriter";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
-import {encodeRSERBuffer} from "@internal/codec-binary-serial/index";
+import {encodeValueToRSERBufferMessage} from "@internal/codec-binary-serial/index";
+import RSERBufferAssembler from "./RSERBufferAssembler";
+import {VERSION} from "./constants";
 
 type State = {
-	// Waiting: Need to read and decode PDU length
-	// Reading: Know the length, need to read whole content
-	type: "WAITING" | "READING";
+	// INIT: Waiting on stream header
+	// IDLE: Waiting on the next message and a full PDU length to decode
+	// READ: Know the length, need to read whole content
+	type: "INIT" | "IDLE" | "READ";
 	writer: RSERBufferWriter;
+	reader: RSERBufferParser;
 };
 
+type RSERStreamType = "client" | "server" | "file";
+
+// 1 bit for the type + 4 bits for the int
+// NOTE: bigint is 8 bits but will never appear in the positions we care about here
+const MAX_INT_SIZE = 5;
+
+// 1 header code bit + int bits
+const MAX_STREAM_HEADER_SIZE = MAX_INT_SIZE + 1;
+const MAX_MESSAGE_HEADER_SIZE = MAX_INT_SIZE + 1;
+
+function createState(type: State["type"], size: number): State {
+	// Max possible size of a message header
+	const writer = RSERBufferWriter.allocate(size);
+
+	return {
+		type,
+		reader: writer.toParser(),
+		writer,
+	};
+}
+
 export default class RSERStream {
-	constructor() {
-		this.state = this.createWaitingState();
+	constructor(type: RSERStreamType) {
+		this.type = type;
+		this.state = createState("INIT", MAX_STREAM_HEADER_SIZE);
 		this.overflow = [];
 
 		this.errorEvent = new Event({
@@ -33,33 +59,39 @@ export default class RSERStream {
 	public sendEvent: Event<ArrayBuffer, void>;
 	public valueEvent: Event<RSERValue, void>;
 
+	private type: RSERStreamType;
 	private overflow: Uint8Array[];
 	private state: State;
 
-	private createWaitingState(): State {
-		return {
-			type: "WAITING",
-			// Max size of the message header
-			writer: RSERBufferWriter.allocate(7),
-		};
+	public sendValue(val: RSERValue) {
+		this.sendBuffer(encodeValueToRSERBufferMessage(val));
 	}
 
-	public send(val: RSERValue) {
+	public sendBuffer(buf: ArrayBuffer) {
 		try {
-			this.sendEvent.send(encodeRSERBuffer(val));
+			this.sendEvent.send(buf);
 		} catch (err) {
 			this.errorEvent.send(err);
 		}
 	}
 
 	public append(buf: ArrayBuffer) {
+		// Fast path for empty buffer
+		if (buf.byteLength === 0) {
+			return;
+		}
+
 		const {writer, type} = this.state;
 
 		try {
 			// Fast path for appending a full message
-			if (type === "WAITING" && writer.writeOffset === 0 && buf.byteLength > 7) {
+			if (
+				type === "IDLE" &&
+				writer.writeOffset === 0 &&
+				buf.byteLength > MAX_MESSAGE_HEADER_SIZE
+			) {
 				const reader = new RSERBufferParser(new DataView(buf));
-				const payloadLength = reader.decodeHeader();
+				const payloadLength = reader.maybeDecodeMessageHeader();
 				if (
 					payloadLength !== false &&
 					payloadLength === reader.getReadableSize()
@@ -73,6 +105,7 @@ export default class RSERStream {
 			// Push to overflow queue if necessary
 			let arr = new Uint8Array(buf);
 
+			// If the buffer is bigger than the current message we expect then cut it up
 			const remaining = writer.getWritableSize();
 			if (remaining < arr.byteLength) {
 				// Slicing Node buffers is cheap since it just creates a view
@@ -87,11 +120,28 @@ export default class RSERStream {
 		}
 	}
 
+	// This marks the end of the buffer we want so add the rest of the data to the overflow so the next state receives it
+	private unshiftUnreadOverflow() {
+		const {reader, writer} = this.state;
+		const leftover = reader.getReadableSize();
+
+		if (leftover > 0 && reader.readOffset < writer.writeOffset) {
+			const bytes = writer.bytes.slice(reader.readOffset, writer.writeOffset);
+			console.log({
+				bytes,
+				readOffset: reader.readOffset,
+				writeOffset: writer.writeOffset,
+			});
+			this.overflow.unshift(bytes);
+		}
+	}
+
 	private setState(state: State) {
 		try {
 			this.state = state;
 			const {writer} = this.state;
 
+			// Keep filling and processing the buffer with overflowed data until it's exhausted
 			while (this.overflow.length > 0 && writer.getWritableSize() > 0) {
 				let entry = this.overflow[0];
 				const writableSize = writer.getWritableSize();
@@ -113,44 +163,65 @@ export default class RSERStream {
 		}
 	}
 
+	public init() {
+		if (this.type === "client") {
+			this.sendStreamHeader();
+		}
+	}
+
+	// Send stream header
+	public sendStreamHeader() {
+		const assembler = new RSERBufferAssembler();
+		assembler.encodeStreamHeader(VERSION);
+
+		const buf = new RSERBufferWriter(
+			new ArrayBuffer(assembler.totalSize),
+			assembler,
+		);
+		buf.encodeStreamHeader(VERSION);
+		this.sendBuffer(buf.buffer);
+	}
+
 	private process(): void {
-		const {type, writer} = this.state;
+		const {type, writer, reader} = this.state;
 
-		if (type === "WAITING") {
-			if (writer.writeOffset < 2) {
-				return;
+		// Decode stream header
+		if (type === "INIT") {
+			const validHeader = reader.maybeDecodeStreamHeader();
+			if (validHeader) {
+				this.unshiftUnreadOverflow();
+				this.setState(createState("IDLE", MAX_MESSAGE_HEADER_SIZE));
+
+				// Server always sends their header after the client bv
+				if (this.type === "server") {
+					this.sendStreamHeader();
+				}
 			}
+			return;
+		}
 
-			const reader = new RSERBufferParser(writer.view);
-			const payloadLength = reader.decodeHeader();
+		// Waiting for message header
+		if (type === "IDLE") {
+			const payloadLength = reader.maybeDecodeMessageHeader();
 			if (payloadLength === false) {
 				return;
 			}
 
-			// The header buffer is set to the maximum size it could be, but there could still be data left so push it on.
-			const leftover = reader.getReadableSize();
-			const payloadWriter = RSERBufferWriter.allocate(payloadLength + leftover);
-			if (leftover > 0) {
-				payloadWriter.appendBytes(writer.bytes.slice(reader.readOffset));
-			}
-
-			this.setState({
-				type: "READING",
-				writer: payloadWriter,
-			});
+			this.unshiftUnreadOverflow();
+			this.setState(createState("READ", payloadLength));
 		}
 
-		if (type === "READING") {
+		// Reading message
+		if (type === "READ") {
 			if (writer.getWritableSize() > 0) {
 				// Need more data
 				return;
 			}
 
 			// We have enough to decode it
-			const reader = new RSERBufferParser(writer.view);
 			const val = reader.decodeValue();
 			this.valueEvent.send(val);
-			this.setState(this.createWaitingState());
+			this.setState(createState("IDLE", MAX_MESSAGE_HEADER_SIZE));
 		}
 	}
 }

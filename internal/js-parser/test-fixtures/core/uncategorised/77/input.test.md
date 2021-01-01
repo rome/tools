@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/uncategorised/77/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

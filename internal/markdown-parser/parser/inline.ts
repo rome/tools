@@ -1,4 +1,4 @@
-import {TokenValues} from "@internal/parser-core";
+import {ParserCoreTokenizeState, TokenValues} from "@internal/parser-core";
 import {
 	DelimiterRun,
 	Emphasis,
@@ -17,6 +17,7 @@ import {
 	MarkdownEmphasisInline,
 	MarkdownText,
 } from "@internal/ast";
+import {MarkdownParserTypes} from "../types";
 
 type OnUnknownToken = (
 	token: TokenValues<Tokens>,
@@ -102,17 +103,12 @@ export function parseInline(
 	);
 }
 
-type TokenizeInline = {
-	state: MarkdownParserState;
-	token: Tokens["Text"] | Tokens["Emphasis"] | Tokens["Strong"];
-};
-
 export function tokenizeInline(
 	parser: MarkdownParser,
 	state: MarkdownParserState,
 	charToCheck: "*" | "_",
 	index: Number0,
-): TokenizeInline | undefined {
+): ParserCoreTokenizeState<MarkdownParserTypes> | undefined {
 	const [valueOfInlineToken, endIndexOfDelimiter] = parser.readInputFrom(
 		index,
 		(char1) => char1 === charToCheck,
@@ -172,19 +168,14 @@ export function tokenizeInline(
 		);
 
 		if (!rightFlankingDelimiterFound || endOfInput) {
-			return {
-				token: parser.finishValueToken(
-					"Text",
-					valueOfInlineToken,
-					endIndexOfDelimiter,
-				),
-				state: {
-					...state,
+			return [
+				{
 					isParagraph: endOfInput || isEndOfParagraph
 						? false
 						: state.isParagraph,
 				},
-			};
+				parser.finishValueToken("Text", valueOfInlineToken, endIndexOfDelimiter),
+			];
 		}
 
 		const nextChar = parser.getInputCharOnly(ob1Add(closingIndex, 2));
@@ -196,14 +187,13 @@ export function tokenizeInline(
 			},
 		);
 
-		return {
-			state: {
-				...state,
+		return [
+			{
 				// if next after two characters we still have a new line, it means we need to start a new paragraph
 				isParagraph: nextChar === "\n" ? false : state.isParagraph,
 			},
 
-			token: parser.finishComplexToken<typeof tokenType, DelimiterRun>(
+			parser.finishComplexToken<typeof tokenType, DelimiterRun>(
 				tokenType,
 				{
 					closingIndexOfDelimiter,
@@ -213,19 +203,18 @@ export function tokenizeInline(
 				},
 				endIndexOfDelimiter,
 			),
-		};
+		];
 	}
 
 	if (rightFlankingDelimiter) {
 		const nextChar = parser.getInputCharOnly(ob1Add(endIndexOfDelimiter, 2));
 
-		return {
-			state: {
-				...state,
+		return [
+			{
 				// if next after two characters we still have a new line, it means we need to start a new paragraph
 				isParagraph: nextChar === "\n" ? false : state.isParagraph,
 			},
-			token: parser.finishComplexToken<typeof tokenType, DelimiterRun>(
+			parser.finishComplexToken<typeof tokenType, DelimiterRun>(
 				tokenType,
 				{
 					leftFlankingDelimiter,
@@ -234,7 +223,8 @@ export function tokenizeInline(
 				},
 				endIndexOfDelimiter,
 			),
-		};
+		];
 	}
+
 	return undefined;
 }

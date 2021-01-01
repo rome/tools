@@ -14,7 +14,6 @@ export {localCommands} from "./client/commands";
 
 export {default as WorkerBridge} from "./common/bridges/WorkerBridge";
 export {default as ServerBridge} from "./common/bridges/ServerBridge";
-export {default as WebBridge} from "./common/bridges/WebBridge";
 export {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -30,7 +29,6 @@ export * from "./common/types/analyzeDependencies";
 export {default as Server} from "./server/Server";
 export {serverCommands} from "./server/commands";
 export {default as ServerRequest} from "./server/ServerRequest";
-export {WebServerClient, WebServerRequest} from "./server/web/index";
 
 export {default as Worker} from "./worker/Worker";
 

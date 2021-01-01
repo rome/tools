@@ -1,9 +1,11 @@
 import {
 	BaseTokens,
 	ComplexToken,
+	NumberToken,
 	ParserOptions,
+	ParserOptionsWithRequiredPath,
 	SimpleToken,
-	ValueToken,
+	StringToken,
 } from "@internal/parser-core";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {InlineState} from "@internal/markdown-parser/State";
@@ -15,6 +17,13 @@ export interface MarkdownParserOptions extends Omit<
 > {
 	consumeDiagnosticCategory?: DiagnosticCategory;
 }
+
+export type MarkdownParserTypes = {
+	tokens: Tokens;
+	state: MarkdownParserState;
+	options: ParserOptionsWithRequiredPath;
+	meta: void;
+};
 
 export type MarkdownParserState = {
 	isBlockHead: boolean;
@@ -52,11 +61,11 @@ export type Emphasis = ComplexToken<"Emphasis", DelimiterRun>;
 export type Strong = ComplexToken<"Strong", DelimiterRun>;
 
 export type Tokens = BaseTokens & {
-	HeadingLevel: ValueToken<"HeadingLevel", number>;
+	HeadingLevel: NumberToken<"HeadingLevel">;
 	Greater: SimpleToken<"Greater">;
-	Text: ValueToken<"Text", string>;
+	Text: StringToken<"Text">;
 	NewLine: SimpleToken<"NewLine">;
-	Break: ValueToken<"Break", string>;
+	Break: StringToken<"Break">;
 	ListItem: ComplexToken<"ListItem", ListProperties>;
 	Code: ComplexToken<"Code", CodeProperties>;
 	// [

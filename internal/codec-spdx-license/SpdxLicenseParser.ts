@@ -10,7 +10,7 @@ import {
 	ParserCore,
 	ParserOptions,
 	SimpleToken,
-	ValueToken,
+	StringToken,
 	createParser,
 	isAlpha,
 	isDigit,
@@ -31,7 +31,7 @@ type Tokens = BaseTokens & {
 	And: SimpleToken<"And">;
 	With: SimpleToken<"With">;
 	Or: SimpleToken<"Or">;
-	Word: ValueToken<"Word", string>;
+	Word: StringToken<"Word">;
 };
 
 function isWordChar(char: string) {
@@ -52,7 +52,7 @@ type SPDXParserTypes = {
 type SPDXParser = ParserCore<SPDXParserTypes>;
 
 const createSPDXLicenseParser = createParser<SPDXParserTypes>({
-	diagnosticCategory: "parse/spdxLicense",
+	diagnosticLanguage: "spdxlicense",
 	ignoreWhitespaceTokens: true,
 	tokenize(parser: SPDXParser, index: Number0) {
 		const char = parser.getInputCharOnly(index);

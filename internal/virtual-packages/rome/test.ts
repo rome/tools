@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AsyncVoidCallback, JSONPropertyValue, VoidCallback} from "./types";
+import {AsyncVoidCallback, VoidCallback} from "./types";
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
@@ -21,7 +21,7 @@ export type TestDiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
 export type TestDiagnosticAdviceInspect = {
 	type: "inspect";
-	data: JSONPropertyValue;
+	data: unknown;
 };
 
 export type TestDiagnosticAdviceList = {

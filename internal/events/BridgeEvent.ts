@@ -6,12 +6,12 @@
  */
 
 import {
+	AnyBridge,
 	BridgeErrorResponseMessage,
 	BridgeSuccessResponseMessage,
-	BridgeType,
-	EventOptions,
+	EventCallback,
+	EventSubscription,
 } from "./types";
-import Bridge from "./Bridge";
 import BridgeError from "./BridgeError";
 import Event from "./Event";
 import {ErrorCallback, VoidCallback} from "@internal/typescript-helpers";
@@ -22,44 +22,24 @@ type CallOptions = {
 	priority?: boolean;
 };
 
-export type BridgeEventDirection =
-	| "server->client"
-	| "server<-client"
-	| "server<->client";
-
-export type BridgeEventOptions = EventOptions & {
-	direction: BridgeEventDirection;
-};
-
-function validateDirection(
-	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	event: BridgeEvent<any, any>,
-	invalidDirections: [BridgeEventDirection, BridgeType][],
-	verb: string,
-) {
-	invalidDirections.push(["server<->client", "server&client"]);
-
-	for (const [eventDirection, bridgeType] of invalidDirections) {
-		if (event.direction === eventDirection && event.bridge.type === bridgeType) {
-			throw new Error(
-				`The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
-			);
-		}
-	}
-}
-
-export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
-	extends Event<Param, Ret> {
-	constructor(opts: BridgeEventOptions, bridge: Bridge) {
-		super(opts);
-
+export class BridgeEvent<Param extends RSERValue, Ret extends RSERValue> {
+	constructor(name: string, bridge: AnyBridge) {
 		this.bridge = bridge;
+		this.name = name;
 		this.requestCallbacks = new Map();
-		this.direction = opts.direction;
+
+		this.backingEvent = new Event({
+			name,
+			displayName: `event ${this.name} in ${bridge.getDisplayName()}`,
+			onSubscriptionChange: () => {
+				this.bridge.sendSubscriptions();
+			},
+		});
 	}
 
-	public bridge: Bridge;
-	public direction: BridgeEventDirection;
+	public name: string;
+	public backingEvent: Event<Param, Ret>;
+	public bridge: AnyBridge;
 	public requestCallbacks: Map<
 		number,
 		{
@@ -71,7 +51,7 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 	>;
 
 	public clear() {
-		super.clear();
+		this.backingEvent.clear();
 		this.requestCallbacks.clear();
 	}
 
@@ -81,17 +61,8 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		}
 	}
 
-	public onSubscriptionChange() {
-		validateDirection(
-			this,
-			[["server->client", "client"], ["server<-client", "server"]],
-			"subscribed",
-		);
-		this.bridge.sendSubscriptions();
-	}
-
 	public dispatchRequest(param: Param): Promise<Ret> {
-		return super.call(param);
+		return this.backingEvent.call(param);
 	}
 
 	public dispatchResponse(
@@ -124,25 +95,20 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		}
 	}
 
+	public hasSubscriptions(): boolean {
+		return this.backingEvent.hasSubscriptions();
+	}
+
 	public hasSubscribers(): boolean {
 		return this.bridge.listeners.has(this.name);
 	}
 
-	private validateCanSend(): void {
-		validateDirection(
-			this,
-			[["server<-client", "client"], ["server->client", "server"]],
-			"called",
-		);
-	}
-
-	public send(param: Param): void {
+	protected _send(param: Param): void {
 		if (!this.hasSubscribers()) {
 			// No point in sending over a subscription that doesn't have a listener
 			return;
 		}
 
-		this.validateCanSend();
 		this.bridge.assertAlive();
 		this.bridge.sendMessage({
 			type: "request",
@@ -152,9 +118,8 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		});
 	}
 
-	public async call(param: Param, opts: CallOptions = {}): Promise<Ret> {
+	protected async _call(param: Param, opts: CallOptions = {}): Promise<Ret> {
 		const {priority = false, timeout} = opts;
-		this.validateCanSend();
 
 		return new Promise((resolve, reject) => {
 			this.bridge.assertAlive();
@@ -207,7 +172,81 @@ export default class BridgeEvent<Param extends RSERValue, Ret extends RSERValue>
 		});
 	}
 
-	public callOptional(): never {
-		throw new Error(`callOptional not allowed on BridgeEvent ${this.name}`);
+	protected async _callOptional(param: Param): Promise<undefined | Ret> {
+		if (this.hasSubscribers()) {
+			return this._call(param);
+		} else {
+			return undefined;
+		}
+	}
+
+	protected _subscribe(
+		callback: EventCallback<Param, Ret>,
+		makeRoot?: boolean,
+	): EventSubscription {
+		return this.backingEvent.subscribe(callback, makeRoot);
+	}
+
+	protected _wait(val: Ret, timeout?: number): Promise<Param> {
+		return this.backingEvent.wait(val, timeout);
+	}
+}
+
+export class BridgeEventCallOnly<Param extends RSERValue, Ret extends RSERValue>
+	extends BridgeEvent<Param, Ret> {
+	public send(param: Param): void {
+		return this._send(param);
+	}
+
+	public async call(param: Param, opts?: CallOptions): Promise<Ret> {
+		return this._call(param, opts);
+	}
+
+	public async callOptional(param: Param): Promise<undefined | Ret> {
+		return this._callOptional(param);
+	}
+}
+
+export class BridgeEventListenOnly<
+	Param extends RSERValue,
+	Ret extends RSERValue
+> extends BridgeEvent<Param, Ret> {
+	public subscribe(
+		callback: EventCallback<Param, Ret>,
+		makeRoot?: boolean,
+	): EventSubscription {
+		return this._subscribe(callback, makeRoot);
+	}
+
+	public wait(val: Ret, timeout?: number): Promise<Param> {
+		return this._wait(val, timeout);
+	}
+}
+
+export class BridgeEventBidirectional<
+	Param extends RSERValue,
+	Ret extends RSERValue
+> extends BridgeEvent<Param, Ret> {
+	public subscribe(
+		callback: EventCallback<Param, Ret>,
+		makeRoot?: boolean,
+	): EventSubscription {
+		return this._subscribe(callback, makeRoot);
+	}
+
+	public wait(val: Ret, timeout?: number): Promise<Param> {
+		return this._wait(val, timeout);
+	}
+
+	public send(param: Param): void {
+		return this._send(param);
+	}
+
+	public async call(param: Param, opts?: CallOptions): Promise<Ret> {
+		return this._call(param, opts);
+	}
+
+	public async callOptional(param: Param): Promise<undefined | Ret> {
+		return this._callOptional(param);
 	}
 }

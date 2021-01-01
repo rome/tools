@@ -12,7 +12,7 @@ MarkdownRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "smoke/input.md"
-	mtime: undefined
+	integrity: undefined
 	loc: Object {
 		filename: "smoke/input.md"
 		end: Object {
