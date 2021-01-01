@@ -114,10 +114,10 @@ class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
 		opts?: Partial<Omit<Node, "type">>,
 		inheritNode?: Node,
 	): Node {
-		const node = ({
+		const node = {
 			...opts,
 			[this.quickKey]: arg,
-		} as Node);
+		} as Node;
 
 		return this.create(node, inheritNode);
 	}

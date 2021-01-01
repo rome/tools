@@ -420,7 +420,6 @@ JSRoot {
 										}
 									}
 									typeAnnotation: TSTupleType {
-										rest: undefined
 										loc: Object {
 											filename: "typescript/types/type-operator/input.ts"
 											end: Object {

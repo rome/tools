@@ -269,7 +269,7 @@ function parseCommitLog(
 
 				return newCommit;
 			},
-			({} as Commit),
+			{} as Commit,
 		);
 	});
 

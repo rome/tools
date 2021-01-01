@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 if (x) {
 	x;
 }
@@ -68,7 +68,7 @@ if (x) {
 
 ### `1: formatted`
 
-```
+```ts
 if (x) {
 	x;
 } else {
@@ -105,7 +105,7 @@ if (x) {
 
 ### `2: formatted`
 
-```
+```ts
 if (x) {
 	x;
 } else if (y) {
@@ -139,7 +139,7 @@ if (x) {
 
 ### `3: formatted`
 
-```
+```ts
 while (true) {
 	// empty
 }
@@ -171,7 +171,7 @@ while (true) {
 
 ### `4: formatted`
 
-```
+```ts
 for (p in obj) {
 	// empty
 }
@@ -203,7 +203,7 @@ for (p in obj) {
 
 ### `5: formatted`
 
-```
+```ts
 for (x of xs) {
 	// empty
 }
@@ -236,7 +236,7 @@ for (x of xs) {
 
 ### `6: formatted`
 
-```
+```ts
 do {
 	// empty
 } while (x);
@@ -268,7 +268,7 @@ do {
 
 ### `7: formatted`
 
-```
+```ts
 while (x) {
 	// empty
 }

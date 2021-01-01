@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const foo = "bar";
 console.log(`${foo}baz`);
 
@@ -58,7 +58,7 @@ console.log(`${foo}baz`);
 
 ### `1: formatted`
 
-```
+```ts
 console.log(`${1 * 2}foo`);
 
 ```
@@ -87,7 +87,7 @@ console.log(`${1 * 2}foo`);
 
 ### `2: formatted`
 
-```
+```ts
 console.log(`${1}foo${2}barbaz${3}`);
 
 ```
@@ -116,7 +116,7 @@ console.log(`${1}foo${2}barbaz${3}`);
 
 ### `3: formatted`
 
-```
+```ts
 console.log(`${1}foo` * 2);
 
 ```
@@ -154,7 +154,7 @@ console.log(`${1}foo` * 2);
 
 ### `4: formatted`
 
-```
+```ts
 console.log(`${1 * `${2}foo`}bar`);
 
 ```
@@ -183,7 +183,7 @@ console.log(`${1 * `${2}foo`}bar`);
 
 ### `5: formatted`
 
-```
+```ts
 console.log(`foo${1}`);
 
 ```
@@ -212,7 +212,7 @@ console.log(`foo${1}`);
 
 ### `6: formatted`
 
-```
+```ts
 console.log(`foobarbaz${"bat" + "bam"}boo`);
 
 ```
@@ -241,7 +241,7 @@ console.log(`foobarbaz${"bat" + "bam"}boo`);
 
 ### `7: formatted`
 
-```
+```ts
 console.log(`foo${1}${2}`);
 
 ```
@@ -255,7 +255,7 @@ console.log(`foo${1}${2}`);
 
 ### `8: formatted`
 
-```
+```ts
 console.log("foo" + "bar");
 
 ```
@@ -269,7 +269,7 @@ console.log("foo" + "bar");
 
 ### `9: formatted`
 
-```
+```ts
 console.log(foo() + "\n");
 
 ```

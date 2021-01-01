@@ -74,7 +74,7 @@ export function valueToNode(
 				);
 			}
 
-			const obj = (value as UnknownObject);
+			const obj = value as UnknownObject;
 			const props: JSObjectProperty[] = [];
 
 			for (let key in obj) {

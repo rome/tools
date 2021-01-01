@@ -12,8 +12,10 @@ export default function JSTaggedTemplateExpression(
 	builder: Builder,
 	node: JSTaggedTemplateExpression,
 ): Token {
-	return concat([
-		builder.tokenize(node.tag, node),
-		builder.tokenize(node.quasi, node),
-	]);
+	const tokens: Token[] = [builder.tokenize(node.tag, node)];
+	if (node.typeArguments) {
+		tokens.push(builder.tokenize(node.typeArguments, node));
+	}
+	tokens.push(builder.tokenize(node.quasi, node));
+	return concat(tokens);
 }

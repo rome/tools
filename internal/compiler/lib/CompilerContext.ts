@@ -163,7 +163,7 @@ export default class CompilerContext {
 		visitor: Visitor<State>,
 	): VisitorState<State> {
 		const state = this.visitorStates.assert(visitor);
-		return (state as VisitorState<State>);
+		return state as VisitorState<State>;
 	}
 
 	public async normalizeTransforms(transforms: Transforms): Promise<AnyVisitors> {

@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo++;
@@ -69,7 +69,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		--this.state.foo;
@@ -108,7 +108,7 @@ class Hello extends React.Component {
 
 ### `2: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo += "bar";
@@ -147,7 +147,7 @@ class Hello extends React.Component {
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		this.state.foo = undefined;
@@ -186,7 +186,7 @@ class Hello extends React.Component {
 
 ### `4: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		this.state.person.name.first = "bar";
@@ -231,7 +231,7 @@ class Hello extends React.Component {
 
 ### `5: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		this.state.person.name.first = "bar";
@@ -270,7 +270,7 @@ class Hello extends React.Component {
 
 ### `6: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	constructor() {
 		someFn();
@@ -308,7 +308,7 @@ class Hello extends React.Component {
 
 ### `7: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	constructor(props) {
 		super(props);
@@ -346,7 +346,7 @@ class Hello extends React.Component {
 
 ### `8: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentWillMount() {
 		this.state.foo = "bar";
@@ -381,7 +381,7 @@ class Hello extends React.Component {
 
 ### `9: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		this.state.foo = "bar";
@@ -416,7 +416,7 @@ class Hello extends React.Component {
 
 ### `10: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentWillReceiveProps() {
 		this.state.foo = "bar";
@@ -451,7 +451,7 @@ class Hello extends React.Component {
 
 ### `11: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	shouldComponentUpdate() {
 		this.state.foo = "bar";
@@ -486,7 +486,7 @@ class Hello extends React.Component {
 
 ### `12: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentWillUpdate() {
 		this.state.foo = "bar";
@@ -521,7 +521,7 @@ class Hello extends React.Component {
 
 ### `13: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidUpdate() {
 		this.state.foo = "bar";
@@ -556,7 +556,7 @@ class Hello extends React.Component {
 
 ### `14: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentWillUnmount() {
 		this.state.foo = "bar";
@@ -591,7 +591,7 @@ class Hello extends React.Component {
 
 ### `15: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	componentWillUnmount() {
 		this.state.foo = "bar";
@@ -626,7 +626,7 @@ class Hello extends Component {
 
 ### `16: formatted`
 
-```
+```tsx
 class Hello extends React.PureComponent {
 	componentWillUnmount() {
 		this.state.foo = "bar";
@@ -661,7 +661,7 @@ class Hello extends React.PureComponent {
 
 ### `17: formatted`
 
-```
+```tsx
 class Hello extends PureComponent {
 	componentWillUnmount() {
 		this.state.foo = "bar";
@@ -679,7 +679,7 @@ class Hello extends PureComponent {
 
 ### `18: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		var obj = {state: {}};
@@ -702,7 +702,7 @@ class Hello extends React.Component {
 
 ### `19: formatted`
 
-```
+```tsx
 var Hello = "foo";
 module.exports = {};
 
@@ -717,7 +717,7 @@ module.exports = {};
 
 ### `20: formatted`
 
-```
+```tsx
 class Hello {
 	getFoo() {
 		this.state.foo = "bar";
@@ -736,7 +736,7 @@ class Hello {
 
 ### `21: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	constructor() {
 		this.state.foo = "bar";
@@ -754,7 +754,7 @@ class Hello extends React.Component {
 
 ### `22: formatted`
 
-```
+```tsx
 class Hello extends Component {
 	constructor() {
 		this.state.foo = "bar";
@@ -772,7 +772,7 @@ class Hello extends Component {
 
 ### `23: formatted`
 
-```
+```tsx
 class Hello extends React.PureComponent {
 	constructor() {
 		this.state.foo = "bar";
@@ -790,7 +790,7 @@ class Hello extends React.PureComponent {
 
 ### `24: formatted`
 
-```
+```tsx
 class Hello extends PureComponent {
 	constructor() {
 		this.state.foo = "bar";
@@ -808,7 +808,7 @@ class Hello extends PureComponent {
 
 ### `25: formatted`
 
-```
+```tsx
 class OneComponent extends Component {
 	constructor() {
 		super();
@@ -832,7 +832,7 @@ class OneComponent extends Component {
 
 ### `26: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	testFunc() {
 		typeof this.state.person.name;
@@ -854,7 +854,7 @@ class Hello extends React.Component {
 
 ### `27: formatted`
 
-```
+```tsx
 class Example extends React.Component {
 	constructor(props) {
 		super(props);
@@ -875,7 +875,7 @@ class Example extends React.Component {
 
 ### `28: formatted`
 
-```
+```tsx
 class Example {
 	constructor(props) {
 		this.state = {
@@ -895,7 +895,7 @@ class Example {
 
 ### `29: formatted`
 
-```
+```tsx
 class Example extends SuperExample {
 	constructor(props) {
 		super(props);
@@ -916,7 +916,7 @@ class Example extends SuperExample {
 
 ### `30: formatted`
 
-```
+```tsx
 class Example extends React.SuperExample {
 	constructor(props) {
 		super(props);
@@ -937,7 +937,7 @@ class Example extends React.SuperExample {
 
 ### `31: formatted`
 
-```
+```tsx
 class Example extends SuperExample.Component {
 	constructor(props) {
 		super(props);
@@ -958,7 +958,7 @@ class Example extends SuperExample.Component {
 
 ### `32: formatted`
 
-```
+```tsx
 class Example extends SuperExample.Component {
 	someOtherFunction(props) {
 		this.state = {

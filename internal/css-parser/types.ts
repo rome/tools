@@ -10,10 +10,12 @@ import {
 	CSSBlock,
 	CSSDimension,
 	CSSFunction,
+	CSSHash,
 	CSSIdentifier,
 	CSSNumber,
 	CSSPercentage,
 	CSSRaw,
+	CSSWhitespace,
 } from "@internal/ast";
 
 export interface CSSParserOptions extends Omit<
@@ -74,4 +76,6 @@ export type AnyCSSValue =
 	| CSSPercentage
 	| CSSIdentifier
 	| CSSNumber
+	| CSSHash
+	| CSSWhitespace
 	| CSSRaw;

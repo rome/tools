@@ -15,11 +15,11 @@ export default function getCreateElementProp(
 		return;
 	}
 
-	return (node.arguments[1].properties.find((prop) => {
+	return node.arguments[1].properties.find((prop) => {
 		return (
 			prop.type === "JSObjectProperty" &&
 			prop.key.value.type === "JSIdentifier" &&
 			prop.key.value.name === propName
 		);
-	}) as JSObjectProperty | undefined);
+	}) as JSObjectProperty | undefined;
 }

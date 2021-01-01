@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 foobar;
 
 ```

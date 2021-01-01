@@ -5,5 +5,5 @@ export default function CSSIdentifier(
 	builder: Builder,
 	node: CSSIdentifier,
 ): Token {
-	throw new Error("unimplemented");
+	return node.value;
 }

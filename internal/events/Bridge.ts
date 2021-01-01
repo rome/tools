@@ -357,7 +357,7 @@ export default class Bridge<
 
 		buf.valueEvent.subscribe((value) => {
 			process.nextTick(() => {
-				this.handleMessage((value as BridgeMessage));
+				this.handleMessage(value as BridgeMessage);
 			});
 		});
 

@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <article role="article" />;
 
 ```
@@ -63,7 +63,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <button role="button" />;
 
 ```
@@ -95,7 +95,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <h1 role="heading" aria-level="1" />;
 
 ```
@@ -127,7 +127,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <h1 role="heading" />;
 
 ```
@@ -159,7 +159,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <dialog role="dialog" />;
 
 ```
@@ -190,7 +190,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <input type="checkbox" role="checkbox" />;
 
 ```
@@ -222,7 +222,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <figure role="figure" />;
 
 ```
@@ -254,7 +254,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <form role="form" />;
 
 ```
@@ -286,7 +286,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <table role="grid" />;
 
 ```
@@ -318,7 +318,7 @@
 
 ### `9: formatted`
 
-```
+```tsx
 <td role="gridcell" />;
 
 ```
@@ -350,7 +350,7 @@
 
 ### `10: formatted`
 
-```
+```tsx
 <fieldset role="group" />;
 
 ```
@@ -381,7 +381,7 @@
 
 ### `11: formatted`
 
-```
+```tsx
 <img src="foo" alt="bar" role="img" />;
 
 ```
@@ -413,7 +413,7 @@
 
 ### `12: formatted`
 
-```
+```tsx
 <a role="link" />;
 
 ```
@@ -444,7 +444,7 @@
 
 ### `13: formatted`
 
-```
+```tsx
 <link role="link" />;
 
 ```
@@ -476,7 +476,7 @@
 
 ### `14: formatted`
 
-```
+```tsx
 <ol role="list" />;
 
 ```
@@ -508,7 +508,7 @@
 
 ### `15: formatted`
 
-```
+```tsx
 <ul role="list" />;
 
 ```
@@ -540,7 +540,7 @@
 
 ### `16: formatted`
 
-```
+```tsx
 <select role="listbox" />;
 
 ```
@@ -572,7 +572,7 @@
 
 ### `17: formatted`
 
-```
+```tsx
 <li role="listitem" />;
 
 ```
@@ -604,7 +604,7 @@
 
 ### `18: formatted`
 
-```
+```tsx
 <nav role="navigation" />;
 
 ```
@@ -636,7 +636,7 @@
 
 ### `19: formatted`
 
-```
+```tsx
 <option role="option" />;
 
 ```
@@ -668,7 +668,7 @@
 
 ### `20: formatted`
 
-```
+```tsx
 <tr role="row" />;
 
 ```
@@ -700,7 +700,7 @@
 
 ### `21: formatted`
 
-```
+```tsx
 <tbody role="rowgroup" />;
 
 ```
@@ -732,7 +732,7 @@
 
 ### `22: formatted`
 
-```
+```tsx
 <tfoot role="rowgroup" />;
 
 ```
@@ -764,7 +764,7 @@
 
 ### `23: formatted`
 
-```
+```tsx
 <thead role="rowgroup" />;
 
 ```
@@ -796,7 +796,7 @@
 
 ### `24: formatted`
 
-```
+```tsx
 <th scope="row" role="rowheader" />;
 
 ```
@@ -827,7 +827,7 @@
 
 ### `25: formatted`
 
-```
+```tsx
 <input type="search" role="searchbox" />;
 
 ```
@@ -859,7 +859,7 @@
 
 ### `26: formatted`
 
-```
+```tsx
 <table role="table" />;
 
 ```
@@ -891,7 +891,7 @@
 
 ### `27: formatted`
 
-```
+```tsx
 <dt role="term" />;
 
 ```
@@ -923,7 +923,7 @@
 
 ### `28: formatted`
 
-```
+```tsx
 <textarea role="textbox" />;
 
 ```
@@ -954,7 +954,7 @@
 
 ### `29: formatted`
 
-```
+```tsx
 <input type="text" role="textbox" />;
 
 ```
@@ -968,7 +968,7 @@
 
 ### `30: formatted`
 
-```
+```tsx
 <article role="presentation" />;
 
 ```
@@ -982,7 +982,7 @@
 
 ### `31: formatted`
 
-```
+```tsx
 <Button role="button" />;
 
 ```
@@ -996,7 +996,7 @@
 
 ### `32: formatted`
 
-```
+```tsx
 <span />;
 
 ```

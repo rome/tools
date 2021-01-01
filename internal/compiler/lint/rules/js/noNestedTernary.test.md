@@ -23,7 +23,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let thing = foo ? bar : baz === qux ? quxx : foobar;
 
 ```
@@ -51,7 +51,7 @@ let thing = foo ? bar : baz === qux ? quxx : foobar;
 
 ### `1: formatted`
 
-```
+```ts
 let thing = foo ? bar ? boo : foo : baz ? boo : foo;
 
 ```
@@ -75,7 +75,7 @@ let thing = foo ? bar ? boo : foo : baz ? boo : foo;
 
 ### `2: formatted`
 
-```
+```ts
 foo ? baz === qux ? quxx() : foobar() : bar();
 
 ```
@@ -89,7 +89,7 @@ foo ? baz === qux ? quxx() : foobar() : bar();
 
 ### `3: formatted`
 
-```
+```ts
 let thing = foo ? bar : foobar;
 
 ```
@@ -103,7 +103,7 @@ let thing = foo ? bar : foobar;
 
 ### `4: formatted`
 
-```
+```ts
 let thing = foo ? bar || boo : foo || bar;
 
 ```
@@ -117,7 +117,7 @@ let thing = foo ? bar || boo : foo || bar;
 
 ### `5: formatted`
 
-```
+```ts
 let thing = foo ? bar && boo : foo && bar;
 
 ```
@@ -131,7 +131,7 @@ let thing = foo ? bar && boo : foo && bar;
 
 ### `6: formatted`
 
-```
+```ts
 let thing = foo || baz ? bar || boo : foo || bar;
 
 ```
@@ -145,7 +145,7 @@ let thing = foo || baz ? bar || boo : foo || bar;
 
 ### `7: formatted`
 
-```
+```ts
 let thing = foo && baz ? bar || boo : foo && bar;
 
 ```
@@ -159,7 +159,7 @@ let thing = foo && baz ? bar || boo : foo && bar;
 
 ### `8: formatted`
 
-```
+```ts
 let thing = foo || baz ? bar || boo : foo && bar;
 
 ```
@@ -173,7 +173,7 @@ let thing = foo || baz ? bar || boo : foo && bar;
 
 ### `9: formatted`
 
-```
+```ts
 if (foo) {
 	thing = bar;
 } else if (baz === qux) {

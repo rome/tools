@@ -305,7 +305,7 @@ export default createServerCommand<Flags>({
 
 					if (editorConfigTabExtensions.length > 0) {
 						editorConfigTemplate = dedent`
-							[{${editorConfigTabExtensions.sort().join(", ")}}]
+							[{${editorConfigTabExtensions.sort().join(",")}}]
 							end_of_line = lf
 							trim_trailing_whitespace = true
 							insert_final_newline = true

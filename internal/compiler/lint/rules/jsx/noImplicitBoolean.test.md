@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <input disabled={true} />;
 
 ```
@@ -42,7 +42,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <input disabled={false} />;
 
 ```
@@ -56,7 +56,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <input disabled={""} />;
 
 ```
@@ -70,7 +70,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <input disabled={0} />;
 
 ```
@@ -84,7 +84,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <input disabled={undefined} />;
 
 ```
@@ -98,7 +98,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <input disabled="false" />;
 
 ```

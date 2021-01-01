@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let foo = /^abc/;
 foo;
 
@@ -52,7 +52,7 @@ foo;
 
 ### `1: formatted`
 
-```
+```ts
 let foo = /foobar/;
 foo;
 
@@ -79,7 +79,7 @@ foo;
 
 ### `2: formatted`
 
-```
+```ts
 if (foo.match(/^abc/)) {
 	foo;
 }
@@ -107,7 +107,7 @@ if (foo.match(/^abc/)) {
 
 ### `3: formatted`
 
-```
+```ts
 let foo = /\]/;
 foo;
 
@@ -134,7 +134,7 @@ foo;
 
 ### `4: formatted`
 
-```
+```ts
 let foo = /\[/;
 foo;
 
@@ -161,7 +161,7 @@ foo;
 
 ### `5: formatted`
 
-```
+```ts
 let foo = /\[\[\]a-z/;
 foo;
 
@@ -176,7 +176,7 @@ foo;
 
 ### `6: formatted`
 
-```
+```ts
 let foo = /^abc[a-zA-Z]/;
 foo;
 
@@ -191,7 +191,7 @@ foo;
 
 ### `7: formatted`
 
-```
+```ts
 let regExp = new RegExp("^abc[]");
 regExp;
 
@@ -206,7 +206,7 @@ regExp;
 
 ### `8: formatted`
 
-```
+```ts
 let foo = /^abc/;
 foo;
 
@@ -221,7 +221,7 @@ foo;
 
 ### `9: formatted`
 
-```
+```ts
 let foo = /[[]/;
 foo;
 
@@ -236,7 +236,7 @@ foo;
 
 ### `10: formatted`
 
-```
+```ts
 let foo = /[\]]/;
 foo;
 
@@ -251,7 +251,7 @@ foo;
 
 ### `11: formatted`
 
-```
+```ts
 let foo = /[a-zA-Z[]/;
 foo;
 
@@ -266,7 +266,7 @@ foo;
 
 ### `12: formatted`
 
-```
+```ts
 let foo = /[[]/;
 foo;
 
@@ -281,7 +281,7 @@ foo;
 
 ### `13: formatted`
 
-```
+```ts
 let foo = /[[a-z[]\]/;
 foo;
 
@@ -296,7 +296,7 @@ foo;
 
 ### `14: formatted`
 
-```
+```ts
 let foo = /[\-[\]\/{}()*+?.\\^$|]/g;
 foo;
 
@@ -311,7 +311,7 @@ foo;
 
 ### `15: formatted`
 
-```
+```ts
 let foo = /[\]]/yu;
 foo;
 
@@ -326,7 +326,7 @@ foo;
 
 ### `16: formatted`
 
-```
+```ts
 let foo = /[\]]/s;
 foo;
 
@@ -341,7 +341,7 @@ foo;
 
 ### `17: formatted`
 
-```
+```ts
 let foo = /\[\]/;
 foo;
 

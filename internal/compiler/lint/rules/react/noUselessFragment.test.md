@@ -33,7 +33,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 {foo};
 
 ```
@@ -67,7 +67,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <p>
 	foo
 </p>;
@@ -101,7 +101,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 
 
 ```
@@ -135,7 +135,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 foo;
 
 ```
@@ -169,7 +169,7 @@ foo;
 
 ### `4: formatted`
 
-```
+```tsx
 foo;
 
 ```
@@ -211,7 +211,7 @@ foo;
 
 ### `5: formatted`
 
-```
+```tsx
 <section>
 	<div />
 	<div />
@@ -228,7 +228,7 @@ foo;
 
 ### `6: formatted`
 
-```
+```tsx
 <>
 	<Foo />
 	<Bar />
@@ -245,7 +245,7 @@ foo;
 
 ### `7: formatted`
 
-```
+```tsx
 <>
 	foo 
 	{bar}
@@ -262,7 +262,7 @@ foo;
 
 ### `8: formatted`
 
-```
+```tsx
 <>
 	 
 	{foo}
@@ -279,7 +279,7 @@ foo;
 
 ### `9: formatted`
 
-```
+```tsx
 const cat = <>
 	meow
 </>;
@@ -295,7 +295,7 @@ const cat = <>
 
 ### `10: formatted`
 
-```
+```tsx
 function cat() {
 	return <>
 		meow
@@ -313,7 +313,7 @@ function cat() {
 
 ### `11: formatted`
 
-```
+```tsx
 function cat() {
 	return <>
 		meow
@@ -331,7 +331,7 @@ function cat() {
 
 ### `12: formatted`
 
-```
+```tsx
 function cat() {
 	const foo = <>
 		meow
@@ -350,7 +350,7 @@ function cat() {
 
 ### `13: formatted`
 
-```
+```tsx
 <SomeComponent>
 	<>
 		<div />
@@ -369,9 +369,26 @@ function cat() {
 
 ### `14: formatted`
 
-```
+```tsx
 <Fragment key={item.id}>
 	{item.value}
 </Fragment>;
+
+```
+
+### `15`
+
+```
+✔ No known problems!
+
+```
+
+### `15: formatted`
+
+```tsx
+true
+	? <div />
+	: <>
+		</>;
 
 ```

@@ -104,6 +104,7 @@ import {
 	TSObjectTypeAnnotation,
 	TSParenthesizedType,
 	TSPropertySignature,
+	TSRestType,
 	TSSignatureDeclarationMeta,
 	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
@@ -968,6 +969,12 @@ function parseTSMappedType(parser: JSParser): TSMappedType {
 		"ts mapped type parameter",
 	);
 	const typeParameter = parseTSMappedTypeParameter(parser);
+
+	let nameType: AnyTSPrimary | undefined;
+	if (isContextual(parser, "as")) {
+		nameType = tsNextThenParseType(parser);
+	}
+
 	expectClosing(parser, paramOpenContext);
 
 	let optional: TSMappedTypeBoolean;
@@ -991,13 +998,14 @@ function parseTSMappedType(parser: JSParser): TSMappedType {
 			typeAnnotation,
 			optional,
 			readonly,
+			nameType,
 		},
 	);
 }
 
 function parseTSTupleType(parser: JSParser): TSTupleType {
 	const start = parser.getPosition();
-	const elementDefs = parseTSBracketedList(
+	const elementTypes = parseTSBracketedList(
 		parser,
 		"TupleElementTypes",
 		parseTSTupleElementType,
@@ -1005,36 +1013,25 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 		/* skipFirstToken */ false,
 	);
 
-	// Validate the elementTypes to ensure:
-	//   No mandatory elements may follow optional elements
+	let elemBefore: TSTupleElement | null = null;
 
-	//   If there's a rest element, it must be at the end of the tuple
-	let seenOptionalElement = false;
-	const elementTypes: TSTupleElement[] = [];
-	let rest: undefined | TSTupleElement;
-	for (const {type, isRest} of elementDefs) {
-		if (rest !== undefined) {
-			// No elements should come after a rest, we should have already produced an error
-			continue;
-		}
-
-		if (type.optional) {
-			seenOptionalElement = true;
-		} else if (seenOptionalElement && !isRest) {
+	for (const elem of elementTypes) {
+		// Validate the elementTypes to ensure:
+		//   No mandatory elements may follow optional elements
+		if (
+			elemBefore?.optional &&
+			!elem.optional &&
+			elem.typeAnnotation.type !== "TSRestType"
+		) {
 			unexpectedDiagnostic(
 				parser,
 				{
-					loc: type.loc,
+					loc: elem.loc,
 					description: descriptions.JS_PARSER.TS_REQUIRED_FOLLOWS_OPTIONAL,
 				},
 			);
 		}
-
-		if (isRest) {
-			rest = type;
-		} else {
-			elementTypes.push(type);
-		}
+		elemBefore = elem;
 	}
 
 	return parser.finishNode(
@@ -1042,7 +1039,21 @@ function parseTSTupleType(parser: JSParser): TSTupleType {
 		{
 			type: "TSTupleType",
 			elementTypes,
-			rest,
+		},
+	);
+}
+
+function parseTSRest(parser: JSParser): TSRestType {
+	const start = parser.getPosition();
+	next(parser);
+
+	const argument = parseTSType(parser);
+
+	return parser.finishNode(
+		start,
+		{
+			type: "TSRestType",
+			argument,
 		},
 	);
 }
@@ -1054,7 +1065,10 @@ function parseTSTupleElementTypeInner(
 	typeAnnotation: AnyTSPrimary;
 	optional: boolean;
 } {
-	let typeAnnotation = parseTSType(parser);
+	let typeAnnotation = match(parser, tt.ellipsis)
+		? parseTSRest(parser)
+		: parseTSType(parser);
+
 	let optional = eat(parser, tt.question);
 	let name: undefined | JSBindingIdentifier;
 
@@ -1094,27 +1108,15 @@ function parseTSTupleElementTypeInner(
 	};
 }
 
-function parseTSTupleElementType(
-	parser: JSParser,
-): {
-	type: TSTupleElement;
-	isRest: boolean;
-} {
+function parseTSTupleElementType(parser: JSParser): TSTupleElement {
 	const start = parser.getPosition();
-	let isRest = false;
-	let typeAnnotation;
-	let optional;
-	let name;
-
-	// parses `...TsType[]`
-	if (eat(parser, tt.ellipsis)) {
-		isRest = true;
-		({typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser));
+	const {typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser);
+	if (
+		typeAnnotation.type === "TSRestType" &&
+		typeAnnotation.argument.type === "TSArrayType"
+	) {
 		hasCommaAfterRest(parser);
-	} else {
-		({typeAnnotation, optional, name} = parseTSTupleElementTypeInner(parser));
 	}
-
 	const elem = parser.finishNode(
 		start,
 		{
@@ -1125,7 +1127,7 @@ function parseTSTupleElementType(
 		},
 	);
 
-	if (optional && isRest) {
+	if (optional && typeAnnotation.type === "TSRestType") {
 		unexpectedDiagnostic(
 			parser,
 			{
@@ -1135,10 +1137,7 @@ function parseTSTupleElementType(
 		);
 	}
 
-	return {
-		isRest,
-		type: elem,
-	};
+	return elem;
 }
 
 function parseTSParenthesizedType(parser: JSParser): TSParenthesizedType {
@@ -1253,9 +1252,9 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 				next(parser);
 				return parser.finishNode(
 					start,
-					({
+					{
 						type,
-					} as AnyTSPrimary),
+					} as AnyTSPrimary,
 				);
 			}
 			return parseTSTypeReference(parser);

@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <MyComponent children={"foo"} />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 React.createElement("div", {children: "foo"});
 
 ```
@@ -80,7 +80,7 @@ React.createElement("div", {children: "foo"});
 
 ### `2: formatted`
 
-```
+```tsx
 createElement("div", {children: "foo"});
 
 ```
@@ -94,7 +94,7 @@ createElement("div", {children: "foo"});
 
 ### `3: formatted`
 
-```
+```tsx
 <MyComponent>
 	<AnotherComponent />
 </MyComponent>;
@@ -110,7 +110,7 @@ createElement("div", {children: "foo"});
 
 ### `4: formatted`
 
-```
+```tsx
 React.createElement("div", {}, "children");
 
 ```
@@ -124,7 +124,7 @@ React.createElement("div", {}, "children");
 
 ### `5: formatted`
 
-```
+```tsx
 React.createElement("div", child1, "child2");
 
 ```

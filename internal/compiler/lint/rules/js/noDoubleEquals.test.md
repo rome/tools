@@ -32,7 +32,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 foo == bar;
 
 ```
@@ -46,7 +46,7 @@ foo == bar;
 
 ### `1: formatted`
 
-```
+```ts
 foo == null;
 
 ```
@@ -60,7 +60,7 @@ foo == null;
 
 ### `2: formatted`
 
-```
+```ts
 foo != null;
 
 ```
@@ -74,7 +74,7 @@ foo != null;
 
 ### `3: formatted`
 
-```
+```ts
 null == foo;
 
 ```
@@ -88,7 +88,7 @@ null == foo;
 
 ### `4: formatted`
 
-```
+```ts
 null != foo;
 
 ```

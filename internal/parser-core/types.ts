@@ -64,7 +64,7 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 
 export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
 	Partial<Types["state"]>,
-	TokenValues<Types["tokens"]>,
+	TokenValues<Types["tokens"]>
 ];
 
 //# Node types

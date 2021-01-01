@@ -7,22 +7,17 @@
 
 import {AnyNode, JSConditionalExpression, JSIfStatement} from "@internal/ast";
 
+const conditionals = new Set([
+	"JSConditionalExpression",
+	"JSIfStatement",
+	"JSLogicalExpression",
+]);
+
 export function isConditional(
 	node: undefined | AnyNode,
 ): node is JSConditionalExpression | JSIfStatement {
 	if (node === undefined) {
 		return false;
 	}
-
-	switch (node.type) {
-		case "JSConditionalExpression":
-		case "JSIfStatement":
-			return true;
-
-		case "JSLogicalExpression":
-			return true;
-
-		default:
-			return false;
-	}
+	return conditionals.has(node.type);
 }

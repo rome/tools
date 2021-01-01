@@ -42,7 +42,7 @@ export default class FatalErrorHandler {
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
 	public wrap<T extends (...args: any[]) => any>(callback: T): T {
-		return (((...args: any[]): any => {
+		return ((...args: any[]): any => {
 			try {
 				const res = callback(...args);
 				if (res instanceof Promise) {
@@ -53,7 +53,7 @@ export default class FatalErrorHandler {
 				this.handle(err);
 				throw err;
 			}
-		}) as T);
+		}) as T;
 	}
 
 	public setupGlobalHandlers(): VoidCallback {

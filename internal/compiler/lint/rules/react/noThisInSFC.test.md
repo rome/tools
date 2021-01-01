@@ -52,7 +52,7 @@ undefined
 
 ### `1: formatted`
 
-```
+```tsx
 const Foo = () => {
 	return <div>
 		{this.props.bar}
@@ -85,7 +85,7 @@ const Foo = () => {
 
 ### `2: formatted`
 
-```
+```tsx
 const Foo = () => {
 	const {bar} = this.props;
 	return <div>
@@ -120,7 +120,7 @@ const Foo = () => {
 
 ### `3: formatted`
 
-```
+```tsx
 function Foo(props) {
 	return <div>
 		{this.props.bar}
@@ -153,7 +153,7 @@ function Foo(props) {
 
 ### `4: formatted`
 
-```
+```tsx
 function Foo(props) {
 	const {bar} = this.props;
 	return <div>
@@ -194,7 +194,7 @@ function Foo(props) {
 
 ### `5: formatted`
 
-```
+```tsx
 function Foo(props, context) {
 	return <div>
 		{this.context.foo ? this.props.bar : ""}
@@ -233,7 +233,7 @@ function Foo(props, context) {
 
 ### `6: formatted`
 
-```
+```tsx
 function Foo(props, context) {
 	const {foo} = this.context;
 	const {bar} = this.props;
@@ -274,7 +274,7 @@ function Foo(props, context) {
 
 ### `7: formatted`
 
-```
+```tsx
 function Foo(props) {
 	if (this.state.loading) {
 		return <Loader />;
@@ -316,7 +316,7 @@ function Foo(props) {
 
 ### `8: formatted`
 
-```
+```tsx
 function Foo(props) {
 	const {loading} = this.state;
 	const {bar} = this.props;
@@ -355,7 +355,7 @@ function Foo(props) {
 
 ### `9: formatted`
 
-```
+```tsx
 React.memo(function Foo(props) {
 	return <div>
 		{this.props.bar}
@@ -389,7 +389,7 @@ React.memo(function Foo(props) {
 
 ### `10: formatted`
 
-```
+```tsx
 React.forwardRef((props, ref) =>
 	<div>
 		{this.props.bar}
@@ -423,7 +423,7 @@ React.forwardRef((props, ref) =>
 
 ### `11: formatted`
 
-```
+```tsx
 const Foo = React.forwardRef((props, ref) =>
 	<div>
 		{this.props.bar}
@@ -457,7 +457,7 @@ const Foo = React.forwardRef((props, ref) =>
 
 ### `12: formatted`
 
-```
+```tsx
 const Foo = React.memo((props, ref) =>
 	<div>
 		{this.props.bar}
@@ -475,7 +475,7 @@ const Foo = React.memo((props, ref) =>
 
 ### `13: formatted`
 
-```
+```tsx
 function Foo(bar) {
 	return <div>
 		{bar}
@@ -493,7 +493,7 @@ function Foo(bar) {
 
 ### `14: formatted`
 
-```
+```tsx
 function Foo(props) {
 	return <div>
 		{props.bar}
@@ -511,7 +511,7 @@ function Foo(props) {
 
 ### `15: formatted`
 
-```
+```tsx
 function Foo(props) {
 	const {bar} = props;
 	return <div>
@@ -530,7 +530,7 @@ function Foo(props) {
 
 ### `16: formatted`
 
-```
+```tsx
 function Foo({bar}) {
 	return <div>
 		{bar}
@@ -548,7 +548,7 @@ function Foo({bar}) {
 
 ### `17: formatted`
 
-```
+```tsx
 function Foo(props, context) {
 	return <div>
 		{context.foo ? props.bar : ""}
@@ -566,7 +566,7 @@ function Foo(props, context) {
 
 ### `18: formatted`
 
-```
+```tsx
 function Foo(props, context) {
 	const {foo} = context;
 	const {bar} = props;
@@ -586,7 +586,7 @@ function Foo(props, context) {
 
 ### `19: formatted`
 
-```
+```tsx
 function Foo({bar}, {foo}) {
 	return <div>
 		{foo ? bar : ""}
@@ -604,7 +604,7 @@ function Foo({bar}, {foo}) {
 
 ### `20: formatted`
 
-```
+```tsx
 class MyComponent extends React.Component {
 	foo() {
 		return <div>
@@ -628,7 +628,7 @@ class MyComponent extends React.Component {
 
 ### `21: formatted`
 
-```
+```tsx
 React.memo(function Foo(props) {
 	return <div>
 		{props.bar}
@@ -646,7 +646,7 @@ React.memo(function Foo(props) {
 
 ### `22: formatted`
 
-```
+```tsx
 React.forwardRef((props, ref) =>
 	<div>
 		{props.bar}
@@ -664,7 +664,7 @@ React.forwardRef((props, ref) =>
 
 ### `23: formatted`
 
-```
+```tsx
 const Foo = React.forwardRef((props, ref) =>
 	<div>
 		{props.bar}
@@ -682,7 +682,7 @@ const Foo = React.forwardRef((props, ref) =>
 
 ### `24: formatted`
 
-```
+```tsx
 const Foo = React.memo((props, ref) =>
 	<div>
 		{props.bar}

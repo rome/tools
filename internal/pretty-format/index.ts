@@ -116,7 +116,7 @@ export default function prettyFormat(
 				return formatFunction(obj, opts);
 
 			case "object":
-				return formatObjectish((obj as Objectish), opts);
+				return formatObjectish(obj as Objectish, opts);
 
 			default:
 				throw new Error("Unknown type");
@@ -185,7 +185,7 @@ function formatFunction(val: Function, opts: FormatOptions): AnyMarkup {
 	}
 
 	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	return formatObject(label, (val as any), opts, []);
+	return formatObject(label, val as any, opts, []);
 }
 
 function getExtraObjectProps(

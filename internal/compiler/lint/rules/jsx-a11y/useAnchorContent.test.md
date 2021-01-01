@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```jsx
 <a />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```jsx
 <a>
 	<TextWrapper aria-hidden={true} />
 </a>;
@@ -67,7 +67,7 @@
 
 ### `2: formatted`
 
-```
+```jsx
 <a>
 	Anchor Content!
 </a>;
@@ -83,7 +83,7 @@
 
 ### `3: formatted`
 
-```
+```jsx
 <a>
 	<TextWrapper />
 </a>;
@@ -99,7 +99,7 @@
 
 ### `4: formatted`
 
-```
+```jsx
 <a dangerouslySetInnerHTML={{__html: "foo"}} />;
 
 ```
@@ -113,7 +113,7 @@
 
 ### `5: formatted`
 
-```
+```jsx
 <a>
 	<TextWrapper aria-hidden={true} />
 	 visible content

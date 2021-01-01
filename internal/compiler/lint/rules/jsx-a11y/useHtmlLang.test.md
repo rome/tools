@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <html />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <html {...props} />;
 
 ```
@@ -126,7 +126,7 @@ undefined
 
 ### `4: formatted`
 
-```
+```tsx
 <html lang={""} />;
 
 ```
@@ -153,7 +153,7 @@ undefined
 
 ### `5: formatted`
 
-```
+```tsx
 <html lang={""} />;
 
 ```
@@ -180,7 +180,7 @@ undefined
 
 ### `6: formatted`
 
-```
+```tsx
 <html lang={undefined} />;
 
 ```
@@ -207,7 +207,7 @@ undefined
 
 ### `7: formatted`
 
-```
+```tsx
 <html lang={false} />;
 
 ```
@@ -234,7 +234,7 @@ undefined
 
 ### `8: formatted`
 
-```
+```tsx
 <html lang={true} />;
 
 ```
@@ -261,7 +261,7 @@ undefined
 
 ### `9: formatted`
 
-```
+```tsx
 <html lang={42} />;
 
 ```
@@ -275,7 +275,7 @@ undefined
 
 ### `10: formatted`
 
-```
+```tsx
 <html lang="en" />;
 
 ```
@@ -289,7 +289,7 @@ undefined
 
 ### `11: formatted`
 
-```
+```tsx
 <html lang={language} />;
 
 ```
@@ -303,7 +303,7 @@ undefined
 
 ### `12: formatted`
 
-```
+```tsx
 <html lang={() => language} />;
 
 ```
@@ -317,7 +317,7 @@ undefined
 
 ### `13: formatted`
 
-```
+```tsx
 <Html lang={42} />;
 
 ```

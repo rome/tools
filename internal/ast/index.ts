@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:52a01c652b90aff283bc92bbb3f34791b1668346,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:1c1163b6d0c13aa9082fce475588a6b1950fc73a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -20,13 +20,16 @@ export * from "./css/core/CSSBlock";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
+export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
+export * from "./css/core/CSSWhitespace";
 export * from "./html/attributes/HTMLAttribute";
+export * from "./html/tags/HTMLCdataTag";
 export * from "./html/tags/HTMLDoctypeTag";
 export * from "./html/tags/HTMLElement";
 export * from "./html/core/HTMLIdentifier";
@@ -236,6 +239,7 @@ export * from "./js/typescript/TSObjectTypeAnnotation";
 export * from "./js/typescript/TSParenthesizedType";
 export * from "./js/typescript/TSPropertySignature";
 export * from "./js/typescript/TSQualifiedName";
+export * from "./js/typescript/TSRestType";
 export * from "./js/typescript/TSSignatureDeclarationMeta";
 export * from "./js/typescript/TSStringKeywordTypeAnnotation";
 export * from "./js/typescript/TSStringLiteralTypeAnnotation";
@@ -267,13 +271,16 @@ export type AnyNode =
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
+	| n.CSSHash
 	| n.CSSIdentifier
 	| n.CSSNumber
 	| n.CSSPercentage
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
+	| n.CSSWhitespace
 	| n.HTMLAttribute
+	| n.HTMLCdataTag
 	| n.HTMLDoctypeTag
 	| n.HTMLElement
 	| n.HTMLIdentifier
@@ -483,6 +490,7 @@ export type AnyNode =
 	| n.TSParenthesizedType
 	| n.TSPropertySignature
 	| n.TSQualifiedName
+	| n.TSRestType
 	| n.TSSignatureDeclarationMeta
 	| n.TSStringKeywordTypeAnnotation
 	| n.TSStringLiteralTypeAnnotation

@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 
 
 ```
@@ -41,7 +41,7 @@
 
 ### `1: formatted`
 
-```
+```ts
 const test = {debugger: 1};
 test.debugger;
 

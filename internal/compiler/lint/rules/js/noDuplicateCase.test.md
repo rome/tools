@@ -31,7 +31,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const expr = "a";
 switch (expr) {
 	case "a":
@@ -77,7 +77,7 @@ switch (expr) {
 
 ### `1: formatted`
 
-```
+```ts
 const expr = 3;
 switch (expr) {
 	case 1:
@@ -121,7 +121,7 @@ switch (expr) {
 
 ### `2: formatted`
 
-```
+```ts
 const expr = 3;
 switch (expr) {
 	case 1:
@@ -165,7 +165,7 @@ switch (expr) {
 
 ### `3: formatted`
 
-```
+```ts
 const foo = "a";
 switch ("a") {
 	case foo:
@@ -205,7 +205,7 @@ switch ("a") {
 
 ### `4: formatted`
 
-```
+```ts
 const foo = "a";
 switch ("a") {
 	case "foo":
@@ -245,7 +245,7 @@ switch ("a") {
 
 ### `5: formatted`
 
-```
+```ts
 const foo = "a";
 switch ("a") {
 	case null:
@@ -267,7 +267,7 @@ switch ("a") {
 
 ### `6: formatted`
 
-```
+```ts
 const expr = "a";
 switch (expr) {
 	case "a":
@@ -293,7 +293,7 @@ switch (expr) {
 
 ### `7: formatted`
 
-```
+```ts
 const expr = 3;
 switch (expr) {
 	case 1:
@@ -319,7 +319,7 @@ switch (expr) {
 
 ### `8: formatted`
 
-```
+```ts
 const expr = 3;
 switch (expr) {
 	case 1:

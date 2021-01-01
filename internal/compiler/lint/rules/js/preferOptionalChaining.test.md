@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -60,7 +60,7 @@ foo?.bar;
 
 ### `1: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -91,7 +91,7 @@ foo?.bar;
 
 ### `2: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -122,7 +122,7 @@ foo?.bar;
 
 ### `3: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -153,7 +153,7 @@ foo?.bar;
 
 ### `4: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -184,7 +184,7 @@ foo?.bar;
 
 ### `5: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar === "baz";
 
@@ -215,7 +215,7 @@ foo?.bar === "baz";
 
 ### `6: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -246,7 +246,7 @@ foo?.bar;
 
 ### `7: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -277,7 +277,7 @@ foo?.bar;
 
 ### `8: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -308,7 +308,7 @@ foo?.bar;
 
 ### `9: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -339,7 +339,7 @@ foo?.bar;
 
 ### `10: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar.baz;
 
@@ -372,7 +372,7 @@ foo?.bar.baz;
 
 ### `11: formatted`
 
-```
+```ts
 let foo = {};
 if (foo?.bar != null) {
 	foo.bar("baz");
@@ -389,7 +389,7 @@ if (foo?.bar != null) {
 
 ### `12: formatted`
 
-```
+```ts
 let foo = {};
 foo?.bar;
 
@@ -404,7 +404,7 @@ foo?.bar;
 
 ### `13: formatted`
 
-```
+```ts
 let foo = {};
 let bar = "";
 foo && bar.foo;
@@ -420,7 +420,7 @@ foo && bar.foo;
 
 ### `14: formatted`
 
-```
+```ts
 let foo = {};
 let bar = "";
 bar in foo && foo.bar;
@@ -436,7 +436,7 @@ bar in foo && foo.bar;
 
 ### `15: formatted`
 
-```
+```ts
 let foo = {};
 foo?.[bar];
 
@@ -451,7 +451,7 @@ foo?.[bar];
 
 ### `16: formatted`
 
-```
+```ts
 let foo = {};
 foo ? foo.bar.baz : null;
 
@@ -466,7 +466,7 @@ foo ? foo.bar.baz : null;
 
 ### `17: formatted`
 
-```
+```ts
 let foo = {};
 foo ? foo.bar.baz : "anything else";
 

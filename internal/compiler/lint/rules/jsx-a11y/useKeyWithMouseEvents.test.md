@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div onMouseOver={() => void 0} />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div onMouseOut={() => void 0} />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <div onMouseOver={() => void 0}>
 	{props}
 </div>;
@@ -109,7 +109,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <div onMouseOut={() => void 0}>
 	{props}
 </div>;
@@ -125,7 +125,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <div onMouseOver={() => void 0} onFocus={() => void 0} />;
 
 ```
@@ -139,7 +139,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <div onMouseOut={() => void 0} onBlur={() => void 0} />;
 
 ```
@@ -153,7 +153,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <div onMouseOver={() => void 0} onFocus={() => void 0}>
 	{props}
 </div>;
@@ -169,7 +169,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <div onMouseOut={() => void 0} onBlur={() => void 0}>
 	{props}
 </div>;
@@ -185,7 +185,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <Div onMouseOut={() => void 0}>
 	{props}
 </Div>;

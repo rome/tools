@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 import foo from "./bar";
 
 ```
@@ -41,7 +41,7 @@ import foo from "./bar";
 
 ### `1: formatted`
 
-```
+```ts
 import foo from "./foo";
 
 ```

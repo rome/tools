@@ -221,7 +221,7 @@ const createSuppressionCommentParser = createParser<ParserTypes>({
 				state,
 				parser.finishValueToken(
 					"Category",
-					(categoryName as DiagnosticCategory),
+					categoryName as DiagnosticCategory,
 					end,
 				),
 			];

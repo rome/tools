@@ -34,7 +34,7 @@ lint/regex/noDuplicateGroupNamesInRegularExpressions ━━━━━━━━━
 
 ### `0: formatted`
 
-```
+```ts
 /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/;
 
 ```

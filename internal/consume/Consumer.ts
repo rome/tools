@@ -981,7 +981,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as string[]),
+					(validValues as any) as string[],
 				),
 				{
 					target: "value",
@@ -1290,7 +1290,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as number[]),
+					(validValues as any) as number[],
 				),
 				{
 					target: "value",

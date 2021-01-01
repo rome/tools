@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <div dangerouslySetInnerHTML={{__html: "child"}} />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
@@ -77,7 +77,7 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ### `2: formatted`
 
-```
+```tsx
 createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
@@ -91,7 +91,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ### `3: formatted`
 
-```
+```tsx
 <div>
 	Hello World
 </div>;
@@ -107,7 +107,7 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ### `4: formatted`
 
-```
+```tsx
 React.createElement("div", child);
 
 ```
@@ -121,7 +121,7 @@ React.createElement("div", child);
 
 ### `5: formatted`
 
-```
+```tsx
 createElement("div", child);
 
 ```

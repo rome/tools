@@ -44,4 +44,5 @@ valid: [
 				</SomeComponent>
 				"
 	"<Fragment key={item.id}>{item.value}</Fragment>"
+	"true ? <div></div> : <></>;"
 ]

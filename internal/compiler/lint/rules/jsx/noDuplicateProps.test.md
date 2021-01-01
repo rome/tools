@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <Hello foo="bar" foo="baz" />;
 
 ```
@@ -57,7 +57,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <div style="{}" style="{}" id="foo" id="bar" />;
 
 ```
@@ -71,7 +71,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <Hello foo="bar" />;
 
 ```
@@ -85,7 +85,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <div style="{}" />;
 
 ```

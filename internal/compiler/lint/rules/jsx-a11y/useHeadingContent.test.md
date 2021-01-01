@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <h1 />;
 
 ```
@@ -51,7 +51,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <h1>
 	<TextWrapper aria-hidden={true} />
 </h1>;
@@ -79,7 +79,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <h1>
 	<div aria-hidden={true} />
 </h1>;
@@ -95,7 +95,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <h1>
 	heading
 </h1>;
@@ -111,7 +111,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <h1>
 	<TextWrapper />
 </h1>;
@@ -127,7 +127,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <h1 dangerouslySetInnerHTML={{__html: "heading"}} />;
 
 ```
@@ -141,7 +141,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <h1>
 	<div aria-hidden={true} />
 	visible content

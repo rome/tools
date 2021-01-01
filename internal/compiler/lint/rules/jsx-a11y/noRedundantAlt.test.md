@@ -26,7 +26,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <img src="src" alt="photo content" />;
 
 ```
@@ -53,7 +53,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <img src="src" alt="picture content" />;
 
 ```
@@ -80,7 +80,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <img src="src" alt="image content" />;
 
 ```
@@ -107,7 +107,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <img src="src" alt="Photo content" />;
 
 ```
@@ -134,7 +134,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <img src="src" alt="Picture content" />;
 
 ```
@@ -161,7 +161,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <img src="src" alt="Image content" />;
 
 ```
@@ -175,7 +175,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <img src="src" alt="alt" />;
 
 ```
@@ -189,7 +189,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <img src="src" alt={photo} />;
 
 ```

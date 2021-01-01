@@ -340,7 +340,7 @@ export function concatMarkup(
 			parts,
 		};
 	} else {
-		return (parts as StaticMarkups);
+		return parts as StaticMarkups;
 	}
 }
 

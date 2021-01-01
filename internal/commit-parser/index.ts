@@ -56,7 +56,7 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 	if (parser.matchToken("Word")) {
 		if (
 			parser.matchToken("Word") &&
-			/("|')/.test((parser.getToken() as Tokens["Word"]).value)
+			/(["'])/.test((parser.getToken() as Tokens["Word"]).value)
 		) {
 			parser.eatToken("Word");
 		}

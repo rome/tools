@@ -30,7 +30,7 @@ lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.PureComponent {
 	shouldComponentUpdate() {}
 }
@@ -63,7 +63,7 @@ lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends PureComponent {
 	shouldComponentUpdate() {}
 }
@@ -79,7 +79,7 @@ class Hello extends PureComponent {
 
 ### `2: formatted`
 
-```
+```tsx
 class Hello extends React.PureComponent {
 	componentDidMount() {}
 }
@@ -95,7 +95,7 @@ class Hello extends React.PureComponent {
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends PureComponent {
 	componentDidMount() {}
 }

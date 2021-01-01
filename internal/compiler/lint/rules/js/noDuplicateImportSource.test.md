@@ -27,7 +27,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 import foo, {bar} from "./testdummy.ts";
 
 import type {fooType} from "./testdummy.ts";

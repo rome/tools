@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		const component = this.refs.hello;
@@ -71,7 +71,7 @@ class Hello extends React.Component {
 
 ### `1: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	render() {
 		return <div ref="hello">
@@ -138,7 +138,7 @@ undefined
 
 ### `3: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	render() {
 		return <div ref={"hello"}>
@@ -211,7 +211,7 @@ undefined
 
 ### `5: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		const component = this.refs.hello;
@@ -236,7 +236,7 @@ class Hello extends React.Component {
 
 ### `6: formatted`
 
-```
+```tsx
 class Hello extends React.Component {
 	componentDidMount() {
 		const component = this.hello;

@@ -28,7 +28,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 import {D, a, b, c} from "mod";
 
 ```
@@ -57,7 +57,7 @@ import {D, a, b, c} from "mod";
 
 ### `1: formatted`
 
-```
+```ts
 import {b as A, B, a as C} from "mod";
 
 ```
@@ -86,7 +86,7 @@ import {b as A, B, a as C} from "mod";
 
 ### `2: formatted`
 
-```
+```ts
 import {b, b as b1, b as b2, c} from "mod";
 
 ```
@@ -115,7 +115,7 @@ import {b, b as b1, b as b2, c} from "mod";
 
 ### `3: formatted`
 
-```
+```ts
 export {D, a, b, c} from "mod";
 
 ```
@@ -144,7 +144,7 @@ export {D, a, b, c} from "mod";
 
 ### `4: formatted`
 
-```
+```ts
 export {B, a as C, b as A} from "mod";
 
 ```
@@ -173,7 +173,7 @@ export {B, a as C, b as A} from "mod";
 
 ### `5: formatted`
 
-```
+```ts
 export {b, b as b1, b as b2, c} from "mod";
 
 ```
@@ -202,7 +202,7 @@ export {b, b as b1, b as b2, c} from "mod";
 
 ### `6: formatted`
 
-```
+```ts
 export {D, a, b, c};
 
 ```
@@ -231,7 +231,7 @@ export {D, a, b, c};
 
 ### `7: formatted`
 
-```
+```ts
 export {B, a as C, b as A};
 
 ```
@@ -260,7 +260,7 @@ export {B, a as C, b as A};
 
 ### `8: formatted`
 
-```
+```ts
 export {b, b as b1, b as b2, c};
 
 ```

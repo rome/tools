@@ -124,22 +124,9 @@ JSRoot {
 												}
 											}
 										}
-									]
-									rest: TSTupleElement {
-										name: undefined
-										optional: false
-										loc: Object {
-											filename: "typescript/types/tuple-rest/input.ts"
-											end: Object {
-												column: 27
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
-										typeAnnotation: TSArrayType {
+										TSTupleElement {
+											name: undefined
+											optional: false
 											loc: Object {
 												filename: "typescript/types/tuple-rest/input.ts"
 												end: Object {
@@ -147,25 +134,51 @@ JSRoot {
 													line: 1
 												}
 												start: Object {
-													column: 19
+													column: 16
 													line: 1
 												}
 											}
-											elementType: TSNumberKeywordTypeAnnotation {
+											typeAnnotation: TSRestType {
 												loc: Object {
 													filename: "typescript/types/tuple-rest/input.ts"
 													end: Object {
-														column: 25
+														column: 27
 														line: 1
 													}
 													start: Object {
-														column: 19
+														column: 16
 														line: 1
+													}
+												}
+												argument: TSArrayType {
+													loc: Object {
+														filename: "typescript/types/tuple-rest/input.ts"
+														end: Object {
+															column: 27
+															line: 1
+														}
+														start: Object {
+															column: 19
+															line: 1
+														}
+													}
+													elementType: TSNumberKeywordTypeAnnotation {
+														loc: Object {
+															filename: "typescript/types/tuple-rest/input.ts"
+															end: Object {
+																column: 25
+																line: 1
+															}
+															start: Object {
+																column: 19
+																line: 1
+															}
+														}
 													}
 												}
 											}
 										}
-									}
+									]
 								}
 							}
 						}

@@ -32,7 +32,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <span tabIndex="5">
 	foo
 </span>;
@@ -67,7 +67,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <span tabIndex={5}>
 	foo
 </span>;
@@ -102,7 +102,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <span tabIndex={"5"}>
 	foo
 </span>;
@@ -118,7 +118,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <span tabIndex={0}>
 	baz
 </span>;
@@ -134,7 +134,7 @@
 
 ### `4: formatted`
 
-```
+```tsx
 <span tabIndex={-1}>
 	baz
 </span>;
@@ -150,7 +150,7 @@
 
 ### `5: formatted`
 
-```
+```tsx
 <span tabIndex="-1">
 	baz
 </span>;
@@ -166,7 +166,7 @@
 
 ### `6: formatted`
 
-```
+```tsx
 <span tabIndex="0">
 	baz
 </span>;
@@ -182,7 +182,7 @@
 
 ### `7: formatted`
 
-```
+```tsx
 <span tabIndex={dynamic}>
 	baz
 </span>;
@@ -198,7 +198,7 @@
 
 ### `8: formatted`
 
-```
+```tsx
 <span tabIndex={undefined}>
 	baz
 </span>;

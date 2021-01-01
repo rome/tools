@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const a = 4;
 
 ```
@@ -51,7 +51,7 @@ const a = 4;
 
 ### `1: formatted`
 
-```
+```ts
 let a = 4;
 
 ```
@@ -85,7 +85,7 @@ let a = 4;
 
 ### `2: formatted`
 
-```
+```ts
 function foo(myVar) {
 	console.log("foo");
 }
@@ -115,7 +115,7 @@ function foo(myVar) {
 
 ### `3: formatted`
 
-```
+```ts
 function foo(myVar) {
 	console.log("foo");
 }
@@ -152,7 +152,7 @@ foo();
 
 ### `4: formatted`
 
-```
+```ts
 function foo(b) {
 	console.log("foo");
 }
@@ -168,7 +168,7 @@ function foo(b) {
 
 ### `5: formatted`
 
-```
+```ts
 function foo(_, b) {
 	console.log(b);
 }
@@ -185,7 +185,7 @@ foo();
 
 ### `6: formatted`
 
-```
+```ts
 function foo(_, b) {
 	console.log(b);
 }
