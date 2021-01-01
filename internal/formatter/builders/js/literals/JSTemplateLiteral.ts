@@ -21,9 +21,9 @@ export default function JSTemplateLiteral(
 	const tokens: Token[] = [];
 	const quasis = node.quasis;
 
-	let startIndentRegex: RegExp;
+	let indentRegex: RegExp;
 	if (isIndent) {
-		startIndentRegex = getIndentRegex(quasis[0].raw);
+		indentRegex = getIndentRegex(quasis.map((elem) => elem.raw).join(""));
 	}
 
 	for (let i = 0; i < quasis.length; i++) {
@@ -52,7 +52,7 @@ export default function JSTemplateLiteral(
 				let line = lines[i];
 
 				// Remove indent
-				line = line.replace(startIndentRegex!, "");
+				line = line.replace(indentRegex!, "");
 				tokens.push(line);
 
 				if (i < lines.length - 1) {
