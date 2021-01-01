@@ -54,6 +54,7 @@ import {
 	parseVarStatement,
 	toBindingIdentifier,
 	toReferenceIdentifier,
+	parseTemplateElement
 } from "./index";
 import {
 	AnyJSExpression,
@@ -1212,23 +1213,12 @@ export function parseTSTemplateElement(
 	parser: JSParser,
 ): TSTemplateElement {
 	const start = parser.getPosition();
-	const tokenValue = parser.state.tokenValue;
-
-	const raw = parser.getRawInput(parser.state.startIndex, parser.state.endIndex).replace(
-		/\r\n?/g,
-		"\n",
-	);
-	const cooked = tokenValue === undefined ? raw : String(tokenValue);
-
-	next(parser);
-	const tail = match(parser, tt.backQuote);
+	const templateElem = parseTemplateElement(parser, false);
 	return parser.finishNode(
 		start,
 		{
+			...templateElem,
 			type: "TSTemplateElement",
-			raw,
-			cooked,
-			tail,
 		},
 	);
 }
