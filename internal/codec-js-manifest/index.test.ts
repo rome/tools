@@ -21,7 +21,8 @@ test(
 					"./foo": "./bar",
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},
@@ -39,7 +40,8 @@ test(
 					},
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},
@@ -57,7 +59,8 @@ test(
 					},
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},

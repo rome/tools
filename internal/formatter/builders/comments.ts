@@ -32,7 +32,7 @@ const languageToBlockCommentWrapper: {
 	[language in DiagnosticLanguage]?: CommentWrapper
 } = {
 	html: HTML_COMMENT_WRAPPER,
-	md: HTML_COMMENT_WRAPPER,
+	markdown: HTML_COMMENT_WRAPPER,
 	css: CSS_COMMENT_WRAPPER,
 	js: CSS_COMMENT_WRAPPER,
 	json: CSS_COMMENT_WRAPPER,

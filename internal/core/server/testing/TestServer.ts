@@ -18,7 +18,7 @@ import {TestRef} from "../../common/bridges/TestWorkerBridge";
 import {Server, ServerRequest} from "@internal/core";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {humanizeNumber} from "@internal/string-utils";
-import {Bridge, BridgeError} from "@internal/events";
+import {AnyBridge, BridgeError} from "@internal/events";
 import {CoverageCollector} from "@internal/v8";
 import {ManifestDefinition} from "@internal/codec-js-manifest";
 import {
@@ -54,12 +54,12 @@ import TestServerFile from "@internal/core/server/testing/TestServerFile";
 import {ExtendedMap} from "@internal/collections";
 
 export class BridgeDiagnosticsError extends DiagnosticsError {
-	constructor(diag: Diagnostic, bridge: Bridge) {
+	constructor(diag: Diagnostic, bridge: AnyBridge) {
 		super(readMarkup(diag.description.message), [diag]);
 		this.bridge = bridge;
 	}
 
-	public bridge: Bridge;
+	public bridge: AnyBridge;
 }
 
 function grammarNumberTests(num: number): StaticMarkup {
@@ -154,7 +154,7 @@ export default class TestServer {
 	private logger: ReporterNamespace;
 	private paths: AbsoluteFilePathSet;
 	private server: Server;
-	private ignoreBridgeEndError: Set<Bridge>;
+	private ignoreBridgeEndError: Set<AnyBridge>;
 
 	public testFilesStack: AbsoluteFilePath[];
 
@@ -178,7 +178,7 @@ export default class TestServer {
 
 	public handlePossibleBridgeError(err: Error) {
 		let diagnostics = getDiagnosticsFromError(err);
-		let bridge: undefined | Bridge;
+		let bridge: undefined | AnyBridge;
 
 		if (err instanceof BridgeDiagnosticsError) {
 			bridge = err.bridge;
@@ -326,7 +326,7 @@ export default class TestServer {
 			timeout = setTimeout(
 				() => {
 					// TODO This will kill the whole worker, maybe it's possible to just terminate the current test? Throw an error, see if the next test was ran, or else terminate completely
-					this.server.wrapFatalPromise(
+					this.server.fatalErrorHandler.wrapPromise(
 						worker.handleTimeout(`${String(timeoutMs)}ms`),
 					);
 				},
@@ -432,14 +432,14 @@ export default class TestServer {
 				}
 			});
 
-			bridge.testStart.subscribe((data) => {
+			bridge.events.testStart.subscribe((data) => {
 				const key = refToKey(data.ref);
 				ourRunningTests.add(key);
 				this.onTestStart(worker, data.ref, data.timeout);
 				progress.pushText(getProgressTestRefText(data.ref), key);
 			});
 
-			bridge.testFinish.subscribe((data) => {
+			bridge.events.testFinish.subscribe((data) => {
 				this.onTestFinished(data.ref);
 				progress.popText(refToKey(data.ref));
 				progress.tick();

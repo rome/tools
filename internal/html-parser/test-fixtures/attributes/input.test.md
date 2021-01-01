@@ -12,7 +12,7 @@ HTMLRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "attributes/input.html"
-	mtime: undefined
+	integrity: undefined
 	loc: Object {
 		filename: "attributes/input.html"
 		end: Object {

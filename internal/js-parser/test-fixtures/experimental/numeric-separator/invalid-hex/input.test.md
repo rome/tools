@@ -14,8 +14,8 @@ JSRoot {
 	diagnostics: Array []
 	filename: "experimental/numeric-separator/invalid-hex/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

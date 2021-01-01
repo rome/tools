@@ -20,12 +20,14 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
+	DiagnosticIntegrity,
 	DiagnosticLanguage,
 	DiagnosticLocation,
 	DiagnosticOrigin,
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
 	descriptions,
+	joinCategoryName,
 } from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
@@ -96,6 +98,7 @@ export default class CompilerContext {
 			frozen = false,
 			options = {},
 			project = {
+				configHashes: [],
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},
@@ -110,7 +113,7 @@ export default class CompilerContext {
 		this.displayFilename =
 			ref === undefined ? ast.filename : ref.relative.join();
 		this.frozen = frozen;
-		this.mtime = ast.mtime;
+		this.integrity = ast.integrity;
 		this.project = project;
 		this.options = options;
 		this.origin = origin;
@@ -135,7 +138,7 @@ export default class CompilerContext {
 	private visitorStates: ExtendedMap<AnyVisitor, AnyVisitorState>;
 	public displayFilename: string;
 	public filename: string;
-	private mtime: undefined | number;
+	private integrity: undefined | DiagnosticIntegrity;
 	public path: UnknownPath;
 	public project: TransformProjectDefinition;
 	public language: DiagnosticLanguage;
@@ -176,42 +179,45 @@ export default class CompilerContext {
 	}
 
 	private checkOverlappingSuppressions() {
-		// Check for overlapping suppressions
 		const nonOverlapSuppressions = new Map();
+
 		for (const suppression of this.suppressions) {
-			if (nonOverlapSuppressions.has(suppression.category)) {
-				const previousSuppression = nonOverlapSuppressions.get(
-					suppression.category,
-				);
-				const currentSuppression = suppression;
-				if (
-					currentSuppression.startLine > previousSuppression.startLine &&
-					currentSuppression.endLine <= previousSuppression.endLine
-				) {
-					this.diagnostics.addDiagnostic({
-						description: descriptions.SUPPRESSIONS.OVERLAP(suppression.category),
-						location: suppression.commentLocation,
-					});
-				} else {
-					// Replace suppression to compare to later suppressions
-					nonOverlapSuppressions.set(suppression.category, suppression);
-				}
-			} else {
-				nonOverlapSuppressions.set(suppression.category, suppression);
+			const key = joinCategoryName(suppression);
+
+			if (!nonOverlapSuppressions.has(key)) {
+				nonOverlapSuppressions.set(key, suppression);
+				continue;
 			}
+
+			const previousSuppression = nonOverlapSuppressions.get(key);
+			const currentSuppression = suppression;
+			if (
+				currentSuppression.startLine > previousSuppression.startLine &&
+				currentSuppression.endLine <= previousSuppression.endLine
+			) {
+				this.diagnostics.addDiagnostic({
+					description: descriptions.SUPPRESSIONS.OVERLAP(key),
+					location: suppression.loc,
+				});
+				continue;
+			}
+
+			// Replace suppression to compare to later suppressions
+			nonOverlapSuppressions.set(key, suppression);
 		}
 	}
 
 	public hasLocSuppression(
 		loc: undefined | DiagnosticLocation,
 		category: DiagnosticCategory,
+		categoryValue: undefined | string,
 	): boolean {
 		if (loc === undefined) {
 			return false;
 		}
 
 		for (const suppression of this.suppressions) {
-			if (matchesSuppression(category, loc, suppression)) {
+			if (matchesSuppression(category, categoryValue, loc, suppression)) {
 				return true;
 			}
 		}
@@ -316,7 +322,7 @@ export default class CompilerContext {
 			);
 		}
 
-		const {category} = description;
+		const {category, categoryValue} = description;
 		const advice = [...description.advice];
 		if (loc?.start !== undefined) {
 			advice.push(
@@ -329,6 +335,7 @@ export default class CompilerContext {
 						filename: this.displayFilename,
 						action: "suppress",
 						category,
+						categoryValue,
 						start: loc.start,
 					}),
 				}),
@@ -339,7 +346,11 @@ export default class CompilerContext {
 					extra: true,
 					noun: markup`Add suppression comments for ALL files with this category`,
 					instruction: markup`To add suppression comments for ALL files with this category run`,
-					decision: buildLintDecisionGlobalString("suppress", category),
+					decision: buildLintDecisionGlobalString(
+						"suppress",
+						category,
+						categoryValue,
+					),
 				}),
 			);
 		}
@@ -363,7 +374,7 @@ export default class CompilerContext {
 			},
 			location: {
 				marker,
-				mtime: this.mtime,
+				integrity: this.integrity,
 				filename: this.filename,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,
@@ -373,18 +384,23 @@ export default class CompilerContext {
 			origins,
 		});
 
-		let suppressed = this.hasLocSuppression(loc, description.category);
+		let suppressed = this.hasLocSuppression(loc, category, categoryValue);
 
 		// If we've been passed lint decisions then consider it suppressed unless we have been specifically told to fix it
-		const diagCategory = description.category;
+		const diagCategory = category;
+		const diagCategoryValue = categoryValue;
 		if (this.hasLintDecisions()) {
 			suppressed = true;
 
 			const decisions = this.getLintDecisions(
 				deriveDecisionPositionKey("fix", loc),
 			);
-			for (const {category, action} of decisions) {
-				if (category === diagCategory && action === "fix") {
+			for (const {category, categoryValue, action} of decisions) {
+				if (
+					category === diagCategory &&
+					action === "fix" &&
+					categoryValue === diagCategoryValue
+				) {
 					suppressed = false;
 				}
 			}

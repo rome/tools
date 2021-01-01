@@ -46,7 +46,7 @@ function greet1() {
 
 ```
 
- lint/js/noUnsafeFinally/reject/2/file.ts:7:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/2/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 
@@ -73,7 +73,7 @@ undefined
 
 ```
 
- lint/js/noUnsafeFinally/reject/3/file.ts:7:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/3/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
 

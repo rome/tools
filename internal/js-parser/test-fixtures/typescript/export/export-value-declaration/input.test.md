@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/export/export-value-declaration/input.ts"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

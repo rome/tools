@@ -5,14 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {getIndentRegex} from "./getIndentRegex";
+
 export function dedent(
 	literals: string | TemplateStringsArray,
 	...values: string[]
 ): string {
-	let string: string = "";
+	let str: string = "";
 
 	if (typeof literals === "string") {
-		string = literals;
+		str = literals;
 	} else {
 		const parts: string[] = [];
 
@@ -26,17 +28,8 @@ export function dedent(
 			}
 		}
 
-		string = parts.join("");
+		str = parts.join("");
 	}
 
-	// Find min indentation
-	const match = string.match(/^[ \t]*(?=\S)/gm);
-	if (match === null) {
-		return string;
-	}
-
-	const indent = Math.min(...match.map((x) => x.length));
-
-	// Remove indentation
-	return string.replace(new RegExp(`^[ \\t]{${indent}}`, "gm"), "").trim();
+	return str.replace(getIndentRegex(str), "").trim();
 }

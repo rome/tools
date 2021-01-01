@@ -13,7 +13,6 @@ import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 
 type FirstTopAwaitLocations = {
-	mtime: number;
 	loc: SourceLocation;
 }[];
 
@@ -74,10 +73,9 @@ export default class DependencyOrderer {
 
 		this.visitedNodes.add(node);
 
-		const {firstTopAwaitLocation} = node.analyze;
+		const {firstTopAwaitLocation} = node.analyze.value;
 		if (firstTopAwaitLocation !== undefined) {
 			this.firstTopAwaitLocations.push({
-				mtime: node.getMtime(),
 				loc: firstTopAwaitLocation,
 			});
 		}
@@ -101,7 +99,7 @@ export default class DependencyOrderer {
 		for (let i = 0; i < flatOrder.length; i++) {
 			const node = flatOrder[i];
 
-			for (const imp of node.analyze.importFirstUsage) {
+			for (const imp of node.analyze.value.importFirstUsage) {
 				const resolved = node.getNodeFromRelativeDependency(imp.source).resolveImport(
 					imp.imported,
 					imp.loc,
@@ -150,7 +148,7 @@ export default class DependencyOrderer {
 			),
 			location: {
 				filename: node.path.join(),
-				mtime: node.getMtime(),
+				integrity: node.getIntegrity(),
 				start: imp.loc === undefined ? undefined : imp.loc.start,
 				end: imp.loc === undefined ? undefined : imp.loc.end,
 			},

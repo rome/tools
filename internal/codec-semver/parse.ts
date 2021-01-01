@@ -46,7 +46,7 @@ type SemverParserTypes = {
 type SemverParser = ParserCore<SemverParserTypes>;
 
 const createSemverParser = createParser<SemverParserTypes>({
-	diagnosticCategory: "parse/semver",
+	diagnosticLanguage: "semver",
 	normalizeInput: (input) => input.trimRight(),
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);

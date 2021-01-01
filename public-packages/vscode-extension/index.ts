@@ -124,7 +124,7 @@ export async function activate() {
 			"No Rome path found. Waiting for workspace folder changes before trying again",
 		);
 
-		await new Promise((resolve) => {
+		await new Promise<void>((resolve) => {
 			const event = vscode.workspace.onDidChangeWorkspaceFolders(() => {
 				getRomeLocation().then((_res) => {
 					if (_res !== undefined) {

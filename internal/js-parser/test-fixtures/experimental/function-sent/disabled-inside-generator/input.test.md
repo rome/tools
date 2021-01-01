@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/function-sent/disabled-inside-generator/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

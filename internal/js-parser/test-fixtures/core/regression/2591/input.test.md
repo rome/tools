@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/regression/2591/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

@@ -21,6 +21,9 @@ import {
 	RSERArrayBufferView,
 } from "@internal/codec-binary-serial/types";
 
+// Bump whenever we make backwards incompatible changes
+export const VERSION = 1;
+
 export function formatCode(code: number): string {
 	if (VALUE_CODES[code] === undefined) {
 		return `?(${code})`;
@@ -30,6 +33,8 @@ export function formatCode(code: number): string {
 }
 
 export enum VALUE_CODES {
+	STREAM_HEADER,
+	MESSAGE_HEADER,
 	STRING,
 	ARRAY,
 	SET,
@@ -64,6 +69,8 @@ export enum VALUE_CODES {
 
 export function validateValueCode(code: number): VALUE_CODES {
 	switch (code) {
+		case VALUE_CODES.STREAM_HEADER:
+		case VALUE_CODES.MESSAGE_HEADER:
 		case VALUE_CODES.STRING:
 		case VALUE_CODES.ARRAY:
 		case VALUE_CODES.SET:
@@ -94,6 +101,7 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.REFERENCE:
 		case VALUE_CODES.ARRAY_BUFFER_VIEW:
 		case VALUE_CODES.ARRAY_BUFFER:
+		case VALUE_CODES.STREAM_HEADER:
 			return code;
 
 		default:

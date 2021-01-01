@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Expected a comma to separate items in "}
-						"function params"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Expected a comma to separate items in "}
+					"function params"
+				]
 			}
 			location: Object {
 				filename: "es2017/async-functions/await-inside-parameters-of-nested-function/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 24
@@ -324,7 +324,7 @@ JSRoot {
 
 ```
 
- es2017/async-functions/await-inside-parameters-of-nested-function/input.js:2:25 parse/js ━━━━━━━━━━
+ es2017/async-functions/await-inside-parameters-of-nested-function/input.js:2:25 parse(js) ━━━━━━━━━
 
   ✖ Expected a comma to separate items in function params
 

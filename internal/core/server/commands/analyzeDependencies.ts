@@ -41,7 +41,7 @@ export default createServerCommand({
 		const {reporter} = req;
 		const filename = await req.resolveEntryAssertPathArg(0);
 
-		let res = await req.requestWorkerAnalyzeDependencies(filename, {});
+		let {value: res} = await req.requestWorkerAnalyzeDependencies(filename, {});
 
 		const {focusSource} = commandFlags;
 		if (focusSource !== undefined) {

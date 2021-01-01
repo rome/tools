@@ -1,6 +1,7 @@
 import {IntSize} from "./types";
 import RSERBufferAssembler from "./RSERBufferAssembler";
 import {utf8Encode} from "./utf8";
+import {RSERBufferParser} from ".";
 
 export default class RSERBufferWriter extends RSERBufferAssembler {
 	constructor(buffer: ArrayBuffer, assembler: RSERBufferAssembler) {
@@ -27,6 +28,10 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 
 	protected onReferenceCreate() {}
 
+	public toParser(): RSERBufferParser {
+		return new RSERBufferParser(this.view);
+	}
+
 	public getWritableSize() {
 		return this.buffer.byteLength - this.writeOffset;
 	}
@@ -42,6 +47,10 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 	}
 
 	public appendBytes(buf: Uint8Array) {
+		if (buf.byteLength === 0) {
+			return;
+		}
+
 		const size = buf.byteLength;
 		this.assertWritableSize(size);
 		this.bytes.set(buf, this.writeOffset);

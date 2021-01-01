@@ -7,8 +7,8 @@ import {
 	isESIdentifierChar,
 	isESIdentifierStart,
 	isHexDigit,
-	readUntilLineBreak,
-} from "@internal/parser-core/utils";
+	isntLineBreak,
+} from "./utils";
 import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 import {parseJS} from "@internal/js-parser";
@@ -37,8 +37,8 @@ test(
 		t.true(isESIdentifierStart("_"));
 		t.false(isESIdentifierStart("4"));
 
-		t.true(readUntilLineBreak("a"));
-		t.false(readUntilLineBreak("\n"));
+		t.true(isntLineBreak("a"));
+		t.false(isntLineBreak("\n"));
 
 		t.is(
 			comparePositions(

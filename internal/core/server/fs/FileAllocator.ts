@@ -6,7 +6,7 @@
  */
 
 import {Server} from "@internal/core";
-import {ChangedFileEventItem, Stats} from "./MemoryFileSystem";
+import {ChangedFileEventItem, SimpleStats} from "./MemoryFileSystem";
 import {WorkerContainer} from "../WorkerManager";
 import {FilePathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
@@ -48,7 +48,7 @@ export default class FileAllocator {
 		return this.fileToWorker.get(path);
 	}
 
-	public verifySize(path: AbsoluteFilePath, stats: Stats) {
+	public verifySize(path: AbsoluteFilePath, stats: SimpleStats) {
 		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return;
@@ -90,6 +90,17 @@ export default class FileAllocator {
 		}
 	}
 
+	public async evictAll() {
+		const queue = this.server.createWorkerQueue({
+			callback: async ({path}) => {
+				await this.evict(path, markup`evict all requested`);
+			},
+		});
+
+		await queue.prepare(this.fileToWorker.keys());
+		await queue.spin();
+	}
+
 	public async evict(path: AbsoluteFilePath, reason: AnyMarkup) {
 		// Find owner
 		const workerId = this.getOwnerId(path);
@@ -97,11 +108,13 @@ export default class FileAllocator {
 			return;
 		}
 
-		// Notify the worker to remove it from 'it's cache
-		const filename = path.join();
+		// Notify the worker to remove it from it's cache
+		// We do not use a FileReference here as the file might not exist
+		const uid = this.server.projectManager.getUid(path, true);
 		const worker = this.server.workerManager.getWorkerAssert(workerId);
-		await worker.bridge.evict.call({
-			filename,
+		await worker.bridge.events.evict.call({
+			real: path,
+			uid,
 		});
 
 		this.logger.info(

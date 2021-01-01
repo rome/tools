@@ -13,8 +13,8 @@ JSRoot {
 	corrupt: false
 	filename: "es2015/uncategorised/217/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -46,15 +46,17 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Bad character escape sequence"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/217/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -74,7 +76,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/217/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/217/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Bad character escape sequence
 

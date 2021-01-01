@@ -158,7 +158,7 @@ function getTokenColors(consumer: undefined | Consumer): Theme {
 	if (consumer === undefined) {
 		if (defaultTokenColors === undefined) {
 			defaultTokenColors = {
-				...getTokenColors(consumeUnknown(OneDarkPro, "parse/vscodeTheme")),
+				...getTokenColors(consumeUnknown(OneDarkPro, "parse", "vscodeTheme")),
 				kind: "default",
 			};
 		}

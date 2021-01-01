@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/class/invalid-escape-static/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"static"
-						RAW_MARKUP {value: " can't contain a unicode escape"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"static"
+					RAW_MARKUP {value: " can't contain a unicode escape"}
+				]
 			}
 			location: Object {
 				filename: "es2015/class/invalid-escape-static/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -213,7 +213,7 @@ JSRoot {
 
 ```
 
- es2015/class/invalid-escape-static/input.js:1:12 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/class/invalid-escape-static/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ static can't contain a unicode escape
 

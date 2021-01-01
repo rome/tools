@@ -7,11 +7,11 @@
 
 import {ConsumeContext, Consumer} from "@internal/consume";
 import {ParserOptions, TokenBase} from "@internal/parser-core";
-import {DiagnosticCategory, DiagnosticLanguage} from "@internal/diagnostics";
+import {DiagnosticLanguage} from "@internal/diagnostics";
 import {JSONValue} from "@internal/codec-config/json/types";
 
 export type ConfigParserOptions = Omit<ParserOptions, "retainCarriageReturn"> & {
-	consumeDiagnosticCategory?: DiagnosticCategory;
+	consumeDiagnosticCategoryValue?: string;
 };
 
 export type JSONConfigType = "rjson" | "json" | "json5" | "yaml";
@@ -56,7 +56,6 @@ export type ConfigParserResult = {
 export type PartialConfigHandler = {
 	type: ConfigType;
 	language: DiagnosticLanguage;
-	consumeCategory: DiagnosticCategory;
 	jsonSuperset: boolean;
 	extensions: string[];
 	parseExtra: (opts: ParserOptions) => ConfigParserResult;

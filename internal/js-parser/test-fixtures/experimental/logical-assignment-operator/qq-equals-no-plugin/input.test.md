@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/logical-assignment-operator/qq-equals-no-plugin/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

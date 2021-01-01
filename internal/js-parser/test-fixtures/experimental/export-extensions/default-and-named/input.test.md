@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/export-extensions/default-and-named/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

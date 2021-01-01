@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/module-namespace/global-in-module/input.ts"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

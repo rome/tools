@@ -5,65 +5,26 @@ import {
 } from "@internal/markup-syntax-highlight/utils";
 import {ob1Coerce0} from "@internal/ob1";
 import {StaticMarkup} from "@internal/markup";
-import {ReduceCallbackResult} from "./types";
-
-test(
-	"should craft markup for tokens",
-	async (t) => {
-		const tokenInput = makeStaticMarkup([
-			fakeToken,
-			makeRawMarkup(fakeToken),
-			makeStaticMarkup([fakeToken, makeRawMarkup(fakeToken)]),
-		]);
-
-		const expectedMarkupOutput = makeStaticMarkup([
-			expectedMarkupPrefix,
-			makeStaticMarkup([
-				makeStaticMarkup([
-					fakeToken,
-					makeRawMarkup(fakeToken),
-					makeStaticMarkup([fakeToken, makeRawMarkup(fakeToken)]),
-				]),
-			]),
-			expectedMarkupSufix,
-		]);
-
-		t.looksLike(markupToken(validTokenType, tokenInput), expectedMarkupOutput);
-	},
-);
+import {convertToMarkupFromRandomString} from "@internal/markup/escape";
 
 const validTokenType = "keyword";
 const fakeToken = "lorem";
 
-function makeRawMarkup(word: string) {
-	return (<MarkupPart>{
-		type: "RAW_MARKUP",
-		value: word,
-	});
-}
+test(
+	"should craft markup for tokens",
+	async (t) => {
+		const tokenInput: StaticMarkup = [
+			fakeToken,
+			convertToMarkupFromRandomString(fakeToken),
+			[fakeToken, convertToMarkupFromRandomString(fakeToken)],
+		];
 
-// hacky way of extracting a private type
-const dummyPart = (<StaticMarkup>{
-	type: "MARKUP",
-	parts: [{type: "RAW_MARKUP", value: "lorem"}],
-}).parts[0];
-type MarkupPart = typeof dummyPart;
-
-function makeStaticMarkup(parts: MarkupPart[]) {
-	return (<StaticMarkup>{
-		type: "MARKUP",
-		parts,
-	});
-}
-
-const expectedMarkupPrefix = (<MarkupPart>{
-	type: "RAW_MARKUP",
-	value: `<token type=\"${validTokenType}\">`,
-});
-const expectedMarkupSufix = (<MarkupPart>{
-	type: "RAW_MARKUP",
-	value: "</token>",
-});
+		t.inlineSnapshot(
+			markupToken(validTokenType, tokenInput),
+			'Array [\n\tRAW_MARKUP {value: "<token type=\\"keyword\\">"}\n\tArray [\n\t\t"lorem"\n\t\tRAW_MARKUP {value: "lorem"}\n\t\tArray [\n\t\t\t"lorem"\n\t\t\tRAW_MARKUP {value: "lorem"}\n\t\t]\n\t]\n\tRAW_MARKUP {value: "</token>"}\n]',
+		);
+	},
+);
 
 test(
 	"should identify and markup tokens from input string",
@@ -75,15 +36,6 @@ test(
 			end: ob1Coerce0(i * 7 + 6),
 		}));
 		const fakeInput = `${fakeTokens.map((token) => token.type).join(" ")} invalid`;
-		const expectedOutput = [
-			makeStaticMarkup([
-				makeRawMarkup(
-					`${fakeTokens.map((token) =>
-						`<token type=\"${validTokenType}\">${token.type}</token>`
-					).join(" ")} <emphasis><color bg="red">invalid</color></emphasis>`,
-				),
-			]),
-		];
 
 		const result = reduceParserCore(
 			fakeInput,
@@ -122,12 +74,16 @@ test(
 					t.is(nextTokenId, tokenId + 1);
 				}
 
-				return (<ReduceCallbackResult>{
+				return {
 					type: validTokenType,
-					value: makeStaticMarkup([value]),
-				});
+					value: [value],
+				};
 			},
 		);
-		t.looksLike(result, expectedOutput);
+
+		t.inlineSnapshot(
+			result,
+			'Array [RAW_MARKUP {value: "<token type=\\"keyword\\">token0</token> <token type=\\"keyword\\">token1</token> <token type=\\"keyword\\">token2</token> <token type=\\"keyword\\">token3</token> <token type=\\"keyword\\">token4</token> <token type=\\"keyword\\">token5</token> <token type=\\"keyword\\">token6</token> <token type=\\"keyword\\">token7</token> <token type=\\"keyword\\">token8</token> <token type=\\"keyword\\">token9</token> <emphasis><color bg=\\"red\\">invalid</color></emphasis>"}]',
+		);
 	},
 );

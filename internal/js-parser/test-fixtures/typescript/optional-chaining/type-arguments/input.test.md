@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/optional-chaining/type-arguments/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

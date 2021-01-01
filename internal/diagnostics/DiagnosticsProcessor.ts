@@ -155,6 +155,7 @@ export default class DiagnosticsProcessor {
 			if (
 				matchesSuppression(
 					diag.description.category,
+					diag.description.categoryValue,
 					diag.location,
 					suppression,
 				)
@@ -386,7 +387,7 @@ export default class DiagnosticsProcessor {
 
 			diagnostics.push(
 				this.normalizer.normalizeDiagnostic({
-					location: suppression.commentLocation,
+					location: suppression.loc,
 					description: descriptions.SUPPRESSIONS.UNUSED(suppression),
 				}),
 			);

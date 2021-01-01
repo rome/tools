@@ -6,18 +6,11 @@
  */
 
 import {Builder, Token} from "@internal/formatter";
-import {JSTemplateElement, jsTemplateLiteral, JSTemplateLiteral} from "@internal/ast";
+import {JSTemplateElement} from "@internal/ast";
 
 export default function JSTemplateElement(
 	builder: Builder,
 	node: JSTemplateElement,
-	parent: JSTemplateLiteral,
 ): Token {
-	parent = jsTemplateLiteral.assert(parent);
-
-	const isFirst = parent.quasis[0] === node;
-	const isLast = parent.quasis[parent.quasis.length - 1] === node;
-
-	const value = (isFirst ? "`" : "}") + node.raw + (isLast ? "`" : "${");
-	return value;
+	return node.raw;
 }

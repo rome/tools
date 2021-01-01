@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/rest-parameter/function-expression/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

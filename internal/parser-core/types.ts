@@ -10,10 +10,12 @@ import {AnyFilePath} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
+	DiagnosticIntegrity,
+	DiagnosticLanguage,
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
-import {Dict} from "@internal/typescript-helpers";
+import {Dict, RequiredProps} from "@internal/typescript-helpers";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -30,8 +32,16 @@ export type ParserCoreTypes = {
 	meta: object | void;
 };
 
+export type ParserCoreOverrides = {
+	diagnosticCategory?: DiagnosticCategory;
+	diagnosticLanguage?: DiagnosticLanguage;
+	diagnosticCategoryValue?: string;
+};
+
 export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
-	diagnosticCategory: DiagnosticCategory;
+	diagnosticLanguage: DiagnosticLanguage;
+	diagnosticCategory?: DiagnosticCategory;
+	diagnosticCategoryValue?: string;
 	ignoreWhitespaceTokens?: boolean;
 	retainCarriageReturn?: boolean;
 	getInitialState?: (parser: ParserCore<Types>) => Types["state"];
@@ -52,10 +62,10 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	};
 };
 
-export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = {
-	token: TokenValues<Types["tokens"]>;
-	state: Types["state"];
-};
+export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
+	Partial<Types["state"]>,
+	TokenValues<Types["tokens"]>
+];
 
 //# Node types
 export type NodeBase = {
@@ -105,6 +115,10 @@ export type ValueToken<Type extends string, Value> = TokenBase & {
 	value: Value;
 };
 
+export type StringToken<Type extends string> = ValueToken<Type, string>;
+
+export type NumberToken<Type extends string> = ValueToken<Type, number>;
+
 export type EOFToken = SimpleToken<"EOF">;
 
 export type SOFToken = SimpleToken<"SOF">;
@@ -137,15 +151,13 @@ export const UNKNOWN_POSITION: Position = {
 
 export type ParserOptions = {
 	path?: string | AnyFilePath;
-	mtime?: number;
+	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
 };
 
-export type ParserOptionsWithRequiredPath = Omit<ParserOptions, "path"> & {
-	path: NonNullable<ParserOptions["path"]>;
-};
+export type ParserOptionsWithRequiredPath = RequiredProps<ParserOptions, "path">;
 
 export type ParserUnexpectedOptions = {
 	description?: DiagnosticDescriptionOptional;

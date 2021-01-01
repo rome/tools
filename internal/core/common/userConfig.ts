@@ -54,7 +54,7 @@ export async function normalizeUserConfig(
 			const input = await readFileText(path);
 
 			userConfig.syntaxTheme = json.consumeValue({
-				consumeDiagnosticCategory: "parse/vscodeTheme",
+				consumeDiagnosticCategoryValue: "vscodeTheme",
 				input,
 				path,
 			});

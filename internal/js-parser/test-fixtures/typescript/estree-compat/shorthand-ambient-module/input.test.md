@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

@@ -5,23 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from "@internal/parser-core";
+import {Position, addPositions} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 	descriptions,
+	joinCategoryName,
 } from "@internal/diagnostics";
 import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
 } from "../types";
-import {ob1Get0, ob1Get1} from "@internal/ob1";
+import {ob1Coerce0, ob1Get0, ob1Get1, ob1Number1} from "@internal/ob1";
 import {AbsoluteFilePath} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter";
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
+import {parseCommentSuppressionLoneCategory} from "../suppressionsParser";
 
 type UnexpectedDecision = (description: DiagnosticDescriptionOptional) => void;
 
@@ -57,10 +59,23 @@ export function deriveDecisionPositionKey(
 	}
 }
 
+function addPartPositionOffset(pos: Position, part: string): Position {
+	return addPositions(
+		pos,
+		{line: ob1Number1, column: ob1Coerce0(part.length + 1)},
+	);
+}
+
 export function parseDecisionStrings(
-	decisions: string[],
-	cwd: AbsoluteFilePath,
-	unexpected: UnexpectedDecision,
+	{decisions, cwd, filename, unexpected}: {
+		filename: string;
+		decisions: {
+			start: Position;
+			value: string;
+		}[];
+		cwd: AbsoluteFilePath;
+		unexpected: UnexpectedDecision;
+	},
 ): {
 	lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile;
 	globalDecisions: LintCompilerOptionsDecision[];
@@ -68,7 +83,7 @@ export function parseDecisionStrings(
 	const lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile = {};
 	const globalDecisions: LintCompilerOptionsDecision[] = [];
 
-	function parseGlobalDecision(parts: string[], i: number) {
+	function parseGlobalDecision(start: Position, parts: string[], i: number) {
 		if (parts.length !== 2) {
 			unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
 		}
@@ -80,11 +95,15 @@ export function parseDecisionStrings(
 			return;
 		}
 
-		const category = rawCategory as DiagnosticCategory;
-		globalDecisions.push({category, action});
+		const {category, categoryValue} = parseCommentSuppressionLoneCategory({
+			input: rawCategory,
+			path: filename,
+			offsetPosition: start,
+		});
+		globalDecisions.push({category, categoryValue, action});
 	}
 
-	function parseLineDecision(parts: string[], i: number) {
+	function parseLineDecision(start: Position, parts: string[], i: number) {
 		if (parts.length < 4 || parts.length > 5) {
 			unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
 		}
@@ -96,7 +115,11 @@ export function parseDecisionStrings(
 			return;
 		}
 
-		const category = rawCategory as DiagnosticCategory;
+		const {category, categoryValue} = parseCommentSuppressionLoneCategory({
+			input: rawCategory,
+			path: filename,
+			offsetPosition: addPartPositionOffset(start, action),
+		});
 		const resolvedFilename = cwd.resolve(rawFilename).join();
 
 		let compilerOptions = lintCompilerOptionsPerFile[resolvedFilename];
@@ -118,33 +141,39 @@ export function parseDecisionStrings(
 		decisionsForPosition.push({
 			action,
 			category,
+			categoryValue,
 			id: id === undefined ? undefined : Number(id),
 		});
 	}
 
 	for (let i = 0; i < decisions.length; i++) {
-		const segment = decisions[i];
-		const parts = escapeSplit(segment, "-");
+		const {start, value} = decisions[i];
+		const parts = escapeSplit(value, "-");
 
 		if (parts[0] === "global") {
-			parseGlobalDecision(parts.slice(1), i);
+			parseGlobalDecision(
+				addPartPositionOffset(start, "global"),
+				parts.slice(1),
+				i,
+			);
 		} else {
-			parseLineDecision(parts, i);
+			parseLineDecision(start, parts, i);
 		}
 	}
 
 	return {lintCompilerOptionsPerFile, globalDecisions};
 }
 
-function escapeFilename(filename: string): string {
-	return filename.replace(/-/, "\\-");
+function escapePart(str: string): string {
+	return str.replace(/-/, "\\-");
 }
 
 export function buildLintDecisionGlobalString(
 	action: LintCompilerOptionsDecisionAction,
 	category: DiagnosticCategory,
+	categoryValue: undefined | string,
 ): string {
-	return `global-${action}-${category}`;
+	return `global-${action}-${joinCategoryName({category, categoryValue})}`;
 }
 
 export function buildLintDecisionString(
@@ -152,26 +181,41 @@ export function buildLintDecisionString(
 		filename,
 		action,
 		category,
+		categoryValue,
 		start,
 		id,
 	}: {
 		filename: string;
 		action: LintCompilerOptionsDecisionAction;
 		category: DiagnosticCategory;
+		categoryValue: undefined | string;
 		start: Position;
 		id?: number;
 	},
 ): string {
-	const escapedFilename = escapeFilename(filename);
 	const pos = deriveDecisionPositionKey(action, {start});
+	if (pos === undefined) {
+		throw new Error(
+			"We explicitly provide start so this should not be undefined",
+		);
+	}
 
-	const parts = [action, category, escapedFilename, pos];
+	const parts = [
+		action,
+		joinCategoryName({category, categoryValue}),
+		filename,
+		pos,
+	];
 
 	if (id !== undefined) {
 		parts.push(String(id));
 	}
 
-	return parts.join("-");
+	if (parts.findIndex((part) => part.replace === undefined) !== -1) {
+		throw new Error(JSON.stringify({parts, id, pos}));
+	}
+
+	return parts.map((part) => escapePart(part)).join("-");
 }
 
 export function buildLintDecisionAdviceAction(
@@ -197,7 +241,7 @@ export function buildLintDecisionAdviceAction(
 		hidden: true,
 		command: "check",
 		shortcut,
-		args: filename === undefined ? [] : [escapeFilename(filename)],
+		args: filename === undefined ? [] : [escapePart(filename)],
 		noun,
 		instruction,
 		commandFlags: {

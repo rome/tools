@@ -13,7 +13,7 @@ CommitRoot {
 	custom: false
 	diagnostics: Array []
 	filename: "fix/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with a fix commit type"
 	scope: ""
 	loc: Object {

@@ -15,6 +15,11 @@ import {
 	VoidCallback,
 } from "@internal/typescript-helpers";
 
+// rome-ignore lint/ts/noExplicitAny: future cleanup
+export type WrapperFactory = <T extends (...args: any[]) => any>(
+	callback: T,
+) => T;
+
 export type SelectOption = {
 	label: StaticMarkup;
 	shortcut?: string;

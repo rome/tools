@@ -10,30 +10,17 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticSuppression,
-	DiagnosticSuppressions,
-	Diagnostics,
-	descriptions,
 } from "@internal/diagnostics";
+import {ob1Coerce0, ob1Number1} from "@internal/ob1";
+import {addPositions} from "@internal/parser-core";
 import CompilerContext from "./lib/CompilerContext";
 import * as signals from "./signals";
+import {
+	ExtractedSuppressions,
+	parseCommentSuppressions,
+} from "./suppressionsParser";
 import {AnyVisitor} from "./types";
 import {createVisitor} from "./utils";
-
-export const SUPPRESSION_START = "rome-ignore";
-export const INCORRECT_SUPPRESSION_START = [
-	"rome-disable",
-	"@rome-ignore",
-	"@rome-disable",
-	"romefrontend-ignore",
-	"romefrontend-disable",
-	"@rometools-ignore",
-	"@rometools-disable",
-];
-
-type ExtractedSuppressions = {
-	suppressions: DiagnosticSuppressions;
-	diagnostics: Diagnostics;
-};
 
 function extractSuppressionsFromComment(
 	context: CompilerContext,
@@ -45,101 +32,18 @@ function extractSuppressionsFromComment(
 		return undefined;
 	}
 
-	const {requireSuppressionExplanations} = context.project.config.lint;
-	const suppressedCategories: Set<string> = new Set();
-	const diagnostics: Diagnostics = [];
-	const suppressions: DiagnosticSuppressions = [];
-
-	const lines = comment.value.split("\n");
-	const cleanLines = lines.map((line) => {
-		// Trim line and remove leading star
-		return line.trim().replace(/\*[\s]/, "");
+	const {diagnostics, suppressions} = parseCommentSuppressions({
+		input: comment.value,
+		requireExplanations: context.project.config.lint.requireSuppressionExplanations,
+		targetNode,
+		path: context.path,
+		offsetPosition: comment.loc === undefined
+			? undefined
+			: addPositions(
+					comment.loc.start,
+					{line: ob1Number1, column: ob1Coerce0(2)},
+				),
 	});
-
-	for (const line of cleanLines) {
-		if (
-			INCORRECT_SUPPRESSION_START.some((incorrectStart) =>
-				line.startsWith(incorrectStart)
-			)
-		) {
-			diagnostics.push({
-				description: descriptions.SUPPRESSIONS.INCORRECT_SUPPRESSION_START,
-				location: commentLocation,
-			});
-		}
-
-		if (!line.startsWith(SUPPRESSION_START)) {
-			continue;
-		}
-
-		if (targetNode === undefined || targetNode.loc === undefined) {
-			diagnostics.push({
-				description: descriptions.SUPPRESSIONS.MISSING_TARGET,
-				location: commentLocation,
-			});
-			break;
-		}
-
-		const startLine = targetNode.loc.start.line;
-		const endLine = targetNode.loc.end.line;
-
-		const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
-		if (lineWithoutPrefix[0] !== " ") {
-			diagnostics.push({
-				description: descriptions.SUPPRESSIONS.MISSING_SPACE,
-				location: commentLocation,
-			});
-			continue;
-		}
-
-		const categories = lineWithoutPrefix.trim().split(" ");
-		const cleanCategories = categories.map((category) => category.trim());
-		let explanation;
-
-		for (let i = 0; i < cleanCategories.length; i++) {
-			let category = cleanCategories[i];
-
-			if (category === "") {
-				continue;
-			}
-
-			// If a category ends with a colon then all the things that follow it are an explanation
-			if (category[category.length - 1] === ":") {
-				category = category.slice(0, -1);
-				explanation = cleanCategories.slice(i + 1);
-			}
-			if (suppressedCategories.has(category)) {
-				diagnostics.push({
-					description: descriptions.SUPPRESSIONS.DUPLICATE(category),
-					location: commentLocation,
-				});
-			} else {
-				suppressedCategories.add(category);
-
-				suppressions.push({
-					filename: context.filename,
-					category,
-					commentLocation,
-					startLine,
-					endLine,
-				});
-			}
-
-			if (explanation !== undefined) {
-				break;
-			}
-		}
-
-		if (
-			requireSuppressionExplanations &&
-			(!explanation || explanation.length === 0)
-		) {
-			diagnostics.push({
-				description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
-				location: commentLocation,
-			});
-		}
-	}
 
 	if (suppressions.length === 0 && diagnostics.length === 0) {
 		return undefined;
@@ -150,8 +54,6 @@ function extractSuppressionsFromComment(
 
 export function createSuppressionsVisitor(): AnyVisitor {
 	const visitedComments: Set<AnyComment> = new Set();
-
-	// TODO verify all comments
 
 	return createVisitor({
 		name: "suppressions",
@@ -185,6 +87,7 @@ export function createSuppressionsVisitor(): AnyVisitor {
 
 export function matchesSuppression(
 	category: DiagnosticCategory,
+	categoryValue: undefined | string,
 	{filename, start, end}: DiagnosticLocation,
 	suppression: DiagnosticSuppression,
 ): boolean {
@@ -194,6 +97,8 @@ export function matchesSuppression(
 		start !== undefined &&
 		end !== undefined &&
 		start.line >= suppression.startLine &&
-		end.line <= suppression.endLine
+		end.line <= suppression.endLine &&
+		(suppression.categoryValue === undefined ||
+		categoryValue === suppression.categoryValue)
 	);
 }

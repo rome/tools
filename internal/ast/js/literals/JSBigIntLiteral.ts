@@ -6,15 +6,16 @@
  */
 
 import {NodeBaseWithComments} from "@internal/ast";
-import {createBuilder} from "../../utils";
+import {createQuickBuilder} from "../../utils";
 
 export interface JSBigIntLiteral extends NodeBaseWithComments {
 	readonly type: "JSBigIntLiteral";
 	readonly value: string;
 }
 
-export const jsBigIntLiteral = createBuilder<JSBigIntLiteral>(
+export const jsBigIntLiteral = createQuickBuilder<JSBigIntLiteral, "value">(
 	"JSBigIntLiteral",
+	"value",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

@@ -11,7 +11,7 @@ import {
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {Stats} from "../server/fs/MemoryFileSystem";
+import {FSStats, createFakeStats} from "@internal/fs";
 
 export type VirtualModulesMap = Map<
 	string,
@@ -25,7 +25,7 @@ export type VirtualModulesMap = Map<
 >;
 
 export type VirtualModuleStatMap = AbsoluteFilePathMap<{
-	stats: Stats;
+	stats: FSStats;
 	content: undefined | string;
 }>;
 
@@ -45,6 +45,10 @@ export default class VirtualModules {
 		return this.nullAbsolute;
 	}
 
+	public getFakeStats(path: AbsoluteFilePath): FSStats {
+		return this.statMap.assert(path).stats;
+	}
+
 	public init() {
 		const {statMap} = this;
 
@@ -54,11 +58,11 @@ export default class VirtualModules {
 					this.nullAbsolute.append(moduleName).append(subpath),
 					{
 						content,
-						stats: {
+						stats: createFakeStats({
 							type: "file",
-							size: content.length,
-							mtime,
-						},
+							date: new Date(Math.round(mtime)),
+							size: BigInt(content.length),
+						}),
 					},
 				);
 			}
@@ -66,35 +70,33 @@ export default class VirtualModules {
 
 		// Add directories
 		for (const [path, {stats: fileStats}] of statMap) {
-			if (fileStats.type !== "file") {
+			if (!fileStats.isFile()) {
 				continue;
 			}
 
 			for (const directory of path.getParent().getChain()) {
-				const directoryEntry = statMap.get(directory);
-				if (directoryEntry !== undefined) {
-					// Directory mtime is the newest file
-					if (fileStats.mtime > directoryEntry.stats.mtime) {
-						directoryEntry.stats.mtime = fileStats.mtime;
-					}
-					continue;
-				}
-
 				if (directory.getBasename() === "\0") {
 					// Reached the "root"
 					break;
+				}
+
+				const directoryEntry = statMap.get(directory);
+				if (
+					directoryEntry !== undefined &&
+					fileStats.mtime < directoryEntry.stats.mtime
+				) {
+					continue;
 				}
 
 				statMap.set(
 					directory,
 					{
 						content: undefined,
-						stats: {
+						stats: createFakeStats({
 							type: "directory",
-							size: 0,
-							// Init to mtime of the first entry. We'll pick the highest mtime of all listings later if necessary.
-							mtime: fileStats.mtime,
-						},
+							date: fileStats.mtime,
+							size: 0n,
+						}),
 					},
 				);
 			}

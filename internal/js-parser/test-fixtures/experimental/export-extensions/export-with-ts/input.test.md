@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/export-extensions/export-with-ts/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected `from` for an export node"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
 				filename: "experimental/export-extensions/export-with-ts/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -700,7 +702,7 @@ JSRoot {
 
 ```
 
- experimental/export-extensions/export-with-ts/input.js:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/export-extensions/export-with-ts/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
 

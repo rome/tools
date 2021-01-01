@@ -98,7 +98,7 @@ export class LSPTransport {
 	private normalizeMessage(content: string): undefined | Consumer {
 		try {
 			const data = JSON.parse(content);
-			const consumer = consumeUnknown(data, "lsp/parse");
+			const consumer = consumeUnknown(data, "parse", "json");
 			return consumer;
 		} catch (err) {
 			if (err instanceof SyntaxError) {

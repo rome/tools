@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2019/json-strings/template-paragraph-separator/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

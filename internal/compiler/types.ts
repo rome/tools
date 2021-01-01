@@ -57,6 +57,7 @@ export type LintRequest = TransformRequest & {
 };
 
 export type TransformProjectDefinition = {
+	configHashes: string[];
 	config: ProjectConfig;
 	directory: undefined | AbsoluteFilePath;
 };
@@ -99,6 +100,7 @@ export type LintCompilerOptionsDecisionAction = "suppress" | "fix" | "ignore";
 export type LintCompilerOptionsDecision = {
 	action: LintCompilerOptionsDecisionAction;
 	category: DiagnosticCategory;
+	categoryValue: undefined | string;
 	id?: number;
 };
 

@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "test262/rest-parameter/array-pattern-empty-with-rest/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

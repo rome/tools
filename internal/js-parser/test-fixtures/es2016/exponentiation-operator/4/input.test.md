@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2016/exponentiation-operator/4/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

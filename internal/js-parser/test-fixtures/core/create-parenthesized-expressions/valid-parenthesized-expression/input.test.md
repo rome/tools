@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
