@@ -163,7 +163,7 @@ function foo(b) {
 
 ```
 
- lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/6/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The function variable foo is unused.
 
@@ -193,7 +193,7 @@ function foo() {
 
 ```
 
- lint/js/noUnusedVariables/reject/7/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/7/file.ts:1:6 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The const variable foo is unused.
 
@@ -224,7 +224,7 @@ const foo = () => {
 
 ```
 
- lint/js/noUnusedVariables/reject/8/file.ts:1:9 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/8/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The function variable foo is unused.
 
@@ -256,7 +256,7 @@ function foo(): typeof foo {
 
 ```
 
- lint/js/noUnusedVariables/reject/9/file.ts:1:6 lint/js/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnusedVariables/reject/9/file.ts:1:6 lint/js/noUnusedVariables(Foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The class variable Foo is unused.
 
